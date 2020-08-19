@@ -69,8 +69,8 @@ public class User {
     
     private String approvedBy;
 	
-	@NotAudited
-	@JsonIgnore
+	//@NotAudited
+	//@JsonIgnore
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 	UserProfile userProfile;
 

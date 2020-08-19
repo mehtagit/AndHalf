@@ -28,8 +28,8 @@ public enum RegistrationTags {
     User_Success_Update("User_Success_Update","User has been sucessfully update"),
     User_Fail_Update("User_Fail_Update","User has been failed to update"),
 	User_Delete("User_Delete","User has been Deleted Successfully"),
-	User_Fail("User_Fail","Unable to delete user");
-	
+	User_Fail("User_Fail","Unable to delete user"),
+	No_Question_Mapped("No_Question_Mapped","No question mapped to this user");
 	private String tag;
 	private String message;
 	

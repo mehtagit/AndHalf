@@ -122,11 +122,13 @@ public class UserProfileService {
 		if(Objects.nonNull(filterRequest.getUserRoleTypeId()) && filterRequest.getUserRoleTypeId() !=0 && filterRequest.getUserRoleTypeId()!=-1)
 			uPSB.addSpecification(uPSB.joinWithMultiple(new SearchCriteria("id",filterRequest.getUserRoleTypeId(), SearchOperation.EQUALITY, Datatype.LONG)));
 		
-		if(Objects.nonNull(filterRequest.getUsername()) && !filterRequest.getUsername().isEmpty()) 
-			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("username",filterRequest.getUsername(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING)));
-		
+		if(Objects.nonNull(filterRequest.getUsername()) && !filterRequest.getUsername().isEmpty()) {
+			log.info("username in filterRequest::::::::"+filterRequest.getUsername());
+			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("username",filterRequest.getUsername(), SearchOperation.EQUALITY, Datatype.STRING)));
+		}
 		else if(Objects.nonNull(filterRequest.getStatus()) && filterRequest.getStatus()!=-1) 
 		{
+			log.info("status in filterRequest::::::::"+filterRequest.getStatus());
 			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INTEGER)));
 		}
 		else
@@ -175,17 +177,24 @@ public class UserProfileService {
 					}
 				}
 			}
-		
-		
+	
 		}
 		
 		
 		uPSB.addSpecification(uPSB.joinWithMultiple(new SearchCriteria("selfRegister",1, SearchOperation.EQUALITY, Datatype.INTEGER)));
 		
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-		//uPSB.orSearchUser(new SearchCriteria("username", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-	    uPSB.orSearchUsertype(new SearchCriteria("usertypeName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-		//uPSB.orSearch(new SearchCriteria("user.username", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		//uPSB.orSearchUser(new SearchCriteria("username", filterRequest.getSearchString(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
+	   // uPSB.orSearchUsertype(new SearchCriteria("usertypeName", filterRequest.getSearchString(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
+		uPSB.orSearch(new SearchCriteria("user-username", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		//uPSB.orSearch(new SearchCriteria("user.usertype-usertypeName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		
+		  uPSB.orSearch(new SearchCriteria("createdOn",filterRequest.getSearchString(), SearchOperation.EQUALITY, Datatype.DATE));
+		  uPSB.orSearch(new SearchCriteria("modifiedOn",filterRequest.getSearchString(), SearchOperation.EQUALITY, Datatype.DATE));
+		//  uPSB.orSearch(new SearchCriteria("type", filterRequest.getSearchString(),SearchOperation.LIKE, Datatype.STRING)); 
+		  uPSB.orSearch(new SearchCriteria("email",filterRequest.getSearchString(),SearchOperation.LIKE, Datatype.STRING));
+		  uPSB.orSearch(new SearchCriteria("phoneNo",filterRequest.getSearchString(),SearchOperation.LIKE, Datatype.STRING));
+		 
 		}
 		
 		return uPSB;

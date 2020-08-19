@@ -238,6 +238,10 @@ public class UserService {
 			User user=userRepo.findByUsername(username);
 			if(user!=null) {
 				List<Securityquestion> securityQuestionList=new ArrayList<Securityquestion>();
+				if(user.getUserSecurityquestion().isEmpty()) {
+					GenricResponse response=new GenricResponse(409,RegistrationTags.No_Question_Mapped.getTag(),"",null);
+					return new ResponseEntity<>(response,HttpStatus.OK);
+				}
 				if(user.getUserSecurityquestion().isEmpty()==false) {
 					for(UserSecurityquestion securityQues:user.getUserSecurityquestion()) {
 						Securityquestion ques=new Securityquestion(securityQues.getSecurityQuestion().getId(),
