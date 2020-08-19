@@ -32,14 +32,20 @@ public class BlackList {
      @NotNull
      private Long msisdn;
 
-     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+//     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+//     @CreationTimestamp
+//     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//     private LocalDateTime createdOn;
+//     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+//     @UpdateTimestamp
+//     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//     private LocalDateTime modifiedOn;
      @CreationTimestamp
-     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
      private LocalDateTime createdOn;
 
-     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-     @UpdateTimestamp
-     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+     @CreationTimestamp
+     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
      private LocalDateTime modifiedOn;
 
      @JsonIgnore
@@ -83,10 +89,8 @@ public class BlackList {
      private String modeType;
      private String requestType;
      private String userType;
-     private String complainType;   
-     
-      
-     
+     private String complainType;
+
      @Type(type = "date")
      @DateTimeFormat(pattern = "yyyy-MM-dd")
      private Date expiryDate;
@@ -285,7 +289,7 @@ public class BlackList {
      public BlackList(@NotNull String imei, @NotNull Long msisdn, String roleType, String userId, String txnId,
              String deviceNumber, String deviceType, String deviceAction, String deviceStatus, String deviceLaunchDate,
              String multipleSimStatus, String deviceId, String imeiEsnMeid, String modeType,
-             String requestType, String userType, String complainType, Date expiryDate, String operator_id, String operator_name ) {
+             String requestType, String userType, String complainType, Date expiryDate, String operator_id, String operator_name) {
           super();
           this.imei = imei;
           this.msisdn = msisdn;
@@ -306,7 +310,7 @@ public class BlackList {
           this.complainType = complainType;
           this.expiryDate = expiryDate;
           this.operator_id = operator_id;
-          this.operator_name =  operator_name;
+          this.operator_name = operator_name;
      }
 
      public String getModeType() {
@@ -354,6 +358,4 @@ public class BlackList {
      }
 
 }
-
-
 
