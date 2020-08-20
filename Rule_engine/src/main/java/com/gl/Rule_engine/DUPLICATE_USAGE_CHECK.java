@@ -30,12 +30,8 @@ class DUPLICATE_USAGE_CHECK {
           Statement stmt4 = null;
           ResultSet result4 = null;
           try {
-
-//            logger.debug("DUPLICATE_USAGE_CHECK executeRule");
-               {
-
                     stmt2 = conn.createStatement();
-                    result1 = stmt2.executeQuery("  select count( imei) as c1  from device_usage_db where imei='" + args[3] + "' ");
+                    result1 = stmt2.executeQuery("select count( imei) as c1  from device_usage_db where imei='" + args[3] + "' ");
                     logger.debug(" select count( msisdn) as c1  from device_usage_db where imei='" + args[3] + "'");
                     int res1 = 0;
                     try {
@@ -61,7 +57,7 @@ class DUPLICATE_USAGE_CHECK {
                     }
                     result3.close();
                     stmt3.close();
-                    logger.debug("device_duplicate_db count:" + res3);
+                    logger.debug("device_duplicatedb count:" + res3);
                     int ttl = res1 + res3;
                     logger.debug("Total  count: " + ttl);
                     stmt4 = conn.createStatement();
@@ -89,7 +85,7 @@ class DUPLICATE_USAGE_CHECK {
 //                    stmt3.close();
 //                    stmt4.close();
 
-               }
+               
           } catch (Exception e) {
                logger.error(" Error " + e);
           } finally {
