@@ -10,6 +10,6 @@ import com.gl.ceir.config.model.DeviceNullDb;
 public interface DeviceNullDbRepository extends JpaRepository<DeviceNullDb, Long>, 
 JpaSpecificationExecutor<DeviceNullDb> {
 
-	public DeviceNullDb findByMsisdn(Long msisdn);
+	public DeviceNullDb findByMsisdn(String msisdn);
 
 }

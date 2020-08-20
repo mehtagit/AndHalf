@@ -29,7 +29,7 @@ public class VipListController {
 
 	@ApiOperation(value = "View available VIP List Device ", response = VipList.class)
 	@RequestMapping(path = "/VipList/", method = RequestMethod.GET)
-	public MappingJacksonValue getByMsisdnAndImei(@RequestParam(required = false) Long msisdn,
+	public MappingJacksonValue getByMsisdnAndImei(@RequestParam(required = false) String msisdn,
 			@RequestParam(required = false) String imei) {
 		ImeiMsisdnIdentity imeiMsisdnIdentity = new ImeiMsisdnIdentity();
 		imeiMsisdnIdentity.setMsisdn(msisdn);

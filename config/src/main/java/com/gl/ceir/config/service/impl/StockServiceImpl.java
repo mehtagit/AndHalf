@@ -500,8 +500,10 @@ public class StockServiceImpl {
 				throw new IllegalArgumentException();
 			}
 
-			StockMgmt stockMgmt2 = stockManagementRepository.getByTxnId(filterRequest.getTxnId()); 
-
+			StockMgmt stockMgmt2 = stockManagementRepository.getByTxnId(filterRequest.getTxnId());
+			if( Objects.isNull(stockMgmt2) ) {
+				throw new IllegalArgumentException();
+			}
 			if("End User".equalsIgnoreCase(filterRequest.getUserType())) {
 				StatesInterpretationDb statesInterpretationDb = statesInterpretaionRepository.findByFeatureIdAndState(4, stockMgmt2.getStockStatus());
 				stockMgmt2.setStateInterp(statesInterpretationDb.getInterp());
@@ -856,7 +858,8 @@ public class StockServiceImpl {
 			User customUser = null;
 			Map<String, String> placeholderMap = new HashMap<String, String>();
 			Integer currentStatus = null;
-			String adminMailTag = null;
+			String adminMailTag   = null;
+			WebActionDb webActionDb = null;
 			adminMailTag = "STOCK_PROCESS_SUCCESS_TO_CEIR_MAIL";
 			String txnId = consignmentUpdateRequest.getTxnId();
 			logger.info("enter in accept reject method..");
@@ -927,10 +930,15 @@ public class StockServiceImpl {
 					stockMgmt.setStockStatus(StockStatus.REJECTED_BY_CEIR_ADMIN.getCode());
 					stockMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 					stockMgmt.setCeirAdminId(consignmentUpdateRequest.getUserId());
+					webActionDb = new WebActionDb();
+					webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
+					webActionDb.setState(WebActionDbState.INIT.getCode());
+					webActionDb.setTxnId(stockMgmt.getTxnId());
+					webActionDb.setSubFeature(WebActionDbSubFeature.REJECT.getName());
 				}
 
 				// Update Stock and its history.
-				if(!stockTransaction.updateStatusWithHistory(stockMgmt)){
+				if(!stockTransaction.updateStatusWithHistory(stockMgmt, webActionDb)){
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
 				}else {
@@ -1052,7 +1060,7 @@ public class StockServiceImpl {
 				}
 
 				// Update Stock and its history.
-				if(!stockTransaction.updateStatusWithHistory(stockMgmt)){
+				if(!stockTransaction.updateStatusWithHistory(stockMgmt, webActionDb )){
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
 				}else {

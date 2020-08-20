@@ -98,7 +98,7 @@ public class FileServiceImpl {
 			fileName = "";
 			break;
 		case 14:
-			fileName = "";
+			fileName = "CEIR_User Manual (Lawful Agency)_v1.0.pdf";
 			break;
 		case 17:
 			fileName = "CEIRv1.0_User Manual (Importer)_v1.0.pdf";

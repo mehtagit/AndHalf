@@ -23,7 +23,7 @@ public class DeviceUsageDb  implements Serializable{
 	@Id
 	private String imei;
 	
-	private Long msisdn;
+	private String msisdn;
 
 	@JsonIgnore
 	@CreationTimestamp
@@ -123,11 +123,11 @@ public class DeviceUsageDb  implements Serializable{
 		this.imsi = imsi;
 	}
 
-	public Long getMsisdn() {
+	public String getMsisdn() {
 		return msisdn;
 	}
 
-	public void setMsisdn(Long msisdn) {
+	public void setMsisdn(String msisdn) {
 		this.msisdn = msisdn;
 	}
 

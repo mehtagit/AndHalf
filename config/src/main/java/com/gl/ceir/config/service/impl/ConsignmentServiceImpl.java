@@ -472,6 +472,8 @@ public class ConsignmentServiceImpl {
 				consignmentInfo.setFeatureId(consignmentFileRequest.getFeatureId());
 				consignmentInfo.setRoleType(consignmentFileRequest.getRoleType());
 				consignmentInfo.setRemarks(null);
+				consignmentInfo.setCeirAdminID(null);
+				consignmentInfo.setCustomID(null);
 				// Pending tac if available in pending_tac_approval_db.
 				FilterRequest filterRequest = new FilterRequest().setTxnId(consignmentFileRequest.getTxnId());
 				if(pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {

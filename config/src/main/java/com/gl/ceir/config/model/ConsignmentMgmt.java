@@ -109,6 +109,7 @@ public class ConsignmentMgmt implements Serializable {
 
 	@Transient
 	public String userName;
+	
 	@Transient
 	private String userType;
 	@Transient

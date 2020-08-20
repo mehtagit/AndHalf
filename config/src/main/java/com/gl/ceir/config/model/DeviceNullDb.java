@@ -24,7 +24,7 @@ public class DeviceNullDb  implements Serializable{
 
 	@Id
 	@Column(name = "msisdn")
-	private Long msisdn;
+	private String msisdn;
 	
 	@Column(name = "imsi")
 	private Long imsi;
@@ -52,11 +52,11 @@ public class DeviceNullDb  implements Serializable{
 	@Column(name = "system_type", length = 100)
 	private String systemType;
 
-	public Long getMsisdn() {
+	public String getMsisdn() {
 		return msisdn;
 	}
 
-	public void setMsisdn(Long msisdn) {
+	public void setMsisdn(String msisdn) {
 		this.msisdn = msisdn;
 	}
 
