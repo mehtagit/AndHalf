@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RemoveIncompleteUser extends BaseService {
-  private static final Logger logger = LogManager.getLogger(com.gl.ceir.factory.service.impl.RemoveIncompleteUser.class);
+  private static final Logger logger = LogManager.getLogger(RemoveIncompleteUser.class);
   
   List<RawMail> rawMails = new ArrayList<>();
   

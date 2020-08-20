@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ConsignmentRevenueService extends BaseService {
-  private static final Logger logger = LogManager.getLogger(com.gl.ceir.factory.service.impl.ConsignmentRevenueService.class);
+  private static final Logger logger = LogManager.getLogger(ConsignmentRevenueService.class);
   
   Map<Integer, Currency> exchangeRateMap = null;
   

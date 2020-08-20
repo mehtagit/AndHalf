@@ -42,20 +42,21 @@ public class RegularizeDbServiceImpl {
 	@Autowired
 	NotifierWrapper notifierWrapper;
 
-	public List<RegularizeDeviceDb> getDevicesbyTaxStatusAndDate( String toDate, int taxPaidStatus){
-		return regularizedDeviceDbRepository.findAll(buildSpecification(toDate, taxPaidStatus).build());
+	public List<RegularizeDeviceDb> getDevicesbyTaxStatusAndDateAndReminderFlag( String toDate, int taxPaidStatus,String reminderFlag){
+		return regularizedDeviceDbRepository.findAll(buildSpecification(toDate, taxPaidStatus,reminderFlag).build());
 	}
 
 	public void saveAllDevices(List<RegularizeDeviceDb> regularizeDeviceDbs) {
 		regularizedDeviceDbRepository.saveAll(regularizeDeviceDbs);
 	}
 
-	public GenericSpecificationBuilder<RegularizeDeviceDb> buildSpecification(String toDate, int taxPaidStatus){
+	public GenericSpecificationBuilder<RegularizeDeviceDb> buildSpecification(String toDate, int taxPaidStatus,String reminderFlag){
 		GenericSpecificationBuilder<RegularizeDeviceDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
 		// cmsb.with(new SearchCriteria("createdOn", fromDate, SearchOperation.GREATER_THAN_OR_EQUAL, Datatype.DATE));
 		cmsb.with(new SearchCriteria("createdOn", toDate, SearchOperation.LESS_THAN, Datatype.DATE));
-		cmsb.with(new SearchCriteria("taxPaidStatus", taxPaidStatus, SearchOperation.EQUALITY, Datatype.STRING)); 
+		cmsb.with(new SearchCriteria("taxPaidStatus", taxPaidStatus, SearchOperation.EQUALITY, Datatype.STRING));
+		cmsb.with(new SearchCriteria("reminderFlag", reminderFlag, SearchOperation.EQUALITY, Datatype.STRING));
 
 		return cmsb;
 	}

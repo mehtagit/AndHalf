@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CloseGrievance extends BaseService {
-  private static final Logger logger = LogManager.getLogger(com.gl.ceir.factory.service.impl.CloseGrievance.class);
+  private static final Logger logger = LogManager.getLogger(CloseGrievance.class);
   
   List<Grievance> processedGrievances = new ArrayList<>();
   

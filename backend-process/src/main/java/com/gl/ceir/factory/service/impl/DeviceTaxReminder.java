@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DeviceTaxReminder extends BaseService {
-  private static final Logger logger = LogManager.getLogger(com.gl.ceir.factory.service.impl.DeviceTaxReminder.class);
+  private static final Logger logger = LogManager.getLogger(DeviceTaxReminder.class);
   
   @Autowired
   RegularizeDbServiceImpl regularizeDbServiceImpl;
@@ -52,12 +52,13 @@ public class DeviceTaxReminder extends BaseService {
       } 
       String toDate = DateUtil.nextDate((Integer.parseInt(graceDays.getValue()) - Integer.parseInt(reminderDays.getValue()) - 1) * -1);
       logger.info("Reminder will sent to user who has registered device on toDate[" + toDate + "] and not paid tax.");
-      List<RegularizeDeviceDb> regularizeDeviceDbs = this.regularizeDbServiceImpl.getDevicesbyTaxStatusAndDate(toDate, 1);
+      List<RegularizeDeviceDb> regularizeDeviceDbs = this.regularizeDbServiceImpl.getDevicesbyTaxStatusAndDateAndReminderFlag(toDate, 1,"N");
       List<RegularizeDeviceDb> processedDeviceDbs = new ArrayList<>();
       for (RegularizeDeviceDb regularizeDeviceDb : regularizeDeviceDbs) {
         EndUserDB endUserDB = regularizeDeviceDb.getEndUserDB();
         logger.info(endUserDB);
         if ("cambodian".equalsIgnoreCase(endUserDB.getNationality())) {
+          regularizeDeviceDb.setReminderFlag("Y");
           processedDeviceDbs.add(regularizeDeviceDb);
           continue;
         } 
@@ -83,6 +84,9 @@ public class DeviceTaxReminder extends BaseService {
   public void process(Object o) {
     String tag = "REMINDER_DEVICE_TAX_NOT_PAID";
     List<RegularizeDeviceDb> regularizeDeviceDbs = (List<RegularizeDeviceDb>)o;
+    logger.info("Going to set reminder flags for devices: " + regularizeDeviceDbs);
+    this.regularizeDbServiceImpl.saveAllDevices(regularizeDeviceDbs);
+    logger.info("Flag set for all devices.");
     logger.info("Going to send reminder for devices : " + regularizeDeviceDbs);
     List<UserWiseMailCount> userWiseMailCounts = this.regularizeDbServiceImpl.getUserWiseMailCountDto(regularizeDeviceDbs);
     this.policyBreachNotiServiceImpl.batchUpdatePolicyBreachNoti(tag, userWiseMailCounts);

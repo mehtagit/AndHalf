@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class BlockEndUserDevice extends BaseService {
-  private static final Logger logger = LogManager.getLogger(com.gl.ceir.factory.service.impl.BlockEndUserDevice.class);
+  private static final Logger logger = LogManager.getLogger(BlockEndUserDevice.class);
   
   @Autowired
   RegularizeDbServiceImpl regularizeDbServiceImpl;
@@ -46,7 +46,7 @@ public class BlockEndUserDevice extends BaseService {
       String fromDate = DateUtil.nextDate(Integer.parseInt(graceDays.getValue()) * -1);
       String toDate = DateUtil.nextDate((Integer.parseInt(graceDays.getValue()) - 1) * -1);
       logger.info("Device block notification will sent to user who has registered device on Date [" + fromDate + "] and not paid tax.");
-      List<RegularizeDeviceDb> regularizeDeviceDbs = this.regularizeDbServiceImpl.getDevicesbyTaxStatusAndDate(toDate, 1);
+      List<RegularizeDeviceDb> regularizeDeviceDbs = this.regularizeDbServiceImpl.getDevicesbyTaxStatusAndDateAndReminderFlag(toDate, 1,"Y");
       List<RegularizeDeviceDb> processedDeviceDbs = new ArrayList<>();
       for (RegularizeDeviceDb regularizeDeviceDb : regularizeDeviceDbs) {
         EndUserDB endUserDB = regularizeDeviceDb.getEndUserDB();

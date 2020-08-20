@@ -113,6 +113,7 @@ public class RegularizeDeviceDb implements Serializable {
 
     private String approvedBy;
     
+    private String reminderFlag;
     
 	public String getMultiSimStatusInterp() {
 		return multiSimStatusInterp;
@@ -373,76 +374,86 @@ public class RegularizeDeviceDb implements Serializable {
 	public void setApprovedBy(String approvedBy) {
 		this.approvedBy = approvedBy;
 	}
+	
+	public String getReminderFlag() {
+		return reminderFlag;
+	}
+
+	public void setReminderFlag(String reminderFlag) {
+		this.reminderFlag = reminderFlag;
+	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("RegularizeDeviceDb [id=");
-		builder.append(id);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", nid=");
-		builder.append(nid);
-		builder.append(", deviceStatus=");
-		builder.append(deviceStatus);
-		builder.append(", deviceStatusInterp=");
-		builder.append(deviceStatusInterp);
-		builder.append(", taxPaidStatus=");
-		builder.append(taxPaidStatus);
-		builder.append(", taxPaidStatusInterp=");
-		builder.append(taxPaidStatusInterp);
-		builder.append(", deviceType=");
-		builder.append(deviceType);
-		builder.append(", deviceTypeInterp=");
-		builder.append(deviceTypeInterp);
-		builder.append(", deviceIdType=");
-		builder.append(deviceIdType);
-		builder.append(", deviceIdTypeInterp=");
-		builder.append(deviceIdTypeInterp);
-		builder.append(", multiSimStatus=");
-		builder.append(multiSimStatus);
-		builder.append(", country=");
-		builder.append(country);
-		builder.append(", deviceSerialNumber=");
-		builder.append(deviceSerialNumber);
-		builder.append(", txnId=");
-		builder.append(txnId);
-		builder.append(", price=");
-		builder.append(price);
-		builder.append(", currency=");
-		builder.append(currency);
-		builder.append(", currencyInterp=");
-		builder.append(currencyInterp);
-		builder.append(", firstImei=");
-		builder.append(firstImei);
-		builder.append(", secondImei=");
-		builder.append(secondImei);
-		builder.append(", thirdImei=");
-		builder.append(thirdImei);
-		builder.append(", fourthImei=");
-		builder.append(fourthImei);
-		builder.append(", remark=");
-		builder.append(remark);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", stateInterp=");
-		builder.append(stateInterp);
-		builder.append(", origin=");
-		builder.append(origin);
-		builder.append(", nationality=");
-		builder.append(nationality);
-		builder.append(", creatorUserId=");
-		builder.append(creatorUserId);
-		builder.append(", multiSimStatusInterp=");
-		builder.append(multiSimStatusInterp);
-		builder.append(", approvedBy=");
-		builder.append(approvedBy);
-		builder.append(", toString()=");
-		builder.append(super.toString());
-		builder.append("]");
-		return builder.toString();
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append("RegularizeDeviceDb [id=");
+		stringBuilder.append(id);
+		stringBuilder.append(", createdOn=");
+		stringBuilder.append(createdOn);
+		stringBuilder.append(", modifiedOn=");
+		stringBuilder.append(modifiedOn);
+		stringBuilder.append(", nid=");
+		stringBuilder.append(nid);
+		stringBuilder.append(", deviceStatus=");
+		stringBuilder.append(deviceStatus);
+		stringBuilder.append(", deviceStatusInterp=");
+		stringBuilder.append(deviceStatusInterp);
+		stringBuilder.append(", taxPaidStatus=");
+		stringBuilder.append(taxPaidStatus);
+		stringBuilder.append(", taxPaidStatusInterp=");
+		stringBuilder.append(taxPaidStatusInterp);
+		stringBuilder.append(", deviceType=");
+		stringBuilder.append(deviceType);
+		stringBuilder.append(", deviceTypeInterp=");
+		stringBuilder.append(deviceTypeInterp);
+		stringBuilder.append(", deviceIdType=");
+		stringBuilder.append(deviceIdType);
+		stringBuilder.append(", deviceIdTypeInterp=");
+		stringBuilder.append(deviceIdTypeInterp);
+		stringBuilder.append(", multiSimStatus=");
+		stringBuilder.append(multiSimStatus);
+		stringBuilder.append(", country=");
+		stringBuilder.append(country);
+		stringBuilder.append(", deviceSerialNumber=");
+		stringBuilder.append(deviceSerialNumber);
+		stringBuilder.append(", txnId=");
+		stringBuilder.append(txnId);
+		stringBuilder.append(", price=");
+		stringBuilder.append(price);
+		stringBuilder.append(", currency=");
+		stringBuilder.append(currency);
+		stringBuilder.append(", currencyInterp=");
+		stringBuilder.append(currencyInterp);
+		stringBuilder.append(", firstImei=");
+		stringBuilder.append(firstImei);
+		stringBuilder.append(", secondImei=");
+		stringBuilder.append(secondImei);
+		stringBuilder.append(", thirdImei=");
+		stringBuilder.append(thirdImei);
+		stringBuilder.append(", fourthImei=");
+		stringBuilder.append(fourthImei);
+		stringBuilder.append(", remark=");
+		stringBuilder.append(remark);
+		stringBuilder.append(", status=");
+		stringBuilder.append(status);
+		stringBuilder.append(", stateInterp=");
+		stringBuilder.append(stateInterp);
+		stringBuilder.append(", endUserDB=");
+		stringBuilder.append(endUserDB);
+		stringBuilder.append(", origin=");
+		stringBuilder.append(origin);
+		stringBuilder.append(", nationality=");
+		stringBuilder.append(nationality);
+		stringBuilder.append(", creatorUserId=");
+		stringBuilder.append(creatorUserId);
+		stringBuilder.append(", multiSimStatusInterp=");
+		stringBuilder.append(multiSimStatusInterp);
+		stringBuilder.append(", approvedBy=");
+		stringBuilder.append(approvedBy);
+		stringBuilder.append(", reminderFlag=");
+		stringBuilder.append(reminderFlag);
+		stringBuilder.append("]");
+		return stringBuilder.toString();
 	}
 	
 }

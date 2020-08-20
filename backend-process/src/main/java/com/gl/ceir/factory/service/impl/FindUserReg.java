@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class FindUserReg extends BaseService {
-  private static final Logger logger = LogManager.getLogger(com.gl.ceir.factory.service.impl.FindUserReg.class);
+  private static final Logger logger = LogManager.getLogger(FindUserReg.class);
   
   List<PolicyBreachNotification> policyBreachNotifications = new LinkedList<>();
   
@@ -50,7 +50,7 @@ public class FindUserReg extends BaseService {
     try {
       String channel = "SMS";
       String policyBreachMessage = "";
-      String tag = "DEVICE_TAX_NOT_PAID";
+      String tag = "BLOCK_DEVICE_TAX_NOT_PAID";
       List<DeviceUsageDb> deviceUsageDbs = this.deviceUsageServiceImpl.getDeviceUsageOfTodayHavingActionUserReg();
       logger.info(deviceUsageDbs);
       if (deviceUsageDbs.isEmpty()) {

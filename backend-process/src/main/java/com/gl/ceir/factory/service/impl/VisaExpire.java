@@ -23,7 +23,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class VisaExpire extends BaseService {
-  private static final Logger logger = LogManager.getLogger(com.gl.ceir.factory.service.impl.VisaExpire.class);
+  private static final Logger logger = LogManager.getLogger(VisaExpire.class);
   
   @Autowired
   EndUserDbRepository endUserDbRepository;
