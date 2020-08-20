@@ -40,7 +40,7 @@ class EXISTS_IN_ALL_ACTIVE_DB {
                     logger.error("" + e);
                }
                if (res1 != 0) {
-                    res = "Yes";
+                    res = "No";
                } else {
                     res = "No";
                }
