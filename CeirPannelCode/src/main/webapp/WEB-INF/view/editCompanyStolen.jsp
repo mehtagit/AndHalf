@@ -872,7 +872,7 @@
 															<div class="file-path-wrapper" data-original-title="" title="">
 																<input class="file-path validate" type="text" placeholder="" id="uploadFirSingleName" title="" data-original-title="Please upload national
 																ID image">
-																<a href="#" id="firFilePreview" class="imgPreviewLink"  style="display: none;">Preview</a>
+																<a href="#" id="firFilePreview" class="imgPreviewLink"  style="display: none;"><spring:message code="input.preView" /></a>
 															</div>
 														</div>
 											<div class="input-field col s12 m6" style="margin-top: 22px;margin-right: -2px;">

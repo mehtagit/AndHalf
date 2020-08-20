@@ -11,6 +11,7 @@ $('#langlistHeader').on('change', function() {
 	var url_string = window.location.href;
 	var url = new URL(url_string);
 	var type = url.searchParams.get("reportType");
+	
 	window.location.assign("uploadAstock?reportType="+type+"&lang="+lang);			
 	}); 
 
@@ -19,6 +20,7 @@ $('#langlistHeader').on('change', function() {
 
 $(document).ready(function () {
 	$('#langlist').val(data_lang_param);
+	$('#langlistHeader').val(data_lang_param);
 	$.i18n().locale = data_lang_param;
 	var successMsg;
 	$.i18n().load( {

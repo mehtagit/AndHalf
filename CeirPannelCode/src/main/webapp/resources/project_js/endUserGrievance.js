@@ -32,6 +32,8 @@
 	
 	$(document).ready(function () {
 		 $('#langlist').val(data_lang_param);
+		 $('#langlistTrack').val(data_lang_param);
+		 $('#langlistTable').val(data_lang_param);
 		 $.i18n().locale = data_lang_param;
 			var successMsg;
 			$.i18n().load( {
@@ -494,12 +496,14 @@ function enableReplySelectFile(){
 						headers:
 						{ 'X-CSRF-TOKEN': token }
 						});
-						if(lang=='km'){
+						if(data_lang_param=='km'){
 							var langFile='./resources/i18n/khmer_datatable.json';
+							
 							}
-						else if(lang=='en'){
+						else if(data_lang_param=='en'){
 							var langFile='./resources/i18n/english_datatable.json';
 						}
+						
 
 				$.ajax({
 					url: 'headers?type=grievanceHeaders',

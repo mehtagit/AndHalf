@@ -1246,6 +1246,9 @@ function historytable(url,dataUrl){
 	if(data_lang_param=='km'){
 		var langFile="./resources/i18n/khmer_datatable.json";
 	}
+	else if(data_lang_param=='en'){
+		var langFile='./resources/i18n/english_datatable.json';
+	}
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -1476,6 +1479,9 @@ function historyRecord(txnID){
 	if(data_lang_param=='km'){
 		var langFile='./resources/i18n/khmer_datatable.json';
 	}
+	else if(data_lang_param=='en'){
+		var langFile='./resources/i18n/english_datatable.json';
+	}
 	//////console.log("22");
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -1503,6 +1509,9 @@ function historyRecord(txnID){
 				"bFilter" : false,
 				"bInfo" : true,
 				"scrollX": true,
+				"oLanguage": {  
+					"sUrl": langFile  
+				},
 				"bSearchable" : true,
 				pageLength : 3,
 				 "data": dataObject.data,

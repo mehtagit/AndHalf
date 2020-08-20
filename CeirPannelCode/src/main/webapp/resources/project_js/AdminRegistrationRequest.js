@@ -755,6 +755,9 @@ function userChangeStatus(entity){
 		if(lang=='km'){
 			var langFile='./resources/i18n/khmer_datatable.json';
 		}
+		else if(lang=='en'){
+			var langFile='./resources/i18n/english_datatable.json';
+		}
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajaxSetup({
@@ -787,6 +790,9 @@ function userChangeStatus(entity){
 					"bFilter" : false,
 					"bInfo" : true,
 					"scrollX": true,
+					"oLanguage": {  
+						"sUrl": langFile  
+					},
 					"scrolly": true,
 					pageLength : 3,
 					"data": dataObject.data,
