@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -15,8 +16,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class DeviceDuplicateDb {
 	
-	@EmbeddedId
-	private ImeiMsisdnIdentity imeiMsisdnIdentity;
+//	@EmbeddedId
+//	private ImeiMsisdnIdentity imeiMsisdnIdentity;
+	@Id
+	@Column(length = 20)
+	private String msisdn;
+	
+	@Column(length = 20)
+	private String imei;
 	
 //	@JsonIgnore
 	@CreationTimestamp
@@ -39,7 +46,7 @@ public class DeviceDuplicateDb {
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date modifiedOn;    
 	
-	private Integer recordType; 
+	private String recordType; 
 	
 	@Column(length = 100)
 	private String systemType;
@@ -59,16 +66,33 @@ public class DeviceDuplicateDb {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ImeiMsisdnIdentity getImeiMsisdnIdentity() {
-		return imeiMsisdnIdentity;
-	}
+//	public ImeiMsisdnIdentity getImeiMsisdnIdentity() {
+//		return imeiMsisdnIdentity;
+//	}
+//
+//	public void setImeiMsisdnIdentity(ImeiMsisdnIdentity imeiMsisdnIdentity) {
+//		this.imeiMsisdnIdentity = imeiMsisdnIdentity;
+//	}
 
-	public void setImeiMsisdnIdentity(ImeiMsisdnIdentity imeiMsisdnIdentity) {
-		this.imeiMsisdnIdentity = imeiMsisdnIdentity;
-	}
-
+	
 	public Date getCreatedOn() {
 		return createdOn;
+	}
+
+	public String getImei() {
+		return imei;
+	}
+
+	public void setImei(String imei) {
+		this.imei = imei;
+	}
+
+	public String getMsisdn() {
+		return msisdn;
+	}
+
+	public void setMsisdn(String msisdn) {
+		this.msisdn = msisdn;
 	}
 
 	public void setCreatedOn(Date createdOn) {
@@ -131,11 +155,11 @@ public class DeviceDuplicateDb {
 		this.modifiedOn = modifiedOn;
 	}
 
-	public Integer getRecordType() {
+	public String getRecordType() {
 		return recordType;
 	}
 
-	public void setRecordType(Integer recordType) {
+	public void setRecordType(String recordType) {
 		this.recordType = recordType;
 	}
 
@@ -181,38 +205,11 @@ public class DeviceDuplicateDb {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("DeviceDuplicateDb [imeiMsisdnIdentity=");
-		builder.append(imeiMsisdnIdentity);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", mobileOperator=");
-		builder.append(mobileOperator);
-		builder.append(", period=");
-		builder.append(period);
-		builder.append(", action=");
-		builder.append(action);
-		builder.append(", failedRuleId=");
-		builder.append(failedRuleId);
-		builder.append(", failedRuleName=");
-		builder.append(failedRuleName);
-		builder.append(", imsi=");
-		builder.append(imsi);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", recordType=");
-		builder.append(recordType);
-		builder.append(", systemType=");
-		builder.append(systemType);
-		builder.append(", createFilename=");
-		builder.append(createFilename);
-		builder.append(", updateFilename=");
-		builder.append(updateFilename);
-		builder.append(", failedRuleDate=");
-		builder.append(failedRuleDate);
-		builder.append(", tac=");
-		builder.append(tac);
-		builder.append("]");
-		return builder.toString();
+		return "DeviceDuplicateDb [msisdn=" + msisdn + ", imei=" + imei + ", createdOn=" + createdOn
+				+ ", mobileOperator=" + mobileOperator + ", period=" + period + ", action=" + action + ", failedRuleId="
+				+ failedRuleId + ", failedRuleName=" + failedRuleName + ", imsi=" + imsi + ", modifiedOn=" + modifiedOn
+				+ ", recordType=" + recordType + ", systemType=" + systemType + ", createFilename=" + createFilename
+				+ ", updateFilename=" + updateFilename + ", failedRuleDate=" + failedRuleDate + ", tac=" + tac + "]";
 	}
+	
 }

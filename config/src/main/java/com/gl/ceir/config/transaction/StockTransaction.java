@@ -184,9 +184,13 @@ public class StockTransaction {
 		return queryStatus;
 	}
 
-	public boolean updateStatusWithHistory(StockMgmt stockMgmt) {
+	public boolean updateStatusWithHistory(StockMgmt stockMgmt, WebActionDb webActionDb) {
 		boolean status = Boolean.FALSE;
-
+		if( Objects.nonNull( webActionDb )) {
+			webActionDbRepository.save(webActionDb);
+			logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in web_action_db.");
+		}
+		
 		stockManagementRepository.save(stockMgmt);
 		logger.info("Stock [" + stockMgmt.getTxnId() + "] saved in stock_mgmt.");
 

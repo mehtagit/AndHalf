@@ -65,6 +65,7 @@ import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.TaxStatus;
+import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.model.file.RegularizeDeviceFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
@@ -149,7 +150,10 @@ public class RegularizedDeviceServiceImpl {
 	CommonFunction commonFunction;
 	@Autowired
 	UserFeignClient userFeignClient;
-
+	@Autowired
+	EnduserServiceImpl enduserServiceImpl;
+	
+	
 	@Autowired
 	DashboardUsersFeatureStateMapRepository dashboardUsersFeatureStateMapRepository; 
 
@@ -228,10 +232,9 @@ public class RegularizedDeviceServiceImpl {
 			int userId=0;
 			if(Objects.nonNull(filterRequest.getUserType()))
 			{
-
 				if("End User".equalsIgnoreCase(filterRequest.getUserType())){
 					logger.info("usertype is end user so setting username is empty");
-					username="";
+					username="NA";
 				}	
 				else {
 
@@ -785,10 +788,12 @@ public class RegularizedDeviceServiceImpl {
 					}
 
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.APPROVED.getCode());
+					regularizeDeviceDb.setRemark(null);
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
 					receiverUserType = "End User";
 					subFeature = SubFeatures.Approve;
 					txnId = regularizeDeviceDb.getTxnId();
+					enduserServiceImpl.updateImeiInVipList(regularizeDeviceDb.getEndUserDB(), username);
 				}else if(ceirActionRequest.getAction() == 1){
 					// Check if someone else taken the same action on consignment.
 					RegularizeDeviceDb regularizeDeviceDbTemp = regularizedDeviceDbRepository.getByTxnId(ceirActionRequest.getTxnId());
@@ -835,6 +840,7 @@ public class RegularizedDeviceServiceImpl {
 				{
 					WebActionDb webAction=new WebActionDb(Features.REGISTER_DEVICE,subFeature, 0, 
 							regularizeDeviceDb.getTxnId());
+					webAction.setSubFeature(WebActionDbSubFeature.REJECT.getName());
 					webActionDbRepository.save(webAction);
 					if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
 						emailUtil.saveNotification(rawMails);	

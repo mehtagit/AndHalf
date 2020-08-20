@@ -22,6 +22,7 @@ import com.gl.ceir.config.factory.impl.CustomerCareTypeApprove;
 import com.gl.ceir.config.factory.impl.CustomerCareVipList;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.repository.BlackListRepository;
+import com.gl.ceir.config.repository.BlacklistImeiDbRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.DeviceDuplicateDbRepository;
 import com.gl.ceir.config.repository.GreyListRepository;
@@ -116,6 +117,8 @@ public class CustomerCareFactory {
 	VipListRepository vipListRepository;
 	@Autowired
 	public GsmaBlacklistRepository gsmaBlackListRepository;
+	@Autowired
+	BlacklistImeiDbRepository blacklistImeiDbRepository;
 	
 	public CustomerCareTarget getObject(String name) {
 
@@ -168,7 +171,8 @@ public class CustomerCareFactory {
 		case Features.BLACK_LIST:
 			return blackListRepository;
 		case Features.GLOBAL_BLACKLIST:
-			 return gsmaBlacklistRepository;
+			return blacklistImeiDbRepository;
+//			 return gsmaBlacklistRepository;
 		case Features.GREY_LIST :
 			 return greyListRepository;
 		case Features.DUPLICATE:
@@ -208,7 +212,8 @@ public class CustomerCareFactory {
 		case 34:
 			return deviceDuplicateDbRepository;
 		case 36: 
-			return gsmaBlackListRepository;
+//			return gsmaBlackListRepository;
+			return blacklistImeiDbRepository;
 		}
 		return null;
 	}

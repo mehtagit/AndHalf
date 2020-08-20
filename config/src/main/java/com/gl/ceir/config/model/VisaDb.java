@@ -48,7 +48,7 @@ public class VisaDb implements Serializable {
 	private String visaNumber;
 	
 	@Column(length = 50)
-	@NotNull
+//	@NotNull
 	private String visaFileName;
 	
 	private String entryDateInCountry;
@@ -72,7 +72,7 @@ public class VisaDb implements Serializable {
 
 	}
 	
-	public VisaDb(@NotNull Integer visaType, String visaNumber, @NotNull String visaFileName, String entryDateInCountry,
+	public VisaDb(@NotNull Integer visaType, String visaNumber, String visaFileName, String entryDateInCountry,
 			Date visaExpiryDate, EndUserDB endUserDB) {
 		super();
 		this.visaType = visaType;

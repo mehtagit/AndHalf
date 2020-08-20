@@ -123,7 +123,8 @@ public class SystemConfigListServiceImpl {
 			User user = userRepository.getById(filterRequest.getUserId());
 
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), user.getUsername(), 0L, "System", 0L, 
-				Features.CONFIG_LIST, SubFeatures.VIEW, ""));
+					Features.FIELD_MANGEMENT, SubFeatures.VIEW, "","NA","System"));
+//				Features.CONFIG_LIST, SubFeatures.VIEW, ""));
 			/*
 			 * auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(),
 			 * user.getUsername(), 0L, "System", 0L, Features.FIELD_MANGEMENT,

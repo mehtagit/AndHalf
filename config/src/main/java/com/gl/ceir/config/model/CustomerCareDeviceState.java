@@ -13,7 +13,7 @@ public class CustomerCareDeviceState implements Serializable{
 	private String txnId;
 	private Integer featureId;
 	private String imei;
-	private Long msisdn;
+	private String msisdn;
 
 	public CustomerCareDeviceState() {}
 
@@ -66,11 +66,11 @@ public class CustomerCareDeviceState implements Serializable{
 	}
 	
 
-	public Long getMsisdn() {
+	public String getMsisdn() {
 		return msisdn;
 	}
 
-	public void setMsisdn(Long msisdn) {
+	public void setMsisdn(String msisdn) {
 		this.msisdn = msisdn;
 	}
 

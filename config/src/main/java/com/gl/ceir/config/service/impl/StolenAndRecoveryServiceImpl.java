@@ -324,16 +324,17 @@ public class StolenAndRecoveryServiceImpl {
 
 				// Operator type id for stolen request of registered by Ceir Admin.
 				if(Objects.nonNull(stolenandRecoveryMgmt.getOperatorTypeId())) {
-					if(stolenandRecoveryMgmt.getOperatorTypeId() == -1) 
-						stolenandRecoveryMgmt.setOperatorTypeIdInterp("CEIR Admin");
+					if(stolenandRecoveryMgmt.getOperatorTypeId() == -1)
+						stolenandRecoveryMgmt.setOperatorTypeIdInterp("NA");
+//						stolenandRecoveryMgmt.setOperatorTypeIdInterp("CEIR Admin");
 				}else {
-					stolenandRecoveryMgmt.setOperatorTypeIdInterp("");
+					stolenandRecoveryMgmt.setOperatorTypeIdInterp("NA");
 					logger.info("WARN : OperatorTypeId is null for [" + stolenandRecoveryMgmt + "]");
 				}
 			}
 
 			logger.info(stolenandRecoveryMgmtPage.getContent());
-			if(Objects.nonNull(filterRequest.getTxnId())) {
+			if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
 				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER, filterRequest.getRoleType(), filterRequest.getRequestType(),filterRequest.getFeatureId());
 			}else {
 				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
@@ -502,13 +503,17 @@ public class StolenAndRecoveryServiceImpl {
 
 			}
 		}else if(!"Lawful Agency".equalsIgnoreCase(filterRequest.getUserType()) 
-				&& !"Operator".equalsIgnoreCase(filterRequest.getUserType())) {
+				&& !"Operator".equalsIgnoreCase(filterRequest.getUserType()) && !"Operation".equalsIgnoreCase(filterRequest.getUserType())) {
 			if(Objects.nonNull(filterRequest.getUserId())) {
 				logger.info("Inside !Lawful Agency block.");
 				srsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 			}
 		}
 
+		if( "Operation".equalsIgnoreCase(filterRequest.getUserType()) ){
+			srsb.with(new SearchCriteria("roleType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+		}
+		
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			srsb.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
@@ -1622,15 +1627,15 @@ public class StolenAndRecoveryServiceImpl {
 
 	public boolean nothingInFilter(FilterRequest filterRequest) {
 		// Clean
-		if(filterRequest.getStartDate().isEmpty()) {
+		if(filterRequest.getStartDate().isEmpty() || filterRequest.getStartDate().equals("")) {
 			filterRequest.setStartDate(null);
 		}
 
-		if(filterRequest.getEndDate().isEmpty()) {
+		if(filterRequest.getEndDate().isEmpty() || filterRequest.getEndDate().equals("")) {
 			filterRequest.setEndDate(null);
 		}
 
-		if(filterRequest.getTxnId().isEmpty()) {
+		if(filterRequest.getTxnId().isEmpty() || filterRequest.getTxnId().equals("")) {
 			filterRequest.setTxnId(null);
 		}
 
@@ -1656,6 +1661,14 @@ public class StolenAndRecoveryServiceImpl {
 		}
 
 		if(Objects.nonNull(filterRequest.getConsignmentStatus()) ) {
+			return Boolean.FALSE;
+		}
+		
+		if(Objects.nonNull(filterRequest.getRequestType()) ) {
+			return Boolean.FALSE;
+		}
+		
+		if(Objects.nonNull(filterRequest.getSourceType()) ) {
 			return Boolean.FALSE;
 		}
 

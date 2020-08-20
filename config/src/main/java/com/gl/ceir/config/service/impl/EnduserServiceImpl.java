@@ -163,6 +163,8 @@ public class EnduserServiceImpl {
 			logger.info("data given: "+data);
 			String username="";
 			long userId=0;
+			if( Objects.nonNull(data.getUsername()))
+				username=data.getUsername();
 			if(data.getUserTypeId()!=17) {
 				username=data.getUsername();
 				userId=data.getUserId();
@@ -177,13 +179,21 @@ public class EnduserServiceImpl {
 			// End user is not registered with CEIR system.
 			if(Objects.nonNull(endUserDB)) {
 				List<RegularizeDeviceDb> regulaizedList=new ArrayList<RegularizeDeviceDb>();
-				if(Objects.nonNull(endUserDB.getRegularizeDeviceDbs()))
+				if(Objects.nonNull(endUserDB.getRegularizeDeviceDbs())) {
 					for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs()) {
 						regularizeData.setEndUserDB(new EndUserDB());
 						regulaizedList.add(regularizeData);
 					}
+				}
 				endUserDB.setRegularizeDeviceDbs(regulaizedList);
 				logger.info("End User with nid [" + data.getNid() + "] does exist.");
+				if( Objects.nonNull(endUserDB.getVisaUpdateDb()) && endUserDB.getVisaUpdateDb().size()>0) {
+					int lastVisaUpdate = endUserDB.getVisaUpdateDb().size() -1;
+					if( Objects.nonNull(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaNumber()) )
+						endUserDB.getVisaDb().get(0).setVisaNumber(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaNumber());
+					if( Objects.nonNull(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaExpiryDate()) )
+						endUserDB.getVisaDb().get(0).setVisaExpiryDate(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaExpiryDate());
+				}
 				return new GenricResponse(1, "End User does exist.", data.getNid(), endUserDB);
 			}else {
 				logger.info("End User with nid [" + data.getNid() + "] does not exist.");
@@ -476,7 +486,10 @@ public class EnduserServiceImpl {
 					//					visaDb.setVisaExpiryDate(latestVisa.getVisaExpiryDate());	
 
 					VisaDb OldVisa=visaDbs.get(0); 	
-					VisaUpdateDb visaUpdateDb=new VisaUpdateDb(OldVisa.getVisaType(), OldVisa.getVisaNumber(),
+//					VisaUpdateDb visaUpdateDb=new VisaUpdateDb(OldVisa.getVisaType(), OldVisa.getVisaNumber(),
+//							latestVisa.getVisaFileName(), OldVisa.getEntryDateInCountry(), latestVisa.getVisaExpiryDate(),
+//							0,endUserDB1,endUserDB.getTxnId(),endUserDB.getNid()); 
+					VisaUpdateDb visaUpdateDb=new VisaUpdateDb(OldVisa.getVisaType(), latestVisa.getVisaNumber(),
 							latestVisa.getVisaFileName(), OldVisa.getEntryDateInCountry(), latestVisa.getVisaExpiryDate(),
 							0,endUserDB1,endUserDB.getTxnId(),endUserDB.getNid()); 
 					String mailTag = "Update_Visa_Request";
@@ -651,9 +664,9 @@ public class EnduserServiceImpl {
 					mailTag = "END_USER_APPROVED_BY_CEIR_ADMIN"; 
 					receiverUserType = "End User";
 					endUserDB.setStatus(EndUserStatus.APPROVED.getCode());
-
+					endUserDB.setRejectedRemark(null);
 					// if user is VIP, add imei's of user in vip_list table.
-					updateImeiInVipList(endUserDB);
+					updateImeiInVipList(endUserDB,"NA");
 
 				}else {
 					action = SubFeatures.REJECT;
@@ -691,30 +704,36 @@ public class EnduserServiceImpl {
 		}
 	}
 
-	private void updateImeiInVipList(EndUserDB endUserDB) {
+	public void updateImeiInVipList(EndUserDB endUserDB, String approvedBy ) {
 		if("Y".equals(endUserDB.getIsVip())) {
 			if(endUserDB.getRegularizeDeviceDbs().isEmpty()) {
 				logger.info("End User is VIP but no device is registered for him/her with NID/Passport. ["+endUserDB.getNid()+"]");
 			}else {
 				RegularizeDeviceDb regularizeDeviceDb = endUserDB.getRegularizeDeviceDbs().get(0);
 
+				logger.info("Update IMEI in VIP list for device:["+regularizeDeviceDb.toString()+"]");
 				List<VipList> vipsImeiList = new ArrayList<>(4);
 				if(Objects.nonNull(regularizeDeviceDb.getFirstImei())) 
-					vipsImeiList.add(new VipList(regularizeDeviceDb.getFirstImei(), Long.parseLong(endUserDB.getPhoneNo())));
+					vipsImeiList.add(new VipList(regularizeDeviceDb.getFirstImei(), endUserDB.getPhoneNo(), endUserDB.getNid(),
+							approvedBy, endUserDB.getTxnId()));
 
 				if(Objects.nonNull(regularizeDeviceDb.getSecondImei()))
-					vipsImeiList.add(new VipList(regularizeDeviceDb.getSecondImei(), Long.parseLong(endUserDB.getPhoneNo())));
+					vipsImeiList.add(new VipList(regularizeDeviceDb.getSecondImei(), endUserDB.getPhoneNo(), endUserDB.getNid(),
+							approvedBy, endUserDB.getTxnId()));
 
 				if(Objects.nonNull(regularizeDeviceDb.getThirdImei()))
-					vipsImeiList.add(new VipList(regularizeDeviceDb.getThirdImei(), Long.parseLong(endUserDB.getPhoneNo())));
+					vipsImeiList.add(new VipList(regularizeDeviceDb.getThirdImei(), endUserDB.getPhoneNo(), endUserDB.getNid(),
+							approvedBy, endUserDB.getTxnId()));
 
 				if(Objects.nonNull(regularizeDeviceDb.getFourthImei()))
-					vipsImeiList.add(new VipList(regularizeDeviceDb.getFourthImei(), Long.parseLong(endUserDB.getPhoneNo())));
-
+					vipsImeiList.add(new VipList(regularizeDeviceDb.getFourthImei(), endUserDB.getPhoneNo(), endUserDB.getNid(),
+							approvedBy, endUserDB.getTxnId()));
+				logger.info("Going to save VIP list.");
 				vipListRepository.saveAll(vipsImeiList);
 			}
 		}else {
 			// user is not VIP, so nothing to do with table vip_list table.
+			logger.info("User is not VIP, so nothing to do with table vip_list table.");
 		}
 	}
 
@@ -1118,6 +1137,8 @@ public class EnduserServiceImpl {
 				if(Objects.nonNull(visa.getEndUserDBData())) {
 					visa.setUserId(visa.getEndUserDBData().getId());
 				}
+				if( Objects.isNull(visa.getVisaNumber()))
+					visa.setVisaNumber("NA");
 			}
 			return page;
 
