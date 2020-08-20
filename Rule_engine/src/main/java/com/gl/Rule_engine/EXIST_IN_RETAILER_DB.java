@@ -38,7 +38,7 @@ class EXIST_IN_RETAILER_DB {
                     } catch (Exception e) {
                          logger.error("");
                     }
-                    if (!res2.equalsIgnoreCase("0")) {
+                    if (!res2.equalsIgnoreCase("No")) {
                          res = "Yes";
                     } else {
                          res = "No";
