@@ -301,7 +301,7 @@ position: fixed;
 														oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											            oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 														title= "<spring:message code="validation.selectFieldMsg" />"
-														 style="padding-left: 0;" required></select>
+														 style="padding-left: 0;"></select>
 										</div>
 										<div class="input-field col s12 m6" id="entryCountryDiv" style="display: none;">
 												<input type="text" id="datepicker"
