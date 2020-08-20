@@ -1386,6 +1386,9 @@ function historyRecord(txnID){
 				"bInfo" : true,
 				"scrollX": true,
 				"scrolly": true,
+				"oLanguage": {  
+					"sUrl": langFile  
+				},
 				pageLength : 3,
 				"data": dataObject.data,
 				"columns": dataObject.columns

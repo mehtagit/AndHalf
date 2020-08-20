@@ -247,7 +247,7 @@ select {
 																placeholder="<spring:message code="registration.uploadnid/passportimage" />"
 																id="singleStolenFileName" title=""> <a href="#"
 																id="PassportNidLink" class="imgPreviewLink"
-																style="display: none;">Preview</a>
+																style="display: none;"><spring:message code="input.preView" /></a>
 														</div>
 													</div>
 
@@ -863,7 +863,7 @@ onclick="_Services._selectstartDate()"></i></span>
 																	placeholder=""
 																	id="uploadFirSingleName" title=""
 																	data-original-title=""> <a id="firImageLink"
-																	class="imgPreviewLink" style="display: none;">Preview</a>
+																	class="imgPreviewLink" style="display: none;"><spring:message code="input.preView" /></a>
 															</div>
 														</div>
 

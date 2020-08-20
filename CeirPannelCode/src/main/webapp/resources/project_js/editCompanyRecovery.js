@@ -11,7 +11,7 @@ $(document).ready(function() {
 function viewIndivisualStolen()
 {
 
-
+	 $('div#initialloader').fadeIn('fast');
 var txnid=$('#existingStolenTxnId').val();
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
@@ -54,6 +54,8 @@ headers:
 		if(response.rejectedRemark=='' || response.rejectedRemark==null){
 			$('#bulkRecoveryRemarkReject').val("NA");	
 		}
+		
+		$('div#initialloader').delay(300).fadeOut('slow');
 		//$('#bulkRecoveryFileLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.fileName+'","'+response.txnId+'")');
 		
 		},

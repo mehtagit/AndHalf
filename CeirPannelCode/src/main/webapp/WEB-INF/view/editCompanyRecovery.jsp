@@ -128,6 +128,7 @@
 
         <!-- START CONTENT -->
             <section id="content">
+            	 <div id="initialloader"></div>
                 <!--start container-->
                 <div class="container">
                     <div class="section">
@@ -326,7 +327,7 @@
                                                         <div class="file-path-wrapper">
                                                             <input class="file-path validate" type="text" id="bulkRecoveryFileName" placeholder="<spring:message code="registration.uploadfile" />"
                                                                  title="Please upload your photo">
-                                                                 <a href="#" id="bulkRecoveryFileLink" style="display: none;">Preview</a>
+                                                                 <a href="#" id="bulkRecoveryFileLink" style="display: none;"><spring:message code="input.preView" /></a>
                                                         </div>
                                                     </div>
                                                     

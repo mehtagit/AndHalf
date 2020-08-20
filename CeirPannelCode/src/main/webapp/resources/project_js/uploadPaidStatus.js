@@ -678,6 +678,9 @@ function historytable(url,dataUrl){
 	if(lang=='km'){
 		var langFile="./resources/i18n/khmer_datatable.json";
 	}
+	else if(lang=='en'){
+		var langFile='./resources/i18n/english_datatable.json';
+	}
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -1757,6 +1760,9 @@ function deptImageValidation() {
 		if(lang=='km'){
 			var langFile='../resources/i18n/khmer_datatable.json';
 		}
+		else if(lang=='en'){
+			var langFile='./resources/i18n/english_datatable.json';
+		}
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajaxSetup({
@@ -1781,6 +1787,9 @@ function deptImageValidation() {
 					"bFilter" : false,
 					"scrollX": true,
 					"bInfo" : true,
+					"oLanguage": {  
+						"sUrl": langFile  
+					},	
 					"bSearchable" : true,
 					pageLength : 3,
 					 "data": dataObject.data,

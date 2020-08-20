@@ -224,7 +224,7 @@ input[type='search'] {
 													<div class="file-path-wrapper">
 														<input class="file-path validate responsive-file-div" id="csvUploadFileName" value="${viewInformation.endUserDB.passportFileName}"
 															type="text">
-														<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${viewInformation.endUserDB.passportFileName}','${viewInformation.endUserDB.txnId}','${viewInformation.endUserDB.docTypeInterp}')">Preview</a>
+														<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${viewInformation.endUserDB.passportFileName}','${viewInformation.endUserDB.txnId}','${viewInformation.endUserDB.docTypeInterp}')"><spring:message code="input.preView" /></a>
 													</div>
 												</div>
 											</div>
@@ -475,7 +475,7 @@ input[type='search'] {
 												<div class="file-path-wrapper">
 													<input class="file-path validate" type="text" readonly="readonly" value="${viewInformation.endUserDB.userDepartment.departmentFilename}"
 													  id="endUSerNidaPlaceholder">
-													<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${viewInformation.endUserDB.userDepartment.departmentFilename}','${viewInformation.endUserDB.txnId}')">Preview</a>	
+													<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${viewInformation.endUserDB.userDepartment.departmentFilename}','${viewInformation.endUserDB.txnId}')"><spring:message code="input.preView" /></a>	
 												</div>
 											</div>
 										</div>
@@ -554,7 +554,7 @@ input[type='search'] {
 												<div class="file-path-wrapper">
 													<input class="file-path validate" type="text" value="${list.visaFileName}"  readonly="readonly"
 														id="ensUserVisaPlaceHolder">
-													<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${list.visaFileName}','${viewInformation.endUserDB.txnId}')">Preview</a>
+													<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${list.visaFileName}','${viewInformation.endUserDB.txnId}')"><spring:message code="input.preView" /></a>
 														
 														
 												</div>

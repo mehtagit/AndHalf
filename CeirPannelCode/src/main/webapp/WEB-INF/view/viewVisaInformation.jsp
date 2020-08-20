@@ -217,7 +217,7 @@ input[type='search'] {
 													<div class="file-path-wrapper">
 														<input class="file-path validate responsive-file-div" id="csvUploadFileName" readonly="readonly" value="${viewInformation.data.passportFileName}"
 															type="text">
-														<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${viewInformation.data.passportFileName}','${viewInformation.data.txnId}','${viewInformation.data.docTypeInterp}')">Preview</a>
+														<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${viewInformation.data.passportFileName}','${viewInformation.data.txnId}','${viewInformation.data.docTypeInterp}')"><spring:message code="input.preView" /></a>
 													<input type="text" style="display: none" id="redirectionTxnid" value="${txnId}">
 													</div>
 												</div>
@@ -478,7 +478,7 @@ input[type='search'] {
 												<div class="file-path-wrapper">
 													<input class="file-path validate" type="text" readonly="readonly" value="${viewInformation.data.userDepartment.departmentFilename}"
 													  id="endUSerNidaPlaceholder">
-													<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${viewInformation.data.userDepartment.departmentFilename}','${viewInformation.data.txnId}')">Preview</a>	
+													<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${viewInformation.data.userDepartment.departmentFilename}','${viewInformation.data.txnId}')"><spring:message code="input.preView" /></a>	
 												</div>
 											</div>
 										</div>
@@ -555,7 +555,7 @@ input[type='search'] {
 												<div class="file-path-wrapper">
 													<input class="file-path validate" type="text" value="${list.visaFileName}"  readonly="readonly"
 														id="ensUserVisaPlaceHolder">
-													<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${list.visaFileName}','${viewInformation.data.txnId}')">Preview</a>
+													<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${list.visaFileName}','${viewInformation.data.txnId}')"><spring:message code="input.preView" /></a>
 														
 														
 												</div>
