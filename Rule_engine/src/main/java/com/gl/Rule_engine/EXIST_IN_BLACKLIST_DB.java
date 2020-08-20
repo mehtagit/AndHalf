@@ -8,9 +8,7 @@ package com.gl.Rule_engine;
 import java.sql.Connection;
 import java.io.BufferedWriter;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
 import org.apache.log4j.Logger;
 
 /**
@@ -30,7 +28,7 @@ public class EXIST_IN_BLACKLIST_DB {
 
                stmt2 = conn.createStatement();
                //      union all select count(imei) as countd from greylist_db  where imei  =  '" + args[3] + "' 
-               String qur = " select count(imei) from black_list  where imei  =   '" + args[3] + "'  ";
+               String qur = " select count(imei) from blacklist  where imei  =   '" + args[3] + "'  ";
                logger.debug("Query:  " + qur);
 
                result1 = stmt2.executeQuery(qur);
