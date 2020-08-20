@@ -57,7 +57,7 @@ class DUPLICATE_USAGE_CHECK {
                     }
                     result3.close();
                     stmt3.close();
-                    logger.debug("device_duplicatedb count:" + res3);
+                    logger.debug("device_duplicate_db count:" + res3);
                     int ttl = res1 + res3;
                     logger.debug("Total  count: " + ttl);
                     stmt4 = conn.createStatement();

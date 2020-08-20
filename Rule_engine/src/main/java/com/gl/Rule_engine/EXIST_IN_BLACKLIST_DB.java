@@ -28,7 +28,7 @@ public class EXIST_IN_BLACKLIST_DB {
 
                stmt2 = conn.createStatement();
                //      union all select count(imei) as countd from greylist_db  where imei  =  '" + args[3] + "' 
-               String qur = " select count(imei) from blacklist  where imei  =   '" + args[3] + "'  ";
+               String qur = " select count(imei) from black_list  where imei  =   '" + args[3] + "'  ";
                logger.debug("Query:  " + qur);
 
                result1 = stmt2.executeQuery(qur);

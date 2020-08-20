@@ -21,7 +21,7 @@ public class IMEI_NULL {
         String res = "";
         try {
             if ((args[3] == null) || args[3] == "") {
-                res = "No";
+                res = "Yes";
             } else {
                 res = "No";
             }

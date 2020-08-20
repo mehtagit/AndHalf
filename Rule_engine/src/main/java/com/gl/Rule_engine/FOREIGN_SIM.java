@@ -18,7 +18,7 @@ class FOREIGN_SIM {
      static final Logger logger = Logger.getLogger(FOREIGN_SIM.class);
 
      static String executeRule(String[] args, Connection conn) {
-          String res = null;
+          String res = "No";
           try {
                String msisdn = args[12].startsWith("19") ? args[12].substring(2) : args[12];
                if (msisdn.startsWith("855")) {
@@ -41,10 +41,10 @@ class FOREIGN_SIM {
                     case "Allow": {
                          String msisdn = args[12].startsWith("19") ? args[12].substring(2) : args[12];
                          logger.debug("Action is Allow");
-                         ResultSet rs1 = null;
-                         ResultSet rs = null;
-                         Statement stmt = null;
-                         try {
+//                         ResultSet rs1 = null;
+//                         ResultSet rs = null;
+//                         Statement stmt = null;
+//                         try {
 
 //                              boolean isOracle = conn.toString().contains("oracle");
 //                              String dateFunction = Util.defaultDate(isOracle);
@@ -70,13 +70,13 @@ class FOREIGN_SIM {
 ////                                       stmt = conn.createStatement();     // uncomment this if not working 
 //                              rs = stmt.executeQuery(my_query);
 
-                         } catch (Exception e) {
-                              logger.error("Error e " + e);
-                         } finally {
-                              rs.close();
-                              rs1.close();
-                              stmt.close();
-                         }
+//                         } catch (Exception e) {
+//                              logger.error("Error e " + e);
+//                         } finally {
+//                              rs.close();
+//                              rs1.close();
+//                              stmt.close();
+//                         }
 
                     }
                     break;
@@ -140,7 +140,7 @@ class FOREIGN_SIM {
 
                return "Success";
           } catch (Exception e) {
-               logger.debug(" Error " + e);
+                logger.debug("Errer " + e);
                return "Failure";
           }
      }
