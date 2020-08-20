@@ -62,7 +62,7 @@
 
 </head>
 
-<body data-roleType="${usertype}" data-userTypeID="${usertypeId}" 
+<body data-id="8" data-roleType="${usertype}" data-userTypeID="${usertypeId}" 
 data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" 
 data-stolenselected-roleType="${stolenselectedUserTypeId}"
 data-session-id="${not empty param.id ? param.id : 'null'}"

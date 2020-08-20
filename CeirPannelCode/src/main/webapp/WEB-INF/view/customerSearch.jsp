@@ -194,7 +194,7 @@ section {
 
  <div class="card-panel" style="    height: 200px;">
                 <div class="container-fluid pageHeader">
-                  <p class="PageHeading">Search</p>
+                  <p class="PageHeading"><spring:message code="modal.header.Search" /></p>
                   <!-- <a href="createConsignment.html" class="boton right">Register Consignment</a> -->
                 </div>
 
@@ -207,30 +207,30 @@ section {
                            
                             
                             <div class="col s12 m3 l3">
-                              <label for="deviceIdType">Device ID Type <span class="star">*</span></label>
+                              <label for="deviceIdType"><spring:message code="select.deviceIDType" /> <span class="star">*</span></label>
                               <select class="browser-default" id="deviceType" style="height: 30px" 
                               					
 												required>
-                                  <option value=""  selected>Device ID Type</option>
+                                  <option value=""  selected><spring:message code="select.deviceIDType" /></option>
                               </select>
                           </div>
                             
                             <div class="input-field col s12 m3 l3">
                               <input type="text" name="IMEI" id="imei" maxlength="16" pattern="[0-9\s]{15,16}" value="" required/>
                               <p id="errorMsgOnModal" class="deviceErrorTitle"></p>
-                              <label for="imei" >IMEI<span class="star">*</span></label>
+                              <label for="imei" ><spring:message code="input.imei" /><span class="star">*</span></label>
                             </div>
                             
                              <div class="input-field col s12 m3 l3">
                               <input type="text" name="MSISDN" maxlength="15" id="msisdn" pattern="[0-9]{7,15}" 
                               oninput="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');" 
                               oninvalid="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');">
-                              <label for="MSISDN" >MSISDN</label>
+                              <label for="MSISDN" ><spring:message code="input.msisdn" /></label>
                             </div>
                             
                             <div class="input-field col s12 m3 l3">
                               <button class="btn " type="submit"><spring:message code="button.submit" /></button>
-                              <a onclick="clearFields()" class="btn" style="margin-left: 10px;">Clear</a>
+                              <a onclick="clearFields()" class="btn" style="margin-left: 10px;"><spring:message code="button.clear" /></a>
                             </div>
                           </div>
                         </div>

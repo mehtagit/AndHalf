@@ -48,6 +48,7 @@ public class ReportController {
 		ModelAndView modelAndView = new ModelAndView();
 		if("other".equals(via)) {
 			modelAndView.setViewName("viewReport");
+			modelAndView.addObject("tableName",tableName);
 		}
 		else {
 			modelAndView.setViewName("selectReport");
