@@ -30,7 +30,7 @@ class EXISTS_IN_TYPE_APPROVED_DB {
           try {
                stmt2 = conn.createStatement();  // state = 6
                result1 = stmt2.executeQuery("select count(tac) as cnt  from type_approved_db where tac='" + args[3].substring(0, 8) + "'     ");   //and    status = 6
-               logger.debug("select count(tac) as cnt  from type_approved_db where tac='" + args[3].substring(0, 8) + "' ");
+               logger.debug("select count(tacs) as cnt  from type_approved_db where tac='" + args[3].substring(0, 8) + "' ");
                int res1 = 0;
 
                while (result1.next()) {
