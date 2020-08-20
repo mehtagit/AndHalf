@@ -43,7 +43,7 @@ class SAME_OPERATOR_UNBLOCK {
                 logger.error("opr1 " + e);
             }
 
-            qury = " select OPERATOR_TYPE_ID from stolenand_recovery_mgmt where  TXN_ID =  '" + args[14] + "' ";
+            qury = " select OPERATOR_TYPE_ID from stolen_and_recovery_mgmt where  TXN_ID =  '" + args[14] + "' ";
             result1 = stmt2.executeQuery(qury);
             logger.debug(qury);
             try {
