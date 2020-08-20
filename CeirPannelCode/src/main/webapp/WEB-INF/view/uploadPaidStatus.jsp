@@ -349,7 +349,7 @@ position: fixed;
 														oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											            oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 														title= "<spring:message code="validation.selectFieldMsg" />"
-														 style="padding-left: 0;" required></select>
+														 style="padding-left: 0;"></select>
 												 <%-- <label for="nationality" class=""><spring:message
 													code="input.Nationality" /> <span class="star">*</span></label> --%>
 										</div>

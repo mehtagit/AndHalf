@@ -7,8 +7,26 @@
 
 		window.location.assign("raiseAgrievance?reportType="+type+"&lang="+lang);			
 		}); 
+	
+	$('#langlistTrack').on('change', function() {
+		lang=$('#langlistTrack').val() == 'km' ? 'km' : 'en';
+		var url_string = window.location.href;
+		var url = new URL(url_string);
+		var type = url.searchParams.get("reportType");
 
+		window.location.assign("raiseAgrievance?reportType="+type+"&lang="+lang);			
+		}); 
+	
+	$('#langlistTable').on('change', function() {
+		lang=$('#langlistTable').val() == 'km' ? 'km' : 'en';
+		var url_string = window.location.href;
+		var url = new URL(url_string);
+		var type = url.searchParams.get("reportType");
 
+		window.location.assign("raiseAgrievance?reportType="+type+"&lang="+lang);			
+		}); 
+
+	
 	
 	
 	
