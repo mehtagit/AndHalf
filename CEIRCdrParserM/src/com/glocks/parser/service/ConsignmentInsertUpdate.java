@@ -66,8 +66,7 @@ public class ConsignmentInsertUpdate {
           String startTime = sdf1.format(new Date());
 
           String period = "";
-          int parser_base_limit = 0;
-          int old_sno = 0;
+//          int parser_base_limit = 0;
           int update_sno = 0;
           LogWriter logWriter = new LogWriter();
           String logPath = logWriter.getLogPath();
@@ -126,12 +125,10 @@ public class ConsignmentInsertUpdate {
                     return;
                }   // state 3 End
                stolnRcvryDetails.put("operator", operator);
-               ResultSet my_result_set = cEIRFeatureFileParser.operatorDetails(conn, operator);
-               if (my_result_set.next()) {
-                    parser_base_limit = my_result_set.getInt("split_upload_set_no");
-                    old_sno = my_result_set.getInt("last_upload_sno");
-               }
-               // query = "select * from "+operator+"_raw where sno>"+old_sno+" and             // status='Init' order by sno asc FETCH FIRST "+parser_base_limit+" ROWS WITH             // TIES ";
+//               ResultSet my_result_set = cEIRFeatureFileParser.operatorDetails(conn, operator);
+//               if (my_result_set.next()) {
+//                    parser_base_limit = my_result_set.getInt("split_upload_set_no");
+//               }
                query = "select * from " + operator + "_raw where   txn_id='" + txn_id + "' and status='Init' order by sno asc ";
                stmt = conn.createStatement();
                logger.info("Query.. " + query);
@@ -196,9 +193,9 @@ public class ConsignmentInsertUpdate {
 
                     update_sno = Integer.parseInt(rs.getString("sno"));
                }                 // END While 
-               if (update_sno != 0) {
-                    cEIRFeatureFileParser.updateRawLastSno(conn, operator, update_sno);
-               }
+//               if (update_sno != 0) {
+//                    cEIRFeatureFileParser.updateRawLastSno(conn, operator, update_sno);
+//               }
                logger.info("Count error.. " + countError + " , Total imei in mgmt db .. ");
                String error_file_path = errorFilePath + txn_id + "/" + txn_id + "_error.csv";
                logger.info("CountError(if 0: Process Pass  )  -- " + countError);
@@ -552,6 +549,11 @@ public class ConsignmentInsertUpdate {
      }
 
 }
+
+
+
+
+
 
 
 

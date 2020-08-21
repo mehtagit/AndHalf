@@ -35,7 +35,7 @@ public class CEIRFeatureFileParser {
                     ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 3, featurers.getString("feature"), featurers.getString("sub_feature"));  // update web_action
                     logger.info("  webACtion 3 don3e ");
                     if (featurers.getString("feature").equalsIgnoreCase("Register Device")) {
-                         logger.info("  Register Device" + featurers.getString("feature"));
+                         logger.info("  Register Device::  " + featurers.getString("feature"));
                          if ((featurers.getString("sub_feature").equalsIgnoreCase("Register")) || (featurers.getString("sub_feature").equalsIgnoreCase("Add Device"))) {     //'Add Device'
                             ceirfunction.updateStatusOfRegularisedDvc(conn,  featurers.getString("txn_id")); 
                               ceirfunction.UpdateStatusViaApi(conn, featurers.getString("txn_id"), 2, featurers.getString("feature"));
@@ -45,7 +45,8 @@ public class CEIRFeatureFileParser {
                               ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 4, featurers.getString("feature"), featurers.getString("sub_feature")); // update web_action_db           
                               break;
                          }
-                    } else if (featurers.getString("feature").equalsIgnoreCase("Update Visa")) {
+                    }
+                    else if (featurers.getString("feature").equalsIgnoreCase("Update Visa")) {
                          ceirfunction.UpdateStatusViaApi(conn, featurers.getString("txn_id"), 2, featurers.getString("feature"));
                          ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 4, featurers.getString("feature"), featurers.getString("sub_feature")); // update web_action_db           
                          break;
@@ -447,19 +448,19 @@ public class CEIRFeatureFileParser {
           return rule_details;
      }
 
-     public static ResultSet operatorDetails(Connection conn, String operator) {
-          Statement stmt = null;
-          ResultSet rs = null;
-          String query = null;
-          try {
-               query = "select * from rep_schedule_config_db where operator='" + operator + "'";
-               stmt = conn.createStatement();
-               return rs = stmt.executeQuery(query);
-          } catch (Exception e) {
-               logger.info("" + e);
-          }
-          return rs;
-     }
+//     public static ResultSet operatorDetails(Connection conn, String operator) {
+//          Statement stmt = null;
+//          ResultSet rs = null;
+//          String query = null;
+//          try {
+//               query = "select * from re p_schedule_config_db where operator='" + operator + "'";
+//               stmt = conn.createStatement();
+//               return rs = stmt.executeQuery(query);
+//          } catch (Exception e) {
+//               logger.info("" + e);
+//          }
+//          return rs;
+//     }
 
      public static void updateLastStatuSno(Connection conn, String operator, int id, int limit) {
           String query = null;
@@ -482,26 +483,25 @@ public class CEIRFeatureFileParser {
           }
      }
 
-     public static void updateRawLastSno(Connection conn, String operator, int sno) {
-          String query = null;
-          Statement stmt = null;
-          query = "update rep_schedule_config_db set last_upload_sno=" + sno + " where operator='" + operator + "'";
-          logger.info(" update rep_schedule_config_db .. " + query);
-          try {
-               stmt = conn.createStatement();
-               stmt.executeUpdate(query);
-               conn.commit();
-          } catch (SQLException e) {
-               logger.error("Error.." + e);
-          } finally {
-               try {
-                    stmt.close();
-               } catch (SQLException e) {
-                    // TODO Auto-generated catch block
-                    logger.error("Error.." + e);
-               }
-          }
-     }
+//     public static void updateRawLastSno(Connection conn, String operator, int sno) {
+//          String query = null;
+//          Statement stmt = null;
+//          query = "update re p_schedule_config_db set last_upload_sno=" + sno + " where operator='" + operator + "'";
+//           try {
+//               stmt = conn.createStatement();
+//               stmt.executeUpdate(query);
+//               conn.commit();
+//          } catch (SQLException e) {
+//               logger.error("Error.." + e);
+//          } finally {
+//               try {
+//                    stmt.close();
+//               } catch (SQLException e) {
+//                    // TODO Auto-generated catch block
+//                    logger.error("Error.." + e);
+//               }
+//          }
+//     }
 
      public static int imeiCountfromRawTable(Connection conn, String txn_id, String operator) {
           int rsslt = 0;
@@ -532,6 +532,12 @@ public class CEIRFeatureFileParser {
      }
 
 }
+
+
+
+
+
+
 
 
 

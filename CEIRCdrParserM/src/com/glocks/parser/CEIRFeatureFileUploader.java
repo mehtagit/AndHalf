@@ -508,7 +508,7 @@ public class CEIRFeatureFileUploader {
      }
 }
 
-//                ResultSet my_result_set = ceir_parser_main.operatorDetails(conn, file_details.getString("feature"));     //select * from rep_schedule_config_db
+//                ResultSet my_result_set = ceir_parser_main.operatorDetails(conn, file_details.getString("feature"));     //select * from re p_schedule_config_db
 //                if (my_result_set.next()) {
 //                    raw_upload_set_no = my_result_set.getInt("raw_upload_set_no");
 //                }
@@ -524,6 +524,7 @@ public class CEIRFeatureFileUploader {
 //                    logger.info("File not exists.... ");
 //                    hfr.readFeatureWithoutFile(conn, file_details.getString("feature"), raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
 //                }
+
 
 
 

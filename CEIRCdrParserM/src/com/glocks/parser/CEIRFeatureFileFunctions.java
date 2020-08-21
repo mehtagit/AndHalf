@@ -437,8 +437,8 @@ public class CEIRFeatureFileFunctions {
 
                               dvcDbCounter = new ConsignmentInsertUpdate().getCounterFromDeviceDb(conn, ValImei);
                               if (dvcDbCounter == 0) {
-                                   device_db_query = "insert  into device_db( counter ,  CREATED_ON , modified_on , DEVICE_ID_TYPE, DEVICE_STATUS,DEVICE_TYPE,IMEI_ESN_MEID,MULTIPLE_SIM_STATUS,FEATURE_NAME ,TXN_ID,user_id , period ) "
-                                           + "values (  1 , " + dateFunction + " , " + dateFunction + " ,  '" + rs.getString("DEVICE_ID_TYPE") + "' , '" + rs.getString("DEVICE_STATUS") + "', '" + ((rs.getString("DEVICE_TYPE") == null) ? "NA" : rs.getString("DEVICE_TYPE")) + "' , '" + rs.getString("" + ValImei + "") + "' , '" + rs.getString("MULTI_SIM_STATUS") + "' , 'Register Device' , '" + rs.getString("TXN_ID") + "','" + rs.getString("TAX_COLLECTED_BY") + "' , '" + period + "'     )";
+                                   device_db_query = "insert  into device_db( counter ,  CREATED_ON , modified_on , DEVICE_ID_TYPE, DEVICE_STATUS,DEVICE_TYPE,IMEI_ESN_MEID,MULTIPLE_SIM_STATUS,FEATURE_NAME ,TXN_ID,period ) "
+                                           + "values (  1 , " + dateFunction + " , " + dateFunction + " ,  '" + rs.getString("DEVICE_ID_TYPE") + "' , '" + rs.getString("DEVICE_STATUS") + "', '" + ((rs.getString("DEVICE_TYPE") == null) ? "NA" : rs.getString("DEVICE_TYPE")) + "' , '" + rs.getString("" + ValImei + "") + "' , '" + rs.getString("MULTI_SIM_STATUS") + "' , 'Register Device' , '" + rs.getString("TXN_ID") + "', '" + period + "'     )";
                               } else {
                                    device_db_query = "update  device_db set counter = " + (dvcDbCounter + 1) + " where imei_esn_meid =   '" + rs.getString("" + ValImei + "") + "'   ";
                               }
@@ -476,7 +476,6 @@ public class CEIRFeatureFileFunctions {
                     String qury = " update device_usage_db set action = 'ALLOWED' where IMEI =  '" + ValImei + "'  and  action = 'USER_REG' ";
                     logger.info("  " + qury);
                     stmt.executeUpdate(qury);
-
                }
           } catch (Exception e) {
                logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
@@ -519,6 +518,7 @@ public class CEIRFeatureFileFunctions {
           ResultSet rs = null;
           String query = null;
           try {
+               stmt = conn.createStatement();
                String ValImei = "";
                for (int i = 1; i < 5; i++) {
                     if (i == 1) {
@@ -533,25 +533,27 @@ public class CEIRFeatureFileFunctions {
                     if (i == 4) {
                          ValImei = "fourth_imei";
                     }
-                    query = "select * from regularize_device_db  where  txn_id = '" + txn_id + "'  and  " + ValImei + " is not null  and TAX_PAY_STATUS =  2 ";                         /////
+                    query = "select * from regularize_device_db  where  txn_id = '" + txn_id + "'  and  " + ValImei + " is not null  and TAX_PAID_STATUS =  2 ";                         /////
+                 logger.info("" + query);
                     rs = stmt.executeQuery(query);
                     while (rs.next()) {
+                         logger.debug("..");
                          markUserRegtoAllowedActiveDb(conn, rs.getString("" + ValImei + ""));
+                          logger.debug("....");
                          removeImeiFromGreyBlackDb(conn, rs.getString("" + ValImei + ""));
-
                     }
-
                }
                conn.commit();
           } catch (Exception e) {
                logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
           } finally {
                try {
+                     logger.debug("final stat ") ;
                     rs.close();
                     stmt.close();
                } catch (SQLException ex) {
-                    java.util.logging.Logger.getLogger(CEIRFeatureFileFunctions.class.getName()).log(Level.SEVERE, null, ex);
-               }
+                   logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + ex);
+             }
           }
      }
 
@@ -660,6 +662,18 @@ public class CEIRFeatureFileFunctions {
 //          }
 //
 //     }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

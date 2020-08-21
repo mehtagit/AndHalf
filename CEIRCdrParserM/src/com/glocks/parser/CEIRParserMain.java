@@ -133,7 +133,7 @@ public class CEIRParserMain {
           String failed_rule_name = null;
           String failed_rule_id = null;
           String finalAction = "";
-          int old_sno = 0;
+//          int old_sno = 0;
           int update_sno = 0;
           int usageInsert = 0;
           int usageUpdate = 0;
@@ -147,7 +147,7 @@ public class CEIRParserMain {
           String fileName = null;
           File file = null;
           String log = null;
-          int split_upload_batch_no = 0;
+//          int split_upload_batch_no = 0;
           int split_upload_batch_count = 0;
           BufferedWriter bw1 = null;
           try {
@@ -163,12 +163,12 @@ public class CEIRParserMain {
                bw1 = new BufferedWriter(new OutputStreamWriter(fos1));
 
                logger.debug(" select * from rep_schedule_config_db where operator ='" + operator + "' ");
-               ResultSet my_result_set = operatorDetails(conn, operator);
-               if (my_result_set.next()) {
-                    old_sno = my_result_set.getInt("last_upload_sno");
-                    split_upload_batch_no = my_result_set.getInt("split_upload_batch_no");
-               }
-               logger.debug(" split_upload_batch_no .." + split_upload_batch_no);
+//               ResultSet my_result_set = operatorDetails(conn, operator);
+//               if (my_result_set.next()) {
+//                    old_sno = my_result_set.getInt("last_upload_sno");
+//                    split_upload_batch_no = my_result_set.getInt("split_upload_batch_no");
+//               }
+            
                Date p2Starttime = new Date();
                query = "select * from " + operator + "_raw where  status='Init'  and file_name = (select file_name from   " + operator + "_raw where  status='Init' order by sno asc  fetch next 1 rows only)  order by sno    asc ";
                stmt = conn.createStatement();
@@ -557,20 +557,19 @@ public class CEIRParserMain {
           return rule_details;
      }
 
-     static ResultSet operatorDetails(Connection conn, String operator) {
-//              logger.info("operatorDetails...>");
-          Statement stmt = null;
-          ResultSet rs = null;
-          String query = null;
-          try {
-               query = "select * from rep_schedule_config_db where operator='" + operator + "'";
-               stmt = conn.createStatement();
-               return rs = stmt.executeQuery(query);
-          } catch (Exception e) {
-               logger.error("  Error operatorDetails::" + e);
-          }
-          return rs;
-     }
+//     static ResultSet operatorDetails(Connection conn, String operator) {
+//          Statement stmt = null;
+//          ResultSet rs = null;
+//          String query = null;
+//          try {
+//               query = "select * from r ep_schedule_config_db where operator='" + operator + "'";
+//               stmt = conn.createStatement();
+//               return rs = stmt.executeQuery(query);
+//          } catch (Exception e) {
+//               logger.error("  Error operatorDetails::" + e);
+//          }
+//          return rs;
+//     }
 
      private static void updateLastStatuSno(Connection conn, String operator, int id, int limit) {
           String query = null;
@@ -664,6 +663,13 @@ public class CEIRParserMain {
      }
 
 }
+
+
+
+
+
+
+
 
 
 
