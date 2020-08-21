@@ -70,6 +70,7 @@ import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.UpdateVisaRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.VipListRepository;
+import com.gl.ceir.config.repository.VisaDbRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.request.model.Generic_Response_Notification;
 import com.gl.ceir.config.request.model.RegisterationUser;
@@ -157,6 +158,9 @@ public class EnduserServiceImpl {
 	
 	@Autowired
 	UserProfileRepository userProfileRepository;
+	
+	@Autowired
+	VisaDbRepository visaDbRepository;
 	
 	public GenricResponse endUserByNid(AllRequest data) {
 		try {
@@ -483,15 +487,19 @@ public class EnduserServiceImpl {
 				}else {
 					//					 Update expiry date of latest Visa
 					//					VisaDb visaDb = visaDbs.get(visaDbs.size() - 1);
-					//					visaDb.setVisaExpiryDate(latestVisa.getVisaExpiryDate());	
-
-					VisaDb OldVisa=visaDbs.get(0); 	
+					//					visaDb.setVisaExpiryDate(latestVisa.getVisaExpiryDate());
+					
+					VisaDb OldVisa=visaDbs.get(0);
+					OldVisa.setVisaNumber(latestVisa.getVisaNumber());
+					OldVisa.setVisaFileName(latestVisa.getVisaFileName());
+					OldVisa.setVisaExpiryDate(latestVisa.getVisaExpiryDate());
 //					VisaUpdateDb visaUpdateDb=new VisaUpdateDb(OldVisa.getVisaType(), OldVisa.getVisaNumber(),
 //							latestVisa.getVisaFileName(), OldVisa.getEntryDateInCountry(), latestVisa.getVisaExpiryDate(),
 //							0,endUserDB1,endUserDB.getTxnId(),endUserDB.getNid()); 
 					VisaUpdateDb visaUpdateDb=new VisaUpdateDb(OldVisa.getVisaType(), latestVisa.getVisaNumber(),
 							latestVisa.getVisaFileName(), OldVisa.getEntryDateInCountry(), latestVisa.getVisaExpiryDate(),
-							0,endUserDB1,endUserDB.getTxnId(),endUserDB.getNid()); 
+							0,endUserDB1,endUserDB.getTxnId(),endUserDB.getNid());
+					visaDbRepository.save(OldVisa);
 					String mailTag = "Update_Visa_Request";
 					List<RawMail> rawMails = new ArrayList<>();
 					Map<String, String> placeholderMap = new HashMap<String, String>();
