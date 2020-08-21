@@ -589,7 +589,7 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 				$("#assigneDetailslink").css("display", "block"); 
 				$('#SupplierIdAssignie').text('');
 				$('#SupplierIdAssignie').text(assigneIdLabel);
-			
+				$("#supplierName").attr("required", true);
 				$('#SupplierIdAssignieName').text('');
 				$('#SupplierIdAssignieName').text(assigneNameLabel);
 
