@@ -249,7 +249,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
                                         </div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="password" name="password" class="password"
+									<input type="password" name="password" class="password" autocomplete="off"
 										id="password"
 										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 										min="8" maxlength="10"
@@ -264,7 +264,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="password" name="rePassword" class="password2"
+									<input type="password" name="rePassword" class="password2" autocomplete="off"
 										id="confirmPassword"
 										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
 										maxlength="10" min="8"

@@ -99,6 +99,7 @@
 	data-selected-consignmentTxnId="${consignmentTxnId}"
 	data-selected-consignmentStatus="${consignmentStatus}"
 	data-selected-username="${username}"
+	data-tableName="${tableName}"
 	session-value="en"
 	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 
@@ -126,6 +127,7 @@
 									<div id="filterBtnDiv"></div>
 								</div>
 							</form>
+							<div class="searchMargin"></div> 
 							<table id="reportLibraryTable"
 								class="responsive-table striped display"></table>
 

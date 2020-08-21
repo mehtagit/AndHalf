@@ -127,6 +127,7 @@
 									<div id="filterBtnDiv"></div>
 								</div>
 							</form>
+							<div class="searchMargin"></div> 
 							<table id="DBManagementLibraryTable"
 								class="responsive-table striped display"></table>
 

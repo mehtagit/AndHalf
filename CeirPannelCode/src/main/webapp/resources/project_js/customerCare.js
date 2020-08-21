@@ -9,7 +9,7 @@ var imei = $("body").attr("data-imei");
 
 var identifierType = $("body").attr("data-deviceIdType");
 var deviceIdType = identifierType.replace(" ","_");
-
+var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 $.i18n().locale = lang;
 
@@ -70,7 +70,7 @@ function setGsmaDetails(data){
 
 
 function stateTable(){
-		
+	
 	var customerCareRequest = {
 			"imei" : $("body").attr("data-imei"),
 			"msisdn" : $("body").attr("data-msisdn"),
@@ -79,6 +79,13 @@ function stateTable(){
 	 //////console.log(JSON.stringify(customerCareRequest));
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
+	
+	if(lang=='km'){
+		var langFile='./resources/i18n/khmer_datatable.json';
+	}
+	else if(lang=='en'){
+		var langFile='./resources/i18n/english_datatable.json';
+	}
 	$.ajaxSetup({
 		headers:
 		{ 'X-CSRF-TOKEN': token }
@@ -91,9 +98,9 @@ function stateTable(){
 		ordering : false,
 		bPaginate : true,
 		bInfo : true,
-		"oLanguage": {
-	        "sEmptyTable": "No records found in the system"
-	    },
+		"oLanguage": {  
+			"sUrl": langFile  
+		},
 		'ajax' : {
 			'url' : "./customerRecord?listType=state",
 			'type' : 'POST',
@@ -140,6 +147,13 @@ function deviceTable(){
 			"msisdn" : $("body").attr("data-msisdn"),
 			"deviceIdType" : $("body").attr("data-deviceIdType")	
 	}
+	
+	if(lang=='km'){
+		var langFile='./resources/i18n/khmer_datatable.json';
+	}
+	else if(lang=='en'){
+		var langFile='./resources/i18n/english_datatable.json';
+	}
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -154,9 +168,9 @@ function deviceTable(){
 		ordering : false,
 		bPaginate : true,
 		bInfo : true,
-		"oLanguage": {
-	        "sEmptyTable": "No records found in the system"
-	    },
+		"oLanguage": {  
+			"sUrl": langFile  
+		},
 		'ajax' : {
 			'url' : "./customerRecord?listType=device",
 			'type' : 'POST',
