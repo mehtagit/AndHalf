@@ -1188,8 +1188,11 @@ function historyRecord(txnID) {
 	
 	formData.append("filter", JSON.stringify(filterRequest));
 	if (lang == 'km') {
-		var langFile = '../resources/i18n/khmer_datatable.json';
+		var langFile = './resources/i18n/khmer_datatable.json';
 	}
+	else if(lang=='en'){
+		var langFile='./resources/i18n/english_datatable.json';
+	}	
 	// ////console.log("22");
 	
 	var token = $("meta[name='_csrf']").attr("content");
@@ -1218,6 +1221,9 @@ function historyRecord(txnID) {
 				"bFilter" : false,
 				"bInfo" : true,
 				"scrollX" : true,
+				"oLanguage": {  
+					"sUrl": langFile  
+				},	
 				"bSearchable" : true,
 				pageLength : 3,
 				"data" : dataObject.data,

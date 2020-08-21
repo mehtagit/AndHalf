@@ -6,10 +6,21 @@ $('#langlist').on('change', function() {
 
 	window.location.assign("uploadAstock?reportType="+type+"&lang="+lang);			
 	}); 
+$('#langlistHeader').on('change', function() {
+	lang=$('#langlistHeader').val() == 'km' ? 'km' : 'en';
+	var url_string = window.location.href;
+	var url = new URL(url_string);
+	var type = url.searchParams.get("reportType");
+	
+	window.location.assign("uploadAstock?reportType="+type+"&lang="+lang);			
+	}); 
+
+
 
 
 $(document).ready(function () {
 	$('#langlist').val(data_lang_param);
+	$('#langlistHeader').val(data_lang_param);
 	$.i18n().locale = data_lang_param;
 	var successMsg;
 	$.i18n().load( {

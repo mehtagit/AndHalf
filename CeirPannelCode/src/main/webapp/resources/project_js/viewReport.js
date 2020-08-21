@@ -30,8 +30,9 @@
 
 		//var sourceType =localStorage.getItem("sourceType");
 		//var TagId = sessionStorage.getItem("tagId");
-		
-		var reportnameId = sessionStorage.getItem("reportname");
+	
+		var reportnameId = $("body").attr("data-tableName");
+		//var reportnameId = sessionStorage.getItem("reportname");
 		var reportNameInterp = sessionStorage.getItem("reportInterp");
 		
 		

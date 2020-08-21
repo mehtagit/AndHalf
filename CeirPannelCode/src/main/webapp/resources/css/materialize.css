@@ -13286,3 +13286,7 @@ textarea::-webkit-scrollbar-thumb:hover {
     z-index: 1003;
     position: fixed;
 }
+
+.searchMargin {
+    margin-top: 103px;
+} 

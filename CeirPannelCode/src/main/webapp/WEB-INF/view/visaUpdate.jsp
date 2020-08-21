@@ -197,7 +197,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
             <div class="row">
                 <form action="">
                     
-                    <h6><spring:message code="modal.deviceApproved" /></h6>
+                    <h6><spring:message code="modal.visaApproved" /></h6>
                    
                 </form>
             </div>
@@ -246,7 +246,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
             <div class="row">
                 <form action="">
                   
-                    <h6><spring:message code="modal.deviceRejected" /></h6>
+                    <h6><spring:message code="modal.visaRejected" /></h6>
                 </form>
             </div>
             <div class="row">

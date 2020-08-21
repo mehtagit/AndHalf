@@ -20,6 +20,8 @@
 	 System.out.println("timeout========"+timeout); 
 	if (session.getAttribute("usertype") != null) { */
 %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -31,12 +33,8 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head><title>CEIR Portal</title>
+<!--<title>Customer Search</title>-->
 
-
-<!--<title>Customer care</title>-->
-<meta http-equiv='cache-control' content='no-cache'>
-<meta http-equiv='expires' content='-1'>
-<meta http-equiv='pragma' content='no-cache'>
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -67,6 +65,7 @@
 <link
 	href=""
 	type="text/css" rel="stylesheet" media="screen,projection">
+
 <!-- Custome CSS-->
 <link href="" type="text/css"
 	rel="stylesheet" media="screen,projection">
@@ -81,21 +80,15 @@
 	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 
-
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 
+
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
-
+<script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 
 <script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
-
-
-<!------------------------------------------- Dragable Model---------------------------------->
-
-<script
-	src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 
 <style type="text/css">
  #starColor {
@@ -132,62 +125,62 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
                       <form action="">
                         <div class="col s12 m12 l12">
                           <h4 class="header2 device-info">
-                            Device Information</h4>
+                           <spring:message code="modal.DeviceInformation" /></h4>
                           <div class="row">
                             <div class="input-field col s12 m4 l4">
                               <input type="text" id="MSISDN" name="MSISDN" value="" disabled>
-                              <label for="MSISDN" >MSISDN</label>
+                              <label for="MSISDN" ><spring:message code="input.msisdn" /></label>
                             </div>
 
                             <div class="input-field col s12 m4 l4">
                               <input type="text" id="IMEI" name="IMEI" value="" disabled>
-                              <label for="IMEI" >IMEI</label>
+                              <label for="IMEI" ><spring:message code="input.imei" /></label>
                             </div>
 
                             <div class="input-field col s12 m4 l4">
                               <input type="text" id="IMSI" name="IMSI" value="" disabled>
-                              <label for="IMSI" >IMSI</label>
+                              <label for="IMSI" ><spring:message code="input.imsi" /></label>
                             </div>
                           </div>
                         </div>
 
                         <div class="col s12 m12 l12">
                           <h4 class="header2 tac-info">
-                            TAC Information</h4>
+                            <spring:message code="modal.header.tacInformation" /></h4>
                           <div class="row">
                             <div class="input-field col s12 m3 l3">
                               <input type="text" id="handsetType" name="handsetType" value="" disabled>
-                              <label for="handsetType" >Handset Type</label>
+                              <label for="handsetType" ><spring:message code="input.HandsetType" /></label>
                             </div>
 
                             <div class="input-field col s12 m3 l3">
                               <input type="text" id="osType" name="osType" value="" disabled>
-                              <label for="osType" >OS Type</label>
+                              <label for="osType" ><spring:message code="input.osType" /></label>
                             </div>
 
                             <div class="input-field col s12 m3 l3">
                               <input type="text" id="brand" name="brand" value="" disabled>
-                              <label for="brand" >Brand Name</label>
+                              <label for="brand" ></label>
                             </div>
 
                             <div class="input-field col s12 m3 l3">
                               <input type="text" id="modal" name="modal" value="" disabled>
-                              <label for="modal" >Model Number</label>
+                              <label for="modal" ><spring:message code="table.ModelNumber" /></label>
                             </div>
                           </div>
                         </div>
 
                         <div class="col s12 m12" >
                           <h4 class="header2 device-state">
-                            DEVICE STATE</h4>
+                            <spring:message code="modal.deviceState" /></h4>
                           <div class="col s12 m6">
                             <table class="responsive-table striped datatable" id="DeviceStateTable">
                               <thead>
                                 <tr>
-                                  <th>State</th>
-                                  <th>Date</th>
-                                  <th>Status</th>
-                                  <th>View</th>
+                                  <th><spring:message code="table.State"/></th>
+                                  <th><spring:message code="table.date"/></th>
+                                  <th><spring:message code="table.State"/></th>
+                                  <th><spring:message code="table.view"/></th>
                                 </tr>
                               </thead>
   							  <tbody style="background-color: #fff;">
@@ -200,10 +193,10 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
                             <table class="responsive-table striped datatable" id="DeviceTable">
                               <thead>
                                 <tr>
-                                  <th>Device Found In</th>
-                                  <th>Date</th>
-                                  <th>Status</th>
-                                  <th>View</th>
+                                  <th><spring:message code="table.DeviceFound"/></th>
+                                  <th><spring:message code="table.date"/></th>
+                                    <th><spring:message code="table.State"/></th>
+                                  <th><spring:message code="table.view"/></th>
                                 </tr>
                               </thead>
   
@@ -217,7 +210,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 
                         <div class="col s12 m12">
                           <h4 class="header2" style="font-weight: bold; margin-top: 50px;">
-                            Notification Information</h4>
+                            <spring:message code="modal.NotificationInformation" /> </h4>
                             <table class="responsive-table striped display" id="Notification-data-table" cellspacing="0">
                           
                           </table>

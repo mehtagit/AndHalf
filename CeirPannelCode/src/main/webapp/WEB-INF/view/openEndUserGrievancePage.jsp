@@ -335,7 +335,7 @@ var contextpath = "${context}";
 			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 		</div>
 		<div class="col s2 m1 right width13" style="padding: 0;">
-			<select class="browser-default select-lang-drpdwn-all" id="langlist">
+			<select class="browser-default select-lang-drpdwn-all" id="langlistTrack">
 				<option value="en" class="fontBlack">English</option>
 				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
 			</select>
@@ -384,7 +384,7 @@ var contextpath = "${context}";
 			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 		</div>
 		<div class="col s2 m1 right width13" style="padding: 0;">
-			<select class="browser-default select-lang-drpdwn-all " id="langlist">
+			<select class="browser-default select-lang-drpdwn-all " id="langlistTable">
 				<option value="en" class="fontBlack">English</option>
 				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
 			</select>
@@ -621,7 +621,7 @@ style="font-size: 20px;">+</span> <spring:message code="input.addmorefile" /></b
     </div>
     
     <div id="manageAccount" class=" full-screen-modal modal">
-<button class="modal-close btn-flat right" data-dismiss="modal">&times;</button>
+<button class="modal-close btn-flat right" data-dismiss="modal" style=" font-size: 25px;">&times;</button>
 <h6 class="modal-header"><spring:message code="modal.header.grievancehistory" /></h6>
 <div class="modal-content">
 <div id="live-chat">
