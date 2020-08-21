@@ -646,10 +646,10 @@ $('div#initialloader').delay(300).fadeOut('slow');
 																	.i18n('selectfile')
 															+ '</span><input required onchange=enableAddMore("docTypeFile'+id+'","filediv'+id+'") id="docTypeFile'
 															+ id
-															+ '" type="file" oninput="InvalidMsg(this,\'file\',\''
+															+ '" type="file" oninput="InvalidMsg(this,\'fileType\',\''
 															+ $
 																	.i18n('selectfile')
-															+ '\');"  oninvalid="InvalidMsg(this,\'file\',\''
+															+ '\');"  oninvalid="InvalidMsg(this,\'fileType\',\''
 															+ $
 																	.i18n('selectfile')
 															+ '\');" name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+placeholderValue+'" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" id="remove_field_icon'+id+'" class="remove_field btn right btn-info" onclick="remove_field('+id+')">-</div></div></div>'); //add input box

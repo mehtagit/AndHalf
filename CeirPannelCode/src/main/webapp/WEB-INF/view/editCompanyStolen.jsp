@@ -113,7 +113,7 @@
 
 </head>
 
-<body data-roleType="${usertype}" data-id="5" data-userTypeID="${usertypeId}"
+<body data-id="5" data-roleType="${usertype}" data-id="5" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-operatorTypeId="${operatorTypeId}"
 	data-selected-roleType="${stolenselectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
