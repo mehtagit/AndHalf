@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.xml.crypto.Data;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
@@ -434,21 +435,22 @@ GrievanceFeignClient grievanceFeignClient;
 	      request.setUserTypeId(17);
 		  request.setUserType("End User");
 		log.info("Request send to the fetch record by Passport="+request);
+		addMoreFileModel.setTag("upload_file_link");
+        urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+        log.info("file link =="+urlToUpload.getValue());
+       // content.setFilePreviewLink(urlToUpload.getValue());
+		String fileLink=urlToUpload.getValue();
 		endUserVisaInfo=	uploadPaidStatusFeignClient.fetchVisaDetailsbyPassport(request);
 		log.info("Response from fetchVisaDetailsbyPassport api== "+endUserVisaInfo);
+		endUserVisaInfo.setResponse(fileLink);
 		log.info("---exit  point in update visa validity page");
 		return endUserVisaInfo;
 	}
 	
 	@PostMapping("updateEndUSerVisaValidity")
-	public @ResponseBody GenricResponse updateEndUSerVisaValidity(@RequestParam(name="passportImage",required = false) MultipartFile passportImage,@RequestParam(name="visaImage",required = false) MultipartFile visaImage,HttpServletRequest request,HttpSession session) {
-		log.info("---entry point in update visa validity page");
-		
-		
-	
-		//request.setAttribute("txnId", txnNumber);
-		//request.setAttribute("request[regularizeDeviceDbs][txnId]",txnNumber);
-		
+	public @ResponseBody GenricResponse updateEndUSerVisaValidity(@RequestParam(name="passportImage",required = false) MultipartFile passportImage,@RequestParam(name="visaImage",required = false) MultipartFile visaImage,
+			  @RequestParam(name="existingTxnId",required = false) String existingTxnId,HttpServletRequest request,HttpSession session) {
+		log.info("---entry point in update visa validity page existingTxnId =="+existingTxnId);
 		String filter = request.getParameter("request");
 		//log.info("txnid+++++++++++"+request.getParameter("request[regularizeDeviceDbs][txnId]"));
 		Gson gson= new Gson(); 
@@ -461,11 +463,7 @@ GrievanceFeignClient grievanceFeignClient;
 		addMoreFileModel.setTag("uploaded_file_move_path");
 		urlToMove=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 		 FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
-
-		  
-		
-		EndUserVisaInfo endUservisaInfo  = gson.fromJson(filter, EndUserVisaInfo.class);
-		
+         EndUserVisaInfo endUservisaInfo  = gson.fromJson(filter, EndUserVisaInfo.class);
 		
 		log.info("after casting request in to pojo classs"+endUservisaInfo);
 		log.info("device db size--"+endUservisaInfo.getVisaDb().size());
@@ -519,49 +517,72 @@ GrievanceFeignClient grievanceFeignClient;
 				e.printStackTrace();
 			}	
 		}
-		
-		try {
-			/*
-			 * byte[] bytes = visaImage.getBytes(); String rootPath
-			 * =filePathforUploadFile+endUservisaInfo.getTxnId()+"/"; File dir = new
-			 * File(rootPath + File.separator);
-			 * 
-			 * if (!dir.exists()) dir.mkdirs(); // Create the file on server File serverFile
-			 * = new File(rootPath+visaImage.getOriginalFilename());
-			 * log.info("uploaded file path on server" + serverFile); BufferedOutputStream
-			 * stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-			 * stream.write(bytes); stream.close();
-			 */
+
+		if(visaImage==null)
+		{
+			log.info("visa image is null for previous file");	
+		}
+		else {
+			try {
+				
+				byte[] bytes = visaImage.getBytes();
+			String rootPath =urlToUpload.getValue()+existingTxnId+"/"; 
+			File tmpDir = new File(rootPath+visaImage.getOriginalFilename());
+			boolean exists = tmpDir.exists();
+			if(exists) {
+
+			Path temp = Files.move 
+			(Paths.get(urlToUpload.getValue()+"/"+existingTxnId+"/"+visaImage.getOriginalFilename()), 
+			Paths.get(urlToMove.getValue()+visaImage.getOriginalFilename())); 
+			String movedPath=urlToMove.getValue()+visaImage.getOriginalFilename();	
+
+			log.info("previous file is already exist, moved to this "+movedPath+" path. ");
+			tmpDir.delete();
+			}
 			
+			File dir = new File(rootPath + File.separator);
 
-String rootPath = urlToUpload.getValue()+txnNumber+"/";
-File tmpDir = new File(rootPath+visaImage.getOriginalFilename());
-boolean exists = tmpDir.exists();
-if(exists) {
+			if (!dir.exists()) dir.mkdirs();
+			// Create the file on server 
+			File serverFile = new File(rootPath+visaImage.getOriginalFilename());
+			log.info("uploaded file path on server for previous txn id" + serverFile); BufferedOutputStream
+			stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			stream.write(bytes); 
+			stream.close();
+			endUservisaInfo.setPassportFileName(passportImage.getOriginalFilename());
+			
+			} 
 
-Path temp = Files.move 
-(Paths.get(urlToUpload.getValue()+"/"+endUservisaInfo.getTxnId()+"/"+visaImage.getOriginalFilename()), 
-Paths.get(urlToMove.getValue()+visaImage.getOriginalFilename())); 
-String movedPath=urlToMove.getValue()+visaImage.getOriginalFilename();	
-
-log.info("file is already exist, moved to this "+movedPath+" path. ");
-tmpDir.delete();
-}
-byte[] bytes = visaImage.getBytes();
-File dir = new File(rootPath + File.separator);
-if (!dir.exists()) 
-dir.mkdirs();
-File serverFile = new File(rootPath+visaImage.getOriginalFilename());
-log.info("uploaded visa  path on server 2" + serverFile);
-BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-stream.write(bytes);
-stream.close();
-
-	} 
-	catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}	
+			catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}	
+		}
+		
+		/*
+		 * try {
+		 * 
+		 * 
+		 * String rootPath = urlToUpload.getValue()+existingTxnId+"/passport/"; File
+		 * tmpDir = new File(rootPath+visaImage.getOriginalFilename()); boolean exists =
+		 * tmpDir.exists(); if(exists) {
+		 * 
+		 * Path temp = Files.move
+		 * (Paths.get(urlToUpload.getValue()+"/"+existingTxnId+"/passport/"+visaImage.
+		 * getOriginalFilename()),
+		 * Paths.get(urlToMove.getValue()+visaImage.getOriginalFilename())); String
+		 * movedPath=urlToMove.getValue()+visaImage.getOriginalFilename();
+		 * 
+		 * log.info("previous file is already exist, moved to this "+movedPath+" path. "
+		 * ); tmpDir.delete(); } byte[] bytes = visaImage.getBytes(); File dir = new
+		 * File(rootPath + File.separator); if (!dir.exists()) dir.mkdirs(); File
+		 * serverFile = new File(rootPath+visaImage.getOriginalFilename());
+		 * log.info("uploaded visa  path on server 2" + serverFile);
+		 * BufferedOutputStream stream = new BufferedOutputStream(new
+		 * FileOutputStream(serverFile)); stream.write(bytes); stream.close();
+		 * 
+		 * } catch (Exception e) { // TODO: handle exception e.printStackTrace(); }
+		 */	
 		fileCopyRequest.setFilePath(urlToUpload.getValue()+txnNumber+"/");
 	  	fileCopyRequest.setTxnId(txnNumber);
 	  

@@ -288,7 +288,10 @@ width: inherit;
 	    <!--------------------------------------------------- Reject Model--------------------------------------------->
     
         <div id="rejectInformation" class="modal">
+        <div class="header-fixed header-fixed-style">
            <h6 class="modal-header"><spring:message code="modal.header.reject" /></h6>
+           </div>
+           <div class="scrollDivHeight"></div>
             <div class="modal-content">
                 <form action="" onsubmit=" return rejectUser()" method="POST">
             <div class="row">
@@ -299,7 +302,7 @@ width: inherit;
                         <textarea id="Reason" class="materialize-textarea" 
                         oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
 						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
-                        required="required"></textarea>
+                        style="min-height: 8rem;" required="required"></textarea>
                         <label for="textarea1" style="margin-left: -10px;"><spring:message code="input.remarks" /><span class="star">*</span></label>
                     </div>
                    

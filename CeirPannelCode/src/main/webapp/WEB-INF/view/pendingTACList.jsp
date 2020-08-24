@@ -150,9 +150,11 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 	
 	
 	<div id="DeleteTacConfirmationModal" class="modal">
+	<div class="header-fixed header-fixed-style">
 			<h6 class="modal-header">
 				<spring:message code="modal.header.deletePendingTac" />
-			</h6>
+			</h6></div>
+			<div class="scrollDivHeight"></div>
 			<div class="modal-content">
 
 

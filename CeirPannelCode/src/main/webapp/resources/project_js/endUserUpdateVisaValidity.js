@@ -111,9 +111,8 @@ function hide() {
 		                                  $('#endUserdatepicker').val(data.data.visaDb[0].visaExpiryDate).prop('readonly', true);
 		                                 // $('#endUserVisaNumber').val(data.data.visaDb[0].visaNumber).prop('readonly', true);
 		                                   $('#endUseremailID').val(data.data.email).prop('readonly', true); 
-		               
-		                                   
-		                
+		                             $('#firImageLink').attr("onclick",'previewFile("'+data.response+'","'+data.data.passportFileName+'","'+data.data.txnId+'","passport")');
+		                            
 						}
 					}
 				
@@ -315,6 +314,7 @@ function hide() {
        
         
         formData.append('visaImage', $('#endUseruploadnationalID')[0].files[0]);
+        formData.append('existingTxnId',$('#endUserTxnId').val());
     	formData.append("request",JSON.stringify(request));
     	var token = $("meta[name='_csrf']").attr("content");
     	var header = $("meta[name='_csrf_header']").attr("content");
