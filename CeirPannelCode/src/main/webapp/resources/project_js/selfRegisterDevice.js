@@ -8,7 +8,7 @@ $('#langlist').on('change', function() {
 	//window.location.assign("selfRegisterDevicePage?lang="+window.lang);			
 }); 
 $('#langlistSave').on('change', function() {
-	window.lang=$('#langlist').val() == 'km' ? 'km' : 'en';
+	window.lang=$('#langlistSave').val() == 'km' ? 'km' : 'en';
 	var url_string = window.location.href;
 	var url = new URL(url_string);
 	var type = url.searchParams.get("type");
@@ -19,6 +19,7 @@ $('#langlistSave').on('change', function() {
 
 
 $('#langlist').val(data_lang_param);
+$('#langlistSave').val(data_lang_param);
 $.i18n().locale = data_lang_param;
 var successMsg;
 $.i18n().load( {

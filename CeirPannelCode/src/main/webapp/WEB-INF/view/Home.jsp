@@ -3,28 +3,7 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
-	<%@ page import="java.util.Date" %>
-<%
-   response.setHeader("Cache-Control", "no-cache");
-	response.setHeader("Cache-Control", "no-store");
-	response.setDateHeader("Expires", 0);
-	response.setHeader("Pragma", "no-cache");
-	
-    /*   //200 secs
-	 session.setAttribute("usertype", null);  */
-/* 	 session.setMaxInactiveInterval(10); */
-	 int timeout = session.getMaxInactiveInterval();
-	 long accessTime = session.getLastAccessedTime();
-	 long currentTime= new Date().getTime(); 
-	 long dfd= accessTime +timeout;
-	
-	 if( currentTime< dfd){
-	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
-	 System.out.println("timeout========"+timeout); 
-	if (session.getAttribute("usertype") != null) { */
-%>
+
 
 <!-- Security Tags -->
 <%@ taglib prefix="sec"
@@ -235,16 +214,3 @@ table.dataTable.display tbody tr:first-child td {
 <script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
 
 </body></html>
-<%
-	} else {
-		/*  request.setAttribute("msg", "  *Please login first");
-		request.getRequestDispatcher("./index.jsp").forward(request, response); */
-%>
-<script language="JavaScript">
-	sessionStorage.setItem("loginMsg",
-			"*Session has been expired");
-	window.top.location.href = "./login";
-</script>
-<%
-	}
-%>
