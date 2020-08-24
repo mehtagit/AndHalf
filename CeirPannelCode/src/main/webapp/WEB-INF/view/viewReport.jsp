@@ -126,6 +126,7 @@
 									<div id="filterBtnDiv"></div>
 								</div>
 							</form>
+							<div class="searchMargin"></div>
 							<table id="reportLibraryTable"
 								class="responsive-table striped display"></table>
 
