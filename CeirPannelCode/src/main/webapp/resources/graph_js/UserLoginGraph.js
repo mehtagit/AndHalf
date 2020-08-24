@@ -21,6 +21,12 @@ function userloginGraph() {
 		},*/
 		success : function(data) {
 			var response = JSON.parse(data);
+			for(var i=response['line'].length;i<response['line'].length+1;i++){
+				$('#dateVal').text('Last Update Date: '+response['line'][i-1].createdOn);
+				$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>Total Users</h6><p class='circle-para right' style='position:absolute;margin-top:49px;width: 170px;margin-left: 5px;padding-right: 0px !important;'><b id=''>"+response['line'][i-1].noUserLogged+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
+				$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>Total Unique Users</h6><p class='circle-para right' style='position:absolute;margin-top:49px;width: 170px;margin-left: 5px;padding-right: 0px !important;'><b id=''>"+response['line'][i-1].uniqueUserLogged+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
+			
+			}
 			console.log(response)
 			graph(response,'lineGraph','line','User Login Line Graph')
 			graph(response,'barGraph','bar','User Login Bar Graph')
@@ -263,4 +269,6 @@ function graph(response,id,chartType,chartTitle)
     }  
     $('div#initialloader').delay(300).fadeOut('slow');
 }
+
+
 
