@@ -1,4 +1,6 @@
-<%@ page import="java.util.Date" %>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+	<%@ page import="java.util.Date" %>
 <%
    response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
@@ -9,31 +11,34 @@
 	 session.setAttribute("usertype", null);  */
 /* 	 session.setMaxInactiveInterval(10); */
 	 int timeout = session.getMaxInactiveInterval();
-	
 	 long accessTime = session.getLastAccessedTime();
 	 long currentTime= new Date().getTime(); 
 	 long dfd= accessTime +timeout;
+	
 	 if( currentTime< dfd){
 	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
 	 System.out.println("timeout========"+timeout); 
 	if (session.getAttribute("usertype") != null) { */
 %>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+
 <!-- Security Tags -->
 <%@ taglib prefix="sec"
 	uri="http://www.springframework.org/security/tags"%>
 <sec:csrfMetaTags />
 <!-- Security Tags -->
 <c:set var="context" value="${pageContext.request.contextPath}" />
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head><title>CEIR Portal</title>
-<!--<title>Graph</title>-->
-
+<!--<title>Home</title>-->
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap"
+	rel="stylesheet">
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -47,18 +52,51 @@
 <meta name="_csrf_header" content="${_csrf.headerName}" />
 <!-- Security Tags -->
 
+<!-- Favicons-->
+<link rel="icon" href="${context}/resources/images/DMC-Logo.png"
+	sizes="32x32">
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
-	<script type="text/javascript" src="${context}/resources/graph_js/chart.min.js"></script>
+		<script type="text/javascript" src="${context}/resources/graph_js/chart.min.js"></script>
+	
+<link rel="shortcut icon" href="">
 <!-- CORE CSS-->
 <link href="${context}/resources/css/materialize.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
+<!-- Custome CSS-->
+
+<link
+	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
 <link
 	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
+<!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+<link href="${context}/resources/js/plugins/prism/prism.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
+<link
+	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
+<link href="${context}/resources/css/dashboard.css" type="text/css"
+	rel="stylesheet" media="screen,projection">
+<link
+	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
+	type="text/css" rel="stylesheet" media="screen,projection">
 
+
+<link rel="stylesheet"
+	href="${context}/resources/custom_js/jquery-ui.css">
+
+<script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
+<!------------------------------------------- Dragable Model---------------------------------->
+<script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
+
+
+
+<link rel="stylesheet"
+	href="${context}/resources/project_css/iconStates.css">
 
 <style>
 .row {
@@ -206,11 +244,38 @@ input#quantity {
 .highcharts-credits {
 display: none !important;
 }
+
+.split {
+    display: grid;
+}
+.icon-div {
+    width: 39px;
+    height: 34px;
+    position: absolute;
+    background-color: #009688;
+    border-radius: 5px;
+    margin: -20px 0 0 10px;
+}
+.round-circle {
+    overflow-wrap: break-word;
+    width: 200px;
+    height: 84px;
+    border: solid 1px #444;
+    border-radius: 5px;
+    margin-top: 30px;
+    background-color: #fff;
+    align-items: center;
+}
+.test-icon {
+    font-size: 22px !important;
+    color: #fff;
+    margin-top: 6px;
+}
 </style>
 </head>
-<body>
+<body data-id="46">
 	<!-- START MAIN -->
-
+		<div id="initialloader"></div>
 	<!-- START WRAPPER -->
 	<div class="wrapper">
 
@@ -218,20 +283,27 @@ display: none !important;
 		<section id="content">
 			<!--start container-->
 			<div class="container">
+			
 				<div class="section">
+						
 					<div class="row">
+			
 						<div class="col s12 m12 l12">
 							<div class="row card-panel">
 								<div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display:block !important">
                             <h6 class="fixPage-modal-header ">
                             <spring:message code="sidebar.User_Dashboard" />
                             				</h6>
+                            				<h6 class="m-0 font-weight-bold text-primary" id="dateVal"></h6>
+                            				 <div class="split">
+                            						<div class="col s12 m12 info-div center" id="infoBox"></div>
+                           						
                             <div style="display:flex">
                             <div class="col-xl-8 col-lg-7"  style=" width: 50.5% !important;">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Active Device Graph</h6>
+                  <h6 class="m-0 font-weight-bold text-primary" id="">Active Device Graph</h6>
                  
                 </div>
                 <!-- Card Body -->
@@ -261,7 +333,7 @@ display: none !important;
               </div>
             </div>               
              </div>               
-                    
+              </div>      
                     
 <%--                     <div style="display:flex">
                             <div class="col-xl-8 col-lg-7">

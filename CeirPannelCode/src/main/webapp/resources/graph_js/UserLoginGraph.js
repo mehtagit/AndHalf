@@ -260,6 +260,7 @@ function graph(response,id,chartType,chartTitle)
              
     	}
     });
-    }   
+    }  
+    $('div#initialloader').delay(300).fadeOut('slow');
 }
 
