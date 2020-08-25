@@ -277,10 +277,13 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 													oninput="InvalidMsg(this,'select','<spring:message code="validation.NoChosen" />');"
 													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.NoChosen" />');"
 													  id="uploadPassportID">
+													  
 											</div>
 											<div class="file-path-wrapper" id="passportFileNameDiv">
 												<input class="file-path validate" type="text"
 													id="passportFileName" placeholder="" value="">
+													 <a id="firImageLink"
+																	class="imgPreviewLink" ><spring:message code="input.preView" /></a>
 											</div>
 										</div>
 
@@ -753,6 +756,15 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 						</a>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="viewuplodedModel" class="modal" style="overflow: hidden">
+		<a href="#!" class="modal-close waves-effect waves-green btn-flat">&times;</a>
+		<div class="modal-content">
+			<div class="row">
+				<img src="" id="fileSource" width="400" height="400">
 			</div>
 		</div>
 	</div>

@@ -555,7 +555,7 @@ input[type='search'] {
 												<div class="file-path-wrapper">
 													<input class="file-path validate" type="text" value="${list.visaFileName}"  readonly="readonly"
 														id="ensUserVisaPlaceHolder">
-													<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${list.visaFileName}','${viewInformation.data.txnId}')"><spring:message code="input.preView" /></a>
+													<a	class="imgPreviewLink" onclick="previewFile('${fileLink}','${list.visaFileName}','${txnId}')"><spring:message code="input.preView" /></a>
 														
 														
 												</div>

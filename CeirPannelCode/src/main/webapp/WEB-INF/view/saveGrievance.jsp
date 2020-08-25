@@ -143,7 +143,7 @@ oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFiel
 
 <div class="col s12 m6 l6" style="margin-top: 8px;">
 <label for="Category"><spring:message code="input.documenttype" /></label>
-<select class="browser-default" id="docTypetag1" onchange="enableSelectFile('docTypetag1')" >
+<select class="browser-default" id="docTypetag1" onchange="enableSelectFile()" >
 <option value="" selected><spring:message code="select.documenttype" /> </option>
 
 </select>
@@ -601,7 +601,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 				localStorage.setItem("maxCount", data.value);
 
 			});
-			
+
 			//var max_fields = 2; //maximum input boxes allowed
 			var max_fields = localStorage.getItem("maxCount");
 			if (max_fields==0 || max_fields==1){
@@ -613,14 +613,13 @@ $('div#initialloader').delay(300).fadeOut('slow');
 			var add_button = $(".add_field_button"); //Add button ID
 			var x = 1; //initlal text box count
 			var id = 2;
-			
+
 			$(".add_field_button")
 					.click(
 							function(e) { //on add input button click
 								e.preventDefault();
 								var placeholderValue = $
 										.i18n('selectFilePlaceHolder');
-								
 								if (x < max_fields) { //max input box allowed
 									x++; //text box increment
 									$(wrapper)
@@ -636,7 +635,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 															+ '\');"  oninvalid="InvalidMsg(this,\'select\',\''
 															+ $
 																	.i18n('selectDocumentType')
-															+ '\');"  class="browser-default", onchange=enableSelectFile("docTypetag'+id+'") > <option value="" disabled selected>'
+															+ '\');"  class="browser-default"> <option value="" disabled selected>'
 															+ $
 																	.i18n('selectDocumentType')
 															+ ' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'
@@ -653,9 +652,9 @@ $('div#initialloader').delay(300).fadeOut('slow');
 															+ '\');"  oninvalid="InvalidMsg(this,\'fileType\',\''
 															+ $
 																	.i18n('selectfile')
-															+ '\');"  name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+placeholderValue+'" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" id="remove_field_icon'+id+'" class="remove_field btn right btn-info" onclick="remove_field('+id+')">-</div></div></div>'); //add input box
+															+ '\');" name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+placeholderValue+'" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" id="remove_field_icon'+id+'" class="remove_field btn right btn-info" onclick="remove_field('+id+')">-</div></div></div>'); //add input box
 								}
-								
+								  
 									if(x==max_fields){
 	 									
 										 $(".add_field_button").prop('disabled', true);
@@ -719,7 +718,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 										});
 
 								id++;
-								
+
 							});
 			
 			/* $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
@@ -732,8 +731,6 @@ $('div#initialloader').delay(300).fadeOut('slow');
 				id--;
 
 			}) */
-			
-			
 			
 			function remove_field(fieldId ){
 				$('#filediv' + fieldId).remove();
@@ -855,26 +852,18 @@ $('div#initialloader').delay(300).fadeOut('slow');
 						
 						$(".add_field_button").attr("disabled", false);
 			}
-			
-			
-			
-			
-			function enableSelectFile(docTypeId) {
-				console.log("docTypeId-->" +docTypeId);
-				if($('#'+docTypeId).val() != ''){
-					
-				   alert($('#'+docTypeId).val());
-					$('#'+docTypeId).attr("disabled", false);
-					$('#'+docTypeId).attr("required", true);
+			function enableSelectFile() {
+				if($('#docTypetag1').val() != ''){
+					$("#docTypeFile1").attr("disabled", false);
+					$("#docTypeFile1").attr("required", true);
 					$("#removestar").find(".star").remove();
 					$("#supportingdocumentFile").append('<span class="star">*</span>');
 				}else{
-					$('#'+docTypeId).attr("required", false);
+					$("#docTypeFile1").attr("required", false);
 					$('#filetextField').val('');
 					$("#removestar").find(".star").remove();
-					
 				}
-			} 
+			}
 			
 		
 
