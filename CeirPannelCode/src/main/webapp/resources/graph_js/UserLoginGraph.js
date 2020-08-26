@@ -1,9 +1,15 @@
 function userloginGraph() {
-
+	var currentTime = new Date()
+	var month = ("0" + (currentTime.getMonth() + 1)).slice(-2)
+	var day = ("0" + (currentTime.getDate())).slice(-2)
+	var year = currentTime.getFullYear();
+	var endDate=year+"-"+month+"-"+day;
+	var startDate=year+"-"+month+"-"+(day-15);
 	var obj={
-			"startDate":"",
-			"endDate":""
+			"startDate":startDate,
+			"endDate":endDate
 	}
+	
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -27,7 +33,7 @@ function userloginGraph() {
 				$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>Total Unique Users</h6><p class='circle-para right' style='position:absolute;margin-top:49px;width: 170px;margin-left: 5px;padding-right: 0px !important;'><b id=''>"+response['line'][i-1].uniqueUserLogged+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
 			
 			}
-			console.log(response)
+			//console.log(response)
 			graph(response,'lineGraph','line','User Login Line Graph')
 			graph(response,'barGraph','bar','User Login Bar Graph')
 			graph(response,'pieGraph','pie','User Login Pie Graph')
