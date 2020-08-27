@@ -500,9 +500,12 @@ width: inherit;
 
 
 	<div id="RejectConsignment" class="modal">
+	  <div class="header-fixed header-fixed-style">
 		<h6 class="modal-header">
 			<spring:message code="modal.header.rejectConsignment" />
 		</h6>
+		</div>
+		<div class="scrollDivHeight"></div>
 		<div class="modal-content">
 
 
@@ -520,7 +523,7 @@ width: inherit;
 			<div class="row">
 				<div class="input-field col s12 m12" style="margin-left: -10px;">
 					<textarea id="dispproveRemarks" class="materialize-textarea"
-						style="padding-left: 0;"></textarea>
+					style="min-height: 8rem;" style="padding-left: 0;"></textarea>
 					<label for="textarea1"><spring:message code="input.remarks" />
 						<span class="star">*</span></label>
 				</div>

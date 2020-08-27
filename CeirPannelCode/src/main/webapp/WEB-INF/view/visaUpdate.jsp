@@ -211,7 +211,9 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
     </div>
     
     <div id="rejectInformation" class="modal">
-           <h6 class="modal-header"><spring:message code="modal.header.reject" /></h6>
+    <div class="header-fixed header-fixed-style">
+           <h6 class="modal-header"><spring:message code="modal.header.reject" /></h6></div>
+           <div class="scrollDivHeight"></div>
             <div class="modal-content">
              <form action="" onsubmit=" return rejectUser()" method="POST">
             <div class="row">
@@ -222,7 +224,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
                         <textarea id="Reason" class="materialize-textarea" name="Reason"
                         oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
 						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
-                         required="required"></textarea>
+                        style="min-height: 8rem;" required="required"></textarea>
                         <label for="Reason" style="margin-left: -10px;"><spring:message code="input.remarks" /><span
 												class="star">*</span></label>
                     </div>
