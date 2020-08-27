@@ -37,7 +37,7 @@ public class RuleEngineMappingServiceImpl {
 
 	@Autowired
 	RuleEngineMappingRepository ruleEngineMappingRepository;
-	
+
 	@Autowired
 	PropertiesReader propertiesReader;
 
@@ -49,11 +49,11 @@ public class RuleEngineMappingServiceImpl {
 
 	@Autowired
 	InterpSetter interpSetter;
-	
+
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
-	
-	
+
+
 	@Autowired
 	AuditTrailRepository auditTrailRepository;
 	public RuleEngineMapping findById(long id){
@@ -70,19 +70,19 @@ public class RuleEngineMappingServiceImpl {
 			RuleEngineMapping ruleEngineMappingOld =  ruleEngineMappingRepository.getById(ruleEngineMapping.getId());
 			logger.info("ruleEngineMappingOld : " + ruleEngineMappingOld);
 			ruleEngineMapping.setId(ruleEngineMappingOld.getId());
-//			ruleEngineMapping.setCreatedOn(ruleEngineMappingOld.getCreatedOn());			
+			//			ruleEngineMapping.setCreatedOn(ruleEngineMappingOld.getCreatedOn());			
 			ruleEngineMappingRepository.save(ruleEngineMapping);
-			
+
 			return new GenricResponse(0);
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public GenricResponse save(RuleEngineMapping ruleEngineMapping){
 		try {
-			
+
 			ruleEngineMappingRepository.save(ruleEngineMapping);
 			return new GenricResponse(0);
 		} catch (Exception e) {
@@ -90,18 +90,18 @@ public class RuleEngineMappingServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public GenricResponse deleteById(RuleEngineMapping ruleEngineMapping){
 		try {
 			ruleEngineMappingRepository.deleteById(ruleEngineMapping.getId());
-		
+
 			return new GenricResponse(0);
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public Page<RuleEngineMapping> filterRuleEngineMapping(FilterRequest filterRequest, Integer pageNo, 
 			Integer pageSize) {
 
@@ -109,24 +109,24 @@ public class RuleEngineMappingServiceImpl {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			Page<RuleEngineMapping> page = ruleEngineMappingRepository.findAll( buildSpecification(filterRequest).build(), pageable );
-		
+			
 			auditTrailRepository.save( new AuditTrail( Long.valueOf(filterRequest.getUserId()),
-			  filterRequest.getUserName(), Long.valueOf(filterRequest.getUserTypeId()),
-			   "SystemAdmin", Long.valueOf(filterRequest.getFeatureId()),
-			  Features.RULE_FEATURE_MAPPING, SubFeatures.VIEW, "","NA",
-			  filterRequest.getRoleType()));
-			 
+					filterRequest.getUserName(), Long.valueOf(filterRequest.getUserTypeId()),
+					"SystemAdmin", Long.valueOf(filterRequest.getFeatureId()),
+					Features.RULE_FEATURE_MAPPING, SubFeatures.VIEW, "","NA",
+					filterRequest.getRoleType()));
+
 			return page;
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
-	
+
+
 	private GenericSpecificationBuilder<RuleEngineMapping> buildSpecification(FilterRequest filterRequest){
 		GenericSpecificationBuilder<RuleEngineMapping> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
-		
+
 		if(Objects.nonNull(filterRequest.getRuleName()))
 			cmsb.with(new SearchCriteria("name", filterRequest.getRuleName(), SearchOperation.EQUALITY, Datatype.STRING));
 
@@ -135,11 +135,15 @@ public class RuleEngineMappingServiceImpl {
 
 		if(Objects.nonNull(filterRequest.getUserType()))
 			cmsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
-		
-		
-		 if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-			 cmsb.orSearch(new SearchCriteria("ruleOrder", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));	
-		 }
+
+
+		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+			cmsb.orSearch(new SearchCriteria("ruleOrder", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));	
+			cmsb.orSearch(new SearchCriteria("name", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("feature", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));	
+			cmsb.orSearch(new SearchCriteria("userType", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+
+		}
 		return cmsb;
 	}
 
