@@ -4,12 +4,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class GraphContent {
+import org.springframework.stereotype.Component;
+
+@Component
+public class UserDashboardGraphContent {
 	private Object dbName;
 	private String tableName;
 	private List<String> columns = null;
-	private List<RowData> rowData = null;
+	private List<UserDashboardMap> rowData = null;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	public List<UserDashboardMap> getRowData() {
+		return rowData;
+	}
 	public Object getDbName() {
 		return dbName;
 	}
@@ -28,22 +34,19 @@ public class GraphContent {
 	public void setColumns(List<String> columns) {
 		this.columns = columns;
 	}
-	public List<RowData> getRowData() {
-		return rowData;
-	}
-	public void setRowData(List<RowData> rowData) {
-		this.rowData = rowData;
-	}
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
 	}
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
 		this.additionalProperties = additionalProperties;
 	}
+	public void setRowData(List<UserDashboardMap> rowData) {
+		this.rowData = rowData;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("GraphContent [dbName=");
+		builder.append("UserDashboardGraphContent [dbName=");
 		builder.append(dbName);
 		builder.append(", tableName=");
 		builder.append(tableName);
@@ -57,4 +60,5 @@ public class GraphContent {
 		return builder.toString();
 	}
 	
+
 }

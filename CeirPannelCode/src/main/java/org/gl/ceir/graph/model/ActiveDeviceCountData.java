@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
 @Component
-public class CountData {
+public class ActiveDeviceCountData {
 	@JsonProperty("Date")
 	@SerializedName("Date")
 	private String date;

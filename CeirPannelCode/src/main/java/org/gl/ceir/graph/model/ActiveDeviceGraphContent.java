@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CountContent {
+import org.springframework.stereotype.Component;
+
+@Component
+public class ActiveDeviceGraphContent {
 	private Object dbName;
 	private String tableName;
 	private List<String> columns = null;
-	private List<CountData> rowData = null;
+	private List<ActiveDeviceGraphRowData> rowData = null;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Object getDbName() {
 		return dbName;
@@ -28,10 +31,10 @@ public class CountContent {
 	public void setColumns(List<String> columns) {
 		this.columns = columns;
 	}
-	public List<CountData> getRowData() {
+	public List<ActiveDeviceGraphRowData> getRowData() {
 		return rowData;
 	}
-	public void setRowData(List<CountData> rowData) {
+	public void setRowData(List<ActiveDeviceGraphRowData> rowData) {
 		this.rowData = rowData;
 	}
 	public Map<String, Object> getAdditionalProperties() {
@@ -43,7 +46,7 @@ public class CountContent {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("CountContent [dbName=");
+		builder.append("ActiveDeviceGraphContent [dbName=");
 		builder.append(dbName);
 		builder.append(", tableName=");
 		builder.append(tableName);
@@ -56,6 +59,5 @@ public class CountContent {
 		builder.append("]");
 		return builder.toString();
 	}
-	
 	
 }
