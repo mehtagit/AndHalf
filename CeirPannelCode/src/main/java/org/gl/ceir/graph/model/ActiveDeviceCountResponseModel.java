@@ -1,14 +1,10 @@
 package org.gl.ceir.graph.model;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.gl.ceir.pagination.model.Pageable;
-import org.gl.ceir.pagination.model.Sort;
 import org.springframework.stereotype.Component;
 @Component
-public class GraphResponseModel {
-	private GraphContent content;
+public class ActiveDeviceCountResponseModel {
+	private ActiveDeviceCountContent content;
 	private Pageable pageable;
 	private Integer totalPages;
 	private Integer totalElements;
@@ -19,7 +15,7 @@ public class GraphResponseModel {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("GraphResponseModel [content=");
+		builder.append("CountResponseModel [content=");
 		builder.append(content);
 		builder.append(", pageable=");
 		builder.append(pageable);
@@ -35,21 +31,13 @@ public class GraphResponseModel {
 		builder.append(numberOfElements);
 		builder.append(", size=");
 		builder.append(size);
-		builder.append(", number=");
-		builder.append(number);
-		builder.append(", empty=");
-		builder.append(empty);
-		builder.append(", sort=");
-		builder.append(sort);
-		builder.append(", additionalProperties=");
-		builder.append(additionalProperties);
 		builder.append("]");
 		return builder.toString();
 	}
-	public GraphContent getContent() {
+	public ActiveDeviceCountContent getContent() {
 		return content;
 	}
-	public void setContent(GraphContent content) {
+	public void setContent(ActiveDeviceCountContent content) {
 		this.content = content;
 	}
 	public Pageable getPageable() {
@@ -94,33 +82,5 @@ public class GraphResponseModel {
 	public void setSize(Integer size) {
 		this.size = size;
 	}
-	public Integer getNumber() {
-		return number;
-	}
-	public void setNumber(Integer number) {
-		this.number = number;
-	}
-	public Boolean getEmpty() {
-		return empty;
-	}
-	public void setEmpty(Boolean empty) {
-		this.empty = empty;
-	}
-	public Sort getSort() {
-		return sort;
-	}
-	public void setSort(Sort sort) {
-		this.sort = sort;
-	}
-	public Map<String, Object> getAdditionalProperties() {
-		return additionalProperties;
-	}
-	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-		this.additionalProperties = additionalProperties;
-	}
-	private Integer number;
-	private Boolean empty;
-	private Sort sort;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-
+	
 }

@@ -1272,7 +1272,8 @@ public class IconsState {
 
 	public String adminRegistrationRequest(String Id ,String userStatus,String AdminCurrentStatus,String createdOn,String roles, String type,String id,String username,String status,String sessionUserName,String userTypeId,String source) {
 		executePostConstruct();
-		log.info("username-->" +username+" sessionUserName--->" +sessionUserName);
+		roles = roles.replace(" ", "%20");
+		log.info("username-->" +username+" sessionUserName--->" +sessionUserName+"roles-------->"+roles);
 		// URL link 
 		String emptyURL="JavaScript:void(0);"; 
 		String approveAction = "userApprovalPopup("+Id+",'"+createdOn.replace(" ", "=")+"','"+username+"','"+sessionUserName+"')";
@@ -2848,7 +2849,7 @@ public class IconsState {
 
 		String viewAction="";
 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class="+disableIconClass+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
 

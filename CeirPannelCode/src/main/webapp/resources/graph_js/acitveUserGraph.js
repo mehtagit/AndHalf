@@ -243,19 +243,23 @@ $(document).ready(function(){
 		contentType : "application/json",
 		data : JSON.stringify(graphRequest),
 		success: function(data){
-
+var i=0;
 				Object.keys(data['rowData'][0]).map(function(key){ 
 				if(key == 'Date'){
 					$('#dateVal').text('Last Update Date: '+data['rowData'][0][key]);
 				}
 				else{
-					$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:49px;width: 170px;margin-left: 5px;padding-right: 0px !important;'><b id=''>"+data['rowData'][0][key]+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
+					if(i == 0){ $('#firstTD').text(data['rowData'][0][key]);}
+					else if(i == 1){$('#secondTD').text(data['rowData'][0][key]);}
+					$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b id="+i+++">"+data['rowData'][0][key]+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
+				
 				}
 				$('div#initialloader').delay(300).fadeOut('slow');
 
 				
 		});
 		}
+	
 	});
 	
 });

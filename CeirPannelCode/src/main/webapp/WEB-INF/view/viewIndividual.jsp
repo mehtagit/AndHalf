@@ -101,7 +101,7 @@
                                 <div class="input-field col s12 m6 l6">
                                     <input type="text" name="nationalityInformation" id="nationalityInformation" value="${registration.nidFilename}" maxlength="20" value="file.csv" disabled="">
                                     <label for="nationalityInformation" class="active"><spring:message code="registration.UploadNationalityInformation"/> </label>
-                                   <span> <a href="#" onclick="previewRegistrtionFile('${registration.nidFilePath}','${registration.nidFilename}')">Preview </a></span> 
+                                   <span> <a href="#" onclick="previewRegistrtionFile('${registration.nidFilePath}','${registration.nidFilename}')"><spring:message code="registration.preview" /> </a></span> 
                                     
                                 </div>
 
@@ -202,7 +202,7 @@
                                  <div class="input-field col s12 m6 l6" id="uploadedvatFileDiv" style="display: none;" >
                                     <input type="text" name="vatFile" id="uploadedVatFile" value="${registration.vatFilename}" maxlength="20"  disabled="">
                                     <label for="ploadedVatFile" class="active"><spring:message code="registration.uploadedVatFile"/> </label>
-                                   <span> <a href="#" onclick="previewRegistrtionFile('${registration.vatFilePath}','${registration.vatFilename}')">Preview </a></span> 
+                                   <span> <a href="#" onclick="previewRegistrtionFile('${registration.vatFilePath}','${registration.vatFilename}')"><spring:message code="registration.preview" /> </a></span> 
                                 </div>
                                 
                                  <div class="input-field col s12 m6">

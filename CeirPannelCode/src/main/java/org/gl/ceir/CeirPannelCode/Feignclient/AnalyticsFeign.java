@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(url = "${dashBoardfeignClientPath}", value = "analytics")
 public interface AnalyticsFeign {
 	@PostMapping("/report/data") 
-	public Object activeDeviceGraph(@RequestBody GraphRequest graphRequest,
+	public Object graph(@RequestBody GraphRequest graphRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 			@RequestParam(value = "file", defaultValue = "0") Integer file);

@@ -147,7 +147,7 @@ public class SLADatatableController {
 			
 		
 			//Dropdown items 
-			  String[] selectParam={"select",Translator.toLocale("table.userType"),"userType","","select","Feature","feature",""}; 
+			  String[] selectParam={"select",Translator.toLocale("table.userType"),"userType","","select",Translator.toLocale("table.feature"),"feature",""}; 
 			  for(int i=0; i<selectParam.length; i++) { 
 					inputFields= new InputFields();
 			  inputFields.setType(selectParam[i]); 

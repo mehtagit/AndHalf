@@ -2,6 +2,8 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Component
 public class SLAContentModel {
 	
@@ -12,8 +14,13 @@ public class SLAContentModel {
 	private String username;
 	private Integer usertypeId;
 	private String txnId;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private String createdOn;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	private String modifiedOn;
+	
 	private String usertype;
 	private String featureName;
 	public Integer getId() {
