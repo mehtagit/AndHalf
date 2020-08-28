@@ -252,7 +252,7 @@ data-session-type="${not empty param.type ? param.type : 'null'}">
                                        
                                     <input type="text" name="vatFile" id="uploadedVatFile" value="${registration.vatFilename}" maxlength="20"  disabled="">
                                     <label for="ploadedVatFile" class="active"><spring:message code="registration.uploadedVatFile"/> </label>
-                                   <span> <a href="#" onclick="previewRegistrtionFile('${registration.vatFilePath}','${registration.vatFilename}')">Preview </a></span> 
+                                   <span> <a href="#" onclick="previewRegistrtionFile('${registration.vatFilePath}','${registration.vatFilename}')"><spring:message code="registration.preview" /> </a></span> 
                                 </div>
                                 
                                  <div class="input-field col s12 m6">

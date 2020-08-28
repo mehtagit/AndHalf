@@ -297,8 +297,37 @@ display: none !important;
                             				<h6 class="m-0 font-weight-bold text-primary" id="dateVal"></h6>
                             				 <div class="split">
                             						<div class="col s12 m12 info-div center" id="infoBox"></div>
-                           						
-                            <div style="display:flex">
+                           	
+                           <div style="display:flex">
+                            
+                               <div class="col-xl-8 col-lg-7"  style=" width: 50.5% !important;">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Active Device Table</h6>
+              
+                </div>
+                <!-- Card Body -->
+                <div class="card-body" style = "height: 463px;">
+                 
+                      	      <table class="responsive-table striped datatable" id="activeDeviceTable">
+                              <thead>
+                                <tr>
+                                  <th>Total IMEI</th>
+                                  <th>Total Unique IMEI</th>
+                                </tr>
+                              </thead>
+  							  <tbody style="background-color: #fff;">
+                               <td id="firstTD"></td>
+                                  <td id="secondTD"></td>
+                              </tbody>
+                            </table>
+                 
+                </div>
+              </div>
+            </div>
+            
+            
                             <div class="col-xl-8 col-lg-7"  style=" width: 50.5% !important;">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
@@ -313,11 +342,15 @@ display: none !important;
                 </div>
               </div>
             </div>
-             
-             
-             
-             
-             <div class="col-xl-8 col-lg-7"  style=" width: 50.5% !important;">
+                      
+             </div>               
+              </div> 
+              
+              
+                   
+                    
+                     <div style="display:flex">
+                   <div class="col-xl-8 col-lg-7"  style=" width: 50.5% !important;">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -331,30 +364,12 @@ display: none !important;
                   </canvas>
                 </div>
               </div>
-            </div>               
-             </div>               
-              </div>      
-                    
-<%--                     <div style="display:flex">
-                            <div class="col-xl-8 col-lg-7">
-              <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
-                 
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                   <canvas class="chart-area" id="pieGraph" style = "width: 550px; height: 400px; margin: 0 auto">
-                  </canvas>
-                </div>
-              </div>
             </div>
              
              
              
              
-             <div class="col-xl-8 col-lg-7">
+         <%--     <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -366,8 +381,8 @@ display: none !important;
                  
                     <canvas class="chart-area" id="donutGraph" style = "width: 550px; height: 400px; margin: 0 auto">
                   </canvas>
-    </div></div></div></div>
-     --%>
+    </div></div></div> --%></div>
+     
     
     
 <%--     <div style="display:flex">
@@ -418,6 +433,9 @@ display: none !important;
 <script type="text/javascript" src="${context}/resources/custom_js/bootstrap.min.js"></script>
 
 <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
+
 <script src="${context}/resources/graph_js/chartjs-plugin-datalabel.js"></script>
 <script type="text/javascript"
 		src="${context}/resources/graph_js/acitveUserGraph.js?version=<%= (int) (Math.random() * 10) %>"></script>		

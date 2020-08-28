@@ -2849,7 +2849,7 @@ public class IconsState {
 
 		String viewAction="";
 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class="+disableIconClass+"><i class="+disableViewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
 
