@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
-	<%@ page import="java.util.Date" %>
+<%@ page import="java.util.Date" %>
 <%
    response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
@@ -11,27 +9,26 @@
 	 session.setAttribute("usertype", null);  */
 /* 	 session.setMaxInactiveInterval(10); */
 	 int timeout = session.getMaxInactiveInterval();
+	
 	 long accessTime = session.getLastAccessedTime();
 	 long currentTime= new Date().getTime(); 
 	 long dfd= accessTime +timeout;
-	
 	 if( currentTime< dfd){
 	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
 	 System.out.println("timeout========"+timeout); 
 	if (session.getAttribute("usertype") != null) { */
 %>
+
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-
 <!-- Security Tags -->
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:csrfMetaTags />
 <!-- Security Tags -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="context" value="${pageContext.request.contextPath}" />
-
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head><title>CEIR Portal</title>
@@ -271,6 +268,11 @@ display: none !important;
     color: #fff;
     margin-top: 6px;
 }
+th {
+    background: #529dba !important;
+    color: #fff;
+     border-bottom: 1px solid #fff; 
+}
 </style>
 </head>
 <body data-id="46">
@@ -308,19 +310,19 @@ display: none !important;
               
                 </div>
                 <!-- Card Body -->
-                <div class="card-body" style = "height: 463px;">
+                <div class="card-body" style = "height: 456px;">
                  
                       	      <table class="responsive-table striped datatable" id="activeDeviceTable">
-                              <thead>
+                             
                                 <tr>
                                   <th>Total IMEI</th>
+                                  <td id="firstTD"></td>
+                                  </tr>
+                                  <tr>
                                   <th>Total Unique IMEI</th>
-                                </tr>
-                              </thead>
-  							  <tbody style="background-color: #fff;">
-                               <td id="firstTD"></td>
                                   <td id="secondTD"></td>
-                              </tbody>
+                                </tr>
+  							  
                             </table>
                  
                 </div>
@@ -444,8 +446,8 @@ display: none !important;
 <script type="text/javascript">$( document ).ready(function() { activeDeviceGraph(); var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
 
 
+<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
 </html>
-
 <%
 	} else {
 		/*  request.setAttribute("msg", "  *Please login first");
@@ -456,6 +458,15 @@ display: none !important;
 			"*Session has been expired");
 	window.top.location.href = "./login";
 </script>
+<!-- <script language="JavaScript">
+window.onload = function() {
+setInterval(function() {
+window.location.replace("../login");
+}, 10);
+}
+ --></script>
 <%
 	}
 %>
+
+
