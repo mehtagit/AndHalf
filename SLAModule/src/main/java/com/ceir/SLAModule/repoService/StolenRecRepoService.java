@@ -25,7 +25,7 @@ private final static Logger log =LoggerFactory.getLogger(App.class);
 	
 	public List<StolenandRecoveryMgmt> fetchStolenByStatusAndReqType(int status,int requestType){
 		try {
-			log.info("now fetching grievance data by status");
+			log.info("Fetching grievance data from StolenandRecoveryMgmt  where  Filestatus " + status +" and RequestType : "+requestType );
 			return stolenRepo.findByFileStatusAndRequestType(status, requestType);
 		}
 		catch(Exception e) {
@@ -35,3 +35,5 @@ private final static Logger log =LoggerFactory.getLogger(App.class);
 		}
 	}
 }
+
+
