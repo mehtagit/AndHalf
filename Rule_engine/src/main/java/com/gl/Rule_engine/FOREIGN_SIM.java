@@ -39,7 +39,7 @@ class FOREIGN_SIM {
           try {
                switch (args[13]) {
                     case "Allow": {
-                         String msisdn = args[12].startsWith("19") ? args[12].substring(2) : args[12];
+//                         String msisdn = args[12].startsWith("19") ? args[12].substring(2) : args[12];
                          logger.debug("Action is Allow");
 //                         ResultSet rs1 = null;
 //                         ResultSet rs = null;
@@ -87,7 +87,7 @@ class FOREIGN_SIM {
                     case "Reject": {
                          logger.debug("Action is Reject");
 
-                         String fileString = args[15] + " , Error Description : Imei  Utilised By Foreign Sim   ";
+                         String fileString = args[15] + " ,   Error Code :CON_RULE_0028 ,   Error Description : Imei  Utilised By Foreign Sim   ";
                          bw.write(fileString);
                          bw.newLine();
                     }
@@ -140,7 +140,7 @@ class FOREIGN_SIM {
 
                return "Success";
           } catch (Exception e) {
-                logger.debug("Errer " + e);
+                logger.debug("Error " + e);
                return "Failure";
           }
      }
