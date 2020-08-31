@@ -147,13 +147,13 @@
                                              <div class="input-field col s12 m6 l6">
                                                 <input type="text" name="uploadnationalId" id="uploadnationalId" value="${registration.nidFilename}" maxlength="30" download="download" disabled="">
                                                 <label for="uploadnationalId" class="active"><spring:message code="registration.uploadnationalid" /> </label>
-                                               <span></span>  <a href="#" onclick="previewRegistrtionFile('${registration.nidFilePath}','${registration.nidFilename}')">Preview </a> </span>
+                                               <span></span>  <a href="#" onclick="previewRegistrtionFile('${registration.nidFilePath}','${registration.nidFilename}')"><spring:message code="registration.preview" /> </a> </span>
                                             </div> 
 
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" name="uploadPhoto" id="uploadPhoto" value="${registration.photoFilename}" maxlength="30" disabled="">
                                                 <label for="uploadPhoto" class="active"><spring:message code="input.UploadedPhoto" /> </label>
-                                               <span>  <a href="#" onclick="previewRegistrtionFile('${registration.photoFilePath}','${registration.photoFilename}')">Preview </a> </span>
+                                               <span>  <a href="#" onclick="previewRegistrtionFile('${registration.photoFilePath}','${registration.photoFilename}')"><spring:message code="registration.preview" /> </a> </span>
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">
@@ -164,7 +164,7 @@
                                             <div class="input-field col s12 m6 l6">
                                                 <input type="text" name="uploadIDCard" id="uploadIDCard" value="${registration.idCardFilename}"  maxlength="30" disabled="">
                                                 <label for="uploadIDCard" class="active"><spring:message code="input.UploadedCard" /></label>
-                                                <span> <a href="#"  onclick="previewRegistrtionFile('${registration.idCardFilePath}','${registration.idCardFilename}')"> Preview </a> </span>
+                                                <span> <a href="#"  onclick="previewRegistrtionFile('${registration.idCardFilePath}','${registration.idCardFilename}')"> <spring:message code="registration.preview" /> </a> </span>
                                             </div>
 
                                             <div class="input-field col s12 m6 l6">

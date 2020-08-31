@@ -182,7 +182,7 @@ section {
 
 		<div class="row card-panel">
 			<div class="container-fluid pageHeader">
-				<p class="PageHeading">Report</p>
+				<p class="PageHeading"><spring:message code="sidebar.Report" /></p>
 			</div>
 			<div class="row">
 				<div class="col s12 m12" style="margin-top: 20px;">
@@ -192,7 +192,7 @@ section {
 						</div>
 						<div class="input-field col s7 m4">
                                 <select class="browser-default" id="tableId" required="">
-                                <option value=""  selected="">Select Report</option>
+                                <option value=""  selected=""><spring:message code="select.report" /></option>
                                  </select>
                          </div>
 						<div class="input-field col s12 m2 l2">

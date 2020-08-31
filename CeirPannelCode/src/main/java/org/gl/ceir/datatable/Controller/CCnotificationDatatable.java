@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
+import org.gl.ceir.CeirPannelCode.Model.AttachedFile;
 import org.gl.ceir.CeirPannelCode.Model.CCPolicyBreachRequest;
 import org.gl.ceir.CeirPannelCode.Model.CustomerCareRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
@@ -80,8 +81,21 @@ public class CCnotificationDatatable {
 				for(CCNotificationContent dataInsideList : paginationContentList) 
 				{
 					String createdOn =dataInsideList.getCreatedOn();
-					String txnID = dataInsideList.getFeatureTxnId();
-					String feature = dataInsideList.getFeatureName();
+					String txnID = null;
+					txnID = dataInsideList.getFeatureTxnId();
+					if(txnID != null  && txnID.equals("")) {
+						txnID = dataInsideList.getFeatureTxnId();
+					}else {
+						txnID = "NA";
+					}
+					//String feature = dataInsideList.getFeatureName();
+					String feature = null;
+					feature = dataInsideList.getFeatureName();
+					if(feature != null  && feature.equals("")) {
+						feature = dataInsideList.getFeatureTxnId();
+					}else {
+						feature = "NA";
+					}
 					String message =dataInsideList.getMessage();
 					String action=iconState.ccNotificationIcon();			   
 					Object[] finalData={createdOn,txnID,feature,message,action}; 
