@@ -363,7 +363,8 @@ div#error_Modal {
 
 					<p>
 						<label style="margin-right: 50px"> <input type="radio"
-							name="status" value="Deactivate"
+							name="status" value="Deactivate" id="deac" oninput="InvalidRadioMsg('radio');"
+					 oninvalid="InvalidRadioMsg('radio');"
 							required> <span> <spring:message
 									code="registration.deactivate" />
 						</span></label>
@@ -373,8 +374,9 @@ div#error_Modal {
 				<%
 					//String status = (String) session.getAttribute("userStatus");
 				Integer statusValue = (Integer) session.getAttribute("userStatusValue");
+				
 				%>
-				<%
+		<%
 					if (statusValue == 3) {
 				%>
 				<div class="row" style="height: 30px;">

@@ -3,13 +3,6 @@ var userTypeID=$("body").attr("data-userTypeID");
 $('#langlist').on('change', function() {
 	var lang=$('#langlist').val(); 
 	sessionStorage.setItem("sessionLang", lang);
-	/* var timeout = sessionStorage.getMaxInactiveInterval();
-	 var accessTime = sessionStorage.getLastAccessedTime();
-	 var  currentTime= new Date().getTime(); 
-	 var dfd= accessTime +timeout;
-	 if( currentTime< dfd){
-
-	 */
 	$('#mainArea').attr('src', function () {
 
 		currentPageLocation=$(this).contents().get(0).location;
@@ -21,9 +14,6 @@ $('#langlist').on('change', function() {
 	});    
 	window.location.replace("?lang="+lang);
 
-	/*else{
-		 window.location.replace("./login?lang="+lang);
-	 }*/
 }); 
 var urlController;
 if($('.navData li a').attr("data-featureid") == 16 || $('.navData li a').attr("data-featureid") ==31 || $('.navData li a').attr("data-featureid") == 26 ||  $('.navData li a').attr("data-featureid") == 45){
@@ -57,6 +47,12 @@ $(document).ready(function () {
 	$("#manualDownload").attr("href", "./Consignment/ManualFileDownload?userTypeId="+userTypeID);
 
 	$(window).scrollTop(0); 
+	
+	
+	
+	
+	
+
 });   
 
 //var password = document.getElementById("password");
@@ -126,89 +122,6 @@ function isActive(feature){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var url = new URL(window.location.href);
-/*sessionStorage.getItem("sessionLang")*/
-//var langParameter = url.searchParams.get("lang")== (null || 'null') ? 'en' : url.searchParams.get("lang");
-var langParameter = url.searchParams.get("lang")== 'km' ? 'km' : 'en';
-$.i18n().locale = langParameter;		
-$.i18n().load( {
-	'en': './resources/i18n/en.json',
-	'km': './resources/i18n/km.json'
-} ).done( function() {
-});
-
-
-$(function(){
-	$('*').tooltip({ track: true });
-	$('*[title]').tooltip('disable');
-});
-
-
-
-function InvalidMsg(textbox,type,msg) {
-	var element = document.getElementById(textbox.id);
-	if(element.validity.valueMissing){
-		if(type=="input" ){
-			element.setCustomValidity($.i18n('requiredMsg_input'));
-		}
-		else if(type=="date"){
-			element.setCustomValidity($.i18n('requiredMsg_date'));	
-		}
-		else if(type=="select"){
-			element.setCustomValidity($.i18n('requiredMsg_select'));	
-		}
-		else if(type=="fileType"){
-			element.setCustomValidity($.i18n('requiredMsg_fileType'));	
-		}
-		else if(type=="email"){
-			element.setCustomValidity($.i18n('requiredMsg_email'));	
-		}
-		else if(type=="checkbox" && $('#'+textbox.id).is(":checked")== false){
-			element.setCustomValidity($.i18n('requiredMsg_checkbox'));	
-		}
-	}
-
-	else if (element.validity.patternMismatch) {
-
-		if(type=="input" || type=="date" || type=="select" || type=="fileType" || type=="email"){
-			element.setCustomValidity(msg);
-		}
-
-		else if(type=="checkbox" && $('#'+textbox.id).is(":checked")== true){
-			element.setCustomValidity('');
-		}
-
-		return false;
-	} 
-	else{
-
-		if(type=="input" || type=="date" || type=="select" || type=="fileType" || type=="email" || (type=="checkbox" && $('#'+textbox.id).is(":checked")== true)){
-			element.setCustomValidity('');
-		}
-
-		return true;
-
-	}
-}
-
 function openEditPage(usertypeId){
 	var asTypeDropdown=$("#editLink");  
 	if(usertypeId!=0){
@@ -244,4 +157,87 @@ function removeToggle(){
 	$('.mdi-navigation-menu').attr('id', 'rightSideToggle');
 }
 
+
+
+
+$(function(){
+	$('*').tooltip({ track: true });
+    $('*[title]').tooltip('disable');
+	});
+
+var url = new URL(window.location.href);
+
+$.i18n().locale =url.searchParams.get("lang")== 'km' ? 'km' : 'en';
+	
+$.i18n().load( {
+	
+	'en': './resources/i18n/en.json',
+	'km': './resources/i18n/km.json'
+} ).done( function() { 
+});	
+function InvalidMsg(textbox,type,msg) {
+	var element = document.getElementById(textbox.id);
+	if(element.validity.valueMissing){
+		 if(type=="input" ){
+		        element.setCustomValidity($.i18n('requiredMsg_input'));
+		    	}
+		    	else if(type=="date"){
+		            element.setCustomValidity($.i18n('requiredMsg_date'));	
+		    	}
+		    	else if(type=="select"){
+		            element.setCustomValidity($.i18n('requiredMsg_select'));	
+		    	}
+		    	else if(type=="fileType"){
+		            element.setCustomValidity($.i18n('requiredMsg_fileType'));	
+		    	}
+		    	else if(type=="email"){
+		            element.setCustomValidity($.i18n('requiredMsg_email'));	
+		    	}
+		    	else if(type=="checkbox" && $('#'+textbox.id).is(":checked")== false){
+		    	
+		            element.setCustomValidity($.i18n('requiredMsg_checkbox'));	
+		    	}
+		  	
+	}
+	
+	else if (element.validity.patternMismatch) {
+		
+		if(type=="input" || type=="date" || type=="select" || type=="fileType" || type=="email"){
+	        element.setCustomValidity(msg);
+	    	}
+	    	
+		else if(type=="checkbox" && $('#'+textbox.id).is(":checked")== true){
+			 element.setCustomValidity('');
+		}
+		
+		
+		    	
+	return false;
+	 } 
+	else{
+			
+		if(type=="input" || type=="date" || type=="select" || type=="fileType" || type=="email" || (type=="checkbox" && $('#'+textbox.id).is(":checked")== true)){
+		        element.setCustomValidity('');
+		    	}
+		    	
+		 return true;
+		  
+	}
+	}
+
+
+function InvalidRadioMsg(type){
+
+	var element = document.getElementById('deac');
+	if(type=='radio' && $("input:radio[name='status']").is(":checked")== true){
+		 element.setCustomValidity('');
+
+	}
+	else if(type=="radio" &&  $("input:radio[name='status']").is(":checked")== false){
+ 
+        element.setCustomValidity($.i18n('requiredMsg_radio'));	
+
+	}
+    return false;
+}
 
