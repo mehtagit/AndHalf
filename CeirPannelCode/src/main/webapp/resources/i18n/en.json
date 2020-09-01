@@ -218,5 +218,6 @@
 	"imageMessage": "File name should not be more than 30 characters. / File should have extension as png,jpg,jpeg,gif,csv and bmp. / File size should be less than 10 MB",
 	"No_Question_Mapped":"No question mapped for this user",
 	"visaExpiryCheck":"Visa expiry date should be less then entry date in country",
-	"nationality":"Select Nationality"
+	"nationality":"Select Nationality",
+	"requiredMsg_radio": "Please select one of these options"
 	}
