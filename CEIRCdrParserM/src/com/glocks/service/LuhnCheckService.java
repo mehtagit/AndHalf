@@ -41,8 +41,10 @@ public class LuhnCheckService {
                int TotalIMEI = 0;
                int TotalNull = 0;
                int totalIMEIwith15digit = 0;
+               int totalIMEIwith16digit = 0;
                int totalIMEILuhnFailed = 0;
                int totalIMEI0End = 0;
+               int totallenth16IMEI0End = 0;
                int totalIMEIlengthNot1516 = 0;
                BufferedWriter bw = null;
                try {
@@ -55,22 +57,28 @@ public class LuhnCheckService {
                               logger.info("imei " + imei);
                               if (imei.length() == 15) {
                                    totalIMEIwith15digit++;
-                              }
-                              if (imei.length() != 15 && imei.length() != 16) {
+
+                                   String[] my_arr = {"IMEI_LUHN_CHECK", "1", "CDR", imei, "4", "5", "6", "7", "8", "IMEI"};
+                                   logger.info("my_arr   " + my_arr);
+                                   String output = RuleEngineApplication.startRuleEngine(my_arr, conn, bw);
+
+                                   if (output.equalsIgnoreCase("No")) {
+                                        totalIMEILuhnFailed++;
+                                   }
+
+                                   if (imei.endsWith("0")) {
+                                        totalIMEI0End++;
+                                   }
+
+                              } else if (imei.length() == 16) {
+                                   totalIMEIwith16digit++;
+                                   if (imei.endsWith("0")) {
+                                        totallenth16IMEI0End++;
+                                   }
+                              } else {
                                    totalIMEIlengthNot1516++;
                               }
 
-                              String[] my_arr = {"IMEI_LUHNCHECK", "1", "CDR", imei, "4", "5", "6", "7", "8", "IMEI"};
-                              logger.info("my_arr   " + my_arr);
-                              String output = RuleEngineApplication.startRuleEngine(my_arr, conn, bw);
-
-                              if (output.equalsIgnoreCase("No")) {
-                                   totalIMEILuhnFailed++;
-                              }
-
-                              if (imei.endsWith("0")) {
-                                   totalIMEI0End++;
-                              }
                          } else {
                               TotalNull++;
                          }
@@ -79,10 +87,11 @@ public class LuhnCheckService {
                     logger.info("LuhnCheckServiceEndResult ");
                     logger.info("TotalIMEI " + TotalIMEI);
                     logger.info("totalIMEIwith15digit " + totalIMEIwith15digit);
-                    logger.info("totalIMEILuhnFailed " + totalIMEILuhnFailed);
-                    logger.info("totalIMEI0End " + totalIMEI0End);
-//                    logger.info("TotalNull " + TotalNull);
-                    logger.info("totalIMEIlengthNot1516 " + totalIMEIlengthNot1516);
+                    logger.info("totalIMEI with 16 digit " + totalIMEIwith16digit);
+                    logger.info("Length 15 with Luhn Failed " + totalIMEILuhnFailed);
+                    logger.info(" Length 15 with Ending 0 :" + totalIMEI0End);
+                    logger.info(" Length 16 with Ending 0 :" + totallenth16IMEI0End);
+                    logger.info("total IMEI length Not1516 " + totalIMEIlengthNot1516);
 
                } catch (Exception e) {
                     logger.info("   " + e);

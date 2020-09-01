@@ -24,7 +24,6 @@ public class TacApiConsumer {
     public HttpResponse delete(String txnId, Long userId, String userType, int deleteFlag) {
 
         try {
-            String result = "";
             String uri = propertyReader.getPropValue("api.tac.delete")
                     + "?txnId=" + txnId + "&"
                     + "userId=" + userId + "&"
@@ -44,8 +43,7 @@ public class TacApiConsumer {
     public HttpResponse approveReject(String txnId, Integer status) {   //
 
         try {
-            String result = "";
-            String uri = propertyReader.getPropValue("api.tac.approve_reject");
+             String uri = propertyReader.getPropValue("api.tac.approve_reject");
             TacApproveRequest tacApproveRequest = new TacApproveRequest(txnId, status);
 
             String body = gson.toJson(tacApproveRequest, TacApproveRequest.class);
@@ -62,3 +60,5 @@ public class TacApiConsumer {
         }
     }
 }
+
+
