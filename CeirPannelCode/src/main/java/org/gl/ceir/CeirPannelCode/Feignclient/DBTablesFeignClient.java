@@ -8,6 +8,7 @@ import org.gl.ceir.CeirPannelCode.Model.ReportResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,7 +28,7 @@ public interface DBTablesFeignClient {
 	
 	
 	@RequestMapping(value="/report/list",method=RequestMethod.POST) 
-	public List<ReportResponse> getAllReports();
+	public List<ReportResponse> getAllReports(@RequestParam(name="reportCategory", required = false) Integer reportCategory);
 	
 	//----------------------------Report TableData Feign------------------------------
 	

@@ -272,30 +272,28 @@ section {
 	<script type="text/javascript"
 		src="${context}/resources/i18n_library/min.js"></script>
 	
-		
-	<script type="text/javascript"
-		src="${context}/resources/project_js/enterKey.js"></script>
-	<%-- <script type="text/javascript"
-		src="${context}/resources/project_js/nidForm.js?version=<%= (int) (Math.random() * 10) %>"></script> --%>
-			<script type="text/javascript"
-		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"
-		src="" async></script>
-		<script type="text/javascript"
-		src="${context}/resources/project_js/ValidationFileOutsidePortal.js?version=<%= (int) (Math.random() * 10) %>"></script>
+src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+
 <script type="text/javascript"
-		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	
+src="${context}/resources/project_js/enterKey.js"></script>
+<%-- <script type="text/javascript"
+src="${context}/resources/project_js/nidForm.js?version=<%= (int) (Math.random() * 10) %>"></script> --%>
+
+
 <script>
 
 $('#langlist').on('change', function() {
-	lang=$('#langlist').val() == 'km' ? 'km' : 'en';
-	var url_string = window.location.href;
-	var url = new URL(url_string);
-	var type = url.searchParams.get("type");
-	window.location.assign("selfRegisterDevice?lang="+lang);			
-});  
+lang=$('#langlist').val() == 'km' ? 'km' : 'en';
+var url_string = window.location.href;
+var url = new URL(url_string);
+var type = url.searchParams.get("type");
+window.location.assign("selfRegisterDevice?lang="+lang);
+});
 
 $('#langlist').val(data_lang_param);
 </script>
+<script type="text/javascript"
+src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 </body></html>
