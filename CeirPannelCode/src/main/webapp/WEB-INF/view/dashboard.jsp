@@ -178,10 +178,10 @@ div#error_Modal {
 					</ul>
 					<ul id="chat-out" class="right hide-on-med-and-down"
 						style="overflow: inherit !important;">
-						<li><a id="manualDownload" download
+						<li><a id="manualDownload" 
 							style="color: white; cursor: pointer;"><i
 								class="fa fa-download download-icon" aria-hidden="true"
-								title="Download Manual" style="color: #fff; line-height: 3;"></i></a></li>
+								title="<spring:message code="title.manual" />" style="color: #fff; line-height: 3;"></i></a></li>
 						<li>
 							<div id="divLang" style="display: flex; margin: 8px 6px;"
 								class="darken-1">
