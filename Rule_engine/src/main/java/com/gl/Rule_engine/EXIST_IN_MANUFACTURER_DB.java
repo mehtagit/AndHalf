@@ -39,7 +39,7 @@ class EXIST_IN_MANUFACTURER_DB {
                     } catch (Exception e) {
                          logger.error("" + e);
                     }
-                    if (!res2.equals("0")) {
+                    if (!res2.equals("1")) {
                          res = "Yes";
                     } else {
                          res = "No";
@@ -74,7 +74,7 @@ class EXIST_IN_MANUFACTURER_DB {
                     case "Reject": {
                          logger.debug("Action is Reject");
 
-                         String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
+                         String fileString = args[15] + " , Error Code :CON_RULE_0010, Error Description : IMEI/ESN/MEID is already present in the system  ";
                          bw.write(fileString);
                          bw.newLine();
                     }
