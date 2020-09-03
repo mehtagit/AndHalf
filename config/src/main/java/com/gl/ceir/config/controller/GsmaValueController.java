@@ -31,7 +31,7 @@ public class GsmaValueController {
 
           String ismi = null;
           UsagesValueModel usagesValueModel = null;
-          if (imei == null) {
+          if (imei == null && identifierType == "3"  ) {
                usagesValueModel = GsmaValueServiceImpl.getimeiValbymsisdn(msisdn);
                if (usagesValueModel == null) {
                     logger.info("IMEI IS NOT FOUND");
