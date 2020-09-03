@@ -18,18 +18,13 @@ public class TacApiConsumer {
     public TacApiConsumer() {
         propertyReader = new PropertyReader();
         gson = new Gson();
-
     }
 
     public HttpResponse delete(String txnId, Long userId, String userType, int deleteFlag) {
 
         try {
-            String uri = propertyReader.getPropValue("api.tac.delete")
-                    + "?txnId=" + txnId + "&"
-                    + "userId=" + userId + "&"
-                    + "userType=" + userType + "&"
-                    + "deleteFlag=" + deleteFlag;   // 2
-            logger.info("Request Body : " + uri);
+            String uri = propertyReader.getPropValue("api.tac.delete");
+                    
             String response = HttpURLConnectionExample.sendPOST(uri);
             HttpResponse httpResponse = gson.fromJson(response, HttpResponse.class);
             return httpResponse;
@@ -60,5 +55,7 @@ public class TacApiConsumer {
         }
     }
 }
+
+
 
 
