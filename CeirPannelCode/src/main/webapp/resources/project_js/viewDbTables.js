@@ -46,7 +46,7 @@
 		var TagId = sessionStorage.getItem("tagId");
 		
 		var tableName = sessionStorage.getItem("tableName");
-		var dbName = "ceirconfig";
+		var dbName = "pview";
 		
 		//**************************************************filter table**********************************************
 		
