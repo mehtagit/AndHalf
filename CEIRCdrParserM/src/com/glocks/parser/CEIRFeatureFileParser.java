@@ -169,9 +169,8 @@ public class CEIRFeatureFileParser {
 
      public static void addCDRInProfileWithRule(String operator, Connection conn, ArrayList<Rule> rulelist, String operator_tag, String txn_id, String sub_feature, String usertype_name, int webActState) {
           CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
-
           try {
-               if (((sub_feature.equalsIgnoreCase("Register") || sub_feature.equalsIgnoreCase("update") || sub_feature.equalsIgnoreCase("UPLOAD"))) && !operator.equalsIgnoreCase("TYPE_APPROVED")) {
+               if ((( sub_feature.equalsIgnoreCase("update") || sub_feature.equalsIgnoreCase("UPLOAD"))) && !operator.equalsIgnoreCase("TYPE_APPROVED")) {
                     logger.info(" NOTE.. ** NOT FOR TYPE APPROVE  ::" + sub_feature);
                     new ConsignmentInsertUpdate().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name, webActState);
                } else if (operator.equalsIgnoreCase("consignment") && (sub_feature.equalsIgnoreCase("delete") || sub_feature.equalsIgnoreCase("REJECT"))) {
@@ -532,6 +531,8 @@ public class CEIRFeatureFileParser {
      }
 
 }
+
+
 
 
 
