@@ -116,6 +116,15 @@
               .statusNotAvailableColor{
               background: #898989 !important;
               }
+     tbody {
+    display: flex;
+    flex-wrap: wrap;
+}
+.trWidht{
+    width: 100px;
+    margin: 1px;
+    text-align: center;
+    line-height: 20px;}
 </style>
 </head>
 
@@ -149,7 +158,7 @@
 
 			  <a id="btn-Convert-Html2Image" href="#" style="margin-left: 92%;font-size: large;"><i class="fa fa-download" aria-hidden="true"> Download</i></a>
     		  <div id="previewImage" style="display: none;"></div>
-              <div id="html-content-holder" class="grid-container">
+              <div id="html-content-holder">
               
                   <table class='responsive-table striped datatable' id='activeDeviceTable'>
                             </table>
@@ -205,24 +214,25 @@
 			//	console.log(data);
         			for(var i=0 ;i<data.length;i++){
         				if(finalVal <= data[i].lastIntervalPacketDate){
-        					
-        					var classN="statusColor";
-        					//$('#activeDeviceTable').append("<tr class="+classN+"><td>"+data[i].substation+"</td><tr>");
-        					 $("#html-content-holder").append("<a href='javascript:void(0)'><div class='grid-item "+classN+"'>"+data[i].substation+"</div></a>");
+        					var classN="\"trWidht statusColor \"";
+        					$('#activeDeviceTable').append("<tr  class="+classN+"><td>"+data[i].substation+"</td><tr>");
+        					// $("#html-content-holder").append("<a href='javascript:void(0)'><div class='grid-item "+classN+"'>"+data[i].substation+"</div></a>");
         				     
         				}
         				else if( data[i].lastIntervalPacketDate == null){
-        					var classN="statusNotAvailableColor";
-        			//	$('#activeDeviceTable').append("<tr class="+classN+"><td>"+data[i].substation+"</td><tr>");
+        					var classN="\"trWidht statusNotAvailableColor \"";
+        			
+        				$('#activeDeviceTable').append("<tr class="+classN+"><td>"+data[i].substation+"</td><tr>");
         					
-          			$("#html-content-holder").append("<a href='javascript:void(0)'><div class='grid-item "+classN+"'>"+data[i].substation+"</div></a>");
+          			//$("#html-content-holder").append("<a href='javascript:void(0)'><div class='grid-item "+classN+"'>"+data[i].substation+"</div></a>");
           				     
         				}
         				else{
-        				var classN="NotstatusColor";
-        				//$('#activeDeviceTable').append("<tr class="+classN+"><td>"+data[i].substation+"</td><tr>");
+        	
+        				var classN="\"trWidht NotstatusColor \"";
+        				$('#activeDeviceTable').append("<tr class="+classN+"><td>"+data[i].substation+"</td><tr>");
     					
-       					$("#html-content-holder").append("<a href='javascript:void(0)'><div class='grid-item "+classN+"'>"+data[i].substation+"</div></a>");
+       					//$("#html-content-holder").append("<a href='javascript:void(0)'><div class='grid-item "+classN+"'>"+data[i].substation+"</div></a>");
        				     
         				}
      // $('div#initialloader').delay(300).fadeOut('slow');
