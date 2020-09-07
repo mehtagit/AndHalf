@@ -124,7 +124,8 @@
     width: 100px;
     margin: 1px;
     text-align: center;
-    line-height: 20px;}
+    line-height: 20px;
+    color: #fff !important;}
 </style>
 </head>
 
@@ -157,7 +158,7 @@
 						<div class="col s12 m12">
 
 			  <a id="btn-Convert-Html2Image" href="#" style="margin-left: 92%;font-size: large;"><i class="fa fa-download" aria-hidden="true"> Download</i></a>
-    		  <div id="previewImage" style="display: none;"></div>
+    	
               <div id="html-content-holder">
               
                   <table class='responsive-table striped datatable' id='activeDeviceTable'>
@@ -240,25 +241,35 @@
         		}
         	
         	});
-        	
-        	
-        	
-            var element = $("#html-content-holder"); // global variable
-            var getCanvas; // global variable
 
-            html2canvas(element, {
-                onrendered: function (canvas) {
-                    $("#previewImage").append(canvas);
-                    getCanvas = canvas;
+           
+        });
+        
+        
+        
+        $('#btn-Convert-Html2Image').on('click', function() {
+            html2canvas($('#activeDeviceTable'), {
+                onrendered: function(canvas) {                                      
+
+                    var saveAs = function(uri, filename) {
+                        var link = document.createElement('a');
+                        if (typeof link.download === 'string') {
+                            document.body.appendChild(link); // Firefox requires the link to be in the body
+                            link.download = filename;
+                            link.href = uri;
+                            link.click();
+                            document.body.removeChild(link); // remove the link when done
+                        } else {
+                            location.replace(uri);
+                        }
+                    };
+
+                    var img = canvas.toDataURL("image/png"),
+                        uri = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+
+                    saveAs(uri, 'tableExport.png');
                 }
-            });
-
-            $("#btn-Convert-Html2Image").on('click', function () {
-                var imgageData = getCanvas.toDataURL("image/png");
-                // Now browser starts downloading it instead of just showing it
-                var newData = imgageData.replace(/^data:image\/png/, "data:application/octet-stream");
-                $("#btn-Convert-Html2Image").attr("download", "image.png").attr("href", newData);
-            });
+            }); 
         });
 	</script>
 <script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
