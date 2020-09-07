@@ -63,7 +63,6 @@
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
 
-
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
 
@@ -71,6 +70,7 @@
 <!------------------------------------------- Dragable Model---------------------------------->
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 
+    <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js"></script>
 
 
 <link rel="stylesheet"
@@ -94,11 +94,38 @@
 	margin: auto;
 	margin-top: 10px;
 }
-
-table.dataTable.display tbody tr:first-child td {
-	border-top: none;
-	min-width: 120px !important;
+              .grid-container {
+                display: grid;
+				grid-gap:2px;
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                background-color: #333;
+                padding: 10px;
+              }
+              .grid-item {
+                background-color: rgba(255, 255, 255, 0.8);
+                border: 1px solid rgba(0, 0, 0, 0.8);
+                padding: 20px;
+                font-size: 30px;
+                text-align: center;
+		color: cadetblue;
+              }
+              .statusColor{
+              background: #008000 !important;}
+              .NotstatusColor{
+              background: #ADD8E6 !important;}
+              .statusNotAvailableColor{
+              background: #898989 !important;
+              }
+     tbody {
+    display: flex;
+    flex-wrap: wrap;
 }
+.trWidht{
+    width: 100px;
+    margin: 1px;
+    text-align: center;
+    line-height: 20px;
+    color: #fff !important;}
 </style>
 </head>
 
@@ -116,7 +143,7 @@ table.dataTable.display tbody tr:first-child td {
 
 	<section id="content">
 		<!--start container-->
-		<div id="initialloader"></div>
+	<!-- 	<div id="initialloader"></div> -->
 		<div class="container">
 			<div class="section">
 				<div class="row card-panel">
@@ -130,21 +157,17 @@ table.dataTable.display tbody tr:first-child td {
 						<div class="row"></div>
 						<div class="col s12 m12">
 
-							<div class="col s12 m12 info-div center" id="infoBox"
-								style="margin-top: 30px;"></div>
-							<div class="col s12 m12" style="padding-bottom: 40px;">
-								<div class="wrap-table">
-									<h4 class="header2"
-										style="font-weight: bold; margin-top: 50px;">
-										<spring:message code="table.header" />
-									</h4>
-
-									<table class="responsive-table striped display"
-										id="notificationLibraryTable" cellspacing="0">
-
-									</table>
-								</div>
-							</div>
+			  <a id="btn-Convert-Html2Image" href="#" style="margin-left: 92%;font-size: large;"><i class="fa fa-download" aria-hidden="true"> Download</i></a>
+    	
+              <div id="html-content-holder">
+              
+                  <table class='responsive-table striped datatable' id='activeDeviceTable'>
+                            </table>
+                            
+             <%--  <c:forEach items="${list}" var="item">
+                <a href="#"><div class="grid-item">${item.id}</div></a>
+               </c:forEach> --%>
+              </div>
 
 						</div>
 
@@ -160,57 +183,95 @@ table.dataTable.display tbody tr:first-child td {
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 
-
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-
-
-
-
-
-	<!-- i18n library -->
-	<script type="text/javascript"
-		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/i18n.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/messagestore.js"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/fallbacks.js"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/language.js"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/parser.js"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/emitter.js"></script>
-
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/bidi.js"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/history.js"></script>
-
-	<script type="text/javascript"
-		src="${context}/resources/i18n_library/min.js"></script>
-
-
 	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
+<%-- 	<script type="text/javascript"
 		src="${context}/resources/project_js/home.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src=""
-		async></script>
+	 --%><script type="text/javascript">
+
+        $(document).ready(function () {
+        	var currentTime = new Date()
+        	var month = ("0" + (currentTime.getMonth() + 1)).slice(-2)
+        	var day = ("0" + (currentTime.getDate())).slice(-2)
+        	var hours=("0"+ (currentTime.getHours() - 6)).slice(-2)
+        	var year = currentTime.getFullYear();
+        	var finalVal=year+"-"+month+"-"+day+" "+hours+":"+currentTime.getMinutes()+":"+currentTime.getSeconds();
+        //("0" + currentHours).slice(-2)
+        	var token = $("meta[name='_csrf']").attr("content");
+        	var header = $("meta[name='_csrf_header']").attr("content");
+        	$.ajaxSetup({
+        	headers:
+        	{ 'X-CSRF-TOKEN': token }
+        	});
+        	$.ajax({
+        		type : 'GET',
+        		url : 'http://13.234.49.133:9004/substation/station/get',
+        		contentType : "application/json",
+        		success: function(data){
+			//	console.log(data);
+        			for(var i=0 ;i<data.length;i++){
+        				if(finalVal <= data[i].lastIntervalPacketDate){
+        					var classN="\"trWidht statusColor \"";
+        					$('#activeDeviceTable').append("<tr  class="+classN+"><td>"+data[i].substation+"</td><tr>");
+        					// $("#html-content-holder").append("<a href='javascript:void(0)'><div class='grid-item "+classN+"'>"+data[i].substation+"</div></a>");
+        				     
+        				}
+        				else if( data[i].lastIntervalPacketDate == null){
+        					var classN="\"trWidht statusNotAvailableColor \"";
+        			
+        				$('#activeDeviceTable').append("<tr class="+classN+"><td>"+data[i].substation+"</td><tr>");
+        					
+          			//$("#html-content-holder").append("<a href='javascript:void(0)'><div class='grid-item "+classN+"'>"+data[i].substation+"</div></a>");
+          				     
+        				}
+        				else{
+        	
+        				var classN="\"trWidht NotstatusColor \"";
+        				$('#activeDeviceTable').append("<tr class="+classN+"><td>"+data[i].substation+"</td><tr>");
+    					
+       					//$("#html-content-holder").append("<a href='javascript:void(0)'><div class='grid-item "+classN+"'>"+data[i].substation+"</div></a>");
+       				     
+        				}
+     // $('div#initialloader').delay(300).fadeOut('slow');
+        			}
+        		}
+        	
+        	});
+
+           
+        });
+        
+        
+        
+        $('#btn-Convert-Html2Image').on('click', function() {
+            html2canvas($('#activeDeviceTable'), {
+                onrendered: function(canvas) {                                      
+
+                    var saveAs = function(uri, filename) {
+                        var link = document.createElement('a');
+                        if (typeof link.download === 'string') {
+                            document.body.appendChild(link); // Firefox requires the link to be in the body
+                            link.download = filename;
+                            link.href = uri;
+                            link.click();
+                            document.body.removeChild(link); // remove the link when done
+                        } else {
+                            location.replace(uri);
+                        }
+                    };
+
+                    var img = canvas.toDataURL("image/png"),
+                        uri = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+
+                    saveAs(uri, 'tableExport.png');
+                }
+            }); 
+        });
+	</script>
 <script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
 
 </body></html>
