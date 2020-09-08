@@ -128,16 +128,16 @@ a#newUserLink {
 							<form id="loginForm" onsubmit="return login()">
 								<div class="col s12 m12 l12">
 									<div class="row">
-<div class="col s9 m10 select-lang-lable">
+<%-- <div class="col s9 m10 select-lang-lable">
 										<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 										</div>
-										<%-- <div class="col s3 m2 right" style="padding: 0;">
+										 <div class="col s3 m2 right" style="padding: 0;">
 											<select class="browser-default select-lang-drpdwn"
 												id="langlist">
 												<option value="en">English</option>
 												<option value="km"><spring:message code="lang.khmer" /></option>
 											</select>
-										</div> --%>
+										</div>  --%>
 										<div class="col s12 m12">
 											<h5 style="text-align: -webkit-center;">
 												<spring:message code="registration.login" />
