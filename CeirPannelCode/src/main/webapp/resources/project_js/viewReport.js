@@ -31,8 +31,8 @@
 		//var sourceType =localStorage.getItem("sourceType");
 		//var TagId = sessionStorage.getItem("tagId");
 		
-		var reportnameId = sessionStorage.getItem("reportname");
-		var reportNameInterp = sessionStorage.getItem("reportInterp");
+		/*var reportnameId = sessionStorage.getItem("reportname");
+		var reportNameInterp = sessionStorage.getItem("reportInterp");*/
 		
 		
 		//**************************************************filter table**********************************************
@@ -69,7 +69,7 @@
 			});	
 
 		$.ajax({
-				url: 'tableHeaders?reportnameId='+parseInt(reportnameId),
+				url: 'tableHeaders?reportnameId=1',
 				type: 'POST',
 				dataType: "json",
 				success: function(result){
@@ -133,7 +133,7 @@
 				{ 'X-CSRF-TOKEN': token }
 			});
 			$.ajax({
-				url: 'dbReportTable/pageRendering?reportName='+reportNameInterp,
+				url: 'dbReportTable/pageRendering',
 				type: 'POST',
 				dataType: "json",
 				success: function(data){

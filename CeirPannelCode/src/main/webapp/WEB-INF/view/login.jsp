@@ -207,11 +207,11 @@ a#newUserLink {
 											</div>
 										</div>
 
-										<a href="${context}/forgotPassword"
+										<%-- <a href="${context}/forgotPassword"
 											class="right forgotPassword"><spring:message
 												code="registration.forgotpassword" /></a> <span><a
 											href="JavaScript:Void(0);" id="newUserLink" class="right"><spring:message
-													code="registration.newUser" /></a></span>
+													code="registration.newUser" /></a></span> --%>
 									</div>
 								</div>
 							</form>

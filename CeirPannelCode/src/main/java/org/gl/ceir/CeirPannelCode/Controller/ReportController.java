@@ -43,15 +43,9 @@ public class ReportController {
 	DBTablesFeignClient dBTablesFeignClient;
 	
 	@GetMapping("/report")
-	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,
-								@RequestParam(name="tableName", required = false) String tableName, HttpSession session) {
+	public ModelAndView pageView(HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
-		if("other".equals(via)) {
-			modelAndView.setViewName("viewReport");
-		}
-		else {
-			modelAndView.setViewName("selectReport");
-		}
+		modelAndView.setViewName("viewReport");
 		return modelAndView;
 	}
 
