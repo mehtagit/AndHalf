@@ -1,7 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
 public class ReportResponse {
-	private Integer reportnameId;
+	private Integer reportnameId,reportCategory;
 	private String reportName;
 	private Integer status;
 	private Integer reportOrder;
@@ -18,6 +18,12 @@ public class ReportResponse {
 	}
 	public void setReportnameId(Integer reportnameId) {
 		this.reportnameId = reportnameId;
+	}
+	public Integer getReportCategory() {
+		return reportCategory;
+	}
+	public void setReportCategory(Integer reportCategory) {
+		this.reportCategory = reportCategory;
 	}
 	public String getReportName() {
 		return reportName;
@@ -90,6 +96,8 @@ public class ReportResponse {
 		StringBuilder builder = new StringBuilder();
 		builder.append("ReportResponse [reportnameId=");
 		builder.append(reportnameId);
+		builder.append(", reportCategory=");
+		builder.append(reportCategory);
 		builder.append(", reportName=");
 		builder.append(reportName);
 		builder.append(", status=");
@@ -115,6 +123,7 @@ public class ReportResponse {
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 	
 	

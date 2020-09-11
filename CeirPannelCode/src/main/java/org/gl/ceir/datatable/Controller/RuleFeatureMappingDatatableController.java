@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
-import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
+import org.gl.ceir.CeirPannelCode.Feignclient.GsmaFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.InterRelatedRuleFeatureMapping;
 import org.gl.ceir.CeirPannelCode.Model.NewRule;
-import org.gl.ceir.CeirPannelCode.Model.RuleListContent;
 import org.gl.ceir.CeirPannelCode.Model.RuleNameModel;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
@@ -22,17 +22,13 @@ import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
-import org.gl.ceir.pagination.model.RegistrationContentModel;
-import org.gl.ceir.pagination.model.RegistrationPaginationModel;
 import org.gl.ceir.pagination.model.RuleFeatureMappingContent;
 import org.gl.ceir.pagination.model.RuleFeatureMappingPagination;
-import org.gl.ceir.pagination.model.RuleListPaginationModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -63,7 +59,8 @@ public class RuleFeatureMappingDatatableController {
 	DatatableResponseModel datatableResponseModel;
 	@Autowired
 	RuleFeatureMappingPagination ruleFeatureMappingPagination;
-
+	@Autowired GsmaFeignClient gsmaFeignClient;
+	@Autowired InterRelatedRuleFeatureMapping interRelatedRuleFeatureMapping;
 	@PostMapping("ruleFeatureMappingListData")
 	public ResponseEntity<?> getData(@RequestParam(name = "type", required = false) String role,
 			HttpServletRequest request, HttpSession session) {
@@ -241,5 +238,7 @@ public class RuleFeatureMappingDatatableController {
 		GenricResponse response = feignCleintImplementation.delete(newRule);
 		return response;
 
-	}
+	}	
+	
+	
 }

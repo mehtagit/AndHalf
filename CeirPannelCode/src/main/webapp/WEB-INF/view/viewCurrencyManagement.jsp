@@ -159,7 +159,7 @@
 					
 					</div> -->
 					<div class="col s12 m6">
-					<label for="port" class="active">Month</label>
+					<label for="port" class="active">Month<span class="star">  *</span></label>
                      	 <select class="browser-default" id="addMonth" required="required">
                                 <option value="" selected >Select Month</option>
                           </select>
@@ -168,7 +168,7 @@
                     </div>
 					
 					<div class="col s12 m6">
-					<label for="port" class="active">Year</label>
+					<label for="port" class="active">Year<span class="star">  *</span></label>
                      	 <select class="browser-default" id="addYear" required="required">
                                 <option value="" selected>Select Year</option>
                           </select>
@@ -177,7 +177,7 @@
                     </div>
 					
 					<div class="col s12 m6">
-					<label for="port" class="active">Currency</label>
+					<label for="port" class="active">Currency<span class="star">  *</span></label>
                      	 <select class="browser-default" id="currency" required="required">
                                 <option value=""  selected>Select Currency</option>
                           </select>
@@ -212,7 +212,7 @@
                 <div class="row" style="margin-top: 10px;">
 					
 					<div class="col s12 m6">
-					<label for="port" class="active">Month<span class="star"> *</span></label>
+					<label for="port" class="active">Month</label>
                      	 <select class="browser-default"  id="editMonth" required="required"  disabled>
                                 <option value="" selected>Select Month</option>
                           </select>
@@ -221,14 +221,14 @@
                     </div>
 					
 					<div class="col s12 m6">
-					<label for="port" class="active">Year<span class="star"> *</span></label>
+					<label for="port" class="active">Year</label>
                      	 <select class="browser-default" id="editYear" required="required" disabled>
                                 <option value=""  selected>Select Year</option>
                           </select>
                     </div>
 					
 					<div class="col s12 m6">
-					<label for="editCurrency" class="active">Currency<span class="star"> *</span></label>
+					<label for="editCurrency" class="active">Currency</label>
                      	 <select class="browser-default" id="editCurrency" required="required" disabled>
                                 <option value=""  selected>Select Currency</option>
                           </select>

@@ -3356,3 +3356,23 @@ div#error_Modal_reg {
 .width13{
 	    width: 13%;
 }
+/*---------------------------------------
+     changes-08-0-2020
+  ------------------------------------------*/
+.input-field input{
+	margin-bottom: 0px !important;
+}
+
+.input-field-addon .teal-text{
+    position: absolute;
+    top: 10px !important;
+    right: 10px;
+}
+
+#enddatepicker .fa.fa-calendar{
+	margin-top: -28px !important;
+}
+
+div#viewuplodedModel {
+      max-height: 100%;
+}

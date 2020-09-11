@@ -184,10 +184,13 @@ section {
 			<div class="container-fluid pageHeader">
 				<p class="PageHeading"><spring:message code="sidebar.Report" /></p>
 			</div>
+		
 			<div class="row">
-				<div class="col s12 m12" style="margin-top: 20px;">
+			  <form action="#" onsubmit="return hide()">
+				<div class="col s12 m12">
 					<div id="submitbtn">
-						<div class="input-field col s12 m1">
+						
+					<%-- 	<div class="input-field col s12 m1">
 							<label for="Search" class="center-align ml-10"><spring:message code="sidebar.Report" /></label>
 						</div>
 						<div class="input-field col s7 m4">
@@ -195,18 +198,77 @@ section {
                                 <option value=""  selected=""><spring:message code="select.report" /></option>
                                  </select>
                          </div>
-						<div class="input-field col s12 m2 l2">
-							<button type="button" class="btn"  id="submit" onclick="hide();"><spring:message code="button.submit" /></button>
+ --%>					
+ 						<div class="col s12 m4 selectDropdwn">
+							<label for="reportCatagory"><spring:message
+									code="sidebar.ReportCatagory" /> <span class="star">*</span></label> <select
+								class="browser-default" title="<spring:message code="" />"
+								oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+								required id="reportCatagory">
+								<option value="" disabled selected><spring:message
+										code="select.reportCatagory" /></option>
+							</select>
+						</div>
+ 										
+						<div class="col s12 m4 selectDropdwn">
+							<label for="tableId"><spring:message
+									code="sidebar.Report" /> <span class="star">*</span></label> <select
+								class="browser-default" title="<spring:message code="" />"
+								oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+								required id="tableId">
+								<option value="" disabled selected><spring:message
+										code="select.report"/></option>
+							</select>
+						</div>
+						<div class="input-field col s12 m2 l2" style="margin-top: 39px;">
+							<%-- <button type="button" class="btn"  id="submit" onclick="hide();"><spring:message code="button.submit" /></button> --%>
+							<button class="btn " type="submit"><spring:message code="button.submit" /></button>
 						</div>
 					</div>
 				</div>
+				</form>
 			</div>
+		
 		</div>
 	</section>
+	<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/i18n.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/language.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/bidi.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 	<script
 		src="${context}/resources/custom_js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>

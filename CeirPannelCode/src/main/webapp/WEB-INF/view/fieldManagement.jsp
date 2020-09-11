@@ -227,7 +227,7 @@
     </div>
 		
 	<div id="confirmField" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.header.submitFieldRecord" /></h6>
+		<h6 class="modal-header">Add New Field</h6>
 		<div class="modal-content">
 			<div class="row">
 				<h6 id="sucessMessage">New Field Added Successfully</h6>

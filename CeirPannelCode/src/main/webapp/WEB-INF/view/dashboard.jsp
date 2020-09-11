@@ -178,10 +178,10 @@ div#error_Modal {
 					</ul>
 					<ul id="chat-out" class="right hide-on-med-and-down"
 						style="overflow: inherit !important;">
-						<li><a id="manualDownload" download
+						<li><a id="manualDownload" 
 							style="color: white; cursor: pointer;"><i
 								class="fa fa-download download-icon" aria-hidden="true"
-								title="Download Manual" style="color: #fff; line-height: 3;"></i></a></li>
+								title="<spring:message code="title.manual" />" style="color: #fff; line-height: 3;"></i></a></li>
 						<li>
 							<div id="divLang" style="display: flex; margin: 8px 6px;"
 								class="darken-1">
@@ -363,7 +363,8 @@ div#error_Modal {
 
 					<p>
 						<label style="margin-right: 50px"> <input type="radio"
-							name="status" value="Deactivate"
+							name="status" value="Deactivate" id="deac" oninput="InvalidRadioMsg('radio');"
+					 oninvalid="InvalidRadioMsg('radio');"
 							required> <span> <spring:message
 									code="registration.deactivate" />
 						</span></label>
@@ -373,8 +374,9 @@ div#error_Modal {
 				<%
 					//String status = (String) session.getAttribute("userStatus");
 				Integer statusValue = (Integer) session.getAttribute("userStatusValue");
+				
 				%>
-				<%
+		<%
 					if (statusValue == 3) {
 				%>
 				<div class="row" style="height: 30px;">

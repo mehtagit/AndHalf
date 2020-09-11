@@ -6,6 +6,8 @@ import org.gl.ceir.CeirPannelCode.Feignclient.AnalyticsFeign;
 import org.gl.ceir.graph.model.ActiveDeviceCountContent;
 import org.gl.ceir.graph.model.ActiveDeviceCountResponseModel;
 import org.gl.ceir.graph.model.GraphRequest;
+import org.gl.ceir.graph.model.MobileDeviceCountContent;
+import org.gl.ceir.graph.model.MobileDeviceCountResponseModel;
 import org.gl.ceir.graph.model.UserDashboardCountContent;
 import org.gl.ceir.graph.model.UserDashboardResponseModel;
 import org.slf4j.Logger;
@@ -31,6 +33,8 @@ public class GraphDashboardCount {
 	@Autowired
 	UserDashboardResponseModel userDashboardResponseModel;
 	
+	@Autowired
+	MobileDeviceCountResponseModel mobileDeviceCountResponseModel;
 	@PostMapping("/report/count") 
 	public ResponseEntity<?> activeDeviceCount(@RequestBody GraphRequest graphRequest) {
 		Object response= null;
@@ -68,6 +72,29 @@ public class GraphDashboardCount {
 			
 			userDashboardResponseModel = gson.fromJson(apiResponse, UserDashboardResponseModel.class);
 			UserDashboardCountContent paginationContentList = userDashboardResponseModel.getContent();
+			return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.SERVICE_UNAVAILABLE);
+			}
+	
+	}
+	
+	@PostMapping("/mobileDevice/report/count") 
+	public ResponseEntity<?> mobileDeviceCount(@RequestBody GraphRequest graphRequest) {
+
+		Object response= null;
+		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(),  graphRequest.getPageSize(),  graphRequest.getFile());
+		 
+		 log.info("/mobileDevice/report/count:::::::::countRequest::::::::"+graphRequest+"::::::countResponse:::::::"+response);
+			try {
+			Gson gson= new Gson(); 
+			String apiResponse = gson.toJson(response);
+			log.info("/mobileDevice/report/count::::::apiResponse:::::::"+apiResponse);
+			
+			mobileDeviceCountResponseModel = gson.fromJson(apiResponse, MobileDeviceCountResponseModel.class);
+			MobileDeviceCountContent paginationContentList = mobileDeviceCountResponseModel.getContent();
 			return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
 			}
 			catch(Exception e) {

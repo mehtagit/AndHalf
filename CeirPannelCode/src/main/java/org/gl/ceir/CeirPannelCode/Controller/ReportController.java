@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,9 +60,9 @@ public class ReportController {
 	
 	/*---------------------------------------- Select Report Dropdown ----------------------------------------*/
 	
-	@RequestMapping(value="/getallreports",method ={org.springframework.web.bind.annotation.RequestMethod.POST})
-	public @ResponseBody List<ReportResponse> dbReportList(){
-		List<ReportResponse> dbTableList = dBTablesFeignClient.getAllReports();
+	@RequestMapping(value="/getallreports", method = {org.springframework.web.bind.annotation.RequestMethod.POST})
+	public @ResponseBody List<ReportResponse> dbReportList(@RequestParam(name="reportCategory", required = false) Integer reportCategory){
+		List<ReportResponse> dbTableList = dBTablesFeignClient.getAllReports(reportCategory);
 		return  dbTableList;
 	}
 	

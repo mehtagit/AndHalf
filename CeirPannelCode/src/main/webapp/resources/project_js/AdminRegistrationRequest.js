@@ -56,9 +56,9 @@
 				"userType":$("body").attr("data-roleType"),
 				"email" : $('#emailID').val(),
 				"phoneNo" : $('#phone').val(),
-				"username" : $('#userName').val(),
+				"username" : $("body").attr("session-valuetxnid") == "null" ? $('#userName').val() :  $("body").attr("session-valuetxnid"),
 		}
-		
+
 		if(lang=='km'){
 			var langFile="./resources/i18n/khmer_datatable.json";
 			}else if(lang=='en'){

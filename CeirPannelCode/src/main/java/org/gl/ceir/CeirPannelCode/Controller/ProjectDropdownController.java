@@ -13,11 +13,14 @@ import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceDropdown;
+import org.gl.ceir.CeirPannelCode.Model.InterRelatedRuleFeatureMapping;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.gl.ceir.pagination.model.MessageContentModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -119,11 +122,22 @@ public class ProjectDropdownController {
 
 		}
 	
-	@ResponseBody
-	@GetMapping("Rule/DistinctName")
-	public List<String> getFeatureName() {
-		List<String> dropdown = gsmaFeignClient.getFeatureName();
-		return dropdown;
+	@PostMapping("getFeatureName")
+	public ResponseEntity<?> getFeatureName(@RequestParam(name = "ruleName", required = false) String ruleName) {
+		List<String> list = gsmaFeignClient.getFeatureName(ruleName);
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
+	
+	
+	@PostMapping("ruleFeatureActionMapping")
+	public ResponseEntity<?>  ruleFeatureActionMapping(@RequestParam(name = "featureName", required = false) String featureName,
+			@RequestParam(name = "ruleName", required = false) String ruleName) {
+		List<InterRelatedRuleFeatureMapping> list= gsmaFeignClient.interRelateMapping(featureName, ruleName);
+		log.info("final::::"+list);
+		return new ResponseEntity<>(list, HttpStatus.OK);
+		
+	}
+
+
 	
 }
