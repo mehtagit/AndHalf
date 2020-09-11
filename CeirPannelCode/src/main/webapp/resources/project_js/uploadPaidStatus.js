@@ -38,8 +38,8 @@ $( document ).ready(function() {
 	
 	var In = $("body").attr("session-value");
 	 var loggedUserType=$("body").attr("data-roleType");
-	if(loggedUserType=='Custom' || loggedUserType=='Immigration' ){
-		var token = $("meta[name='_csrf']").attr("content");
+	if((loggedUserType=='Custom' || loggedUserType=='Immigration') && $("body").attr("data-filterSource")!='dashboard' ){
+				var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajaxSetup({
 		headers:
@@ -90,6 +90,16 @@ $( document ).ready(function() {
 
 
 	}
+	else if($("body").attr("data-filterSource")=='dashboard'){
+		//alert("dashboard");
+		$("#user123").css("display", "none");
+		$("#user456").css("display", "block");
+		$("#addbutton").css("display", "block");
+		$("#submitbtn").css("display", "none");
+		pageRendering(lang);
+		filter(lang,null);
+		$("#btnLink").css({display: "none"});
+		}
 	else{
 		////alert("a")
 		/*$.ajax({
@@ -743,7 +753,8 @@ function exportpaidStatus(){
 	var startDate = $('#startDate').val();
 	var endDate = $('#endDate').val();
 	var taxPaidStatus = $('#taxPaidStatus').val();
-    var nid = nationalId == null ? $('#nId').val() : nationalId
+    var nid = nationalId == null ? $('#nId').val() : nationalId;
+	
 	var table = $('#data-table-simple').DataTable();
     var status=$('#recordStatus').val();
     if( $("body").attr("data-filterSource")=='noti'){
@@ -755,6 +766,12 @@ function exportpaidStatus(){
 	var info = table.page.info(); 
 	var pageNo=info.page;
 	var pageSize =info.length;
+
+		if(typeof nid==="undefined"){ 
+                 nid="";
+    		}
+
+
 	window.location.href="./exportPaidStatus?startDate="+startDate+"&endDate="+endDate+"&taxPaidStatus="+taxPaidStatus+"&nid="+nid+"&txnId="+txnId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&status="+status;
 }
 

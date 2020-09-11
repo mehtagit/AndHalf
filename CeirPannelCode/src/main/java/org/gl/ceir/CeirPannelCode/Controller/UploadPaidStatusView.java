@@ -107,6 +107,10 @@ GrievanceFeignClient grievanceFeignClient;
 			modelAndView.setViewName("uploadPaidStatus");
 		
 		}
+		else if("dashboard".equals(source)) {
+			session.setAttribute("filterSource", source);
+			modelAndView.setViewName("uploadPaidStatus");
+			}
 		else {
 			modelAndView.setViewName("nidForm");
 		

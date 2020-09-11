@@ -4,12 +4,35 @@
 			headers:
 			{ 'X-CSRF-TOKEN': token }
 		});
-$.getJSON('./Rule/DistinctName', function(data) {
-	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i]).text(data[i]).appendTo('#Feature,#editFeature');
-	}
-});
 
+		
+		function getFeature(current){
+
+			$.ajax({
+				url: './getFeatureName?ruleName='+current.value,
+				type: 'POST',
+				processData: false,
+				contentType: false,
+				async : false,
+				success: function (data, textStatus, jqXHR) {
+
+					$('#Feature').empty();
+					var html='<option value="">Feature Name</option>';
+					$('#Feature').append(html);
+			    	for (i = 0; i < data.length; i++) {
+			    		$('<option>').val(data[i]).text(data[i]).appendTo('#Feature,#editFeature');
+			    	}
+					
+				
+				
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+
+				}
+			});
+
+		}
+		
 $.getJSON('./registrationUserType', function(data) {
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].usertypeName).text(data[i].usertypeName)
@@ -23,12 +46,36 @@ $.getJSON('./ruleName', function(data) {
 	}
 });
 
-$.getJSON('./getDropdownList/PERIOD_ACTION', function(data) {
+/*$.getJSON('./getDropdownList/PERIOD_ACTION', function(data) {
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].interp).text(data[i].interp)
 		.appendTo('#GracePeriod,#PostGracePeriod');
 	}
 });
+*/
+
+
+function getGrace(current){
+	var rule=$('#Rule').val();
+	$.ajax({
+		url: './ruleFeatureActionMapping?&ruleName='+rule+'&featureName='+current.value,
+		type: 'POST',
+		processData: false,
+		contentType: false,
+		async : false,
+		success: function (data, textStatus, jqXHR) {
+			$('#GracePeriod,#PostGracePeriod').empty();
+			
+	    for (i = 0; i < data.length; i++) {
+	    		$('<option>').val(data[i].actions).text(data[i].actions).appendTo('#GracePeriod,#PostGracePeriod');
+	    	}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+
+		}
+	});
+
+}
 
 
 $.getJSON('./getDropdownList/MOVE_TO_NEXT', function(data) {
