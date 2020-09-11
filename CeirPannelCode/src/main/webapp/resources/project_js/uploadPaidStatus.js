@@ -1860,7 +1860,6 @@ function deptImageValidation() {
 			$("#errorMsgOnModal").text($.i18n('ESNMsg'));
 			break;
 		}
-
 	}); 
 
 	function isLengthValid(val){
