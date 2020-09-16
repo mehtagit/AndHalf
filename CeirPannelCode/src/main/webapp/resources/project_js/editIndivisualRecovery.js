@@ -106,6 +106,9 @@ headers:
 		}
 		$('#bulkRecoveryDate').val(response.dateOfRecovery);
 		$('#sigleRecoveryimeiNumber1').val(response.stolenIndividualUserDB.imeiEsnMeid1);
+		if(response.stolenIndividualUserDB.imeiEsnMeid1=="" || response.stolenIndividualUserDB.imeiEsnMeid1==null){
+			$('#sigleRecoveryimeiNumber1').val('NA');	
+		}
 		$('#sigleRecoveryimeiNumber2').val(response.stolenIndividualUserDB.imeiEsnMeid2);
 		if(response.stolenIndividualUserDB.imeiEsnMeid2=="" || response.stolenIndividualUserDB.imeiEsnMeid2==null){
 			$('#sigleRecoveryimeiNumber2').val('NA');	
@@ -123,7 +126,20 @@ headers:
 		$("label[for='sigleRecoveryimeiNumber3']").addClass('active');
 		$("label[for='sigleRecoveryimeiNumber4']").addClass('active');
 		
-		
+		if ($('#pageViewType').val() == 'edit') {
+			if(response.stolenIndividualUserDB.imeiEsnMeid2=="" || response.stolenIndividualUserDB.imeiEsnMeid2==null){
+				$('#sigleRecoveryimeiNumber2').val('');	
+			}
+			if(response.stolenIndividualUserDB.imeiEsnMeid1=="" || response.stolenIndividualUserDB.imeiEsnMeid1==null){
+				$('#sigleRecoveryimeiNumber1').val('');	
+			}
+			if(response.stolenIndividualUserDB.imeiEsnMeid3=="" || response.stolenIndividualUserDB.imeiEsnMeid3==null){
+				$('#sigleRecoveryimeiNumber3').val('');	
+			}
+			if(response.stolenIndividualUserDB.imeiEsnMeid4=="" || response.stolenIndividualUserDB.imeiEsnMeid4==null){
+				$('#sigleRecoveryimeiNumber4').val('');	
+			}
+		}
 		
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -141,7 +157,7 @@ headers:
 function updateIndivisualRecovery()
 {
   var formData= new FormData();
-	 
+  $('div#initialloader').fadeIn('fast');
 	var sigleRecoverydeviceBrandName=$('#editsigleRecoverydeviceBrandName').val();
 	var sigleRecoveryimeiNumber1=$('#sigleRecoveryimeiNumber1').val();
 	var sigleRecoveryimeiNumber2=$('#sigleRecoveryimeiNumber2').val();
@@ -227,7 +243,7 @@ function updateIndivisualRecovery()
 		processData: false,
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
-		
+			$('div#initialloader').delay(300).fadeOut('slow');
 			if(response.errorCode=='0'){
 				$("#indivisualStolenButton").prop('disabled', true);
 				$('#stolenSucessPopUp').openModal({dismissible:false});

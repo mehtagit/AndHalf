@@ -5,7 +5,7 @@ function saveIndivisualRecoveryRequest()
 {
 var formData= new FormData();
 $("#singleDeviceRecovery").prop('disabled', true);
-
+$('div#initialloader').fadeIn('fast');
 	var sigleRecoverydeviceBrandName=$('#sigleRecoverydeviceBrandName').val();
 	var sigleRecoveryimeiNumber1=$('#sigleRecoveryimeiNumber1').val();
 	var sigleRecoveryimeiNumber2=$('#sigleRecoveryimeiNumber2').val();
@@ -95,7 +95,7 @@ $("#singleDeviceRecovery").prop('disabled', true);
 		processData: false,
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
-		
+			$('div#initialloader').delay(300).fadeOut('slow');
 			if(response.errorCode=='0'){
 				$("#indivisualStolenButton").prop('disabled', true);
 				$('#IndivisualStolenSucessPopup').openModal({
@@ -122,6 +122,7 @@ $("#singleDeviceRecovery").prop('disabled', true);
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			////console.log("error in ajax")
+			$('div#initialloader').delay(300).fadeOut('slow');
 
 		}
 	});

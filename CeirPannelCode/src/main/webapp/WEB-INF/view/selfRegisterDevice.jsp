@@ -752,7 +752,7 @@ position: fixed;
 															title="<spring:message code="validation.1516digit" />"
 															maxlength="16"> <label for="IMEIC1"><spring:message
 																code="title.three" /></label>
-													<p id="errorMsgOnModal" class="deviceErrorTitle" style="    margin-top: -154px;margin-left: 104px;"></p>
+													<p id="errorMsgOnModal" class="deviceErrorTitle" style="    margin-top: -140px;margin-left: 110px;"></p>
 													</div>
 
 													<div class="input-field col s12 m6">

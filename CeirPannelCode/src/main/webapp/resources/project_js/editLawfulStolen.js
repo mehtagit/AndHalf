@@ -285,6 +285,30 @@ $("#calender").css("display", "none");
 			$('div#initialloader').delay(300).fadeOut('slow');
 			
 			if ($('#pageViewType').val() == 'edit') {
+				if(response.stolenIndividualUserDB.imeiEsnMeid1=="" || response.stolenIndividualUserDB.imeiEsnMeid1==null){
+					$('#updatesingleStolenimei1').val("");	
+				}
+				if(response.stolenIndividualUserDB.imeiEsnMeid2=="" || response.stolenIndividualUserDB.imeiEsnMeid2==null){
+					$('#updatesingleStolenimei2').val("");	
+				}
+				if(response.stolenIndividualUserDB.imeiEsnMeid3=="" || response.stolenIndividualUserDB.imeiEsnMeid3==null){
+					$('#updatesingleStolenimei3').val("");	
+				}
+				if(response.stolenIndividualUserDB.imeiEsnMeid4=="" || response.stolenIndividualUserDB.imeiEsnMeid4==null){
+					$('#updatesingleStolenimei4').val("");	
+				}
+				if(response.stolenIndividualUserDB.contactNumber2=="" || response.stolenIndividualUserDB.contactNumber2==null){
+					$('#singleStolenphone3').val("");	
+				}
+				if(response.stolenIndividualUserDB.contactNumber3=="" || response.stolenIndividualUserDB.contactNumber3==null){
+					$('#singleStolenphone4').val("");	
+				}
+				if(response.stolenIndividualUserDB.contactNumber4=="" || response.stolenIndividualUserDB.contactNumber4==null){
+					$('#singleStolenphone5').val("");	
+				}
+				if(response.stolenIndividualUserDB.email=="" || response.stolenIndividualUserDB.email==null){
+					$('#singleStolenemail').val('');
+				}
 				setOpertorTypeMandaotry();
 			}
 			
@@ -304,7 +328,7 @@ $("#calender").css("display", "none");
 
 function updateIndivisualStolen()
 {
-
+	$('div#initialloader').fadeIn('fast');
 
 	var formData= new FormData();
 
@@ -458,7 +482,7 @@ function updateIndivisualStolen()
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
 			////console.log(response);
-
+			$('div#initialloader').delay(300).fadeOut('slow');
 			if(response.errorCode==0){
 				$("#IndivisualUpdateStolen").prop('disabled', true);
 				$('#stolenSucessPopUp').openModal({dismissible:false});
