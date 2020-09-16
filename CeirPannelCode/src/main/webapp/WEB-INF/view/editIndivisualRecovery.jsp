@@ -687,6 +687,7 @@ onclick="_Services._selectstartDate()"></i></span>
 	            	$('#headingType').text('');
 	            	$('#headingType').text(editrecoveryIndivisual);
 	            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",false);
+	            	  
 	            }
 	          
 	      }

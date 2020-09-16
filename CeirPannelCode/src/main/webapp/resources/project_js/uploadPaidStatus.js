@@ -753,8 +753,7 @@ function exportpaidStatus(){
 	var startDate = $('#startDate').val();
 	var endDate = $('#endDate').val();
 	var taxPaidStatus = $('#taxPaidStatus').val();
-    var nid = nationalId == null ? $('#nId').val() : nationalId;
-	
+    var nid = nationalId == null ? $('#nId').val() : nationalId
 	var table = $('#data-table-simple').DataTable();
     var status=$('#recordStatus').val();
     if( $("body").attr("data-filterSource")=='noti'){
@@ -1860,6 +1859,7 @@ function deptImageValidation() {
 			$("#errorMsgOnModal").text($.i18n('ESNMsg'));
 			break;
 		}
+
 	}); 
 
 	function isLengthValid(val){

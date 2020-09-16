@@ -112,7 +112,14 @@ headers:
 			$("#calender").css("display", "none"); 
 		}
 		
-		
+		if ($('#pageViewType').val() == 'edit') {
+			if(response.stolenOrganizationUserDB.phoneNo=="" || response.stolenOrganizationUserDB.phoneNo==null){
+				$('#bulkStolenContact').val("");
+			}
+			if(response.stolenOrganizationUserDB.email=="" || response.stolenOrganizationUserDB.email==null){
+				$('#bulkStolenofficeEmail').val("");
+			}
+		}
 		//$('#deviceListlink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.fileName+'","'+response.txnId+'")');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -125,7 +132,7 @@ headers:
 
 
 function updateCompanyStolenDetails(){
-	
+	$('div#initialloader').fadeIn('fast');
 	var formData= new FormData();
 	
 	var bulkStolencompanyName=$('#bulkStolencompanyName').val();
@@ -229,7 +236,7 @@ function updateCompanyStolenDetails(){
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
 		//////console.log(response)
-		
+			$('div#initialloader').delay(300).fadeOut('slow');
 		if(response.errorCode==0){
 			$("#companyStolenButton").prop('disabled', true);
 			$('#stolenSucessPopUp').openModal({dismissible:false});;

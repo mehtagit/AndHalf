@@ -111,7 +111,7 @@ function hide() {
 		                                  $('#endUserdatepicker').val(data.data.visaDb[0].visaExpiryDate).prop('readonly', true);
 		                                 // $('#endUserVisaNumber').val(data.data.visaDb[0].visaNumber).prop('readonly', true);
 		                                   $('#endUseremailID').val(data.data.email).prop('readonly', true); 
-		                             $('#firImageLink').attr("onclick",'previewFile("'+data.response+'","'+data.data.passportFileName+'","'+data.data.txnId+'","passport")');
+		                             $('#firImageLink').attr("onclick",'previewFile("'+data.response+'","'+data.data.passportFileName+'","'+data.data.txnId+'","'+data.data.docTypeInterp+'")');
 		                            
 						}
 					}

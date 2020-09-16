@@ -561,7 +561,7 @@ $.ajax({
 
 
 function saveIndivisualStolenRequest(){
-	
+	$('div#initialloader').fadeIn('fast');
 	var formData= new FormData();
 
 	var singleStolenfirstName=$('#singleStolenfirstName').val();
@@ -719,7 +719,7 @@ function saveIndivisualStolenRequest(){
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
 			//////console.log(response)
-
+			$('div#initialloader').delay(300).fadeOut('slow');
 			if(response.errorCode==0){
 				$("#indivisualStolenButton").prop('disabled', true);
 				$('#IndivisualStolenSucessPopup').openModal({
@@ -745,6 +745,7 @@ function saveIndivisualStolenRequest(){
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			//////console.log("error in ajax")
+			$('div#initialloader').delay(300).fadeOut('slow');
 
 		}
 	});
@@ -760,7 +761,7 @@ function saveIndivisualStolenRequest(){
 
 
 function saveCompanyStolenRequest(){
-	
+	$('div#initialloader').fadeIn('fast');
 	$("#bulkStolenButton").prop('disabled', true);
 	var formData= new FormData();
 
@@ -868,7 +869,7 @@ function saveCompanyStolenRequest(){
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
 			
-			$('#initialloader2').remove();
+			
 			$('div#initialloader').delay(300).fadeOut('slow');
 			//////console.log(response)
 
