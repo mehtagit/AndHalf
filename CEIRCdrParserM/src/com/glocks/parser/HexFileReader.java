@@ -166,7 +166,7 @@ public class HexFileReader {
 
                int fail_my_batch = 0;
                int pass_my_batch = 0;
-               int my_batch_count = 10;
+               int my_batch_count = 9;
                String toDate = " ? ";
                if (conn.toString().contains("oracle")) {
                     toDate = " TO_DATE(?,'yyyy/mm/dd hh24:mi:ss') ";
@@ -296,7 +296,7 @@ public class HexFileReader {
                new com.glocks.files.FileList().moveCDRFile(conn, fileName, repName, fileFolderPath, source);
 
           } catch (Exception e) {
-               logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
+               logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() +  e );
                e.printStackTrace();
                try {
                     if (conn != null) {
@@ -737,7 +737,7 @@ logger.debug("***");
                                              for (; j <= data.length; j++) {
 //                                        logger.info("DATA at setString " + data[j - 1].trim());
                                                   ps.setString(j, data[j - 1].trim());
-                                             }
+                                             } 
                                              ps.setString(j, txn_id);
                                              ps.setString(j + 1, fileName);
                                              ps.setString(j + 2, main_type);
@@ -745,11 +745,14 @@ logger.debug("***");
                                              ps.setString(j + 4, stringDate);
                                              ps.addBatch();
                                              pass_my_batch++;
+                                             
+                                            
                                         }
                                    }
                               }
                               k++;
-                              logger.info(k);
+                              logger.info("counting :  "+ k);
+                              
                               if (pass_my_batch == my_batch_count) {
                                    logger.info("Executing Pass Batch File");
                                    ps.executeBatch();
@@ -758,15 +761,19 @@ logger.debug("***");
                               }
                          }
                     }      // While close 
+                    
                     br.close();
+                    logger.debug("Batch started");
                     ps.executeBatch();
                     if (fr != null) {
                          fr.close();
                     }
+                    logger.debug("Batch ended");
                     rs = ps.getGeneratedKeys();
                     if (rs != null) {
                          rs.close();
                     }
+                    logger.debug("Batch endsed");
 //                    if (main_type.equalsIgnoreCase("Consignment")) {
 //                         ceirfunction.UpdateStatus ViaApi(conn, txn_id, 0, main_type);
 //                    } else {
@@ -793,7 +800,7 @@ logger.debug("***");
                          conn.rollback();
                     }
 
-                    new ErrorFileGenrator().gotoErrorFile(conn, txn_id, "  Something went Wrong. Please Contact to Ceir Admin.  ");
+                    new ErrorFileGenrator().gotoErrorFile(conn, txn_id, "Something went Wrong. Please Contact to Ceir Admin.  ");
                     new CEIRFeatureFileFunctions().UpdateStatusViaApi(conn, txn_id, 1, main_type);       //1 for reject
                     new CEIRFeatureFileFunctions().updateFeatureFileStatus(conn, txn_id, 5, main_type, subfeature); // update web_action_db    
                     conn.commit();
