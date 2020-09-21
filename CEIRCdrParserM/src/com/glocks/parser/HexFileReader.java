@@ -119,7 +119,7 @@ public class HexFileReader {
           return result;
      }
 
-     public void readConvertedCSVFile(Connection conn, String fileName, String repName /*oprtator NAme */, String fileFolderPath, int raw_upload_set_no, String source) {
+     public void readConvertedCSVFile(Connection conn, String fileName, String repName /*oprtator NAme */, String fileFolderPath, String source) {
           int total_error_record_count = 0;
           int k = 0;
           int rowInserted = 0;
@@ -166,7 +166,7 @@ public class HexFileReader {
 
                int fail_my_batch = 0;
                int pass_my_batch = 0;
-               int my_batch_count = raw_upload_set_no;
+               int my_batch_count = 10;
                String toDate = " ? ";
                if (conn.toString().contains("oracle")) {
                     toDate = " TO_DATE(?,'yyyy/mm/dd hh24:mi:ss') ";
@@ -326,7 +326,7 @@ public class HexFileReader {
 //        return result;
      }
 
-     public String[] readConvertedFeatureFile(Connection conn, String fileName, String filePath, String main_type, String basePath, int raw_upload_set_no, String txn_id, String subfeature, String management_table, String usertype_name) throws IOException, SQLException {
+     public String[] readConvertedFeatureFile(Connection conn, String fileName, String filePath, String main_type, String basePath,   String txn_id, String subfeature, String management_table, String usertype_name) throws IOException, SQLException {
           int i = 0;
           int k = 0;
           String query = null;
@@ -398,7 +398,7 @@ public class HexFileReader {
                query = "insert into " + main_type + "_raw" + "( ";
                int pass_my_batch = 0;
                int cnt = 0;
-               int my_batch_count = raw_upload_set_no;
+               int my_batch_count = 10;   //  raw_upload_set_no1 but tbl removed
                List aList = new ArrayList();
                List aList1 = new ArrayList();
                List alst = new ArrayList();
@@ -1200,37 +1200,37 @@ logger.debug("***");
           return lastDate;
      }
 
-     public String getPreviousFileCounts(String repName, Connection conn) {
-          String seq_no = null;
-          String query = null;
-          ResultSet rs = null;
-          Statement stmt = null;
-          try {
-               query = "select seq_no from rep_schedule where rep_name = '" + repName + "'";
-               logger.info("Query is " + query);
-               stmt = conn.createStatement();
-               rs = stmt.executeQuery(query);
-               while (rs.next()) {
-                    seq_no = rs.getString("seq_no");
-               }
-          } catch (Exception ex) {
-               seq_no = null;
-               ex.printStackTrace();
-          } finally {
-               if (conn != null) {
-                    try {
-                         if (rs != null) {
-                              rs.close();
-                         }
-                         if (stmt != null) {
-                              stmt.close();
-                         }
-                    } catch (Exception e) {
-                    }
-               }
-          }
-          return seq_no;
-     }
+//     public String getPreviousFileCounts(String repName, Connection conn) {
+//          String seq_no = null;
+//          String query = null;
+//          ResultSet rs = null;
+//          Statement stmt = null;
+//          try {
+//               query = "select seq_no from re p_schedule where rep_name = '" + repName + "'";
+//               logger.info("Query is " + query);
+//               stmt = conn.createStatement();
+//               rs = stmt.executeQuery(query);
+//               while (rs.next()) {
+//                    seq_no = rs.getString("seq_no");
+//               }
+//          } catch (Exception ex) {
+//               seq_no = null;
+//               ex.printStackTrace();
+//          } finally {
+//               if (conn != null) {
+//                    try {
+//                         if (rs != null) {
+//                              rs.close();
+//                         }
+//                         if (stmt != null) {
+//                              stmt.close();
+//                         }
+//                    } catch (Exception e) {
+//                    }
+//               }
+//          }
+//          return seq_no;
+//     }
 
      public String getFilePath(Connection conn, String tag_type) {
           String file_path = "";
@@ -1262,44 +1262,44 @@ logger.debug("***");
 
      }
 
-     public String updateNextCounts(String repName, Connection conn, int seq_no) {
-          String seq_no1 = null;
-          String query = null;
-          ResultSet rs = null;
-          Statement stmt = null;
-          try {
-               query = "update rep_schedule set seq_no='" + seq_no + "' where rep_name = '" + repName + "';";
-               logger.info("Query is " + query);
-               // PreparedStatement pstmt = conn.prepareStatement(query);
-               // pstmt.executeUpdate();
-
-               stmt = conn.createStatement();
-               logger.info("update count are " + stmt.executeUpdate(query));
-               conn.commit();
-
-               // rs = stmt.executeQuery(query);
-               // while( rs.next() ){
-               // seq_no = rs.getString("seq_no");
-               // }
-          } catch (Exception ex) {
-               seq_no1 = null;
-               ex.printStackTrace();
-          } finally {
-               if (conn != null) {
-                    try {
-                         if (rs != null) {
-                              rs.close();
-                         }
-                         if (stmt != null) {
-                              stmt.close();
-                         }
-                         // c onn.close();
-                    } catch (Exception e) {
-                    }
-               }
-          }
-          return seq_no1;
-     }
+//     public String updateNextCounts(String repName, Connection conn, int seq_no) {
+//          String seq_no1 = null;
+//          String query = null;
+//          ResultSet rs = null;
+//          Statement stmt = null;
+//          try {
+//               query = "update rep _schedule set seq_no='" + seq_no + "' where rep_name = '" + repName + "';";
+//               logger.info("Query is " + query);
+//               // PreparedStatement pstmt = conn.prepareStatement(query);
+//               // pstmt.executeUpdate();
+//
+//               stmt = conn.createStatement();
+//               logger.info("update count are " + stmt.executeUpdate(query));
+//               conn.commit();
+//
+//               // rs = stmt.executeQuery(query);
+//               // while( rs.next() ){
+//               // seq_no = rs.getString("seq_no");
+//               // }
+//          } catch (Exception ex) {
+//               seq_no1 = null;
+//               ex.printStackTrace();
+//          } finally {
+//               if (conn != null) {
+//                    try {
+//                         if (rs != null) {
+//                              rs.close();
+//                         }
+//                         if (stmt != null) {
+//                              stmt.close();
+//                         }
+//                         // c onn.close();
+//                    } catch (Exception e) {
+//                    }
+//               }
+//          }
+//          return seq_no1;
+//     }
 
      public String getTableSize(Connection conn, String tableName) {
           String tableSize = null;

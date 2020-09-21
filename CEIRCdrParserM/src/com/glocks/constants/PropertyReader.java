@@ -57,13 +57,11 @@ public class PropertyReader {
         }
 
     }
-    
-    
-    
 }
 
 //jdbc_driver=oracle.jdbc.driver.OracleDriver
 //db_url=jdbc:jdbc:oracle:thin:@172.24.1.96:1521/dbdmcrac
 //username=CEIRCONFIG
 //password=CEIRCONFIG
+
 

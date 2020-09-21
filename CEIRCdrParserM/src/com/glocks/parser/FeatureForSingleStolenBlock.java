@@ -28,7 +28,7 @@ public class FeatureForSingleStolenBlock {
 
      Logger logger = Logger.getLogger(FeatureForSingleStolenBlock.class);
 
-     public void readFeatureWithoutFile(Connection conn, String feature, int raw_upload_set_no, String txn_id, String sub_feature, String mgnt_table_db, String user_type) {
+     public void readFeatureWithoutFile(Connection conn, String feature, String txn_id, String sub_feature, String mgnt_table_db, String user_type) {
           Map<String, String> map = new HashMap<String, String>();
           try {
                logger.info("  readFeatureWithoutFile ");

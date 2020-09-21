@@ -1,5 +1,6 @@
 package com.glocks.parser;
 
+import com.glocks.parser.service.ConsignmentInsertUpdate;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.util.HashMap;
@@ -25,13 +26,13 @@ public class CEIRFeatureFileUploader {
           String basePath = "";
           String complete_file_path = "";
           CEIRParserMain ceir_parser_main = new CEIRParserMain();
-          int raw_upload_set_no = 1;
+//          int raw_upload_set_no = 1;
           String[] rawDataResult = null;
           String feature = null;
           if (args.length == 1) {
                feature = args[0];
           }
-          new ErrorFileGenrator().apiConnectionErrorFileReader();
+//          new ErrorFileGenrator().apiConnectionErrorFileReader();     // required later
           HashMap<String, String> feature_file_management = new HashMap<String, String>();
           CEIRFeatureFileFunctions ceirfunction = new CEIRFeatureFileFunctions();
           HashMap<String, String> feature_file_mapping = new HashMap<String, String>();
@@ -61,6 +62,7 @@ public class CEIRFeatureFileUploader {
                     }
                     if (file_details.getString("feature").equalsIgnoreCase("Stolen") && (file_details.getString("sub_feature").equalsIgnoreCase("Approve") || file_details.getString("sub_feature").equalsIgnoreCase("Accept"))) {
                          updateDeviceDetailsByTxnId(conn, file_details.getString("txn_id"), "device_lawful_db");
+                         new ConsignmentInsertUpdate().rawTableCleanUp(conn, file_details.getString("feature"), file_details.getString("txn_id"));
                          ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                          logger.debug("Web Action 4 done ");
                          break;
@@ -73,6 +75,7 @@ public class CEIRFeatureFileUploader {
                     }
                     if (file_details.getString("feature").equalsIgnoreCase("Recovery") && (file_details.getString("sub_feature").equalsIgnoreCase("Approve") || file_details.getString("sub_feature").equalsIgnoreCase("Accept"))) {
                          removeDeviceDetailsByTxnId(conn, file_details.getString("txn_id"), "device_lawful_db");
+                           new ConsignmentInsertUpdate().rawTableCleanUp(conn, file_details.getString("feature"), file_details.getString("txn_id"));
                          ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                          logger.debug("Web Action 4 done ");
                          break;
@@ -86,6 +89,7 @@ public class CEIRFeatureFileUploader {
                     }
                     if (file_details.getString("feature").equalsIgnoreCase("Block") && (file_details.getString("sub_feature").equalsIgnoreCase("Approve") || file_details.getString("sub_feature").equalsIgnoreCase("Accept"))) {
                          updateDeviceDetailsByTxnId(conn, file_details.getString("txn_id"), "device_operator_db");
+                           new ConsignmentInsertUpdate().rawTableCleanUp(conn, file_details.getString("feature"), file_details.getString("txn_id"));
                          ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                          logger.debug("Web Action 4 done ");
                          break;
@@ -99,6 +103,7 @@ public class CEIRFeatureFileUploader {
 
                     if (file_details.getString("feature").equalsIgnoreCase("Unblock") && (file_details.getString("sub_feature").equalsIgnoreCase("Approve") || file_details.getString("sub_feature").equalsIgnoreCase("Accept"))) {
                          removeDeviceDetailsByTxnId(conn, file_details.getString("txn_id"), "device_operator_db");
+                           new ConsignmentInsertUpdate().rawTableCleanUp(conn, file_details.getString("feature"), file_details.getString("txn_id"));
                          ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                          logger.debug("Web Action 4 done ");
                          break;
@@ -136,7 +141,7 @@ public class CEIRFeatureFileUploader {
                               }
                          } else {     // optimise
                               if (feature_file_management.get("delete_flag") == null) {
-                                   logger.info(" Delete_flag null");
+                                   logger.info("Delete_flag null");
                               } else {
                                    if (feature_file_management.get("delete_flag").equals("0")) {
                                         logger.debug("  Other Than Stock/Consignment , delete Flag : " + feature_file_management.get("delete_flag"));
@@ -172,11 +177,11 @@ public class CEIRFeatureFileUploader {
                     logger.debug("user_types *****" + user_type);
                     if (!(feature_file_management.get("file_name") == null || feature_file_management.get("file_name").equals(""))) {
                          logger.info("File Found... " + file_details.getString("feature"));
-                         ResultSet my_result_set = ceir_parser_main.operatorDetails(conn, file_details.getString("feature"));
-                         logger.info("my_result_set " + my_result_set);
-                         if (my_result_set.next()) {
-                              raw_upload_set_no = my_result_set.getInt("raw_upload_set_no");
-                         }
+//                         ResultSet my_result_set = ceir_parser_main.operatorDetails(conn, file_details.getString("feature"));
+//                         logger.info("my_result_set " + my_result_set);
+//                         if (my_result_set.next()) {
+//                              raw_upload_set_no = my_result_set.getInt("raw_upload_set_no");
+//                         }
                          basePath = hfr.getFilePath(conn, "system_upload_filepath");  // filePath
                          if (!basePath.endsWith("/")) {
                               basePath += "/";
@@ -198,7 +203,7 @@ public class CEIRFeatureFileUploader {
                                    break;
                               } else {
                                    ceirfunction.UpdateStatusViaApi(conn, file_details.getString("txn_id"), 0, file_details.getString("feature"));
-                                   rawDataResult = hfr.readConvertedFeatureFile(conn, feature_file_management.get("file_name"), complete_file_path, file_details.getString("feature"), basePath, raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
+                                   rawDataResult = hfr.readConvertedFeatureFile(conn, feature_file_management.get("file_name"), complete_file_path, file_details.getString("feature"), basePath, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
                               }
                          }
                     } else {
@@ -210,11 +215,11 @@ public class CEIRFeatureFileUploader {
                               logger.info("STOLEN/BLOCK/RECOVERY/UNBLOCK   ");
                               ceirfunction.UpdateStatusViaApi(conn, file_details.getString("txn_id"), 0, file_details.getString("feature"));
                               FeatureForSingleStolenBlock featureForSingleStolenBlock = new FeatureForSingleStolenBlock();
-                              featureForSingleStolenBlock.readFeatureWithoutFile(conn, file_details.getString("feature"), raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
+                              featureForSingleStolenBlock.readFeatureWithoutFile(conn, file_details.getString("feature"), file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
                          }
                     }
                }
-               raw_upload_set_no = 1;
+//               raw_upload_set_no = 1;
           } catch (Exception e) {
                logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
                try {
@@ -373,7 +378,6 @@ public class CEIRFeatureFileUploader {
                     } catch (Exception e) {
                          logger.error(" .. $$ :" + e);
                     }
-                    
 
                }
                rs.close();
@@ -524,13 +528,6 @@ public class CEIRFeatureFileUploader {
 //                    logger.info("File not exists.... ");
 //                    hfr.readFeatureWithoutFile(conn, file_details.getString("feature"), raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
 //                }
-
-
-
-
-
-
-
 
 
 

@@ -157,22 +157,30 @@ public class CdrParserProcess {
                     data = line.split(",", -1);
                     device_info.put("IMEI", data[0].trim());
                     device_info.put("IMSI", data[1].trim());
-                    device_info.put("MSISDN", (data[2].trim().startsWith("19") ? data[2].trim().substring(2) : data[2]).trim());
+                    device_info.put("MSISDN", ((data[2].trim().startsWith("19") || data[2].trim().startsWith("00")) ? data[2].substring(2) : data[2]));
                     device_info.put("record_type", data[3].trim());
                     device_info.put("system_type", data[4].trim());
+
+                    device_info.put("source", data[5].trim());
+                    device_info.put("raw_cdr_file_name", data[6].trim());
+                    device_info.put("imei_arrival_time", data[7].trim());
                     device_info.put("operator", operator.trim());
                     device_info.put("file_name", fileName.trim());
-                    device_info.put("record_time", "");
+                    device_info.put("record_time", data[7].trim());
                     device_info.put("operator_tag", operator_tag);
+                    
+                    
+                    // add for foreign db .. foreign msisdn is not handled , dsicard them , but make entry of them in reporting_db
+                    
                     if (device_info.get("IMEI") == null || device_info.get("IMEI").equals("") || device_info.get("IMEI") == "" || device_info.get("IMEI").length() < 8) {
                          logger.debug("Imei Null");
 //                         if (device_info.get("MSISDN") != null) {
-                         output = checkDeviceNullDB(conn, (device_info.get("MSISDN").startsWith("19") ? device_info.get("MSISDN").substring(2) : device_info.get("MSISDN")));
+                         output = checkDeviceNullDB(conn, device_info.get("MSISDN"));
                          logger.debug(" Null Output " + output);
                          if (output == 0) {
                               my_query = "insert into device_null_db (msisdn,imsi,create_filename,update_filename,"
                                       + "updated_on,modified_on , created_on,record_type,system_type , operator ,record_time  ) "
-                                      + "values('" + (device_info.get("MSISDN").startsWith("19") ? device_info.get("MSISDN").substring(2) : device_info.get("MSISDN")) + "',"
+                                      + "values('" + device_info.get("MSISDN") + "',"
                                       + "'" + device_info.get("IMSI") + "',"
                                       + "'" + device_info.get("file_name") + "',"
                                       + "'" + device_info.get("file_name") + "',"
@@ -190,8 +198,7 @@ public class CdrParserProcess {
                                       + "update_filename = '" + device_info.get("file_name")
                                       //								+"',updated_on='"+device_info.get("record_time")+
                                       + "',MODIFIED_ON=" + dateFunction
-                                      + ""
-                                      + " where msisdn='" + (device_info.get("MSISDN").startsWith("19") ? device_info.get("MSISDN").substring(2) : device_info.get("MSISDN")) + "'";
+                                      + " where msisdn='" + device_info.get("MSISDN") + "'";
                               logger.debug("need to update");
                               nullUpdate++;
 //                              }
@@ -227,13 +234,13 @@ public class CdrParserProcess {
                               }
                          }
                          logger.debug("Failed Condition Success");
-                         output = checkDeviceUsageDB(conn, device_info.get("IMEI"), (device_info.get("MSISDN").startsWith("19") ? device_info.get("MSISDN").substring(2) : device_info.get("MSISDN")));
+                         output = checkDeviceUsageDB(conn, device_info.get("IMEI").substring(0, 14), device_info.get("MSISDN"));
                          if (output == 0) {                                         // imei not found in usagedb
                               my_query = "insert into device_usage_db (imei,msisdn,imsi,create_filename,update_filename,"
                                       + "updated_on,created_on,system_type,failed_rule_id,failed_rule_name,tac,period,action "
-                                      + " , mobile_operator , record_type , failed_rule_date,  modified_on ,record_time ) "
+                                      + " , mobile_operator , record_type , failed_rule_date,  modified_on ,record_time, imei_index , raw_cdr_file_name , imei_arrival_time , source ) "
                                       + "values('" + device_info.get("IMEI") + "',"
-                                      + "'" + (device_info.get("MSISDN").startsWith("19") ? device_info.get("MSISDN").substring(2) : device_info.get("MSISDN")) + "',"
+                                      + "'" + device_info.get("MSISDN") + "',"
                                       + "'" + device_info.get("IMSI") + "',"
                                       + "'" + device_info.get("file_name") + "',"
                                       + "'" + device_info.get("file_name") + "',"
@@ -249,11 +256,15 @@ public class CdrParserProcess {
                                       + "'" + device_info.get("record_type") + "',"
                                       + "" + failedRuleDate + ","
                                       + "" + dateFunction + ","
-                                      + "'" + device_info.get("record_time") + "'  "
+                                      + "'" + device_info.get("record_time") + "' , "
+                                      + "'" + device_info.get("IMEI").substring(0, 14) + "', "
+                                      + "'" + device_info.get("raw_cdr_file_name") + "',"
+                                      + "'" + device_info.get("imei_arrival_time") + "',"
+                                      + "'" + device_info.get("source") + "'  "
                                       + ")";
                               usageInsert++;
                          }
-                         if (output == 1) {                        // imei found with same msisdn 
+                         if (output == 1) {                        // imei found with same msisdn  update_raw_cdr_file_name , update_imei_arrival_time  
                               my_query = "update device_usage_db set "
                                       + "update_filename = '" + device_info.get("file_name")
                                       //								+"', updated_on=TO_DATE('"+device_info.get("record_time")+"','yyyy/mm/dd hh24:mi:ss')"
@@ -263,18 +274,20 @@ public class CdrParserProcess {
                                       + ", failed_rule_id='" + failed_rule_id
                                       + "', failed_rule_name='" + failed_rule_name
                                       + "',period='" + period
+                                      + "',update_raw_cdr_file_name='" + device_info.get("raw_cdr_file_name")
+                                      + "',update_imei_arrival_time='" + device_info.get("imei_arrival_time")
                                       + "',action='" + finalAction
-                                      + "' where imei='" + device_info.get("IMEI") + "'";
+                                      + "' where imei_index='" + device_info.get("IMEI").substring(0, 14) + "'";
                               usageUpdate++;
                          }
                          if (output == 2) {                                 // imei found with different msisdn
-                              output = checkDeviceDuplicateDB(conn, device_info.get("IMEI"), (device_info.get("MSISDN").startsWith("19") ? device_info.get("MSISDN").substring(2) : device_info.get("MSISDN")));
+                              output = checkDeviceDuplicateDB(conn, device_info.get("IMEI").substring(0, 14), device_info.get("MSISDN"));
                               if (output == 0) {
                                    my_query = "insert into device_duplicate_db (imei,msisdn,imsi,create_filename,update_filename,"
                                            + "updated_on,created_on,system_type,failed_rule_id,failed_rule_name,tac,period,action  "
-                                           + " , mobile_operator , record_type , failed_rule_date,  modified_on  ,record_time  ) "
+                                           + " , mobile_operator , record_type , failed_rule_date,  modified_on  ,record_time, imei_index ,raw_cdr_file_name , imei_arrival_time , source) "
                                            + "values('" + device_info.get("IMEI") + "',"
-                                           + "'" + (device_info.get("MSISDN").startsWith("19") ? device_info.get("MSISDN").substring(2) : device_info.get("MSISDN")) + "',"
+                                           + "'" + device_info.get("MSISDN") + "',"
                                            + "'" + device_info.get("IMSI") + "',"
                                            + "'" + device_info.get("file_name") + "',"
                                            + "'" + device_info.get("file_name") + "',"
@@ -290,7 +303,11 @@ public class CdrParserProcess {
                                            + "'" + device_info.get("record_type") + "' , "
                                            + "" + failedRuleDate + " , "
                                            + "" + dateFunction + ",  "
-                                           + "'" + device_info.get("record_time") + "' "
+                                           + "'" + device_info.get("record_time") + "', "
+                                           + "'" + device_info.get("IMEI").substring(0, 14) + "', "
+                                           + "'" + device_info.get("raw_cdr_file_name") + "',"
+                                           + "'" + device_info.get("imei_arrival_time") + "',"
+                                           + "'" + device_info.get("source") + "'  "
                                            + ")";
                                    duplicateInsert++;
                               } else {
@@ -302,8 +319,10 @@ public class CdrParserProcess {
                                            + ", failed_rule_id='" + failed_rule_id
                                            + "', failed_rule_name='" + failed_rule_name
                                            + "',period='" + period
+                                           + "',update_raw_cdr_file_name='" + device_info.get("raw_cdr_file_name")
+                                           + "',update_imei_arrival_time='" + device_info.get("imei_arrival_time")
                                            + "',action='" + finalAction
-                                           + "' where msisdn='" + (device_info.get("MSISDN").startsWith("19") ? device_info.get("MSISDN").substring(2) : device_info.get("MSISDN")) + "' and imei='" + device_info.get("IMEI") + "'";
+                                           + "' where msisdn='" + device_info.get("MSISDN") + "' and imei_index='" + device_info.get("IMEI").substring(0, 14) + "'";
                                    duplicateUpdate++;
                               }
                          }
@@ -318,9 +337,13 @@ public class CdrParserProcess {
                     counter++;
 
                     logger.info("Remaining List : " + (fileCount - counter));
+                    
+                    
+                    
+                    
                }   //While End   
                Date p2Endtime = new Date();
-               cdrFileDetailsUpdate(conn, operator, device_info.get("file_name"), usageInsert, usageUpdate, duplicateInsert, duplicateUpdate, nullInsert, nullUpdate, p2Starttime, p2Endtime, source, counter);
+               cdrFileDetailsUpdate(conn, operator, device_info.get("file_name"), usageInsert, usageUpdate, duplicateInsert, duplicateUpdate, nullInsert, nullUpdate, p2Starttime, p2Endtime, device_info.get("source"), counter, device_info.get("raw_cdr_file_name"));
                try {
                     Map<String, Long> map = sourceTacList.stream()
                             .collect(Collectors.groupingBy(c -> c, Collectors.counting()));
@@ -351,7 +374,7 @@ public class CdrParserProcess {
           Statement stmt = null;
           int status = 0;
           try {
-               query = "select * from device_duplicate_db where imei='" + imei + "' and msisdn = '" + msisdn + "'";
+               query = "select * from device_duplicate_db where imei_index='" + imei + "' and msisdn = '" + msisdn + "'";
                logger.debug("device_dupliate db" + query);
                stmt = conn.createStatement();
                rs1 = stmt.executeQuery(query);
@@ -372,13 +395,13 @@ public class CdrParserProcess {
           return status;
      }
 
-     private static int checkDeviceUsageDB(Connection conn, String imei, String msisdn) {
+     private static int checkDeviceUsageDB(Connection conn, String imeiIndex, String msisdn) {
           String query = null;
           ResultSet rs1 = null;
           Statement stmt = null;
           int status = 0;                                                         // imei not found
           try {
-               query = "select * from device_usage_db where imei='" + imei + "'";
+               query = "select * from device_usage_db where imei_index='" + imeiIndex + "'";
                logger.debug("device usage db" + query);
                stmt = conn.createStatement();
                rs1 = stmt.executeQuery(query);
@@ -472,7 +495,7 @@ public class CdrParserProcess {
 //          ResultSet rs = null;
 //          String query = null;
 //          try {
-//               query = "select * from rep_schedule_config_db where operator='" + operator + "'";
+//               query = "select * from r ep_schedule_config_db where operator='" + operator + "'";
 //               stmt = conn.createStatement();
 //               return rs = stmt.executeQuery(query);
 //          } catch (Exception e) {
@@ -480,13 +503,13 @@ public class CdrParserProcess {
 //          }
 //          return rs;
 //     }
-     static void cdrFileDetailsUpdate(Connection conn, String operator, String fileName, int usageInsert, int usageUpdate, int duplicateInsert, int duplicateUpdate, int nullInsert, int nullUpdate, Date P2StartTime, Date P2EndTime, String source, int counter) {
+     static void cdrFileDetailsUpdate(Connection conn, String operator, String fileName, int usageInsert, int usageUpdate, int duplicateInsert, int duplicateUpdate, int nullInsert, int nullUpdate, Date P2StartTime, Date P2EndTime, String source, int counter, String raw_cdr_file_name) {
           String query = null;
           DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
           Statement stmt = null;
-          query = "insert into  cdr_file_details_db (created_on ,MODIFIED_ON ,total_inserts_in_usage_db,total_updates_in_usage_db ,total_insert_in_dup_db , total_updates_in_dup_db , total_insert_in_null_db , total_update_in_null_db , P2StartTime , P2EndTime ,operator , file_name, total_records_count) "
+          query = "insert into  cdr_file_details_db (created_on ,MODIFIED_ON ,total_inserts_in_usage_db,total_updates_in_usage_db ,total_insert_in_dup_db , total_updates_in_dup_db , total_insert_in_null_db , total_update_in_null_db , P2StartTime , P2EndTime ,operator , file_name, total_records_count , raw_cdr_file_name  ) "
                   + "values(current_timestamp , current_timestamp,'" + usageInsert + "' , '" + usageUpdate + "'  , '" + duplicateInsert + "' , '" + duplicateUpdate + "' "
-                  + " ,'" + nullInsert + "' ,'" + nullUpdate + "', TO_DATE('" + df.format(P2StartTime) + "','YYYY-MM-DD HH24:MI:SS') , TO_DATE('" + df.format(P2EndTime) + "','YYYY-MM-DD HH24:MI:SS') ,   '" + operator + "', '" + fileName + "' , '" + (counter - 1) + "' )  ";
+                  + " ,'" + nullInsert + "' ,'" + nullUpdate + "', TO_DATE('" + df.format(P2StartTime) + "','YYYY-MM-DD HH24:MI:SS') , TO_DATE('" + df.format(P2EndTime) + "','YYYY-MM-DD HH24:MI:SS') ,   '" + operator + "', '" + fileName + "' , '" + (counter - 2) + "' , '" + raw_cdr_file_name + "'        )  ";
           logger.info(" qury is " + query);
 
           try {
@@ -651,7 +674,6 @@ public class CdrParserProcess {
                File fout1 = new File(fileNameInput1);
                FileOutputStream fos1 = new FileOutputStream(fout1, true);
                bw1 = new BufferedWriter(new OutputStreamWriter(fos1));
-
           } catch (Exception e) {
                logger.error("e " + e);
           }

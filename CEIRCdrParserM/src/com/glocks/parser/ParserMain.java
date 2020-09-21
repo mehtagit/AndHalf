@@ -25,14 +25,14 @@ public class ParserMain {
                String source = null;
                String tableName = args[0];
                logger.info("...." + tableName);
-               int raw_upload_set_no = 1;
+//               int raw_upload_set_no = 1;
                try {
                     conn = new com.glocks.db.MySQLConnection().getConnection();
                     CEIRParserMain ceir_parser_main = new CEIRParserMain();
-                    ResultSet my_result_set = ceir_parser_main.operatorDetails(conn, tableName);
-                    if (my_result_set.next()) {
-                         raw_upload_set_no = my_result_set.getInt("raw_upload_set_no");
-                    }
+//                    ResultSet my_result_set = ceir_parser_main.operatorDetails(conn, tableName);
+//                    if (my_result_set.next()) {
+//                         raw_upload_set_no = my_result_set.getInt("raw_upload_set_no");
+//                    }
                     basePath = hfr.getFilePath(conn, "smart_file_path");
                     if (!basePath.endsWith("/")) {
                          basePath += "/";
@@ -44,7 +44,7 @@ public class ParserMain {
                     filePath = intermPath + source + "output/";
                     fileName = new FileList().readOldestOneFile(filePath);
                     logger.info("FilePath :" + filePath + ";fileName:" + fileName + " ;basePath :" + basePath + ";source : " + source);
-                    hfr.readConvertedCSVFile(conn, fileName, args[0], filePath, raw_upload_set_no, source);
+                    hfr.readConvertedCSVFile(conn, fileName, args[0], filePath, source);
 //                conn.commit();
                } catch (Exception e) {
                     logger.error(" :" + e);
