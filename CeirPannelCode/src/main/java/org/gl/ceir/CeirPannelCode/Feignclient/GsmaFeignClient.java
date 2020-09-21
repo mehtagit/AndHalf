@@ -3,14 +3,10 @@ package org.gl.ceir.CeirPannelCode.Feignclient;
 import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
-import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GsmaDetail;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.gl.ceir.CeirPannelCode.Model.InterRelatedRuleFeatureMapping;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,8 +39,8 @@ public interface GsmaFeignClient {
 	
 		
 		
-		@RequestMapping(value="/Rule/DistinctName" ,method=RequestMethod.GET) 
-		public List<String> getFeatureName();
+		@RequestMapping(value="/rule/GetfeaturebyRuleName" ,method=RequestMethod.POST) 
+		public List<String> getFeatureName(@RequestParam(name = "ruleName", required = false) String ruleName);
 		
 		
 		//---------------------------------check Msisdn Exist or not ---------------------------------
@@ -52,5 +48,13 @@ public interface GsmaFeignClient {
 		@PostMapping(path = "gsma/CheckImeiMsisdnValues")
 				public @ResponseBody String checkImeiDetails(@RequestParam(name = "imei", required = false) String imei,
 						@RequestParam(name = "msisdn", required = false) String msisdn);
-			
+		
+		
+		
+		
+		@PostMapping(path ="rule/getRuleFeaturAction")
+		public @ResponseBody List<InterRelatedRuleFeatureMapping> interRelateMapping(@RequestParam(name = "featureName", required = false) String featureName,
+				@RequestParam(name = "ruleName", required = false) String ruleName);
+
+
 }

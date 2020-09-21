@@ -157,9 +157,11 @@ if (currentTime < dfd) {
 							</p>
 							<select id="editRule" name="rule" class="browser-default"
 								class="mySelect"
-								onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+								onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');getFeature(this);"
 								oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-								style="padding-left: 0;" required></select>
+								style="padding-left: 0;" required>
+															<option value="null" selected="">Rule Name</option>
+								</select>
 						</div>
 
 
@@ -170,9 +172,11 @@ if (currentTime < dfd) {
 							</p>
 							<select id="editFeature" name="organisationcountry"
 								class="browser-default" class="mySelect"
-								onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+								onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');getGrace(this);"
 								oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-								style="padding-left: 0;" required></select>
+								style="padding-left: 0;" required>
+								<option value="null" selected="">Feature Name</option>
+								</select>
 						</div>
 					</div>
 

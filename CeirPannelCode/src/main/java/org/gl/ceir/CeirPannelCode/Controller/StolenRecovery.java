@@ -15,6 +15,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.PropertyReader;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
@@ -47,11 +48,7 @@ import com.google.gson.Gson;
 public class StolenRecovery {
 
 	
-	@Value ("${filePathforUploadFile}")
-	String filePathforUploadFile;
-
-	@Value ("${filePathforMoveFile}")
-	String filePathforMoveFile;
+	
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
@@ -63,9 +60,8 @@ public class StolenRecovery {
 	@Autowired
 	AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
 	
-
-	@Value ("${serverId}")
-	Integer serverId;
+	@Autowired
+    PropertyReader propertyReader;
 	
 	@Autowired
 	GrievanceFeignClient grievanceFeignClient;
@@ -350,7 +346,7 @@ public class StolenRecovery {
 						fileCopyRequest.setFilePath(rootPath);
 			  			fileCopyRequest.setTxnId(txnId);
 			  			fileCopyRequest.setFileName(file.getOriginalFilename());
-			  			fileCopyRequest.setServerId(serverId);
+			  			fileCopyRequest.setServerId(propertyReader.serverId);
 			  			log.info("request passed to move file to other server=="+fileCopyRequest);
 			  			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
 			  			log.info("file move api response==="+fileRespnose);

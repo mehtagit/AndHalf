@@ -13,6 +13,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.PropertyReader;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
@@ -48,11 +49,7 @@ import com.google.gson.Gson;
 @Controller
 public class Stock {
 
-	@Value ("${filePathforUploadFile}")
-	String filePathforUploadFile;
-
-	@Value ("${filePathforMoveFile}")
-	String filePathforMoveFile;
+	
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
@@ -67,8 +64,8 @@ public class Stock {
 	@Autowired
 	UserRegistrationFeignImpl userRegistrationFeignImpl;
 
-	@Value ("${serverId}")
-	Integer serverId;
+	@Autowired
+    PropertyReader propertyReader;
 	@Autowired
 	GrievanceFeignClient grievanceFeignClient;
 
@@ -200,7 +197,7 @@ public class Stock {
 			fileCopyRequest.setFilePath(rootPath);
 			fileCopyRequest.setTxnId(txnNumner);
 			fileCopyRequest.setFileName(file.getOriginalFilename());
-			fileCopyRequest.setServerId(serverId);
+			fileCopyRequest.setServerId(propertyReader.serverId);
 			log.info("request passed to move file to other server=="+fileCopyRequest);
 			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
 			log.info("file move api response==="+fileRespnose);
@@ -375,7 +372,7 @@ public class Stock {
 				fileCopyRequest.setFilePath(rootPath);
 				fileCopyRequest.setTxnId(txnId);
 				fileCopyRequest.setFileName(filename);
-				fileCopyRequest.setServerId(serverId);
+				fileCopyRequest.setServerId(propertyReader.serverId);
 				log.info("request passed to move file to other server=="+fileCopyRequest);
 				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
 				log.info("file move api response==="+fileRespnose);
@@ -539,7 +536,7 @@ public class Stock {
 		fileCopyRequest.setFilePath(rootPath);
 		fileCopyRequest.setTxnId(txnNumber);
 		fileCopyRequest.setFileName(file.getOriginalFilename());
-		fileCopyRequest.setServerId(serverId);
+		fileCopyRequest.setServerId(propertyReader.serverId);
 		log.info("request passed to move file to other server=="+fileCopyRequest);
 		GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
 		log.info("file move api response==="+fileRespnose);
@@ -602,7 +599,7 @@ public class Stock {
 		fileCopyRequest.setFilePath(urlToUpload.getValue());
 		fileCopyRequest.setTxnId(txnId);
 		fileCopyRequest.setFileName(file.getOriginalFilename());
-		fileCopyRequest.setServerId(serverId);
+		fileCopyRequest.setServerId(propertyReader.serverId);
 		log.info("request passed to move file to other server=="+fileCopyRequest);
 		GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
 		log.info("file move api response==="+fileRespnose);

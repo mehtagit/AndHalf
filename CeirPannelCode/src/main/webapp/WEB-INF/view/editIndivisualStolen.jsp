@@ -273,7 +273,7 @@ select {
 																code="input.email" /> </label>
 													</div>
 
-													<div class="input-field col s12 m6 l6">
+													<div class="input-field col s12 m6 l6" style="margin-top:4px;">
 														<p class="contact-label">
 															<spring:message code="registration.altcontactnumber" />
 															<span class="star">*</span>

@@ -54,7 +54,7 @@ headers:
 		if(response.rejectedRemark=='' || response.rejectedRemark==null){
 			$('#bulkRecoveryRemarkReject').val("NA");	
 		}
-		
+
 		$('div#initialloader').delay(300).fadeOut('slow');
 		//$('#bulkRecoveryFileLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.fileName+'","'+response.txnId+'")');
 		
@@ -73,6 +73,7 @@ headers:
 
 
 function updateCompanyRecoveryRequest(){
+	$('div#initialloader').fadeIn('fast');
 	var formData= new FormData();
 	var bulkRecoveryquantity=$('#bulkRecoveryquantity').val();
 	var bulkRecoveryRemark=$('#bulkRecoveryRemark').val();
@@ -140,6 +141,7 @@ function updateCompanyRecoveryRequest(){
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
 		//////console.log(JSON.stringify(response));
+			$('div#initialloader').delay(300).fadeOut('slow');
 		var resp= JSON.stringify(response);
 		//////console.log(resp.errorCode);
 		//////console.log(response.errorCode);

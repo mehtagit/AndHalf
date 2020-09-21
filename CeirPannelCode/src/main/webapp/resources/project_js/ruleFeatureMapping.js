@@ -178,21 +178,16 @@ function pageButtons(Url){
 			}
 
 
-			/*$.getJSON('./getAllfeatures', function(data) {
+			$.getJSON('./getAllfeatures', function(data) {
 				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].name).text(data[i].name).appendTo('#Feature,#editFeature');
+					$('<option>').val(data[i].name).text(data[i].name).appendTo('#Feature');
 				}
-			});*/
+			});
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
 			$.ajaxSetup({
 				headers:
 				{ 'X-CSRF-TOKEN': token }
-			});	
-			$.getJSON('./Rule/DistinctName', function(data) {
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i]).text(data[i]).appendTo('#Feature,#editFeature');
-				}
 			});
 			
 			
@@ -202,6 +197,7 @@ function pageButtons(Url){
 					.appendTo('#User,#editUser');
 				}
 			});
+			
 			$.getJSON('./ruleName', function(data) {
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].name).text(data[i].name)
@@ -209,13 +205,13 @@ function pageButtons(Url){
 				}
 			});
 
-			$.getJSON('./getDropdownList/PERIOD_ACTION', function(data) {
+		/*	$.getJSON('./getDropdownList/PERIOD_ACTION', function(data) {
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].interp).text(data[i].interp)
 					.appendTo('#GracePeriod,#PostGracePeriod');
 				}
 			});
-
+*/
 
 			$.getJSON('./getDropdownList/MOVE_TO_NEXT', function(data) {
 				for (i = 0; i < data.length; i++) {
@@ -266,9 +262,9 @@ function getDetailBy(id){
 
 
 function setData(result){
-
-	$("#editRule").val(result.name);
-	$("#editFeature").val(result.feature);
+console.log("result is : "+JSON.stringify(result))
+	$("#editRule").val(result.name).change();
+	
 	$("#editUser").val(result.userType);
 	$("#order").val(result.ruleOrder);
 	$("#GracePeriod").val(result.graceAction);
@@ -276,6 +272,52 @@ function setData(result){
 	$("#MoveToGracePeriod").val(result.failedRuleActionGrace);
 	$("#MoveToPostGracePeriod").val(result.failedRuleActionPostGrace);
 	$("#editOutput").val(result.output);
+	
+	
+	
+	var rule=$('#editRule').val();
+	var feature=$('#editFeature').val();
+	$.ajax({
+		url: './ruleFeatureActionMapping?&ruleName='+rule+'&featureName='+feature,
+		type: 'POST',
+		processData: false,
+		contentType: false,
+		async : false,
+		success: function (data, textStatus, jqXHR) {
+			$('#GracePeriod,#PostGracePeriod').empty();
+			
+	    for (i = 0; i < data.length; i++) {
+	    		$('<option>').val(data[i].actions).text(data[i].actions).appendTo('#GracePeriod,#PostGracePeriod');
+	    	}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+
+		}
+	});
+
+	$.ajax({
+		url: './getFeatureName?ruleName='+rule,
+		type: 'POST',
+		processData: false,
+		contentType: false,
+		async : false,
+		success: function (data, textStatus, jqXHR) {
+
+			$('#editFeature').empty();
+			var html='<option value="">Feature Name</option>';
+			$('#editFeature').append(html);
+	    	for (i = 0; i < data.length; i++) {
+	    		$('<option>').val(data[i]).text(data[i]).appendTo('#editFeature');
+	    	}
+			
+	    	$("#editFeature").val(result.feature).change();
+		
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+
+		}
+	});
+
 }
 
 
@@ -380,5 +422,67 @@ function deleteModal(){
 
 	return false;
 
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function getGrace(current){
+	var rule=$('#editRule').val();
+	$.ajax({
+		url: './ruleFeatureActionMapping?&ruleName='+rule+'&featureName='+current.value,
+		type: 'POST',
+		processData: false,
+		contentType: false,
+		async : false,
+		success: function (data, textStatus, jqXHR) {
+			$('#GracePeriod,#PostGracePeriod').empty();
+			
+	    for (i = 0; i < data.length; i++) {
+	    		$('<option>').val(data[i].actions).text(data[i].actions).appendTo('#GracePeriod,#PostGracePeriod');
+	    	}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+
+		}
+	});
+
+}
+
+
+
+
+function getFeature(current){
+
+	$.ajax({
+		url: './getFeatureName?ruleName='+current.value,
+		type: 'POST',
+		processData: false,
+		contentType: false,
+		async : false,
+		success: function (data, textStatus, jqXHR) {
+			$('#editFeature').empty();
+			var html='<option value="">Feature Name</option>';
+			$('#editFeature').append(html);
+	    	for (i = 0; i < data.length; i++) {
+	    		$('<option>').val(data[i]).text(data[i]).appendTo('#editFeature');
+	    	}
+			
+		
+		
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+
+		}
+	});
 
 }

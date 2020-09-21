@@ -21,9 +21,11 @@ import org.springframework.context.annotation.PropertySources;
  * @PropertySource(value =
  * "file:/home/ubuntu/apache-tomcat-9.0.4/conf/application.properties")
  */
-@PropertySource({"file:${HOME}/guiconfig/application.properties",
-	"file:${HOME}/guiconfig/messages.properties", 
-	"file:${HOME}/guiconfig/messages_km.properties"})
+
+
+@PropertySource({"file:${GUI_CONFIG_PATH}/application.properties",
+"file:${GUI_CONFIG_PATH}/messages.properties",
+"file:${GUI_CONFIG_PATH}/messages_km.properties"})
 //@PropertySource("file:${HOME}/guiconfig/application.properties")
 public class MainApplication extends SpringBootServletInitializer
 {

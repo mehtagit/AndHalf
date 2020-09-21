@@ -259,7 +259,7 @@ select {
 														</label>
 													</div>
 
-													<div class="col s12 m6 l6">
+													<div class="col s12 m6 l6" style="margin-top:4px;">
 														<p class="contact-label">
 															<spring:message code="registration.altcontactnumber" />
 															<span class="star"> *</span>
