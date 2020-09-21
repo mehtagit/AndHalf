@@ -4,7 +4,7 @@
     
     
     
-    <wb-module deploy-name="CEIR">
+    <wb-module deploy-name="Test1">
                                                 
         
         
@@ -39,7 +39,7 @@
         
         
         <property name="java-output-path" value="/CeirPannelCode/target/classes"/>
-        <property name="context-root" value="CEIR"/>
+        <property name="context-root" value="Test1"/>
                                             
     
     

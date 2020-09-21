@@ -26,11 +26,7 @@ public class DBTablesController {
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	@Value ("${filePathforUploadFile}")
-	String filePathforUploadFile;
 
-	@Value ("${filePathforMoveFile}")
-	String filePathforMoveFile;
 	
 	@Autowired
 	DBTablesFeignClient dBTablesFeignClient;

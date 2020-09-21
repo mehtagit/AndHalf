@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.PropertyReader;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.TypeApprovedFeignImpl;
@@ -53,11 +54,7 @@ import CeirPannelCode.Model.Register_UploadPaidStatus;
 public class TrcController {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	@Value ("${filePathforUploadFile}")
-	String filePathforUploadFile;
-
-	@Value ("${filePathforMoveFile}")
-	String filePathforMoveFile;
+	
 	
 	
 	@Autowired
@@ -72,8 +69,8 @@ public class TrcController {
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
 
-	@Value ("${serverId}")
-	Integer serverId;
+	@Autowired
+    PropertyReader propertyReader;
 	@Autowired
 	GrievanceFeignClient grievanceFeignClient;
 	
@@ -166,7 +163,7 @@ public class TrcController {
 						fileCopyRequest.setFilePath(urlToUpload.getValue()+txnNumber+"/"+tagName+"/");
 						fileCopyRequest.setTxnId(txnNumber);
 						fileCopyRequest.setFileName(file.getOriginalFilename());
-						fileCopyRequest.setServerId(serverId);
+						fileCopyRequest.setServerId(propertyReader.serverId);
 						log.info("request passed to move file to other server=="+fileCopyRequest);
 						GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
 						log.info("file move api response==="+fileRespnose);
@@ -254,7 +251,7 @@ public class TrcController {
 			fileCopyRequest.setFilePath(urlToUpload.getValue()+trcRequest.getTxnId()+"/"+tagName+"/");
 			fileCopyRequest.setTxnId(trcRequest.getTxnId());
 			fileCopyRequest.setFileName(file.getOriginalFilename());
-			fileCopyRequest.setServerId(serverId);
+			fileCopyRequest.setServerId(propertyReader.serverId);
 			log.info("request passed to move file to other server=="+fileCopyRequest);
 			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
 			log.info("file move api response==="+fileRespnose);
