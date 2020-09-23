@@ -12,6 +12,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.PropertyReader;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient;
@@ -39,30 +40,28 @@ import com.google.gson.Gson;
 public class LawfulFormController 
 {
 
-	@Value ("${filePathforUploadFile}")
-	String filePathforUploadFile;
 
-	@Value ("${filePathforMoveFile}")
-	String filePathforMoveFile;
 
 	@Autowired
 	UtilDownload utildownload;
 
 	@Autowired
 	UploadPaidStatusFeignClient uploadPaidStatusFeignClient;
-	
+
 	@Autowired
 	AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
-	
-	
-@Autowired
 
-FeignCleintImplementation feignCleintImplementation;
 
-@Value ("${serverId}")
-Integer serverId;
-@Autowired
-GrievanceFeignClient grievanceFeignClient;
+	@Autowired
+
+	FeignCleintImplementation feignCleintImplementation;
+
+	
+	@Autowired
+	GrievanceFeignClient grievanceFeignClient;
+	
+	@Autowired
+    PropertyReader propertyReader;
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	ModelAndView mv = new ModelAndView();
@@ -122,7 +121,7 @@ GrievanceFeignClient grievanceFeignClient;
 			@RequestParam(name="firFileName",required = false) MultipartFile firFileName,
 			HttpServletRequest request,HttpSession session) {
 		log.info("-inside controllerlawfulIndivisualStolen-------request---------");
-		
+
 		String userName=session.getAttribute("username").toString();
 		Integer userId= (Integer) session.getAttribute("userid");
 		String roletype=session.getAttribute("usertype").toString();
@@ -131,14 +130,14 @@ GrievanceFeignClient grievanceFeignClient;
 		log.info("Random transaction id number="+txnNumber);
 		String filter = request.getParameter("request");
 		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
-	
-		
+
+
 		Gson gson= new Gson(); 
 		log.info("*********"+filter);
-		
+
 		addMoreFileModel.setTag("system_upload_filepath");
 		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
-		
+
 		LawfulStolenRecovey lawfulIndivisualStolen  = gson.fromJson(filter, LawfulStolenRecovey.class);
 		log.info(""+lawfulIndivisualStolen.toString());
 		lawfulIndivisualStolen.setTxnId(txnNumber);
@@ -147,7 +146,7 @@ GrievanceFeignClient grievanceFeignClient;
 		// lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
 
 		try {
-			
+
 			byte[] bytes = file.getBytes();
 			String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
 			File dir = new File(rootPath + File.separator);
@@ -159,11 +158,11 @@ GrievanceFeignClient grievanceFeignClient;
 			stream = new BufferedOutputStream(new FileOutputStream(serverFile));
 			stream.write(bytes); 
 			stream.close();
-			
+
 			fileCopyRequest.setFilePath(rootPath);
 			fileCopyRequest.setTxnId(txnNumber);
 			fileCopyRequest.setFileName(file.getOriginalFilename());
-			fileCopyRequest.setServerId(serverId);
+			fileCopyRequest.setServerId(propertyReader.serverId);
 
 			log.info("request passed to move file to other server=="+fileCopyRequest);
 			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
@@ -179,7 +178,7 @@ GrievanceFeignClient grievanceFeignClient;
 		}
 		else {
 			try {
-				
+
 				byte[] bytes = firFileName.getBytes();
 				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
 				File dir = new File(rootPath + File.separator);
@@ -194,7 +193,7 @@ GrievanceFeignClient grievanceFeignClient;
 				fileCopyRequest.setFilePath(rootPath);
 				fileCopyRequest.setTxnId(txnNumber);
 				fileCopyRequest.setFileName(firFileName.getOriginalFilename());
-				fileCopyRequest.setServerId(serverId);
+				fileCopyRequest.setServerId(propertyReader.serverId);
 				log.info("request passed to move file to other server=="+fileCopyRequest);
 				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
 				log.info("file move api response==="+fileRespnose);
@@ -236,7 +235,7 @@ GrievanceFeignClient grievanceFeignClient;
 		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
 		addMoreFileModel.setTag("system_upload_filepath");
 		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
-		
+
 		Gson gson= new Gson(); 
 		log.info("*********"+filter);
 		LawfulStolenRecovey lawfulIndivisualStolen  = gson.fromJson(filter, LawfulStolenRecovey.class);
@@ -247,8 +246,8 @@ GrievanceFeignClient grievanceFeignClient;
 		lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
 
 		try {
-			
-			
+
+
 			byte[] bytes = file.getBytes();
 			String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
 			File dir = new File(rootPath + File.separator);
@@ -263,11 +262,11 @@ GrievanceFeignClient grievanceFeignClient;
 			fileCopyRequest.setFilePath(rootPath);
 			fileCopyRequest.setTxnId(txnNumber);
 			fileCopyRequest.setFileName(file.getOriginalFilename());
-			fileCopyRequest.setServerId(serverId);
+			fileCopyRequest.setServerId(propertyReader.serverId);
 			log.info("request passed to move file to other server=="+fileCopyRequest);
 			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
 			log.info("file move api response==="+fileRespnose);
-			
+
 		} 
 		catch (Exception e) {
 			// TODO: handle exception
@@ -279,8 +278,8 @@ GrievanceFeignClient grievanceFeignClient;
 		}
 		else {
 			try {
-				
-				
+
+
 				byte[] bytes = firFileName.getBytes();
 				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
 				File dir = new File(rootPath + File.separator);
@@ -295,7 +294,7 @@ GrievanceFeignClient grievanceFeignClient;
 				fileCopyRequest.setFilePath(rootPath);
 				fileCopyRequest.setTxnId(txnNumber);
 				fileCopyRequest.setFileName(firFileName.getOriginalFilename());
-				fileCopyRequest.setServerId(serverId);
+				fileCopyRequest.setServerId(propertyReader.serverId);
 				log.info("request passed to move file to other server=="+fileCopyRequest);
 				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
 				log.info("file move api response==="+fileRespnose);
@@ -338,8 +337,8 @@ GrievanceFeignClient grievanceFeignClient;
 		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
 		addMoreFileModel.setTag("system_upload_filepath");
 		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
-		
-		
+
+
 		Gson gson= new Gson(); 
 		log.info("*********"+filter);
 		LawfulStolenRecovey lawfulIndivisualStolen  = gson.fromJson(filter, LawfulStolenRecovey.class);
@@ -355,9 +354,9 @@ GrievanceFeignClient grievanceFeignClient;
 		}
 		else {
 			try {
-				
-				
-				
+
+
+
 				log.info("file is not blank");
 				byte[] bytes = file.getBytes();
 				String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
@@ -373,7 +372,7 @@ GrievanceFeignClient grievanceFeignClient;
 				fileCopyRequest.setFilePath(rootPath);
 				fileCopyRequest.setTxnId(txnNumber);
 				fileCopyRequest.setFileName(file.getOriginalFilename());
-				fileCopyRequest.setServerId(serverId);
+				fileCopyRequest.setServerId(propertyReader.serverId);
 				log.info("request passed to move file to other server=="+fileCopyRequest);
 				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
 				log.info("file move api response==="+fileRespnose);
@@ -409,23 +408,23 @@ GrievanceFeignClient grievanceFeignClient;
 		log.info("entry point of  fetch lawful stolen an recovery devices in the bases of transaction id .");
 		Integer userId= (Integer) session.getAttribute("userid");
 		String roletype=session.getAttribute("usertype").toString();
-		
+
 		LawfulStolenRecovey lawfulStolenRecovery= new LawfulStolenRecovey();
 		LawfulStolenRecovey lawfulUser= new LawfulStolenRecovey();
-		
+
 		lawfulUser.setTxnId(txnId);
 		lawfulUser.setRequestType(requestType);
 		lawfulUser.setRoleType(roletype);
 		lawfulUser.setUserId(userId);
 		log.info("request passed to the fetch Device api="+lawfulUser);
 		lawfulStolenRecovery=uploadPaidStatusFeignClient.fetchSingleDevicebyTxnId(lawfulUser);
-		
+
 		log.info("response from fetch lawful stolen an recovery devices  api="+lawfulStolenRecovery);
-		
+
 		addMoreFileModel.setTag("upload_file_link");
-        urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
-        lawfulStolenRecovery.setFileLink(urlToUpload.getValue());
-        return lawfulStolenRecovery;
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		lawfulStolenRecovery.setFileLink(urlToUpload.getValue());
+		return lawfulStolenRecovery;
 	}
 
 
@@ -440,12 +439,12 @@ GrievanceFeignClient grievanceFeignClient;
 		log.info("Moved File Time value=="+movedFileTime);
 		addMoreFileModel.setTag("system_upload_filepath");
 		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
-		
+
 		FileCopyToOtherServer fileCopyRequest= new FileCopyToOtherServer();
 		addMoreFileModel.setTag("uploaded_file_move_path");
 		urlToMove=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 		log.info("moved file path from api="+urlToMove.getValue());
-		
+
 		String filter = request.getParameter("request");
 		Gson gson= new Gson(); 
 		log.info("*********"+filter);
@@ -459,24 +458,24 @@ GrievanceFeignClient grievanceFeignClient;
 		}
 		else {
 			try {
-				
-				
-				
+
+
+
 				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
 				File tmpDir = new File(rootPath+file.getOriginalFilename());
 				boolean exists = tmpDir.exists();
 				if(exists) {
 
-				Path temp = Files.move 
-				(Paths.get(urlToUpload.getValue()+"/"+lawfulIndivisualStolen.getTxnId()+"/"+file.getOriginalFilename()), 
-				Paths.get(urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename())); 
-				String movedPath=urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename();	
+					Path temp = Files.move 
+							(Paths.get(urlToUpload.getValue()+"/"+lawfulIndivisualStolen.getTxnId()+"/"+file.getOriginalFilename()), 
+									Paths.get(urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename())); 
+					String movedPath=urlToMove.getValue()+movedFileTime+"_"+file.getOriginalFilename();	
 
-				log.info("file is already exist, moved to this "+movedFileTime+"_"+movedPath+" path. ");
-				tmpDir.delete();
+					log.info("file is already exist, moved to this "+movedFileTime+"_"+movedPath+" path. ");
+					tmpDir.delete();
 				}
 				byte[] bytes = file.getBytes();
-				
+
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) dir.mkdirs();
@@ -489,7 +488,7 @@ GrievanceFeignClient grievanceFeignClient;
 				fileCopyRequest.setFilePath(rootPath);
 				fileCopyRequest.setTxnId(lawfulIndivisualStolen.getTxnId());
 				fileCopyRequest.setFileName(file.getOriginalFilename());
-				fileCopyRequest.setServerId(serverId);
+				fileCopyRequest.setServerId(propertyReader.serverId);
 				log.info("request passed to move file to other server=="+fileCopyRequest);
 				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
 				log.info("file move api response==="+fileRespnose);
@@ -508,23 +507,23 @@ GrievanceFeignClient grievanceFeignClient;
 		else {
 			try {
 
-				
-				
+
+
 				byte[] bytes = firFileName.getBytes();
 				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
 				File tmpDir = new File(rootPath+firFileName.getOriginalFilename());
 				boolean exists = tmpDir.exists();
 				if(exists) {
 
-				Path temp = Files.move 
-				(Paths.get(urlToUpload.getValue()+"/"+lawfulIndivisualStolen.getTxnId()+"/"+firFileName.getOriginalFilename()), 
-				Paths.get(urlToMove.getValue()+movedFileTime+"_"+firFileName.getOriginalFilename())); 
-				String movedPath=urlToMove.getValue()+movedFileTime+"_"+firFileName.getOriginalFilename();	
+					Path temp = Files.move 
+							(Paths.get(urlToUpload.getValue()+"/"+lawfulIndivisualStolen.getTxnId()+"/"+firFileName.getOriginalFilename()), 
+									Paths.get(urlToMove.getValue()+movedFileTime+"_"+firFileName.getOriginalFilename())); 
+					String movedPath=urlToMove.getValue()+movedFileTime+"_"+firFileName.getOriginalFilename();	
 
-				log.info("file is already exist, moved to this "+movedFileTime+"_"+movedPath+" path. ");
-				tmpDir.delete();
+					log.info("file is already exist, moved to this "+movedFileTime+"_"+movedPath+" path. ");
+					tmpDir.delete();
 				}
-				
+
 				File dir = new File(rootPath + File.separator);
 
 				if (!dir.exists()) dir.mkdirs();
@@ -537,7 +536,7 @@ GrievanceFeignClient grievanceFeignClient;
 				fileCopyRequest.setFilePath(rootPath);
 				fileCopyRequest.setTxnId(lawfulIndivisualStolen.getTxnId());
 				fileCopyRequest.setFileName(firFileName.getOriginalFilename());
-				fileCopyRequest.setServerId(serverId);
+				fileCopyRequest.setServerId(propertyReader.serverId);
 				log.info("request passed to move file to other server=="+fileCopyRequest);
 				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
 				log.info("file move api response==="+fileRespnose);

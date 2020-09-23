@@ -13,8 +13,8 @@ public class IconsState {
 	@Autowired
 	Translator Translator;
 
-	@Value ("${projectPath}")
-	String projectPath;
+	
+	String projectPath="default";
 
 	String className = "emptyClass";
 	String disableIconClass = "eventNone";

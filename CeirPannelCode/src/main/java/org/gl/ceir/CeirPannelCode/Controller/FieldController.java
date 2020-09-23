@@ -26,11 +26,6 @@ public class FieldController {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	@Value ("${filePathforUploadFile}")
-	String filePathforUploadFile;
-
-	@Value ("${filePathforMoveFile}")
-	String filePathforMoveFile;
 	
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;

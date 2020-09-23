@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.xml.crypto.Data;
 
+import org.gl.ceir.CeirPannelCode.PropertyReader;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.ImmigrationFeignImpl;
@@ -58,11 +59,7 @@ public class UploadPaidStatusView {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
-	@Value ("${filePathforUploadFile}")
-	String filePathforUploadFile;
-
-	@Value ("${filePathforMoveFile}")
-	String filePathforMoveFile;
+	
 	
 	
 	@Autowired
@@ -86,9 +83,9 @@ AddMoreFileModel addMoreFileModel,urlToUpload,urlToMove;
 
 FeignCleintImplementation feignCleintImplementation;
 
+@Autowired
+PropertyReader propertyReader;
 
-@Value ("${serverId}")
-Integer serverId;
 @Autowired
 GrievanceFeignClient grievanceFeignClient;
 
@@ -598,7 +595,7 @@ GrievanceFeignClient grievanceFeignClient;
 	    else {
 	    	fileCopyRequest.setFileName(visaImage.getOriginalFilename());
 	    }
-	  	fileCopyRequest.setServerId(serverId);
+	  	fileCopyRequest.setServerId(propertyReader.serverId);
 	  	log.info("request passed to move file to other server=="+fileCopyRequest);
 	  	GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
 	  	log.info("file move api response==="+fileRespnose);
@@ -697,7 +694,7 @@ GrievanceFeignClient grievanceFeignClient;
 			fileCopyRequest.setFilePath(rootPath);
 			fileCopyRequest.setTxnId(txnNumber);
 			fileCopyRequest.setFileName(uploadnationalID.getOriginalFilename());
-			fileCopyRequest.setServerId(serverId);
+			fileCopyRequest.setServerId(propertyReader.serverId);
 			log.info("request passed to move file to other server=="+fileCopyRequest);
 			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
 			log.info("file move api response==="+fileRespnose);
@@ -728,7 +725,7 @@ GrievanceFeignClient grievanceFeignClient;
 		  fileCopyRequest.setFilePath(rootPath);
 			fileCopyRequest.setTxnId(txnNumber);
 			fileCopyRequest.setFileName(endUserDepartmentFile.getOriginalFilename());
-			fileCopyRequest.setServerId(serverId);
+			fileCopyRequest.setServerId(propertyReader.serverId);
 			log.info("request passed to move file to other server=="+fileCopyRequest);
 			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
 			log.info("file move api response==="+fileRespnose);
@@ -757,7 +754,7 @@ GrievanceFeignClient grievanceFeignClient;
 			  fileCopyRequest.setFilePath(rootPath);
 				fileCopyRequest.setTxnId(txnNumber);
 				fileCopyRequest.setFileName(visaImage.getOriginalFilename());
-				fileCopyRequest.setServerId(serverId);
+				fileCopyRequest.setServerId(propertyReader.serverId);
 				log.info("request passed to move file to other server=="+fileCopyRequest);
 				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
 				log.info("file move api response==="+fileRespnose);

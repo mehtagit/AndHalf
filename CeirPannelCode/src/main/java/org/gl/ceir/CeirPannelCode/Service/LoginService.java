@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.PropertyReader;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeatureFeignImpl;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserLoginFeignImpl;
@@ -50,8 +51,8 @@ public class LoginService {
 	@Autowired
 	RegistrationService registerService;
 	
-	@Value ("${sessionLogOutTime}")
-	int sessionLogOutTime;
+	   @Autowired
+	    PropertyReader propertyReader;
 	
 	/*
 	 * public ModelAndView loginPage(HttpSession session){
@@ -81,7 +82,7 @@ public class LoginService {
 
 	public LoginResponse checkLogin(User user,HttpSession session,HttpServletRequest request) {
 		log.info("check login controller ");
-		log.info("session time from properties file."+sessionLogOutTime);
+		log.info("session time from properties file."+propertyReader.sessionLogOutTime);
 		UserHeader header=registerService.getUserHeaders(request);
 		user.setUserAgent(header.getUserAgent());
 		user.setPublicIp(header.getPublicIp());
@@ -113,7 +114,7 @@ public class LoginService {
 					session.setAttribute("period", response.getPeriod());
 					session.setAttribute("selfRegister", response.getSelfRegister());
 					session.setAttribute("defaultLink", response.getDefaultLink());
-					session.setMaxInactiveInterval(sessionLogOutTime);
+					session.setMaxInactiveInterval(propertyReader.sessionLogOutTime);
 
 					return response;      
 				}       

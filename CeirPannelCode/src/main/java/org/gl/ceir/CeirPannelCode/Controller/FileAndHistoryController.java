@@ -39,18 +39,7 @@ import com.google.gson.Gson;
 @Controller
 public class FileAndHistoryController {
 
-	@Value ("${filePathforUploadFile}")
-	String filePathforUploadFile;
-
-	@Value ("${filePathforMoveFile}")
-	String filePathforMoveFile;
 	
-
-	@Value ("${filePathforErrorFile}")
-	String filePathforErrorFile;
-	
-	@Value ("${serverId}")
-	Integer serverId;
 	
 	@Autowired
 	GrievanceFeignClient grievanceFeignClient;
@@ -84,6 +73,11 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 		FileExportResponse response = new FileExportResponse();	
 	log.info("inside file download method"+doc_TypeTag);
 
+	addMoreFileModel.setTag("system_upload_filepath");
+
+	
+	urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+	log.info("url to download file=="+urlToUpload.getValue());
 
 	if (filetype.equalsIgnoreCase("actual"))
 	{
@@ -91,7 +85,7 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 	if (!doc_TypeTag.equals("DEFAULT"))
 	{
 		log.info("doc_TypeTag_______"+doc_TypeTag);
-		String rootPath = filePathforUploadFile+txnid+"/"+doc_TypeTag+"/";
+		String rootPath = urlToUpload.getValue()+txnid+"/"+doc_TypeTag+"/";
 		File tmpDir = new File(rootPath+fileName);
 		boolean exists = tmpDir.exists();
 		if(exists) {
@@ -116,7 +110,7 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 	}
 	else if(doc_TypeTag.equalsIgnoreCase("DEFAULT")) {
 		log.info("doc_TypeTag==="+doc_TypeTag);
-		String rootPath = filePathforUploadFile+txnid+"/";
+		String rootPath = urlToUpload.getValue()+txnid+"/";
 		File tmpDir = new File(rootPath+fileName);
 		boolean exists = tmpDir.exists();
 		if(exists) {
@@ -133,7 +127,11 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 	}
 	else if(filetype.equalsIgnoreCase("error"))
 	{
-		String rootPath = filePathforErrorFile+txnid+"/"+txnid+"_error.csv";
+		addMoreFileModel.setTag("system_error_filepath");
+		
+		urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
+		log.info("url to download error  file path =="+urlToUpload.getValue());
+		String rootPath = urlToUpload.getValue()+txnid+"/"+txnid+"_error.csv";
 		File tmpDir = new File(rootPath);
 		boolean exists = tmpDir.exists();
 		if(exists) {
