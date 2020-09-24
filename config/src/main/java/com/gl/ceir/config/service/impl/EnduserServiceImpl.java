@@ -182,6 +182,10 @@ public class EnduserServiceImpl {
 
 			// End user is not registered with CEIR system.
 			if(Objects.nonNull(endUserDB)) {
+//				endUserDB.setDocTypeInterp(interpSetter.setConfigInterp(Tags.DOC_TYPE, endUserDB.getDocType()));
+				if(Objects.nonNull(endUserDB.getDocType())) {
+					endUserDB.setDocTypeInterp(interpSetter.setTagId(Tags.DOC_TYPE, endUserDB.getDocType()));	
+				}
 				List<RegularizeDeviceDb> regulaizedList=new ArrayList<RegularizeDeviceDb>();
 				if(Objects.nonNull(endUserDB.getRegularizeDeviceDbs())) {
 					for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs()) {
@@ -1184,8 +1188,8 @@ public class EnduserServiceImpl {
 		String fileName = null;
 		Writer writer   = null;
 		UpdateVisaFileModel uVFm = null;
-		SystemConfigurationDb userProfileDowlonadDir=configurationManagementServiceImpl.findByTag("VisaUpdate_Download_Dir");
-		SystemConfigurationDb userProfileDowlonadLink=configurationManagementServiceImpl.findByTag("VisaUpdate_Download_link");
+		SystemConfigurationDb userProfileDowlonadDir=configurationManagementServiceImpl.findByTag("file.download-dir");
+		SystemConfigurationDb userProfileDowlonadLink=configurationManagementServiceImpl.findByTag("file.download-link");
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 

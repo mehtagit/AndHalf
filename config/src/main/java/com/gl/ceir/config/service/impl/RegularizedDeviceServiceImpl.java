@@ -1104,22 +1104,25 @@ public class RegularizedDeviceServiceImpl {
 
 		if(Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty())
 			specificationBuilder.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
+		else {
+			if(Objects.nonNull(filterRequest.getUserTypeId())) {
+				if(filterRequest.getUserTypeId()==18)		
+				{
+					specificationBuilder.with(new SearchCriteria("origin","Immigration" , SearchOperation.EQUALITY, Datatype.STRING));
+				}
+				else if(filterRequest.getUserTypeId()==17)		
+				{
+					specificationBuilder.with(new SearchCriteria("origin", "Self" , SearchOperation.EQUALITY, Datatype.STRING));
+				}
+				else if(filterRequest.getUserTypeId()==7)		
+				{
+					specificationBuilder.with(new SearchCriteria("origin", "Custom" , SearchOperation.EQUALITY, Datatype.STRING));
+				}
+			}
+		}
 
 		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
 			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
-
-		if(Objects.nonNull(filterRequest.getUserTypeId())) {
-			if(filterRequest.getUserTypeId()==18)		
-			{
-				specificationBuilder.with(new SearchCriteria("origin","Immigration" , SearchOperation.EQUALITY, Datatype.STRING));
-			}
-			else if(filterRequest.getUserTypeId()==17)		
-			{
-				specificationBuilder.with(new SearchCriteria("origin", "Self" , SearchOperation.EQUALITY, Datatype.STRING));
-			}
-			else {
-			}
-		}
 
 		if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
 			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
@@ -1141,7 +1144,7 @@ public class RegularizedDeviceServiceImpl {
 		else {
 			if(Objects.nonNull(filterRequest.getUserTypeId())) {
 
-				if(filterRequest.getUserTypeId()==8)		
+				if( filterRequest.getUserTypeId()==8 || filterRequest.getUserTypeId()==7 || filterRequest.getUserTypeId()==18  )		
 				{
 					//			specificationBuilder.with(new SearchCriteria("status",RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode(), SearchOperation.EQUALITY, Datatype.INT));
 
@@ -1153,11 +1156,11 @@ public class RegularizedDeviceServiceImpl {
 						List<Integer> deviceStatus = new LinkedList<>();
 
 						if(Objects.nonNull(dashboardUsersFeatureStateMap)) {
-							if("dashboard".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source)) {
+							if("dashboard".equalsIgnoreCase(source) ) {
 								for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
 									deviceStatus.add(dashboardUsersFeatureStateMap2.getState());
 								}
-							}else if("filter".equalsIgnoreCase(source)) {
+							}else if("filter".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source) ) {
 								if(nothingInFilter(filterRequest)) {
 									for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
 										deviceStatus.add(dashboardUsersFeatureStateMap2.getState());
@@ -1223,24 +1226,30 @@ public class RegularizedDeviceServiceImpl {
 	}
 
 	public boolean nothingInFilter(FilterRequest filterRequest) {
-		if(Objects.nonNull(filterRequest.getStartDate()) || !filterRequest.getStartDate().isEmpty()) {
+		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty()) {
 			return Boolean.FALSE;
 		}
-		if(Objects.nonNull(filterRequest.getEndDate()) || !filterRequest.getEndDate().isEmpty()) {
-			return Boolean.FALSE;
-		}
-
-		if(Objects.nonNull(filterRequest.getTxnId()) || !filterRequest.getTxnId().isEmpty()) {
+		if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty()) {
 			return Boolean.FALSE;
 		}
 
-		if(Objects.nonNull(filterRequest.getDisplayName()) || !filterRequest.getDisplayName().isEmpty()) {
+		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
 			return Boolean.FALSE;
 		}
-		if(Objects.nonNull(filterRequest.getConsignmentStatus()) ) {
+
+		if( Objects.nonNull(filterRequest.getDeviceIdType()) ) {
 			return Boolean.FALSE;
 		}
-		if(Objects.nonNull(filterRequest.getUserType()) || !filterRequest.getEndDate().isEmpty()) {
+		if( Objects.nonNull(filterRequest.getDeviceType()) ) {
+			return Boolean.FALSE;
+		}
+		if( Objects.nonNull(filterRequest.getTaxPaidStatus()) ) {
+			return Boolean.FALSE;
+		}
+		if( Objects.nonNull(filterRequest.getStatus()) ) {
+			return Boolean.FALSE;
+		}
+		if( Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty()) {
 			return Boolean.FALSE;
 		}
 		return Boolean.TRUE;
