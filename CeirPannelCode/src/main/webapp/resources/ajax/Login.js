@@ -172,7 +172,7 @@ function login(){
 	});
 	return false;
 }
-function dataByTag(tag,divId,input){ 
+/*function dataByTag(tag,divId,input){ 
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -200,7 +200,7 @@ function dataByTag(tag,divId,input){
 		error: function (xhr, ajaxOptions, thrownError) {
 		}
 	});
-}
+}*/
 
 
 

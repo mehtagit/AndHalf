@@ -1,25 +1,8 @@
-		var cierRoletype =$("body").attr("data-roleType");	
-		var userId = $("body").attr("data-userID");
-		var userType=$("body").attr("data-roleType");
-		var featureId="3";
-		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-
-
-		$.i18n().locale = lang;	
-		
-		$.i18n().load( {
-			'en': './resources/i18n/en.json',
-			'km': './resources/i18n/km.json'
-		} ).done( function() { 
-			
-		});
-
-		
-		$(document).ready(function(){
+	$(document).ready(function(){
 			$('div#initialloader').fadeIn('fast');
-			Datatable(lang);
-			sessionStorage.removeItem("session-value");
-			pageRendering();
+			Datatable();
+		//	sessionStorage.removeItem("session-value");
+		//	pageRendering();
 			
 		 });
 		
@@ -28,50 +11,14 @@
 			dateFormat: "yy-mm-dd"
 		});
 
-
-		//var sourceType =localStorage.getItem("sourceType");
-		//var TagId = sessionStorage.getItem("tagId");
-		
-		/*var reportnameId = sessionStorage.getItem("reportname");
-		var reportNameInterp = sessionStorage.getItem("reportInterp");*/
-		
-		
 		//**************************************************filter table**********************************************
 		
-		function Datatable(lang){
+		function Datatable(){
 			
-			if($("body").attr("data-redirectURL") == 'viaDashboard'){
-			
-				var filterRequest={
-						"unitId" : $("body").attr("data-unitID")
-				
-				}			
-				var tableURL="./defaultReport";
-				
-			}
-			else{
 			var filterRequest={
-					"startDate" : $('#startDate').val(), 
-					"endDate":$('#endDate').val(),
-					"reportnameId" : 1,
-					"featureId":parseInt(featureId),
-					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType":$("body").attr("data-roleType"),
-					"username" : $("body").attr("data-selected-username"),
-					"userId" : parseInt($("body").attr("data-userID"))
-					//"pageNo": Integer.parseInt(pageNo),
-					//"pageSize":Integer.parseInt(pageSize),
-
-			}
-			var tableURL="dbReportData";
-			}
-			////console.log(JSON.stringify(filterRequest));
+					"unitId" : $("body").attr("data-unitID")
 			
-			if(lang=='km'){
-				var langFile="./resources/i18n/khmer_datatable.json";
-			}else if(lang=='en'){
-				var langFile='./resources/i18n/english_datatable.json';
-			}				
+			}			
 			
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
@@ -81,11 +28,11 @@
 			});	
 
 		$.ajax({
-				url: 'tableHeaders?reportnameId=1',
+				url: './headerName?type=default',
 				type: 'POST',
 				dataType: "json",
 				success: function(result){
-					var table=	$("#reportLibraryTable").DataTable({
+					var table=	$("#example").DataTable({
 						destroy:true,
 						"serverSide": true,
 						orderCellsTop : true,
@@ -96,10 +43,7 @@
 						"bSearchable" : true,
 						"scrollX": true,
 						"scrolly": true,
-						"searching": false,
-						"oLanguage": {  
-							"sUrl": langFile  
-						},
+						"searching": true,
 						initComplete: function() {
 					 		$('.dataTables_filter input')
 	       .off().on('keyup', function(event) {
@@ -110,7 +54,7 @@
 	       });
 		   },
 						ajax: {
-							url : tableURL,
+							url : './defaultReport',
 							type: 'POST',
 							dataType: "json",
 							data : function(d) {
@@ -119,14 +63,12 @@
 							}
 
 						},
-						"columns": result,"defaultContent":"",
+						"columns": result,
 						fixedColumns: true,
 					});
 					
 					$('div#initialloader').delay(300).fadeOut('slow');
 					
-					$('.dataTables_filter').css("display", "none");	
-					sessionStorage.removeItem("reportname");
 					
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
@@ -145,7 +87,7 @@
 				{ 'X-CSRF-TOKEN': token }
 			});
 			$.ajax({
-				url: 'dbReportTable/pageRendering',
+				url: 'dbReportTable/pageRendering?reportName='+reportNameInterp,
 				type: 'POST',
 				dataType: "json",
 				success: function(data){
@@ -207,56 +149,3 @@
 			//alert("reportNameInterp--->" +reportNameInterp)
 			
 }
-
-
-		function exportReportData(){
-			var table = $('#reportLibraryTable').DataTable();
-			var info = table.page.info(); 
-			var pageNo=info.page;
-			var pageSize =info.length;
-			
-			var filterRequest={
-					"startDate" : $('#startDate').val(), 
-					"endDate":$('#endDate').val(),
-					"reportnameId" : parseInt(reportnameId),
-					"featureId":parseInt(featureId),
-					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType":$("body").attr("data-roleType"),
-					"username" : $("body").attr("data-selected-username"),
-					"userId" : parseInt($("body").attr("data-userID")),
-					"pageNo":parseInt(pageNo),
-					"pageSize":parseInt(pageSize),
-					
-					
-					
-					
-					
-					
-			}
-			//////console.log(JSON.stringify(filterRequest))
-			var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			$.ajaxSetup({
-				headers:
-				{ 'X-CSRF-TOKEN': token }
-			});
-			$.ajax({
-				url: './exportReportData',
-				type: 'POST',
-				dataType : 'json',
-				contentType : 'application/json; charset=utf-8',
-				data : JSON.stringify(filterRequest),
-				success: function (data, textStatus, jqXHR) {
-					  window.location.href = data.url;
-
-				},
-				error: function (jqXHR, textStatus, errorThrown) {
-					
-				}
-			});
-			
-			
-		}
-		
-
-	

@@ -15,7 +15,7 @@
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
-<title>CEIR Portal</title>
+<title>SubStation Portal</title>
 <!--<title>Add Devices</title>-->
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>

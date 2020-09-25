@@ -30,7 +30,7 @@
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
-<head><title>CEIR Portal</title>
+<head><title>SubStation Portal</title>
 <!--<title>View Report</title>-->
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
@@ -92,7 +92,7 @@
 
 	
 </head>
-<body data-id="42"
+<body data-id="3"
 	data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
@@ -100,7 +100,9 @@
 	data-selected-consignmentStatus="${consignmentStatus}"
 	data-selected-username="${username}"
 	session-value="en"
-	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
+	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
+	data-redirectURL="${not empty param.redirectURL ? param.redirectURL : 'null'}"
+		data-unitID="${not empty param.unitID ? param.unitID : 'null'}">
 
 	<%-- session-value="${not empty param.NID ? param.NID : 'null'}" --%>
 

@@ -30,7 +30,7 @@
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
-<head><title>CEIR Portal</title>
+<head><title>SubStation Portal</title>
 <!-- Security Tags -->
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->

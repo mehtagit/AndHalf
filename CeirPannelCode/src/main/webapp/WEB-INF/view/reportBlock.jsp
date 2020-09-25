@@ -31,7 +31,7 @@
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<head><title>CEIR Portal</title>
+<head><title>SubStation Portal</title>
 <!--<title>Report Block</title>-->
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>

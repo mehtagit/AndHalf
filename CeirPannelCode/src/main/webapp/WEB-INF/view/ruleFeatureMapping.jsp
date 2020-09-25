@@ -32,7 +32,7 @@ if (currentTime < dfd) {
 <!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
 <head>
-<title>CEIR Portal</title>
+<title>SubStation Portal</title>
 <!--<title>Rule List</title>-->
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>

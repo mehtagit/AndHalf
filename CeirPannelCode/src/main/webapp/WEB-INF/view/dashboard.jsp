@@ -36,7 +36,7 @@ if (currentTime < dfd) {
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<head><title>CEIR Portal</title>
+<head><title>SubStation Portal</title>
 <!--<title>Dashboard</title>-->
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -153,18 +153,17 @@ div#error_Modal {
 			<nav class="navbar-color">
 				<div class="nav-wrapper">
 					<ul class="left">
-						<li>
+						<!-- <li>
 							<div class="offset-md-1 text-right px-0 ml-3 my-auto">
 								<a href="javascript:void(0)" rel="noopener noreferrer"
 									title="DMC, external link that open in a new window"> <img
 									src="./resources/images/DMC-Logo.png" id="header-img"
 									class="darken-1 my-2" style="height: 56px;"></a>
 							</div>
-						</li>
+						</li> -->
 						<li>
 							<h1 class="logo-wrapper">
-								<a href="#" class="brand-logo darken-1"><spring:message
-										code="page.ceir" /> <span id="cierRoletype"> <spring:message
+								<a href="#" class="brand-logo darken-1"><span id="cierRoletype"> <spring:message
 											code="roletype.${fn:replace(sessionScope.usertype, ' ', '_')}" />
 								</span> <spring:message code="page.portal" /> <%
  	if ("Operator".equalsIgnoreCase(usertype)) {
@@ -178,11 +177,11 @@ div#error_Modal {
 					</ul>
 					<ul id="chat-out" class="right hide-on-med-and-down"
 						style="overflow: inherit !important;">
-						<li><a id="manualDownload" download
+						<!-- <li><a id="manualDownload" download
 							style="color: white; cursor: pointer;"><i
 								class="fa fa-download download-icon" aria-hidden="true"
-								title="Download Manual" style="color: #fff; line-height: 3;"></i></a></li>
-						<li>
+								title="Download Manual" style="color: #fff; line-height: 3;"></i></a></li> -->
+						<%-- <li>
 							<div id="divLang" style="display: flex; margin: 8px 6px;"
 								class="darken-1">
 								<div id="iconLable" class="darken-1">
@@ -198,7 +197,7 @@ div#error_Modal {
 									</select>
 								</div>
 							</div>
-						</li>
+						</li> --%>
 						<%-- 						<li>
                              <a href="javascript:void(0)"  
 							 style="color:rgba(0, 0, 0, 0.3);; cursor: pointer;"><spring:message
@@ -339,8 +338,8 @@ div#error_Modal {
 		<div class="footer-copyright">
 			<div class="container">
 
-				<span id="copyrightText" class="right"><spring:message
-						code="registration.copyright" /></span>
+				<%-- <span id="copyrightText" class="right"><spring:message
+						code="registration.copyright" /></span> --%>
 
 			</div>
 		</div>
@@ -692,7 +691,7 @@ data-dismiss="modal">&times;</button> -->
 							<spring:message code="modal.yes" />
 						</button>
 						<a href="#" class="modal-close btn" style="margin-left: 10px;"><spring:message
-								code="modal.no" /></a>
+								code="modal.no"/></a>
 					</form>
 
 				</div>

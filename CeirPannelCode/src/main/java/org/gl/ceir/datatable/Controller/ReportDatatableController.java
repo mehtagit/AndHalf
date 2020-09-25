@@ -131,7 +131,7 @@ public class ReportDatatableController {
 	}
 	
 	@PostMapping("dbReportTable/pageRendering")
-	public ResponseEntity<?> pageRendering(String displayName, HttpSession session,@RequestParam("reportName") String reportName) {
+	public ResponseEntity<?> pageRendering(HttpSession session) {
 
 		String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
@@ -172,8 +172,7 @@ public class ReportDatatableController {
 		 */
 
 		// input type date list
-		String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
-				Translator.toLocale("input.endDate"), "endDate", "" };
+		String[] dateParam = { "date","Packet Recived Date", "startDate", "", "text","Unit ID","unitId","" };
 		for (int i = 0; i < dateParam.length; i++) {
 			dateRelatedFields = new InputFields();
 			dateRelatedFields.setType(dateParam[i]);
@@ -187,7 +186,7 @@ public class ReportDatatableController {
 		}
 		
 		
-		pageElement.setPageTitle(Translator.toLocale("sidebar.Report")+" - "+reportName);
+		pageElement.setPageTitle(Translator.toLocale("sidebar.Report")+" - Substation Configuration Report ");
 		pageElement.setInputTypeDateList(inputTypeDateList);
 		pageElement.setUserStatus(userStatus);
 		return new ResponseEntity<>(pageElement, HttpStatus.OK);

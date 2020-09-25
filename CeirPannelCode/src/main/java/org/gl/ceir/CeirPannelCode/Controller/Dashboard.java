@@ -47,6 +47,14 @@ public class Dashboard {
 		mv.setViewName("Home");
 		return mv;
 	}
+	
+	
+	@RequestMapping(value = { "/defaultReport" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET })
+	public ModelAndView defaultReport() {
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("defaultReport");
+		return mv;
+	}
 
 	@GetMapping("dashboard/box")
 	@ResponseBody

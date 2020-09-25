@@ -14,7 +14,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head><title>CEIR Portal</title>
+<head><title>SubStation Portal</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
@@ -29,7 +29,7 @@
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <!-- Security Tags -->
-<!--<title>CEIR Portal</title>-->
+<!--<title>SubStation Portal</title>-->
 
 
 <!-- Favicons-->
@@ -128,7 +128,7 @@ a#newUserLink {
 							<form id="loginForm" onsubmit="return login()">
 								<div class="col s12 m12 l12">
 									<div class="row">
-<div class="col s9 m10 select-lang-lable">
+<%-- <div class="col s9 m10 select-lang-lable">
 										<i class="fa fa-globe fa-6" aria-hidden="true"></i>
 										</div>
 										<div class="col s3 m2 right" style="padding: 0;">
@@ -137,7 +137,7 @@ a#newUserLink {
 												<option value="en">English</option>
 												<option value="km"><spring:message code="lang.khmer" /></option>
 											</select>
-										</div>
+										</div> --%>
 										<div class="col s12 m12">
 											<h5 style="text-align: -webkit-center;">
 												<spring:message code="registration.login" />
@@ -207,11 +207,11 @@ a#newUserLink {
 											</div>
 										</div>
 
-										<a href="${context}/forgotPassword"
+										<%-- <a href="${context}/forgotPassword"
 											class="right forgotPassword"><spring:message
 												code="registration.forgotpassword" /></a> <span><a
 											href="JavaScript:Void(0);" id="newUserLink" class="right"><spring:message
-													code="registration.newUser" /></a></span>
+													code="registration.newUser" /></a></span> --%>
 									</div>
 								</div>
 							</form>

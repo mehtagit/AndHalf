@@ -1,159 +1,80 @@
-var userTypeId = parseInt($("body").attr("data-userTypeID"));
-var userType = $("body").attr("data-roleType");
-var userId = $("body").attr("data-userID");
-var operatortypeid = window.parent.$("body").attr("data-operatortypeid");
 
-var featureId="3";
+$(document).ready(function () {
+	var ip=$("body").attr("data-ip");
+	var port=$("body").attr("data-port");
 
-var sessionLang=window.parent.$('#langlist').val() == 'en' ? 'en' : 'km';
-$.i18n().locale = sessionLang;	
-
-
-
-$(document).ready(function(){
-	$('div#initialloader').fadeIn('fast');
-	var url;
-
+	var currentTime = new Date()
+	var month = ("0" + (currentTime.getMonth() + 1)).slice(-2)
+	var day = ("0" + (currentTime.getDate())).slice(-2)
+	var hours=("0"+ (currentTime.getHours() - 6)).slice(-2)
+	var year = currentTime.getFullYear();
+	var finalVal=year+"-"+month+"-"+day+" "+hours+":"+currentTime.getMinutes()+":"+currentTime.getSeconds();
+//	("0" + currentHours).slice(-2)
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
-	headers:
-	{ 'X-CSRF-TOKEN': token }
+		headers:
+		{ 'X-CSRF-TOKEN': token }
 	});
 	$.ajax({
-		url: './dashboard/box?userTypeId='+userTypeId,
-		type: 'GET',
+		type : 'GET',
+		url : ''+ip+''+port+'/substation/station/get',
+		contentType : "application/json",
 		success: function(data){
-
-			$.i18n().load( {
-				'en': './resources/i18n/en.json',
-				'km': './resources/i18n/km.json'
-			} ).done( function() { 
-				
-			for (i = 0; i < data.length; i++) {
-				var id=data[i].name;
-				/*var finalID=id.replace (/\//g, "");*/
-				url= data[i].url.split("?"); 
-				$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+$.i18n(data[i].name)+"</h6><p class='circle-para right' style='position:absolute;margin-top:70px;width: 170px;margin-left: 5px;padding-right: 0px !important;'><b id='"+data[i].id+"count'></b> </p><p class='center view-div-info'><a href='"+data[i].viewName+"?&source=dashboard' onclick='isActive(\""+data[i].featureId+"\")' class=''><i class='fa fa-eye view-icon teal-text' title='view'></i></a></p><div class='icon-div center'><i class='"+data[i].icon+"' aria-hidden='true'></i></div></div>");
-				var finalID = data[i].id;
-				var outParam = data[i].outParam;
-				if(userTypeId == 8){
-					userId = -1;
+			//	console.log(data);
+			for(var i=0 ;i<data.length;i++){
+				if(finalVal <= data[i].lastIntervalPacketDate){
+					var classN="\"trWidht statusColor \"";
+					$('#activeDeviceTable').append('<tr  class='+classN+'><td onclick=redirectToTable("'+data[i].unitID+'");isActive(3);>'+data[i].substation+'</td><tr>');
 				}
+				else if( data[i].lastIntervalPacketDate == null){
+					var classN="\"trWidht statusNotAvailableColor \"";
 
-				var operatorId;
-				var requestType;
-				if(data[i].name == 'Block Requests' && data[i].featureId == 7){
-					requestType=2;
-				}
-				else if(data[i].name == 'Unblock Requests' && data[i].featureId == 7){
-					requestType=3;
-				}
+					$('#activeDeviceTable').append("<tr class="+classN+"><td>"+data[i].substation+"</td><tr>");
 
-				else if(data[i].name == 'Stolen Requests' && data[i].featureId == 5){
-					requestType=0;
-				}
 
-				else if(data[i].name == 'Recovery Requests' && data[i].featureId == 5){
-					requestType=1;
 				}
-
-				var user_Type=window.parent.$("body").attr("data-usertype");
-				
-				if(user_Type =='Operator'){
-					operatorId=operatortypeid;
-					}
 				else{
-					operatorId=-1;
+
+					var classN="\"trWidht NotstatusColor \"";
+					$('#activeDeviceTable').append('<tr  class='+classN+'><td onclick=redirectToTable("'+data[i].unitID+'");isActive(3);>'+data[i].substation+'</td><tr>');
+					
 				}
-
-				var token = $("meta[name='_csrf']").attr("content");
-				var header = $("meta[name='_csrf_header']").attr("content");
-				$.ajaxSetup({
-				headers:
-				{ 'X-CSRF-TOKEN': token }
-				});
-				$.ajax({
-					url: './'+url[0]+'?featureId='+data[i].featureId+'&userId='+userId+'&userTypeId='+userTypeId+'&requestType='+requestType+'&userType='+userType+'&operatorId='+operatorId,
-					'async': false,
-					type: 'GET',
-					success: function(data){
-						outParam == 'count' ? $('#'+finalID+'count').text(data.count) : $('#'+finalID+'count').text(data.quantity);	
-					}
-				});
-
-
+				$('div#initialloader').delay(300).fadeOut('slow');
 			}
-			});
 		}
+
 	});
-	notificationDatatable(sessionLang);
+
+
 });
 
 
 
-localStorage.setItem("sourceType", "viaDashBoard");
-localStorage.setItem("grievancePageSource", "viaDashBoard");
+$('#btn-Convert-Html2Image').on('click', function() {
+	html2canvas($('#activeDeviceTable'), {
+		onrendered: function(canvas) {                                      
 
+			var saveAs = function(uri, filename) {
+				var link = document.createElement('a');
+				if (typeof link.download === 'string') {
+					document.body.appendChild(link); // Firefox requires the link to be in the body
+					link.download = filename;
+					link.href = uri;
+					link.click();
+					document.body.removeChild(link); // remove the link when done
+				} else {
+					location.replace(uri);
+				}
+			};
 
+			var img = canvas.toDataURL("image/png"),
+			uri = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
 
-//**************************************************Notification Data table**********************************************
-
-function notificationDatatable(){
-
-	var filterRequest = {
-			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
-			"userType" : $("body").attr("data-roleType"),
-			"userId" : $("body").attr("data-userID"),
-			"featureId" : 3
-	}
-
-
-	if(sessionLang=='km'){
-		var langFile="./resources/i18n/khmer_datatable.json";
-	}
-
-	var token = $("meta[name='_csrf']").attr("content");
-	var header = $("meta[name='_csrf_header']").attr("content");
-	$.ajaxSetup({
-	headers:
-	{ 'X-CSRF-TOKEN': token }
-	});
-	$.ajax({
-		url: 'headers?type=dashboardNotification&lang='+sessionLang,
-		type: 'POST',
-		dataType: "json",
-		success: function(result){
-			var table=	$("#notificationLibraryTable").DataTable({
-				destroy:true,
-				"serverSide": true,
-				orderCellsTop : true,
-				"ordering" : false,
-				"bPaginate" : true,
-				"bFilter" : true,
-				"bInfo" : true,
-				"bSearchable" : true,
-				"pageLength": 10,
-				ajax: {
-					url : './NotificationData',
-					type: 'POST',
-					dataType: "json",
-					data : function(d) {
-						d.filter = JSON.stringify(filterRequest); 
-					}
-
-				},
-				"columns": result
-			});
-			$('div#initialloader').delay(300).fadeOut('slow');
-		},
-		error: function (jqXHR, textStatus, errorThrown) {
-			//////console.log("error in ajax");
+			saveAs(uri, 'tableExport.png');
 		}
-	});
-}
-
-
+	}); 
+});
 
 function isActive(feature){	
 	window.parent.$('.navData li:nth-child(1)').removeClass("active");
@@ -166,3 +87,9 @@ function isActive(feature){
 		}
 	})
 }
+
+
+// get detail based on Unit ID
+function redirectToTable(recieveID){
+	window.location = "./report?redirectURL=viaDashboard&unitID="+recieveID+"&back=./Home";
+				}
