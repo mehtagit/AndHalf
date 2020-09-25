@@ -90,7 +90,11 @@
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 
 <script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
-
+<style>
+.dataTables_scrollBody {
+height: auto !important;
+}
+</style>
 	
 </head>
 <body data-id="39"
