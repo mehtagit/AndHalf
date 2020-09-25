@@ -162,8 +162,8 @@ public class ReqHeadersService {
 		String fileName = null;
 		Writer writer   = null;
 		ReqHeaderFile adFm = null;
-		SystemConfigurationDb alertDbDowlonadDir=systemConfigurationDbRepoImpl.getDataByTag("reqHeader_Download_Dir");
-		SystemConfigurationDb alertDbDowlonadLink=systemConfigurationDbRepoImpl.getDataByTag("reqHeader_Download_link");
+		SystemConfigurationDb alertDbDowlonadDir=systemConfigurationDbRepoImpl.getDataByTag("file.download-dir");
+		SystemConfigurationDb alertDbDowlonadLink=systemConfigurationDbRepoImpl.getDataByTag("file.download-link");
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String filePath  = alertDbDowlonadDir.getValue();
 		log.info("filePath:  "+filePath);

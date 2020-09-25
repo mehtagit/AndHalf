@@ -1,10 +1,13 @@
 package com.ceir.CeirCode.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -16,37 +19,19 @@ public class UserLoginReport {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-
-	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date createdOn;
+	private LocalDateTime createdOn;
+	
 	
 	private Integer noUserLogged;  
 	private Integer uniqueUserLogged;
-	public long getId() {
-		return id;
+	
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
 	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	public Date getCreatedOn() {
-		return createdOn;
-	}
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
-	public Integer getNoUserLogged() {
-		return noUserLogged;
-	}
-	public void setNoUserLogged(Integer noUserLogged) {
-		this.noUserLogged = noUserLogged;
-	}
-	public Integer getUniqueUserLogged() {
-		return uniqueUserLogged;
-	}
-	public void setUniqueUserLogged(Integer uniqueUserLogged) {
-		this.uniqueUserLogged = uniqueUserLogged;
+	public static void setSerialVersionUID(long serialVersionUID) {
+		UserLoginReport.serialVersionUID = serialVersionUID;
 	}
 	@Override
 	public String toString() {
@@ -61,5 +46,31 @@ public class UserLoginReport {
 		builder.append(uniqueUserLogged);
 		builder.append("]");
 		return builder.toString();
-	}  
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	public LocalDateTime getCreatedOn() {
+		return createdOn;
+	}
+	public void setCreatedOn(LocalDateTime createdOn) {
+		this.createdOn = createdOn;
+	}
+	public Integer getNoUserLogged() {
+		return noUserLogged;
+	}
+	public void setNoUserLogged(Integer noUserLogged) {
+		this.noUserLogged = noUserLogged;
+	}
+	public Integer getUniqueUserLogged() {
+		return uniqueUserLogged;
+	}
+	public void setUniqueUserLogged(Integer uniqueUserLogged) {
+		this.uniqueUserLogged = uniqueUserLogged;
+	}
+
+	
 }

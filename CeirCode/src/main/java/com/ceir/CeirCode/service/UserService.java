@@ -524,10 +524,7 @@ public class UserService {
 				HttpResponse response=new HttpResponse(RegistrationTags.Phone_Exist.getMessage(),409,RegistrationTags.Phone_Exist.getTag());
 				return new ResponseEntity<>(response,HttpStatus.OK);
 			}
-
-
-
-			log.info("roles output:  "+rolesOutput);
+			log.info("roles output:"+rolesOutput);
 			if(rolesOutput > 0) {
 				List<Long> usertypeList=usertypeCheck();
 				log.info("primary usertypeId is:  "+rolesOutput);	
@@ -782,7 +779,8 @@ public class UserService {
 							
 							  emailUtils.saveNotification("REG_NOTIFY_CEIR_ADMIN_TO_VERIFY_USER",
 							  adminUser.getUserProfile(), 8, "Registration Request",
-							  "user phone and email details validated",  String.valueOf(user.getId()), "NA", mapEmail, "CEIRAdmin",
+							 // "user phone and email details validated",  String.valueOf(user.getId()), "NA", mapEmail, "CEIRAdmin", 
+							  "user phone and email details validated",  user.getUsername(), "NA", mapEmail, "CEIRAdmin",
 							  "CEIRAdmin", "Users");
 							 
 					}	
@@ -1677,7 +1675,7 @@ public class UserService {
 					user.setPortAddressName(portAddress.getAddress());
 				}
 
-				SystemConfigurationDb filePath=systemConfigurationRepo.getDataByTag("USER_FILE_DOWNLOAD_PATH");	
+				SystemConfigurationDb filePath=systemConfigurationRepo.getDataByTag("upload_file_link");	
 				if(filePath!=null) {
 					if(user.getNidFilename()!=null || !"null".equalsIgnoreCase(user.getNidFilename())) {
 						user.setNidFilePath(filePath.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+"/"+user.getUser().getUsername()+"/NID/");				
@@ -1965,7 +1963,7 @@ public class UserService {
 				if(Objects.nonNull(user.getUser().getApprovedBy())) {
 					user.setApprovedBy(user.getUser().getApprovedBy());
 				}
-				SystemConfigurationDb filePath=systemConfigurationRepo.getDataByTag("USER_FILE_DOWNLOAD_PATH");	
+				SystemConfigurationDb filePath=systemConfigurationRepo.getDataByTag("upload_file_link");	
 				if(filePath!=null) {
 					if(user.getNidFilename()!=null || !"null".equalsIgnoreCase(user.getNidFilename())) {
 						user.setNidFilePath(filePath.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+"/"+user.getUser().getUsername()+"/NID/");				

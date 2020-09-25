@@ -7,6 +7,7 @@ import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ceir.CeirCode.Constants.Datatype;
@@ -17,7 +18,6 @@ import com.ceir.CeirCode.filtermodel.LoginReportFilter;
 import com.ceir.CeirCode.model.SearchCriteria;
 import com.ceir.CeirCode.model.UserLoginReport;
 import com.ceir.CeirCode.repo.LoginReportRepo;
-
 @Service
 public class ReportService {
 
@@ -35,11 +35,12 @@ public class ReportService {
 			uPSB.with(new SearchCriteria("createdOn",filterRequest.getStartDate(), SearchOperation.GREATER_THAN, Datatype.DATE));
 		if(Objects.nonNull(filterRequest.getEndDate()) && filterRequest.getEndDate()!="")
 			uPSB.with(new SearchCriteria("createdOn",filterRequest.getEndDate(), SearchOperation.LESS_THAN, Datatype.DATE));
+		
 		try {
-			List<UserLoginReport> userReport = loginRepo.findAll( uPSB.build());
+			List<UserLoginReport> userReport = loginRepo.findAll( uPSB.build(),new Sort(Sort.Direction.ASC, "createdOn"));
+			
 			return userReport;
-
-		} catch (Exception e) {
+			} catch (Exception e) {
 			log.info("Exception found ="+e.getMessage());
 			log.info(e.getClass().getMethods().toString());
 			log.info(e.toString());

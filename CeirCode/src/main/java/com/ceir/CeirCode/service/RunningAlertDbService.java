@@ -155,8 +155,8 @@ public class RunningAlertDbService {
 		String fileName = null;
 		Writer writer   = null;
 		RunningAlertFile adFm = null;
-		SystemConfigurationDb alertDbDowlonadDir=systemConfigurationDbRepoImpl.getDataByTag("RunningAlert_Download_Dir");
-		SystemConfigurationDb alertDbDowlonadLink=systemConfigurationDbRepoImpl.getDataByTag("RunningAlert_Download_link");
+		SystemConfigurationDb alertDbDowlonadDir=systemConfigurationDbRepoImpl.getDataByTag("file.download-dir");
+		SystemConfigurationDb alertDbDowlonadLink=systemConfigurationDbRepoImpl.getDataByTag("file.download-link");
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		User user=userRepoService.findByUSerId(runAlertFilter.getUserId());
 		if(user!=null) {
