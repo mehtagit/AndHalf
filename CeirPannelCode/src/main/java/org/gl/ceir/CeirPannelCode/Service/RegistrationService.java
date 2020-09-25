@@ -147,6 +147,13 @@ public class RegistrationService {
 				Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);
 				log.info("user upload file path value from db: "+dropdown.getValue());
 				StringBuilder combinedPath=new StringBuilder(dropdown.getValue()).append("/"+username);
+				//give file read and write  permission to txnId Directory
+				/*
+				 * File dir1 = new File(combinedPath + File.separator);
+				 * dir1.setReadable(true,false); dir1.setWritable(true,false);
+				 * dir1.setExecutable(true,false);
+				 */
+				File dir1 = new File(combinedPath + File.separator);
 				String nationalIdPath=new String(combinedPath+"/NID");  
 				String photoPath=new String(combinedPath+"/photo");
 				String idCardPath=new String(combinedPath+"/IDCard");  
@@ -156,9 +163,25 @@ public class RegistrationService {
 					log.info("file name: " +nationalIdImage.getOriginalFilename());
 					log.info("finalPath:   "+nationalIdPath);  
 					File dir = new File(nationalIdPath);
-					if (!dir.exists()) dir.mkdirs();
+				
+					if (!dir.exists()) {
+						
+						dir.mkdirs();
+						dir.setReadable(true,false);
+						dir.setWritable(true,false);
+						dir.setExecutable(true,false);
+						
+						dir1.setReadable(true,false);
+						dir1.setWritable(true,false);
+						dir1.setExecutable(true,false);
+						
+					}
 					byte barr[]=nationalIdImage.getBytes();
 					BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(nationalIdPath + "/" + nationalIdImage.getOriginalFilename()));
+					File files =	new File(nationalIdPath + "/" + nationalIdImage.getOriginalFilename());
+					  files.setReadable(true,false);
+					  files.setWritable(true,false);
+					  files.setExecutable(true,false);
 					bout.write(barr);
 					bout.flush();
 					bout.close(); 
@@ -170,9 +193,23 @@ public class RegistrationService {
 					log.info("file name: " +photo.getOriginalFilename());
 					log.info("finalPath:   "+photoPath);  
 					File dir = new File(photoPath);
-					if (!dir.exists()) dir.mkdirs();
+					
+					if (!dir.exists()) 
+						{
+						dir.mkdirs();
+						dir.setReadable(true,false);
+						dir.setWritable(true,false);
+						dir.setExecutable(true,false);
+						dir1.setReadable(true,false);
+						dir1.setWritable(true,false);
+						dir1.setExecutable(true,false);
+						}
 					byte barr[]=photo.getBytes();
 					BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(photoPath + "/" + photo.getOriginalFilename()));
+					File files =	new File(photoPath + "/" + photo.getOriginalFilename());
+					  files.setReadable(true,false);
+					  files.setWritable(true,false);
+					  files.setExecutable(true,false);
 					bout.write(barr);
 					bout.flush();
 					bout.close();  
@@ -185,9 +222,21 @@ public class RegistrationService {
 					log.info("finalPath:   "+idCardPath);  
 					log.info("going to save id card file in server");
 					File dir = new File(idCardPath);   
-					if (!dir.exists()) dir.mkdirs();
+					if (!dir.exists()) {
+						dir.mkdirs();
+						  dir.setReadable(true,false);
+						  dir.setWritable(true,false);
+						  dir.setExecutable(true,false);
+							dir1.setReadable(true,false);
+							dir1.setWritable(true,false);
+							dir1.setExecutable(true,false);
+					}
 					byte barr[]=idCard.getBytes();
 					BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(idCardPath + "/" + idCard.getOriginalFilename()));
+					File files =	new File(idCardPath + "/" + idCard.getOriginalFilename());
+					  files.setReadable(true,false);
+					  files.setWritable(true,false);
+					  files.setExecutable(true,false);
 					bout.write(barr);
 					bout.flush();
 					bout.close(); 
@@ -201,9 +250,21 @@ public class RegistrationService {
 					log.info("finalPath:   "+vatFilePath);
 					log.info("path plus filename: "+vatFilePath+vatFile.getOriginalFilename());
 					File dir = new File(vatFilePath);
-					if (!dir.exists()) dir.mkdirs();
+					if (!dir.exists()) {
+						  dir.mkdirs();
+						  dir.setReadable(true,false);
+						  dir.setWritable(true,false);
+						  dir.setExecutable(true,false);
+							dir1.setReadable(true,false);
+							dir1.setWritable(true,false);
+							dir1.setExecutable(true,false);
+					}
 					byte barr[]=vatFile.getBytes();
 					BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(vatFilePath + "/" + vatFile.getOriginalFilename()));
+					  File files =	new File(vatFilePath + "/" + vatFile.getOriginalFilename());
+					  files.setReadable(true,false);
+					  files.setWritable(true,false);
+					  files.setExecutable(true,false);
 					bout.write(barr);
 					bout.flush();
 					bout.close();
@@ -257,6 +318,9 @@ public class RegistrationService {
 				Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);	
 				log.info("user upload file path value from db: "+dropdown.getValue());
 				StringBuilder combinedPath=new StringBuilder(dropdown.getValue()).append("/"+username);
+				//give file read and write  permission to txnId Directory
+				File dir1 = new File(combinedPath + File.separator);
+				
 				String nationalIdPath=new String(combinedPath+"/NID");  
 				String vatFilePath=new String(combinedPath+"/Vat");
 				if(registration.getVatStatus()==1) {
@@ -265,9 +329,21 @@ public class RegistrationService {
 						log.info("finalPath:   "+vatFilePath);
 						log.info("path plus filename: "+vatFilePath+vatFile.getOriginalFilename());
 						File dir = new File(vatFilePath);
-						if (!dir.exists()) dir.mkdirs();
+						if (!dir.exists()) {
+							dir.mkdirs();
+							dir.setReadable(true,false);
+							dir.setWritable(true,false);
+							dir.setExecutable(true,false);
+							dir1.setReadable(true,false);
+							dir1.setWritable(true,false);
+							dir1.setExecutable(true,false);
+						}
 						byte barr[]=vatFile.getBytes();
 						BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(vatFilePath + "/" + vatFile.getOriginalFilename()));
+			            File files =	new File(vatFilePath + "/" + vatFile.getOriginalFilename());
+			            files.setReadable(true,false);
+			            files.setWritable(true,false);
+			            files.setExecutable(true,false);
 						bout.write(barr);
 						bout.flush();
 						bout.close();
@@ -288,10 +364,22 @@ public class RegistrationService {
 						log.info("file name: " +file.getOriginalFilename());
 						log.info("finalPath:   "+nationalIdPath);  
 						File dir = new File(nationalIdPath);
-						if (!dir.exists()) dir.mkdirs();
+						if (!dir.exists()) {
+							dir.mkdirs();
+							dir.setReadable(true,false);
+					        dir.setWritable(true,false);
+					        dir.setExecutable(true,false);
+					        dir1.setReadable(true,false);
+							dir1.setWritable(true,false);
+							dir1.setExecutable(true,false);
+						}
 						byte barr[]=file.getBytes();
 						BufferedOutputStream bout=new BufferedOutputStream(new FileOutputStream(nationalIdPath + "/" + file.getOriginalFilename()));
-						bout.write(barr);
+						 File files =	new File(nationalIdPath + "/" + file.getOriginalFilename());
+						  files.setReadable(true,false);
+				          files.setWritable(true,false);
+				          files.setExecutable(true,false);
+						 bout.write(barr);
 						bout.flush();
 						bout.close();   
 						registration.setNidFilename(file.getOriginalFilename());

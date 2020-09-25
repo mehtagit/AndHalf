@@ -87,6 +87,7 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 		log.info("doc_TypeTag_______"+doc_TypeTag);
 		String rootPath = urlToUpload.getValue()+txnid+"/"+doc_TypeTag+"/";
 		File tmpDir = new File(rootPath+fileName);
+		
 		boolean exists = tmpDir.exists();
 		if(exists) {
 

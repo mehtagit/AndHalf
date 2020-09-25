@@ -500,13 +500,26 @@ GrievanceFeignClient grievanceFeignClient;
 				
 				byte[] bytes = visaImage.getBytes();
 			String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
+			//give file read and writ  permission to txnId Directory
+			File dir1 = new File(urlToUpload.getValue()+txnNumber+"/" + File.separator);
 			File dir = new File(rootPath + File.separator);
 
-			if (!dir.exists()) dir.mkdirs();
-			// Create the file on server 
+			if (!dir.exists()) { 
+				dir.mkdirs();
+				dir.setExecutable(true,false);
+				dir.setReadable(true,false);
+				dir.setWritable(true,false);
+				dir1.setExecutable(true,false);
+				dir1.setReadable(true,false);
+				dir1.setWritable(true,false);
+			}
+			// Create the file on server} 
 			File serverFile = new File(rootPath+visaImage.getOriginalFilename());
 			log.info("uploaded file path on server 1" + serverFile); BufferedOutputStream
 			stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			serverFile.setExecutable(true,false);
+			serverFile.setReadable(true,false);
+			serverFile.setWritable(true,false);
 			stream.write(bytes); 
 			stream.close();
 			endUservisaInfo.setPassportFileName(passportImage.getOriginalFilename());
@@ -529,6 +542,10 @@ GrievanceFeignClient grievanceFeignClient;
 				byte[] bytes = visaImage.getBytes();
 			String rootPath =urlToUpload.getValue()+existingTxnId+"/"; 
 			File tmpDir = new File(rootPath+visaImage.getOriginalFilename());
+			
+			tmpDir.setExecutable(true,false);
+			tmpDir.setReadable(true,false);
+			tmpDir.setWritable(true,false);
 			boolean exists = tmpDir.exists();
 			if(exists) {
 
@@ -543,11 +560,19 @@ GrievanceFeignClient grievanceFeignClient;
 			
 			File dir = new File(rootPath + File.separator);
 
-			if (!dir.exists()) dir.mkdirs();
-			// Create the file on server 
+			if (!dir.exists()) { 
+				dir.mkdirs();
+				dir.setExecutable(true,false);
+				dir.setReadable(true,false);
+				dir.setWritable(true,false);
+			}
+			// Create the file on server }
 			File serverFile = new File(rootPath+visaImage.getOriginalFilename());
 			log.info("uploaded file path on server for previous txn id" + serverFile); BufferedOutputStream
 			stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			serverFile.setExecutable(true,false);
+			serverFile.setReadable(true,false);
+			serverFile.setWritable(true,false);
 			stream.write(bytes); 
 			stream.close();
 			endUservisaInfo.setPassportFileName(passportImage.getOriginalFilename());
@@ -682,13 +707,25 @@ GrievanceFeignClient grievanceFeignClient;
 			String rootPath =urlToUpload.getValue()+txnNumber+"/"+docType+"/"; 
 			File dir = new File(rootPath + File.separator);
 			
-			
+			//give file read and writ  permission to txnId Directory
+			File dir1 = new File(urlToUpload.getValue()+txnNumber+"/" + File.separator);
 
-			if (!dir.exists()) dir.mkdirs();
+			if (!dir.exists()) {
+				dir.mkdirs();
+				dir.setExecutable(true,false);
+				dir.setReadable(true,false);
+				dir.setWritable(true,false);
+				dir1.setExecutable(true,false);
+				dir1.setReadable(true,false);
+				dir1.setWritable(true,false);
+			}
 			// Create the file on server 
 			File serverFile = new File(rootPath+uploadnationalID.getOriginalFilename());
 			log.info("uploaded uploadnationalID file path on server" + serverFile); BufferedOutputStream
 			stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			serverFile.setExecutable(true,false);
+			serverFile.setReadable(true,false);
+			serverFile.setWritable(true,false);
 			stream.write(bytes); 
 			stream.close();
 			fileCopyRequest.setFilePath(rootPath);
@@ -716,10 +753,19 @@ GrievanceFeignClient grievanceFeignClient;
 			  String rootPath  =urlToUpload.getValue()+txnNumber+"/";
 			  File dir = new File(rootPath + File.separator);
 		  
-		  if (!dir.exists()) dir.mkdirs(); // Create the file on server 
+		  if (!dir.exists()) {
+			  dir.mkdirs(); 
+				dir.setExecutable(true,false);
+				dir.setReadable(true,false);
+				dir.setWritable(true,false);
+			  // Create the file on server 
+		  }
 		  File serverFile = new File(rootPath+endUserDepartmentFile.getOriginalFilename());
 		  log.info("uploaded department  File  path on server" + serverFile); BufferedOutputStream
 		  stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			serverFile.setExecutable(true,false);
+			serverFile.setReadable(true,false);
+			serverFile.setWritable(true,false);
 		  stream.write(bytes); stream.close();
 		  
 		  fileCopyRequest.setFilePath(rootPath);
@@ -745,10 +791,19 @@ GrievanceFeignClient grievanceFeignClient;
 			  File.separator);
 			  
 			  
-			  if (!dir.exists()) dir.mkdirs(); // Create the file on server 
+			  if (!dir.exists()) {
+				  dir.mkdirs(); // Create the file on server
+					dir.setExecutable(true,false);
+					dir.setReadable(true,false);
+					dir.setWritable(true,false);
+			  }
+			  
 			  File serverFile = new File(rootPath+visaImage.getOriginalFilename());
 			  log.info("uploaded  visa Image path on server" + serverFile); BufferedOutputStream
 			  stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				serverFile.setExecutable(true,false);
+				serverFile.setReadable(true,false);
+				serverFile.setWritable(true,false);
 			  stream.write(bytes); stream.close();
 			  
 			  fileCopyRequest.setFilePath(rootPath);
