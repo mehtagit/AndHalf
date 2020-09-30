@@ -1,9 +1,11 @@
 package com.glocks.parser;
 
+import com.gl.Rule_engine.RuleEngineApplication;
 import com.glocks.constants.PropertyReader;
 import com.glocks.parser.service.ConsignmentInsertUpdate;
 import com.glocks.util.Util;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -430,17 +432,17 @@ public class CEIRFeatureFileFunctions {
                     int dvcDbCounter = 0;
                     try {
                          while (rs.next()) {
-                              InsrtQry = "insert  into device_custom_db(CREATED_ON , modified_on , DEVICE_ID_TYPE, DEVICE_STATUS,DEVICE_TYPE,IMEI_ESN_MEID,MULTIPLE_SIM_STATUS,FEATURE_NAME ,TXN_ID,user_id , period ) "
-                                      + "values (" + dateFunction + " , " + dateFunction + " ,  '" + rs.getString("DEVICE_ID_TYPE") + "' , '" + rs.getString("DEVICE_STATUS") + "', '" + ((rs.getString("DEVICE_TYPE") == null) ? "NA" : rs.getString("DEVICE_TYPE")) + "' , '" + rs.getString("" + ValImei + "") + "' , '" + rs.getString("MULTI_SIM_STATUS") + "' , 'Register Device' , '" + rs.getString("TXN_ID") + "','" + rs.getString("TAX_COLLECTED_BY") + "' , '" + period + "'     )";
+                              InsrtQry = "insert  into device_custom_db(CREATED_ON , modified_on , DEVICE_ID_TYPE, DEVICE_STATUS,DEVICE_TYPE,IMEI_ESN_MEID,MULTIPLE_SIM_STATUS,FEATURE_NAME ,TXN_ID,user_id , period , actual_imei) "
+                                      + "values (" + dateFunction + " , " + dateFunction + " ,  '" + rs.getString("DEVICE_ID_TYPE") + "' , '" + rs.getString("DEVICE_STATUS") + "', '" + ((rs.getString("DEVICE_TYPE") == null) ? "NA" : rs.getString("DEVICE_TYPE")) + "'  , '" + rs.getString("" + ValImei + "").substring(0, 14) + "' , '" + rs.getString("MULTI_SIM_STATUS") + "' , 'Register Device' , '" + rs.getString("TXN_ID") + "','" + rs.getString("TAX_COLLECTED_BY") + "' , '" + period + "'   , '" + rs.getString("" + ValImei + "") + "'   )";
                               logger.info(" insert qury  [" + InsrtQry + "]");
                               stmt1.executeUpdate(InsrtQry);
 
-                              dvcDbCounter = new ConsignmentInsertUpdate().getCounterFromDeviceDb(conn, ValImei);
+                              dvcDbCounter = new ConsignmentInsertUpdate().getCounterFromDeviceDb(conn, ValImei.substring(0, 14));
                               if (dvcDbCounter == 0) {
-                                   device_db_query = "insert  into device_db( counter ,  CREATED_ON , modified_on , DEVICE_ID_TYPE, DEVICE_STATUS,DEVICE_TYPE,IMEI_ESN_MEID,MULTIPLE_SIM_STATUS,FEATURE_NAME ,TXN_ID,period ) "
-                                           + "values (  1 , " + dateFunction + " , " + dateFunction + " ,  '" + rs.getString("DEVICE_ID_TYPE") + "' , '" + rs.getString("DEVICE_STATUS") + "', '" + ((rs.getString("DEVICE_TYPE") == null) ? "NA" : rs.getString("DEVICE_TYPE")) + "' , '" + rs.getString("" + ValImei + "") + "' , '" + rs.getString("MULTI_SIM_STATUS") + "' , 'Register Device' , '" + rs.getString("TXN_ID") + "', '" + period + "'     )";
+                                   device_db_query = "insert  into device_db( counter ,  CREATED_ON , modified_on , DEVICE_ID_TYPE, DEVICE_STATUS,DEVICE_TYPE,IMEI_ESN_MEID,MULTIPLE_SIM_STATUS,FEATURE_NAME ,TXN_ID,period ,actual_imei ) "
+                                           + "values (  1 , " + dateFunction + " , " + dateFunction + " ,  '" + rs.getString("DEVICE_ID_TYPE") + "' , '" + rs.getString("DEVICE_STATUS") + "', '" + ((rs.getString("DEVICE_TYPE") == null) ? "NA" : rs.getString("DEVICE_TYPE")) + "' , '" + rs.getString("" + ValImei + "").substring(0, 14) + "' , '" + rs.getString("MULTI_SIM_STATUS") + "' , 'Register Device' , '" + rs.getString("TXN_ID") + "', '" + period + "'  , '" + rs.getString("" + ValImei + "") + "'     )";
                               } else {
-                                   device_db_query = "update  device_db set counter = " + (dvcDbCounter + 1) + " where imei_esn_meid =   '" + rs.getString("" + ValImei + "") + "'   ";
+                                   device_db_query = "update  device_db set counter = " + (dvcDbCounter + 1) + " where imei_esn_meid =   '" + rs.getString("" + ValImei + "").substring(0, 14) + "'   ";
                               }
                               logger.info(" insert device_db_query  [" + device_db_query + "]");
                               stmt1.executeUpdate(device_db_query);
@@ -471,6 +473,7 @@ public class CEIRFeatureFileFunctions {
           String prdType = cEIRFeatureFileParser.checkGraceStatus(conn);
           logger.info("  PEROID [" + prdType + "]");
           try {
+               ValImei = ValImei.substring(0, 14);
                stmt = conn.createStatement();
                if (prdType.equalsIgnoreCase("post_grace")) {
                     String qury = " update device_usage_db set action = 'ALLOWED' where IMEI =  '" + ValImei + "'  and  action = 'USER_REG' ";
@@ -494,8 +497,9 @@ public class CEIRFeatureFileFunctions {
           Statement stmt = null;
           String qury = null;
           try {
+               ValImei = ValImei.substring(0, 14);
                stmt = conn.createStatement();
-               qury = " delete from greylist_db where imei_esn_meid = '" + ValImei + "' ";
+               qury = " delete from greylist_db where imei= '" + ValImei + "' ";
                logger.info("  " + qury);
                stmt.executeUpdate(qury);
                qury = " delete from black_list where imei  = '" + ValImei + "'  ";
@@ -520,6 +524,9 @@ public class CEIRFeatureFileFunctions {
           try {
                stmt = conn.createStatement();
                String ValImei = "";
+               BufferedWriter bw = null;
+               int resultValue = 1;
+               String action_output = null;
                for (int i = 1; i < 5; i++) {
                     if (i == 1) {
                          ValImei = "first_imei";
@@ -534,12 +541,22 @@ public class CEIRFeatureFileFunctions {
                          ValImei = "fourth_imei";
                     }
                     query = "select * from regularize_device_db  where  txn_id = '" + txn_id + "'  and  " + ValImei + " is not null  and TAX_PAID_STATUS =  2 ";                         /////
-                 logger.info("" + query);
+                    logger.info("" + query);
                     rs = stmt.executeQuery(query);
                     while (rs.next()) {
-                         logger.debug("..");
+
+                         String[] ruleArr = {"EXIST_IN_END_USER_DEVICE_DB", "1", "IMEI", rs.getString("" + ValImei + "").substring(0, 14)};   // typeApproceTac with status =3 
+                         action_output = RuleEngineApplication.startRuleEngine(ruleArr, conn, bw);
+                         logger.debug("action_output is " + action_output);
+                         if (action_output.equalsIgnoreCase("Yes")) {
+                              resultValue = 0;
+                              return;
+                         } else {
+                              insertinEndUserDvcDb(conn, ValImei, rs);
+                         }
+                         logger.debug(".||.");
                          markUserRegtoAllowedActiveDb(conn, rs.getString("" + ValImei + ""));
-                          logger.debug("....");
+                         logger.debug("....");
                          removeImeiFromGreyBlackDb(conn, rs.getString("" + ValImei + ""));
                     }
                }
@@ -548,13 +565,36 @@ public class CEIRFeatureFileFunctions {
                logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
           } finally {
                try {
-                     logger.debug("final stat ") ;
+                    logger.debug("final stat ");
                     rs.close();
                     stmt.close();
                } catch (SQLException ex) {
-                   logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + ex);
-             }
+                    logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + ex);
+               }
           }
+     }
+
+     private void insertinEndUserDvcDb(Connection conn, String ValImei, ResultSet rs) {
+          Statement stmt = null;
+          try {
+               stmt = conn.createStatement();
+               String qury = "insert into end_user_device_db ( imei_esn_meid , actual_imei, created_on , modified_on, CURRENCY,	DEVICE_ID_TYPE,	DEVICE_SERIAL_NUMBER,	DEVICE_STATUS,	DEVICE_TYPE ,	TAX_PAID_STATUS,	TXN_ID	,USER_ID	,CREATOR_USER_ID	,ORIGIN   ) values"
+                       + "( '" + rs.getString("" + ValImei + "").substring(0, 14) + "', '" + rs.getString("" + ValImei + "") + "',current_timestamp,current_timestamp, '" + rs.getString("CURRENCY") + "', '" + rs.getString("DEVICE_ID_TYPE") + "', '" + rs.getString("DEVICE_SERIAL_NUMBER") + "', '" + rs.getString("DEVICE_STATUS") + "', "
+                       + " '" + rs.getString("DEVICE_TYPE") + "','" + rs.getString("TAX_PAID_STATUS") + "', '" + rs.getString("TXN_ID") + "', '" + rs.getString("USER_ID") + "', '" + rs.getString("CREATOR_USER_ID") + "',  '" + rs.getString("ORIGIN") + "'   ) ";
+
+               logger.info(" insertinEndUserDvcDb Query  " + qury);
+               stmt.executeUpdate(qury);
+          } catch (Exception e) {
+               logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
+          } finally {
+               try {
+                    stmt.close();
+               } catch (SQLException e) {
+                    logger.error("Error.." + e);
+               }
+
+          }
+
      }
 
 }
@@ -662,18 +702,5 @@ public class CEIRFeatureFileFunctions {
 //          }
 //
 //     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

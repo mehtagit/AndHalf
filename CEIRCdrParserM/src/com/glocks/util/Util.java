@@ -23,12 +23,12 @@ public class Util {
           }
      }
 
-//    public static void main(String[] args) {
+ 
      public static long timeDiff(String created_on, String modified_on) {
           logger.debug(" CDate " + created_on);
           logger.debug(" MDate " + modified_on);
 //          SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yy HH.mm.ss");
-          SimpleDateFormat format = new SimpleDateFormat("yyyy-M-yy.HH.mm.ss");
+          SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
           Date d1 = null;
           Date d2 = null;
           long diff = 0L;
@@ -39,7 +39,6 @@ public class Util {
           } catch (Exception e) {
                e.printStackTrace();
           }
-          // System.out.println("diff// " + diff);
           return diff;
      }
 

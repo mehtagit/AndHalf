@@ -18,9 +18,9 @@ import java.io.BufferedWriter;
 import java.util.logging.Level;
 
 public class RuleFilter {
-
+     
      private static Logger logger = Logger.getLogger(RuleFilter.class);
-
+     
      public HashMap getMyRule(Connection conn, HashMap<String, String> device_info, ArrayList<Rule> rulelist) {
           BufferedWriter bw = null;
           HashMap<String, String> rule_detail = new HashMap<String, String>();    // CDR
@@ -41,7 +41,8 @@ public class RuleFilter {
                String[] my_arr = {device_info.get("rule_name"), //0
                     "1", //1
                     "CDR", //2
-                    device_info.get("IMEI"), //3
+                    (     device_info.get("rule_name").equals("IMEI_LUHN_CHECK")  ||  device_info.get("rule_name").equals("IMEI_LENGTH") )     ? device_info.get("IMEIESNMEID") : device_info.get("IMEIESNMEID").substring(0, 14), //3
+               
                     "0", //4
                     device_info.get("file_name"), //5
                     "0", //6
@@ -104,7 +105,7 @@ public class RuleFilter {
 //                            device_info.get("ruleid"), device_info.get("rule_name"), action_output, new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
 
                     if (device_info.get("failed_rule_aciton").equalsIgnoreCase("rule")) {
-
+                         
                          if (!device_info.get("rule_name").equalsIgnoreCase("EXISTS_IN_ALL_ACTIVE_DB")) {
                               insertInDeviceInvalidDb(conn, device_info);
                          }
@@ -124,7 +125,7 @@ public class RuleFilter {
           }
           return rule_detail;
      }
-
+     
      private void insertInDeviceInvalidDb(Connection conn, HashMap<String, String> device_info) {
           boolean isOracle = conn.toString().contains("oracle");
           String dateFunction = Util.defaultDate(isOracle);
@@ -141,12 +142,12 @@ public class RuleFilter {
                try {
                     stmt.close();
                } catch (Exception ex) {
-                     logger.error(this.getClass().getName() + ex);
+                    logger.error(this.getClass().getName() + ex);
                }
           }
-
+          
      }
-
+     
      public HashMap getMyFeatureRule(Connection conn, HashMap<String, String> device_info, ArrayList<Rule> rulelist, FileWriter myWriter, BufferedWriter bw) {
           int errorFlag = 0;                  // NONCDR
 
@@ -171,7 +172,7 @@ public class RuleFilter {
                     device_info.get("rule_name"), //0
                     "1", //1
                     device_info.get("feature"), //2   (consign,stock,CDr etc
-                    device_info.get("IMEIESNMEID"), //3
+                (     device_info.get("rule_name").equals("IMEI_LUHN_CHECK")  ||  device_info.get("rule_name").equals("IMEI_LENGTH") )     ? device_info.get("IMEIESNMEID") : device_info.get("IMEIESNMEID").substring(0, 14), //3
                     "0", //4//
                     device_info.get("file_name"), //5     foreignSim Only
                     "0", //6//
@@ -188,13 +189,13 @@ public class RuleFilter {
                logger.debug(" Rule Execution Start" + Arrays.toString(my_arr));
                output = RuleEngineApplication.startRuleEngine(my_arr, conn, bw);
                logger.info("Rule End .." + device_info.get("rule_name") + "; Rule Output:" + output + " ;  Expected O/T : " + device_info.get("output"));
-
+               
                new LogWriter().writeFeatureEvents(myWriter, device_info.get("IMEIESNMEID"),
                        device_info.get("DeviceType"), device_info.get("MultipleSIMStatus"), device_info.get("SNofDevice"),
                        device_info.get("Devicelaunchdate"), device_info.get("DeviceStatus"),
                        device_info.get("txn_id"), device_info.get("operator"), device_info.get("file_name"), "RuleCheckEnd",
                        device_info.get("ruleid"), device_info.get("rule_name"), output, new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
-
+               
                if (device_info.get("output").equalsIgnoreCase(output)) {    // go to next rule(  rule_engine _mapping )
                     rule_detail.put("rule_name", null);
                } else {																	// kuch to gdbad h.
@@ -223,7 +224,7 @@ public class RuleFilter {
                          device_info.get("txn_id"),
                          fileArray
                     };
-
+                    
                     action_output = RuleEngineApplication.startRuleEngine(my_action_arr, conn, bw);
 //                errorFlag = 1;
                     try {
@@ -232,13 +233,13 @@ public class RuleFilter {
                          logger.error("e " + e);
                     }
                     logger.info("Rule Filter Action Output is [" + action_output + "]");
-
+                    
                     new LogWriter().writeFeatureEvents(myWriter, device_info.get("IMEIESNMEID"),
                             device_info.get("DeviceType"), device_info.get("MultipleSIMStatus"), device_info.get("SNofDevice"),
                             device_info.get("Devicelaunchdate"), device_info.get("DeviceStatus"),
                             device_info.get("txn_id"), device_info.get("operator"), device_info.get("file_name"), "failed_rule_action :" + device_info.get("failed_rule_aciton"),
                             device_info.get("ruleid"), device_info.get("rule_name"), action_output, new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
-
+                    
                     if (device_info.get("failed_rule_aciton").equalsIgnoreCase("rule")) {
                          rule_detail.put("rule_name", null);
                          logger.info("failed_rule_aciton is Rule ..   ");  // if action FAils But next failed_rule_aciton is Rule , ..action _output  will not work ....         
@@ -326,7 +327,7 @@ public class RuleFilter {
           // System.out.println("Java api Rule Query" + query);
           logger.info("Query for Java API Rule filter [" + query + "]");
           String output = "";
-
+          
           try {
                stmt = conn.createStatement();
                rs = stmt.executeQuery(query);
@@ -352,11 +353,11 @@ public class RuleFilter {
                     rule_details.put("rule_name", device_info.get("rule_name"));
                     rule_details.put("rule_id", device_info.get("ruleid"));
                }
-
+               
           } catch (Exception e) {
                e.printStackTrace();
                logger.info("Exception [" + e + "]");
-
+               
           } finally {
                try {
                     rs.close();
@@ -367,7 +368,7 @@ public class RuleFilter {
           }
           return rule_details;
      }
-
+     
      private HashMap<String, String> fromDBRule(Connection conn, HashMap<String, String> device_info) {
           ResultSet rs = null;
           Statement stmt = null;
@@ -375,23 +376,23 @@ public class RuleFilter {
           Statement stmt1 = null;
           String my_rule_query = "";
           HashMap<String, String> rule_details = new HashMap<String, String>();
-
+          
           String query = "select * from rule_filter_condition_db where rule_id='" + device_info.get("ruleid") + "'";
           // System.out.println("Normal Check query" + query);
           logger.info("Query for DB Check Rule filter [" + query + "]");
-
+          
           try {
                stmt = conn.createStatement();
                rs = stmt.executeQuery(query);
                while (rs.next()) {
-
+                    
                     my_rule_query = "select * from " + rs.getString("table_name") + " where ";
                     String[] keys = rs.getString("param_key").split(",");
                     String[] condition = rs.getString("param_condition").split(",");
                     String[] values = rs.getString("param_value").split(",");
                     String[] operators = rs.getString("param_operator").split(",");
                     String operator = "";
-
+                    
                     for (int i = 0; i < keys.length; i++) {
                          if (i > 1) {
                               operator = operators[i - 1];
@@ -416,11 +417,11 @@ public class RuleFilter {
                     }
                }
                logger.info("Final Rule Details for DB check Rule filter [" + query + "]");
-
+               
           } catch (Exception e) {
                e.printStackTrace();
                logger.info("Exception [" + e + "]");
-
+               
           } finally {
                try {
                     rs.close();
@@ -430,12 +431,12 @@ public class RuleFilter {
                } catch (SQLException e) {
                     e.printStackTrace();
                }
-
+               
           }
-
+          
           return rule_details;
      }
-
+     
      private HashMap<String, String> fromNormCheckRule(Connection conn, HashMap<String, String> device_info) {
           ResultSet rsnorm = null;
           Statement stmtnorm = null;
@@ -444,7 +445,7 @@ public class RuleFilter {
           //		ResultSet rs3=null;
           //		Statement stmt3=null;
           HashMap<String, String> rule_details = new HashMap<String, String>();
-
+          
           String query = "select * from rule_filter_norm_check_db where rule_id='" + device_info.get("ruleid") + "'";
           // System.out.println("In Norm Check Query" + query);
           logger.info("Query for Normal check query [" + query + "]");
@@ -493,11 +494,11 @@ public class RuleFilter {
                          rule_details.put("action", rsnorm.getString("action_type"));
                          rule_details.put("rule_name", device_info.get("rule_name"));
                          rule_details.put("rule_id", device_info.get("ruleid"));
-
+                         
                     }
                }
                logger.info("Query for Normal check final rule details [" + rule_details + "]");
-
+               
           } catch (Exception e) {
                logger.info("Exception [" + e + "]");
                e.printStackTrace();
@@ -513,12 +514,12 @@ public class RuleFilter {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                }
-
+               
           }
           return rule_details;
-
+          
      }
-
+     
      private void ruleFilterAction(Connection conn, String action_type, HashMap<String, String> device_info) {
           Statement stmt2 = null;
           ResultSet rs2 = null;
@@ -574,7 +575,7 @@ public class RuleFilter {
                          }
                          // System.out.println("Java API Output action" + output);
                          logger.info("Java API Rule filter action[" + output + "]");
-
+                         
                     }
                }
           } catch (Exception e) {
@@ -591,11 +592,11 @@ public class RuleFilter {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                }
-
+               
           }
-
+          
      }
-
+     
      private static boolean parseExpression(int number1, String operator, int number2) {
           if ("<".equals(operator)) {
                return number1 < number2;
@@ -615,7 +616,7 @@ public class RuleFilter {
                throw new IllegalArgumentException("Invalid operator");
           }
      }
-
+     
      private static int parseMethod(String my_string, String operator) {
           if ("len".equals(operator)) {
                // System.out.println("my imei length" + my_string.length() + my_string);
@@ -624,7 +625,7 @@ public class RuleFilter {
                throw new IllegalArgumentException("Invalid operator");
           }
      }
-
+     
      private static boolean parseOperator(boolean param1, String operator, boolean param2) {
           if ("||".equals(operator)) {
                return param1 || param2;
@@ -634,7 +635,7 @@ public class RuleFilter {
                throw new IllegalArgumentException("Invalid operator");
           }
      }
-
+     
      public HashMap getMyFeatureRuleForTypeApprove(Connection conn, HashMap<String, String> device_info, ArrayList<Rule> rulelist, FileWriter myWriter, BufferedWriter bw) {
           int errorFlag = 0;                  // NONCDR
 
@@ -648,7 +649,7 @@ public class RuleFilter {
                device_info.put("period", rule.period);
                device_info.put("action", rule.action);
                device_info.put("failed_rule_aciton", rule.failed_rule_aciton);
-
+               
                String fileArray = "TAC No.: " + device_info.get("IMEIESNMEID") + " :: ";
                String[] my_arr = {
                     device_info.get("rule_name"), //0
@@ -671,7 +672,7 @@ public class RuleFilter {
                logger.info(" Rule Execution Start" + Arrays.toString(my_arr));
                output = RuleEngineApplication.startRuleEngine(my_arr, conn, bw);
                logger.info("Rule End .." + device_info.get("rule_name") + "; Rule Output:" + output + " ;  Expected O/T : " + device_info.get("output"));
-
+               
                if (device_info.get("output").equalsIgnoreCase(output)) {    // go to next rule(  rule_engine _mapping )
                     rule_detail.put("rule_name", null);
                } else {																	// kuch to gdbad h.
@@ -693,17 +694,17 @@ public class RuleFilter {
                          device_info.get("txn_id"),
                          fileArray
                     };
-
+                    
                     action_output = RuleEngineApplication.startRuleEngine(my_action_arr, conn, bw);
 //                errorFlag = 1;
                     logger.info("Rule Filter Action Output is [" + action_output + "]");
-
+                    
                     new LogWriter().writeFeatureEvents(myWriter, device_info.get("IMEIESNMEID"),
                             device_info.get("DeviceType"), device_info.get("MultipleSIMStatus"), device_info.get("SNofDevice"),
                             device_info.get("Devicelaunchdate"), device_info.get("DeviceStatus"),
                             device_info.get("txn_id"), device_info.get("operator"), device_info.get("file_name"), "failed_rule_action :" + device_info.get("failed_rule_aciton"),
                             device_info.get("ruleid"), device_info.get("rule_name"), action_output, new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
-
+                    
                     if (device_info.get("failed_rule_aciton").equalsIgnoreCase("rule")) {
                          rule_detail.put("rule_name", null);
                          logger.info("failed_rule_aciton is Rule ..   ");  // if action FAils But next failed_rule_aciton is Rule , ..action _output  will not work ....         
@@ -722,7 +723,7 @@ public class RuleFilter {
           rule_detail.put("errorFlag", String.valueOf(errorFlag));
           return rule_detail;
      }
-
+     
 }
 
 //package com.functionapps.parser;
@@ -1523,8 +1524,6 @@ public class RuleFilter {
 ////				 // System.out.println("Breaking the Rules");
 ////				break;
 ////			}
-
-
 
 
 

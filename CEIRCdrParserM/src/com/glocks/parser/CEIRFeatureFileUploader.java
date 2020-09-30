@@ -45,7 +45,6 @@ public class CEIRFeatureFileUploader {
                          return;
                     }
                     ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 1, file_details.getString("feature"), file_details.getString("sub_feature"));  //update web_action_db set state 1
-
                     if (file_details.getString("feature").equalsIgnoreCase("Register Device")) {
                          if ((file_details.getString("sub_feature").equalsIgnoreCase("Register")) || (file_details.getString("sub_feature").equalsIgnoreCase("Add Device"))) {     //'Add Device'
                               ceirfunction.UpdateStatusViaApi(conn, file_details.getString("txn_id"), 0, file_details.getString("feature"));
@@ -75,7 +74,7 @@ public class CEIRFeatureFileUploader {
                     }
                     if (file_details.getString("feature").equalsIgnoreCase("Recovery") && (file_details.getString("sub_feature").equalsIgnoreCase("Approve") || file_details.getString("sub_feature").equalsIgnoreCase("Accept"))) {
                          removeDeviceDetailsByTxnId(conn, file_details.getString("txn_id"), "device_lawful_db");
-                           new ConsignmentInsertUpdate().rawTableCleanUp(conn, file_details.getString("feature"), file_details.getString("txn_id"));
+                         new ConsignmentInsertUpdate().rawTableCleanUp(conn, file_details.getString("feature"), file_details.getString("txn_id"));
                          ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                          logger.debug("Web Action 4 done ");
                          break;
@@ -89,7 +88,7 @@ public class CEIRFeatureFileUploader {
                     }
                     if (file_details.getString("feature").equalsIgnoreCase("Block") && (file_details.getString("sub_feature").equalsIgnoreCase("Approve") || file_details.getString("sub_feature").equalsIgnoreCase("Accept"))) {
                          updateDeviceDetailsByTxnId(conn, file_details.getString("txn_id"), "device_operator_db");
-                           new ConsignmentInsertUpdate().rawTableCleanUp(conn, file_details.getString("feature"), file_details.getString("txn_id"));
+                         new ConsignmentInsertUpdate().rawTableCleanUp(conn, file_details.getString("feature"), file_details.getString("txn_id"));
                          ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                          logger.debug("Web Action 4 done ");
                          break;
@@ -103,7 +102,7 @@ public class CEIRFeatureFileUploader {
 
                     if (file_details.getString("feature").equalsIgnoreCase("Unblock") && (file_details.getString("sub_feature").equalsIgnoreCase("Approve") || file_details.getString("sub_feature").equalsIgnoreCase("Accept"))) {
                          removeDeviceDetailsByTxnId(conn, file_details.getString("txn_id"), "device_operator_db");
-                           new ConsignmentInsertUpdate().rawTableCleanUp(conn, file_details.getString("feature"), file_details.getString("txn_id"));
+                         new ConsignmentInsertUpdate().rawTableCleanUp(conn, file_details.getString("feature"), file_details.getString("txn_id"));
                          ceirfunction.updateFeatureFileStatus(conn, file_details.getString("txn_id"), 4, file_details.getString("feature"), file_details.getString("sub_feature")); // update web_action_db           
                          logger.debug("Web Action 4 done ");
                          break;
@@ -126,7 +125,8 @@ public class CEIRFeatureFileUploader {
                     feature_file_mapping = ceirfunction.getFeatureMapping(conn, file_details.getString("feature"), "NOUSER");  //select * from feature_mapping_db
                     feature_file_management = ceirfunction.getFeatureFileManagement(conn, feature_file_mapping.get("mgnt_table_db"), file_details.getString("txn_id"));   //select * from " + management_db + " 
 
-                    long diffTime = Util.timeDiff(feature_file_management.get("created_on"), feature_file_management.get("modified_on"));
+                    long diffTime = 0L;
+//                      diffTime = Util.timeDiff(feature_file_management.get("created_on"), feature_file_management.get("modified_on"));
                     logger.info("Time Difference .." + diffTime);
                     if (((file_details.getString("sub_feature").equalsIgnoreCase("Register") || file_details.getString("sub_feature").equalsIgnoreCase("UPLOAD")) && (diffTime != 0))) {
                          logger.debug("  It is Regsiter/Upload and different time" + feature_file_management.get("created_on") + " ||  " + feature_file_management.get("modified_on") + " OR delete Flaag : " + feature_file_management.get("delete_flag"));
@@ -177,11 +177,6 @@ public class CEIRFeatureFileUploader {
                     logger.debug("user_types *****" + user_type);
                     if (!(feature_file_management.get("file_name") == null || feature_file_management.get("file_name").equals(""))) {
                          logger.info("File Found... " + file_details.getString("feature"));
-//                         ResultSet my_result_set = ceir_parser_main.operatorDetails(conn, file_details.getString("feature"));
-//                         logger.info("my_result_set " + my_result_set);
-//                         if (my_result_set.next()) {
-//                              raw_upload_set_no = my_result_set.getInt("raw_upload_set_no");
-//                         }
                          basePath = hfr.getFilePath(conn, "system_upload_filepath");  // filePath
                          if (!basePath.endsWith("/")) {
                               basePath += "/";
@@ -285,8 +280,8 @@ public class CEIRFeatureFileUploader {
           CEIRFeatureFileParser cEIRFeatureFileParser = new CEIRFeatureFileParser();
           stolnRcvryDetails = cEIRFeatureFileParser.getStolenRecvryDetails(conn, txnId);   //IMEI_ESN_MEID
           String query = "update " + TableName + " set DEVICE_STATUS  = 'Approved' , modified_on = current_timestamp "
-                  + " where imei_esn_meid  in   "
-                  + "(select IMEIESNMEID  from  " + stolnRcvryDetails.get("reason") + "_raw  where  TXN_ID =  '" + txnId + "'   ) "
+                  + " where actual_imei  in   "
+                  + "(select       IMEIESNMEID   from  " + stolnRcvryDetails.get("reason") + "_raw  where  TXN_ID =  '" + txnId + "'   ) "
                   + "   ";
           Statement stmt = null;
           logger.info("update   as  APPROVED  ...[" + query + "]");
@@ -324,11 +319,11 @@ public class CEIRFeatureFileUploader {
 //                  + "and  SN_OF_DEVICE is not null)  union  select   imei_esn_meid   , user_id "
 //                  + "from   " + tableName + " where  TXN_ID = '" + txn_id + "'  "
 //                  + "and  SN_OF_DEVICE is null  ";
-          String query = " select imei_esn_meid , user_id from   " + tableName + "  where SN_OF_DEVICE in (   select SN_OF_DEVICE from   " + tableName + " where imei_esn_meid in "
-                  + "(select IMEIESNMEID  from  " + stolnRcvryDetails.get("reason") + "_raw  where  TXN_ID =  '" + txn_id + "'   ) "
+          String query = " select actual_imei,  imei_esn_meid , user_id from   " + tableName + "  where SN_OF_DEVICE in (   select SN_OF_DEVICE from   " + tableName + " where imei_esn_meid in "
+                  + "(select SUBSTR( IMEIESNMEID, 1,14)    from  " + stolnRcvryDetails.get("reason") + "_raw  where  TXN_ID =  '" + txn_id + "'   ) "
                   + "  and  SN_OF_DEVICE is not null and SN_OF_DEVICE != 'null' )      "
-                  + "  UNION      select   imei_esn_meid   , user_id from    " + tableName + "  "
-                  + " where imei_esn_meid  in  ( select IMEIESNMEID  from  " + stolnRcvryDetails.get("reason") + "_raw where  TXN_ID =  '" + txn_id + "'   )    and   SN_OF_DEVICE =  'null'   ";
+                  + "  UNION      select actual_imei,  imei_esn_meid   , user_id from    " + tableName + "  "
+                  + " where imei_esn_meid  in  ( select  SUBSTR( IMEIESNMEID, 1,14)    from  " + stolnRcvryDetails.get("reason") + "_raw where  TXN_ID =  '" + txn_id + "'   )    and   SN_OF_DEVICE =  'null'   ";
 
 //           query = "select imei_esn_meid , user_id  from  " + tableName + "  where txn_id =   ";
           logger.info(" ..:::   " + query);
@@ -341,14 +336,14 @@ public class CEIRFeatureFileUploader {
                rs = stmt.executeQuery(query);
                while (rs.next()) {
 
-                    query = "insert into   greylist_db_history ( EXPIRY_DATE, modified_on ,  created_on , imei, user_id , txn_id , mode_type  , request_type, user_type  , complain_type ,operation    , operator_id , operator_name  )   "
+                    query = "insert into   greylist_db_history ( EXPIRY_DATE, modified_on ,  created_on , imei, user_id , txn_id , mode_type  , request_type, user_type  , complain_type ,operation    , operator_id , operator_name  ,actual_imei )   "
                             + "values(   " + expdate + " , " + dateFunction + ",   " + dateFunction + ",    " + "'" + rs.getString("imei_esn_meid")
                             + "'," + " ( select username from users where users.id=  "
                             + rs.getString("user_id") + "  )  ,  " + " '" + txn_id + "', " + "'"
                             + stolnRcvryDetails.get("source") + "'," + "'" + stolnRcvryDetails.get("reason") + "',"
                             + " ( select USERTYPE_NAME from usertype  where ID = (select  usertype_id from users where id =  " + rs.getString("user_id") + "  ) )   ," + "'"
                             + stolnRcvryDetails.get("complaint_type") + "' ,"
-                            + "  1    , (select OPERATOR_TYPE_ID  from user_profile where USERID =   " + rs.getString("user_id") + "  )  , (select OPERATOR_TYPE_NAME  from user_profile where USERID =   " + rs.getString("user_id") + "  )           )";
+                            + "  1    , (select OPERATOR_TYPE_ID  from user_profile where USERID =   " + rs.getString("user_id") + "  )  , (select OPERATOR_TYPE_NAME  from user_profile where USERID =   " + rs.getString("user_id") + "  ) , '"+ rs.getString("actual_imei")+"'          )";
 
                     logger.info(" ..:::: " + query);
                     stmt1.executeUpdate(query);
@@ -365,7 +360,7 @@ public class CEIRFeatureFileUploader {
                     }
 
                     try {
-                         query = "delete from greylist_db where imei_esn_meid = '" + rs.getString("imei_esn_meid") + "' ";
+                         query = "delete from greylist_db where imei  = '" + rs.getString("imei_esn_meid") + "' ";
                          stmt3.executeUpdate(query);
                          logger.info(" ___ " + query);
                     } catch (Exception e) {
@@ -404,11 +399,11 @@ public class CEIRFeatureFileUploader {
           CEIRFeatureFileParser cEIRFeatureFileParser = new CEIRFeatureFileParser();
           stolnRcvryDetails = cEIRFeatureFileParser.getStolenRecvryDetails(conn, txnId);   //IMEI_ESN_MEID
 //                    String query = "select imei_esn_meid , user_id  from  " + tableName + "  where txn_id = '" + txnId + "'   ";
-          String query = " select imei_esn_meid , user_id from   " + tableName + "  where SN_OF_DEVICE in (   select SN_OF_DEVICE from   " + tableName + " where imei_esn_meid in "
+          String query = " select actual_imei, imei_esn_meid , user_id from   " + tableName + "  where SN_OF_DEVICE in (   select SN_OF_DEVICE from   " + tableName + " where actual_imei in "
                   + "(select IMEIESNMEID  from  " + stolnRcvryDetails.get("reason") + "_raw  where  TXN_ID =  '" + txnId + "'   ) "
                   + "  and  SN_OF_DEVICE is not null and SN_OF_DEVICE != 'null' )      "
-                  + "  UNION      select   imei_esn_meid   , user_id from    " + tableName + "  "
-                  + " where imei_esn_meid  in  ( select IMEIESNMEID  from  " + stolnRcvryDetails.get("reason") + "_raw where  TXN_ID =  '" + txnId + "'   )    and   SN_OF_DEVICE =  'null'   ";
+                  + "  UNION      select actual_imei,  imei_esn_meid   , user_id from    " + tableName + "  "
+                  + " where actual_imei  in  ( select IMEIESNMEID from  " + stolnRcvryDetails.get("reason") + "_raw where  TXN_ID =  '" + txnId + "'   )    and   SN_OF_DEVICE =  'null'   ";
           logger.info(" ...[" + query + "]");
           String device_greylist_db_qry = null;
           String device_greylist_History_db_qry = null;
@@ -422,22 +417,22 @@ public class CEIRFeatureFileUploader {
                while (rs.next()) {
 //                    {
 //                         if (stolnRcvryDetails.get("operation").equals("0")) {
-                    device_greylist_db_qry = "insert into   greylist_db (EXPIRY_DATE,created_on ,modified_on , imei, user_id , txn_id , mode_type  , request_type, user_type  , complain_type , operator_id , operator_name  )   "
-                            + "values(  " + expdate + "    ,  " + dateFunction + ",    " + dateFunction + "," + "'" + rs.getString("imei_esn_meid")
+                    device_greylist_db_qry = "insert into   greylist_db (EXPIRY_DATE,created_on ,modified_on , imei, user_id , txn_id , mode_type  , request_type, user_type  , complain_type , operator_id , operator_name ,actual_imei )   "
+                            + "values(  " + expdate + "    ,  " + dateFunction + ",    " + dateFunction + "," + "'" + rs.getString("imei_esn_meid") 
                             + "'," + " ( select username from users where users.id=  "
                             + rs.getString("user_id") + "  )  ,  " + " '" + txnId + "', " + "'"
                             + stolnRcvryDetails.get("source") + "'," + "'" + stolnRcvryDetails.get("reason")
                             + "'," + "   ( select USERTYPE_NAME from usertype  where ID = (select  usertype_id from users where id =  " + rs.getString("user_id") + "  ) )     ," + "'"
-                            + stolnRcvryDetails.get("complaint_type") + "' , (select OPERATOR_TYPE_ID  from user_profile where USERID =   " + rs.getString("user_id") + "  )  , (select OPERATOR_TYPE_NAME  from user_profile where USERID =   " + rs.getString("user_id") + "  )         )";
+                            + stolnRcvryDetails.get("complaint_type") + "' , (select OPERATOR_TYPE_ID  from user_profile where USERID =   " + rs.getString("user_id") + "  )  , (select OPERATOR_TYPE_NAME  from user_profile where USERID =   " + rs.getString("user_id") + "  )  , '"+ rs.getString("actual_imei")+"'          )";
 //                         }
-                    device_greylist_History_db_qry = "insert into   greylist_db_history ( EXPIRY_DATE,modified_on ,  created_on , imei, user_id , txn_id , mode_type  , request_type, user_type  , complain_type ,operation  ,   operator_id , operator_name )   "
-                            + "values(   " + expdate + " ,  " + dateFunction + ",       " + dateFunction + "," + "'" + rs.getString("imei_esn_meid")
+                    device_greylist_History_db_qry = "insert into   greylist_db_history ( EXPIRY_DATE,modified_on ,  created_on , imei, user_id , txn_id , mode_type  , request_type, user_type  , complain_type ,operation  ,   operator_id , operator_name ,actual_imei )   "
+                            + "values(   " + expdate + " ,  " + dateFunction + ",       " + dateFunction + "," + "'" + rs.getString("imei_esn_meid") 
                             + "'," + " ( select username from users where users.id=  "
                             + rs.getString("user_id") + "  )  ,  " + " '" + txnId + "', " + "'"
                             + stolnRcvryDetails.get("source") + "'," + "'" + stolnRcvryDetails.get("reason") + "',"
                             + "  ( select USERTYPE_NAME from usertype  where ID = (select  usertype_id from users where id =  " + rs.getString("user_id") + "  ) )     ," + "'"
                             + stolnRcvryDetails.get("complaint_type") + "' , "
-                            + " 0   , (select OPERATOR_TYPE_ID  from user_profile where USERID =   " + rs.getString("user_id") + "  )  , (select OPERATOR_TYPE_NAME  from user_profile where USERID =   " + rs.getString("user_id") + "  )                  )";
+                            + " 0   , (select OPERATOR_TYPE_ID  from user_profile where USERID =   " + rs.getString("user_id") + "  )  , (select OPERATOR_TYPE_NAME  from user_profile where USERID =   " + rs.getString("user_id") + "  )  , '"+ rs.getString("actual_imei")+"'  )";
                     logger.info(" " + device_greylist_db_qry);
                     try {
                          stmt1.executeUpdate(device_greylist_db_qry);
@@ -528,7 +523,6 @@ public class CEIRFeatureFileUploader {
 //                    logger.info("File not exists.... ");
 //                    hfr.readFeatureWithoutFile(conn, file_details.getString("feature"), raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
 //                }
-
 
 
 

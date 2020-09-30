@@ -33,11 +33,11 @@ public class CEIRFeatureFileParser {
                while (featurers.next()) {
                     System.out.println("" + featurers.getString("txn_id"));
                     ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 3, featurers.getString("feature"), featurers.getString("sub_feature"));  // update web_action
-                    logger.info("  webACtion 3 don3e ");
+                    logger.info("  webAction 3 don3e ");
                     if (featurers.getString("feature").equalsIgnoreCase("Register Device")) {
                          logger.info("  Register Device::  " + featurers.getString("feature"));
                          if ((featurers.getString("sub_feature").equalsIgnoreCase("Register")) || (featurers.getString("sub_feature").equalsIgnoreCase("Add Device"))) {     //'Add Device'
-                            ceirfunction.updateStatusOfRegularisedDvc(conn,  featurers.getString("txn_id")); 
+                              ceirfunction.updateStatusOfRegularisedDvc(conn, featurers.getString("txn_id"));
                               ceirfunction.UpdateStatusViaApi(conn, featurers.getString("txn_id"), 2, featurers.getString("feature"));
                               ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 4, featurers.getString("feature"), featurers.getString("sub_feature")); // update web_action_db           
                               break;
@@ -45,8 +45,7 @@ public class CEIRFeatureFileParser {
                               ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 4, featurers.getString("feature"), featurers.getString("sub_feature")); // update web_action_db           
                               break;
                          }
-                    }
-                    else if (featurers.getString("feature").equalsIgnoreCase("Update Visa")) {
+                    } else if (featurers.getString("feature").equalsIgnoreCase("Update Visa")) {
                          ceirfunction.UpdateStatusViaApi(conn, featurers.getString("txn_id"), 2, featurers.getString("feature"));
                          ceirfunction.updateFeatureFileStatus(conn, featurers.getString("txn_id"), 4, featurers.getString("feature"), featurers.getString("sub_feature")); // update web_action_db           
                          break;
@@ -77,7 +76,7 @@ public class CEIRFeatureFileParser {
                     logger.error("" + ex);
                }
                logger.error("" + e);
-             
+
           } finally {
                System.out.println("Exit");
                System.exit(0);
@@ -124,7 +123,7 @@ public class CEIRFeatureFileParser {
                     }
                }
           } catch (Exception ex) {
-                logger.error("Error.." + ex);
+               logger.error("Error.." + ex);
           } finally {
                try {
                     stmt.close();
@@ -186,7 +185,7 @@ public class CEIRFeatureFileParser {
                     logger.info("running tac register process.");
                     new RegisterTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name);
                     ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, operator, sub_feature);
-               } else if (operator.equalsIgnoreCase("TYPE_APPROVED") && (sub_feature.equalsIgnoreCase("delete"))     ) {
+               } else if (operator.equalsIgnoreCase("TYPE_APPROVED") && (sub_feature.equalsIgnoreCase("delete"))) {
                     logger.info("running tac delete process.");
                     new WithdrawnTac().process(conn, operator, sub_feature, rulelist, txn_id, operator_tag, usertype_name);
                     ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, operator, sub_feature);
@@ -196,7 +195,7 @@ public class CEIRFeatureFileParser {
                     ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, operator, sub_feature);
                } else {
                     logger.info("Skipping the process.");
-                  ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, operator, sub_feature);
+                    ceirfunction.updateFeatureFileStatus(conn, txn_id, 4, operator, sub_feature);
                }
 
           } catch (Exception e) {
@@ -461,7 +460,6 @@ public class CEIRFeatureFileParser {
 //          }
 //          return rs;
 //     }
-
      public static void updateLastStatuSno(Connection conn, String operator, int id, int limit) {
           String query = null;
           Statement stmt = null;
@@ -502,7 +500,6 @@ public class CEIRFeatureFileParser {
 //               }
 //          }
 //     }
-
      public static int imeiCountfromRawTable(Connection conn, String txn_id, String operator) {
           int rsslt = 0;
           String query = null;
@@ -532,26 +529,4 @@ public class CEIRFeatureFileParser {
      }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

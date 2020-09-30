@@ -33,6 +33,7 @@ import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
@@ -166,7 +167,7 @@ public class HexFileReader {
 
                int fail_my_batch = 0;
                int pass_my_batch = 0;
-               int my_batch_count = 9;
+               int my_batch_count = 1;
                String toDate = " ? ";
                if (conn.toString().contains("oracle")) {
                     toDate = " TO_DATE(?,'yyyy/mm/dd hh24:mi:ss') ";
@@ -296,7 +297,7 @@ public class HexFileReader {
                new com.glocks.files.FileList().moveCDRFile(conn, fileName, repName, fileFolderPath, source);
 
           } catch (Exception e) {
-               logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() +  e );
+               logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
                e.printStackTrace();
                try {
                     if (conn != null) {
@@ -326,7 +327,7 @@ public class HexFileReader {
 //        return result;
      }
 
-     public String[] readConvertedFeatureFile(Connection conn, String fileName, String filePath, String main_type, String basePath,   String txn_id, String subfeature, String management_table, String usertype_name) throws IOException, SQLException {
+     public String[] readConvertedFeatureFile(Connection conn, String fileName, String filePath, String main_type, String basePath, String txn_id, String subfeature, String management_table, String usertype_name) throws IOException, SQLException {
           int i = 0;
           int k = 0;
           String query = null;
@@ -515,7 +516,7 @@ public class HexFileReader {
 
                                         if (cdrColumn.columName.equalsIgnoreCase("SNofDevice")) {
                                              SNofDeviceValue = cdrColumn.graceType;
-                                           logger.info(cdrColumn.columName + " //SNofDeviceValue...." + SNofDeviceValue);
+                                             logger.info(cdrColumn.columName + " //SNofDeviceValue...." + SNofDeviceValue);
 
                                         }
 
@@ -567,55 +568,55 @@ public class HexFileReader {
                                    errorString += "   Error Code :CON_FILE_0011, Error Message: The Rows contain more Column than allowed in the header.";
                                    failed_flag = 0; /// added after
                               }
-logger.debug("***");
+//                              logger.debug("***");
                               for (int v = 0; v < data.length; v++) {
                                    if (data[v].length() > 25) {
                                         errorString += " Error Code :CON_FILE_0004, Error Message:   File Contain a Long Field  Record , ";
                                         failed_flag = 0;
                                    }
                               }
-                              logger.debug("!!!");
+//                              logger.debug("!!!");
                               if (set.add(imeiV) == false) {
                                    logger.info("errfor First Wrok set.." + imeiV);
                                    errorString += "   Error Code :CON_FILE_0008, Error Message:   The record is duplicate in the file,";
                                    failed_flag = 0; /// added after
                               }
- logger.debug("@@@");
+//                              logger.debug("@@@");
                               if (!(deviceType.contains(data[0].trim().toLowerCase()))) {
                                    errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device Type) is not as per the specifications,";
                                    failed_flag = 0;
                               }
- logger.debug("###");
+//                              logger.debug("###");
 
                               if (!(deviceType3.contains(data[1].trim().toLowerCase()))) {
                                    errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device ID Type) is not as per the specifications,";
                                    failed_flag = 0;
-                              }  
- logger.debug("###");
+                              }
+                              logger.debug("###");
                               if (!(deviceType4.contains(data[2].trim().toLowerCase()))) {
                                    errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Multiple Sim Status) is not as per the specifications,";
                                    failed_flag = 0;
                               }
-                               logger.debug("$$$");
+                              logger.debug("$$$");
 
                               if (!(deviceType5.contains(data[6].trim().toLowerCase()))) {
                                    errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device Status) is not as per the specifications,";
                                    failed_flag = 0;
                               }
-                               logger.debug("^^^");
+                              logger.debug("^^^");
 
                               boolean val = validateJavaDate(data[5]);
                               if (!val) {
                                    errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device Launch Date) is not as per the specifications,";
                                    failed_flag = 0;
                               }
-                               logger.debug("&&&");
+                              logger.debug("&&&");
 
                               for (CDRColumn cdrColumn : myfilelist) {
                                    if (cdrColumn.graceType.equalsIgnoreCase("Mandatory")) {
-                                        logger.info("DATA in field ... " + data[j - 1]);
+                                        logger.debug("DATA in field ... " + data[j - 1]);
                                         if (data[j - 1].equals("") || data[j - 1] == " " || data[j - 1].equals(" ") || data[j - 1] == null) {
-                                             logger.info("2 mandorty are their. .remove one ");
+                                             logger.debug("2 mandorty are their. .remove one ");
                                              errorString += "   Error Code :CON_FILE_0007, Error Message:   The mandatory parameter does not contain the value. ,";
                                              failed_flag = 0;
                                         }
@@ -646,7 +647,7 @@ logger.debug("***");
                     }
                }
                if (lngth != deviceQuantity) {
-                    logger.info("   Devce Qntity   method started ");
+                    logger.debug("   Devce Qntity   method started ");
                     if (failed_flag != 0) {
                          logger.info(" Device Quantity   doesnot matched with unique serial number  in File  ");
                          //  errFile.gotoErrorFile(txn_id, "Error Code :CON_FILE_0011, Error Message: Device Quantity does not match with the  count of unique serial number in the uploaded file  ");
@@ -656,7 +657,7 @@ logger.debug("***");
                }
 
                try {
-                   if (SNofDeviceValue.equalsIgnoreCase("Mandatory")) {
+                    if (SNofDeviceValue.equalsIgnoreCase("Mandatory")) {
 
                          Map<String, Integer> hm = new HashMap<String, Integer>();
                          for (String ii : sourceTacList) {
@@ -731,40 +732,41 @@ logger.debug("***");
                                         String imeiV = data[4].trim();
                                         logger.info("imeiV;;" + imeiV);
                                         if (aList.contains(imeiV)) {
-                                             logger.info("err. for list,,." + imeiV);
+                                             logger.debug("err. for list,,." + imeiV);
                                         } else {
                                              aList.add(imeiV);
                                              for (; j <= data.length; j++) {
-//                                        logger.info("DATA at setString " + data[j - 1].trim());
+                                                  logger.debug("DATA at setString " + data[j - 1].trim());
                                                   ps.setString(j, data[j - 1].trim());
-                                             } 
+                                             }
                                              ps.setString(j, txn_id);
                                              ps.setString(j + 1, fileName);
                                              ps.setString(j + 2, main_type);
                                              ps.setString(j + 3, stringDate);
                                              ps.setString(j + 4, stringDate);
+                                             logger.debug(fileName + main_type + stringDate + txn_id);
                                              ps.addBatch();
                                              pass_my_batch++;
-                                             
-                                            
+
                                         }
                                    }
                               }
                               k++;
-                              logger.info("counting :  "+ k);
-                              
+                              logger.info("counting :  " + k);
                               if (pass_my_batch == my_batch_count) {
-                                   logger.info("Executing Pass Batch File");
+                                   logger.debug("Executing Pass Batch File");
                                    ps.executeBatch();
 //                            conn.commit();
                                    pass_my_batch = 0;
                               }
                          }
                     }      // While close 
-                    
+
                     br.close();
                     logger.debug("Batch started");
-                    ps.executeBatch();
+                    if (ps != null) {
+                         ps.executeBatch();
+                    }
                     if (fr != null) {
                          fr.close();
                     }
@@ -774,15 +776,20 @@ logger.debug("***");
                          rs.close();
                     }
                     logger.debug("Batch endsed");
+                    if (ps != null) {
+                         ps.clearParameters();
+                         ps.close();
+                    }
 //                    if (main_type.equalsIgnoreCase("Consignment")) {
 //                         ceirfunction.UpdateStatus ViaApi(conn, txn_id, 0, main_type);
 //                    } else {
 //                         ceirfunction.updateFeatureManagementStatus(conn, txn_id, 1, management_table, main_type);      // 1 for processing
 //                         logger.info("mgmt Db  1  done");
 //                    }
+
                     ceirfunction.updateFeatureFileStatus(conn, txn_id, 2, main_type, subfeature); // update web_action_db 
-                    logger.info("web_action_db 2 done");
-                    conn.commit();
+                    logger.debug("web_action_db 2 done");
+//                    conn.commit();
                } else {
                     errFile.gotoErrorFilewithList(errorFilePath, txn_id, fileLines);
 //                    if (main_type.equalsIgnoreCase("Consignment")) {
@@ -799,7 +806,6 @@ logger.debug("***");
                     if (conn != null) {
                          conn.rollback();
                     }
-
                     new ErrorFileGenrator().gotoErrorFile(conn, txn_id, "Something went Wrong. Please Contact to Ceir Admin.  ");
                     new CEIRFeatureFileFunctions().UpdateStatusViaApi(conn, txn_id, 1, main_type);       //1 for reject
                     new CEIRFeatureFileFunctions().updateFeatureFileStatus(conn, txn_id, 5, main_type, subfeature); // update web_action_db    
@@ -809,14 +815,19 @@ logger.debug("***");
                result = null;
           } finally {
                try {
-                    if (conn != null) {
-                         if (rs != null) {
+                    logger.debug("in Finally Block");
+                    if (Objects.nonNull(conn)) {
+                         if (Objects.nonNull(rs)) {
                               rs.close();
                          }
-                         if (ps != null) {
+                         logger.debug("1212");
+                         if (Objects.nonNull(ps)) {
                               ps.clearParameters();
                               ps.close();
                          }
+                         logger.debug("Committed Conntion ");
+                         conn.commit();
+
                     }
                     if (fis != null) {
                          fis.close();
@@ -828,7 +839,7 @@ logger.debug("***");
                          fw.close();
                     }
                } catch (Exception e) {
-                    logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
+                    logger.error("._." + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
                }
                query = null;
                values = null;
@@ -1238,7 +1249,6 @@ logger.debug("***");
 //          }
 //          return seq_no;
 //     }
-
      public String getFilePath(Connection conn, String tag_type) {
           String file_path = "";
           String query = null;
@@ -1307,7 +1317,6 @@ logger.debug("***");
 //          }
 //          return seq_no1;
 //     }
-
      public String getTableSize(Connection conn, String tableName) {
           String tableSize = null;
           String query = null;
