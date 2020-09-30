@@ -13,7 +13,7 @@ public class UsagesValueModel implements Serializable {
      private String imei;
      private String msisdn;
      private String imsi;
-
+     private String actual_imei;
      private int FOREGIN_RULE;
      private String MOBILE_OPERATOR;
      private String PERIOD;
@@ -28,6 +28,14 @@ public class UsagesValueModel implements Serializable {
      private String FEATURE_NAME;
      private String RECORD_TIME;
      private String RECORD_TYPE;
+
+     public String getActual_imei() {
+          return actual_imei;
+     }
+
+     public void setActual_imei(String actual_imei) {
+          this.actual_imei = actual_imei;
+     }
 
      public int getFOREGIN_RULE() {
           return FOREGIN_RULE;
@@ -172,28 +180,11 @@ public class UsagesValueModel implements Serializable {
 
      @Override
      public String toString() {
-          StringBuilder sb = new StringBuilder();
-          sb.append("UsagesValueModel{imei=").append(imei);
-          sb.append(", msisdn=").append(msisdn);
-          sb.append(", imsi=").append(imsi);
-          sb.append(", FOREGIN_RULE=").append(FOREGIN_RULE);
-          sb.append(", MOBILE_OPERATOR=").append(MOBILE_OPERATOR);
-          sb.append(", PERIOD=").append(PERIOD);
-          sb.append(", CREATE_FILENAME=").append(CREATE_FILENAME);
-          sb.append(", UPDATE_FILENAME=").append(UPDATE_FILENAME);
-          sb.append(", SYSTEM_TYPE=").append(SYSTEM_TYPE);
-          sb.append(", FAILED_RULE_ID=").append(FAILED_RULE_ID);
-          sb.append(", FAILED_RULE_NAME=").append(FAILED_RULE_NAME);
-          sb.append(", TAC=").append(TAC);
-          sb.append(", ACTION=").append(ACTION);
-          sb.append(", FAILED_RULE_DATE=").append(FAILED_RULE_DATE);
-          sb.append(", FEATURE_NAME=").append(FEATURE_NAME);
-          sb.append(", RECORD_TIME=").append(RECORD_TIME);
-          sb.append(", RECORD_TYPE=").append(RECORD_TYPE);
-          sb.append('}');
-          return sb.toString();
+          return "UsagesValueModel{" + "imei=" + imei + ", msisdn=" + msisdn + ", imsi=" + imsi + ", actual_imei=" + actual_imei + ", FOREGIN_RULE=" + FOREGIN_RULE + ", MOBILE_OPERATOR=" + MOBILE_OPERATOR + ", PERIOD=" + PERIOD + ", CREATE_FILENAME=" + CREATE_FILENAME + ", UPDATE_FILENAME=" + UPDATE_FILENAME + ", SYSTEM_TYPE=" + SYSTEM_TYPE + ", FAILED_RULE_ID=" + FAILED_RULE_ID + ", FAILED_RULE_NAME=" + FAILED_RULE_NAME + ", TAC=" + TAC + ", ACTION=" + ACTION + ", FAILED_RULE_DATE=" + FAILED_RULE_DATE + ", FEATURE_NAME=" + FEATURE_NAME + ", RECORD_TIME=" + RECORD_TIME + ", RECORD_TYPE=" + RECORD_TYPE + '}';
      }
 
+     
+     
     
      
      

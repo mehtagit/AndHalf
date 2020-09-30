@@ -15,7 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-public class CheckImeiController {  //sam
+public class CheckImeiController {  //sachin
 
     private static final Logger logger = Logger.getLogger(GsmaValueController.class);
 
@@ -30,7 +30,7 @@ public class CheckImeiController {  //sam
         Long imei = checkImeiValuesEntity.getImei();
         Long imei_type = checkImeiValuesEntity.getImei_type();
         logger.info("Feature   " + feature + user_type);
-        logger.info("UsrTyp   " + user_type);
+        logger.info("UsrType   " + user_type);
         logger.info("Imei_type (devIdType)   " + imei_type);
         logger.info("Imei   " + imei);
         CheckImeiMess cImsg = new CheckImeiMess();

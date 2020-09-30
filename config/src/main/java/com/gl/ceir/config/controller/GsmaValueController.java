@@ -13,7 +13,7 @@ import com.gl.ceir.config.service.impl.GsmaValueServiceImpl;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-public class GsmaValueController {
+public class GsmaValueController { //sachin
 
      private static final Logger logger = Logger.getLogger(GsmaValueController.class);
 
@@ -23,7 +23,7 @@ public class GsmaValueController {
      @ApiOperation(value = "View All list of Values of Gsma", response = GsmaValueModel.class)
      @PostMapping(path = "gsma/GsmaValues")
      public MappingJacksonValue getAllValues(String imei, String msisdn, String identifierType) {
-
+        
           MappingJacksonValue mapping = null;
           logger.info("imei " + imei);
           logger.info("msisdn" + msisdn);
@@ -31,7 +31,7 @@ public class GsmaValueController {
 
           String ismi = null;
           UsagesValueModel usagesValueModel = null;
-          if (imei == null && identifierType == "3"  ) {
+          if (imei == null) {
                usagesValueModel = GsmaValueServiceImpl.getimeiValbymsisdn(msisdn);
                if (usagesValueModel == null) {
                     logger.info("IMEI IS NOT FOUND");
@@ -42,6 +42,7 @@ public class GsmaValueController {
                     ismi = usagesValueModel.getImsi() == null ? "NA" : usagesValueModel.getImsi();
                }
           } else {
+                 imei = imei.substring(0, 14);
                usagesValueModel = GsmaValueServiceImpl.getimeiValbyImei(imei);
                ismi = usagesValueModel == null ? "NA" : usagesValueModel.getImsi();
                msisdn = usagesValueModel == null ? "NA" : usagesValueModel.getMsisdn();
@@ -75,7 +76,6 @@ public class GsmaValueController {
                     getvals.setImei("NA");
                     getvals.setMsisdn("NA");
                     getvals.setImsi("NA");
-
                     getvals.setACTION("NA");
                     getvals.setCREATE_FILENAME("NA");
                     getvals.setFAILED_RULE_DATE("NA");
@@ -90,12 +90,10 @@ public class GsmaValueController {
                     getvals.setSYSTEM_TYPE("NA");
                     getvals.setTAC("NA");
                     getvals.setUPDATE_FILENAME("NA");
-
                } else {
                     getvals.setImei(usagesValueModel.getImei());
                     getvals.setMsisdn(usagesValueModel.getMsisdn());
                     getvals.setImsi(usagesValueModel.getImsi());
-
                     getvals.setACTION(usagesValueModel.getACTION());
                     getvals.setCREATE_FILENAME(usagesValueModel.getCREATE_FILENAME());
                     getvals.setFAILED_RULE_DATE(usagesValueModel.getFAILED_RULE_DATE());
@@ -119,7 +117,7 @@ public class GsmaValueController {
           return mapping;
      }
 
-     @ApiOperation(value = "Check Imei Msisdn Combination Present" )
+     @ApiOperation(value = "Check Imei Msisdn Combination Present")
      @PostMapping(path = "gsma/CheckImeiMsisdnValues")
      public String CheckImeiMsisdnValues(String imei, String msisdn) {
           logger.info("Imei:   " + imei + " ;msisdn: " + msisdn);

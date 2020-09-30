@@ -15,18 +15,18 @@ import com.gl.ceir.config.repository.UsagesValueRepository;
 import com.gl.ceir.config.repository.DuplicateValueRepository;
 
 @Service
-public class GsmaValueServiceImpl {
+public class GsmaValueServiceImpl  {
 
      private static final Logger logger = Logger.getLogger(GsmaValueServiceImpl.class);
-
+ @Autowired
+     DuplicateValueRepository duplicateValueRepository;
      @Autowired
      GsmaValueRepository gsmaValueRepository;
 
      @Autowired
      UsagesValueRepository usagesValueRepository;
 
-     @Autowired
-     DuplicateValueRepository duplicateValueRepository;
+    
      
 
      public GsmaValueModel getAll(int device_id) {

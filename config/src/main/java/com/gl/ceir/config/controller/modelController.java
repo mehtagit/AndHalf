@@ -10,33 +10,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.gl.ceir.config.model.brandRepoModel;
 import com.gl.ceir.config.model.modelRepoPojo;
-import com.gl.ceir.config.service.impl.BrandServiceImpl;
 import com.gl.ceir.config.service.impl.ModelServiceImpl;
 
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-public class modelController {  //sam
-	private static final Logger logger = Logger.getLogger(modelController.class);
+public class modelController {  ////sachin
 
-	@Autowired
-	ModelServiceImpl modelServiceImpl;
+     private static final Logger logger = Logger.getLogger(modelController.class);
 
-	@ApiOperation(value="View All list of Mdels of Brands", response = modelRepoPojo.class)
-	@RequestMapping(path = "gsma/modelName", method = RequestMethod.GET)
-	public MappingJacksonValue getAllModels(@RequestParam("brand_id") int brand_id) {
-		logger.info("Request TO view TO all record of user="+brand_id);
-	List<modelRepoPojo> getmodels = modelServiceImpl.getAll(brand_id);
-	MappingJacksonValue mapping = new MappingJacksonValue(getmodels);
-	logger.info("Response of View ="+mapping.toString() + "for id " + brand_id);
-	return mapping;
-}
-	
+     @Autowired
+     ModelServiceImpl modelServiceImpl;
 
-	
-	
-	
+     @ApiOperation(value = "View All list of Mdels of Brands", response = modelRepoPojo.class)
+     @RequestMapping(path = "gsma/modelName", method = RequestMethod.GET)
+     public MappingJacksonValue getAllModels(@RequestParam("brand_id") int brand_id) {
+          logger.info("Request TO view TO all record of user=" + brand_id);
+          List<modelRepoPojo> getmodels = modelServiceImpl.getAll(brand_id);
+          MappingJacksonValue mapping = new MappingJacksonValue(getmodels);
+          logger.info("Response of View =" + mapping.toString() + "for id " + brand_id);
+          return mapping;
+     }
 }

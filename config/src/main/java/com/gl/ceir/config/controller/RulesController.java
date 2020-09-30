@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController
-public class RulesController {
+public class RulesController { //sachin
 
     @Autowired
             RulesServiceImpl rulesServiceImpl;
@@ -39,3 +39,4 @@ public class RulesController {
 //    }
  
 }
+
