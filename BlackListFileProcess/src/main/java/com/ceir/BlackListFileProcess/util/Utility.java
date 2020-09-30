@@ -93,7 +93,7 @@ public class Utility {
 
 			fw.append("\n");
 			for(BlackList blackListData:record) {
-				fw.append(blackListData.getImei());
+				fw.append(blackListData.getActualImei());
 				fw.append("\n");
 			}
 			
@@ -119,7 +119,7 @@ public class Utility {
 
 			fw.append("\n");
 			for(BlacklistDbHistory blackListData:record) {
-				fw.append(String.valueOf(blackListData.getImei()) +"," +BlackOperation.getUserStatusByCode(blackListData.getOperation()).getDescription());
+				fw.append(String.valueOf(blackListData.getActualImei()) +"," +BlackOperation.getUserStatusByCode(blackListData.getOperation()).getDescription());
 				fw.append("\n");
 			}
 			
@@ -212,3 +212,5 @@ public class Utility {
 	}
 	
 }
+
+

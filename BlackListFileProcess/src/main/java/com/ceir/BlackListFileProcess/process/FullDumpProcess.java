@@ -4,8 +4,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,9 @@ import com.ceir.BlackListFileProcess.util.Utility;
 @Service
 public class FullDumpProcess {
 
-	private final Logger log =LoggerFactory.getLogger(getClass());
+//      private static final Logger logger = Logger.getLogger(getClass()) ;
+      
+	private final Logger log =Logger.getLogger(getClass());
 
 	@Autowired
 	SystemConfigurationDbRepository systemConfigDbRepo;
@@ -154,3 +155,7 @@ public class FullDumpProcess {
 		listFileDetailsImpl.saveFileDumpMgmt(fileDumpMgmt);
 	}
 }
+
+
+
+

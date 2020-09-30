@@ -1,7 +1,10 @@
 package com.ceir.BlackListFileProcess.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
+
+
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -35,7 +38,7 @@ public class BlackListService implements Runnable{
 	("${threadSleep}")
 	Integer threadSleep;
 
-	private final Logger log =LoggerFactory.getLogger(getClass());
+	private final Logger log =Logger.getLogger(getClass());
 
 	public void run() {
 		while(true) {
@@ -67,13 +70,17 @@ public class BlackListService implements Runnable{
 			 * log.info("so this process cannot go further"); }
 			 */
 			log.info("exit from Black List dump process");
-			try {
-				Thread.sleep(threadSleep);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+           System.exit(0);
+//			try {
+//				Thread.sleep(threadSleep);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
 		}
 	}
 }
+
+
+
 
 

@@ -21,329 +21,292 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class BlackList {
 
-	private static long serialVersionUID = 1L;
-	@Id
-	@NotNull
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-	
-    @NotNull
-	private String imei;
-	@NotNull
-	private Long msisdn;
+     private static long serialVersionUID = 1L;
+     @Id
+     @NotNull
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+     private long id;
 
+     @NotNull
+     private String imei;
+     @NotNull
+     private Long msisdn;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-	@CreationTimestamp
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime createdOn;
-	
-	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-	@UpdateTimestamp
-	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime modifiedOn;
-	
-	@JsonIgnore
-	private String requestedBy;
-	@JsonIgnore
-	private String approvedBy;
+//	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+//	@CreationTimestamp
+//	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//	private LocalDateTime createdOn;
+//	
+//	
+//	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
+//	@UpdateTimestamp
+//	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//	private LocalDateTime modifiedOn;
+     @CreationTimestamp
+     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+     private LocalDateTime createdOn;
 
-	@Column(length = 15)
-	private String roleType;
-	private String userId;
-	@Column(length = 20)
-	private String txnId;
-	private String deviceNumber;
-	private String deviceType;
-	private String deviceAction;
-	private String	 deviceStatus;
-	private String DeviceLaunchDate;
-	private String multipleSimStatus;
-	private String  deviceId;
-	private String imeiEsnMeid;
-	private String modeType;
-	private String requestType;
-	private String userType;
-	private String complainType;
-	@Type(type="date")
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date expiryDate;
+     @CreationTimestamp
+     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+     private LocalDateTime modifiedOn;
 
-	public String getRoleType() {
-		return roleType;
-	}
+     @JsonIgnore
+     private String requestedBy;
+     @JsonIgnore
+     private String approvedBy;
 
-	public void setRoleType(String roleType) {
-		this.roleType = roleType;
-	}
+     @Column(length = 15)
+     private String roleType;
+     private String userId;
+     @Column(length = 20)
+     private String txnId;
+     private String deviceNumber;
+     private String deviceType;
+     private String deviceAction;
+     private String deviceStatus;
+     private String DeviceLaunchDate;
+     private String multipleSimStatus;
+     private String deviceId;
+     private String imeiEsnMeid;
+     private String modeType;
+     private String requestType;
+     private String userType;
+     private String complainType;
+     private String actualImei;
+     @Type(type = "date")
+     @DateTimeFormat(pattern = "yyyy-MM-dd")
+     private Date expiryDate;
 
-	public String getUserId() {
-		return userId;
-	}
+     public String getRoleType() {
+          return roleType;
+     }
 
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+     public void setRoleType(String roleType) {
+          this.roleType = roleType;
+     }
 
-	public String getTxnId() {
-		return txnId;
-	}
+     public String getUserId() {
+          return userId;
+     }
 
-	public void setTxnId(String txnId) {
-		this.txnId = txnId;
-	}
+     public void setUserId(String userId) {
+          this.userId = userId;
+     }
 
-	public String getDeviceNumber() {
-		return deviceNumber;
-	}
+     public String getTxnId() {
+          return txnId;
+     }
 
-	public void setDeviceNumber(String deviceNumber) {
-		this.deviceNumber = deviceNumber;
-	}
+     public void setTxnId(String txnId) {
+          this.txnId = txnId;
+     }
 
-	public String getDeviceType() {
-		return deviceType;
-	}
+     public String getDeviceNumber() {
+          return deviceNumber;
+     }
 
-	public void setDeviceType(String deviceType) {
-		this.deviceType = deviceType;
-	}
+     public void setDeviceNumber(String deviceNumber) {
+          this.deviceNumber = deviceNumber;
+     }
 
-	public String getDeviceAction() {
-		return deviceAction;
-	}
+     public String getDeviceType() {
+          return deviceType;
+     }
 
-	public void setDeviceAction(String deviceAction) {
-		this.deviceAction = deviceAction;
-	}
+     public void setDeviceType(String deviceType) {
+          this.deviceType = deviceType;
+     }
 
-	public String getDeviceStatus() {
-		return deviceStatus;
-	}
+     public String getDeviceAction() {
+          return deviceAction;
+     }
 
-	public void setDeviceStatus(String deviceStatus) {
-		this.deviceStatus = deviceStatus;
-	}
+     public void setDeviceAction(String deviceAction) {
+          this.deviceAction = deviceAction;
+     }
 
-	public String getDeviceLaunchDate() {
-		return DeviceLaunchDate;
-	}
+     public String getDeviceStatus() {
+          return deviceStatus;
+     }
 
-	public void setDeviceLaunchDate(String deviceLaunchDate) {
-		DeviceLaunchDate = deviceLaunchDate;
-	}
+     public void setDeviceStatus(String deviceStatus) {
+          this.deviceStatus = deviceStatus;
+     }
 
-	public String getMultipleSimStatus() {
-		return multipleSimStatus;
-	}
+     public String getDeviceLaunchDate() {
+          return DeviceLaunchDate;
+     }
 
-	public void setMultipleSimStatus(String multipleSimStatus) {
-		this.multipleSimStatus = multipleSimStatus;
-	}
+     public void setDeviceLaunchDate(String deviceLaunchDate) {
+          DeviceLaunchDate = deviceLaunchDate;
+     }
 
-	public String getDeviceId() {
-		return deviceId;
-	}
+     public String getMultipleSimStatus() {
+          return multipleSimStatus;
+     }
 
-	public void setDeviceId(String deviceId) {
-		this.deviceId = deviceId;
-	}
+     public void setMultipleSimStatus(String multipleSimStatus) {
+          this.multipleSimStatus = multipleSimStatus;
+     }
 
-	public String getImeiEsnMeid() {
-		return imeiEsnMeid;
-	}
+     public String getDeviceId() {
+          return deviceId;
+     }
 
-	public void setImeiEsnMeid(String imeiEsnMeid) {
-		this.imeiEsnMeid = imeiEsnMeid;
-	}
+     public void setDeviceId(String deviceId) {
+          this.deviceId = deviceId;
+     }
 
-	
+     public String getImeiEsnMeid() {
+          return imeiEsnMeid;
+     }
 
-	public String getRequestedBy() {
-		return requestedBy;
-	}
+     public void setImeiEsnMeid(String imeiEsnMeid) {
+          this.imeiEsnMeid = imeiEsnMeid;
+     }
 
-	public void setRequestedBy(String requestedBy) {
-		this.requestedBy = requestedBy;
-	}
+     public String getRequestedBy() {
+          return requestedBy;
+     }
 
-	public String getApprovedBy() {
-		return approvedBy;
-	}
+     public void setRequestedBy(String requestedBy) {
+          this.requestedBy = requestedBy;
+     }
 
-	public void setApprovedBy(String approvedBy) {
-		this.approvedBy = approvedBy;
-	}
+     public String getApprovedBy() {
+          return approvedBy;
+     }
 
-	
+     public void setApprovedBy(String approvedBy) {
+          this.approvedBy = approvedBy;
+     }
 
-	
-	public BlackList() {
-		super();
-	}
+     public String getActualImei() {
+          return actualImei;
+     }
 
-	
+     public void setActualImei(String actualImei) {
+          this.actualImei = actualImei;
+     }
 
-	
+     public BlackList() {
+          super();
+     }
 
-	public Long getId() {
-		return id;
-	}
+     public Long getId() {
+          return id;
+     }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+     public void setId(Long id) {
+          this.id = id;
+     }
 
-	
+     public LocalDateTime getCreatedOn() {
+          return createdOn;
+     }
 
-	public LocalDateTime getCreatedOn() {
-		return createdOn;
-	}
+     public void setCreatedOn(LocalDateTime createdOn) {
+          this.createdOn = createdOn;
+     }
 
-	public void setCreatedOn(LocalDateTime createdOn) {
-		this.createdOn = createdOn;
-	}
+     public LocalDateTime getModifiedOn() {
+          return modifiedOn;
+     }
 
-	public LocalDateTime getModifiedOn() {
-		return modifiedOn;
-	}
+     public void setModifiedOn(LocalDateTime modifiedOn) {
+          this.modifiedOn = modifiedOn;
+     }
 
-	public void setModifiedOn(LocalDateTime modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+     public String getImei() {
+          return imei;
+     }
 
-	public String getImei() {
-		return imei;
-	}
+     public void setImei(String imei) {
+          this.imei = imei;
+     }
 
-	public void setImei(String imei) {
-		this.imei = imei;
-	}
+     public Long getMsisdn() {
+          return msisdn;
+     }
 
-	public Long getMsisdn() {
-		return msisdn;
-	}
+     public void setMsisdn(Long msisdn) {
+          this.msisdn = msisdn;
+     }
 
-	public void setMsisdn(Long msisdn) {
-		this.msisdn = msisdn;
-	}
+     @Override
+     public String toString() {
+          return "BlackList{" + "id=" + id + ", imei=" + imei + ", msisdn=" + msisdn + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", requestedBy=" + requestedBy + ", approvedBy=" + approvedBy + ", roleType=" + roleType + ", userId=" + userId + ", txnId=" + txnId + ", deviceNumber=" + deviceNumber + ", deviceType=" + deviceType + ", deviceAction=" + deviceAction + ", deviceStatus=" + deviceStatus + ", DeviceLaunchDate=" + DeviceLaunchDate + ", multipleSimStatus=" + multipleSimStatus + ", deviceId=" + deviceId + ", imeiEsnMeid=" + imeiEsnMeid + ", modeType=" + modeType + ", requestType=" + requestType + ", userType=" + userType + ", complainType=" + complainType + ", actualImei=" + actualImei + ", expiryDate=" + expiryDate + '}';
+     }
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("BlackList [imei=");
-		builder.append(imei);
-		builder.append(", msisdn=");
-		builder.append(msisdn);
-		builder.append(", id=");
-		builder.append(id);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", requestedBy=");
-		builder.append(requestedBy);
-		builder.append(", approvedBy=");
-		builder.append(approvedBy);
-		builder.append(", roleType=");
-		builder.append(roleType);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", txnId=");
-		builder.append(txnId);
-		builder.append(", deviceNumber=");
-		builder.append(deviceNumber);
-		builder.append(", deviceType=");
-		builder.append(deviceType);
-		builder.append(", deviceAction=");
-		builder.append(deviceAction);
-		builder.append(", deviceStatus=");
-		builder.append(deviceStatus);
-		builder.append(", DeviceLaunchDate=");
-		builder.append(DeviceLaunchDate);
-		builder.append(", multipleSimStatus=");
-		builder.append(multipleSimStatus);
-		builder.append(", deviceId=");
-		builder.append(deviceId);
-		builder.append(", imeiEsnMeid=");
-		builder.append(imeiEsnMeid);
-		builder.append("]");
-		return builder.toString();
-	}
+     public BlackList(@NotNull String imei, @NotNull Long msisdn, String roleType, String userId, String txnId,
+             String deviceNumber, String deviceType, String deviceAction, String deviceStatus, String deviceLaunchDate,
+             String multipleSimStatus, String deviceId, String imeiEsnMeid, String modeType,
+             String requestType, String userType, String complainType, Date expiryDate, String actualImei) {
+          super();
+          this.imei = imei;
+          this.msisdn = msisdn;
+          this.roleType = roleType;
+          this.userId = userId;
+          this.txnId = txnId;
+          this.deviceNumber = deviceNumber;
+          this.deviceType = deviceType;
+          this.deviceAction = deviceAction;
+          this.deviceStatus = deviceStatus;
+          DeviceLaunchDate = deviceLaunchDate;
+          this.multipleSimStatus = multipleSimStatus;
+          this.deviceId = deviceId;
+          this.imeiEsnMeid = imeiEsnMeid;
+          this.modeType = modeType;
+          this.requestType = requestType;
+          this.userType = userType;
+          this.complainType = complainType;
+          this.expiryDate = expiryDate;
+          this.actualImei = actualImei;
+     }
 
-	public BlackList(@NotNull String imei, @NotNull Long msisdn, String roleType, String userId, String txnId,
-			String deviceNumber, String deviceType, String deviceAction, String deviceStatus, String deviceLaunchDate,
-			String multipleSimStatus, String deviceId, String imeiEsnMeid,String modeType, 
-			String requestType,String  userType,String complainType,Date expiryDate) {
-		super();
-		this.imei = imei;
-		this.msisdn = msisdn;
-		this.roleType = roleType;
-		this.userId = userId;
-		this.txnId = txnId;
-		this.deviceNumber = deviceNumber;
-		this.deviceType = deviceType;
-		this.deviceAction = deviceAction;
-		this.deviceStatus = deviceStatus;
-		DeviceLaunchDate = deviceLaunchDate;
-		this.multipleSimStatus = multipleSimStatus;
-		this.deviceId = deviceId;
-		this.imeiEsnMeid = imeiEsnMeid;
-		this.modeType=modeType;
-		this.requestType=requestType;
-		this.userType=userType;
-		this.complainType=complainType;
-		this.expiryDate=expiryDate;
-	}
+     public String getModeType() {
+          return modeType;
+     }
 
-	
+     public void setModeType(String modeType) {
+          this.modeType = modeType;
+     }
 
-	public String getModeType() {
-		return modeType;
-	}
+     public String getRequestType() {
+          return requestType;
+     }
 
-	public void setModeType(String modeType) {
-		this.modeType = modeType;
-	}
+     public void setRequestType(String requestType) {
+          this.requestType = requestType;
+     }
 
-	public String getRequestType() {
-		return requestType;
-	}
+     public String getUserType() {
+          return userType;
+     }
 
-	public void setRequestType(String requestType) {
-		this.requestType = requestType;
-	}
+     public void setUserType(String userType) {
+          this.userType = userType;
+     }
 
-	public String getUserType() {
-		return userType;
-	}
+     public String getComplainType() {
+          return complainType;
+     }
 
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
+     public void setComplainType(String complainType) {
+          this.complainType = complainType;
+     }
 
-	public String getComplainType() {
-		return complainType;
-	}
+     public void setId(long id) {
+          this.id = id;
+     }
 
-	public void setComplainType(String complainType) {
-		this.complainType = complainType;
-	}
+     public Date getExpiryDate() {
+          return expiryDate;
+     }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+     public void setExpiryDate(Date expiryDate) {
+          this.expiryDate = expiryDate;
+     }
 
-	public Date getExpiryDate() {
-		return expiryDate;
-	}
-
-	public void setExpiryDate(Date expiryDate) {
-		this.expiryDate = expiryDate;
-	}
-
-	
-	
-       	
 }
+
