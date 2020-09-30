@@ -90,6 +90,7 @@ public class BlackList {
      private String requestType;
      private String userType;
      private String complainType;
+     private String actualImei;
 
      @Type(type = "date")
      @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -243,53 +244,26 @@ public class BlackList {
           this.msisdn = msisdn;
      }
 
-     @Override
-     public String toString() {
-          StringBuilder builder = new StringBuilder();
-          builder.append("BlackList [imei=");
-          builder.append(imei);
-          builder.append(", msisdn=");
-          builder.append(msisdn);
-          builder.append(", id=");
-          builder.append(id);
-          builder.append(", createdOn=");
-          builder.append(createdOn);
-          builder.append(", modifiedOn=");
-          builder.append(modifiedOn);
-          builder.append(", requestedBy=");
-          builder.append(requestedBy);
-          builder.append(", approvedBy=");
-          builder.append(approvedBy);
-          builder.append(", roleType=");
-          builder.append(roleType);
-          builder.append(", userId=");
-          builder.append(userId);
-          builder.append(", txnId=");
-          builder.append(txnId);
-          builder.append(", deviceNumber=");
-          builder.append(deviceNumber);
-          builder.append(", deviceType=");
-          builder.append(deviceType);
-          builder.append(", deviceAction=");
-          builder.append(deviceAction);
-          builder.append(", deviceStatus=");
-          builder.append(deviceStatus);
-          builder.append(", DeviceLaunchDate=");
-          builder.append(DeviceLaunchDate);
-          builder.append(", multipleSimStatus=");
-          builder.append(multipleSimStatus);
-          builder.append(", deviceId=");
-          builder.append(deviceId);
-          builder.append(", imeiEsnMeid=");
-          builder.append(imeiEsnMeid);
-          builder.append("]");
-          return builder.toString();
+     public String getActualImei() {
+          return actualImei;
      }
 
+     public void setActualImei(String actualImei) {
+          this.actualImei = actualImei;
+     }
+
+     @Override
+     public String toString() {
+          return "BlackList{" + "id=" + id + ", imei=" + imei + ", msisdn=" + msisdn + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", requestedBy=" + requestedBy + ", approvedBy=" + approvedBy + ", roleType=" + roleType + ", userId=" + userId + ", txnId=" + txnId + ", operator_id=" + operator_id + ", operator_name=" + operator_name + ", deviceNumber=" + deviceNumber + ", deviceType=" + deviceType + ", deviceAction=" + deviceAction + ", deviceStatus=" + deviceStatus + ", DeviceLaunchDate=" + DeviceLaunchDate + ", multipleSimStatus=" + multipleSimStatus + ", deviceId=" + deviceId + ", imeiEsnMeid=" + imeiEsnMeid + ", modeType=" + modeType + ", requestType=" + requestType + ", userType=" + userType + ", complainType=" + complainType + ", actualImei=" + actualImei + ", expiryDate=" + expiryDate + '}';
+     }
+
+     
+    
+     
      public BlackList(@NotNull String imei, @NotNull Long msisdn, String roleType, String userId, String txnId,
              String deviceNumber, String deviceType, String deviceAction, String deviceStatus, String deviceLaunchDate,
              String multipleSimStatus, String deviceId, String imeiEsnMeid, String modeType,
-             String requestType, String userType, String complainType, Date expiryDate, String operator_id, String operator_name) {
+             String requestType, String userType, String complainType, Date expiryDate, String operator_id, String operator_name,String actualImei) {
           super();
           this.imei = imei;
           this.msisdn = msisdn;
@@ -311,6 +285,7 @@ public class BlackList {
           this.expiryDate = expiryDate;
           this.operator_id = operator_id;
           this.operator_name = operator_name;
+          this.actualImei = actualImei;
      }
 
      public String getModeType() {
@@ -358,4 +333,7 @@ public class BlackList {
      }
 
 }
+
+
+
 

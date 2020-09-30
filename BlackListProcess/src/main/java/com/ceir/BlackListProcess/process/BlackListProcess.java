@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +44,7 @@ public class BlackListProcess {
 	@Autowired
 	WebActionRepoImpl webActionRepoImpl;
 	
-	private final Logger log =LoggerFactory.getLogger(getClass());
+	private final Logger log =Logger.getLogger(getClass());
     @Transactional
 	public void blackListProcess() {
 		log.info("inside blacklist process");
@@ -93,7 +93,7 @@ public class BlackListProcess {
 						greyListDb.getDeviceAction(),greyListDb.getDeviceStatus(),greyListDb.getDeviceLaunchDate(),
 						greyListDb.getMultipleSimStatus(), greyListDb.getDeviceId(),greyListDb.getImeiEsnMeid(),GreyListOperation.DELETE.getCode()
 						,"Moved to BlackList",greyListDb.getModeType(),greyListDb.getRequestType(),
-						greyListDb.getUserType(),greyListDb.getComplainType(),greyListDb.getExpiryDate() ,greyListDb.getOperator_id() , greyListDb.getOperator_name() );
+						greyListDb.getUserType(),greyListDb.getComplainType(),greyListDb.getExpiryDate() ,greyListDb.getOperator_id() , greyListDb.getOperator_name() , greyListDb.getActualImei() );
 				GreylistDbHistory greylistDbHistory=nationalislmServiceImpl.saveGreyListHistory(greyListHistory);
                 
 				if(greylistDbHistory!=null) {
@@ -107,7 +107,7 @@ public class BlackListProcess {
 								greyListDb.getDeviceAction(),greyListDb.getDeviceStatus(),greyListDb.getDeviceLaunchDate(),
 								greyListDb.getMultipleSimStatus(),greyListDb.getDeviceId(),greyListDb.getImeiEsnMeid(),
 								greyListDb.getModeType(),greyListDb.getRequestType(),greyListDb.getUserType(),
-								greyListDb.getComplainType(),greyListDb.getExpiryDate(), greyListDb.getOperator_id() , greyListDb.getOperator_name() );
+								greyListDb.getComplainType(),greyListDb.getExpiryDate(), greyListDb.getOperator_id() , greyListDb.getOperator_name()  , greyListDb.getActualImei() );
 					
 						BlackList blackListOutput=blackListRepoImpl.saveBlackList(blackList);	
 						if(blackListOutput!=null) {
@@ -119,7 +119,7 @@ public class BlackListProcess {
 									greyListDb.getDeviceAction(),greyListDb.getDeviceStatus(),greyListDb.getDeviceLaunchDate(),
 									greyListDb.getMultipleSimStatus(), greyListDb.getDeviceId(),greyListDb.getImeiEsnMeid(),GreyListOperation.Add.getCode()
 									,greyListDb.getModeType(),greyListDb.getRequestType(),greyListDb.getUserType(),
-									greyListDb.getComplainType(),greyListDb.getExpiryDate() , greyListDb.getOperator_id() , greyListDb.getOperator_name() );
+									greyListDb.getComplainType(),greyListDb.getExpiryDate() , greyListDb.getOperator_id() , greyListDb.getOperator_name()  , greyListDb.getActualImei());
 							BlacklistDbHistory output=blackListRepoImpl.saveBlackListHistory(blackListHistory);	
 							if(output!=null) {
 								System.out.println("data saved into blacklist_db_history table");
@@ -143,6 +143,8 @@ public class BlackListProcess {
 		}
 	}
 }
+
+
 
 
 

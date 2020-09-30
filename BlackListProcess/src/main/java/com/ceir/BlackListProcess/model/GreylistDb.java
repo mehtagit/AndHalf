@@ -47,6 +47,7 @@ public class GreylistDb implements Serializable {
 	private String multipleSimStatus;
 	private String  deviceId;
 	private String imeiEsnMeid;
+	private String actualImei;
 	private String modeType;
 	private String requestType;
 	private String userType;
@@ -199,10 +200,20 @@ public class GreylistDb implements Serializable {
 	public void setComplainType(String complainType) {
 		this.complainType = complainType;
 	}
+
+     public String getActualImei() {
+          return actualImei;
+     }
+
+     public void setActualImei(String actualImei) {
+          this.actualImei = actualImei;
+     }
     
 
 
 
 }
+
+
 
 

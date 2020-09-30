@@ -46,6 +46,7 @@ public class GreylistDbHistory implements Serializable {
      private String multipleSimStatus;
      private String deviceId;
      private String imeiEsnMeid;
+     private String actualImei;
      private int operation;
      private String reason;
      private String modeType;
@@ -244,10 +245,20 @@ public class GreylistDbHistory implements Serializable {
           this.complainType = complainType;
      }
 
+     public String getActualImei() {
+          return actualImei;
+     }
+
+     public void setActualImei(String actualImei) {
+          this.actualImei = actualImei;
+     }
+
+     
+     
      public GreylistDbHistory(Date createdOn, Date modifiedOn, String imei, String roleType, String userId,
              String txnId, String deviceNumber, String deviceType, String deviceAction, String deviceStatus,
              String deviceLaunchDate, String multipleSimStatus, String deviceId, String imeiEsnMeid, int operation, String reason,
-             String modeType, String requestType, String userType, String complainType, Date expiryDate, String operator_id, String operator_name) {
+             String modeType, String requestType, String userType, String complainType, Date expiryDate, String operator_id, String operator_name , String actualImei) {
           this.createdOn = createdOn;
           this.modifiedOn = modifiedOn;
           this.imei = imei;
@@ -270,7 +281,8 @@ public class GreylistDbHistory implements Serializable {
           this.complainType = complainType;
           this.expiryDate = expiryDate;
           this.operator_id = operator_id;
-          this.operator_name = operator_id;
+          this.operator_name = operator_name;
+          this.actualImei = actualImei;
      }
 
      public GreylistDbHistory() {
@@ -285,4 +297,11 @@ public class GreylistDbHistory implements Serializable {
      }
 
 }
+
+
+
+
+
+
+
 

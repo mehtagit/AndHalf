@@ -46,6 +46,7 @@ public class BlacklistDbHistory {
      private String complainType;
      private String operator_id;
      private String operator_name;
+     private String actualImei;
 
      public String getOperator_id() {
           return operator_id;
@@ -187,13 +188,24 @@ public class BlacklistDbHistory {
           this.imeiEsnMeid = imeiEsnMeid;
      }
 
+     public String getActualImei() {
+          return actualImei;
+     }
+
+     public void setActualImei(String actualImei) {
+          this.actualImei = actualImei;
+     }
+
+     
      public BlacklistDbHistory() {
      }
+     
+     
 
      public BlacklistDbHistory(Date createdOn, Date modifiedOn, String imei, String roleType, String userId,
              String deviceNumber, String deviceType, String deviceAction, String deviceStatus, String deviceLaunchDate,
              String multipleSimStatus, String deviceId, String imeiEsnMeid, int operation, String modeType,
-             String requestType, String userType, String complainType, Date expiryDate, String operator_id, String operator_name) {
+             String requestType, String userType, String complainType, Date expiryDate, String operator_id, String operator_name ,String actualImei ) {
           super();
           this.createdOn = createdOn;
           this.modifiedOn = modifiedOn;
@@ -216,6 +228,7 @@ public class BlacklistDbHistory {
           this.expiryDate = expiryDate;
           this.operator_id = operator_id;
           this.operator_name = operator_name;
+          this.actualImei = actualImei;  
      }
 
      public static long getSerialversionuid() {
@@ -267,4 +280,5 @@ public class BlacklistDbHistory {
      }
 
 }
+
 

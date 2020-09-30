@@ -4,7 +4,7 @@
 
     <groupId>cm.ceir</groupId>
     <artifactId>BlackListProcess</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <!--<version>0.0.1-SNAPSHOT</version>-->
     <packaging>jar</packaging>
 
     <name>BlackListProcess</name>
@@ -36,7 +36,12 @@
             <version>3.8.1</version>
             <scope>test</scope>
         </dependency>
-    
+      <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.14</version>
+            <type>jar</type>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
@@ -98,6 +103,8 @@
     </build>
 	
 </project>
+
+
 
 
 

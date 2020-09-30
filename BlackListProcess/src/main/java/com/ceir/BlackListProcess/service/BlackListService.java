@@ -1,7 +1,7 @@
 package com.ceir.BlackListProcess.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ public class BlackListService implements Runnable{
 	@Autowired
 	BlackListProcess blackListProcess;
 
-	private final Logger log =LoggerFactory.getLogger(getClass());
+	private final Logger log =Logger.getLogger(getClass());
 
 
 	@Override
@@ -23,12 +23,9 @@ public class BlackListService implements Runnable{
 			log.info("inside blacklist service");
 			blackListProcess.blackListProcess();
 			log.info("exit from blacklist service");
-			try {
-				Thread.sleep(3600000);
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-			}
+           System.exit(0);
 		}
 	}
 }
+
+
