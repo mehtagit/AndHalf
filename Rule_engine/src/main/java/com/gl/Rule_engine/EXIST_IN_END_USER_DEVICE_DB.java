@@ -1,60 +1,51 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.gl.Rule_engine;
 
 import java.sql.Connection;
+import java.io.BufferedWriter;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.io.BufferedWriter;
 import org.apache.log4j.Logger;
 
 /**
  *
  * @author user
  */
-class EXIST_IN_MANUFACTURER_DB {
+class EXIST_IN_END_USER_DEVICE_DB {
 
-     static final Logger logger = Logger.getLogger(EXIST_IN_MANUFACTURER_DB.class);
+     static final Logger logger = Logger.getLogger(EXIST_IN_END_USER_DB.class);
 
      static String executeRule(String[] args, Connection conn) {
-          String res = "No";
-          logger.debug("EXIST_IN_MANUFACTURER_DB executeRule");
-//         
+
           Statement stmt2 = null;
           ResultSet result1 = null;
+          String res = "No";
           try {
                stmt2 = conn.createStatement();
                {
-                    result1 = stmt2.executeQuery("select count(imei_esn_meid) from device_manufacturer_db  where imei_esn_meid='" + args[3] + "' ");
-                    logger.debug("select count(imei_esn_meid) from device_manufacturer_db  where imei_esn_meid='" + args[3] + "' ");
-
-                    String res2 = "0";
+                    result1 = stmt2.executeQuery("select count(imei_esn_meid) from end_user_device_db  where imei_esn_meid='" + args[3] + "' ");
+                    logger.debug("select count(imei_esn_meid) from end_user_device_db  where imei_esn_meid='" + args[3] + "' ");
+                    int res2 = 0;
                     try {
                          while (result1.next()) {
-                              res2 = result1.getString(1);
+                              res2 = result1.getInt(1);
                          }
                     } catch (Exception e) {
-                         logger.error("" + e);
+                         logger.debug("error " + e);
                     }
-                    if (!res2.equals("0")) {
+                    if (res2 != 0) {
                          res = "Yes";
                     } else {
                          res = "No";
                     }
                }
-
           } catch (Exception e) {
                logger.error("error.." + e);
           } finally {
                try {
                     result1.close();
                     stmt2.close();
-               } catch (Exception e) {
-                    logger.error("Error  ::" + e);
-
+               } catch (Exception ex) {
+                    logger.error("Error" + ex);
                }
           }
           return res;
@@ -74,7 +65,8 @@ class EXIST_IN_MANUFACTURER_DB {
                     case "Reject": {
                          logger.debug("Action is Reject");
 
-                         String fileString = args[15] + " , Error Code :CON_RULE_0010, Error Description : IMEI/ESN/MEID is already present in the system  ";
+                         String fileString = args[15] + " , Error Code :CON_RULE_0019, Error Description : IMEI/ESN/MEID is already present in the system  ";
+
                          bw.write(fileString);
                          bw.newLine();
                     }
@@ -107,6 +99,8 @@ class EXIST_IN_MANUFACTURER_DB {
           }
      }
 
+}
+
 //    static String executeAction(String[] args, Connection conn , BufferedWriter bw) {
 //        String rrst = "Success";
 //        try {
@@ -127,35 +121,29 @@ class EXIST_IN_MANUFACTURER_DB {
 ////                Calendar cal = Calendar.getInstance();
 ////                cal.add(Calendar.DATE, 0);
 ////                String date = dateFormat1.format(cal.getTime());
-////                
-////                // for device_db insertion .. already done in custom db
 ////
-////                String historyIns = " insert into device_manufacturer_db (created_on,device_id ,device_type  , device_status , imei_esn_meid   ) values   ( '" + date + "'  ,'" + args[4] + "' ,  '' , '' ,  '" + args[3] + "'    ) ";
+////                String historyIns = " insert into device_end_user_db (created_on,device_id ,device_type   device_status , imei_esn_meid   ) values  ( '" + date + "'  , 10 , '" + args[3] + "' ) ";
 ////                PreparedStatement statementN = conn.prepareStatement(historyIns);
 ////                int rowsInserted1 = statementN.executeUpdate();
 ////                if (rowsInserted1 > 0) {
-////                    logger.debug("inserted into device_manufacturer_db ");
+////                    logger.debug("insert into device_end_user_db ");
 ////                }
-////  
+////                 
 ////            } else 
 //            {
+//
 //                Map<String, String> map = new HashMap<String, String>();
 //                map.put("fileName", args[14]);
-//                String fileString = args[15] + " ,Error Occured : :  IMEI/ESN/MEID is already present in the system ";
+//                String fileString =args[15]  + " ,Error Occured :IMEI/ESN/MEID is already present in the system ";
 //                map.put("fileString", fileString);
+//                   bw.write(fileString);
+//                 return "Success";
+//            }
 //
 //        } catch (Exception e) {
 //            rrst = "Error";
 //        }
 //        return rrst;
 //    }
-}
 //
-//
-//
-//EXIST_IN_MANUFACTURER_DB
-//Query : select manufacturer_txn_id from device_db where imei='XXXXXXXXX';
-//if(non null)
-//	Add entry in error file and move to the next record. and insert in device_info_fail_rule_db 
-//else
-//	move to the next rule.
+//}

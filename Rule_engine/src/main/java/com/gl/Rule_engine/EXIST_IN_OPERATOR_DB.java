@@ -67,11 +67,11 @@ public class EXIST_IN_OPERATOR_DB {
                     case "Reject": {
  
                          logger.debug("Operator  Action is Reject");
-                         String errmsg = "IMEI is  not Present. (It is not marked as Block ) ";
+                         String errmsg = "  , Error Code :CON_RULE_0026 , Error Description :     IMEI is  not Present. (It is not marked as Block ) ";
                          if ( args[2].equalsIgnoreCase("block")) {
-                              errmsg = " IMEI/ESN/MEID is already in process of Blocking. ";
+                              errmsg = "  , Error Code :CON_RULE_0027 , Error Description :    IMEI/ESN/MEID is already in process of Blocking. ";
                          }
-                         String fileString = args[15] + ",  Error Code : CON_RULE_0018,  Error Description : " + errmsg;
+                         String fileString = args[15] + " " + errmsg;
                          bw.write(fileString);
                          bw.newLine();
 

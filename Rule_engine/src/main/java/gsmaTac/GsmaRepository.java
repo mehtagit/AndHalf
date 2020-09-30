@@ -43,7 +43,7 @@ class GsmaDbDao {
                getRadioInterface = getRadioInterface.contains("]") ? getRadioInterface.replace("]", " ") : getRadioInterface;
                logger.debug("gsma_tac_db getRadioInterface ...." + getRadioInterface);
                String sqlqry = "insert into  gsma_tac_db ( created_on, status_message,  device_id, band_name ,model_name,internal_model_name ,marketing_name,equipment_type ,sim_support,"
-                       + " nfc ,    wLan,bluetooth  ,lpwan  ,manufacturer_or_applicant, tac_approved_date , gsma_approved_tac, operating_system , device_certify_body , radio_interface ,  status_code , brand_name , modified_on ) "
+                       + " nfc ,    wlan,bluetooth  ,lpwan  ,manufacturer_or_applicant, tac_approved_date , gsma_approved_tac, operating_system , device_certify_body , radio_interface ,  status_code , brand_name , modified_on ) "
                        + "  Values ( " + now + ", "
                        + " '" + product.getStatusMessage() + "', '" + product.getDeviceId() + "', "
                        + " '" + product.getBrandName() + "' ,"

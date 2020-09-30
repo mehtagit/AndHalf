@@ -63,7 +63,7 @@ public class EXIST_IN_GSMABLACKLIST_DB {
             break;
             case "NAN": {
                 logger.debug("Action is NAN");
-                String fileString = args[15] + " , Error Code :CON_RULE_0013, Error Description :Something went Wrong while Checking  Status of Imei .Try after Some Time.   ";
+                String fileString = args[15] + " , Error Code :CON_RULE_0023, Error Description :Something went Wrong while Checking  Status of Imei .Try after Some Time.   ";
                  bw.write(fileString);
                 bw.newLine();
             }

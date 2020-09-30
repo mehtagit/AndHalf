@@ -106,7 +106,7 @@ class EXIST_REGULARIZED {
                 case "Reject": {
                     logger.debug("Action is Reject");
 
-                    String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
+                    String fileString = args[15] + " ,Error Code :CON_RULE_0022, Error Description : IMEI/ESN/MEID is already present in the system  ";
 
                     bw.write(fileString);
                     bw.newLine();

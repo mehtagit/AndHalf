@@ -27,8 +27,7 @@ public class EXIST_IN_BLACKLIST_DB {
           try {
 
                stmt2 = conn.createStatement();
-               //      union all select count(imei) as countd from greylist_db  where imei  =  '" + args[3] + "' 
-               String qur = " select count(imei) from black_list  where imei  =   '" + args[3] + "'  ";
+                String qur = " select count(imei) from black_list  where imei  =   '" + args[3] + "'  ";
                logger.debug("Query:  " + qur);
 
                result1 = stmt2.executeQuery(qur);
@@ -73,7 +72,7 @@ public class EXIST_IN_BLACKLIST_DB {
                     break;
                     case "Reject": {
                          logger.debug("Action is Reject");
-                         String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
+                         String fileString = args[15] + " , Error Code :CON_RULE_0017, Error Description : IMEI/ESN/MEID is already present in the system  ";
                          bw.write(fileString);
                          bw.newLine();
                     }

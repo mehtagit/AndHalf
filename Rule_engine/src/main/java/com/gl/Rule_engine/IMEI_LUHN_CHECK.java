@@ -46,7 +46,7 @@ class IMEI_LUHN_CHECK {
                     break;
                     case "Reject": {
                          logger.debug("Action is Reject");
-                         String fileString = args[15] + " , Error Description : IMEI does not pass the Checksum algorithm  ";
+                         String fileString = args[15] + " ,Error Code :CON_RULE_0005,  Error Description : IMEI does not pass the Checksum algorithm  ";
                          bw.write(fileString);
                          bw.newLine();
                     }
@@ -57,7 +57,6 @@ class IMEI_LUHN_CHECK {
                     break;
                     case "Report": {
                          logger.debug("Action is Report");
-
                     }
                     break;
 
@@ -87,7 +86,7 @@ class IMEI_LUHN_CHECK {
           String ress = "No";
 
           if (ImeiNo.length() != 15) {
-               logger.debug("IMEI Number should contain 15 characters");
+               logger.debug("IMEI Number should contain 15 characters"  + ImeiNo);
           } else {
                int sum = 0;
                boolean errorflag = false;

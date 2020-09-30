@@ -71,14 +71,13 @@ public class EXIST_IN_LAWFUL_DB {
                     break;
                     case "Reject": {
                          logger.debug("Lawful Db  Action is Reject");
-                         String errmsg = "IMEI is  not Present. (It is not marked as Stolen ) ";
+                         String errmsg = " , Error Code :CON_RULE_0024 , Error Description :  IMEI is  not Present. (It is not marked as Stolen )  , ";
                          if (args[2].equalsIgnoreCase("stolen")) {
-                              errmsg = " IMEI/ESN/MEID  is  already marked as Stolen ";
+                              errmsg = " , Error Code :CON_RULE_0025 , Error Description :  IMEI/ESN/MEID  is  already marked as Stolen  ";
                          }
-                         String fileString = args[15] + ",  Error Code : CON_RULE_0002,  Error Description : " + errmsg;
+                         String fileString = args[15] + "" + errmsg;
                          bw.write(fileString);
                          bw.newLine();
-
                     }
                     break;
                     case "Block": {

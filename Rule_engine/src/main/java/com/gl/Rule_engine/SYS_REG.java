@@ -9,8 +9,7 @@ import java.sql.Connection;
 import java.io.BufferedWriter;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.HashSet;
-import java.util.Set;
+ 
 import org.apache.log4j.Logger;
 
 /**
@@ -89,7 +88,7 @@ class SYS_REG {
                     case "Reject": {
                          logger.debug("Action is Reject");
 
-                         String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is System Registered ";
+                         String fileString = args[15] + " , Error Code :CON_RULE_0030 , Error Description : IMEI/ESN/MEID is System Registered ";
                          bw.write(fileString);
                          bw.newLine();
                     }
@@ -105,6 +104,8 @@ class SYS_REG {
                     break;
                     case "SYS_REG": {
                          logger.debug("Action is SYS_REG");
+                     // set action as SYS_REG
+
                     }
                     break;
                     case "USER_REG": {

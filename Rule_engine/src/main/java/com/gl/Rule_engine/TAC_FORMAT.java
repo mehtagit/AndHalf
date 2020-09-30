@@ -49,7 +49,7 @@ class TAC_FORMAT {
             case "Reject": {
                 logger.debug("Action is Reject");
 
-                String fileString = args[15] + " , Error Description :  TAC is not as per specifications  ";
+                String fileString = args[15] + " , Error Code :CON_RULE_0031 , Error Description :  TAC is not as per specifications  ";
 
                  bw.write(fileString);
                 bw.newLine();

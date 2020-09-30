@@ -100,7 +100,7 @@ public class BasicApplication {
                               status = "Yes";
                          } else {
                               logger.debug("GSMAINVALIDDB");
-                              snt.invalidGsmaDb(product.getEquipmentType(), conn);
+                              snt.invalidGsmaDb(product.getDeviceId(), conn);
                               status = "No";
                          }
                     } catch (Exception e) {

@@ -70,7 +70,7 @@ class EXIST_IN_VIP_LIST {
                     case "Reject": {
                          logger.debug("Action is Reject");
 
-                         String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is Vip ";
+                         String fileString = args[15] + " , Error Code :CON_RULE_0015,Error Description : IMEI/ESN/MEID is Vip ";
                          bw.write(fileString);
                          bw.newLine();
                     }

@@ -72,7 +72,7 @@ class EXISTS_IN_USAGE_DB {
                 }
                 break;
                 case "Reject": {
-                    String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already in use in the network ";
+                    String fileString = args[15] + " ,Error Code :CON_RULE_0004,  Error Description : IMEI/ESN/MEID is already in use in the network ";
                      bw.write(fileString);
                 bw.newLine();
                 }

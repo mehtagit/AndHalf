@@ -77,7 +77,7 @@ class EXISTS_IN_GSMA_TAC_DB {     // EXISTS_IN_GSMA_TAC_DB used in TYPE APPROVE 
             break;
             case "NAN": {
                 logger.debug("Action is NAN");
-                String fileString = args[15] + " , Error Code :CON_RULE_0021, Error Description :Something went Wrong while Authorization of TAC .Try after Some Time.   ";
+                String fileString = args[15] + " , Error Code :CON_RULE_0002, Error Description :Something went Wrong while Authorization of TAC .Try after Some Time.   ";
                  bw.write(fileString);
                 bw.newLine();
             }

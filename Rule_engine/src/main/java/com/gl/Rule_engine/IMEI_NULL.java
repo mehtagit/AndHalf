@@ -35,7 +35,7 @@ public class IMEI_NULL {
         String res = "Success";
         try {
             {
-                String fileString = args[15] + ", Error Description:IMEI/ESN/MEID is missing in the record. ";
+                String fileString = args[15] + ", Error Code :CON_RULE_0014,Error Description:IMEI/ESN/MEID is missing in the record. ";
                  bw.write(fileString);
                 bw.newLine();
             }

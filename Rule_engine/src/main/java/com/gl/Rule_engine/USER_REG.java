@@ -73,7 +73,7 @@ class USER_REG {
                     break;
                     case "Reject": {
                          logger.debug("Action is Reject");
-                         String fileString = args[15] + " , Error Description : IMEI/ESN/MEID  is User Registered   ";
+                         String fileString = args[15] + " , Error Code :CON_RULE_0032 , Error Description : IMEI/ESN/MEID  is User Registered   ";
                          bw.write(fileString);
                          bw.newLine();
                     }
@@ -93,6 +93,7 @@ class USER_REG {
                     break;
                     case "USER_REG": {
                          logger.debug("Action is USER_REG");
+                         // set action as USER_REG
                     }
                     break;
                     default:

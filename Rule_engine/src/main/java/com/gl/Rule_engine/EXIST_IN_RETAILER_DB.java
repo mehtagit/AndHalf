@@ -30,19 +30,19 @@ class EXIST_IN_RETAILER_DB {
                {
                     result1 = stmt2.executeQuery("select count(imei_esn_meid) from device_retailer_db  where imei_esn_meid='" + args[3] + "' ");
                     logger.debug("select count(imei_esn_meid) from device_retailer_db  where imei_esn_meid='" + args[3] + "' ");
-                    String res2 = "0";
+                     int res2 =  0;
                     try {
-                         while (result1.next()) {
-                              res2 = result1.getString(1);
-                         }
-                    } catch (Exception e) {
-                         logger.error("");
+                    while (result1.next()) {
+                        res2 = result1.getInt(1);
                     }
-                    if (!res2.equalsIgnoreCase("0")) {
-                         res = "Yes";
-                    } else {
-                         res = "No";
-                    }
+                } catch (Exception e) {
+                    logger.debug("error " +e);
+                }
+                if (res2 !=0 ) {
+                    res = "Yes";
+                } else {
+                    res = "No";
+                }
                     result1.close();
                     stmt2.close();
                }
@@ -74,7 +74,7 @@ class EXIST_IN_RETAILER_DB {
                     case "Reject": {
                          logger.debug("Action is Reject");
 
-                         String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
+                         String fileString = args[15] + " , Error Code :CON_RULE_0008, Error Description : IMEI/ESN/MEID is already present in the system  ";
                          bw.write(fileString);
                          bw.newLine();
                     }

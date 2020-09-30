@@ -18,21 +18,21 @@ class EXIST_IN_END_USER_DB {
          
  Statement stmt2 = null;
           ResultSet result1  = null;
-        String res = ""; 
+        String res = "No"; 
         try {
               stmt2 = conn.createStatement();
               {
                   result1 = stmt2.executeQuery("select count(imei_esn_meid) from device_end_user_db  where imei_esn_meid='" + args[3] + "' ");
                logger.debug("select count(imei_esn_meid) from device_end_user_db  where imei_esn_meid='" + args[3] + "' ");
-                  String res2 = "0";
+                  int res2 = 0;
                 try {
                     while (result1.next()) {
-                        res2 = result1.getString(1);
+                        res2 = result1.getInt(1);
                     }
                 } catch (Exception e) {
-                    logger.error("ERrror " + e);
+                    logger.debug("error " +e);
                 }
-                if (!res2.equals("0")) {
+                if (res2 !=0 ) {
                     res = "Yes";
                 } else {
                     res = "No";
@@ -65,7 +65,7 @@ class EXIST_IN_END_USER_DB {
             case "Reject": {
                 logger.debug("Action is Reject");
 
-                String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
+                String fileString = args[15] + " , Error Code :CON_RULE_0011, Error Description : IMEI/ESN/MEID is already present in the system  ";
 
                  bw.write(fileString);
                 bw.newLine();

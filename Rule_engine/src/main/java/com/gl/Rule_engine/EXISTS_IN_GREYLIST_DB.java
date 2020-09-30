@@ -26,8 +26,8 @@ public class EXISTS_IN_GREYLIST_DB {
         try {
 
               stmt2 = conn.createStatement();
-                  result1 = stmt2.executeQuery("select count(imei_esn_meid) from greylist_db  where imei_esn_meid='" + args[3] + "' ");
-                 logger.debug("select count(imei_esn_meid) from greylist_db  where imei_esn_meid='" + args[3] + "' ");
+                  result1 = stmt2.executeQuery("select count(imei) from greylist_db  where imei ='" + args[3] + "' ");
+                 logger.debug("select count(imei ) from greylist_db  where imei='" + args[3] + "' ");
                   String res2 = "0";
                 try {
                     while (result1.next()) {
@@ -70,7 +70,7 @@ public class EXISTS_IN_GREYLIST_DB {
             case "Reject": {
                 logger.debug("Action is Reject");
 
-                String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the system  ";
+                String fileString = args[15] + " ,Error Code :CON_RULE_0019, Error Description : IMEI/ESN/MEID is already present in the system  ";
                  bw.write(fileString);
                 bw.newLine();
 

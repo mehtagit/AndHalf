@@ -86,7 +86,6 @@ class FOREIGN_SIM {
                     break;
                     case "Reject": {
                          logger.debug("Action is Reject");
-
                          String fileString = args[15] + " ,   Error Code :CON_RULE_0028 ,   Error Description : Imei  Utilised By Foreign Sim   ";
                          bw.write(fileString);
                          bw.newLine();
@@ -98,10 +97,7 @@ class FOREIGN_SIM {
                     break;
                     case "Report": {
                          logger.debug("Action is Report");
-
 //                try {
-//                     
-//
 //                    String actn = "";
 //
 //                    if (args[11].equalsIgnoreCase("grace")) {
@@ -119,8 +115,7 @@ class FOREIGN_SIM {
 //                    int rowsInserted11 = statement1.executeUpdate();
 //                    if (rowsInserted11 > 0) {
 //                        logger.debug("inserted into device _invalid_db tabl");
-//                    }
-//                     
+//                    }      
 //                } catch (Exception e) {
 //                    logger.debug("Error e " + e);
 //                }
@@ -140,7 +135,7 @@ class FOREIGN_SIM {
 
                return "Success";
           } catch (Exception e) {
-                logger.debug("Error " + e);
+                logger.error("Error " + e);
                return "Failure";
           }
      }

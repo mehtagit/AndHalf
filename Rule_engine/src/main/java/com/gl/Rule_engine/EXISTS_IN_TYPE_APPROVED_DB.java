@@ -69,7 +69,7 @@ class EXISTS_IN_TYPE_APPROVED_DB {
                     break;
                     case "Reject": {
                          logger.debug("Action is Reject");
-                         String fileString = args[15] + " ,Error Description : TAC in the IMEI/MEID is not a approved TAC from TRC ";
+                         String fileString = args[15] + ", Error Code :CON_RULE_0003,  ,Error Description : TAC in the IMEI/MEID is not a approved TAC from TRC ";
                          bw.write(fileString);
                          bw.newLine();
                     }

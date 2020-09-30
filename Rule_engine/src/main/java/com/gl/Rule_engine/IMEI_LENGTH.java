@@ -128,7 +128,7 @@ class IMEI_LENGTH {
                     case "Reject": {
                          logger.debug("Action is Reject");
 
-                         String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is not as per Specifications ";
+                         String fileString = args[15] + " ,Error Code :CON_RULE_0012, Error Description : IMEI/ESN/MEID is not as per Specifications ";
                          bw.write(fileString);
                          bw.newLine();
                     }

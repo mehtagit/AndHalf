@@ -86,7 +86,7 @@ class SAME_OPERATOR_UNBLOCK {
                 case "Reject": {
                     logger.debug("Action is Reject");
 
-                    String fileString = args[15] + ",Error Code :CON_RULE_0015 , Error Description : Current Operator don't have Permission to UnBlock this  IMEI/ESN/MEID   ";
+                    String fileString = args[15] + ",Error Code :CON_RULE_0029 , Error Description : Current Operator don't have Permission to UnBlock this  IMEI/ESN/MEID   ";
                     bw.write(fileString);
                     bw.newLine();
                 }
