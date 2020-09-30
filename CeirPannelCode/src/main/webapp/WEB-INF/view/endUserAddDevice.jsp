@@ -182,21 +182,22 @@ input[type='search'] {
 						<div class="row card-panel register-device-responsive-page"
 							style="margin: 5vh auto auto; display: block;">
 							<h6 class="fixPage-modal-header ">
-								<spring:message
-									code="registerconsignment.header.addDeviceInformation" />
-								<div class="col s10 m11 select-lang-lable-all width87">
+<div class="col s9 m10 l10 select-lang-lable-all width87">
+<p><spring:message
+code="registerconsignment.header.addDeviceInformation" /></p>
 
-									<i class="fa fa-globe fa-6" aria-hidden="true"></i>
-								</div>
-								<div class="col s2 m1 right width13" style="padding: 0;">
-									<select class="browser-default select-lang-drpdwn-all"
-										id="langlist">
-										<option value="en" class="fontBlack">English</option>
-										<option value="km" class="fontBlack"><spring:message
-												code="lang.khmer" /></option>
-									</select>
-								</div>
-							</h6>
+
+<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+</div>
+<div class="col s3 m2 l2 right width13" style="padding: 0;">
+<select class="browser-default select-lang-drpdwn-all"
+id="langlist">
+<option value="en" class="fontBlack">English</option>
+<option value="km" class="fontBlack"><spring:message
+code="lang.khmer" /></option>
+</select>
+</div>
+</h6>
 
 
 							<div id="user123" class="section">
@@ -308,14 +309,14 @@ input[type='search'] {
 														<div class='row'>
 															<div class="input-field col s12 m6">
 																<input type="text" id="IMEIA1" name="IMEI1"
-																	pattern="[0-9]{15,16}" required
+																	pattern="[0-9]{15,16}" required onchange="luhnCheck('IMEIA1','deviceIdType1')"
 																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																	maxlength="16"> <label for="IMEIA1"><spring:message
 																		code="title.one" /><span class="star">*</span></label>
 															</div>
 															<div class="input-field col s12 m6">
-																<input type="text" id="IMEIB1" name="IMEI2"
+																<input type="text" id="IMEIB1" name="IMEI2" onchange="luhnCheck('IMEIB1','deviceIdType1')"
 																	pattern="[0-9]{15,16}"
 																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
@@ -324,7 +325,7 @@ input[type='search'] {
 															</div>
 
 															<div class="input-field col s12 m6">
-																<input type="text" id="IMEIC1" name="IMEIC3"
+																<input type="text" id="IMEIC1" name="IMEIC3" onchange="luhnCheck('IMEIC1','deviceIdType1')"
 																	pattern="[0-9]{15,16}"
 																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
@@ -335,7 +336,7 @@ input[type='search'] {
 															</div>
 
 															<div class="input-field col s12 m6" id="field">
-																<input type="text" id="IMEID1" name="IMEID4[]"
+																<input type="text" id="IMEID1" name="IMEID4[]" onchange="luhnCheck('IMEID1','deviceIdType1')"
 																	pattern="[0-9]{15,16}"
 																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"

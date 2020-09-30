@@ -244,7 +244,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                                 <p style="margin-bottom: 0;"><spring:message code="title.imeiMeidEsn" /></p>
                                                             </div>
                                                            <div class="input-field col s12 m6">
-                                                                <input type="text" id="singleblockIMEI1" name="IMEI1" pattern="[0-9]{15,16}" 
+                                                                <input type="text" id="singleblockIMEI1" name="IMEI1" pattern="[0-9]{15,16}"  onchange="luhnCheck('singleblockIMEI1','blockdeviceIdType')"
                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                     required   maxlength="16">
@@ -252,7 +252,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6">
-                                                                <input type="text" id="singleblockIMEI2" name="IMEI2" pattern="[0-9]{15,16}"
+                                                                <input type="text" id="singleblockIMEI2" name="IMEI2" pattern="[0-9]{15,16}" onchange="luhnCheck('singleblockIMEI2','blockdeviceIdType')"
                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                     maxlength="16">
@@ -260,7 +260,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                             </div>  
                                                             
                                                             <div class="input-field col s12 m6">
-                                                                <input type="text" id="singleblockIMEI3" name="IMEI3" pattern="[0-9]{15,16}"
+                                                                <input type="text" id="singleblockIMEI3" name="IMEI3" pattern="[0-9]{15,16}" onchange="luhnCheck('singleblockIMEI3','blockdeviceIdType')"
                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                     oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                   maxlength="16">
@@ -269,7 +269,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                             </div>
             
                                                             <div class="input-field col s12 m6">
-                                                               <input type="text" id="singleblockIMEI4" name="IMEI4[]" pattern="[0-9]{15,16}"
+                                                               <input type="text" id="singleblockIMEI4" name="IMEI4[]" pattern="[0-9]{15,16}" onchange="luhnCheck('singleblockIMEI1','blockdeviceIdType')"
                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                     oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                   maxlength="16">
@@ -518,7 +518,9 @@ onclick="_Services._selectstartDate()"></i></span>
 		
 		<script type="text/javascript"
 		src="${context}/resources/project_js/reportBlock.js?version=<%= (int) (Math.random() * 10) %>"></script>
+			<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript">
+	
 	$('#stolenBulkDatePeriod').datepicker({
 		dateFormat : "yy-mm-dd",
 		minDate: "0"

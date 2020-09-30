@@ -165,6 +165,7 @@ public class LoginService {
 			HttpResponse response=new HttpResponse();
 			response=userLoginFeignImpl.sessionTracking(userid);
 			log.info("response got: "+response);
+		
 		} 
 		session.removeAttribute("username");
 		session.removeAttribute("userid"); 

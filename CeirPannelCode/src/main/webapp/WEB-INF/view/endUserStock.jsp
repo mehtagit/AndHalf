@@ -199,17 +199,20 @@ var contextpath = "${context}";
                 <div class="container" id="uploadPaidStatusDiv" style="dispay:none">
                     <div class="section">
                         <div class="row card-panel upload-stock-responsive-page">
-                            <h6 class="fixPage-modal-header "><spring:message code="modal.UploadStock" />
-                            					<div class="col s10 m11 select-lang-lable-all width87">
+                            <h6 class="fixPage-modal-header ">
+<div class="col s9 m10 l10 select-lang-lable-all width87">
+<p><spring:message code="modal.UploadStock" /></p>
 
-			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
-		</div>
-		<div class="col s2 m1 right width13" style="padding: 0;">
-			<select class="browser-default select-lang-drpdwn-all" id="langlist">
-				<option value="en" class="fontBlack">English</option>
-				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
-			</select>
-		</div></h6>
+
+<i class="fa fa-globe fa-6" aria-hidden="true"></i> 
+</div>
+<div class="col s3 m2 l2 right width13" >
+<select class="browser-default select-lang-drpdwn-all" id="langlist">
+<option value="en" class="fontBlack">English</option>
+<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
+</select>
+</div>
+</h6>
                            	<form action="" onsubmit="return uploadEndUserStock()" method="POST"
 								enctype="multipart/form-data" >
                                 <div class="col s12 m12 l12">
@@ -291,18 +294,20 @@ var contextpath = "${context}";
                             
                                 data-dismiss="modal">&times;</a> -->
                                
-                                <h6 class="fixPage-modal-header "><spring:message code="modal.CheckStatus" />
-                                            					<div class="col s10 m11 select-lang-lable-all width87">
+                               <h6 class="fixPage-modal-header ">
+<div class="col s9 m10 l10 select-lang-lable-all width87">
+<p><spring:message code="modal.CheckStatus" /></p>
 
-			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
-		</div>
-		<div class="col s2 m1 right width13" style="padding: 0;">
-			<select class="browser-default select-lang-drpdwn-all" id="langlistHeader">
-				<option value="en" class="fontBlack">English</option>
-				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
-			</select>
-		</div>
-                                </h6>
+
+<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+</div>
+<div class="col s3 m2 l2 right width13" style="padding: 0;">
+<select class="browser-default select-lang-drpdwn-all" id="langlistHeader">
+<option value="en" class="fontBlack">English</option>
+<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
+</select>
+</div>
+</h6>
                                  	
                                 <div class="col s12 m12 l12">
                                 <form action="" onsubmit="return validateTxnId()" method="POST"
@@ -313,7 +318,7 @@ var contextpath = "${context}";
                                                 <label for="transactionID"><spring:message code="input.TransactionID2" /><span class="star">*</span> :</label>
                                             </div>
                                             <div class="input-field col s6 m7">
-                                                <input type="text" id="checktransactionID" name="checktransactionID"
+                                               <input type="text" id="checktransactionID" name="checktransactionID"
                                                     pattern=[A-Z0-9]{18,18}  maxlength="18"
  												oninput="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"

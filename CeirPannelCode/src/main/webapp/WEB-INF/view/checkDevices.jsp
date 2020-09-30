@@ -147,18 +147,19 @@ i.fa.fa-times-circle-o.red-text {
 					<div class="section">
 						<div class="row card-panel login-card-panel">
 		<h6 class="fixPage-modal-header ">
-										<spring:message code="registration.checkdevice" />
-															<div class="col s10 m11 select-lang-lable-all width87">
+<div class="col s9 m10 l10 select-lang-lable-all width87">
+<p><spring:message code="registration.checkdevice" /></p>
 
-			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
-		</div>
-		<div class="col s2 m1 right width13" style="padding: 0;">
-			<select class="browser-default select-lang-drpdwn-all" id="langlist">
-				<option value="en" class="fontBlack">English</option>
-				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
-			</select>
-		</div>
-									</h6>
+
+<i class="fa fa-globe fa-6" aria-hidden="true"></i> 
+</div>
+<div class="col s3 m2 l2 right width13">
+<select class="browser-default select-lang-drpdwn-all" id="langlist">
+<option value="en" class="fontBlack">English</option>
+<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
+</select>
+</div>
+</h6>
 									
 							<form action="" onsubmit="return DeviceDetails()" method="POST"
 								enctype="multipart/form-data" >
@@ -188,7 +189,7 @@ i.fa.fa-times-circle-o.red-text {
 
 											</div>
 											<div class="input-field col s6 m7">
-												<input type="text" id="DeviceID" required>
+												<input type="text" id="DeviceID" onchange="luhnCheck('DeviceID','deviceIdType')" required>
 
 											</div>
 

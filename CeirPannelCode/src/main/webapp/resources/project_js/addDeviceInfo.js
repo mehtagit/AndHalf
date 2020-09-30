@@ -33,6 +33,14 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		 
 	 }
 	function submitDeviceInfo(){
+		if($('#deviceIdType1').val()==0){
+			var checkIMEI=checkDuplicateImei($('#IMEIA1').val(),$('#IMEIB1').val(),$('#IMEIC1').val(),$('#IMEID1').val());
+			if(checkIMEI===true){
+			$('#errorMsgOnModal').text('');
+			$('#errorMsgOnModal').text($.i18n('duplicateImeiMessage'));
+			return false;
+		}
+		}
 		$("#uploadPaidStatusbutton").prop('disabled', true);
 		 var formData= new FormData();	
 		 var fieldId=1;	
