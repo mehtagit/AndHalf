@@ -102,8 +102,12 @@
             <artifactId>oracle8</artifactId>
             <version>19.3</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.5</version>
+            <type>jar</type>
+        </dependency>
     </dependencies>
 
  

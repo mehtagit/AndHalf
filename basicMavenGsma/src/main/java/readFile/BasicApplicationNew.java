@@ -25,6 +25,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContexts;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
+ 
+
 
 public class BasicApplicationNew {
 
@@ -34,6 +36,7 @@ public class BasicApplicationNew {
           final String DB_URL = "jdbc:oracle:thin:@dmc-prod-db:1521/dmcproddb";
           final String USER = "CRESTELCEIR";
           final String PASS = "CRESTELCEIR";
+          
           Connection conn = null;
           try {
                Class.forName(JDBC_DRIVER);

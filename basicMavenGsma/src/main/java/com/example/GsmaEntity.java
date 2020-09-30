@@ -10,7 +10,7 @@ package com.example;
  * @author user
  */
 import java.util.Arrays;
-
+import org.apache.commons.lang.StringUtils;
 
 
   
@@ -43,7 +43,8 @@ private String [] deviceCertifybody,radioInterface,operatingSystem;
     }
 
     public String getStatusCode() {
-        return statusCode;
+//        return   StringUtils.capitalize(statusCode);
+        return    statusCode;
     }
 
     public void setStatusCode(String statusCode) {
