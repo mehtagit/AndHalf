@@ -11,15 +11,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 import org.springframework.stereotype.Component;
 
 
 @Component
 public class Utility {
 
-	private final Logger log = LoggerFactory.getLogger(getClass());
+	private final Logger log = Logger.getLogger(getClass());
 	
 	Date yesterday() {
 		final Calendar cal = Calendar.getInstance();

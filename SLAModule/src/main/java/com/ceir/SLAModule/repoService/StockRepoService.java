@@ -3,8 +3,8 @@ package com.ceir.SLAModule.repoService;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ import com.ceir.SLAModule.repo.StockRepo;
 @Service
 public class StockRepoService {
 
-	private final static Logger log =LoggerFactory.getLogger(App.class);
+	private final static Logger log =Logger.getLogger(App.class);
 
 	@Autowired
 	StockRepo stockRepo;

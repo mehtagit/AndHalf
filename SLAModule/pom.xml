@@ -5,7 +5,7 @@
     <groupId>com.ceir</groupId>
     <artifactId>SLAModule</artifactId>
     <!--   <version>0.0.2-SNAPSHOT</version> -->
-    <version>0.0.1-SNAPSHOT</version>
+    <!--<version>0.0.1-SNAPSHOT</version>-->
     <packaging>jar</packaging>
 
     <name>SLAModule</name>
@@ -31,6 +31,12 @@
 	
 	
     <dependencies>
+          <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.14</version>
+            <type>jar</type>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -82,7 +88,7 @@
     </dependencies>
   
     <build>
-        <finalName>${artifactId}-${version}</finalName>
+        <finalName>${artifactId}</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -98,6 +104,9 @@
         </plugins>
     </build>
 </project>
+
+
+
 
 
 

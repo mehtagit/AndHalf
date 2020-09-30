@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -51,7 +51,7 @@ public class ConsignmentService {
 	@Value("${consign.featureId}")
 	Integer featureId;
 
-	private final static Logger log =LoggerFactory.getLogger(App.class);
+	private final static Logger log =Logger.getLogger(App.class);
 	public void consignmentProcess(int status) {
 		log.info("inside consignment sla process");
 		log.info("now going to fetch consignment by status: "+status);
