@@ -568,7 +568,7 @@ select {
 
 															</select>
 														</div>
-														<div class="col s12 m6">
+														<div class="col s12 m12">
 															<p style="margin-top: 3px; margin-bottom: 5px">
 																<spring:message code="operator.blocking" />
 															</p>
@@ -586,7 +586,7 @@ select {
 																onclick="document.getElementById('calender').style.display = 'block';"
 																name="stolenBlockPeriod"> <spring:message code="operator.later" />
 															</label>
-															<div class="input-field col s6 m2 responsiveDiv"
+															<div class="input-field col s12 m6 responsiveDiv stolen_calender"
 																style="display: none; width: 30%; margin-right: 30%; float: right; margin-top: -15px"
 																id="calender">
 																<div id="startdatepicker" class="input-group date">
@@ -612,18 +612,18 @@ select {
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumber" pattern="[0-9]{15,16}" oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"  
-																maxlength="16" id="singleStolenimei1"> 
+																maxlength="16" id="singleStolenimei1" onchange="luhnCheck('singleStolenimei1','singleStolendeviceIDType')"> 
 																<label for="singleStolenimei1"><spring:message code="registration.one" /> <span class="star"> </span> 
 																</label>
 														</div>
 
 														<div class="input-field col s12 m6">
-															<input type="text" name="imeiNumberTwo"
-																pattern="[0-9]{15,16}"
+															<input type="text" name="imeiNumberTwo" 
+																pattern="[0-9]{15,16}" 
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																
-																maxlength="16" id="singleStolenimei2"> <label
+																maxlength="16" id="singleStolenimei2" onchange="luhnCheck('singleStolenimei2','singleStolendeviceIDType')"> <label
 																for="singleStolenimei12"> <spring:message
 																	code="registration.two" /></label>
 														</div>
@@ -633,7 +633,7 @@ select {
 																pattern="[0-9]{15,16}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																
+																onchange="luhnCheck('singleStolenimei3','singleStolendeviceIDType')"
 																maxlength="16" id="singleStolenimei3"> <label
 																for="singleStolenimei3"> <spring:message code="registration.three" /></label>
 														<p id="errorMsgOnModal" class="deviceErrorTitle"></p>
@@ -644,7 +644,7 @@ select {
 																pattern="[0-9]{15,16}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																
+																onchange="luhnCheck('singleStolenimei4','singleStolendeviceIDType')"
 																maxlength="16" id="singleStolenimei4"> <label
 																for="singleStolenimei4"> <spring:message code="registration.four" /></label>
 														
@@ -1550,7 +1550,7 @@ select {
 <script type="text/javascript">
 /* $('div#initialloader').delay(300).fadeOut('slow'); */
 </script>
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 
 </body></html>
 <%

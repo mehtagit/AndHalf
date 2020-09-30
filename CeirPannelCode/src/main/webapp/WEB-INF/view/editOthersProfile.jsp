@@ -1011,7 +1011,7 @@ var contextpath = "${context}";
        error: function (jqXHR, textStatus, errorThrown) {}
        });
        if( currentTime > timeoutTime ){
-       window.top.location.href = "./login";
+       window.top.location.href = "./login?isExpired=yes";
        }else{
        timeoutTime = currentTime + timeout;
        }

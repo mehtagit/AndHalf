@@ -156,6 +156,14 @@ headers:
 
 function updateIndivisualRecovery()
 {
+	if($('#sigleRecoverydeviceIDType').val()==0){
+		var checkIMEI=checkDuplicateImei($('#sigleRecoveryimeiNumber1').val(),$('#sigleRecoveryimeiNumber2').val(),$('#sigleRecoveryimeiNumber3').val(),$('#sigleRecoveryimeiNumber4').val());
+		if(checkIMEI===true){
+		$('#errorMsgOnModal').text('');
+		$('#errorMsgOnModal').text($.i18n('duplicateImeiMessage'));
+		return false;
+	}
+	}
   var formData= new FormData();
   $('div#initialloader').fadeIn('fast');
 	var sigleRecoverydeviceBrandName=$('#editsigleRecoverydeviceBrandName').val();

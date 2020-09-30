@@ -316,7 +316,7 @@ select {
 
 													<div class="input-field col s12 m6">
 														<input type="text" name="sigleRecoveryimeiNumber1"
-															pattern="[0-9]{15,16}"
+															pattern="[0-9]{15,16}" onchange="luhnCheck('sigleRecoveryimeiNumber1','sigleRecoverydeviceIDType')"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															maxlength="16" id="sigleRecoveryimeiNumber1" /> <label
@@ -326,7 +326,7 @@ select {
 
 													<div class="input-field col s12 m6">
 														<input type="text" name="imeiNumberTwo"
-															pattern="[0-9]{15,16}"
+															pattern="[0-9]{15,16}" onchange="luhnCheck('sigleRecoveryimeiNumber2','sigleRecoverydeviceIDType')"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															maxlength="16" id="sigleRecoveryimeiNumber2"> <label
@@ -336,7 +336,7 @@ select {
 
 													<div class="input-field col s12 m6">
 														<input type="text" name="imeiNumberThree"
-															pattern="[0-9]{15,16}"
+															pattern="[0-9]{15,16}" onchange="luhnCheck('sigleRecoveryimeiNumber3','sigleRecoverydeviceIDType')"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															maxlength="16" id="sigleRecoveryimeiNumber3"> <label
@@ -347,7 +347,7 @@ select {
 
 													<div class="input-field col s12 m6">
 														<input type="text" name="imeiNumberFour"
-															pattern="[0-9]{15,16}"
+															pattern="[0-9]{15,16}" onchange="luhnCheck('sigleRecoveryimeiNumber4','sigleRecoverydeviceIDType')"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															maxlength="16" id="sigleRecoveryimeiNumber4"> <label
@@ -991,7 +991,7 @@ onclick="_Services._selectstartDate()"></i></span>
 </script>
 
 
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>
 <%
 	}else{

@@ -841,11 +841,19 @@ $(document).ready(function () {
 });
 
 
-
-
-
 function submitEndUserDeviceInfo(){
 	var formData= new FormData();
+	
+	if($('#deviceIdType1').val()==0){
+		var checkIMEI=checkDuplicateImei($('#IMEIA1').val(),$('#IMEIB1').val(),$('#IMEIC1').val(),$('#IMEID1').val());
+		if(checkIMEI===true){
+		$('#errorMsgOnModal').text('');
+		$('#errorMsgOnModal').text($.i18n('duplicateImeiMessage'));
+		return false;
+	}
+	}
+	
+	
 	$('div#initialloader').fadeIn('fast');
 	$("#uploadPaidStatusbutton").prop('disabled', true);
 
@@ -1065,7 +1073,7 @@ function submitEndUserDeviceInfo(){
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			//////console.log("error in ajax")
-
+			$('div#initialloader').delay(300).fadeOut('slow');
 		}
 	});
 	return false;
@@ -1597,3 +1605,5 @@ function openEndUserAddDevice(){
 	
 	document.getElementById("openEndUserAddDeviceForm").submit();	
 }
+
+

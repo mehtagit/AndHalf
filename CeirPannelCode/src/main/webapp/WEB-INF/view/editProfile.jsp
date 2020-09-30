@@ -949,7 +949,7 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
        error: function (jqXHR, textStatus, errorThrown) {}
        });
        if( currentTime > timeoutTime ){
-       window.top.location.href = "./login";
+       window.top.location.href = "./login?isExpired=yes";
        }else{
     	      timeoutTime = currentTime + timeout;
        }

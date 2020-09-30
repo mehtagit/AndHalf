@@ -337,6 +337,14 @@ function submitUnBlockImei()
 
 function submitSingleBlockDevicesRequest()
 {
+	if($('#blockdeviceIdType').val()==0){
+		var checkIMEI=checkDuplicateImei($('#singleblockIMEI1').val(),$('#singleblockIMEI2').val(),$('#singleblockIMEI3').val(),$('#singleblockIMEI14').val());
+		if(checkIMEI===true){
+		$('#errorMsgOnModal').text('');
+		$('#errorMsgOnModal').text($.i18n('duplicateImeiMessage'));
+		return false;
+	}
+	}
 	$('div#initialloader').fadeIn('fast');
 	var deviceType=$('#blockdeviceType').val();
 	var blockdeviceIdType=$('#blockdeviceIdType').val();
@@ -427,6 +435,14 @@ function submitSingleBlockDevicesRequest()
 
 function submitSingleUnBlockDevicesRequest()
 {
+	if($('#UnblockdeviceIdType').val()==0){
+		var checkIMEI=checkDuplicateImei($('#unbockSingleIMEI1').val(),$('#unbockSingleIMEI2').val(),$('#unbockSingleIMEI3').val(),$('#unbockSingleIMEI4').val());
+		if(checkIMEI===true){
+		$('#errorMsgOnModal').text('');
+		$('#errorMsgOnModal').text($.i18n('duplicateImeiMessage'));
+		return false;
+	}
+	}
 	$('div#initialloader').fadeIn('fast');
 	var deviceType=$('#unbockSingledeviceType').val();
 	var blockdeviceIdType=$('#UnblockdeviceIdType').val();
@@ -825,29 +841,35 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 
 
 
-		if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei==0  )
+		if(data.singleImeiDetails.secondImei==null && data.singleImeiDetails.thirdImei==null && data.singleImeiDetails.fourthImei==null  )
 		{
 			$("#viewsingleblockIMEI2").val("NA");
 			$("#viewsingleblockIMEI3").val("NA");
 			$("#viewsingleblockIMEI4").val("NA");
 		}
-		else if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei!=0 )
+		else if(data.singleImeiDetails.secondImei==null && data.singleImeiDetails.thirdImei==null && data.singleImeiDetails.fourthImei!=null )
 		{
 			$("#viewsingleblockIMEI2").val("NA");
 			$("#viewsingleblockIMEI3").val("NA");
 			$("#viewsingleblockIMEI4").val(data.singleImeiDetails.fourthImei);
 		}
-		else if(data.singleImeiDetails.secondImei!=0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei==0)
+		else if(data.singleImeiDetails.secondImei!=null && data.singleImeiDetails.thirdImei==null && data.singleImeiDetails.fourthImei==null)
 		{
 			$("#viewsingleblockIMEI2").val(data.singleImeiDetails.secondImei);
 			$("#viewsingleblockIMEI3").val("NA");
 			$("#viewsingleblockIMEI4").val("NA");
 		}
-		else if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei!=0 && data.singleImeiDetails.fourthImei==0)
+		else if(data.singleImeiDetails.secondImei==null && data.singleImeiDetails.thirdImei!=null && data.singleImeiDetails.fourthImei==null)
 		{
 			$("#viewsingleblockIMEI2").val("NA");
 			$("#viewsingleblockIMEI3").val(data.singleImeiDetails.thirdImei);
 			$("#viewsingleblockIMEI4").val("NA");
+		}
+		else if(data.singleImeiDetails.secondImei!=null && data.singleImeiDetails.thirdImei!=null && data.singleImeiDetails.fourthImei!=null)
+		{
+			$("#viewsingleblockIMEI2").val(data.singleImeiDetails.secondImei);
+			$("#viewsingleblockIMEI3").val(data.singleImeiDetails.thirdImei);
+			$("#viewsingleblockIMEI4").val(data.singleImeiDetails.fourthImei);
 		}
 		else{
 			////console.log("else############")
@@ -907,29 +929,35 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 		}
  		$("#editblockImeiDevice").openModal({dismissible:false});
 
-		if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei==0  )
+		if(data.singleImeiDetails.secondImei==null && data.singleImeiDetails.thirdImei==null && data.singleImeiDetails.fourthImei==null  )
 		{
 			$("#editsingleblockIMEI2").val("");
 			$("#editsingleblockIMEI3").val("");
 			$("#editsingleblockIMEI4").val("");
 		}
-		else if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei!=0 )
+		else if(data.singleImeiDetails.secondImei==null && data.singleImeiDetails.thirdImei==null && data.singleImeiDetails.fourthImei!=null )
 		{
 			$("#editsingleblockIMEI2").val("");
 			$("#editsingleblockIMEI3").val("");
 			$("#editsingleblockIMEI4").val(data.singleImeiDetails.fourthImei);
 		}
-		else if(data.singleImeiDetails.secondImei!=0 && data.singleImeiDetails.thirdImei==0 && data.singleImeiDetails.fourthImei==0)
+		else if(data.singleImeiDetails.secondImei!=null && data.singleImeiDetails.thirdImei==null && data.singleImeiDetails.fourthImei==null)
 		{
 			$("#editsingleblockIMEI2").val(data.singleImeiDetails.secondImei);
 			$("#editsingleblockIMEI3").val("");
 			$("#editsingleblockIMEI4").val("");
 		}
-		else if(data.singleImeiDetails.secondImei==0 && data.singleImeiDetails.thirdImei!=0 && data.singleImeiDetails.fourthImei==0)
+		else if(data.singleImeiDetails.secondImei==null && data.singleImeiDetails.thirdImei!=null && data.singleImeiDetails.fourthImei==null)
 		{
 			$("#editsingleblockIMEI2").val("");
 			$("#editsingleblockIMEI3").val(data.singleImeiDetails.thirdImei);
 			$("#editsingleblockIMEI4").val("");
+		}
+		else if(data.singleImeiDetails.secondImei!=null && data.singleImeiDetails.thirdImei!=null && data.singleImeiDetails.fourthImei!=null)
+		{
+			$("#editsingleblockIMEI2").val(data.singleImeiDetails.secondImei);
+			$("#editsingleblockIMEI3").val(data.singleImeiDetails.thirdImei);
+			$("#editsingleblockIMEI4").val(data.singleImeiDetails.fourthImei);
 		}
 		else{
 			////console.log("else############");
@@ -966,6 +994,14 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 
 function updateSingleBlockDevicesRequest()
 {
+	if($('#editblockdeviceIdType').val()==0){
+		var checkIMEI=checkDuplicateImei($('#editsingleblockIMEI1').val(),$('#editsingleblockIMEI2').val(),$('#editsingleblockIMEI3').val(),$('#editsingleblockIMEI4').val());
+		if(checkIMEI===true){
+		$('#errorMsgOnModal').text('');
+		$('#errorMsgOnModal').text($.i18n('duplicateImeiMessage'));
+		return false;
+	}
+	}
 	$('div#initialloader').fadeIn('fast');
 	var deviceType=$('#editblockdeviceType').val();
 	var blockdeviceIdType=$('#editblockdeviceIdType').val();
