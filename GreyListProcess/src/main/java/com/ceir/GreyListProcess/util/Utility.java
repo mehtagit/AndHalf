@@ -104,7 +104,7 @@ public class Utility {
 				
 			fw.append("\n");
 			for(GreylistDb greyListData:record) {
-				fw.append(String.valueOf(greyListData.getImei()));
+				fw.append(String.valueOf(greyListData.getActualImei()));
 				fw.append("\n");
 			}
 			
@@ -132,7 +132,7 @@ public class Utility {
 
 			fw.append("\n");
 			for(GreylistDbHistory greyListData:record) {
-				fw.append(String.valueOf(greyListData.getImei()) +"," +GreyListOperation.getUserStatusByCode(greyListData.getOperation()).getDescription());
+				fw.append(String.valueOf(greyListData.getActualImei()) +"," +GreyListOperation.getUserStatusByCode(greyListData.getOperation()).getDescription());
 				fw.append("\n");
 			}
 			
@@ -223,3 +223,6 @@ public class Utility {
 	}
 	
 }
+
+
+

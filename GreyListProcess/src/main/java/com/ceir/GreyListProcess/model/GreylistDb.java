@@ -46,6 +46,7 @@ public class GreylistDb {
 	private String multipleSimStatus;
 	private String  deviceId;
 	private String imeiEsnMeid;
+	private String actualImei;
 	private String modeType;
 	private String requestType;
 	private String userType;
@@ -177,52 +178,21 @@ public class GreylistDb {
 	public void setModeType(String modeType) {
 		this.modeType = modeType;
 	}
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("GreylistDb [id=");
-		builder.append(id);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", imei=");
-		builder.append(imei);
-		builder.append(", roleType=");
-		builder.append(roleType);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", txnId=");
-		builder.append(txnId);
-		builder.append(", deviceNumber=");
-		builder.append(deviceNumber);
-		builder.append(", deviceType=");
-		builder.append(deviceType);
-		builder.append(", deviceAction=");
-		builder.append(deviceAction);
-		builder.append(", deviceStatus=");
-		builder.append(deviceStatus);
-		builder.append(", DeviceLaunchDate=");
-		builder.append(DeviceLaunchDate);
-		builder.append(", multipleSimStatus=");
-		builder.append(multipleSimStatus);
-		builder.append(", deviceId=");
-		builder.append(deviceId);
-		builder.append(", imeiEsnMeid=");
-		builder.append(imeiEsnMeid);
-		builder.append(", modeType=");
-		builder.append(modeType);
-		builder.append(", requestType=");
-		builder.append(requestType);
-		builder.append(", userType=");
-		builder.append(userType);
-		builder.append(", complainType=");
-		builder.append(complainType);
-		builder.append(", expiryDate=");
-		builder.append(expiryDate);
-		builder.append("]");
-		return builder.toString();
-	}
 
+     public String getActualImei() {
+          return actualImei;
+     }
+
+     public void setActualImei(String actualImei) {
+          this.actualImei = actualImei;
+     }
+
+     @Override
+     public String toString() {
+          return "GreylistDb{" + "id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", imei=" + imei + ", roleType=" + roleType + ", userId=" + userId + ", txnId=" + txnId + ", deviceNumber=" + deviceNumber + ", deviceType=" + deviceType + ", deviceAction=" + deviceAction + ", deviceStatus=" + deviceStatus + ", DeviceLaunchDate=" + DeviceLaunchDate + ", multipleSimStatus=" + multipleSimStatus + ", deviceId=" + deviceId + ", imeiEsnMeid=" + imeiEsnMeid + ", actualImei=" + actualImei + ", modeType=" + modeType + ", requestType=" + requestType + ", userType=" + userType + ", complainType=" + complainType + ", expiryDate=" + expiryDate + '}';
+     }
+ 
 
 }
+
+

@@ -1,7 +1,7 @@
 package com.ceir.GreyListProcess.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -42,13 +42,13 @@ public class GreyListService implements Runnable{
 	Integer threadSleep;
 	
 
-	private final Logger log =LoggerFactory.getLogger(getClass());
+	private final Logger log =Logger.getLogger(getClass());
 
 	public void run() {
 		while(true) {
 			SystemConfigurationDb filePath=new SystemConfigurationDb();
 			log.info("inside in Grey List dump process");
-			log.info("now going to check whether stolen data found on web_action_db table or not");   
+//			log.info("now going to check whether stolen data found  table or not");   
 		//	boolean checkStolenStatus=webActionRepoImpl.checkFeatureExist("Stolen");
 			//if(checkStolenStatus==false) {
 				//log.info("If stolen data doesnot exist in web action db");
@@ -74,11 +74,16 @@ public class GreyListService implements Runnable{
 				log.info("so this process cannot go further");
 			}*/
 			log.info("exit from Grey List dump process");
-			try {
-				Thread.sleep(threadSleep);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+         log.info("exit from  service");
+           System.exit(0);
+//			try {
+//				Thread.sleep(threadSleep);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
 		}
 	}
 }
+
+
+

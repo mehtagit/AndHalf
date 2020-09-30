@@ -6,7 +6,7 @@
 	<groupId>com.ceir</groupId>
 	<artifactId>GreyListProcess</artifactId>
 <!-- 	<version>0.0.3-SNAPSHOT</version> -->
-	<version>0.0.1-SNAPSHOT</version>
+	<!--<version>0.0.1-SNAPSHOT</version>-->
 	<packaging>jar</packaging>
 
 	<name>GreyListProcess</name>
@@ -106,17 +106,29 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-	
+	  <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.14</version>
+            <type>jar</type>
+        </dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.12</version>
 		</dependency>
-		<dependency>
+<!--		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc8</artifactId>
 			<version>19.3</version>
-		</dependency>
+		</dependency>-->
+                
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>oracle8</artifactId>
+            <version>19.3</version>
+        </dependency>
+                
 		<dependency> 
     <groupId>com.opencsv</groupId> 
     <artifactId>opencsv</artifactId> 
@@ -125,7 +137,7 @@
 		</dependencies>
 
 	<build>
-		<finalName>${artifactId}-${version}</finalName>
+		<finalName>${artifactId}</finalName>
 		<!-- <finalName>${artifactId}-${version}_Test</finalName> -->
 		<resources>
 			<resource>
@@ -144,3 +156,7 @@
 
 
 </project>
+
+
+
+
