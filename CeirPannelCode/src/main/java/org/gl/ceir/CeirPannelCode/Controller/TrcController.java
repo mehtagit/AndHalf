@@ -153,10 +153,23 @@ public class TrcController {
 				byte[] bytes =
 						file.getBytes(); String rootPath = urlToUpload.getValue()+txnNumber+"/"+tagName+"/"; 
 						File dir =   new File(rootPath + File.separator);
-						if (!dir.exists()) dir.mkdirs(); // Create the file on server // Calendar now = Calendar.getInstance();
+						//give file read and writ  permission to txnId Directory
+						File dir1 = new File(urlToUpload.getValue()+txnNumber+"/" + File.separator);
+						if (!dir.exists()) {
+							dir.mkdirs(); // Create the file on server // Calendar now = Calendar.getInstance();
+							dir.setReadable(true,false);
+							dir.setWritable(true,false);
+							dir.setExecutable(true,false);
+							dir1.setReadable(true,false);
+							dir1.setWritable(true,false);
+							dir1.setExecutable(true,false);
+						}
 						File serverFile = new File(rootPath+file.getOriginalFilename());
 						log.info("uploaded file path on server" + serverFile); BufferedOutputStream
 						stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+						serverFile.setReadable(true,false);
+						serverFile.setWritable(true,false);
+						serverFile.setExecutable(true,false);
 						stream.write(bytes); stream.close(); 
 						//  grievanceRequest.setFileName(file.getOriginalFilename());
 						
@@ -237,15 +250,27 @@ public class TrcController {
 			byte[] bytes = file.getBytes();
 			String rootPath = urlToUpload.getValue()+trcRequest.getTxnId()+"/"+tagName+"/";
 			File dir = new File(rootPath + File.separator);
-
+			//give file read and writ  permission to txnId Directory
+			File dir1 = new File(urlToUpload.getValue()+trcRequest.getTxnId()+"/" + File.separator);
 			if (!dir.exists()) 
+				{
 				dir.mkdirs();
+				dir.setReadable(true,false);
+				dir.setWritable(true,false);
+				dir.setExecutable(true,false);
+				dir1.setReadable(true,false);
+				dir1.setWritable(true,false);
+				dir1.setExecutable(true,false);
+				}
 			// Create the file on server
 			// Calendar now = Calendar.getInstance();
 
 			File serverFile = new File(rootPath+file.getOriginalFilename());
 			log.info("uploaded file path on server" + serverFile);
 			BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			serverFile.setReadable(true,false);
+			serverFile.setWritable(true,false);
+			serverFile.setExecutable(true,false);
 			stream.write(bytes);
 			stream.close();
 			fileCopyRequest.setFilePath(urlToUpload.getValue()+trcRequest.getTxnId()+"/"+tagName+"/");

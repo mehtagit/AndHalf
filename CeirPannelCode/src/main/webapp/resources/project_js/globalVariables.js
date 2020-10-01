@@ -294,3 +294,53 @@ function previewRegistrtionFile(srcFilePath,srcFileName){
 		window.open(FinalLink);
 	}
 }
+
+
+function checkDuplicateImei(CheckIMEI1,CheckIMEI2,CheckIMEI3,CheckIMEI4){
+	if(CheckIMEI1==CheckIMEI2 && CheckIMEI2!="" || CheckIMEI1==CheckIMEI3 && CheckIMEI3!="" || CheckIMEI1==CheckIMEI4 && CheckIMEI4!="" || CheckIMEI2==CheckIMEI3 && CheckIMEI3!="" || CheckIMEI2==CheckIMEI4 && CheckIMEI4!="" || CheckIMEI3==CheckIMEI4 && CheckIMEI4!="" ){
+		//duplicate IMEI found
+		return true;
+	}
+	else{
+		//duplicate IMEI not found"
+		return false;
+	}
+}
+
+function luhn_checksum(code) {
+	var IMEI1toPass = code.slice(0, 14);
+	var len = IMEI1toPass.length
+	//console.log("IMEI passed to luhn="+IMEI1toPass);
+    var parity = len % 2
+    var sum = 0
+    for (var i = len-1; i >= 0; i--) {
+        var d = parseInt(IMEI1toPass.charAt(i))
+        if (i % 2 == parity) { d *= 2 }
+        if (d > 9) { d -= 9 }
+        sum += d
+    }
+    return sum % 10
+}
+
+function luhnCheck(IMEILUHN,IMEIType){
+	if($("#"+IMEIType).val()==0){
+	var IMEIlenth1=$("#"+IMEILUHN).val().length;
+	var IMEI1LastDigit=$("#"+IMEILUHN).val().slice(14);
+	//console.log("IMEI1LastDigit=="+IMEI1LastDigit);
+	if (IMEIlenth1==15){
+		 var res=luhn_checksum($("#"+IMEILUHN).val());
+		//console.log(res);
+		if(IMEI1LastDigit==res){
+			//IMEI number passed luhn alogoritham .
+			$('#errorMsgOnModal').text('');
+		}
+		else
+			{
+			//IMEI number passed not passed luhn alogoritham.
+			$("#"+IMEILUHN).val('');
+			$('#errorMsgOnModal').text('');
+			$('#errorMsgOnModal').text($.i18n('luhnCheckMessage'));
+			}
+	}
+	}
+	  }

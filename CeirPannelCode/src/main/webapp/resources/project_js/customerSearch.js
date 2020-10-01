@@ -16,7 +16,8 @@
 		var deviceIdType =  $("#deviceType option:selected").text();
 		var deviceIdvalue = $("#deviceType").val();
 		var msisdn = $('#msisdn').val();
-		var imei =  $('#imei').val();
+		var  res  =  $('#imei').val();
+		  var imei = res.substring(0, 14);
 		var deviceIdType =  deviceIdType;
 		//sessionStorage.setItem("roleType",roleType);
 		//sessionStorage.setItem("tagId", tagId);
@@ -81,6 +82,7 @@
 
 		switch (value) {
 		case 0:
+			$('#imei').val('');
 			$("#imei").attr("pattern","[0-9]{15,16}");
 			$("#imei").attr("maxlength","16");
 			$("#imei").removeAttr("onkeyup");

@@ -328,6 +328,14 @@ $("#calender").css("display", "none");
 
 function updateIndivisualStolen()
 {
+	if($('#singleStolendeviceIDType').val()==0){
+		var checkIMEI=checkDuplicateImei($('#updatesingleStolenimei1').val(),$('#updatesingleStolenimei2').val(),$('#updatesingleStolenimei3').val(),$('#updatesingleStolenimei4').val());
+		if(checkIMEI===true){
+		$('#errorMsgOnModal').text('');
+		$('#errorMsgOnModal').text($.i18n('duplicateImeiMessage'));
+		return false;
+	}
+	}
 	$('div#initialloader').fadeIn('fast');
 
 	var formData= new FormData();
@@ -732,6 +740,7 @@ $('#singleStolendeviceIDType').on('change', function() {
 
 	switch (value) {
 	case 0:
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").val('');
 		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("pattern","[0-9]{15,16}");
 		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("maxlength","16");
 		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").removeAttr("onkeyup");

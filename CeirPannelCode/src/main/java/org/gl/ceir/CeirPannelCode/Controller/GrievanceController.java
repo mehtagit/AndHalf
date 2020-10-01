@@ -137,10 +137,23 @@ public class GrievanceController {
 				byte[] bytes =
 						file.getBytes(); String rootPath = urlToUpload.getValue()+grevnceId+"/"+tagName+"/"; 
 						File dir =   new File(rootPath + File.separator);
-						if (!dir.exists()) dir.mkdirs(); // Create the file on server // Calendar now = Calendar.getInstance();
+						File dir1 =   new File(urlToUpload.getValue()+grevnceId+"/" + File.separator);
+						if (!dir.exists())
+							{
+							dir.mkdirs(); // Create the file on server // Calendar now = Calendar.getInstance();
+							dir.setReadable(true,false);
+							dir.setWritable(true,false);
+							dir.setExecutable(true,false);
+							dir1.setReadable(true,false);
+							dir1.setWritable(true,false);
+							dir1.setExecutable(true,false);
+							}
 						File serverFile = new File(rootPath+file.getOriginalFilename());
 						log.info("uploaded file path on server" + serverFile); BufferedOutputStream
 						stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+						serverFile.setExecutable(true,false);
+						serverFile.setReadable(true,false);
+						serverFile.setWritable(true,false);
 						stream.write(bytes); stream.close();
 
 						fileCopyRequest.setFilePath(rootPath);
@@ -259,15 +272,26 @@ public class GrievanceController {
 					byte[] bytes = file.getBytes();
 					String rootPath = urlToUpload.getValue()+grievanceRequest.getGrievanceId()+"/"+tagName+"/";
 					File dir = new File(rootPath + File.separator);
-
-					if (!dir.exists()) 
+					//give file read and writ  permission to txnId Directory
+					File dir1 = new File(urlToUpload.getValue()+grievanceRequest.getGrievanceId()+"/" + File.separator);
+					if (!dir.exists()) {
 						dir.mkdirs();
+						dir.setReadable(true,false);
+						dir.setWritable(true,false);
+						dir.setExecutable(true,false);
+						dir1.setReadable(true,false);
+						dir1.setWritable(true,false);
+						dir1.setExecutable(true,false);
+					}
 					// Create the file on server
 					// Calendar now = Calendar.getInstance();
 
 					File serverFile = new File(rootPath+file.getOriginalFilename());
 					log.info("uploaded file path on server" + serverFile);
 					BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+					serverFile.setExecutable(true,false);
+					serverFile.setReadable(true,false);
+					serverFile.setWritable(true,false);
 					stream.write(bytes);
 					stream.close();
 
@@ -338,15 +362,25 @@ public class GrievanceController {
 					byte[] bytes = file.getBytes();
 					String rootPath = urlToUpload.getValue()+grievanceRequest.getGrievanceId()+"/"+tagName+"/";
 					File dir = new File(rootPath + File.separator);
-
-					if (!dir.exists()) 
+					//give file read and writ  permission to txnId Directory
+					File dir1 = new File(urlToUpload.getValue()+grievanceRequest.getGrievanceId()+"/" + File.separator);	
+					if (!dir.exists()) {
 						dir.mkdirs();
+						dir.setReadable(true,false);
+						dir.setWritable(true,false);
+						dir.setExecutable(true,false);
+						dir1.setReadable(true,false);
+						dir1.setWritable(true,false);
+						dir1.setExecutable(true,false);
 					// Create the file on server
 					// Calendar now = Calendar.getInstance();
-
+					}
 					File serverFile = new File(rootPath+file.getOriginalFilename());
 					log.info("uploaded file path on server" + serverFile);
 					BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+					serverFile.setExecutable(true,false);
+					serverFile.setReadable(true,false);
+					serverFile.setWritable(true,false);
 					stream.write(bytes);
 					stream.close();
 
@@ -441,10 +475,23 @@ public class GrievanceController {
 				byte[] bytes =
 						file.getBytes(); String rootPath = urlToUpload.getValue()+grevnceId+"/"+tagName+"/"; 
 						File dir =   new File(rootPath + File.separator);
-						if (!dir.exists()) dir.mkdirs(); // Create the file on server // Calendar now = Calendar.getInstance();
+						//give file read and writ  permission to txnId Directory
+						File dir1 = new File(urlToUpload.getValue()+grevnceId+"/" + File.separator);
+						if (!dir.exists()) { dir.mkdirs(); // Create the file on server // Calendar now = Calendar.getInstance();
+						
+						dir.setReadable(true,false);
+						dir.setWritable(true,false);
+						dir.setExecutable(true,false);
+						dir1.setReadable(true,false);
+						dir1.setWritable(true,false);
+						dir1.setExecutable(true,false);
+						}
 						File serverFile = new File(rootPath+file.getOriginalFilename());
 						log.info("uploaded file path on server" + serverFile); BufferedOutputStream
 						stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+						serverFile.setExecutable(true,false);
+						serverFile.setReadable(true,false);
+						serverFile.setWritable(true,false);
 						stream.write(bytes); stream.close(); 
 
 						fileCopyRequest.setFilePath(rootPath);

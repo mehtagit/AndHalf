@@ -160,7 +160,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 
                             <div class="input-field col s12 m3 l3">
                               <input type="text" id="brand" name="brand" value="" disabled>
-                              <label for="brand" ></label>
+                                     <label for="brand" ><spring:message code="table.ProductName" /></label>
                             </div>
 
                             <div class="input-field col s12 m3 l3">
@@ -984,7 +984,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 		src="" async></script>	
 	
 
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime += timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime += timeout;}});});</script>
 </body></html>
 
 <%

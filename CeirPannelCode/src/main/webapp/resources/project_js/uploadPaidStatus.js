@@ -777,6 +777,14 @@ function exportpaidStatus(){
 
 
 function submitDeviceInfo(){
+	if($('#deviceIdType1').val()==0){
+		var checkIMEI=checkDuplicateImei($('#IMEIA1').val(),$('#IMEIB1').val(),$('#IMEIC1').val(),$('#IMEID1').val());
+		if(checkIMEI===true){
+		$('#errorMsgOnModal').text('');
+		$('#errorMsgOnModal').text($.i18n('duplicateImeiMessage'));
+		return false;
+	}
+	}
 	$('div#initialloader').fadeIn('fast');
 	$("#uploadPaidStatusbutton").prop('disabled', true);
 	var formData= new FormData();
@@ -997,6 +1005,7 @@ function submitDeviceInfo(){
 			else{
 				$('#customRegisterDeviceDuplicateImei').openModal({dismissible:false});;
 				$('#dupliCateImeiMsg').text($.i18n(data.tag));
+				$("#uploadPaidStatusbutton").prop('disabled', true);
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -1830,6 +1839,7 @@ function deptImageValidation() {
 
 		switch (value) {
 		case 0:
+			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").val('');	
 			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("pattern","[0-9]{15,16}");
 			$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("maxlength","16");
 			

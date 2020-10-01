@@ -101,6 +101,7 @@ $('#deviceIdType').on('change', function() {
 
 	switch (value) {
 	case 0:
+		$('#DeviceID').val('');
 		$("#DeviceID").attr("pattern","[0-9]{15,16}");
 		$("#DeviceID").attr("maxlength","16");
 		$("#DeviceID").removeAttr("onkeyup");
@@ -145,3 +146,6 @@ function isLengthValid(val){
 
 	}
 }
+
+
+

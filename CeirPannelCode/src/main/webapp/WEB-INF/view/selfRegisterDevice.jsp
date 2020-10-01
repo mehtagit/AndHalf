@@ -195,6 +195,10 @@ position: fixed;
     position: absolute;
 }
 
+.deviceErrorTitle {
+    position: relative;
+    top: 0px;
+}
 </style>
 </head>
 <body data-lang-param="${pageContext.response.locale}"
@@ -213,18 +217,18 @@ position: fixed;
 							<div class="row card-panel login-card-panel" id="user123" class="section" style="display: none;">
 								
 		<h6 class="fixPage-modal-header ">
-						<spring:message code="modal.header.registerdevice" />
-						<div class="col s10 m11 select-lang-lable-all">
 
-			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
-		</div>
-		<div class="col s2 m1 right" style="padding: 0;">
-			<select class="browser-default select-lang-drpdwn-all" id="langlistSave">
-				<option value="en" class="fontBlack">English</option>
-				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
-			</select>
-		</div>
-					</h6>
+<div class="col s9 m10 l10 select-lang-lable-all">
+<p><spring:message code="modal.header.registerdevice" /></p>
+<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+</div>
+<div class="col s3 m2 l2 right">
+<select class="browser-default select-lang-drpdwn-all" id="langlistSave">
+<option value="en" class="fontBlack">English</option>
+<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
+</select>
+</div>
+</h6>
 
 									<form action="" onsubmit="return submitEndUserDeviceInfo()"
 						method="POST" enctype="multipart/form-data" >
@@ -723,14 +727,15 @@ position: fixed;
 															</select>
 														</div>
 
-													<div class="col s12 m12">
+													<div class="col s12 m12" style="position: relative;">
 														<p>
 															<spring:message code="title.imeiMeidEsn" />
 														</p>
+														<p id="errorMsgOnModal" class="deviceErrorTitle"></p>
 													</div>
 
 													<div class="input-field col s12 m6">
-														<input type="text" id="IMEIA1" pattern="[0-9]{16,16}"
+														<input type="text" id="IMEIA1" pattern="[0-9]{15,16}" onchange="luhnCheck('IMEIA1','deviceIdType1')"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															required maxlength="16"> <label for="IMEIA1"><spring:message
@@ -738,7 +743,7 @@ position: fixed;
 													</div>
 
 													<div class="input-field col s12 m6">
-														<input type="text" id="IMEIB1" pattern="[0-9]{16,16}"
+														<input type="text" id="IMEIB1" pattern="[0-9]{15,16}" onchange="luhnCheck('IMEIB1','deviceIdType1')"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															title="<spring:message code="validation.1516digit" />"
@@ -746,17 +751,17 @@ position: fixed;
 																code="title.two" /></label>
 													</div>
 													<div class="input-field col s12 m6">
-														<input type="text" id="IMEIC1" pattern="[0-9]{16,16}"
+														<input type="text" id="IMEIC1" pattern="[0-9]{15,16}" onchange="luhnCheck('IMEIC1','deviceIdType1')"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															title="<spring:message code="validation.1516digit" />"
 															maxlength="16"> <label for="IMEIC1"><spring:message
 																code="title.three" /></label>
-													<p id="errorMsgOnModal" class="deviceErrorTitle" style="    margin-top: -140px;margin-left: 110px;"></p>
+													
 													</div>
 
 													<div class="input-field col s12 m6">
-														<input type="text" id="IMEID1" pattern="[0-9]{16,16}"
+														<input type="text" id="IMEID1" pattern="[0-9]{15,16}" onchange="luhnCheck('IMEID1','deviceIdType1')"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															title="<spring:message code="validation.1516digit" />"
@@ -818,21 +823,20 @@ position: fixed;
 						<spring:message code="modal.header.registerdevice" />
 					</h6> --%>
 					
-						<h6 class="fixPage-modal-header ">
-						<spring:message code="modal.header.registerdevice" />
-						<a href="" class="boton right" id="btnLink"></a>
-						<div class="col s10 m11 select-lang-lable-all" style="position: fixed;width: 57%;">
+						<h6 class="fixPage-modal-header rg_device">
+<div class="col s8 m6 l8 select-lang-lable-all">
+<p><spring:message code="modal.header.registerdevice" /></p>
+</div>
+<div class="col s4 m6 l4 ">
+<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+<select class="browser-default select-lang-drpdwn-all" id="langlist">
+<option value="en" class="fontBlack">English</option>
+<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
+</select>
+<a href="" class="boton right" id="btnLink"></a>
+</div>
 
-			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
-		</div>
-		<div class="col s2 m1 right" style="padding: 0;position: fixed;margin-left: 57%;">
-			<select class="browser-default select-lang-drpdwn-all" id="langlist">
-				<option value="en" class="fontBlack">English</option>
-				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
-			</select>
-		</div>
-					
-					</h6>
+</h6>
 					
 					
 					

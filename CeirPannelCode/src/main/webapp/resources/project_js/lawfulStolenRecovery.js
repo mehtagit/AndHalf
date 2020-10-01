@@ -561,9 +561,17 @@ $.ajax({
 
 
 function saveIndivisualStolenRequest(){
+	if($('#singleStolendeviceIDType').val()==0){
+		var checkIMEI=checkDuplicateImei($('#singleStolenimei1').val(),$('#singleStolenimei2').val(),$('#singleStolenimei3').val(),$('#singleStolenimei4').val());
+		if(checkIMEI===true){
+		$('#errorMsgOnModal').text('');
+		$('#errorMsgOnModal').text($.i18n('duplicateImeiMessage'));
+		return false;
+	}
+	}
 	$('div#initialloader').fadeIn('fast');
 	var formData= new FormData();
-
+	
 	var singleStolenfirstName=$('#singleStolenfirstName').val();
 	var singleStolenmiddleName=$('#singleStolenmiddleName').val();
 	var singleStolenlastName=$('#singleStolenlastName').val();
@@ -1471,6 +1479,7 @@ $('#sigleRecoverydeviceIDType').on('change', function() {
 
 	switch (value) {
 	case 0:
+		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").val('');
 		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("pattern","[0-9]{15,16}");
 		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("maxlength","16");
 		

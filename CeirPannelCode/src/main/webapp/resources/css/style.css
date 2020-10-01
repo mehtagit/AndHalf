@@ -3094,14 +3094,6 @@ div#iconLable {
 	margin: -20px -21px 1rem -21px;
 }
 
-@media only screen and (max-width:786px) {
-	.fixPage-modal-header {
-		background-color: #529dba;
-		padding: 15px 24px;
-		color: #fff;
-		margin: -20px -10px 1rem -10px;
-	}
-}
 
 .btn {
 	background-color: #ff4081 !important;
@@ -3239,12 +3231,11 @@ td.dateDiv {
 }
 
 .nidValidationMsg {
-	color: red;
-	font-size: 12px;
-	position: absolute;
-	margin: 0;
+    color: red;
+    font-size: 12px;
+    position: relative;
+    margin: 10px 0px 0px;
 }
-
 .imgPreviewLink {
 	position: absolute;
 	top: 30px;
@@ -3330,9 +3321,10 @@ div#error_Modal_reg {
 }
 
 .select-lang-drpdwn-all {
-    width: 75px;
-    margin-top: -30px;
+    max-width: 75px;
+    margin-top: -22px;
     border-bottom: none;
+    min-width: 65px;
 }
 .select-lang-lable-all {
     margin-top: -18px;
@@ -3407,6 +3399,99 @@ position:fixed;
     margin-bottom: 20px;
 }
 
+[type="checkbox"]+span{
+  height:auto !important;
+}
+
+.haed-btn li.haed-btn-style {
+    margin-bottom: 10px;
+    height: 35px;
+}
+.haed-btn li.haed-btn-style select{
+  padding:5px;
+}
+
+.fixPage-modal-header .select-lang-lable-all p{
+    float: left;
+    padding: 0px;
+    margin: 9px 0px 0px;
+}
+.fixPage-modal-header .select-lang-lable-all i.fa{
+    float: right;
+    position: relative;
+    top: 10px;
+}
+
+.fixPage-modal-header .select-lang-lable p{
+    float: left;
+    padding: 0px;
+    margin: 3px 0px 0px;
+}
+
+.fixPage-modal-header .select-lang-lable i.fa{
+    float: right;
+    position: relative;
+    top: 4px;
+}
+
+.fixPage-modal-header.rg_device .fa-globe {
+    float: left;
+    position: relative;
+    top: -9px;
+    margin-right: 5px;
+}
+
+.fixPage-modal-header.rg_device .select-lang-drpdwn-all {
+    float: left;
+}
+
+.fixPage-modal-header.rg_device a#btnLink {
+    margin: 0px;
+    position: relative;
+    top: -12px;
+    font-size: 13px;
+    padding: 3px 5px;
+}
+.fixPage-modal-header.rg_device {
+    margin: -20px -21px 1rem -21px;
+}
+
+.modal button.modal-close:focus {
+    outline: none;
+    background-color: transparent;
+}
+.stolen_calender{
+	float: right !important;
+	margin-top: -15px
+}
+.buttonDiv .btn {
+margin-bottom: 10px;
+}
+
+@media (max-width:991px){
+
+	.dataTables_scrollHeadInner table{
+	    display:none;
+	}
+	.dataTables_scrollBody table thead tr{
+	  display:table;
+	}
+
+	.dataTables_scrollBody table thead th.sorting_disabled{
+	   height: auto !important;
+	}
+	.dataTables_scrollBody table thead th.sorting_disabled .dataTables_sizing {
+    		height: auto !important;
+    		overflow: visible !important;
+	}
+	.dataTables_scrollBody table.dataTable tbody td {
+    	       padding: 13px 10px 5px;
+	}
+	.card-panel.upload-stock-responsive-page {
+	    max-width: 90%;
+	}
+
+}
 
 @media (max-width:991px) and (min-width:768px){
 
@@ -3416,29 +3501,104 @@ position:fixed;
 
 }
 
-@media (max-width:767px) {
+@media only screen and (max-width:1024px) {
+.buttonDiv {
+width: 100% !important;
+}
+
+
+}
+
+@media only screen and (max-width:767px) {
 
 	.sidebar-collapse {
 	    z-index: 999;
 	    top: -62px;
 	}
-        div#viewuplodedModel {
+    div#viewuplodedModel {
 	    max-width: 75%;
 	}
+	.modal {
+	    width: 75% !important;
+	}
+	.full-screen-modal {
+		width: 75% !important;
+	}
+    .fixPage-modal-header.rg_device a#btnLink {
+        font-size: 10px;
+        padding: 3px 2px;
+	}
+	
+	nav, nav .nav-wrapper i, nav a.button-collapse, nav a.button-collapse i {
+	    height: auto !important;
+	    
+	}
 
+	.navbar-fixed nav.navbar-color {
+	    height: 120px !important;
+	}
+	
+	
 }
 
 @media (max-width:600px) {
 
 	.export-to-excel{
-	   margin-top: 10px;
+	    margin-top: 10px;
 	}
 
 	button#submitFilter {
 	    margin: 10px 0px 0px 0px;
 	}
+	.fixPage-modal-header {
+		padding: 15px 15px;
+		color: #fff;
+		margin: -20px 0px 1rem 0px;
+	}
+	.register-device-responsive-page .fixPage-modal-header {
+    	  margin: -20px -21px 1rem -21px;
+	}
+        .upload-stock-responsive-page .fixPage-modal-header {
+    	  margin: -20px -21px 1rem -21px;
+	}
+	.track-grievance-responsive-page .fixPage-modal-header {
+    	  margin: -20px -21px 1rem -21px;
+	}  
+	.fixPage-modal-header.rg_device a#btnLink {
+	   
+	    min-width: 85px;
+	    text-align: center;
+	    margin-top: 10px;
+	}
+	.stolen_calender{
+		margin-top: 0px
+	}
 
-	
+}
+
+
+@media (max-width:480px) {
+
+	.fixPage-modal-header.rg_device .select-lang-drpdwn-all {
+	    margin-left: 20px;
+	    position: relative;
+	    top: -10px;
+	    font-size: 12px;
+	}
+	.fixPage-modal-header.rg_device a#btnLink {
+	    margin-top: 0px;
+	}
+
+	.fixPage-modal-header-reg {
+	    padding: 15px 15px;
+	    color: #fff;
+	    font-size: 15px;
+	}
+	.select-lang-drpdwn-reg {
+	    width: 55px;
+	    margin-top: -32px;
+	    font-size: 11px;
+	}
 
 }
 

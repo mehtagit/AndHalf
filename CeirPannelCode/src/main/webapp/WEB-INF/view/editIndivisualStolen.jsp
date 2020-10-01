@@ -613,7 +613,7 @@ select {
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumber"
-																pattern="[0-9]{15,16}"
+																pattern="[0-9]{15,16}" onchange="luhnCheck('updatesingleStolenimei1','singleStolendeviceIDType')"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																
@@ -626,7 +626,7 @@ select {
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberTwo"
-																pattern="[0-9]{15,16}"
+																pattern="[0-9]{15,16}" onchange="luhnCheck('updatesingleStolenimei2','singleStolendeviceIDType')"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																title="<spring:message code=" validation.1516digit" />"
@@ -637,7 +637,7 @@ select {
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberThree"
-																pattern="[0-9]{15,16}"
+																pattern="[0-9]{15,16}" onchange="luhnCheck('updatesingleStolenimei3','singleStolendeviceIDType')"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																title="<spring:message code=" validation.1516digit" />"
@@ -649,7 +649,7 @@ select {
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberFour"
-																pattern="[0-9]{15,16}"
+																pattern="[0-9]{15,16}" onchange="luhnCheck('updatesingleStolenimei4','singleStolendeviceIDType')"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																title="<spring:message code=" validation.1516digit" />"
@@ -1324,7 +1324,7 @@ onclick="_Services._selectstartDate()"></i></span>
 		src="${context}/resources/project_js/editLawfulStolen.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	
 
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login";}else{timeoutTime = currentTime + timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>
 <%
 } else {

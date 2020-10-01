@@ -209,39 +209,40 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 			<div class="section">
 				<div class="row card-panel login-card-panel">
 					<h6 class="fixPage-modal-header ">
-						<spring:message code="input.UpdateVisaValidity" />
-						
-							<div class="col s10 m11 select-lang-lable-all width87">
+<div class="col s9 m10 l10 select-lang-lable-all width87">
+<p><spring:message code="input.UpdateVisaValidity" /></p>
 
-			<i class="fa fa-globe fa-6" aria-hidden="true"></i>
-		</div>
-		<div class="col s2 m1 right width13" style="padding: 0;">
-			<select class="browser-default select-lang-drpdwn-all" id="langlist">
-				<option value="en" class="fontBlack">English</option>
-				<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
-			</select>
-		</div>
-					</h6>
+
+
+<i class="fa fa-globe fa-6" aria-hidden="true"></i>
+</div>
+<div class="col s3 m2 l2 right width13" >
+<select class="browser-default select-lang-drpdwn-all" id="langlist">
+<option value="en" class="fontBlack">English</option>
+<option value="km" class="fontBlack"><spring:message code="lang.khmer" /></option>
+</select>
+</div>
+</h6>
 					<div class="col s12 m12 l12">
 						<div class="row">
 							<div class="row">
 								<form  onsubmit="return findEndUserByNid()" method="POST"
 									enctype="multipart/form-data">
 									<div id="submitbtn">
-										<div class="input-field col s12 m1 l1">
+										<div class="input-field col s12 m3 l3">
 											<label for="Search" class="center-align ml-10" style="width: max-content;"><spring:message code="input.pportnumber" />
 											<span class="star"> *</span></label>
 										</div>
 										<div class="input-field col s12 m3 l3">
 											<input type="text" id="nidForEndUser"
-												pattern="[A-Za-z0-9]{0,12}" style="margin-left: 78px;"
+												pattern="[A-Za-z0-9]{0,12}" 
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.12NID" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12NID" />');"
 												title="<spring:message code="validation.12NID" />"
 												required  maxlength="12" name="Search" />
 
 										</div>
-										<div class="input-field col s12 m6"style="margin-left: 90px;" >
+										<div class="input-field col s12 m6" >
 											<button  class="btn" type="submit" id="passPortBtnId">
 												<spring:message code="button.submit" />
 											</button>

@@ -151,11 +151,19 @@ public class LawfulFormController
 			String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
 			File dir = new File(rootPath + File.separator);
 
-			if (!dir.exists()) dir.mkdirs();
+			if (!dir.exists()) {
+				dir.mkdirs();
+				dir.setExecutable(true,false);
+				dir.setReadable(true,false);
+				dir.setWritable(true,false);
+			}
 			// Create the file on server 
 			File serverFile = new File(rootPath+file.getOriginalFilename());
 			log.info("uploaded file path on server" + serverFile); BufferedOutputStream
 			stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			serverFile.setExecutable(true,false);
+			serverFile.setReadable(true,false);
+			serverFile.setWritable(true,false);
 			stream.write(bytes); 
 			stream.close();
 
@@ -183,11 +191,19 @@ public class LawfulFormController
 				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
 				File dir = new File(rootPath + File.separator);
 
-				if (!dir.exists()) dir.mkdirs();
+				if (!dir.exists()) {
+					dir.mkdirs();
+					dir.setExecutable(true,false);
+					dir.setReadable(true,false);
+					dir.setWritable(true,false);
+				}
 				// Create the file on server 
 				File serverFile = new File(rootPath+firFileName.getOriginalFilename());
 				log.info("uploaded file path on server" + serverFile); BufferedOutputStream
 				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				serverFile.setExecutable(true,false);
+				serverFile.setReadable(true,false);
+				serverFile.setWritable(true,false);
 				stream.write(bytes); 
 				stream.close();
 				fileCopyRequest.setFilePath(rootPath);
@@ -252,11 +268,19 @@ public class LawfulFormController
 			String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
 			File dir = new File(rootPath + File.separator);
 
-			if (!dir.exists()) dir.mkdirs();
+			if (!dir.exists()) {
+				dir.mkdirs();
+				dir.setExecutable(true,false);
+				dir.setReadable(true,false);
+				dir.setWritable(true,false);
+			}
 			// Create the file on server 
 			File serverFile = new File(rootPath+file.getOriginalFilename());
 			log.info("uploaded file path on server" + serverFile); BufferedOutputStream
 			stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+			serverFile.setExecutable(true,false);
+			serverFile.setReadable(true,false);
+			serverFile.setWritable(true,false);
 			stream.write(bytes); 
 			stream.close();
 			fileCopyRequest.setFilePath(rootPath);
@@ -284,11 +308,19 @@ public class LawfulFormController
 				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
 				File dir = new File(rootPath + File.separator);
 
-				if (!dir.exists()) dir.mkdirs();
+				if (!dir.exists()) {
+					dir.mkdirs();
+					dir.setExecutable(true,false);
+					dir.setReadable(true,false);
+					dir.setWritable(true,false);
+				}
 				// Create the file on server 
 				File serverFile = new File(rootPath+firFileName.getOriginalFilename());
 				log.info("uploaded file path on server" + serverFile); BufferedOutputStream
 				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				serverFile.setExecutable(true,false);
+				serverFile.setReadable(true,false);
+				serverFile.setWritable(true,false);
 				stream.write(bytes); 
 				stream.close();
 				fileCopyRequest.setFilePath(rootPath);
@@ -362,11 +394,19 @@ public class LawfulFormController
 				String rootPath =urlToUpload.getValue()+txnNumber+"/"; 
 				File dir = new File(rootPath + File.separator);
 
-				if (!dir.exists()) dir.mkdirs();
+				if (!dir.exists()) {
+					dir.mkdirs();
+					dir.setExecutable(true,false);
+					dir.setReadable(true,false);
+					dir.setWritable(true,false);
+				}
 				// Create the file on server 
 				File serverFile = new File(rootPath+file.getOriginalFilename());
 				log.info("uploaded file path on server" + serverFile); BufferedOutputStream
 				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				serverFile.setExecutable(true,false);
+				serverFile.setReadable(true,false);
+				serverFile.setWritable(true,false);
 				stream.write(bytes); 
 				stream.close();
 				fileCopyRequest.setFilePath(rootPath);
@@ -463,6 +503,9 @@ public class LawfulFormController
 
 				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
 				File tmpDir = new File(rootPath+file.getOriginalFilename());
+				tmpDir.setExecutable(true,false);
+				tmpDir.setReadable(true,false);
+				tmpDir.setWritable(true,false);
 				boolean exists = tmpDir.exists();
 				if(exists) {
 
@@ -478,11 +521,20 @@ public class LawfulFormController
 
 				File dir = new File(rootPath + File.separator);
 
-				if (!dir.exists()) dir.mkdirs();
+				if (!dir.exists()) {
+					dir.mkdirs();
+					dir.setExecutable(true,false);
+					dir.setReadable(true,false);
+					dir.setWritable(true,false);
+				}
+				
 				// Create the file on server 
 				File serverFile = new File(rootPath+file.getOriginalFilename());
 				log.info("uploaded file path on server" + serverFile); BufferedOutputStream
 				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				serverFile.setExecutable(true,false);
+				serverFile.setReadable(true,false);
+				serverFile.setWritable(true,false);
 				stream.write(bytes); 
 				stream.close();
 				fileCopyRequest.setFilePath(rootPath);
@@ -512,6 +564,9 @@ public class LawfulFormController
 				byte[] bytes = firFileName.getBytes();
 				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
 				File tmpDir = new File(rootPath+firFileName.getOriginalFilename());
+				tmpDir.setExecutable(true,false);
+				tmpDir.setReadable(true,false);
+				tmpDir.setWritable(true,false);
 				boolean exists = tmpDir.exists();
 				if(exists) {
 
@@ -526,11 +581,19 @@ public class LawfulFormController
 
 				File dir = new File(rootPath + File.separator);
 
-				if (!dir.exists()) dir.mkdirs();
+				if (!dir.exists()) {
+					dir.mkdirs();
+					dir.setExecutable(true,false);
+					dir.setReadable(true,false);
+					dir.setWritable(true,false);
+				}
 				// Create the file on server 
 				File serverFile = new File(rootPath+firFileName.getOriginalFilename());
 				log.info("uploaded file path on server" + serverFile); BufferedOutputStream
 				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				serverFile.setExecutable(true,false);
+				serverFile.setReadable(true,false);
+				serverFile.setWritable(true,false);
 				stream.write(bytes); 
 				stream.close();
 				fileCopyRequest.setFilePath(rootPath);

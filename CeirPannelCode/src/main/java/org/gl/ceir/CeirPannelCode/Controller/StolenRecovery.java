@@ -174,14 +174,20 @@ public class StolenRecovery {
 				String rootPath = urlToUpload.getValue()+stlnTxnNumber+"/";
 				File dir = new File(rootPath + File.separator);
 
-				if (!dir.exists()) 
+				if (!dir.exists()) {
 					dir.mkdirs();
-				// Create the file on server
+					dir.setExecutable(true,false);
+					dir.setReadable(true,false);
+					dir.setWritable(true,false);
+					// Create the file on server
 				// Calendar now = Calendar.getInstance();
-
+				}
 				File serverFile = new File(rootPath+file.getOriginalFilename());
 				log.info("uploaded file path on server" + serverFile);
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				serverFile.setExecutable(true,false);
+				serverFile.setReadable(true,false);
+				serverFile.setWritable(true,false);
 				stream.write(bytes);
 				stream.close();
 
@@ -230,15 +236,21 @@ public class StolenRecovery {
 				byte[] bytes = file.getBytes();
 				String rootPath = urlToUpload.getValue()+stlnTxnNumber+"/";
 				File dir = new File(rootPath + File.separator);
-
+				
 				if (!dir.exists()) 
-					dir.mkdirs();
+				{	dir.mkdirs();
+				dir.setExecutable(true,false);
+				dir.setReadable(true,false);
+				dir.setWritable(true,false);
 				// Create the file on server
 				// Calendar now = Calendar.getInstance();
-
+				}
 				File serverFile = new File(rootPath+file.getOriginalFilename());
 				log.info("uploaded file path on server" + serverFile);
 				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+				serverFile.setExecutable(true,false);
+				serverFile.setReadable(true,false);
+				serverFile.setWritable(true,false);
 				stream.write(bytes);
 				stream.close();
 
@@ -318,6 +330,9 @@ public class StolenRecovery {
 				  		    
 				  			String rootPath = urlToUpload.getValue()+txnId+"/";
 				  		File tmpDir = new File(rootPath+file.getOriginalFilename());
+				  		tmpDir.setExecutable(true,false);
+						tmpDir.setReadable(true,false);
+						tmpDir.setWritable(true,false);
 				  		boolean exists = tmpDir.exists();
 
 				  		if(exists) {
@@ -334,13 +349,21 @@ public class StolenRecovery {
 						byte[] bytes = file.getBytes();
 						File dir = new File(rootPath + File.separator);
 						if (!dir.exists()) 
+							{
 							dir.mkdirs();
+							dir.setExecutable(true,false);
+							dir.setReadable(true,false);
+							dir.setWritable(true,false);
+							}
 						// Create the file on server
 						// Calendar now = Calendar.getInstance();
 
 						File serverFile = new File(rootPath+file.getOriginalFilename());
 						log.info("uploaded file path on server" + serverFile);
 						BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+						serverFile.setExecutable(true,false);
+						serverFile.setReadable(true,false);
+						serverFile.setWritable(true,false);
 						stream.write(bytes);
 						stream.close();
 						fileCopyRequest.setFilePath(rootPath);

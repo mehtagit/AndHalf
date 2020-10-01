@@ -216,8 +216,10 @@
 	"Recovery IMEI Count":"Recovery IMEI Count",
 	"EXISTS_IN_GSMA_TAC_DB":"TAC in IMEI is not approved TAC from GSMA .",
 	"imageMessage": "File name should not be more than 30 characters. / File should have extension as png,jpg,jpeg,gif,csv and bmp. / File size should be less than 10 MB",
-	"No_Question_Mapped":"No question mapped for this user",
+	"No_Question_Mapped":"This feature works only for external users",
 	"visaExpiryCheck":"Visa expiry date should be less then entry date in country",
 	"nationality":"Select Nationality",
-	"requiredMsg_radio": "Please select one of these options"
+	"requiredMsg_radio": "Please select one of these options",
+	"duplicateImeiMessage":"Duplicate IMEI found please enter unique IMEI",
+	"luhnCheckMessage":"The IMEI is not valid as Luhn's algorithm check has not passed."
 	}
