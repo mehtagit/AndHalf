@@ -197,13 +197,13 @@ section {
 			<div class="row">
 				<div class="col s12 m12">
 					<div id="submitbtn">
-						<div class="input-field col s12 m2" style="width: 29.666667%;">
-							<label for="Search" class="center-align ml-10" style="width:100%"><spring:message code="input.nid" /><span class="star">*</span></label>
+					<div class="input-field col s12 l3 m12" style="width: 35.666667%;">
+							<label for="Search" class="center-align ml-10" style="width:100%;text-align: left;"><spring:message code="input.nid" /><span class="star">*</span></label>
 						
 						</div>
 						
 						<form action="selfRegisterDevicePage" method="post">
-						<div class="input-field col s12 m3 l3 placeholderDiv">
+						<div class="input-field col s12  m12 l5 placeholderDiv">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<input type="text" id="Search" name="Search"
 								pattern="[A-Za-z0-9]{1,12}" maxlength="12"
@@ -212,7 +212,7 @@ section {
 								placeholder="<spring:message code="input.nidInput" />" required>
 						</div>
 							
-						<div class="input-field col s12 m2 l2 buttonDiv">
+						<div class="input-field col s12 m12 l4 buttonDiv">
 						
 							<button type="submit" class="btn"  id="submit"><spring:message code="button.submit" /></button>
 							<a href="./redirectToHomePage" class="btn"><spring:message code="modal.close" /></a>

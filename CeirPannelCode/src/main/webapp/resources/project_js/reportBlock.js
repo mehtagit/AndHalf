@@ -1267,6 +1267,7 @@ $('#UnblockdeviceIdType').on('change', function() {
 
 	switch (value) {
 	case 0:
+		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").val('');
 		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("pattern","[0-9]{15,16}");
 		$("#unbockSingleIMEI1,#unbockSingleIMEI2,#unbockSingleIMEI3,#unbockSingleIMEI4").attr("maxlength","16");
 

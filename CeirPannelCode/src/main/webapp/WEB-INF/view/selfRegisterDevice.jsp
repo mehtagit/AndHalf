@@ -195,6 +195,10 @@ position: fixed;
     position: absolute;
 }
 
+.deviceErrorTitle {
+    position: relative;
+    top: 0px;
+}
 </style>
 </head>
 <body data-lang-param="${pageContext.response.locale}"
@@ -723,10 +727,11 @@ position: fixed;
 															</select>
 														</div>
 
-													<div class="col s12 m12">
+													<div class="col s12 m12" style="position: relative;">
 														<p>
 															<spring:message code="title.imeiMeidEsn" />
 														</p>
+														<p id="errorMsgOnModal" class="deviceErrorTitle"></p>
 													</div>
 
 													<div class="input-field col s12 m6">
@@ -752,7 +757,7 @@ position: fixed;
 															title="<spring:message code="validation.1516digit" />"
 															maxlength="16"> <label for="IMEIC1"><spring:message
 																code="title.three" /></label>
-													<p id="errorMsgOnModal" class="deviceErrorTitle" style="    margin-top: -140px;margin-left: 110px;"></p>
+													
 													</div>
 
 													<div class="input-field col s12 m6">

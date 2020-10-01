@@ -229,20 +229,20 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 								<form  onsubmit="return findEndUserByNid()" method="POST"
 									enctype="multipart/form-data">
 									<div id="submitbtn">
-										<div class="input-field col s12 m1 l1">
+										<div class="input-field col s12 m3 l3">
 											<label for="Search" class="center-align ml-10" style="width: max-content;"><spring:message code="input.pportnumber" />
 											<span class="star"> *</span></label>
 										</div>
 										<div class="input-field col s12 m3 l3">
 											<input type="text" id="nidForEndUser"
-												pattern="[A-Za-z0-9]{0,12}" style="margin-left: 78px;"
+												pattern="[A-Za-z0-9]{0,12}" 
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.12NID" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12NID" />');"
 												title="<spring:message code="validation.12NID" />"
 												required  maxlength="12" name="Search" />
 
 										</div>
-										<div class="input-field col s12 m6"style="margin-left: 90px;" >
+										<div class="input-field col s12 m6" >
 											<button  class="btn" type="submit" id="passPortBtnId">
 												<spring:message code="button.submit" />
 											</button>

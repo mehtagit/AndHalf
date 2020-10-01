@@ -3464,7 +3464,9 @@ position:fixed;
 	float: right !important;
 	margin-top: -15px
 }
-
+.buttonDiv .btn {
+margin-bottom: 10px;
+}
 
 @media (max-width:991px){
 
@@ -3499,6 +3501,14 @@ position:fixed;
 
 }
 
+@media only screen and (max-width:1024px) {
+.buttonDiv {
+width: 100% !important;
+}
+
+
+}
+
 @media only screen and (max-width:767px) {
 
 	.sidebar-collapse {
@@ -3527,7 +3537,8 @@ position:fixed;
 	.navbar-fixed nav.navbar-color {
 	    height: 120px !important;
 	}
-
+	
+	
 }
 
 @media (max-width:600px) {
