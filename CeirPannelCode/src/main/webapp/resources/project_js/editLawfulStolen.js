@@ -740,6 +740,7 @@ $('#singleStolendeviceIDType').on('change', function() {
 
 	switch (value) {
 	case 0:
+		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").val('');
 		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("pattern","[0-9]{15,16}");
 		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").attr("maxlength","16");
 		$("#updatesingleStolenimei1,#updatesingleStolenimei2,#updatesingleStolenimei3,#updatesingleStolenimei4").removeAttr("onkeyup");

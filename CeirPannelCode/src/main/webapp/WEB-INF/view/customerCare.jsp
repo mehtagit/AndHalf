@@ -160,7 +160,7 @@ data-roleType="${usertype}" data-userID="${userid}" data-userTypeID="${usertypeI
 
                             <div class="input-field col s12 m3 l3">
                               <input type="text" id="brand" name="brand" value="" disabled>
-                              <label for="brand" ></label>
+                              <label for="brand" ><spring:message code="table.ProductName" /></label>
                             </div>
 
                             <div class="input-field col s12 m3 l3">

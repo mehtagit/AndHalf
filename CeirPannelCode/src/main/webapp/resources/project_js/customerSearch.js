@@ -82,6 +82,7 @@
 
 		switch (value) {
 		case 0:
+			$('#imei').val('');
 			$("#imei").attr("pattern","[0-9]{15,16}");
 			$("#imei").attr("maxlength","16");
 			$("#imei").removeAttr("onkeyup");

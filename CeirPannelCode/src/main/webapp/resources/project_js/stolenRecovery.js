@@ -1467,6 +1467,7 @@ $('#editblockdeviceIdType').on('change', function() {
 
 	switch (value) {
 	case 0:
+		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").val('');
 		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("pattern","[0-9]{15,16}");
 		$("#editsingleblockIMEI1,#editsingleblockIMEI2,#editsingleblockIMEI3,#editsingleblockIMEI4").attr("maxlength","16");
 		
