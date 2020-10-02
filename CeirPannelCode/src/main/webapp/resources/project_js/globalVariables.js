@@ -112,7 +112,7 @@ function isFileValid(id) {
 
 
 function isImageValid(id) {
-
+	
 	var uploadedFileName = $("#"+id).val();
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 	////alert("file extension=="+uploadedFileName)
@@ -122,6 +122,7 @@ function isImageValid(id) {
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 		//alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000);
+	
 	$('#FilefieldId').val(id);
 	////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var fileExtension =ext.toLowerCase();

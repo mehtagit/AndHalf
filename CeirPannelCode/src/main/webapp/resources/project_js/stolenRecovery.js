@@ -1135,7 +1135,7 @@ function exportStolenRecoveryData()
 			"endDate":stolenRecoveryEndDate,
 			"startDate":stolenRecoveryStartDate,
 			"txnId":stolenRecoveryTxnId,
-			"grievanceStatus":stolenRecoveryFileStatus, 
+			"consignmentStatus":stolenRecoveryFileStatus, 
 			"sourceType":stolenRecoverySourceStatus,
 			"requestType":stolenRecoveryRequestType,
 			"featureId":featureId,
