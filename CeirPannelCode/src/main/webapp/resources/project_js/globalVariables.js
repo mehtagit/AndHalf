@@ -326,7 +326,7 @@ function luhn_checksum(code) {
 function luhnCheck(IMEILUHN,IMEIType){
 	if($("#"+IMEIType).val()==0){
 	var IMEIlenth1=$("#"+IMEILUHN).val().length;
-	var IMEI1LastDigit=$("#"+IMEILUHN).val().slice(14);
+	var IMEI1LastDigit=$("#"+IMEILUHN).val();
 	//console.log("IMEI1LastDigit=="+IMEI1LastDigit);
 	if (IMEIlenth1==15){
 		 var res=luhn_checksum($("#"+IMEILUHN).val());
