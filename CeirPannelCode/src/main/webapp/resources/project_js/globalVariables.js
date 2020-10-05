@@ -310,16 +310,17 @@ function checkDuplicateImei(CheckIMEI1,CheckIMEI2,CheckIMEI3,CheckIMEI4){
 
 function luhn_checksum(code) {
 	var IMEI1toPass = code;
+	var len = IMEI1toPass.length
 	//console.log("IMEI passed to luhn="+IMEI1toPass);
-    var parity = len % 2
-    var sum = 0
-    for (var i = len-1; i >= 0; i--) {
-        var d = parseInt(IMEI1toPass.charAt(i))
-        if (i % 2 == parity) { d *= 2 }
-        if (d > 9) { d -= 9 }
-        sum += d
-    }
-    return sum % 10
+	var parity = len % 2
+	var sum = 0
+	for (var i = len-1; i >= 0; i--) {
+	var d = parseInt(IMEI1toPass.charAt(i))
+	if (i % 2 == parity) { d *= 2 }
+	if (d > 9) { d -= 9 }
+	sum += d
+	}
+	return sum % 10
 }
 
 function luhnCheck(IMEILUHN,IMEIType){
