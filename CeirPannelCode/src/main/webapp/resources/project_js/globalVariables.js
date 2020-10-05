@@ -309,8 +309,7 @@ function checkDuplicateImei(CheckIMEI1,CheckIMEI2,CheckIMEI3,CheckIMEI4){
 }
 
 function luhn_checksum(code) {
-	var IMEI1toPass = code(0, 14);
-	var len = IMEI1toPass.length
+	var IMEI1toPass = code;
 	//console.log("IMEI passed to luhn="+IMEI1toPass);
     var parity = len % 2
     var sum = 0
