@@ -60,19 +60,28 @@ public class LoginService {
 	 * ModelAndView mv=new ModelAndView(); mv.setViewName("login");
 	 * log.info("exit from login controller"); return mv; }
 	 */
-	public  ModelAndView loginPage(HttpSession session){
+	public  ModelAndView loginPage(String isExpired,HttpSession session){
 		log.info("inside login controller");
 		//this.sessionRemoveCode(null, session);
 		ModelAndView mv=new ModelAndView();
 		Integer userid = (Integer)session.getAttribute("userid");
-		String defaultLink = (String)session.getAttribute("defaultLink");
+		//String defaultLink = (String)session.getAttribute("defaultLink");
 		if( Objects.nonNull(userid) && !(userid.equals(0) || userid.equals(-1))) {
-			if( Objects.nonNull(defaultLink) )
-				//return new ModelAndView("redirect:"+defaultLink);
-				return new ModelAndView("redirect:./?lang="+(String)session.getAttribute("language"));
-			else {
-				mv.setViewName("login");
+			/*
+			 * if( Objects.nonNull(defaultLink) ) //return new
+			 * ModelAndView("redirect:"+defaultLink); return new
+			 * ModelAndView("redirect:./?lang="+(String)session.getAttribute("language"));
+			 * else { mv.setViewName("login"); }
+			 */
+			
+			if( "yes".equalsIgnoreCase(isExpired)) {
+				sessionRemoveCode( userid, session);
+				mv.setViewName("login");	
 			}
+			else {
+				return new ModelAndView("redirect:./?lang="+(String)session.getAttribute("language"));	
+			}
+			
 		}else {
 			mv.setViewName("login");
 		}

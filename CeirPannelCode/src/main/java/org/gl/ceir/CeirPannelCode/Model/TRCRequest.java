@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TRCRequest {
-	private String endDate,searchString,startDate,tac,txnId,userType;
+	private String endDate,searchString,startDate,tac,txnId,userType,filterUserType;
 	private Integer status,adminStatus,featureId,userTypeId,file;
 	private long userId;
 	public String getEndDate() {
@@ -42,6 +42,12 @@ public class TRCRequest {
 	}
 	public void setUserType(String userType) {
 		this.userType = userType;
+	}
+	public String getFilterUserType() {
+		return filterUserType;
+	}
+	public void setFilterUserType(String filterUserType) {
+		this.filterUserType = filterUserType;
 	}
 	public Integer getStatus() {
 		return status;
@@ -81,14 +87,36 @@ public class TRCRequest {
 	}
 	@Override
 	public String toString() {
-		return "TRCRequest [endDate=" + endDate + ", searchString=" + searchString + ", startDate=" + startDate
-				+ ", tac=" + tac + ", txnId=" + txnId + ", userType=" + userType + ", status=" + status
-				+ ", adminStatus=" + adminStatus + ", featureId=" + featureId + ", userTypeId=" + userTypeId + ", file="
-				+ file + ", userId=" + userId + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("TRCRequest [endDate=");
+		builder.append(endDate);
+		builder.append(", searchString=");
+		builder.append(searchString);
+		builder.append(", startDate=");
+		builder.append(startDate);
+		builder.append(", tac=");
+		builder.append(tac);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", filterUserType=");
+		builder.append(filterUserType);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", adminStatus=");
+		builder.append(adminStatus);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", file=");
+		builder.append(file);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append("]");
+		return builder.toString();
 	}
-	
-	
-	
 	
 }
 

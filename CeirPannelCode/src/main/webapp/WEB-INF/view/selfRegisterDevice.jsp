@@ -196,8 +196,8 @@ position: fixed;
 }
 
 .deviceErrorTitle {
-position: relative;
-top:0px;
+    position: relative;
+    top: 0px;
 }
 </style>
 </head>
