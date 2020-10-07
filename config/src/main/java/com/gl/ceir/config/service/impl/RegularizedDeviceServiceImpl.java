@@ -1035,7 +1035,9 @@ public class RegularizedDeviceServiceImpl {
 					tag = ConfigTags.max_foreigner_end_user_device_count;
 				}
 
-				PolicyConfigurationDb policyConfigurationDb = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(tag);
+//				PolicyConfigurationDb policyConfigurationDb = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(tag);
+				
+				SystemConfigurationDb policyConfigurationDb = systemConfigurationDbRepository.getByTag(tag);
 
 //				return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()), regularizedDeviceDbRepository.countByNidAndTaxPaidStatus(nid,2)));
 				return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()),

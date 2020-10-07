@@ -32,7 +32,6 @@ public class GreylistServiceImpl {
 			
 			if(Objects.nonNull(greylistDb.getComplainType()))
 				greylistDb.setComplainTypeInterp(interpSetter.setConfigInterp(Tags.COMPLAINT_TYPE, Integer.parseInt(greylistDb.getComplainType())));
-		
 		}catch (NumberFormatException e) {
 			greylistDb.setComplainTypeInterp("NA");
 		}
