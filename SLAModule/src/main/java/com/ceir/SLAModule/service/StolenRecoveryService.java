@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -54,10 +54,11 @@ public class StolenRecoveryService {
 	@Autowired
 	UserRepoService userRepo;
 
-	private final static Logger log =LoggerFactory.getLogger(App.class);
+	private final static Logger log =Logger.getLogger(App.class);
+//   	Stolen(0, "Stolen"), Recovery(1, "Recovery"), Block(2, "Block"),Unblock(3, "Unblock");
 	public void stolenRecProcess(int state,String requestType,int featureId,Integer requestTypeId,String tag) {
 		log.info("inside "+requestType+"   process");
-		log.info("now going to fetch type "+requestType+" by status: "+state);
+		log.info("now going to fetch type "+requestType+" by status: "+state + " and requestTypeId: " + requestTypeId);
 		List<StolenandRecoveryMgmt> data=new ArrayList<StolenandRecoveryMgmt>();
 		try {
 			data=stolenRepo.fetchStolenByStatusAndReqType(state, requestTypeId);
@@ -71,14 +72,14 @@ public class StolenRecoveryService {
 			String currentDate=utility.currentDate();
 			log.info("currentDate is "+currentDate);
 			Iterator<StolenandRecoveryMgmt> dataIterator=data.iterator();
-			log.info("now going to find number of days for "+requestType+" of typeapprove tac by  ceir");
+			log.info("now going to find number of days for "+requestType+" of  approving by  ceir");
 //			log.info("number of days for approval of consign by  ceir is "+consignDays);
 			SystemConfigurationDb systemconfig=systemConfigRepoService.getByTag(tag);
 			List<SlaReport> slaData=new ArrayList<SlaReport>();
 			if(systemconfig!=null) {
 				long days=Long.parseLong(systemconfig.getValue());
 				log.info("number of days for approval of "+requestType+" by  ceir is "+days);
-				log.info("now going to fetch state interup value ");
+				log.info("now going to fetch state interup value for FeatureId " + featureId);
 				List<StatesInterpretationDb> stateInterup=stateInterupRepoService.getByFeatureID(featureId);
 			    String stateInterupValue=new String();
 			    for(StatesInterpretationDb statedata:stateInterup) {
@@ -140,3 +141,8 @@ public class StolenRecoveryService {
 		log.info("exit from "+requestType+" sla process");  
 	}
 }
+
+
+
+
+

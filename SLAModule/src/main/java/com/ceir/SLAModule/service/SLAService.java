@@ -1,7 +1,7 @@
 package com.ceir.SLAModule.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ceir.SLAModule.App;
@@ -31,7 +31,7 @@ public class SLAService implements Runnable{
 	
 	@Autowired
 	UserService userService;
-	private final static Logger log =LoggerFactory.getLogger(App.class);
+	private final static Logger log =Logger.getLogger(App.class);
 	
 	@Override
 	public void run() 
@@ -42,17 +42,29 @@ public class SLAService implements Runnable{
 			grievanceService.grievanceProcess(GrievanceStatus.PENDING_WITH_ADMIN.getCode());
 			stockService.stockProcess(StockStatus.SUCCESS.getCode());			
 			tacApproveService.tacProcess(3);
-			stolenRecService.stolenRecProcess(2, RequestType.Stolen.getDescription(), 5, RequestType.Stolen.getCode(),"STOLEN_PEN_WITH_CEIR_ADMIN");
-			stolenRecService.stolenRecProcess(2, RequestType.Recovery.getDescription(), 5, RequestType.Recovery.getCode(),"RECOVERY_PEN_WITH_CEIR_ADMIN");
-			stolenRecService.stolenRecProcess(2, RequestType.Block.getDescription(), 7, RequestType.Block.getCode(),"BLOCK_PEN_WITH_CEIR_ADMIN");
-			stolenRecService.stolenRecProcess(2, RequestType.Unblock.getDescription(), 7, RequestType.Unblock.getCode(),"UNBLOCK_PEN_WITH_CEIR_ADMIN");
+  // 	Stolen(0, "Stolen"), Recovery(1, "Recovery"), Block(2, "Block"),Unblock(3, "Unblock");
+			stolenRecService.stolenRecProcess(3, RequestType.Stolen.getDescription(), 5, RequestType.Stolen.getCode(),"STOLEN_PEN_WITH_CEIR_ADMIN");
+			stolenRecService.stolenRecProcess(3, RequestType.Recovery.getDescription(), 5, RequestType.Recovery.getCode(),"RECOVERY_PEN_WITH_CEIR_ADMIN");
+			stolenRecService.stolenRecProcess(3, RequestType.Block.getDescription(), 7, RequestType.Block.getCode(),"BLOCK_PEN_WITH_CEIR_ADMIN");
+			stolenRecService.stolenRecProcess(3, RequestType.Unblock.getDescription(), 7, RequestType.Unblock.getCode(),"UNBLOCK_PEN_WITH_CEIR_ADMIN");
 			userService.userProcess(2);
 			log.info("exit from sla report");
-			try {
-				Thread.sleep(3600000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+           System.exit(0);
+//			try {
+//				Thread.sleep(3600000);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
