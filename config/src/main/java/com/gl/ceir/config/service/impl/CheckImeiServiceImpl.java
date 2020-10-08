@@ -66,7 +66,8 @@ public class CheckImeiServiceImpl {
                }
                logger.info("Rules Populated");  // optimse
                for (Rule rule : rule_details) {
-                    String[] my_arr = {rule.rule_name, "1", "NONCDR", imei.toString().substring(0, 14), "4", "5", "6", "7", "8", deviceIdValue, "", " ", " ", ""};
+
+                    String[] my_arr = {rule.rule_name, "1", "NONCDR", ((rule.rule_name.equals("IMEI_LUHN_CHECK") || rule.rule_name.equals("IMEI_LENGTH")) ? imei.toString() : imei.toString().substring(0, 14)), "4", "5", "6", "7", "8", deviceIdValue, "", " ", " ", ""};
                     logger.info("Rule Output from RulE Engine");
 
                     expOutput = RuleEngineApplication.startRuleEngine(my_arr, conn, bw);
