@@ -22,11 +22,13 @@ public class RuleFilter {
      private static Logger logger = Logger.getLogger(RuleFilter.class);
      
      public HashMap getMyRule(Connection conn, HashMap<String, String> device_info, ArrayList<Rule> rulelist) {
+          logger.debug("getMyRule started ");
           BufferedWriter bw = null;
           HashMap<String, String> rule_detail = new HashMap<String, String>();    // CDR
           String output = "Yes";
           String action_output = "";
           for (Rule rule : rulelist) {
+                logger.debug("  MyRule  " + rule.rule_name);
                device_info.put("rule_name", rule.rule_name);
                device_info.put("output", rule.output);
                device_info.put("ruleid", rule.ruleid);
@@ -41,7 +43,7 @@ public class RuleFilter {
                String[] my_arr = {device_info.get("rule_name"), //0
                     "1", //1
                     "CDR", //2
-                    (     device_info.get("rule_name").equals("IMEI_LUHN_CHECK")  ||  device_info.get("rule_name").equals("IMEI_LENGTH") )     ? device_info.get("IMEIESNMEID") : device_info.get("IMEIESNMEID").substring(0, 14), //3
+                    ( device_info.get("rule_name").equals("IMEI_LUHN_CHECK")  ||  device_info.get("rule_name").equals("IMEI_LENGTH") )     ? device_info.get("IMEI") : device_info.get("IMEI").substring(0, 14), //3
                
                     "0", //4
                     device_info.get("file_name"), //5
@@ -1524,6 +1526,10 @@ public class RuleFilter {
 ////				 // System.out.println("Breaking the Rules");
 ////				break;
 ////			}
+
+
+
+
 
 
 
