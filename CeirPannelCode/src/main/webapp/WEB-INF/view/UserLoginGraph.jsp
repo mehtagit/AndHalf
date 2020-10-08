@@ -294,7 +294,7 @@ display: none !important;
                             	 				 <div class="split">
                             						<div class="col s12 m12 info-div center" id="infoBox"></div>
                            			
-                            <div style="display:flex">
+                            <div style="display:flex; margin-left: 12px;">
                             <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
@@ -331,7 +331,7 @@ display: none !important;
              </div>               
                  </div>   
                     
-                    <div style="display:flex">
+                    <div style="display:flex; margin-left: 12px;">
                             <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
@@ -366,7 +366,7 @@ display: none !important;
     
     
     
-    <div style="display:flex">
+    <div style="display:flex; margin-left: 12px;">
                             <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
