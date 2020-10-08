@@ -300,7 +300,7 @@ th {
                             				 <div class="split">
                             						<div class="col s12 m12 info-div center" id="infoBox"></div>
                            	
-                           <div style="display:flex">
+                           <div style="display:flex; margin-left: 12px;">
                             
                                <div class="col-xl-8 col-lg-7"  style=" width: 50.5% !important;">
               <div class="card shadow mb-4">
@@ -313,14 +313,23 @@ th {
                 <div class="card-body" style = "height: 456px;">
                  
                       	      <table class="responsive-table striped datatable" id="activeDeviceTable">
-                             
+                             	<thead>
+				<tr>
+				<th>Parameter</th>
+				<th>Value</th>
+				</tr>
+				</thead>
                                 <tr>
-                                  <th>Total IMEI</th>
+                                  <td>Total IMEI</td>
                                   <td id="firstTD"></td>
                                   </tr>
                                   <tr>
-                                  <th>Total Unique IMEI</th>
+                                  <td>Total Unique IMEI</td>
                                   <td id="secondTD"></td>
+                                </tr>
+                                <tr>
+                                  <td>Total Paired IMEI</td>
+                                  <td id="thirdTD"></td>
                                 </tr>
   							  
                             </table>
@@ -351,7 +360,7 @@ th {
               
                    
                     
-                     <div style="display:flex">
+                     <div style="display:flex; margin-left: 12px;">
                    <div class="col-xl-8 col-lg-7"  style=" width: 50.5% !important;">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->

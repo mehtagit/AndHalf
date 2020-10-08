@@ -1208,6 +1208,7 @@ $('#blockdeviceIdType').on('change', function() {
 
 	switch (value) {
 	case 0:
+		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").val('');
 		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("pattern","[0-9]{15,16}");
 		$("#singleblockIMEI1,#singleblockIMEI2,#singleblockIMEI3,#singleblockIMEI4").attr("maxlength","16");
 

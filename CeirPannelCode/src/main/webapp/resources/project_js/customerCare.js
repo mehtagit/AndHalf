@@ -353,6 +353,21 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 		$("#fileName").val(data.data.fileName); 
 		$("#viewcurrency").val(data.data.currencyInterp);
 		$("#viewtotalPrice").val(data.data.totalPrice);
+		if(data.data.supplierld==null){
+			$("#supplierId").val("NA");	
+		}
+		
+		if(data.data.consignmentNumber==null){
+			$("#consignmentNumber").val("NA");	
+		}
+		
+		if(data.data.totalPrice==null){
+			$("#viewtotalPrice").val("NA");	
+		}
+		
+		if(data.data.remarks==null){
+			$("#remark").val("NA");	
+		}
 		
 		}
 		else if(name=='Importer' && featureId==4)
@@ -368,9 +383,28 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 				$("#SupplierName").val(data.data.suplierName);
 				$("#InvoiceNumber").val(data.data.invoiceNumber);
 				$("#StockQuantity").val(data.data.quantity);
+				$('#StockDeviceQuantity').val(data.data.deviceQuantity);
 				$("#StockTransactionId").val(data.data.txnId);
 				$("#csvUploadFileName").val(data.data.fileName);
 				$("#withdrawnRemark").val(data.data.remarks);
+				
+				if(data.data.supplierId==null){
+					$("#SupplierId").val("NA");	
+				}
+				
+				if(data.data.suplierName==null){
+					$("#SupplierName").val("NA");	
+				}
+				
+				if(data.data.invoiceNumber==null){
+					$("#InvoiceNumber").val("NA");	
+				}
+				
+				if(data.data.remarks==null){
+					$("#withdrawnRemark").val("NA");	
+				}
+				
+				
 			}
 		
 		else if(name=='Custom' && featureId==4)
@@ -393,9 +427,26 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 			$("#SupplierName").val(data.data.suplierName);
 			$("#InvoiceNumber").val(data.data.invoiceNumber);
 			$("#StockQuantity").val(data.data.quantity);
+			$('#StockDeviceQuantity').val(data.data.deviceQuantity);
 			$("#StockTransactionId").val(data.data.txnId);
 			$("#csvUploadFileName").val(data.data.fileName);
 			$("#withdrawnRemark").val(data.data.remarks);
+			
+			if(data.data.supplierId==null){
+				$("#SupplierId").val("NA");	
+			}
+			
+			if(data.data.suplierName==null){
+				$("#SupplierName").val("NA");	
+			}
+			
+			if(data.data.invoiceNumber==null){
+				$("#InvoiceNumber").val("NA");	
+			}
+			
+			if(data.data.remarks==null){
+				$("#withdrawnRemark").val("NA");	
+			}
 		}
 		
 		else if(name=='Custom' && featureId==3)
@@ -412,11 +463,28 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 		$("#expectedArrivaldate").val(data.data.expectedArrivaldate);
 		$("#expectedArrivalPort").val(data.data.expectedArrivalPortInterp);
 		$("#Quantity").val(data.data.quantity);
+		$('#StockDeviceQuantity').val(data.data.deviceQuantity);
 		$("#TransactionId").val(data.data.txnId);
 		$("#remark").val(data.data.remarks);
 		$("#fileName").val(data.data.fileName); 
 		$("#viewcurrency").val(data.data.currencyInterp);
 		$("#viewtotalPrice").val(data.data.totalPrice);
+		
+		if(data.data.supplierld==null){
+			$("#supplierId").val("NA");	
+		}
+		
+		if(data.data.consignmentNumber==null){
+			$("#consignmentNumber").val("NA");	
+		}
+		
+		if(data.data.totalPrice==null){
+			$("#viewtotalPrice").val("NA");	
+		}
+		
+		if(data.data.remarks==null){
+			$("#remark").val("NA");	
+		}
 		}
 		else if(name=='Distributor' || name=='Retailer') {
 			
@@ -435,6 +503,22 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 				$("#StockTransactionId").val(data.data.txnId);
 				$("#csvUploadFileName").val(data.data.fileName);
 				$("#withdrawnRemark").val(data.data.remarks);
+				
+				if(data.data.supplierId==null){
+					$("#SupplierId").val("NA");	
+				}
+				
+				if(data.data.suplierName==null){
+					$("#SupplierName").val("NA");	
+				}
+				
+				if(data.data.invoiceNumber==null){
+					$("#InvoiceNumber").val("NA");	
+				}
+				
+				if(data.data.remarks==null){
+					$("#withdrawnRemark").val("NA");	
+				}
 			}
 		
          else if(name=='Manufacturer') {
@@ -455,6 +539,16 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 				$("#StockTransactionId").val(data.data.txnId);
 				$("#csvUploadFileName").val(data.data.fileName);
 				$("#withdrawnRemark").val(data.data.remarks);
+				
+				
+				
+				if(data.data.invoiceNumber==null){
+					$("#InvoiceNumber").val("NA");	
+				}
+				
+				if(data.data.remarks==null){
+					$("#withdrawnRemark").val("NA");	
+				}
 			}
          else if(name=="End User") {
  			
@@ -474,6 +568,14 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
  				$("#csvUploadFileName").val(data.data.fileName);
  				$("#withdrawnRemark").val(data.data.remarks);
  				$("#endUseremail").val(data.data.user.userProfile.email);
+ 				
+ 				if(data.data.user.userProfile.email==null){
+ 					$("#endUseremail").val("");
+				}
+				
+				if(data.data.remarks==null){
+					$("#withdrawnRemark").val("NA");	
+				}
  				$("label[for='endUseremail']").addClass('active');
  			
  			}
