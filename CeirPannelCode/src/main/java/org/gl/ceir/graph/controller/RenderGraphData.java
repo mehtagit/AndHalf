@@ -5,6 +5,8 @@ import org.gl.ceir.CeirPannelCode.Feignclient.AnalyticsFeign;
 import org.gl.ceir.CeirPannelCode.Service.GraphService;
 import org.gl.ceir.graph.model.ActiveDeviceGraphContent;
 import org.gl.ceir.graph.model.ActiveDeviceGraphResponseModel;
+import org.gl.ceir.graph.model.BrandContent;
+import org.gl.ceir.graph.model.BrandModelGrapContent;
 import org.gl.ceir.graph.model.GraphRequest;
 import org.gl.ceir.graph.model.UserDashboardGraphContent;
 import org.gl.ceir.graph.model.UserDashboardGraphResponseModel;
@@ -39,6 +41,8 @@ public class RenderGraphData {
 	UserDashboardResponseModel userDashboardResponseModel;
 	@Autowired
 	ActiveDeviceGraphResponseModel activeDeviceGraphResponseModel;
+	@Autowired
+	BrandContent brandModelGrapContent;
 
 	@ResponseBody
 	@RequestMapping(value = "/userLoginGraph",method = {RequestMethod.POST})
@@ -82,6 +86,30 @@ public class RenderGraphData {
 			 log.info("::::::graphResponseModel:::::::"+activeDeviceGraphResponseModel);
 			 ActiveDeviceGraphContent paginationContentList = activeDeviceGraphResponseModel.getContent();
 			 log.info("::::::paginationContentList:::::::"+paginationContentList);
+			return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.SERVICE_UNAVAILABLE);
+			}
+	}
+	
+	@PostMapping("/brandModel/data") 
+	public ResponseEntity<?> topBrandModel(@RequestBody GraphRequest graphRequest) {
+		Object response= null;
+		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(),  graphRequest.getPageSize(),  graphRequest.getFile());
+		 
+		 log.info("::::::::: brand model graphRequest::::::::"+graphRequest+"::::::response:::::::"+response);
+	
+			try {
+			Gson gson= new Gson(); 
+			String apiResponse = gson.toJson(response);
+			log.info("::::::apiResponse:::::::"+apiResponse);
+			
+			brandModelGrapContent = gson.fromJson(apiResponse, BrandContent.class);
+			 log.info(":::::: brand model graphResponseModel:::::::"+brandModelGrapContent);
+			 BrandModelGrapContent paginationContentList = brandModelGrapContent.getContent();
+			 log.info(":::::: brand model paginationContentList:::::::"+paginationContentList);
 			return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
 			}
 			catch(Exception e) {
