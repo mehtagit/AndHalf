@@ -26,13 +26,13 @@ function activeDeviceGraph() {
 						  "groupBy": "Operator Name",
 						  "reportnameId": 29,
 						  "file" : 0, 
-						  "pageSize" :25, 
+						  "pageSize" :55, 
 						  "pageNo" :0
 			}
 			
 			
-			chartID='horizontalBarGraph';
-			type='horizontalBar';
+			chartID='lineGraph';
+			type='line';
 			title='User Login HorizontalBar Graph';
 		}
 
@@ -58,7 +58,7 @@ function activeDeviceGraph() {
 				
 				var response = JSON.parse(data);
 				//graph(response,chartID,type,title);
-				graph(response,'horizontalBarGraph','line','User Login HorizontalBar Graph');
+				graph(response,'lineGraph','line','User Login Line Graph')
 
 			},
 			error : function() {
@@ -79,19 +79,11 @@ function graph(response,id,chartType,chartTitle)
   var smart=[];
   var cellcard=[];
   var metfone=[];
-  //var pieLabelName=response['columns'];
+  
   var pieLabelName=['No of user logged','Unique user logged'];
   var pieData=[];
-	   //console.log("repsonse-->"+JSON.stringify(response));
-		/*noOfUsers.push(52,45,76,87,89);
-	   	date.push('05-09-2020','06-09-2020','07-09-2020','08-09-2020','09-09-2020');
-	   	uniqueUsers.push(55,21,43,65,76);*/
-	   	
-	   	//console.log("date: "+date);
-	    //console.log("noOfUsers: "+noOfUsers);
-	    //console.log("uniqueUserLogged: "+);	
-	   	
-	   	for(var i=0;i<response['rowData'].length;i++){
+	   	//console.log("repsonse-->"+JSON.stringify(response));
+		for(var i=0;i<response['rowData'].length;i++){
 	   		QB.push(response['rowData'][i]['QB']);
 	   		seatel.push(response['rowData'][i]['SEATEL']);
 	   		smart.push(response['rowData'][i]['SMART']);
@@ -99,9 +91,12 @@ function graph(response,id,chartType,chartTitle)
 	   		metfone.push(response['rowData'][i]['METFONE']);
 	   		date.push(response['rowData'][i]['Date']);
 	   		//totalImei.push(response['rowData'][i]['Total IMEI']);
-
-	   	}
-	   	
+	   		
+	   	}	
+	   	//console.log("cellcard-->"+JSON.stringify(cellcard));
+		//console.log("metfone-->"+JSON.stringify(metfone));
+	    
+	    
 	    var ctx = document.getElementById(''+id+'').getContext('2d');
 	    var chart = new Chart(ctx, {
 	      // The type of chart we want to create
@@ -183,24 +178,19 @@ function graph(response,id,chartType,chartTitle)
 				
 	    	    scales: {
 	                xAxes: [{
-	                   stacked: true, 
 	                   gridLines: {
-	                	   
 	                      display: false
 	                   }
 	                }],
 	                yAxes: [{
-	                   stacked: true,
 	                   gridLines: {
 	                      display: false
 	                   }
 	                }]
-	             },           
-				  legend: {display: true}
+	             }           
+	             
 	    	}
 	    });
-	    
-    	
    
     $('div#initialloader').delay(300).fadeOut('slow');
 }
