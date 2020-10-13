@@ -93,11 +93,7 @@ function graph(response,id,chartType,chartTitle)
 	   		//totalImei.push(response['rowData'][i]['Total IMEI']);
 	   		
 	   	}	
-	   	//console.log("cellcard-->"+JSON.stringify(cellcard));
-		//console.log("metfone-->"+JSON.stringify(metfone));
-	    
-	    
-	    var ctx = document.getElementById(''+id+'').getContext('2d');
+	   	var ctx = document.getElementById(''+id+'').getContext('2d');
 	    var chart = new Chart(ctx, {
 	      // The type of chart we want to create
 	      type: ''+chartType+'',
@@ -107,7 +103,6 @@ function graph(response,id,chartType,chartTitle)
 	        labels: date,
 	        datasets: [{
 	            label: "QB",
-	            //backgroundColor:  'rgb(70, 191, 189)',
 	            borderColor:  'rgb(235, 203, 138)',
 	            data: QB,
 	            fill: false
@@ -115,7 +110,6 @@ function graph(response,id,chartType,chartTitle)
 	        },
 	        {
 	            label: "Seatel",
-	            //backgroundColor:  'rgb(70, 191, 189)',
 	            borderColor: 'rgb(70, 191, 189)',
 	            data: seatel,
 	            fill: false
@@ -123,7 +117,6 @@ function graph(response,id,chartType,chartTitle)
 	        },
 	        {
 	            label: "Smart",
-	            //backgroundColor:  'rgb(70, 191, 189)',
 	            borderColor:  '#512DA8',
 	            data: smart,
 	            fill: false
@@ -131,7 +124,6 @@ function graph(response,id,chartType,chartTitle)
 	        },
 	        {
 	            label: "Cellcard",
-	            //backgroundColor:  'rgb(70, 191, 189)',
 	            borderColor: '#D32F2F',
 	            data: cellcard,
 	            fill: false
@@ -139,20 +131,11 @@ function graph(response,id,chartType,chartTitle)
 	        },
 	        {
 	            label: "Metfone",
-	            //backgroundColor:  'rgb(70, 191, 189)',
 	            borderColor:  '#FFA000',
 	            data: metfone,
 	            fill: false
 	            
-	        },
-	        
-	      /* {
-	            label: "Date",
-	            //backgroundColor: 'rgb(235, 203, 138)',
-	            borderColor:  'rgb(235, 203, 138)',
-	            data: date,
-	            fill: false
-	       }*/]
+	        }]
 	      },
 
 	      // Configuration options go here
@@ -180,12 +163,20 @@ function graph(response,id,chartType,chartTitle)
 	                xAxes: [{
 	                   gridLines: {
 	                      display: false
-	                   }
+	                   },
+	                   scaleLabel: {
+	                       display: true,
+	                       labelString: 'Date'
+	                     }
 	                }],
 	                yAxes: [{
 	                   gridLines: {
 	                      display: false
-	                   }
+	                   },
+	                   scaleLabel: {
+	                       display: true,
+	                       labelString: 'IMEI Count'
+	                     }
 	                }]
 	             }           
 	             

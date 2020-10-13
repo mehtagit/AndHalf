@@ -331,7 +331,7 @@ display: none !important;
              </div>               
                  </div>   
                     
-                    <div style="display:flex; margin-left: 12px;">
+                    <%-- <div style="display:flex; margin-left: 12px;">
                             <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
@@ -362,11 +362,11 @@ display: none !important;
                  
                     <canvas class="chart-area" id="donutGraph" style = "width: 550px; height: 400px; margin: 0 auto">
                   </canvas>
-    </div></div></div></div>
+    </div></div></div></div> --%>
     
     
     
-    <div style="display:flex; margin-left: 12px;">
+    <%-- <div style="display:flex; margin-left: 12px;">
                             <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
@@ -397,7 +397,7 @@ display: none !important;
                  
                     <canvas class="chart-area" id="horizontalBarGraph" style = "width: 550px; height: 400px; margin: 0 auto">
                   </canvas>
-    </div></div></div></div>
+    </div></div></div></div> --%>
     </div></div></div></div></div></div></section></div>
 
 
