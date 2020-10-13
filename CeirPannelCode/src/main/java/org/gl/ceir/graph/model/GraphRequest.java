@@ -23,34 +23,7 @@ public class GraphRequest {
 	public String getEndDate() {
 		return endDate;
 	}
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("GraphRequest [columns=");
-		builder.append(columns);
-		builder.append(", dbName=");
-		builder.append(dbName);
-		builder.append(", endDate=");
-		builder.append(endDate);
-		builder.append(", reportnameId=");
-		builder.append(reportnameId);
-		builder.append(", searchString=");
-		builder.append(searchString);
-		builder.append(", startDate=");
-		builder.append(startDate);
-		builder.append(", tableName=");
-		builder.append(tableName);
-		builder.append(", txnId=");
-		builder.append(txnId);
-		builder.append(", file=");
-		builder.append(file);
-		builder.append(", pageSize=");
-		builder.append(pageSize);
-		builder.append(", pageNo=");
-		builder.append(pageNo);
-		builder.append("]");
-		return builder.toString();
-	}
+
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
 	}
@@ -90,8 +63,14 @@ public class GraphRequest {
 	private String searchString;
 	private String startDate ;
 	private String tableName;
+	private String groupBy ;
+	public String getGroupBy() {
+		return groupBy;
+	}
+	public void setGroupBy(String groupBy) {
+		this.groupBy = groupBy;
+	}
 	private String txnId ;
-	
 	private int file;
 	private int pageSize;
 	private int pageNo;
@@ -112,6 +91,36 @@ public class GraphRequest {
 	}
 	public void setPageNo(int pageNo) {
 		this.pageNo = pageNo;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("GraphRequest [columns=");
+		builder.append(columns);
+		builder.append(", dbName=");
+		builder.append(dbName);
+		builder.append(", endDate=");
+		builder.append(endDate);
+		builder.append(", reportnameId=");
+		builder.append(reportnameId);
+		builder.append(", searchString=");
+		builder.append(searchString);
+		builder.append(", startDate=");
+		builder.append(startDate);
+		builder.append(", tableName=");
+		builder.append(tableName);
+		builder.append(", groupBy=");
+		builder.append(groupBy);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", file=");
+		builder.append(file);
+		builder.append(", pageSize=");
+		builder.append(pageSize);
+		builder.append(", pageNo=");
+		builder.append(pageNo);
+		builder.append("]");
+		return builder.toString();
 	}
 
 }
