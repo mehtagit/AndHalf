@@ -63,7 +63,7 @@ function Datatable(Url, dataUrl) {
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 			"userType" : $("body").attr("data-roleType"),
 			"status" : parseInt($('#Status').val()),
-			"FilterUserType" : FilterUserType
+			"filterUserType" : FilterUserType
 		}
 	}else if(userType == "TRC"){
 		

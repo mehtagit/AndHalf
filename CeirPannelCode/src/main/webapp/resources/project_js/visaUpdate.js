@@ -325,6 +325,7 @@
 						"endDate":$('#endDate').val(),
 						"startDate":$('#startDate').val(),
 						"txnId":txn,
+						"status":$('#statusvisa').val(),
 						"userId": parseInt($("body").attr("data-userID")),
 						"featureId":parseInt(featureId),
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),

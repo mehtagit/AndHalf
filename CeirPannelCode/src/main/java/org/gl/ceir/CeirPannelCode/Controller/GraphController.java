@@ -42,6 +42,13 @@ public class GraphController {
 		mv.setViewName("ActiveDeviceGraph");
 		return  mv;
 	}
+	
+	@RequestMapping(value = "/featureDashboard",method = {RequestMethod.GET})
+	public ModelAndView featureDashboard(){
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("featureDashboardGraph");
+		return  mv;
+	}
 
 
 }

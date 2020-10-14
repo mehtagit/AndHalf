@@ -2,6 +2,7 @@ package org.gl.ceir.graph.model;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 
 @Component
@@ -17,25 +18,39 @@ public class ActiveDeviceGraphRowData {
 	@SerializedName("Modified On")
 	private String modifiedOn;
 	
+	@JsonProperty("Date")
+	@SerializedName("Date")
+	private String date;
 	
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("ActiveDeviceGraphRowData [approvedTAC=");
-		builder.append(approvedTAC);
-		builder.append(", rejectedTAC=");
-		builder.append(rejectedTAC);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", imeiCount=");
-		builder.append(imeiCount);
-		builder.append(", msisdnFrequency=");
-		builder.append(msisdnFrequency);
-		builder.append("]");
-		return builder.toString();
-	}
+	@JsonProperty("Operator Name")
+	@SerializedName("Operator Name")
+	private String operatorName;
+	
+	@JsonProperty("Total IMEI")
+	@SerializedName("Total IMEI")
+	private String totalImei;
+	
+	@JsonProperty("QB")
+	@SerializedName("QB")
+	private String qb;
+	
+	@JsonProperty("SEATEL")
+	@SerializedName("SEATEL")
+	private String seatel;
+	
+	@JsonProperty("SMART")
+	@SerializedName("SMART")
+	private String smart;
+	
+	@JsonProperty("CELLCARD")
+	@SerializedName("CELLCARD")
+	private String cellcard;
+	
+	@JsonProperty("METFONE")
+	@SerializedName("METFONE")
+	private String metfone;
+	
+	
 	public String getApprovedTAC() {
 		return approvedTAC;
 	}
@@ -76,4 +91,62 @@ public class ActiveDeviceGraphRowData {
 	private String imeiCount;
 	@SerializedName("MSISDN Frequency")
 	private String msisdnFrequency;
+
+
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getOperatorName() {
+		return operatorName;
+	}
+	public void setOperatorName(String operatorName) {
+		this.operatorName = operatorName;
+	}
+	
+	public String getTotalImei() {
+		return totalImei;
+	}
+	public void setTotalImei(String totalImei) {
+		this.totalImei = totalImei;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("ActiveDeviceGraphRowData [approvedTAC=");
+		builder.append(approvedTAC);
+		builder.append(", rejectedTAC=");
+		builder.append(rejectedTAC);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", date=");
+		builder.append(date);
+		builder.append(", operatorName=");
+		builder.append(operatorName);
+		builder.append(", totalImei=");
+		builder.append(totalImei);
+		builder.append(", qb=");
+		builder.append(qb);
+		builder.append(", seatel=");
+		builder.append(seatel);
+		builder.append(", smart=");
+		builder.append(smart);
+		builder.append(", cellcard=");
+		builder.append(cellcard);
+		builder.append(", metfone=");
+		builder.append(metfone);
+		builder.append(", imeiCount=");
+		builder.append(imeiCount);
+		builder.append(", msisdnFrequency=");
+		builder.append(msisdnFrequency);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
+	
 }

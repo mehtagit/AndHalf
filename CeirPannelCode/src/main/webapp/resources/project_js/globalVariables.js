@@ -112,7 +112,7 @@ function isFileValid(id) {
 
 
 function isImageValid(id) {
-
+	
 	var uploadedFileName = $("#"+id).val();
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 	////alert("file extension=="+uploadedFileName)
@@ -122,6 +122,7 @@ function isImageValid(id) {
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 		//alert("----"+fileSize);*/
 	fileSize = Math.floor(fileSize/1000);
+	
 	$('#FilefieldId').val(id);
 	////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var fileExtension =ext.toLowerCase();
@@ -308,9 +309,9 @@ function checkDuplicateImei(CheckIMEI1,CheckIMEI2,CheckIMEI3,CheckIMEI4){
 }
 
 function luhn_checksum(code) {
-	var IMEI1toPass = code.slice(0, 14);
-	var len = IMEI1toPass.length
+	var IMEI1toPass = code;
 	//console.log("IMEI passed to luhn="+IMEI1toPass);
+	var len = IMEI1toPass.length	
     var parity = len % 2
     var sum = 0
     for (var i = len-1; i >= 0; i--) {
@@ -325,12 +326,12 @@ function luhn_checksum(code) {
 function luhnCheck(IMEILUHN,IMEIType){
 	if($("#"+IMEIType).val()==0){
 	var IMEIlenth1=$("#"+IMEILUHN).val().length;
-	var IMEI1LastDigit=$("#"+IMEILUHN).val().slice(14);
+	var IMEI1LastDigit=$("#"+IMEILUHN).val();
 	//console.log("IMEI1LastDigit=="+IMEI1LastDigit);
 	if (IMEIlenth1==15){
 		 var res=luhn_checksum($("#"+IMEILUHN).val());
 		//console.log(res);
-		if(IMEI1LastDigit==res){
+		if(res==0){
 			//IMEI number passed luhn alogoritham .
 			$('#errorMsgOnModal').text('');
 		}

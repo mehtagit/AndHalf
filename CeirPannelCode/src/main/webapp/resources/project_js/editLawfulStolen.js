@@ -524,7 +524,7 @@ function isImageValid(id) {
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 	////alert("file extension=="+uploadedFileName)
 	var ext = uploadedFileName.split('.').pop();
-
+	$('#FilefieldId').val(id);
 	var fileSize = ($("#"+id)[0].files[0].size);
 	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
 	//alert("----"+fileSize);*/

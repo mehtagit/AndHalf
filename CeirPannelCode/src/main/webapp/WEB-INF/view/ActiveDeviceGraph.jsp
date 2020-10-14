@@ -300,7 +300,7 @@ th {
                             				 <div class="split">
                             						<div class="col s12 m12 info-div center" id="infoBox"></div>
                            	
-                           <div style="display:flex">
+                           <div style="display:flex; margin-left: 12px;">
                             
                                <div class="col-xl-8 col-lg-7"  style=" width: 50.5% !important;">
               <div class="card shadow mb-4">
@@ -313,14 +313,23 @@ th {
                 <div class="card-body" style = "height: 456px;">
                  
                       	      <table class="responsive-table striped datatable" id="activeDeviceTable">
-                             
+                             	<thead>
+				<tr>
+				<th>Parameter</th>
+				<th>Value</th>
+				</tr>
+				</thead>
                                 <tr>
-                                  <th>Total IMEI</th>
+                                  <td>Total IMEI</td>
                                   <td id="firstTD"></td>
                                   </tr>
                                   <tr>
-                                  <th>Total Unique IMEI</th>
+                                  <td>Total Unique IMEI</td>
                                   <td id="secondTD"></td>
+                                </tr>
+                                <tr>
+                                  <td>Total Paired IMEI</td>
+                                  <td id="thirdTD"></td>
                                 </tr>
   							  
                             </table>
@@ -347,11 +356,51 @@ th {
                       
              </div>               
               </div> 
-              
-              
+            
+            
+         <!-- ----------------------------------------------- brand name graph ----------------------------------------------------->     
+              <div class="split">
+                            						<div class="col s12 m12 info-div center" id="infoBox"></div>
+                           	
+                           <div style="display:flex; margin-left: 12px;">
+                            
+                                           <div class="col-xl-8 col-lg-7"  style=" width: 50.5% !important;">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary" id="">Top 5 Brands</h6>
+                 
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                   <canvas class="chart-area" id="pieGraphBrandName" style = "width: 550px; height: 400px; margin: 0 auto">
+                  </canvas>
+                </div>
+              </div>
+            </div>
+            
+            
+                            <div class="col-xl-8 col-lg-7"  style=" width: 50.5% !important;">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary" id="">Top 5 Models </h6>
+                 
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                   <canvas class="chart-area" id="pieGraphModelNumber" style = "width: 550px; height: 400px; margin: 0 auto">
+                  </canvas>
+                </div>
+              </div>
+            </div>
+                      
+             </div>               
+              </div> 
+            
                    
                     
-                     <div style="display:flex">
+                     <div style="display:flex; margin-left: 12px;">
                    <div class="col-xl-8 col-lg-7"  style=" width: 50.5% !important;">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
