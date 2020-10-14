@@ -31,8 +31,8 @@ function activeDeviceGraph() {
 			}
 			
 			
-			chartID='horizontalBarGraph';
-			type='horizontalBar';
+			chartID='lineGraph';
+			type='line';
 			title='User Login HorizontalBar Graph';
 		}
 
@@ -58,7 +58,7 @@ function activeDeviceGraph() {
 				
 				var response = JSON.parse(data);
 				//graph(response,chartID,type,title);
-				graph(response,'horizontalBarGraph','line','User Login HorizontalBar Graph');
+				graph(response,'lineGraph','line','User Login Line Graph')
 
 			},
 			error : function() {
@@ -79,19 +79,11 @@ function graph(response,id,chartType,chartTitle)
   var smart=[];
   var cellcard=[];
   var metfone=[];
-  //var pieLabelName=response['columns'];
+  
   var pieLabelName=['No of user logged','Unique user logged'];
   var pieData=[];
-	   //console.log("repsonse-->"+JSON.stringify(response));
-		/*noOfUsers.push(52,45,76,87,89);
-	   	date.push('05-09-2020','06-09-2020','07-09-2020','08-09-2020','09-09-2020');
-	   	uniqueUsers.push(55,21,43,65,76);*/
-	   	
-	   	//console.log("date: "+date);
-	    //console.log("noOfUsers: "+noOfUsers);
-	    //console.log("uniqueUserLogged: "+);	
-	   	
-	   	for(var i=0;i<response['rowData'].length;i++){
+	   	//console.log("repsonse-->"+JSON.stringify(response));
+		for(var i=0;i<response['rowData'].length;i++){
 	   		QB.push(response['rowData'][i]['QB']);
 	   		seatel.push(response['rowData'][i]['SEATEL']);
 	   		smart.push(response['rowData'][i]['SMART']);
@@ -99,10 +91,9 @@ function graph(response,id,chartType,chartTitle)
 	   		metfone.push(response['rowData'][i]['METFONE']);
 	   		date.push(response['rowData'][i]['Date']);
 	   		//totalImei.push(response['rowData'][i]['Total IMEI']);
-
-	   	}
-	   	
-	    var ctx = document.getElementById(''+id+'').getContext('2d');
+	   		
+	   	}	
+	   	var ctx = document.getElementById(''+id+'').getContext('2d');
 	    var chart = new Chart(ctx, {
 	      // The type of chart we want to create
 	      type: ''+chartType+'',
@@ -112,7 +103,6 @@ function graph(response,id,chartType,chartTitle)
 	        labels: date,
 	        datasets: [{
 	            label: "QB",
-	            //backgroundColor:  'rgb(70, 191, 189)',
 	            borderColor:  'rgb(235, 203, 138)',
 	            data: QB,
 	            fill: false
@@ -120,7 +110,6 @@ function graph(response,id,chartType,chartTitle)
 	        },
 	        {
 	            label: "Seatel",
-	            //backgroundColor:  'rgb(70, 191, 189)',
 	            borderColor: 'rgb(70, 191, 189)',
 	            data: seatel,
 	            fill: false
@@ -128,7 +117,6 @@ function graph(response,id,chartType,chartTitle)
 	        },
 	        {
 	            label: "Smart",
-	            //backgroundColor:  'rgb(70, 191, 189)',
 	            borderColor:  '#512DA8',
 	            data: smart,
 	            fill: false
@@ -136,7 +124,6 @@ function graph(response,id,chartType,chartTitle)
 	        },
 	        {
 	            label: "Cellcard",
-	            //backgroundColor:  'rgb(70, 191, 189)',
 	            borderColor: '#D32F2F',
 	            data: cellcard,
 	            fill: false
@@ -144,20 +131,11 @@ function graph(response,id,chartType,chartTitle)
 	        },
 	        {
 	            label: "Metfone",
-	            //backgroundColor:  'rgb(70, 191, 189)',
 	            borderColor:  '#FFA000',
 	            data: metfone,
 	            fill: false
 	            
-	        },
-	        
-	      /* {
-	            label: "Date",
-	            //backgroundColor: 'rgb(235, 203, 138)',
-	            borderColor:  'rgb(235, 203, 138)',
-	            data: date,
-	            fill: false
-	       }*/]
+	        }]
 	      },
 
 	      // Configuration options go here
@@ -183,24 +161,27 @@ function graph(response,id,chartType,chartTitle)
 				
 	    	    scales: {
 	                xAxes: [{
-	                   stacked: true, 
 	                   gridLines: {
-	                	   
 	                      display: false
-	                   }
+	                   },
+	                   scaleLabel: {
+	                       display: true,
+	                       labelString: 'Date'
+	                     }
 	                }],
 	                yAxes: [{
-	                   stacked: true,
 	                   gridLines: {
 	                      display: false
-	                   }
+	                   },
+	                   scaleLabel: {
+	                       display: true,
+	                       labelString: 'IMEI Count'
+	                     }
 	                }]
-	             },           
-				  legend: {display: true}
+	             }           
+	             
 	    	}
 	    });
-	    
-    	
    
     $('div#initialloader').delay(300).fadeOut('slow');
 }
@@ -278,3 +259,98 @@ $.ajax({
 		});
 	}
 });
+
+
+
+
+function graph(response,id,chartType,chartTitle,pieLabelName)
+{
+	var date = [];
+	//console.log("resonse=="+pieLabelName);
+	//var pieLabelName=['New','Approved By CEIR Admin','Pending Approval From CEIR Admin','Rejected by CEIR Admin','Rejected By System','Withdrawn By User','Withdrawn By CEIR Admin'];
+	var backgroundColors=['#512DA8','#008B8B','#F20515','#4682B4','#8B4513','#006400','#7C0378','#696969','#800080','#9400D3','#FFFF00','#7E57C2'];
+	var backgroundHoverColors=['#512DA8','#008B8B','#F20515','#4682B4','#8B4513','#006400','#7C0378','#696969','#800080','#9400D3','#FFFF00','#7E57C2'];
+	var rowData = [];
+	var allData = new Map();
+	var dataSetList = [];
+	for(var i=0;i<response['rowData'].length;i++)
+	{
+	    for( var j=0; j<pieLabelName.length; j++ )
+	    {
+	      if( allData.has( pieLabelName[j] ) ){
+	        rowData = allData.get( pieLabelName[j] );
+	      }
+	      else{
+	    	  rowData = [];
+	      }
+	      
+	      if(response['rowData'][i][pieLabelName[j]]==null || response['rowData'][i][pieLabelName[j]]=="null"){
+	    	  rowData.push(0);  
+	      }
+	      else{
+	    	  rowData.push(response['rowData'][i][pieLabelName[j]]);  
+	      }
+	      //console.log(rowData);;	
+	      	allData.set( pieLabelName[j], rowData );
+	    }
+	    date.push(response['rowData'][i]['Date']);
+	}
+
+	for( var j=0; j<pieLabelName.length; j++ ){
+		  dataSetList.push( {
+			label: pieLabelName[j],
+			backgroundColor: backgroundColors[j],
+			hoverBackgroundColor: backgroundHoverColors[j],
+			data: allData.get( pieLabelName[j] )
+		});
+
+	}
+	
+    	var bar_ctx = document.getElementById(''+id+'');
+    	var bar_chart = new Chart(bar_ctx, {
+    	    type: ''+chartType+'',
+    	    data: {
+    	        labels: date,
+    	        datasets:dataSetList
+    	    },
+    	    options: {
+    	        responsive: false,
+        	    maintainAspectRatio: false,
+    	     		animation: {
+    	        	duration: 10,
+    	        },
+    	        plugins: {
+    			    datalabels: {
+    			        display: false,
+    			    },
+    			    anchor :'end',
+    	            align :'top',
+    	            // and if you need to format how the value is displayed...
+    	            formatter: function(value, context) {
+    	                return GetValueFormatted(value);
+    	            }
+    			},
+    	        scales: {
+    	          xAxes: [{ 
+    	          	stacked: false,
+    	          	scaleLabel: {
+    	                display: true,
+    	                labelString: 'Count'
+    	              },
+    	            
+    	            gridLines: { display: false },
+    	            }],
+    	          yAxes: [{ 
+    	          	stacked: true,
+    	          	scaleLabel: {
+    	                display: true,
+    	                labelString: 'Date'
+    	              },
+    	            }],
+    	        }, // scales
+    	        legend: {display: true}
+    	    } // options
+    	   }
+    	);
+    	$('div#initialloader').delay(300).fadeOut('slow');    
+}

@@ -128,7 +128,6 @@ var i=0;
 
 function graph(response,id,chartType,chartTitle)
 {
-
   var date=[];
   var noOfUsers=[];
   var uniqueUsers=[];
@@ -147,9 +146,8 @@ function graph(response,id,chartType,chartTitle)
 	    //console.log("uniqueUserLogged: "+);	
 
     if(chartType=='pie' || chartType=='doughnut'){
-  
+    
         var ctx = document.getElementById(''+id+'').getContext('2d');
-
         var chart = new Chart(ctx, {
           // The type of chart we want to create
           type: ''+chartType+'',
@@ -169,7 +167,6 @@ function graph(response,id,chartType,chartTitle)
           options: {
         	    responsive: false,
         	    maintainAspectRatio: false,
-        	 
         	    plugins: {
 				    datalabels: {
 				      formatter: (value, ctx) => {
@@ -189,8 +186,7 @@ function graph(response,id,chartType,chartTitle)
         	    
         	}
         });
-
-     
+    	
     }
     else if(chartType=='gauge'){
 
@@ -292,7 +288,8 @@ function graph(response,id,chartType,chartTitle)
     	   }
     	);
     }
-    else if(chartType == 'bar'){
+    
+        else if(chartType == 'bar'){
 
     var ctx = document.getElementById(''+id+'').getContext('2d');
     var chart = new Chart(ctx, {
@@ -413,11 +410,19 @@ function graph(response,id,chartType,chartTitle)
 			
     	    scales: {
                 xAxes: [{
+                scaleLabel: {
+    	                display: true,
+    	                labelString: 'Date'
+    	              },
                    gridLines: {
                       display: false
                    }
                 }],
                 yAxes: [{
+                scaleLabel: {
+    	                display: true,
+    	                labelString: 'Number Of Users'
+    	              },
                    gridLines: {
                       display: false
                    }
@@ -434,7 +439,4 @@ function graph(response,id,chartType,chartTitle)
     }  
     $('div#initialloader').delay(300).fadeOut('slow');
 }
-
-
-
-
+    
