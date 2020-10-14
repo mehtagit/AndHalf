@@ -11,6 +11,17 @@
 	
 
 
+	$('#wholePageImage').on('click', function() {
+		html2canvas($('#wrapperPage'), {
+			onrendered: function(canvas) {                                      
+				var img = canvas.toDataURL("image/png"),
+				uri = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+				saveAs(uri, 'graph.png');
+			}
+		}); 
+	});
+	
+	
 	function saveAs(uri, filename) {
 		var link = document.createElement('a');
 		if (typeof link.download === 'string') {

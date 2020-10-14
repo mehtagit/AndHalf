@@ -92,6 +92,8 @@
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 
 
+<script type="text/javascript"
+	src="${context}/resources/graph_js/html2canvas.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
@@ -269,23 +271,33 @@ display: none !important;
     color: #fff;
     margin-top: 6px;
 }
+a#wholePageImage {
+    float: right;
+    margin: 10px 20px;
+    color: #fff;
+}
 </style>
 
 </head>
 <body data-id="45">
+			
 	<!-- START MAIN -->
 		<div id="initialloader"></div>
 	<!-- START WRAPPER -->
-	<div class="wrapper">
+	<div class="wrapper" id="wrapperPage">
 
 		<!-- START CONTENT -->
 		<section id="content">
 			<!--start container-->
+
 			<div class="container">
 				<div class="section">
 					<div class="row">
+					
 						<div class="col s12 m12 l12">
+						
 							<div class="row card-panel">
+							<a id="wholePageImage">Download</a>
 								<div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display:block !important">
                             <h6 class="fixPage-modal-header ">
                             <spring:message code="sidebar.User_Dashboard" />
@@ -416,10 +428,13 @@ display: none !important;
 
 <script src="${context}/resources/graph_js/chartjs-plugin-datalabel.js"></script>
 <script type="text/javascript"
-		src="${context}/resources/graph_js/UserLoginGraph.js?version=<%= (int) (Math.random() * 10) %>"></script>		
+	src="${context}/resources/graph_js/toImage.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 <script type="text/javascript"
 		src="${context}/resources/graph_js/jsonToCSV.js?version=<%= (int) (Math.random() * 10) %>"></script>		
+
+<script type="text/javascript"
+		src="${context}/resources/graph_js/UserLoginGraph.js?version=<%= (int) (Math.random() * 10) %>"></script>		
 <script type="text/javascript">$( document ).ready(function() {  userloginGraph();  var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </html>
 <%

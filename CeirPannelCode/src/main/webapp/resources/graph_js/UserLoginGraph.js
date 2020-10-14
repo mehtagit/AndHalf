@@ -135,12 +135,14 @@ function graph(response,id,chartType,chartTitle)
   var pieLabelName=['No of user logged','Unique user logged'];
   var pieData=[];
 	for(var i=0;i<response['rowData'].length;i++){
-		noOfUsers.push(response['rowData'][i].numberOfUserLogged);
-	   	 date.push(response['rowData'][i].date);
-	   	uniqueUsers.push(response['rowData'][i].uniqueUserLogged);
-		pieData.push(parseInt(response['rowData'][i].numberOfUserLogged));
-		pieData.push(parseInt(response['rowData'][i].uniqueUserLogged));
+		noOfUsers.push(response['rowData'][i]['Number of user logged']);
+	   	 date.push(response['rowData'][i]['Date']);
+	   	uniqueUsers.push(response['rowData'][i]['Unique user logged']);
+		pieData.push(parseInt(response['rowData'][i]['Number of user logged']));
+		pieData.push(parseInt(response['rowData'][i]['Unique user logged']));
 	    }
+	
+	
 	//console.log("date: "+date);
 	   //console.log("noOfUsers: "+noOfUsers);
 	    //console.log("uniqueUserLogged: "+);	
