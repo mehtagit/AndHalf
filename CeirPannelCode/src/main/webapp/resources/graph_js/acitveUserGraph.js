@@ -228,18 +228,27 @@ function graph(response,id,chartType,chartTitle)
                 plugins: {
     			    datalabels: {
     			        display: false,
+    			        
     			    },
     			},
 				scales: {
 					xAxes: [{
 						gridLines: {
-							display: false
-						}
+							display: false,
+						},
+						scaleLabel: {
+		                       display: true,
+		                       labelString: 'Date'
+		                     }
 					}],
 					yAxes: [{
 						gridLines: {
 							display: false
-						}
+						},
+						scaleLabel: {
+		                       display: true,
+		                       labelString: 'IMEI Count'
+		                     }
 					}]
 				}           
 
@@ -347,7 +356,7 @@ function graphBrandName(response,id,chartType,chartTitle)
 	var pieData1=[];
 	
 	
-	for(var i=0;i<=4;i++){
+	for(var i=0;i<=5;i++){
 		
 		pieData1.push(parseInt(response['rowData'][i]['Count']));
 		pieLabelName1.push(response['rowData'][i]['Brand Name']);
@@ -433,7 +442,7 @@ function graphTopModelNumber(response,id,chartType,chartTitle)
 	var date1=[];
 	var pieLabelName2=[];
 	var pieData2=[];
-	for(var i=0;i<=4;i++){
+	for(var i=0;i<=5;i++){
 		
 		pieData2.push(parseInt(response['rowData'][i]['Count']));
 		pieLabelName2.push(response['rowData'][i]['Model Name']);

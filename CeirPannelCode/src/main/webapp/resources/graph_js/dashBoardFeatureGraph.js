@@ -7,7 +7,7 @@ function featureDashboardGraph() {
 	var startDate=year+"-"+month+"-"+(day-15);
 	*/
 	var graphRequest=null;
-	[41,44,16].forEach(function(reportnameId) {
+	[41,44,16,57].forEach(function(reportnameId) {
 		if(reportnameId==41){
 			
 	 graphRequest={
@@ -56,6 +56,23 @@ else if(reportnameId==16){
 						"pageNo" :0
 				}			
 		}
+		
+else if(reportnameId==57){
+	
+	graphRequest={
+				"columns": [
+					"Date",
+					"User Type",
+					"Count"
+					],
+
+				"reportnameId": reportnameId,
+				"groupBy": "User Type",
+				"file" : 0,
+				"pageSize" :20,
+				"pageNo" :0
+		}			
+}	
 
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -94,6 +111,12 @@ else if(reportnameId==16){
             	
             	labelSet=setLabelByID(6 , 4);
             	graph(response,'grievanceStatusWise','horizontalBar','User Login HorizontalBar Graph',labelSet);
+				
+            }
+            	else if(reportnameId==57){
+            	
+            	labelSet=UserTypeList();
+            	graph(response,'grievanceUserWise','horizontalBar','User Login HorizontalBar Graph',labelSet);
 				
             }
 		},
@@ -174,12 +197,20 @@ function graph(response,id,chartType,chartTitle,pieLabelName)
     			},
     	        scales: {
     	          xAxes: [{ 
-    	          	stacked: true, 
+    	          	stacked: false,
+    	          	scaleLabel: {
+    	                display: true,
+    	                labelString: 'Count'
+    	              },
+    	            
     	            gridLines: { display: false },
     	            }],
     	          yAxes: [{ 
-    	          	stacked: true
-    	           
+    	          	stacked: true,
+    	          	scaleLabel: {
+    	                display: true,
+    	                labelString: 'Date'
+    	              },
     	            }],
     	        }, // scales
     	        legend: {display: true}
@@ -210,4 +241,14 @@ function setLabelByID(featureId,userTypeId){
 	});
 	
 	return res;
+}
+
+function UserTypeList(){
+	var userTypeList=[];
+	$.getJSON('./registrationUserType?type=1', function(data) {
+		for (i = 0; i < data.length; i++) {
+			userTypeList.push(data[i].usertypeName);
+		}
+	});
+	return userTypeList;
 }

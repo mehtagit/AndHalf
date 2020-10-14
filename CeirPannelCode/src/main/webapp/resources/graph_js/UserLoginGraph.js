@@ -336,12 +336,20 @@ function graph(response,id,chartType,chartTitle)
                 xAxes: [{
                    gridLines: {
                       display: false
-                   }
+                   },
+                   scaleLabel: {
+                       display: true,
+                       labelString: 'Date'
+                     }
                 }],
                 yAxes: [{
                    gridLines: {
                       display: false
-                   }
+                   },
+                   scaleLabel: {
+                       display: true,
+                       labelString: 'Number of Users'
+                     }
                 }]
              }           
              
