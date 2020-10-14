@@ -82,7 +82,7 @@ function graph(response,id,chartType,chartTitle)
   
   var pieLabelName=['No of user logged','Unique user logged'];
   var pieData=[];
-	   	//console.log("repsonse-->"+JSON.stringify(response));
+//	   	console.log("repsonse-->"+JSON.stringify(response['rowData']));
 		for(var i=0;i<response['rowData'].length;i++){
 	   		QB.push(response['rowData'][i]['QB']);
 	   		seatel.push(response['rowData'][i]['SEATEL']);
@@ -212,7 +212,13 @@ $(document).ready(function(){
 		contentType : "application/json",
 		data : JSON.stringify(graphRequest),
 		success: function(data){
-			
+	    	$("#expOperatorWiseIMEI").unbind("click").click(function(){
+		        var result = JSON.stringify(data['rowData']);
+		        if(result == '')
+		            return;
+		        
+		        JSONToCSVConvertor(result, "Report", true);
+		    });
 var i=0;
 				Object.keys(data['rowData'][0]).map(function(key){ 
 				if(key == 'Date'){
@@ -354,3 +360,4 @@ function graph(response,id,chartType,chartTitle,pieLabelName)
     	);
     	$('div#initialloader').delay(300).fadeOut('slow');    
 }
+
