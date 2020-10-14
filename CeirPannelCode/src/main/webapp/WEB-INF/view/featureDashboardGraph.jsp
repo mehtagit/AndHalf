@@ -288,10 +288,10 @@ display: none !important;
 							<div class="row card-panel">
 								<div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display:block !important">
                             <h6 class="fixPage-modal-header ">
-                            <spring:message code="sidebar.User_Dashboard" />
+                            <spring:message code="sidebar.Feature_Dashboard" />
                             				</h6>
                             				<h6 class="m-0 font-weight-bold text-primary" id="dateVal"></h6>
-                            	 				 <div class="split">
+                            	 				<%--  <div class="split">
                             						<div class="col s12 m12 info-div center" id="infoBox"></div>
                            			
                             <div style="display:flex; margin-left: 12px;">
@@ -300,8 +300,7 @@ display: none !important;
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
-        <div> <a id="exp">Export</a> | 
-                      <a id="pieImage" download="Pie.jpg">Download</a></div>
+                 
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -330,19 +329,19 @@ display: none !important;
               </div>
             </div>               
              </div>               
-                 </div>   
+                 </div>    --%>
                     
-                    <%-- <div style="display:flex; margin-left: 12px;">
+                    <div style="display:flex; margin-left: 12px;">
                             <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Grievance Status Wise Graph</h6>
                  
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                   <canvas class="chart-area" id="pieGraph" style = "width: 550px; height: 400px; margin: 0 auto">
+                   <canvas class="chart-area" id="grievanceStatusWise" style = "width: 550px; height: 400px; margin: 0 auto">
                   </canvas>
                 </div>
               </div>
@@ -355,29 +354,29 @@ display: none !important;
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Grievance User Wise Graph</h6>
               
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
                  
-                    <canvas class="chart-area" id="donutGraph" style = "width: 550px; height: 400px; margin: 0 auto">
+                    <canvas class="chart-area" id="grievanceUserWise" style = "width: 550px; height: 400px; margin: 0 auto">
                   </canvas>
-    </div></div></div></div>--%>
+    </div></div></div></div>
     
     
     
-   <%--   <div style="display:flex; margin-left: 12px;">
+    <div style="display:flex; margin-left: 12px;">
                             <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Consignment Status Wise Graph</h6>
                  
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                   <canvas class="chart-area" id="gaugeGraph" style = "width: 550px; height: 400px; margin: 0 auto">
+                   <canvas class="chart-area" id="ConsignmentBarGraph" style = "width: 550px; height: 400px; margin: 0 auto">
                   </canvas>
                 </div>
               </div>
@@ -390,7 +389,7 @@ display: none !important;
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Stock Status Wise Graph</h6>
               
                 </div>
                 <!-- Card Body -->
@@ -398,7 +397,7 @@ display: none !important;
                  
                     <canvas class="chart-area" id="horizontalBarGraph" style = "width: 550px; height: 400px; margin: 0 auto">
                   </canvas>
-    </div></div></div></div>--%>
+    </div></div></div></div>
     </div></div></div></div></div></div></section></div>
 
 
@@ -416,11 +415,9 @@ display: none !important;
 
 <script src="${context}/resources/graph_js/chartjs-plugin-datalabel.js"></script>
 <script type="text/javascript"
-		src="${context}/resources/graph_js/UserLoginGraph.js?version=<%= (int) (Math.random() * 10) %>"></script>		
+		src="${context}/resources/graph_js/dashBoardFeatureGraph.js?version=<%= (int) (Math.random() * 10) %>"></script>		
 
-<script type="text/javascript"
-		src="${context}/resources/graph_js/jsonToCSV.js?version=<%= (int) (Math.random() * 10) %>"></script>		
-<script type="text/javascript">$( document ).ready(function() {  userloginGraph();  var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {  featureDashboardGraph();  var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </html>
 <%
 	} else {

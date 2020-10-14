@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class GraphRequest {
 
 	private List<String> columns;
+	private String groupBy;
 	public List<String> getColumns() {
 		return columns;
 	}
@@ -22,6 +23,14 @@ public class GraphRequest {
 	}
 	public String getEndDate() {
 		return endDate;
+	}
+	
+	
+	public String getGroupBy() {
+		return groupBy;
+	}
+	public void setGroupBy(String groupBy) {
+		this.groupBy = groupBy;
 	}
 
 	public void setEndDate(String endDate) {
@@ -63,14 +72,8 @@ public class GraphRequest {
 	private String searchString;
 	private String startDate ;
 	private String tableName;
-	private String groupBy ;
-	public String getGroupBy() {
-		return groupBy;
-	}
-	public void setGroupBy(String groupBy) {
-		this.groupBy = groupBy;
-	}
 	private String txnId ;
+	
 	private int file;
 	private int pageSize;
 	private int pageNo;
@@ -97,6 +100,8 @@ public class GraphRequest {
 		StringBuilder builder = new StringBuilder();
 		builder.append("GraphRequest [columns=");
 		builder.append(columns);
+		builder.append(", groupBy=");
+		builder.append(groupBy);
 		builder.append(", dbName=");
 		builder.append(dbName);
 		builder.append(", endDate=");
@@ -109,8 +114,6 @@ public class GraphRequest {
 		builder.append(startDate);
 		builder.append(", tableName=");
 		builder.append(tableName);
-		builder.append(", groupBy=");
-		builder.append(groupBy);
 		builder.append(", txnId=");
 		builder.append(txnId);
 		builder.append(", file=");
@@ -123,4 +126,6 @@ public class GraphRequest {
 		return builder.toString();
 	}
 
+	
+	
 }
