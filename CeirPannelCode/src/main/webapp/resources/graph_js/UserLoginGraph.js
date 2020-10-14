@@ -288,7 +288,9 @@ function graph(response,id,chartType,chartTitle)
     	   }
     	);
     }
-    else{
+    
+        else if(chartType == 'bar'){
+
     var ctx = document.getElementById(''+id+'').getContext('2d');
     var chart = new Chart(ctx, {
       // The type of chart we want to create
@@ -315,6 +317,9 @@ function graph(response,id,chartType,chartTitle)
       options: {
     	    responsive: false,
     	    maintainAspectRatio: false,
+    	    animation: {
+    	        onComplete: done
+    	      },
     	    elements: {
                 point:{
                     radius: 0
@@ -336,25 +341,102 @@ function graph(response,id,chartType,chartTitle)
                 xAxes: [{
                    gridLines: {
                       display: false
-                   },
-                   scaleLabel: {
-                       display: true,
-                       labelString: 'Date'
-                     }
+                   }
                 }],
                 yAxes: [{
                    gridLines: {
                       display: false
-                   },
-                   scaleLabel: {
-                       display: true,
-                       labelString: 'Number of Users'
-                     }
+                   }
                 }]
              }           
              
     	}
     });
+
+    }
+    else if(chartType == 'line'){
+    	$("#exp").unbind("click").click(function(){
+	        var data = response['rowData'];
+	        if(data == '')
+	            return;
+	        
+	        JSONToCSVConvertor(data, "Report", true);
+	    });
+    var ctx = document.getElementById(''+id+'').getContext('2d');
+    var chart = new Chart(ctx, {
+      // The type of chart we want to create
+      type: ''+chartType+'',
+
+      // The data for our dataset
+      data: {
+        labels: date,
+        datasets: [ {
+            label: "Number Of Users",
+            backgroundColor:  'rgb(70, 191, 189)',
+            borderColor: 'rgb(70, 191, 189)',
+            data: noOfUsers
+        },
+        {
+            label: "Unique Users",
+          backgroundColor: 'rgb(235, 203, 138)',
+            borderColor:  'rgb(235, 203, 138)',
+            data: uniqueUsers
+        }]
+      },
+
+      // Configuration options go here
+      options: {
+    	    responsive: false,
+    	    maintainAspectRatio: false,
+    	    animation: {
+    	        onComplete: captureImage
+    	      },
+    	    elements: {
+                point:{
+                    radius: 0
+                }
+            },
+    	    plugins: {
+			    datalabels: {
+			        display: false,
+			    },
+			    anchor :'end',
+	            align :'top',
+	            // and if you need to format how the value is displayed...
+	            formatter: function(value, context) {
+	                return GetValueFormatted(value);
+	            }
+			},
+			
+    	    scales: {
+                xAxes: [{
+                scaleLabel: {
+    	                display: true,
+    	                labelString: 'Date'
+    	              },
+                   gridLines: {
+                      display: false
+                   }
+                }],
+                yAxes: [{
+                scaleLabel: {
+    	                display: true,
+    	                labelString: 'Number Of Users'
+    	              },
+                   gridLines: {
+                      display: false
+                   }
+                }]
+             }           
+             
+    	}
+    });
+    
+    function captureImage(){  
+        var url=chart.toBase64Image();
+        document.getElementById("pieImage").href=url;
+        }
     }  
     $('div#initialloader').delay(300).fadeOut('slow');
 }
+    

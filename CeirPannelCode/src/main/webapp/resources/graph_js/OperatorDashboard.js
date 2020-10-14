@@ -259,3 +259,98 @@ $.ajax({
 		});
 	}
 });
+
+
+
+
+function graph(response,id,chartType,chartTitle,pieLabelName)
+{
+	var date = [];
+	//console.log("resonse=="+pieLabelName);
+	//var pieLabelName=['New','Approved By CEIR Admin','Pending Approval From CEIR Admin','Rejected by CEIR Admin','Rejected By System','Withdrawn By User','Withdrawn By CEIR Admin'];
+	var backgroundColors=['#512DA8','#008B8B','#F20515','#4682B4','#8B4513','#006400','#7C0378','#696969','#800080','#9400D3','#FFFF00','#7E57C2'];
+	var backgroundHoverColors=['#512DA8','#008B8B','#F20515','#4682B4','#8B4513','#006400','#7C0378','#696969','#800080','#9400D3','#FFFF00','#7E57C2'];
+	var rowData = [];
+	var allData = new Map();
+	var dataSetList = [];
+	for(var i=0;i<response['rowData'].length;i++)
+	{
+	    for( var j=0; j<pieLabelName.length; j++ )
+	    {
+	      if( allData.has( pieLabelName[j] ) ){
+	        rowData = allData.get( pieLabelName[j] );
+	      }
+	      else{
+	    	  rowData = [];
+	      }
+	      
+	      if(response['rowData'][i][pieLabelName[j]]==null || response['rowData'][i][pieLabelName[j]]=="null"){
+	    	  rowData.push(0);  
+	      }
+	      else{
+	    	  rowData.push(response['rowData'][i][pieLabelName[j]]);  
+	      }
+	      //console.log(rowData);;	
+	      	allData.set( pieLabelName[j], rowData );
+	    }
+	    date.push(response['rowData'][i]['Date']);
+	}
+
+	for( var j=0; j<pieLabelName.length; j++ ){
+		  dataSetList.push( {
+			label: pieLabelName[j],
+			backgroundColor: backgroundColors[j],
+			hoverBackgroundColor: backgroundHoverColors[j],
+			data: allData.get( pieLabelName[j] )
+		});
+
+	}
+	
+    	var bar_ctx = document.getElementById(''+id+'');
+    	var bar_chart = new Chart(bar_ctx, {
+    	    type: ''+chartType+'',
+    	    data: {
+    	        labels: date,
+    	        datasets:dataSetList
+    	    },
+    	    options: {
+    	        responsive: false,
+        	    maintainAspectRatio: false,
+    	     		animation: {
+    	        	duration: 10,
+    	        },
+    	        plugins: {
+    			    datalabels: {
+    			        display: false,
+    			    },
+    			    anchor :'end',
+    	            align :'top',
+    	            // and if you need to format how the value is displayed...
+    	            formatter: function(value, context) {
+    	                return GetValueFormatted(value);
+    	            }
+    			},
+    	        scales: {
+    	          xAxes: [{ 
+    	          	stacked: false,
+    	          	scaleLabel: {
+    	                display: true,
+    	                labelString: 'Count'
+    	              },
+    	            
+    	            gridLines: { display: false },
+    	            }],
+    	          yAxes: [{ 
+    	          	stacked: true,
+    	          	scaleLabel: {
+    	                display: true,
+    	                labelString: 'Date'
+    	              },
+    	            }],
+    	        }, // scales
+    	        legend: {display: true}
+    	    } // options
+    	   }
+    	);
+    	$('div#initialloader').delay(300).fadeOut('slow');    
+}
