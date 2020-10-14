@@ -299,7 +299,7 @@ display: none !important;
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
+                <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
         <div> <a id="exp">Export</a> | 
                       <a id="pieImage" download="Pie.jpg">Download</a></div>
                 </div>
