@@ -94,6 +94,7 @@
 	src="${context}/resources/graph_js/html2canvas.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 
+
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 
@@ -275,6 +276,7 @@ a#wholePageImage {
     margin: 10px 20px;
     color: #fff;
 }
+
 </style>
 
 </head>
@@ -306,9 +308,9 @@ a#wholePageImage {
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
         <div> <a id="exp">Export</a> | 
-                      <a id="pieImage" download="Pie.jpg">Download</a></div>
+                      <a id="pieImage" download="User_login_report.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -326,7 +328,8 @@ a#wholePageImage {
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
-              
+              <div> <a id="expLineBar">Export</a> | 
+                      <a id="lineBarImage" download="Use_login_graph.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -432,7 +435,6 @@ a#wholePageImage {
 		src="${context}/resources/graph_js/UserLoginGraph.js?version=<%= (int) (Math.random() * 10) %>"></script>		
 <script type="text/javascript">$( document ).ready(function() {  userloginGraph();  var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </html>
-
 <%
 	} else {
 		/*  request.setAttribute("msg", "  *Please login first");
