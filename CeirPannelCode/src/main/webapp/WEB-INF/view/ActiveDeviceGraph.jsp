@@ -89,6 +89,8 @@
 <script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 <!------------------------------------------- Dragable Model---------------------------------->
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
+<script type="text/javascript"
+	src="${context}/resources/graph_js/html2canvas.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 
 
@@ -307,7 +309,9 @@ th {
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Active Device Table</h6>
-              
+              <div>
+					<a id="expActiveDeviceTable">Export</a> | <a id="activeDeviceDownload">Download</a>
+				</div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body" style = "height: 456px;">
@@ -359,44 +363,47 @@ th {
             
             
          <!-- ----------------------------------------------- brand name graph ----------------------------------------------------->     
-              <div class="split">
-                            						<div class="col s12 m12 info-div center" id="infoBox"></div>
-                           	
-                           <div style="display:flex; margin-left: 12px;">
-                            
-                                           <div class="col-xl-8 col-lg-7"  style=" width: 50.5% !important;">
-              <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary" id="">Top 5 Brands</h6>
-                 
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                   <canvas class="chart-area" id="pieGraphBrandName" style = "width: 550px; height: 400px; margin: 0 auto">
-                  </canvas>
-                </div>
-              </div>
-            </div>
-            
-            
-                            <div class="col-xl-8 col-lg-7"  style=" width: 50.5% !important;">
-              <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary" id="">Top 5 Models </h6>
-                 
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                   <canvas class="chart-area" id="pieGraphModelNumber" style = "width: 550px; height: 400px; margin: 0 auto">
-                  </canvas>
-                </div>
-              </div>
-            </div>
-                      
-             </div>               
-              </div> 
+            <!-- ----------------------------------------------- brand name graph -----------------------------------------------------> 
+<div class="split">
+<div class="col s12 m12 info-div center" id="infoBox"></div>
+
+<div style="display:flex; margin-left: 12px;">
+
+<div class="col-xl-8 col-lg-7" style=" width: 50.5% !important;">
+<div class="card shadow mb-4">
+<!-- Card Header - Dropdown -->
+<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+<h6 class="m-0 font-weight-bold text-primary" id="">Top 5 Brands</h6>
+ <div> <a id="exportBrandReport">Export</a> | 
+                      <a id="Top5BrandName" download="Top5BrandName.jpg">Download</a></div>
+</div>
+<!-- Card Body -->
+<div class="card-body">
+<canvas class="chart-area" id="pieGraphBrandName" style = "width: 550px; height: 400px; margin: 0 auto">
+</canvas>
+</div>
+</div>
+</div>
+
+
+<div class="col-xl-8 col-lg-7" style=" width: 50.5% !important;">
+<div class="card shadow mb-4">
+<!-- Card Header - Dropdown -->
+<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+<h6 class="m-0 font-weight-bold text-primary" id="">Top 5 Models </h6>
+<div> <a id="exportBrandReport">Export</a> | 
+                      <a id="Top5BrandName" download="Top5BrandName.jpg">Download</a></div>
+</div>
+<!-- Card Body -->
+<div class="card-body">
+<canvas class="chart-area" id="pieGraphModelNumber" style = "width: 550px; height: 400px; margin: 0 auto">
+</canvas>
+</div>
+</div>
+</div>
+
+</div> 
+</div> 
             
                    
                     
@@ -489,7 +496,12 @@ th {
 
 <script src="${context}/resources/graph_js/chartjs-plugin-datalabel.js"></script>
 <script type="text/javascript"
-		src="${context}/resources/graph_js/acitveUserGraph.js?version=<%= (int) (Math.random() * 10) %>"></script>		
+	src="${context}/resources/graph_js/toImage.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<script type="text/javascript"
+		src="${context}/resources/graph_js/jsonToCSV.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<script type="text/javascript"
+		src="${context}/resources/graph_js/acitveUserGraph.js?version=<%= (int) (Math.random() * 10) %>"></script>	
+	
 	<!-- chartist -->
         
 <script type="text/javascript">$( document ).ready(function() { activeDeviceGraph(); var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>

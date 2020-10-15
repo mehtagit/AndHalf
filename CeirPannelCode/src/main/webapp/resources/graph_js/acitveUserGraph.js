@@ -17,7 +17,7 @@ function activeDeviceGraph() {
 		var type=null;
 		var title=null;
 		var urlHit=null;
-		
+		var featureFlag =null;
 		if(reportnameId == 31){
 			graphRequest={
 					"columns": [
@@ -50,6 +50,7 @@ function activeDeviceGraph() {
 		}
 		
 		else if(reportnameId == 52 ){
+			featureFlag="Brand";
 			graphRequest={
 
 					"reportnameId": reportnameId,
@@ -61,9 +62,10 @@ function activeDeviceGraph() {
 			chartID='pieGraphBrandName';
 			type='pie';
 			title='User Login Pie Graph';
-			urlHit='./brandModel/data';
+			urlHit='./brandModel/data/'+featureFlag;
 		}
 		else if(reportnameId == 53 ){
+			featureFlag="Model";
 			graphRequest={
 
 					"reportnameId": reportnameId,
@@ -75,7 +77,7 @@ function activeDeviceGraph() {
 			chartID='pieGraphModelNumber';
 			type='pie';
 			title='User Login Pie Graph';
-			urlHit='./brandModel/data';
+			urlHit='./brandModel/data/'+featureFlag;
 		}
 
 		var token = $("meta[name='_csrf']").attr("content");
@@ -299,6 +301,13 @@ $(document).ready(function(){
 		contentType : "application/json",
 		data : JSON.stringify(graphRequest),
 		success: function(data){
+		$("#expActiveDeviceTable").unbind("click").click(function(){
+		        var result = JSON.stringify(data['rowData']);
+		        if(result == '')
+		            return;
+		        
+		        JSONToCSVConvertor(result, "Report", true);
+		    });
 var i=0;
 				Object.keys(data['rowData'][0]).map(function(key){ 
 				if(key == 'Date'){
@@ -374,12 +383,21 @@ function graphBrandName(response,id,chartType,chartTitle)
 		});
 		
 */
+		$("#exportBrandReport").unbind("click").click(function(){
+	        var data = JSON.stringify(response['rowData']);
+	        //console.log(JSON.stringify(data));
+	        if(data == '')
+	            return;
+	        JSONToCSVConvertor(data, "Top5Brand", true);
+
+	    });
 		
 		var ctx = document.getElementById(''+id+'').getContext('2d');
 		
 		var options = {
 				responsive: false,
 				maintainAspectRatio: false,
+				onComplete:captureLineImage,
 				plugins: {
 					datalabels: {
 					formatter: (value, ctx) => {
@@ -398,6 +416,11 @@ function graphBrandName(response,id,chartType,chartTitle)
 					}
 					}
 							}
+		function captureLineImage(){  
+            var url=bar_chart.toBase64Image();
+            /*document.getElementById("grievanceBarImg").href=url;*/
+            $("#Top5BrandName").attr("href",url);
+            }
 
 		var chart = new Chart(ctx, {
 			// The type of chart we want to create
@@ -426,7 +449,7 @@ function graphBrandName(response,id,chartType,chartTitle)
 
 			 options : options
 		});
-
+		
 	
 	}
 

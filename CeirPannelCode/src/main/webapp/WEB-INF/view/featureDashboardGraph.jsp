@@ -337,7 +337,8 @@ display: none !important;
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Grievance Status Wise Graph</h6>
-                 
+                   <div> <a id="expGrievanceStatus">Export</a> | 
+                      <a id="grievanceBarImg" download="state_Wise_Grievance.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -355,7 +356,8 @@ display: none !important;
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Grievance User Wise Graph</h6>
-              
+              	<div> <a id="expUserStatus">Export</a> | 
+                      <a id="grievanceUserImg" download="User_Wise_Grievance.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -372,7 +374,8 @@ display: none !important;
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Consignment Status Wise Graph</h6>
-                 
+                 <div> <a id="expConsignmentStatus">Export</a> | 
+                      <a id="consignmentStatusImg" download="state_Wise_Consignment.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -390,7 +393,8 @@ display: none !important;
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Stock Status Wise Graph</h6>
-              
+              <div> <a id="expStockStatus">Export</a> | 
+                      <a id="stockStatusImg" download="state_Wise_Stock.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -414,6 +418,8 @@ display: none !important;
 <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 
 <script src="${context}/resources/graph_js/chartjs-plugin-datalabel.js"></script>
+<script type="text/javascript"
+		src="${context}/resources/graph_js/jsonToCSV.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"
 		src="${context}/resources/graph_js/dashBoardFeatureGraph.js?version=<%= (int) (Math.random() * 10) %>"></script>		
 

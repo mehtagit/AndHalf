@@ -90,6 +90,8 @@
 <script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 <!------------------------------------------- Dragable Model---------------------------------->
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
+<script type="text/javascript"
+	src="${context}/resources/graph_js/html2canvas.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 
 
@@ -269,6 +271,12 @@ display: none !important;
     color: #fff;
     margin-top: 6px;
 }
+a#wholePageImage {
+    float: right;
+    margin: 10px 20px;
+    color: #fff;
+}
+
 </style>
 
 </head>
@@ -276,7 +284,7 @@ display: none !important;
 	<!-- START MAIN -->
 		<div id="initialloader"></div>
 	<!-- START WRAPPER -->
-	<div class="wrapper">
+	<div class="wrapper" id="wrapperPage">
 
 		<!-- START CONTENT -->
 		<section id="content">
@@ -286,6 +294,7 @@ display: none !important;
 					<div class="row">
 						<div class="col s12 m12 l12">
 							<div class="row card-panel">
+							<a id="wholePageImage">Download</a>
 								<div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display:block !important">
                             <h6 class="fixPage-modal-header ">
                             <spring:message code="sidebar.User_Dashboard" />
@@ -301,7 +310,7 @@ display: none !important;
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
         <div> <a id="exp">Export</a> | 
-                      <a id="pieImage" download="Pie.jpg">Download</a></div>
+                      <a id="pieImage" download="User_login_report.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -319,7 +328,8 @@ display: none !important;
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
-              
+              <div> <a id="expLineBar">Export</a> | 
+                      <a id="lineBarImage" download="Use_login_graph.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -416,10 +426,13 @@ display: none !important;
 
 <script src="${context}/resources/graph_js/chartjs-plugin-datalabel.js"></script>
 <script type="text/javascript"
-		src="${context}/resources/graph_js/UserLoginGraph.js?version=<%= (int) (Math.random() * 10) %>"></script>		
+	src="${context}/resources/graph_js/toImage.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 <script type="text/javascript"
 		src="${context}/resources/graph_js/jsonToCSV.js?version=<%= (int) (Math.random() * 10) %>"></script>		
+
+<script type="text/javascript"
+		src="${context}/resources/graph_js/UserLoginGraph.js?version=<%= (int) (Math.random() * 10) %>"></script>		
 <script type="text/javascript">$( document ).ready(function() {  userloginGraph();  var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </html>
 <%

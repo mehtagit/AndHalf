@@ -12,7 +12,7 @@ public class BrandModelGrapContent {
 	private String tableName;
 	private List<String> columns = null;
 	private List<BrandModelRowData> rowData = null;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
 	public Object getDbName() {
 	return dbName;
@@ -67,9 +67,18 @@ public class BrandModelGrapContent {
 		builder.append(dbName);
 		builder.append(", tableName=");
 		builder.append(tableName);
+		builder.append(", columns=");
+		builder.append(columns);
+		builder.append(", rowData=");
+		builder.append(rowData);
+		builder.append(", additionalProperties=");
+		builder.append(additionalProperties);
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
+	
 	
 	
 	
