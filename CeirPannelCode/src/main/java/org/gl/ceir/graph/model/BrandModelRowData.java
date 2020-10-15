@@ -13,56 +13,16 @@ public class BrandModelRowData {
 	
 	@SerializedName("Brand Name")
 	@JsonProperty("Brand Name")
-	private int brandName;
+	private String brandName;
 	
 	@SerializedName("Model Name")
 	@JsonProperty("Model Name")
-	private int modelNumber;
+	private String modelNumber;
 	
 	
 	@SerializedName("Count")
 	@JsonProperty("Count")
-	private int count;
-
-
-	public String getDate() {
-		return date;
-	}
-
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-
-
-	public int getBrandName() {
-		return brandName;
-	}
-
-
-	public void setBrandName(int brandName) {
-		this.brandName = brandName;
-	}
-
-
-	public int getModelNumber() {
-		return modelNumber;
-	}
-
-
-	public void setModelNumber(int modelNumber) {
-		this.modelNumber = modelNumber;
-	}
-
-
-	public int getCount() {
-		return count;
-	}
-
-
-	public void setCount(int count) {
-		this.count = count;
-	}
+	private String count;
 
 
 	@Override
@@ -76,23 +36,48 @@ public class BrandModelRowData {
 		builder.append(modelNumber);
 		builder.append(", count=");
 		builder.append(count);
-		builder.append(", getDate()=");
-		builder.append(getDate());
-		builder.append(", getBrandName()=");
-		builder.append(getBrandName());
-		builder.append(", getModelNumber()=");
-		builder.append(getModelNumber());
-		builder.append(", getCount()=");
-		builder.append(getCount());
-		builder.append(", getClass()=");
-		builder.append(getClass());
-		builder.append(", hashCode()=");
-		builder.append(hashCode());
-		builder.append(", toString()=");
-		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}
 
+
+	public String getDate() {
+		return date;
+	}
+
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
+
+	public String getBrandName() {
+		return brandName;
+	}
+
+
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
+	}
+
+
+	public String getModelNumber() {
+		return modelNumber;
+	}
+
+
+	public void setModelNumber(String modelNumber) {
+		this.modelNumber = modelNumber;
+	}
+
+
+	public String getCount() {
+		return count;
+	}
+
+
+	public void setCount(String count) {
+		this.count = count;
+	}
 
 }
