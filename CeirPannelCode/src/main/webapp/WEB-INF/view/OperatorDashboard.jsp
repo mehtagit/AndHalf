@@ -274,6 +274,7 @@ th {
     color: #fff;
      border-bottom: 1px solid #fff; 
 }
+
 </style>
 </head>
 <body data-id="46">
@@ -293,10 +294,12 @@ th {
 			
 						<div class="col s12 m12 l12">
 							<div class="row card-panel">
+							<a id="wholePageImage">Download</a>
 								<div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display:block !important">
                             <h6 class="fixPage-modal-header ">
                             <spring:message code="sidebar.Operator_Dashboard" />
                             				</h6>
+                            				<div id="wrapperPage">
                             				<h6 class="m-0 font-weight-bold text-primary" id="dateVal"></h6>
                             				 <div class="split">
                             						<!-- <div class="col s12 m12 info-div center" id="infoBox"></div> -->
@@ -379,7 +382,8 @@ th {
     
     </div>
                       
-             </div>               
+             </div>    
+             </div>           
               </div> 
               
               

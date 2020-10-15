@@ -2,6 +2,7 @@ package org.gl.ceir.graph.controller;
 import java.util.Collections;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.AnalyticsFeign;
+import org.gl.ceir.CeirPannelCode.Model.Operator;
 import org.gl.ceir.CeirPannelCode.Service.GraphService;
 import org.gl.ceir.graph.model.ActiveDeviceGraphContent;
 import org.gl.ceir.graph.model.ActiveDeviceGraphResponseModel;
@@ -17,6 +18,10 @@ import org.gl.ceir.graph.model.GrievanceModelRowData;
 import org.gl.ceir.graph.model.GrievanceUserTpeModelRowData;
 import org.gl.ceir.graph.model.GrievanceUserType;
 import org.gl.ceir.graph.model.GrievanceUserTypeModelGrapContent;
+import org.gl.ceir.graph.model.OperatorTableGraph;
+import org.gl.ceir.graph.model.OperatorTableGraphContent;
+import org.gl.ceir.graph.model.OperatorWiseGraphContant;
+import org.gl.ceir.graph.model.OperatorWiseImei;
 import org.gl.ceir.graph.model.StockContentReport;
 import org.gl.ceir.graph.model.StockModelGrapContent;
 import org.gl.ceir.graph.model.StockModelRowData;
@@ -33,6 +38,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -80,6 +86,12 @@ public class RenderGraphData {
 	GrievanceContent grievanceContent;
 	@Autowired
 	GrievanceUserType grievanceUserTypeContent;
+	@Autowired
+	OperatorWiseImei operatorWiseImei;
+	@Autowired
+	OperatorTableGraph operatorTableGraph;
+	
+	
 	
 	@ResponseBody
 	@RequestMapping(value = "/userLoginGraph",method = {RequestMethod.POST})
@@ -108,7 +120,7 @@ public class RenderGraphData {
 	
 	
 	@PostMapping("/report/data") 
-	public ResponseEntity<?> activeDeviceGraph(@RequestBody GraphRequest graphRequest) {
+	public ResponseEntity<?> activeDeviceGraph(@RequestBody GraphRequest graphRequest,@RequestParam(name="Type",required = false ) String Type) {
 		Object response= null;
 		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(),  graphRequest.getPageSize(),  graphRequest.getFile());
 		 
@@ -118,12 +130,25 @@ public class RenderGraphData {
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
 			log.info("::::::apiResponse:::::::"+apiResponse);
-			
-			activeDeviceGraphResponseModel = gson.fromJson(apiResponse, ActiveDeviceGraphResponseModel.class);
-			 log.info("::::::graphResponseModel:::::::"+activeDeviceGraphResponseModel);
-			 ActiveDeviceGraphContent paginationContentList = activeDeviceGraphResponseModel.getContent();
-			 log.info("::::::paginationContentList:::::::"+paginationContentList);
-			return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			if ("OperatorDashboard".equals(Type)) {
+				operatorWiseImei = gson.fromJson(apiResponse, OperatorWiseImei.class);
+				 log.info("::::::graphResponseModel:::::::"+operatorWiseImei);
+				 OperatorWiseGraphContant paginationContentList = operatorWiseImei.getContent();
+				 log.info("::::::paginationContentList:::::::"+paginationContentList);
+				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			}else if("OperatorDatatable".equals(Type)){
+				operatorTableGraph = gson.fromJson(apiResponse, OperatorTableGraph.class);
+				 log.info("::::::graphResponseModel:::::::"+operatorTableGraph);
+				 OperatorTableGraphContent paginationContentList = operatorTableGraph.getContent();
+				 log.info("::::::paginationContentList:::::::"+paginationContentList);
+				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			}else {
+				activeDeviceGraphResponseModel = gson.fromJson(apiResponse, ActiveDeviceGraphResponseModel.class);
+				log.info("::::::graphResponseModel:::::::"+activeDeviceGraphResponseModel);
+				ActiveDeviceGraphContent paginationContentList = activeDeviceGraphResponseModel.getContent();
+				log.info("::::::paginationContentList:::::::"+paginationContentList);
+				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			}
 			}
 			catch(Exception e) {
 				e.printStackTrace();

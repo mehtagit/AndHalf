@@ -3602,3 +3602,8 @@ width: 100% !important;
 
 }
 
+a#wholePageImage {
+    float: right;
+    margin: 10px 20px;
+    color: #fff;
+}

@@ -46,7 +46,7 @@ function activeDeviceGraph() {
 		});
 		$.ajax({
 			type : 'POST',
-			url : './report/data',
+			url : './report/data?Type=OperatorDashboard',
 			contentType : "application/json",
 			dataType : 'html',
 			async:false,
@@ -222,7 +222,7 @@ $(document).ready(function(){
 	
 	$.ajax({
 		type : 'POST',
-		url : './report/data',
+		url : './report/data?Type=OperatorDatatable',
 		contentType : "application/json",
 		data : JSON.stringify(graphRequest),
 		success: function(data){
@@ -233,23 +233,16 @@ $(document).ready(function(){
 		        
 		        JSONToCSVConvertor(result, "Report", true);
 		    });
-var i=0;
-				Object.keys(data['rowData'][0]).map(function(key){ 
-				if(key == 'Date'){
-					$('#dateVal').text('Last Update Date: '+data['rowData'][0][key]);
-				}
-				else{
-					if(i == 0){ $('#firstTD').text(data['rowData'][0]['Total IMEI']);}
-					else if(i == 1){$('#secondTD').text(data['rowData'][1]['Total IMEI']);}
-					else if(i == 2){$('#thirdTD').text(data['rowData'][2]['Total IMEI']);}
-					else if(i == 3){$('#fourthTD').text(data['rowData'][3]['Total IMEI']);}
-					else if(i == 4){$('#fifthTD').text(data['rowData'][4]['Total IMEI']);}
-					
-					$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b id="+i+++">"+data['rowData'][0][key]+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
-				
-				}
+
 				$('div#initialloader').delay(300).fadeOut('slow');
-				});
+				for(var i=0;i<data['rowData'].length;i++){
+					if(i == 0){ $('#firstTD').text(data['rowData'][i]['Total IMEI']);}
+					else if(i == 1){$('#secondTD').text(data['rowData'][i]['Total IMEI']);}
+					else if(i == 2){$('#thirdTD').text(data['rowData'][i]['Total IMEI']);}
+					else if(i == 3){$('#fourthTD').text(data['rowData'][i]['Total IMEI']);}
+					else if(i == 4){$('#fifthTD').text(data['rowData'][i]['Total IMEI']);}
+				}
+			
 		}
 	
 	});
