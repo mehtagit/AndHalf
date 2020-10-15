@@ -6,10 +6,11 @@ function featureDashboardGraph() {
 	var endDate=year+"-"+month+"-"+day;
 	var startDate=year+"-"+month+"-"+(day-15);
 	*/
+	var featureFlag =null;
 	var graphRequest=null;
 	[41,44,16,57].forEach(function(reportnameId) {
 		if(reportnameId==41){
-			
+			featureFlag="Stock";
 	 graphRequest={
 			"columns": [
 				"Date",
@@ -25,7 +26,7 @@ function featureDashboardGraph() {
 	}
 	}
 		else if(reportnameId==44){
-			
+			featureFlag="Consignment";
 			graphRequest={
 						"columns": [
 							"Date",
@@ -41,7 +42,7 @@ function featureDashboardGraph() {
 				}			
 		}
 else if(reportnameId==16){
-	
+	featureFlag="Grievance";
 			graphRequest={
 						"columns": [
 							"Date",
@@ -58,7 +59,7 @@ else if(reportnameId==16){
 		}
 		
 else if(reportnameId==57){
-	
+	featureFlag="UserType";
 	graphRequest={
 				"columns": [
 					"Date",
@@ -83,7 +84,7 @@ else if(reportnameId==57){
 	$.ajax({
 		type : 'POST',
 		async:false,
-		url : './brandModel/data',
+		url : './brandModel/data/'+featureFlag,
 		contentType : "application/json",
 		data : JSON.stringify(graphRequest),
 		/*beforeSend : function() {
@@ -95,14 +96,14 @@ else if(reportnameId==57){
 			if(reportnameId==41){
 				
 				labelSet=setLabelByID(4 , 4);
-				graph(response,'horizontalBarGraph','horizontalBar','User Login HorizontalBar Graph',labelSet);
+				graph(response,'horizontalBarGraph','horizontalBar','User Login HorizontalBar Graph',labelSet,'stockStatusImg','expStockStatus','Stock_Status');
 				
 				
 			}
 			else if(reportnameId==44){
 				
 				labelSet=setLabelByID(3 , 4);
-				graph(response,'ConsignmentBarGraph','horizontalBar','User Login HorizontalBar Graph',labelSet);
+				graph(response,'ConsignmentBarGraph','horizontalBar','User Login HorizontalBar Graph',labelSet,'consignmentStatusImg','expConsignmentStatus','Consignment_Status');
 				
 				
 			}
@@ -110,13 +111,13 @@ else if(reportnameId==57){
             else if(reportnameId==16){
             	
             	labelSet=setLabelByID(6 , 4);
-            	graph(response,'grievanceStatusWise','horizontalBar','User Login HorizontalBar Graph',labelSet);
+            	graph(response,'grievanceStatusWise','horizontalBar','User Login HorizontalBar Graph',labelSet,'grievanceBarImg','expGrievanceStatus','Grievance_Status');
 				
             }
             	else if(reportnameId==57){
             	
             	labelSet=UserTypeList();
-            	graph(response,'grievanceUserWise','horizontalBar','User Login HorizontalBar Graph',labelSet);
+            	graph(response,'grievanceUserWise','horizontalBar','User Login HorizontalBar Graph',labelSet,'grievanceUserImg','expUserStatus','Users_Grievance');
 				
             }
 		},
@@ -128,7 +129,7 @@ else if(reportnameId==57){
 
 
 
-function graph(response,id,chartType,chartTitle,pieLabelName)
+function graph(response,id,chartType,chartTitle,pieLabelName,GraphImageId,GraphExcel,reportName)
 {
 	var date = [];
 	//console.log("resonse=="+pieLabelName);
@@ -170,7 +171,22 @@ function graph(response,id,chartType,chartTitle,pieLabelName)
 		});
 
 	}
+	/*
+	$("#expGrievanceStatus").unbind("click").click(function(){
+        var data = response['rowData'];
+        if(data == '')
+            return;
+        JSONToCSVConvertor(data, "Report", true);
+    });*/
 	
+	$("#"+GraphExcel).unbind("click").click(function(){
+        var data = JSON.stringify(response['rowData']);
+        //console.log(JSON.stringify(data));
+        if(data == '')
+            return;
+        JSONToCSVConvertor(data, reportName, true);
+
+    });
     	var bar_ctx = document.getElementById(''+id+'');
     	var bar_chart = new Chart(bar_ctx, {
     	    type: ''+chartType+'',
@@ -183,6 +199,7 @@ function graph(response,id,chartType,chartTitle,pieLabelName)
         	    maintainAspectRatio: false,
     	     		animation: {
     	        	duration: 10,
+    	        	onComplete:captureLineImage
     	        },
     	        plugins: {
     			    datalabels: {
@@ -217,6 +234,13 @@ function graph(response,id,chartType,chartTitle,pieLabelName)
     	    } // options
     	   }
     	);
+    	
+    	function captureLineImage(){  
+            var url=bar_chart.toBase64Image();
+            /*document.getElementById("grievanceBarImg").href=url;*/
+            $("#"+GraphImageId).attr("href",url);
+            }
+    	
     	$('div#initialloader').delay(300).fadeOut('slow');    
 }
 

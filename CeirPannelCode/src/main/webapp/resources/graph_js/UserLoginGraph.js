@@ -141,8 +141,6 @@ function graph(response,id,chartType,chartTitle)
 		pieData.push(parseInt(response['rowData'][i]['Number of user logged']));
 		pieData.push(parseInt(response['rowData'][i]['Unique user logged']));
 	    }
-	
-	
 	//console.log("date: "+date);
 	   //console.log("noOfUsers: "+noOfUsers);
 	    //console.log("uniqueUserLogged: "+);	
@@ -292,7 +290,12 @@ function graph(response,id,chartType,chartTitle)
     }
     
         else if(chartType == 'bar'){
-
+        	$("#expLineBar").unbind("click").click(function(){
+    	        var data = response['rowData'];
+    	        if(data == '')
+    	            return;
+    	        JSONToCSVConvertor(data, "Report", true);
+    	    });
     var ctx = document.getElementById(''+id+'').getContext('2d');
     var chart = new Chart(ctx, {
       // The type of chart we want to create
@@ -320,7 +323,7 @@ function graph(response,id,chartType,chartTitle)
     	    responsive: false,
     	    maintainAspectRatio: false,
     	    animation: {
-    	        onComplete: done
+    	        onComplete: captureLineImage
     	      },
     	    elements: {
                 point:{
@@ -343,18 +346,29 @@ function graph(response,id,chartType,chartTitle)
                 xAxes: [{
                    gridLines: {
                       display: false
-                   }
+                   },
+                   scaleLabel: {
+   	                display: true,
+   	                labelString: 'Date'
+   	              },
                 }],
                 yAxes: [{
                    gridLines: {
                       display: false
-                   }
+                   },
+                   scaleLabel: {
+   	                display: true,
+   	                labelString: 'Number Of Users'
+   	              },
                 }]
              }           
              
     	}
     });
-
+    function captureLineImage(){  
+        var url=chart.toBase64Image();
+        document.getElementById("lineBarImage").href=url;
+        }
     }
     else if(chartType == 'line'){
     	$("#exp").unbind("click").click(function(){
@@ -438,6 +452,8 @@ function graph(response,id,chartType,chartTitle)
         var url=chart.toBase64Image();
         document.getElementById("pieImage").href=url;
         }
+    
+   
     }  
     $('div#initialloader').delay(300).fadeOut('slow');
 }

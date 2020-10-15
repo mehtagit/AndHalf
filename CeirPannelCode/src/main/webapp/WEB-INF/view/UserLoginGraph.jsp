@@ -90,10 +90,10 @@
 <script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 <!------------------------------------------- Dragable Model---------------------------------->
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
-
-
 <script type="text/javascript"
 	src="${context}/resources/graph_js/html2canvas.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
+
 
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
@@ -276,11 +276,11 @@ a#wholePageImage {
     margin: 10px 20px;
     color: #fff;
 }
+
 </style>
 
 </head>
 <body data-id="45">
-			
 	<!-- START MAIN -->
 		<div id="initialloader"></div>
 	<!-- START WRAPPER -->
@@ -289,13 +289,10 @@ a#wholePageImage {
 		<!-- START CONTENT -->
 		<section id="content">
 			<!--start container-->
-
 			<div class="container">
 				<div class="section">
 					<div class="row">
-					
 						<div class="col s12 m12 l12">
-						
 							<div class="row card-panel">
 							<a id="wholePageImage">Download</a>
 								<div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display:block !important">
@@ -313,7 +310,7 @@ a#wholePageImage {
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
         <div> <a id="exp">Export</a> | 
-                      <a id="pieImage" download="Pie.jpg">Download</a></div>
+                      <a id="pieImage" download="User_login_report.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -331,7 +328,8 @@ a#wholePageImage {
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
-              
+              <div> <a id="expLineBar">Export</a> | 
+                      <a id="lineBarImage" download="Use_login_graph.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">

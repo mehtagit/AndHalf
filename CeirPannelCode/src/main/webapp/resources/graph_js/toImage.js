@@ -21,6 +21,16 @@
 		}); 
 	});
 	
+	$('#activeDeviceDownload').on('click', function() {
+		html2canvas($('#activeDeviceTable'), {
+			onrendered: function(canvas) {                                      
+				var img = canvas.toDataURL("image/png"),
+				uri = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+				saveAs(uri, 'ActiveDevices.png');
+			}
+		}); 
+	});
+	
 	
 	function saveAs(uri, filename) {
 		var link = document.createElement('a');

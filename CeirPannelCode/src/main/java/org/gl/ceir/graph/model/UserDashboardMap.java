@@ -7,14 +7,14 @@ import com.google.gson.annotations.SerializedName;
 
 @Component
 public class UserDashboardMap {
-	@SerializedName("Date")
 	@JsonProperty("Date")
+	@SerializedName("Date")
 	private String date;
 
 	@JsonProperty("Number of user logged")
 	@SerializedName("Number of user logged")
 	private String numberOfUserLogged;
-
+     
 	@JsonProperty("Unique user logged")
 	@SerializedName("Unique user logged")
 	private String uniqueUserLogged;
