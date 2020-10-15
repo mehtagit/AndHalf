@@ -90,6 +90,8 @@
 <script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 <!------------------------------------------- Dragable Model---------------------------------->
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
+<script type="text/javascript"
+	src="${context}/resources/graph_js/html2canvas.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 
 
@@ -286,10 +288,12 @@ display: none !important;
 					<div class="row">
 						<div class="col s12 m12 l12">
 							<div class="row card-panel">
+							<a id="wholePageImage">Download</a>
 								<div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display:block !important">
                             <h6 class="fixPage-modal-header ">
                             <spring:message code="sidebar.Feature_Dashboard" />
                             				</h6>
+                            				<div id="wrapperPage">
                             				<h6 class="m-0 font-weight-bold text-primary" id="dateVal"></h6>
                             	 				<%--  <div class="split">
                             						<div class="col s12 m12 info-div center" id="infoBox"></div>
@@ -401,7 +405,7 @@ display: none !important;
                  
                     <canvas class="chart-area" id="horizontalBarGraph" style = "width: 550px; height: 400px; margin: 0 auto">
                   </canvas>
-    </div></div></div></div>
+    </div></div></div></div></div>
     </div></div></div></div></div></div></section></div>
 
 
@@ -418,6 +422,9 @@ display: none !important;
 <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 
 <script src="${context}/resources/graph_js/chartjs-plugin-datalabel.js"></script>
+<script type="text/javascript"
+	src="${context}/resources/graph_js/toImage.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
 <script type="text/javascript"
 		src="${context}/resources/graph_js/jsonToCSV.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"

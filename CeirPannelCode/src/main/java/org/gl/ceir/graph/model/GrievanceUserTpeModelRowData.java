@@ -10,29 +10,29 @@ public class GrievanceUserTpeModelRowData {
 
 	@SerializedName("DRT")
 	@JsonProperty("DRT")
-	private String drt;
+	private int drt;
 	
 	@SerializedName("Custom")
 	@JsonProperty("Custom")
-	private String custom;
+	private int custom;
 	
 	@SerializedName("Distributor")
 	@JsonProperty("Distributor")
-	private String distributor;
+	private int distributor;
 	
 	@SerializedName("Immigration")
 	@JsonProperty("Immigration")
-	private String immigration;
+	private int immigration;
 	
 	
 	
 	@SerializedName("Importer")
 	@JsonProperty("Importer")
-	private String importer;
+	private int importer;
 	
 	@SerializedName("Lawful Agency")
 	@JsonProperty("Lawful Agency")
-	private String lawfulAgency;
+	private int lawfulAgency;
 	
 	@SerializedName("Manufacturer")
 	@JsonProperty("Manufacturer")
@@ -40,15 +40,15 @@ public class GrievanceUserTpeModelRowData {
 	
 	@SerializedName("Operator")
 	@JsonProperty("Operator")
-	private String operator;
+	private int operator;
 	
 	@SerializedName("Retailer")
 	@JsonProperty("Retailer")
-	private String retailer;
+	private int retailer;
 	
 	@SerializedName("TRC")
 	@JsonProperty("TRC")
-	private String trc;
+	private int trc;
 	
 	
 	@SerializedName("Date")
@@ -56,84 +56,102 @@ public class GrievanceUserTpeModelRowData {
 	private String date;
 
 
-	
-	public String getDrt() {
+	public int getDrt() {
 		return drt;
 	}
 
-	public void setDrt(String drt) {
+
+	public void setDrt(int drt) {
 		this.drt = drt;
 	}
 
-	public String getCustom() {
+
+	public int getCustom() {
 		return custom;
 	}
 
-	public void setCustom(String custom) {
+
+	public void setCustom(int custom) {
 		this.custom = custom;
 	}
 
-	public String getDistributor() {
+
+	public int getDistributor() {
 		return distributor;
 	}
 
-	public void setDistributor(String distributor) {
+
+	public void setDistributor(int distributor) {
 		this.distributor = distributor;
 	}
 
-	public String getImmigration() {
+
+	public int getImmigration() {
 		return immigration;
 	}
 
-	public void setImmigration(String immigration) {
+
+	public void setImmigration(int immigration) {
 		this.immigration = immigration;
 	}
 
-	public String getImporter() {
+
+	public int getImporter() {
 		return importer;
 	}
 
-	public void setImporter(String importer) {
+
+	public void setImporter(int importer) {
 		this.importer = importer;
 	}
 
-	public String getLawfulAgency() {
+
+	public int getLawfulAgency() {
 		return lawfulAgency;
 	}
 
-	public void setLawfulAgency(String lawfulAgency) {
+
+	public void setLawfulAgency(int lawfulAgency) {
 		this.lawfulAgency = lawfulAgency;
 	}
+
 
 	public String getManufacturer() {
 		return manufacturer;
 	}
 
+
 	public void setManufacturer(String manufacturer) {
 		this.manufacturer = manufacturer;
 	}
 
-	public String getOperator() {
+
+	public int getOperator() {
 		return operator;
 	}
 
-	public void setOperator(String operator) {
+
+	public void setOperator(int operator) {
 		this.operator = operator;
 	}
 
-	public String getRetailer() {
+
+	public int getRetailer() {
 		return retailer;
 	}
 
-	public void setRetailer(String retailer) {
+
+	public void setRetailer(int retailer) {
 		this.retailer = retailer;
 	}
 
-	public String getTrc() {
+
+	public int getTrc() {
 		return trc;
 	}
 
-	public void setTrc(String trc) {
+
+	public void setTrc(int trc) {
 		this.trc = trc;
 	}
 
@@ -142,9 +160,11 @@ public class GrievanceUserTpeModelRowData {
 		return date;
 	}
 
+
 	public void setDate(String date) {
 		this.date = date;
 	}
+
 
 	@Override
 	public String toString() {
@@ -175,7 +195,7 @@ public class GrievanceUserTpeModelRowData {
 		return builder.toString();
 	}
 
-	
+
 	
 
 }

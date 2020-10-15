@@ -271,12 +271,6 @@ display: none !important;
     color: #fff;
     margin-top: 6px;
 }
-a#wholePageImage {
-    float: right;
-    margin: 10px 20px;
-    color: #fff;
-}
-
 </style>
 
 </head>
@@ -284,7 +278,7 @@ a#wholePageImage {
 	<!-- START MAIN -->
 		<div id="initialloader"></div>
 	<!-- START WRAPPER -->
-	<div class="wrapper" id="wrapperPage">
+	<div class="wrapper">
 
 		<!-- START CONTENT -->
 		<section id="content">
@@ -299,6 +293,7 @@ a#wholePageImage {
                             <h6 class="fixPage-modal-header ">
                             <spring:message code="sidebar.User_Dashboard" />
                             				</h6>
+                            				<div id="wrapperPage">
                             				<h6 class="m-0 font-weight-bold text-primary" id="dateVal"></h6>
                             	 				 <div class="split">
                             						<div class="col s12 m12 info-div center" id="infoBox"></div>
@@ -409,7 +404,7 @@ a#wholePageImage {
                     <canvas class="chart-area" id="horizontalBarGraph" style = "width: 550px; height: 400px; margin: 0 auto">
                   </canvas>
     </div></div></div></div>--%>
-    </div></div></div></div></div></div></section></div>
+    </div></div></div></div></div></div></div></section></div>
 
 
 

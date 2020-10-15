@@ -13,214 +13,157 @@ public class ConsignmentModelRowData {
 	
 	@SerializedName("Approved")
 	@JsonProperty("Approved")
-	private String approved;
+	private int approved;
 
 	@SerializedName("Pending Approval From CEIR Admin")
 	@JsonProperty("Pending Approval From CEIR Admin")
-	private String pendingByAdmin;
+	private int pendingByAdmin;
 	
 	@SerializedName("Rejected by CEIR Admin")
 	@JsonProperty("Rejected by CEIR Admin")
-	private String rejectedByAdmin;
+	private int rejectedByAdmin;
 	
 	@SerializedName("Rejected By System")
 	@JsonProperty("Rejected By System")
-	private String rejectedBySystem;
+	private int rejectedBySystem;
 	
 	@SerializedName("Withdrawn By Importer")
 	@JsonProperty("Withdrawn By Importer")
-	private String withdrawnByImporter;
+	private int withdrawnByImporter;
 	
 	@SerializedName("Withdrawn By CEIR")
 	@JsonProperty("Withdrawn By CEIR")
-	private String withdrawnByCeir;
+	private int withdrawnByCeir;
 	
 	@SerializedName("Processing")
 	@JsonProperty("Processing")
-	private String processing;
+	private int processing;
 	
 	@SerializedName("Pending Clearance From Customs")
 	@JsonProperty("Pending Clearance From Customs")
-	private String pendingClearenceFromCustom;
+	private int pendingClearenceFromCustom;
 	
 	
 
 	@SerializedName("New")
 	@JsonProperty("New")
-	private String newState;
+	private int newState;
 	
 	@SerializedName("Rejected By Customs")
 	@JsonProperty("Rejected By Customs")
-	private String rejectedByCustoms;
+	private int rejectedByCustoms;
 	
 	@SerializedName("Rejected by DRT")
 	@JsonProperty("Rejected by DRT")
-	private String rejectedByDrt;
+	private int rejectedByDrt;
 	
 	@SerializedName("Pending Clearance from DRT")
 	@JsonProperty("Pending Clearance from DRT")
-	private String pndingByDrt;
-
-	
-	
-
-
+	private int pndingByDrt;
 
 	public String getDate() {
 		return date;
 	}
 
-
-
 	public void setDate(String date) {
 		this.date = date;
 	}
 
-
-
-	public String getApproved() {
+	public int getApproved() {
 		return approved;
 	}
 
-
-
-	public void setApproved(String approved) {
+	public void setApproved(int approved) {
 		this.approved = approved;
 	}
 
-
-
-	public String getPendingByAdmin() {
+	public int getPendingByAdmin() {
 		return pendingByAdmin;
 	}
 
-
-
-	public void setPendingByAdmin(String pendingByAdmin) {
+	public void setPendingByAdmin(int pendingByAdmin) {
 		this.pendingByAdmin = pendingByAdmin;
 	}
 
-
-
-	public String getRejectedByAdmin() {
+	public int getRejectedByAdmin() {
 		return rejectedByAdmin;
 	}
 
-
-
-	public void setRejectedByAdmin(String rejectedByAdmin) {
+	public void setRejectedByAdmin(int rejectedByAdmin) {
 		this.rejectedByAdmin = rejectedByAdmin;
 	}
 
-
-
-	public String getRejectedBySystem() {
+	public int getRejectedBySystem() {
 		return rejectedBySystem;
 	}
 
-
-
-	public void setRejectedBySystem(String rejectedBySystem) {
+	public void setRejectedBySystem(int rejectedBySystem) {
 		this.rejectedBySystem = rejectedBySystem;
 	}
 
-
-
-	public String getWithdrawnByImporter() {
+	public int getWithdrawnByImporter() {
 		return withdrawnByImporter;
 	}
 
-
-
-	public void setWithdrawnByImporter(String withdrawnByImporter) {
+	public void setWithdrawnByImporter(int withdrawnByImporter) {
 		this.withdrawnByImporter = withdrawnByImporter;
 	}
 
-
-
-	public String getWithdrawnByCeir() {
+	public int getWithdrawnByCeir() {
 		return withdrawnByCeir;
 	}
 
-
-
-	public void setWithdrawnByCeir(String withdrawnByCeir) {
+	public void setWithdrawnByCeir(int withdrawnByCeir) {
 		this.withdrawnByCeir = withdrawnByCeir;
 	}
 
-
-
-	public String getProcessing() {
+	public int getProcessing() {
 		return processing;
 	}
 
-
-
-	public void setProcessing(String processing) {
+	public void setProcessing(int processing) {
 		this.processing = processing;
 	}
 
-
-
-	public String getPendingClearenceFromCustom() {
+	public int getPendingClearenceFromCustom() {
 		return pendingClearenceFromCustom;
 	}
 
-
-
-	public void setPendingClearenceFromCustom(String pendingClearenceFromCustom) {
+	public void setPendingClearenceFromCustom(int pendingClearenceFromCustom) {
 		this.pendingClearenceFromCustom = pendingClearenceFromCustom;
 	}
 
-
-
-	public String getNewState() {
+	public int getNewState() {
 		return newState;
 	}
 
-
-
-	public void setNewState(String newState) {
+	public void setNewState(int newState) {
 		this.newState = newState;
 	}
 
-
-
-	public String getRejectedByCustoms() {
+	public int getRejectedByCustoms() {
 		return rejectedByCustoms;
 	}
 
-
-
-	public void setRejectedByCustoms(String rejectedByCustoms) {
+	public void setRejectedByCustoms(int rejectedByCustoms) {
 		this.rejectedByCustoms = rejectedByCustoms;
 	}
 
-
-
-	public String getRejectedByDrt() {
+	public int getRejectedByDrt() {
 		return rejectedByDrt;
 	}
 
-
-
-	public void setRejectedByDrt(String rejectedByDrt) {
+	public void setRejectedByDrt(int rejectedByDrt) {
 		this.rejectedByDrt = rejectedByDrt;
 	}
 
-
-
-	public String getPndingByDrt() {
+	public int getPndingByDrt() {
 		return pndingByDrt;
 	}
 
-
-
-	public void setPndingByDrt(String pndingByDrt) {
+	public void setPndingByDrt(int pndingByDrt) {
 		this.pndingByDrt = pndingByDrt;
 	}
-
-
 
 	@Override
 	public String toString() {
@@ -254,8 +197,6 @@ public class ConsignmentModelRowData {
 		builder.append("]");
 		return builder.toString();
 	}
-
-
 
 	
 	

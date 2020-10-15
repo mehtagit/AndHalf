@@ -73,7 +73,7 @@ public class GraphRequest {
 	private String startDate ;
 	private String tableName;
 	private String txnId ;
-	
+	private Boolean lastDate;
 	private int file;
 	private int pageSize;
 	private int pageNo;
@@ -116,6 +116,8 @@ public class GraphRequest {
 		builder.append(tableName);
 		builder.append(", txnId=");
 		builder.append(txnId);
+		builder.append(", lastDate=");
+		builder.append(lastDate);
 		builder.append(", file=");
 		builder.append(file);
 		builder.append(", pageSize=");
@@ -125,7 +127,13 @@ public class GraphRequest {
 		builder.append("]");
 		return builder.toString();
 	}
-
+	public Boolean getLastDate() {
+		return lastDate;
+	}
+	public void setLastDate(Boolean lastDate) {
+		this.lastDate = lastDate;
+	}
+	
 	
 	
 }

@@ -13,16 +13,16 @@ public class BrandModelRowData {
 	
 	@SerializedName("Brand Name")
 	@JsonProperty("Brand Name")
-	private String brandName;
+	private int brandName;
 	
 	@SerializedName("Model Name")
 	@JsonProperty("Model Name")
-	private String modelNumber;
+	private int modelNumber;
 	
 	
 	@SerializedName("Count")
 	@JsonProperty("Count")
-	private String count;
+	private int count;
 
 
 	public String getDate() {
@@ -35,32 +35,32 @@ public class BrandModelRowData {
 	}
 
 
-	public String getBrandName() {
+	public int getBrandName() {
 		return brandName;
 	}
 
 
-	public void setBrandName(String brandName) {
+	public void setBrandName(int brandName) {
 		this.brandName = brandName;
 	}
 
 
-	public String getModelNumber() {
+	public int getModelNumber() {
 		return modelNumber;
 	}
 
 
-	public void setModelNumber(String modelNumber) {
+	public void setModelNumber(int modelNumber) {
 		this.modelNumber = modelNumber;
 	}
 
 
-	public String getCount() {
+	public int getCount() {
 		return count;
 	}
 
 
-	public void setCount(String count) {
+	public void setCount(int count) {
 		this.count = count;
 	}
 
@@ -76,9 +76,23 @@ public class BrandModelRowData {
 		builder.append(modelNumber);
 		builder.append(", count=");
 		builder.append(count);
+		builder.append(", getDate()=");
+		builder.append(getDate());
+		builder.append(", getBrandName()=");
+		builder.append(getBrandName());
+		builder.append(", getModelNumber()=");
+		builder.append(getModelNumber());
+		builder.append(", getCount()=");
+		builder.append(getCount());
+		builder.append(", getClass()=");
+		builder.append(getClass());
+		builder.append(", hashCode()=");
+		builder.append(hashCode());
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}
-	
-		
+
+
 }
