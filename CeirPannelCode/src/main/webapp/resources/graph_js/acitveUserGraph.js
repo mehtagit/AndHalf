@@ -299,6 +299,13 @@ $(document).ready(function(){
 		contentType : "application/json",
 		data : JSON.stringify(graphRequest),
 		success: function(data){
+			$("#expActiveDeviceTable").unbind("click").click(function(){
+		        var result = JSON.stringify(data['rowData']);
+		        if(result == '')
+		            return;
+		        
+		        JSONToCSVConvertor(result, "Report", true);
+		    });
 var i=0;
 				Object.keys(data['rowData'][0]).map(function(key){ 
 				if(key == 'Date'){
