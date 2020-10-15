@@ -11,11 +11,12 @@
 
 */
 function activeDeviceGraph() {
-	[29,29].forEach(function(reportnameId) {
+	[29,27].forEach(function(reportnameId) {
 		var graphRequest=null;
 		var chartID=null;
 		var type=null;
 		var title=null;
+		var  urlParam=null;
 		if(reportnameId == 29){
 			graphRequest={
 					 "columns": [
@@ -29,13 +30,21 @@ function activeDeviceGraph() {
 						  "pageSize" :55, 
 						  "pageNo" :0
 			}
+			urlParam= './report/data';
 			
-			
-			chartID='lineGraph';
-			type='line';
-			title='User Login HorizontalBar Graph';
 		}
-
+		if(reportnameId == 27){
+			graphRequest={
+					 
+					  
+					  "lastDate": true,
+					  "reportnameId": 27,
+						  "file" : 0, 
+						  "pageSize" :10, 
+						  "pageNo" :0
+			}
+			urlParam='./report/imeiUsageDashBoard';
+		}
 		
 
 		var token = $("meta[name='_csrf']").attr("content");
@@ -46,7 +55,7 @@ function activeDeviceGraph() {
 		});
 		$.ajax({
 			type : 'POST',
-			url : './report/data',
+			url :urlParam,
 			contentType : "application/json",
 			dataType : 'html',
 			async:false,
@@ -58,8 +67,16 @@ function activeDeviceGraph() {
 				
 				var response = JSON.parse(data);
 				//graph(response,chartID,type,title);
-				graph(response,'lineGraph','line','User Login Line Graph')
-
+if(reportnameId==29){
+					
+	graph(response,'lineGraph','line','User Login Line Graph')
+				}
+			
+if(reportnameId==27){
+	
+	graph(response,'gaugeGraph','gauge','User Login Doughnut Graph')
+				}
+		
 			},
 			error : function() {
 			}
@@ -79,8 +96,7 @@ function graph(response,id,chartType,chartTitle)
   var smart=[];
   var cellcard=[];
   var metfone=[];
-  
-  var pieLabelName=['No of user logged','Unique user logged'];
+  var pieLabelName=['Primary','Secondary'];
   var pieData=[];
 	   	//console.log("repsonse-->"+JSON.stringify(response));
 		for(var i=0;i<response['rowData'].length;i++){
@@ -91,8 +107,12 @@ function graph(response,id,chartType,chartTitle)
 	   		metfone.push(response['rowData'][i]['METFONE']);
 	   		date.push(response['rowData'][i]['Date']);
 	   		//totalImei.push(response['rowData'][i]['Total IMEI']);
-	   		
 	   	}	
+		pieData.push(parseInt(response['rowData'][0]['Total Paired IMEI']));
+		pieData.push(parseInt(response['rowData'][0]['Total Duplicate IMEI']));
+		
+		
+		if(chartType=='line' ){
 		$("#exp").unbind("click").click(function(){
 	        var data = response['rowData'];
 	        if(data == '')
@@ -195,6 +215,70 @@ function graph(response,id,chartType,chartTitle)
 	    function captureImage(){  
 	        var url=chart.toBase64Image();
 	        document.getElementById("lineImage").href=url;
+	    }
+		}
+		
+		
+		
+		else if(chartType=='gauge'){
+	    	 $("#expPairingType").unbind("click").click(function(){
+	 	        var data = response['rowData'];
+	 	        if(data == '')
+	 	            return;
+	 	        
+	 	        JSONToCSVConvertor(data, "Pairing_Type_Report", true);
+	 	    });
+	        var ctx = document.getElementById(''+id+'').getContext('2d');
+	        var chart = new Chart(ctx, {
+	          // The type of chart we want to create
+	          type: 'doughnut',
+
+	          // The data for our dataset
+	          data: {
+	            labels: pieLabelName,
+	            datasets: [ {
+	            	 backgroundColor: [
+	            		 '#512DA8',
+	                     '#D32F2F'],
+	                data: pieData
+	            }],
+	            borderWidth: 0
+	          },
+
+	          // Configuration options go here
+	          options: {
+	        	    responsive: false,
+	        	    maintainAspectRatio: false,
+	        	    animation: {
+	        	        onComplete: captureImage
+	        	      },
+	        	    rotation: 1 * Math.PI,
+	                circumference: 1 * Math.PI,
+	         	    plugins: {
+					    datalabels: {
+					      formatter: (value, ctx) => {
+					    	  let datasets = ctx.chart.data.datasets;
+
+					          if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
+					            let sum = datasets[0].data.reduce((a, b) => a + b, 0);
+					            let percentage = Math.round((value / sum) * 100) + '%';
+					            return percentage;
+					          } else {
+					            return percentage;
+					          }
+					          },
+					      color: '#fff',
+					    }
+					  }
+	             }
+	 
+	        });
+	         
+	          function captureImage(){  
+	              var url=chart.toBase64Image();
+	              document.getElementById("pairingTypesImage").href=url;
+	              }	
+	    
 	    }
     $('div#initialloader').delay(300).fadeOut('slow');
 }

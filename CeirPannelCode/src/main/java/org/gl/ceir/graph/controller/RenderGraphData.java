@@ -1,4 +1,5 @@
 package org.gl.ceir.graph.controller;
+
 import java.util.Collections;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.AnalyticsFeign;
@@ -17,6 +18,8 @@ import org.gl.ceir.graph.model.GrievanceModelRowData;
 import org.gl.ceir.graph.model.GrievanceUserTpeModelRowData;
 import org.gl.ceir.graph.model.GrievanceUserType;
 import org.gl.ceir.graph.model.GrievanceUserTypeModelGrapContent;
+import org.gl.ceir.graph.model.ImeiUsageGraphContent;
+import org.gl.ceir.graph.model.ImeiUsageGraphResponseModel;
 import org.gl.ceir.graph.model.StockContentReport;
 import org.gl.ceir.graph.model.StockModelGrapContent;
 import org.gl.ceir.graph.model.StockModelRowData;
@@ -47,7 +50,7 @@ public class RenderGraphData {
 
 	@Autowired
 	AnalyticsFeign analyticsFeign;
-	
+
 	@Autowired
 	UserDashboardGraphResponseModel userDashboardGraphResponseModel;
 	@Autowired
@@ -76,116 +79,137 @@ public class RenderGraphData {
 	StockContentReport stockContentReport;
 	@Autowired
 	ConsignmentContent consignmentContent;
-	@Autowired 
+	@Autowired
 	GrievanceContent grievanceContent;
 	@Autowired
 	GrievanceUserType grievanceUserTypeContent;
-	
-	@ResponseBody
-	@RequestMapping(value = "/userLoginGraph",method = {RequestMethod.POST})
-	public ResponseEntity<?> userLoginGraph(@RequestBody GraphRequest graphRequest){
-		Object response= null;
-		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(),  graphRequest.getPageSize(),  graphRequest.getFile());
-		 
-		 log.info("userLoginGraph:::::::::countRequest::::::::"+graphRequest+"::::::countResponse:::::::"+response);
-			try {
-			Gson gson= new Gson(); 
+	@Autowired
+	ImeiUsageGraphResponseModel imeiUsageGraphResponseModel;
+
+	@RequestMapping(value = "/userLoginGraph", method = { RequestMethod.POST })
+	public ResponseEntity<?> userLoginGraph(@RequestBody GraphRequest graphRequest) {
+		Object response = null;
+		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(), graphRequest.getPageSize(),
+				graphRequest.getFile());
+
+		log.info(
+				"userLoginGraph:::::::::countRequest::::::::" + graphRequest + "::::::countResponse:::::::" + response);
+		try {
+			Gson gson = new Gson();
 			String apiResponse = gson.toJson(response);
-			log.info("userLoginGraph::::::apiResponse:::::::"+apiResponse);
-			
+			log.info("userLoginGraph::::::apiResponse:::::::" + apiResponse);
+
 			userDashboardGraphResponseModel = gson.fromJson(apiResponse, UserDashboardGraphResponseModel.class);
 			UserDashboardGraphContent paginationContentList = userDashboardGraphResponseModel.getContent();
 			return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-				return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.SERVICE_UNAVAILABLE);
-			}
-	
-	
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.SERVICE_UNAVAILABLE);
+		}
+
 	}
-	
-	
-	
-	@PostMapping("/report/data") 
+
+	@PostMapping("/report/data")
 	public ResponseEntity<?> activeDeviceGraph(@RequestBody GraphRequest graphRequest) {
-		Object response= null;
-		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(),  graphRequest.getPageSize(),  graphRequest.getFile());
-		 
-		 log.info(":::::::::graphRequest::::::::"+graphRequest+"::::::response:::::::"+response);
-	
-			try {
-			Gson gson= new Gson(); 
+		Object response = null;
+		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(), graphRequest.getPageSize(),
+				graphRequest.getFile());
+
+		log.info(":::::::::graphRequest::::::::" + graphRequest + "::::::response:::::::" + response);
+
+		try {
+			Gson gson = new Gson();
 			String apiResponse = gson.toJson(response);
-			log.info("::::::apiResponse:::::::"+apiResponse);
-			
+			log.info("::::::apiResponse:::::::" + apiResponse);
+
 			activeDeviceGraphResponseModel = gson.fromJson(apiResponse, ActiveDeviceGraphResponseModel.class);
-			 log.info("::::::graphResponseModel:::::::"+activeDeviceGraphResponseModel);
-			 ActiveDeviceGraphContent paginationContentList = activeDeviceGraphResponseModel.getContent();
-			 log.info("::::::paginationContentList:::::::"+paginationContentList);
+			log.info("::::::graphResponseModel:::::::" + activeDeviceGraphResponseModel);
+			ActiveDeviceGraphContent paginationContentList = activeDeviceGraphResponseModel.getContent();
+			log.info("::::::paginationContentList:::::::" + paginationContentList);
 			return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-				return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.SERVICE_UNAVAILABLE);
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.SERVICE_UNAVAILABLE);
+		}
 	}
-	
-	@PostMapping("/brandModel/data/{featureFlag}") 
-	public ResponseEntity<?> topBrandModel(@RequestBody GraphRequest graphRequest, @PathVariable("featureFlag")  String featureFlag) {
-		Object response= null;
-		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(),  graphRequest.getPageSize(),  graphRequest.getFile());
-		 log.info("featureFlag== "+featureFlag);
-		 log.info("::::::::: brand model graphRequest::::::::"+graphRequest+"::::::response:::::::"+response);
-	
-			try {
-			Gson gson= new Gson(); 
+
+	@PostMapping("/brandModel/data/{featureFlag}")
+	public ResponseEntity<?> topBrandModel(@RequestBody GraphRequest graphRequest,
+			@PathVariable("featureFlag") String featureFlag) {
+		Object response = null;
+		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(), graphRequest.getPageSize(),
+				graphRequest.getFile());
+		log.info("featureFlag== " + featureFlag);
+		log.info("::::::::: brand model graphRequest::::::::" + graphRequest + "::::::response:::::::" + response);
+
+		try {
+			Gson gson = new Gson();
 			String apiResponse = gson.toJson(response);
-			log.info("::::::apiResponse:::::::"+apiResponse);
-			if(featureFlag.equals("Brand") ||featureFlag.equals("Model") ) {
-			brandModelGrapContent = gson.fromJson(apiResponse, BrandContent.class);
-			 log.info(":::::: brand model graphResponseModel:::::::"+brandModelGrapContent);
-			 BrandModelGrapContent paginationContentList = brandModelGrapContent.getContent();
-			 log.info(":::::: brand model paginationContentList:::::::"+paginationContentList);
-			
-			return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
-			}
-			else if(featureFlag.equals("Stock")) {
-				 stockContentReport = gson.fromJson(apiResponse, StockContentReport.class);
-				 log.info(":::::: Stock model graphResponseModel:::::::"+brandModelGrapContent);
-				 StockModelGrapContent paginationContentList =  stockContentReport.getContent();
-				 log.info(":::::: Stock model paginationContentList:::::::"+paginationContentList);
-			return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
-			}
-			else if(featureFlag.equals("Consignment")) {
+			log.info("::::::apiResponse:::::::" + apiResponse);
+			if (featureFlag.equals("Brand") || featureFlag.equals("Model")) {
+				brandModelGrapContent = gson.fromJson(apiResponse, BrandContent.class);
+				log.info(":::::: brand model graphResponseModel:::::::" + brandModelGrapContent);
+				BrandModelGrapContent paginationContentList = brandModelGrapContent.getContent();
+				log.info(":::::: brand model paginationContentList:::::::" + paginationContentList);
+
+				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			} else if (featureFlag.equals("Stock")) {
+				stockContentReport = gson.fromJson(apiResponse, StockContentReport.class);
+				log.info(":::::: Stock model graphResponseModel:::::::" + brandModelGrapContent);
+				StockModelGrapContent paginationContentList = stockContentReport.getContent();
+				log.info(":::::: Stock model paginationContentList:::::::" + paginationContentList);
+				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			} else if (featureFlag.equals("Consignment")) {
 				consignmentContent = gson.fromJson(apiResponse, ConsignmentContent.class);
-				 log.info(":::::: Consignment model graphResponseModel:::::::"+brandModelGrapContent);
-				 ConsignmentModelGrapContent paginationContentList = consignmentContent.getContent();
-				 log.info(":::::: Consignment model paginationContentList:::::::"+paginationContentList);
-			return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+				log.info(":::::: Consignment model graphResponseModel:::::::" + brandModelGrapContent);
+				ConsignmentModelGrapContent paginationContentList = consignmentContent.getContent();
+				log.info(":::::: Consignment model paginationContentList:::::::" + paginationContentList);
+				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
 			}
-			
-			else if(featureFlag.equals("Grievance")) {
+
+			else if (featureFlag.equals("Grievance")) {
 				grievanceContent = gson.fromJson(apiResponse, GrievanceContent.class);
-				 log.info(":::::: Grievance model graphResponseModel:::::::"+brandModelGrapContent);
-				 GrievanceGrapContent paginationContentList = grievanceContent.getContent();
-				 log.info(":::::: Grievance model paginationContentList:::::::"+paginationContentList);
-			return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+				log.info(":::::: Grievance model graphResponseModel:::::::" + brandModelGrapContent);
+				GrievanceGrapContent paginationContentList = grievanceContent.getContent();
+				log.info(":::::: Grievance model paginationContentList:::::::" + paginationContentList);
+				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			} else if (featureFlag.equals("UserType")) {
+				grievanceUserTypeContent = gson.fromJson(apiResponse, GrievanceUserType.class);
+				log.info(":::::: Grievance user model graphResponseModel:::::::" + grievanceUserTypeContent);
+				GrievanceUserTypeModelGrapContent paginationContentList = grievanceUserTypeContent.getContent();
+				log.info(":::::: Grievance user model paginationContentList:::::::" + paginationContentList);
+				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
 			}
-			else if(featureFlag.equals("UserType")) {
-				grievanceUserTypeContent = gson.fromJson(apiResponse, 	GrievanceUserType.class);
-				 log.info(":::::: Grievance user model graphResponseModel:::::::"+grievanceUserTypeContent);
-				 GrievanceUserTypeModelGrapContent paginationContentList = grievanceUserTypeContent.getContent();
-				 log.info(":::::: Grievance user model paginationContentList:::::::"+paginationContentList);
-				 return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
-			}
-			}
-			
-			catch(Exception e) {
-				e.printStackTrace();
-				return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.SERVICE_UNAVAILABLE);
-			}
-			return null;
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.SERVICE_UNAVAILABLE);
+		}
+		return null;
 	}
-	
+
+	@PostMapping("/report/imeiUsageDashBoard")
+	public ResponseEntity<?> imeiUsageDashBoard(@RequestBody GraphRequest graphRequest) {
+		Object response = null;
+		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(), graphRequest.getPageSize(),
+				graphRequest.getFile());
+
+		log.info(":::::::::graphRequest::::::::" + graphRequest + "::::::response:::::::" + response);
+
+		try {
+			Gson gson = new Gson();
+			String apiResponse = gson.toJson(response);
+			log.info("::::::apiResponse:::::::" + apiResponse);
+
+			imeiUsageGraphResponseModel = gson.fromJson(apiResponse, ImeiUsageGraphResponseModel.class);
+			log.info("::::::imeiUsageGraphResponseModel:::::::" + imeiUsageGraphResponseModel);
+			ImeiUsageGraphContent paginationContentList = imeiUsageGraphResponseModel.getContent();
+			log.info("::::::paginationContentList:::::::" + paginationContentList);
+			return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.SERVICE_UNAVAILABLE);
+		}
+	}
 }
