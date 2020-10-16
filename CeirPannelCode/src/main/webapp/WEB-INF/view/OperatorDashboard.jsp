@@ -412,7 +412,7 @@ th {
                 </div>
                 <!-- Card Body -->
                 <div class="card-body" id="noData">
-                   <canvas class="chart-area" id="gaugeGraph" style = "width: 550px; height: 400px; margin: 0 auto">
+                   <canvas class="chart-area" id="pieGraph" style = "width: 550px; height: 400px; margin: 0 auto">
                   </canvas>
                 </div>
               </div>
