@@ -424,6 +424,7 @@ display: none !important;
 <script src="${context}/resources/graph_js/chartjs-plugin-datalabel.js"></script>
 <script type="text/javascript"
 	src="${context}/resources/graph_js/toImage.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
 <script type="text/javascript"
 		src="${context}/resources/graph_js/jsonToCSV.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"

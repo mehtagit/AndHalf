@@ -271,7 +271,6 @@ display: none !important;
     color: #fff;
     margin-top: 6px;
 }
-
 </style>
 
 </head>

@@ -25,6 +25,22 @@ public class BrandModelRowData {
 	private String count;
 
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("BrandModelRowData [date=");
+		builder.append(date);
+		builder.append(", brandName=");
+		builder.append(brandName);
+		builder.append(", modelNumber=");
+		builder.append(modelNumber);
+		builder.append(", count=");
+		builder.append(count);
+		builder.append("]");
+		return builder.toString();
+	}
+
+
 	public String getDate() {
 		return date;
 	}
@@ -64,21 +80,4 @@ public class BrandModelRowData {
 		this.count = count;
 	}
 
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("BrandModelRowData [date=");
-		builder.append(date);
-		builder.append(", brandName=");
-		builder.append(brandName);
-		builder.append(", modelNumber=");
-		builder.append(modelNumber);
-		builder.append(", count=");
-		builder.append(count);
-		builder.append("]");
-		return builder.toString();
-	}
-	
-		
 }

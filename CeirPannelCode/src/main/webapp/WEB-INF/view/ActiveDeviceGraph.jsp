@@ -350,7 +350,8 @@ th {
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary" id="">Active Device Graph</h6>
-                 
+                 <div> <a id="exportDeviceReport">Export</a> | 
+                      <a id="DeviceReport" download="Device_Report.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -393,8 +394,8 @@ th {
 <!-- Card Header - Dropdown -->
 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 <h6 class="m-0 font-weight-bold text-primary" id="">Top 5 Models </h6>
-<div> <a id="exportBrandReport">Export</a> | 
-                      <a id="Top5BrandName" download="Top5BrandName.jpg">Download</a></div>
+<div> <a id="exportModelReport">Export</a> | 
+                      <a id="Top5ModelName" download="Top5ModelName.jpg">Download</a></div>
 </div>
 <!-- Card Body -->
 <div class="card-body">
@@ -415,7 +416,8 @@ th {
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Active Device Graph</h6>
-              
+                <div> <a id="exportLineDeviceReport">Export</a> | 
+                      <a id="LineDeviceReport" download="Device_Report.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
