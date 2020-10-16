@@ -11,7 +11,7 @@
 
 */
 function activeDeviceGraph() {
-	[29,34,27,'operatorActive'].forEach(function(reportnameId) {
+	['operatorActive',29,34,27].forEach(function(reportnameId) {
 		var graphRequest=null;
 		var chartID=null;
 		var type=null;
@@ -150,7 +150,8 @@ function graph(response,id,chartType,chartTitle)
   var metfone=[];
   var pieLabelName=['Primary','Secondary'];
   var pieData=[];
-  var pieOperatorActiveLabelName=["QB","Seatel", "Smart","Cellcard","Metfone"];
+
+  var pieOperatorActiveLabelName;
   var pieOperatorActive=[];
 	   	//console.log("repsonse-->"+JSON.stringify(response));
 		for(var i=0;i<response['rowData'].length;i++){
@@ -165,13 +166,78 @@ function graph(response,id,chartType,chartTitle)
 		pieData.push(parseInt(response['rowData'][0]['Total Paired IMEI']));
 		pieData.push(parseInt(response['rowData'][0]['Total Duplicate IMEI']));
 		
+		if(chartType=='pie'){
+		pieOperatorActiveLabelName=["QB","Seatel", "Smart","Cellcard","Metfone"];
+		//pieOperatorActiveLabelName=response['columns'];
 		pieOperatorActive.push(parseInt(response['rowData'][0]['QB']));
 		pieOperatorActive.push(parseInt(response['rowData'][0]['SEATEL']));
 		pieOperatorActive.push(parseInt(response['rowData'][0]['SMART']));
 		pieOperatorActive.push(parseInt(response['rowData'][0]['CELLCARD']));
 		pieOperatorActive.push(parseInt(response['rowData'][0]['METFONE']));
+		}
 		
-		if(chartType=='line' ){
+		
+	   if(chartType == 'pie'){
+	    	$("#expOperatorActivePair").unbind("click").click(function(){
+		        var data = JSON.stringify(response['rowData']);
+		        //console.log(JSON.stringify(data));
+		        if(data == '')
+		            return;
+		        JSONToCSVConvertor(data, "Operator_Active_Pair_Report", true);
+
+		    });
+	
+			
+
+			var ctx = document.getElementById(''+id+'').getContext('2d');
+
+			var chart = new Chart(ctx, {
+				// The type of chart we want to create
+				type: ''+chartType+'',
+
+				// The data for our dataset
+				data: {
+					labels: pieOperatorActiveLabelName,
+					datasets: [ {
+						backgroundColor: [
+							 '#512DA8','#008B8B','#F20515','#4682B4','#8B4513'],
+							data: pieOperatorActive
+					}]
+				},
+
+				// Configuration options go here
+				options: {
+					responsive: false,
+					maintainAspectRatio: false,
+					animation: {
+	    	        	
+	    	        	onComplete:captureLineImage
+	    	        },
+					plugins: {
+					    datalabels: {
+						      formatter: (value, ctx) => {
+						    	  
+						        let sum = ctx.dataset._meta[0].total;
+						    
+						        let percentage = (value * 100 / sum).toFixed(2) + "%";
+						        return percentage;
+
+
+						      },
+						      color: '#fff',
+						    }
+						  }
+				}
+			});
+
+			function captureLineImage(){  
+	            var url=chart.toBase64Image();
+	            //alert("urll="+url);
+	            document.getElementById("OperatorActiveImage").href=url;
+	          //  $("#Top5BrandName").attr("href",url);
+	            }
+	    }
+	    else if(chartType=='line' ){
 		$("#exp").unbind("click").click(function(){
 	        var data = response['rowData'];
 	        if(data == '')
@@ -277,62 +343,7 @@ function graph(response,id,chartType,chartTitle)
 	    }
 		}
 		
-		
-	    else if(chartType == 'pie'){
-	        $("#expOperatorActivePair").unbind("click").click(function(){
-	    	 	        var data = response['rowData'];
-	    	 	        if(data == '')
-	    	 	            return;
-	    	 	        
-	    	 	        JSONToCSVConvertor(data, "Pairing_Type_Report", true);
-	    	 	    });
-	            var ctx = document.getElementById(''+id+'').getContext('2d');
-	            var chart = new Chart(ctx, {
-	              // The type of chart we want to create
-	              type: ''+chartType+'',
 
-	              // The data for our dataset
-	              data: {
-	                labels: pieOperatorActiveLabelName,
-	                datasets: [ {
-	                	 backgroundColor: [
-	                		 '#512DA8','#008B8B','#F20515','#4682B4','#8B4513'],
-	                    data: pieOperatorActive
-	                }]
-	              },
-
-	              // Configuration options go here
-	              options: {
-	            	    responsive: false,
-	            	    maintainAspectRatio: false,
-	    				 animation: {
-	    	        	        onComplete: captureImage
-	    	        	      },
-	            	    plugins: {
-	    				    datalabels: {
-	    				      formatter: (value, ctx) => {
-	    				    	  let datasets = ctx.chart.data.datasets;
-
-	    				          if (datasets.indexOf(ctx.dataset) === datasets.length - 1) {
-	    				            let sum = datasets[0].data.reduce((a, b) => a + b, 0);
-	    				            let percentage = Math.round((value / sum) * 100) + '%';
-	    				            return percentage;
-	    				          } else {
-	    				            return percentage;
-	    				          }
-	    				          },
-	    				      color: '#fff',
-	    				    }
-	    				  }
-	            	    
-	            	}
-	            });
-	        	       
-	    	          function captureImage(){  
-	    	              var url=chart.toBase64Image();
-	    	              document.getElementById("OperatorActiveImage").href=url;
-	    	              }	
-	        }
 		else if(chartType=='gauge'){
 	    	 $("#expPairingType").unbind("click").click(function(){
 	 	        var data = response['rowData'];
