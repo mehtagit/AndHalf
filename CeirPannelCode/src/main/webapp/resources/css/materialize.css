@@ -13290,3 +13290,8 @@ textarea::-webkit-scrollbar-thumb:hover {
 .searchMargin {
     margin-top: 103px;
 } 
+a#wholePageImage {
+    float: right !important;
+    margin: 10px 20px !important;
+    color: #fff !important;
+}
