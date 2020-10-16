@@ -15,23 +15,21 @@ public class GrievanceModelRowData {
 		
 	@SerializedName("Closed")
 	@JsonProperty("Closed")
-	private String closed;
+	private int closed;
 	
 	@SerializedName("Pending With Admin")
 	@JsonProperty("Pending With Admin")
-	private String pendigWithAdmin;
+	private int pendigWithAdmin;
 	
 	@SerializedName("Pending With User")
 	@JsonProperty("Pending With User")
-	private String pendingWithUser;
+	private int pendingWithUser;
 	
 
 	@SerializedName("New")
 	@JsonProperty("New")
-	private String newState;
+	private int newState;
 
-
-	
 
 	public String getDate() {
 		return date;
@@ -43,43 +41,42 @@ public class GrievanceModelRowData {
 	}
 
 
-
-	public String getClosed() {
+	public int getClosed() {
 		return closed;
 	}
 
 
-	public void setClosed(String closed) {
+	public void setClosed(int closed) {
 		this.closed = closed;
 	}
 
 
-	public String getPendigWithAdmin() {
+	public int getPendigWithAdmin() {
 		return pendigWithAdmin;
 	}
 
 
-	public void setPendigWithAdmin(String pendigWithAdmin) {
+	public void setPendigWithAdmin(int pendigWithAdmin) {
 		this.pendigWithAdmin = pendigWithAdmin;
 	}
 
 
-	public String getPendingWithUser() {
+	public int getPendingWithUser() {
 		return pendingWithUser;
 	}
 
 
-	public void setPendingWithUser(String pendingWithUser) {
+	public void setPendingWithUser(int pendingWithUser) {
 		this.pendingWithUser = pendingWithUser;
 	}
 
 
-	public String getNewState() {
+	public int getNewState() {
 		return newState;
 	}
 
 
-	public void setNewState(String newState) {
+	public void setNewState(int newState) {
 		this.newState = newState;
 	}
 
@@ -101,8 +98,5 @@ public class GrievanceModelRowData {
 		return builder.toString();
 	}
 
-
-	
-	
 	
 }

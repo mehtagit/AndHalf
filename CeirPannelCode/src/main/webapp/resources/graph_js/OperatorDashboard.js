@@ -11,13 +11,15 @@
 
 */
 function activeDeviceGraph() {
-	[29,27].forEach(function(reportnameId) {
+	[29,34,27].forEach(function(reportnameId) {
 		var graphRequest=null;
 		var chartID=null;
 		var type=null;
 		var title=null;
-		var  urlParam=null;
+		var urlHit=null;
+		var featureFlag=null;
 		if(reportnameId == 29){
+			urlHit="./report/data?Type=OperatorDashboard";
 			graphRequest={
 					 "columns": [
 						    "Date",
@@ -30,10 +32,13 @@ function activeDeviceGraph() {
 						  "pageSize" :55, 
 						  "pageNo" :0
 			}
-			urlParam= './report/data';
 			
+			
+			chartID='lineGraph';
+			type='line';
+			title='User Login HorizontalBar Graph';
 		}
-		if(reportnameId == 27){
+		else if(reportnameId == 27){
 			graphRequest={
 					 
 					  
@@ -43,8 +48,29 @@ function activeDeviceGraph() {
 						  "pageSize" :10, 
 						  "pageNo" :0
 			}
-			urlParam='./report/imeiUsageDashBoard';
+			urlHit='./report/imeiUsageDashBoard';
 		}
+		
+		
+		else if(reportnameId == 34){
+			featureFlag="BlocedkIMEI"
+			urlHit='./brandModel/data/'+featureFlag;
+			graphRequest={
+					 "columns": [
+						    "Date",
+						    "Operator Name",
+						    "count"
+						  ],
+						  "groupBy": "Operator Name",
+						  "reportnameId": 34,
+						  "file" : 0, 
+						  "pageSize" :30, 
+						  "pageNo" :0
+			}
+			
+		}
+		
+
 		
 
 		var token = $("meta[name='_csrf']").attr("content");
@@ -55,7 +81,7 @@ function activeDeviceGraph() {
 		});
 		$.ajax({
 			type : 'POST',
-			url :urlParam,
+			url : urlHit,
 			contentType : "application/json",
 			dataType : 'html',
 			async:false,
@@ -64,19 +90,23 @@ function activeDeviceGraph() {
 				$("#loading-image").show();
 			},*/
 			success : function(data) {
-				
+				var labelSet=null;
 				var response = JSON.parse(data);
 				//graph(response,chartID,type,title);
-if(reportnameId==29){
+				if(reportnameId==34){
 					
-	graph(response,'lineGraph','line','User Login Line Graph')
+					labelSet=operatorList()
+					blockIMEIgraph(response,'blockIMEIGraph','horizontalBar','User Login HorizontalBar Graph',labelSet,'blockedIMEIImg','expblockedIMEI','blockedIMEI');
+					
+					
 				}
-			
-if(reportnameId==27){
+				else if(reportnameId==29){
+				graph(response,'lineGraph','line','User Login Line Graph')
+				}
+				else if(reportnameId==27){
 	
-	graph(response,'gaugeGraph','gauge','User Login Doughnut Graph')
+	         graph(response,'gaugeGraph','gauge','User Login Doughnut Graph')
 				}
-		
 			},
 			error : function() {
 			}
@@ -84,6 +114,7 @@ if(reportnameId==27){
 	});
 
 }
+
 
 
 function graph(response,id,chartType,chartTitle)
@@ -306,7 +337,7 @@ $(document).ready(function(){
 	
 	$.ajax({
 		type : 'POST',
-		url : './report/data',
+		url : './report/data?Type=OperatorDatatable',
 		contentType : "application/json",
 		data : JSON.stringify(graphRequest),
 		success: function(data){
@@ -317,30 +348,20 @@ $(document).ready(function(){
 		        
 		        JSONToCSVConvertor(result, "Report", true);
 		    });
-var i=0;
-				Object.keys(data['rowData'][0]).map(function(key){ 
-				if(key == 'Date'){
-					$('#dateVal').text('Last Update Date: '+data['rowData'][0][key]);
-				}
-				else{
-					if(i == 0){ $('#firstTD').text(data['rowData'][0]['Total IMEI']);}
-					else if(i == 1){$('#secondTD').text(data['rowData'][1]['Total IMEI']);}
-					else if(i == 2){$('#thirdTD').text(data['rowData'][2]['Total IMEI']);}
-					else if(i == 3){$('#fourthTD').text(data['rowData'][3]['Total IMEI']);}
-					else if(i == 4){$('#fifthTD').text(data['rowData'][4]['Total IMEI']);}
-					
-					$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b id="+i+++">"+data['rowData'][0][key]+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
-				
-				}
+
 				$('div#initialloader').delay(300).fadeOut('slow');
-				});
+				for(var i=0;i<data['rowData'].length;i++){
+					if(i == 0){ $('#firstTD').text(data['rowData'][i]['Total IMEI']);}
+					else if(i == 1){$('#secondTD').text(data['rowData'][i]['Total IMEI']);}
+					else if(i == 2){$('#thirdTD').text(data['rowData'][i]['Total IMEI']);}
+					else if(i == 3){$('#fourthTD').text(data['rowData'][i]['Total IMEI']);}
+					else if(i == 4){$('#fifthTD').text(data['rowData'][i]['Total IMEI']);}
+				}
+			
 		}
 	
 	});
-	
 });
-
-
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 $.ajaxSetup({
@@ -366,4 +387,138 @@ $.ajax({
 
 
 
+
+function blockIMEIgraph(response,id,chartType,chartTitle,pieLabelName,GraphImageId,GraphExcel,reportName)
+{
+	var date = [];
+	//console.log("resonse=="+pieLabelName);
+	//var pieLabelName=['New','Approved By CEIR Admin','Pending Approval From CEIR Admin','Rejected by CEIR Admin','Rejected By System','Withdrawn By User','Withdrawn By CEIR Admin'];
+	var backgroundColors=['#512DA8','#008B8B','#F20515','#4682B4','#8B4513','#006400','#7C0378','#696969','#800080','#9400D3','#FFFF00','#7E57C2'];
+	var backgroundHoverColors=['#512DA8','#008B8B','#F20515','#4682B4','#8B4513','#006400','#7C0378','#696969','#800080','#9400D3','#FFFF00','#7E57C2'];
+	var rowData = [];
+	var allData = new Map();
+	var dataSetList = [];
+	for(var i=0;i<response['rowData'].length;i++)
+	{
+	    for( var j=0; j<pieLabelName.length; j++ )
+	    {
+	      if( allData.has( pieLabelName[j] ) ){
+	        rowData = allData.get( pieLabelName[j] );
+	      }
+	      else{
+	    	  rowData = [];
+	      }
+	      
+	      if(response['rowData'][i][pieLabelName[j]]==null || response['rowData'][i][pieLabelName[j]]=="null"){
+	    	  rowData.push(0);  
+	      }
+	      else{
+	    	  rowData.push(response['rowData'][i][pieLabelName[j]]);  
+	      }
+	      //console.log(rowData);;	
+	      	allData.set( pieLabelName[j], rowData );
+	    }
+	    date.push(response['rowData'][i]['Date']);
+	}
+
+	for( var j=0; j<pieLabelName.length; j++ ){
+		  dataSetList.push( {
+			label: pieLabelName[j],
+			backgroundColor: backgroundColors[j],
+			hoverBackgroundColor: backgroundHoverColors[j],
+			data: allData.get( pieLabelName[j] )
+		});
+
+	}
+	/*
+	$("#expGrievanceStatus").unbind("click").click(function(){
+        var data = response['rowData'];
+        if(data == '')
+            return;
+        JSONToCSVConvertor(data, "Report", true);
+    });*/
+	
+	$("#"+GraphExcel).unbind("click").click(function(){
+        var data = JSON.stringify(response['rowData']);
+        //console.log(JSON.stringify(data));
+        if(data == '')
+            return;
+        JSONToCSVConvertor(data, reportName, true);
+
+    });
+    	var bar_ctx = document.getElementById(''+id+'');
+    	var bar_chart = new Chart(bar_ctx, {
+    	    type: ''+chartType+'',
+    	    data: {
+    	        labels: date,
+    	        datasets:dataSetList
+    	    },
+    	    options: {
+    	        responsive: false,
+        	    maintainAspectRatio: false,
+    	     		animation: {
+    	        	duration: 10,
+    	        	onComplete:captureLineImage
+    	        },
+    	        plugins: {
+    			    datalabels: {
+    			        display: false,
+    			    },
+    			    anchor :'end',
+    	            align :'top',
+    	            // and if you need to format how the value is displayed...
+    	            formatter: function(value, context) {
+    	                return GetValueFormatted(value);
+    	            }
+    			},
+    	        scales: {
+    	          xAxes: [{ 
+    	          	stacked: false,
+    	          	scaleLabel: {
+    	                display: true,
+    	                labelString: 'Count'
+    	              },
+    	            
+    	            gridLines: { display: false },
+    	            }],
+    	          yAxes: [{ 
+    	          	stacked: true,
+    	          	scaleLabel: {
+    	                display: true,
+    	                labelString: 'Date'
+    	              },
+    	            }],
+    	        }, // scales
+    	        legend: {display: true}
+    	    } // options
+    	   }
+    	);
+    	
+    	function captureLineImage(){  
+            var url=bar_chart.toBase64Image();
+            /*document.getElementById("grievanceBarImg").href=url;*/
+            $("#"+GraphImageId).attr("href",url);
+            }
+    	
+    	$('div#initialloader').delay(300).fadeOut('slow');    
+}
+
+function operatorList(){
+	var operatorList=[];
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		async: false,
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	$.getJSON('./getDropdownList/OPERATORS', function(data) {
+		for (i = 0; i < data.length; i++) {
+			operatorList.push((data[i].interp));
+			
+		}
+		
+	});
+	return operatorList;
+}
 

@@ -294,10 +294,12 @@ th {
 			
 						<div class="col s12 m12 l12">
 							<div class="row card-panel">
+							<a id="wholePageImage">Download</a>
 								<div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display:block !important">
                             <h6 class="fixPage-modal-header ">
                             <spring:message code="sidebar.User_Dashboard" />
                             				</h6>
+                            				<div id="wrapperPage">
                             				<h6 class="m-0 font-weight-bold text-primary" id="dateVal"></h6>
                             				 <div class="split">
                             						<div class="col s12 m12 info-div center" id="infoBox"></div>
@@ -348,7 +350,8 @@ th {
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary" id="">Active Device Graph</h6>
-                 
+                 <div> <a id="exportDeviceReport">Export</a> | 
+                      <a id="DeviceReport" download="Device_Report.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -391,8 +394,8 @@ th {
 <!-- Card Header - Dropdown -->
 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 <h6 class="m-0 font-weight-bold text-primary" id="">Top 5 Models </h6>
-<div> <a id="exportBrandReport">Export</a> | 
-                      <a id="Top5BrandName" download="Top5BrandName.jpg">Download</a></div>
+<div> <a id="exportModelReport">Export</a> | 
+                      <a id="Top5ModelName" download="Top5ModelName.jpg">Download</a></div>
 </div>
 <!-- Card Body -->
 <div class="card-body">
@@ -413,7 +416,8 @@ th {
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Active Device Graph</h6>
-              
+                <div> <a id="exportLineDeviceReport">Export</a> | 
+                      <a id="LineDeviceReport" download="Device_Report.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -423,7 +427,7 @@ th {
                 </div>
               </div>
             </div>
-             
+             </div>
              
              
              

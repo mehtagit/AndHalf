@@ -25,6 +25,7 @@ function activeDeviceGraph() {
 						"Rejected TAC"
 						],
 						"reportnameId": reportnameId,
+						"lastDate": true,
 						"file" : 0,
 						"pageSize" :1,
 						"pageNo" :0
@@ -54,6 +55,7 @@ function activeDeviceGraph() {
 			graphRequest={
 
 					"reportnameId": reportnameId,
+					"lastDate": true,
 					"file" : 0,
 					"pageSize" :10,
 					"pageNo" :0
@@ -69,6 +71,7 @@ function activeDeviceGraph() {
 			graphRequest={
 
 					"reportnameId": reportnameId,
+					"lastDate": true,
 					"file" : 0,
 					"pageSize" :10,
 					"pageNo" :0
@@ -149,9 +152,21 @@ function graph(response,id,chartType,chartTitle)
 		});
 		
 */
+		$("#exportDeviceReport").unbind("click").click(function(){
+	        var data = JSON.stringify(response['rowData']);
+	        //console.log(JSON.stringify(data));
+	        if(data == '')
+	            return;
+	        JSONToCSVConvertor(data, "Active_Device", true);
+
+	    });
 		var options = {
 				responsive: false,
 				maintainAspectRatio: false,
+				animation: {
+    	        	
+    	        	onComplete:captureLineImage
+    	        },
 				plugins: {
 				    datalabels: {
 				      formatter: (value, ctx) => {
@@ -190,12 +205,26 @@ function graph(response,id,chartType,chartTitle)
 			options: options
 		});
 
+		function captureLineImage(){  
+            var url=chart.toBase64Image();
+            //alert("urll="+url);
+            document.getElementById("DeviceReport").href=url;
+          //  $("#Top5BrandName").attr("href",url);
+            }
 	
 	}
 
 
 	else if(chartType == "line"){
 
+		$("#exportLineDeviceReport").unbind("click").click(function(){
+	        var data = JSON.stringify(response['rowData']);
+	        //console.log(JSON.stringify(data));
+	        if(data == '')
+	            return;
+	        JSONToCSVConvertor(data, "Active_Device", true);
+
+	    });
 		var ctx = document.getElementById(''+id+'').getContext('2d');
 		var chart = new Chart(ctx, {
 			// The type of chart we want to create
@@ -222,6 +251,9 @@ function graph(response,id,chartType,chartTitle)
 			options: {
 				responsive: false,
 				maintainAspectRatio: false,
+                   animation: {
+    	        	onComplete:captureLineImage
+    	        },
 				elements: {
                     point:{
                         radius: 0
@@ -256,6 +288,13 @@ function graph(response,id,chartType,chartTitle)
 
 			}
 		});
+		
+		function captureLineImage(){  
+            var url=chart.toBase64Image();
+            //alert("urll="+url);
+            document.getElementById("LineDeviceReport").href=url;
+          //  $("#Top5BrandName").attr("href",url);
+            }
 		 	}
 
 }
@@ -363,12 +402,13 @@ function graphBrandName(response,id,chartType,chartTitle)
 	var date1=[];
 	var pieLabelName1=[];
 	var pieData1=[];
-	
+	var expoData=[];
 	
 	for(var i=0;i<=5;i++){
 		
 		pieData1.push(parseInt(response['rowData'][i]['Count']));
 		pieLabelName1.push(response['rowData'][i]['Brand Name']);
+		expoData.push(response['rowData'][i]);
 		//pieData.push(response['rowData'][i].rejectedTAC);
 		//date1.push(response['rowData'][i].date);
 	//	msisdnFrequency.push(response['rowData'][i].msisdnFrequency);
@@ -388,7 +428,7 @@ function graphBrandName(response,id,chartType,chartTitle)
 	        //console.log(JSON.stringify(data));
 	        if(data == '')
 	            return;
-	        JSONToCSVConvertor(data, "Top5Brand", true);
+	        JSONToCSVConvertor(expoData, "Top5Brand", true);
 
 	    });
 		
@@ -397,7 +437,9 @@ function graphBrandName(response,id,chartType,chartTitle)
 		var options = {
 				responsive: false,
 				maintainAspectRatio: false,
-				onComplete:captureLineImage,
+				animation: {
+    	        	onComplete:captureLineImage
+    	        },
 				plugins: {
 					datalabels: {
 					formatter: (value, ctx) => {
@@ -416,11 +458,7 @@ function graphBrandName(response,id,chartType,chartTitle)
 					}
 					}
 							}
-		function captureLineImage(){  
-            var url=bar_chart.toBase64Image();
-            /*document.getElementById("grievanceBarImg").href=url;*/
-            $("#Top5BrandName").attr("href",url);
-            }
+		
 
 		var chart = new Chart(ctx, {
 			// The type of chart we want to create
@@ -449,6 +487,12 @@ function graphBrandName(response,id,chartType,chartTitle)
 
 			 options : options
 		});
+		function captureLineImage(){  
+            var url=chart.toBase64Image();
+            //alert("urll="+url);
+            document.getElementById("Top5BrandName").href=url;
+          //  $("#Top5BrandName").attr("href",url);
+            }
 		
 	
 	}
@@ -465,17 +509,26 @@ function graphTopModelNumber(response,id,chartType,chartTitle)
 	var date1=[];
 	var pieLabelName2=[];
 	var pieData2=[];
+	var expoData1=[];
 	for(var i=0;i<=5;i++){
 		
 		pieData2.push(parseInt(response['rowData'][i]['Count']));
 		pieLabelName2.push(response['rowData'][i]['Model Name']);
+		expoData1.push(response['rowData'][i]);
 		//pieData.push(response['rowData'][i].rejectedTAC);
 		//date1.push(response['rowData'][i].date);
 	//	msisdnFrequency.push(response['rowData'][i].msisdnFrequency);
 		//imeiCount.push(response['rowData'][i].imeiCount);
 	}
 	if(chartType=='pie'){
+		$("#exportModelReport").unbind("click").click(function(){
+	        var data = JSON.stringify(response['rowData']);
+	        //console.log(JSON.stringify(data));
+	        if(data == '')
+	            return;
+	        JSONToCSVConvertor(expoData1, "Top5Model", true);
 
+	    });
 
 		['./resources/graph_js/chartjs-plugin-datalabel.js'].forEach(function(src) {
 			$('body').append('<script type="text/javascript" id="pieJS" src='+src+' async defer><\/script>');
@@ -488,6 +541,9 @@ function graphTopModelNumber(response,id,chartType,chartTitle)
 		var options = {
 				responsive: false,
 				maintainAspectRatio: false,
+				animation: {
+    	        	onComplete:captureLineImage
+    	        },
 				plugins: {
 					datalabels: {
 					formatter: (value, ctx) => {
@@ -532,7 +588,12 @@ function graphTopModelNumber(response,id,chartType,chartTitle)
 			// Configuration options go here
 			 options : options		});
 
-	
+		function captureLineImage(){  
+            var url=chart.toBase64Image();
+            //alert("urll="+url);
+            document.getElementById("Top5ModelName").href=url;
+          //  $("#Top5BrandName").attr("href",url);
+            }
 	}
 
 

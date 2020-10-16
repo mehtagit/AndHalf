@@ -14,38 +14,37 @@ public class StockModelRowData {
 	
 	@SerializedName("Withdrawn By User")
 	@JsonProperty("Withdrawn By User")
-	private String withdrawnBySystem;
+	private int withdrawnBySystem;
 	
 	@SerializedName("Approved by CEIR Admin")
 	@JsonProperty("Approved by CEIR Admin")
-	private String approvedByAdmin;
+	private int approvedByAdmin;
 	
 	@SerializedName("Withdrawn By CEIR Admin")
 	@JsonProperty("Withdrawn By CEIR Admin")
-	private String withdrawnByAdmin;
+	private int withdrawnByAdmin;
 
 	@SerializedName("New")
 	@JsonProperty("New")
-	private String newState;
+	private int newState;
 	
 	@SerializedName("Processing")
 	@JsonProperty("Processing")
-	private String processing;
+	private int processing;
 	
 	@SerializedName("Rejected By System")
 	@JsonProperty("Rejected By System")
-	private String rejectedBySystem;
+	private int rejectedBySystem;
 	
 	@SerializedName("Pending Approval From CEIR Admin")
 	@JsonProperty("Pending Approval From CEIR Admin")
-	private String pendingByAdmin;
+	private int pendingByAdmin;
 	
 	@SerializedName("Rejected by CEIR Admin")
 	@JsonProperty("Rejected by CEIR Admin")
-	private String rejectedByAdmin;
+	private int rejectedByAdmin;
 
-	
-		public String getDate() {
+	public String getDate() {
 		return date;
 	}
 
@@ -53,67 +52,67 @@ public class StockModelRowData {
 		this.date = date;
 	}
 
-	public String getWithdrawnBySystem() {
+	public int getWithdrawnBySystem() {
 		return withdrawnBySystem;
 	}
 
-	public void setWithdrawnBySystem(String withdrawnBySystem) {
+	public void setWithdrawnBySystem(int withdrawnBySystem) {
 		this.withdrawnBySystem = withdrawnBySystem;
 	}
 
-	public String getApprovedByAdmin() {
+	public int getApprovedByAdmin() {
 		return approvedByAdmin;
 	}
 
-	public void setApprovedByAdmin(String approvedByAdmin) {
+	public void setApprovedByAdmin(int approvedByAdmin) {
 		this.approvedByAdmin = approvedByAdmin;
 	}
 
-	public String getWithdrawnByAdmin() {
+	public int getWithdrawnByAdmin() {
 		return withdrawnByAdmin;
 	}
 
-	public void setWithdrawnByAdmin(String withdrawnByAdmin) {
+	public void setWithdrawnByAdmin(int withdrawnByAdmin) {
 		this.withdrawnByAdmin = withdrawnByAdmin;
 	}
 
-	public String getNewState() {
+	public int getNewState() {
 		return newState;
 	}
 
-	public void setNewState(String newState) {
+	public void setNewState(int newState) {
 		this.newState = newState;
 	}
 
-	public String getProcessing() {
+	public int getProcessing() {
 		return processing;
 	}
 
-	public void setProcessing(String processing) {
+	public void setProcessing(int processing) {
 		this.processing = processing;
 	}
 
-	public String getRejectedBySystem() {
+	public int getRejectedBySystem() {
 		return rejectedBySystem;
 	}
 
-	public void setRejectedBySystem(String rejectedBySystem) {
+	public void setRejectedBySystem(int rejectedBySystem) {
 		this.rejectedBySystem = rejectedBySystem;
 	}
 
-	public String getPendingByAdmin() {
+	public int getPendingByAdmin() {
 		return pendingByAdmin;
 	}
 
-	public void setPendingByAdmin(String pendingByAdmin) {
+	public void setPendingByAdmin(int pendingByAdmin) {
 		this.pendingByAdmin = pendingByAdmin;
 	}
 
-	public String getRejectedByAdmin() {
+	public int getRejectedByAdmin() {
 		return rejectedByAdmin;
 	}
 
-	public void setRejectedByAdmin(String rejectedByAdmin) {
+	public void setRejectedByAdmin(int rejectedByAdmin) {
 		this.rejectedByAdmin = rejectedByAdmin;
 	}
 
@@ -141,6 +140,7 @@ public class StockModelRowData {
 		builder.append("]");
 		return builder.toString();
 	}
+
 	
 	
 	
