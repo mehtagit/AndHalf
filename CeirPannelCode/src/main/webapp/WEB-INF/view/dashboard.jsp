@@ -155,8 +155,7 @@ div#error_Modal {
 					<ul class="left">
 						<li>
 							<div class="offset-md-1 text-right px-0 ml-3 my-auto">
-								<a href="javascript:void(0)" rel="noopener noreferrer"
-									title="DMC, external link that open in a new window"> <img
+								<a href="javascript:void(0)" rel="noopener noreferrer"> <img
 									src="./resources/images/DMC-Logo.png" id="header-img"
 									class="darken-1 my-2" style="height: 56px;"></a>
 							</div>
@@ -827,7 +826,7 @@ data-dismiss="modal">&times;</button> -->
 
 		$(document).ready(function() {
 			
-			<%if (usertypeId == 13 || usertypeId == 20) {%>
+			<%if (usertypeId == 13 || usertypeId == 20 || usertypeId == 23) {%>
 		//	$("#langlist").val('en');
 			$("#langlist").prop("disabled", true);
 			$("#divLang").hide();
