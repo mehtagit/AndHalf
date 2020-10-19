@@ -112,9 +112,9 @@ var i=0;
 			},*/
 			success : function(data) {
 				var response = data;
-			//	graph(response,'pieGraph','pie','User Login Pie Graph')
-			//	graph(response,'donutGraph','doughnut','User Login Doughnut Graph')
-			//	graph(response,'gaugeGraph','gauge','User Login Doughnut Graph')
+				//graph(response,'pieGraph','pie','User Login Pie Graph')
+				//graph(response,'donutGraph','doughnut','User Login Doughnut Graph')
+				//graph(response,'gaugeGraph','gauge','User Login Doughnut Graph')
 
 			},
 			error : function() {

@@ -384,11 +384,10 @@ a#newUserLink {
 	 <script type="text/javascript" src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript">
-	
-	    if(window.location.href.includes('isExpired=yes') && location.href.indexOf('reload')  ==-1)    	    {
+	 if(window.location.href.includes('isExpired=yes') && location.href.indexOf('reload')  ==-1)   
+	    {
 	         location.href=location.href+'&reload';
 	    }
-
 </script>
 	<script type="text/javascript" src="${context}/resources/project_js/login.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	
