@@ -32,7 +32,7 @@ function userloginGraph() {
 			var response = data;
 			graph(response,'lineGraph','line','User Login Line Graph')
 			graph(response,'barGraph','bar','User Login Bar Graph')
-			graph(response,'horizontalBarGraph','horizontalBar','User Login HorizontalBar Graph')	
+			//graph(response,'horizontalBarGraph','horizontalBar','User Login HorizontalBar Graph')	
 			
 		},
 		error : function() {
@@ -112,9 +112,9 @@ var i=0;
 			},*/
 			success : function(data) {
 				var response = data;
-				graph(response,'pieGraph','pie','User Login Pie Graph')
-				graph(response,'donutGraph','doughnut','User Login Doughnut Graph')
-				graph(response,'gaugeGraph','gauge','User Login Doughnut Graph')
+			//	graph(response,'pieGraph','pie','User Login Pie Graph')
+			//	graph(response,'donutGraph','doughnut','User Login Doughnut Graph')
+			//	graph(response,'gaugeGraph','gauge','User Login Doughnut Graph')
 
 			},
 			error : function() {
