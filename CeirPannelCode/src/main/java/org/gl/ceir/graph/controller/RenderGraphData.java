@@ -25,6 +25,8 @@ import org.gl.ceir.graph.model.OperatorTableGraph;
 import org.gl.ceir.graph.model.OperatorTableGraphContent;
 import org.gl.ceir.graph.model.OperatorWiseGraphContant;
 import org.gl.ceir.graph.model.OperatorWiseImei;
+import org.gl.ceir.graph.model.RegisterDeviceGraphContent;
+import org.gl.ceir.graph.model.RegisteredDeviceGraph;
 import org.gl.ceir.graph.model.StockContentReport;
 import org.gl.ceir.graph.model.StockModelGrapContent;
 import org.gl.ceir.graph.model.StockModelRowData;
@@ -103,6 +105,8 @@ public class RenderGraphData {
 	OperatorWiseImei operatorWiseImei;
 	@Autowired
 	OperatorTableGraph operatorTableGraph;
+	@Autowired
+	RegisteredDeviceGraph registeredDeviceGraph;
 	
 	
 	@ResponseBody
@@ -152,6 +156,12 @@ public class RenderGraphData {
 				operatorTableGraph = gson.fromJson(apiResponse, OperatorTableGraph.class);
 				 log.info("::::::graphResponseModel:::::::"+operatorTableGraph);
 				 OperatorTableGraphContent paginationContentList = operatorTableGraph.getContent();
+				 log.info("::::::paginationContentList:::::::"+paginationContentList);
+				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			}else if("registeredDeviceGraph".equals(Type)){
+				registeredDeviceGraph = gson.fromJson(apiResponse, RegisteredDeviceGraph.class);
+				 log.info("::::::graphResponseModel:::::::"+registeredDeviceGraph);
+				 RegisterDeviceGraphContent paginationContentList = registeredDeviceGraph.getContent();
 				 log.info("::::::paginationContentList:::::::"+paginationContentList);
 				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
 			}else {

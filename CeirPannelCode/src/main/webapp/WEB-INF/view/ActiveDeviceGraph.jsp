@@ -427,6 +427,24 @@ th {
                 </div>
               </div>
             </div>
+            
+            
+              <div class="col-xl-8 col-lg-7">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Types of Registered Devices</h6>
+              <div> <a id="expLineBar">Export</a> | 
+                      <a id="lineBarImage" download="Use_login_graph.jpg">Download</a></div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                 
+                    <canvas class="chart-area" id="barGraph" style = "width: 550px; height: 400px; margin: 0 auto">
+                  </canvas>
+                </div>
+              </div>
+            </div>   
              </div>
              
              

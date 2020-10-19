@@ -15,7 +15,6 @@
 <html lang="en">
 
 <head><title>CEIR Portal</title>
-
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
@@ -391,8 +390,7 @@ if (location.href.indexOf('reload')==-1)
 }
 </script>
 	<script type="text/javascript" src="${context}/resources/project_js/login.js?version=<%= (int) (Math.random() * 10) %>"></script>
-</body>
-
-</html>
+	
+</body></html>
 
  
