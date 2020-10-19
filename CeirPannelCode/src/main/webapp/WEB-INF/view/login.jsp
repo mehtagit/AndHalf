@@ -382,7 +382,13 @@ a#newUserLink {
 	<script type="text/javascript" src="${context}/resources/ajax/clearSession.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript" src="${context}/resources/ajax/Login.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	 <script type="text/javascript" src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	
+
+	<script type="text/javascript">
+if (location.href.indexOf('reload')==-1)
+{
+   location.href=location.href+'&reload';
+}
+</script>
 	<script type="text/javascript" src="${context}/resources/project_js/login.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	
 </body></html>
