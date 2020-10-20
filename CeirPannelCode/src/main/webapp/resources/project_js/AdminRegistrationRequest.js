@@ -44,7 +44,24 @@
 		var userRoleTypeId = $("#role").val();
 		var status =  $('#recentStatus').val();
 		var userID= (txnIdValue == 'null' && transactionIDValue == undefined)? transactionIDValue : transactionIDValue;
-		var filterRequest={
+		
+		if(source == 'filter' ) {
+			var filterRequest={
+					"endDate":$('#endDate').val(),
+					"startDate":$('#startDate').val(),
+					"asType": parseInt(asType),
+					"userRoleTypeId" : parseInt(userRoleTypeId),
+					"status" : parseInt(status),
+					"userId":parseInt(userID),
+					"featureId":parseInt(featureId),
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"email" : $('#emailID').val(),
+					"phoneNo" : $('#phone').val(),
+					"username" : $('#userName').val()
+			}
+		}else{
+			var filterRequest={
 				"endDate":$('#endDate').val(),
 				"startDate":$('#startDate').val(),
 				"asType": parseInt(asType),
@@ -56,8 +73,9 @@
 				"userType":$("body").attr("data-roleType"),
 				"email" : $('#emailID').val(),
 				"phoneNo" : $('#phone').val(),
-				"username" : $("body").attr("session-valuetxnid") == "null" ? $('#userName').val() :  $("body").attr("session-valuetxnid"),
-		}
+				"username" : $("body").attr("session-valuetxnid") == "null" ? $('#userName').val() : $("body").attr("session-valuetxnid"),
+		}}
+		
 
 		if(lang=='km'){
 			var langFile="./resources/i18n/khmer_datatable.json";
@@ -431,7 +449,6 @@
 		var asType =  $('#asType').val();
 		var userRoleTypeId =  $("#role").val();
 		var status =  $('#recentStatus').val();
-		
 		var featureId = 8;
 		var usertypeId= parseInt($("body").attr("data-usertypeid"));
 		var table = $('#registrationLibraryTable').DataTable();
@@ -441,19 +458,25 @@
 		
 		
 		
+		var userID= (txnIdValue == 'null' && transactionIDValue == undefined)? -1 : -1;
 		
 		var source;
 		if(startdate != "" || endDate != "" || emailId !="" || phone != '' || username != "" || asType != "-1" ||  userRoleTypeId != "-1" || status != "-1"  ){
 			source = "filter"
+			var username = $('#userName').val()
+			window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&email="+emailId+"&phoneNo="+phone+"&username="+username+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&featureId="+featureId+"&status="+status+"&source="+source+"&pageSize="+pageSize+"&pageNo="+pageNo+"&userTypeId="+usertypeId+"&userId="+userID+"";	
 		}else{
 			source =$("body").attr("data-session-source");
+			var username =  $("body").attr("session-valuetxnid") == "null" ? $('#userName').val() : $("body").attr("session-valuetxnid")
+			window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&email="+emailId+"&phoneNo="+phone+"&username="+username+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&featureId="+featureId+"&status="+status+"&source="+source+"&pageSize="+pageSize+"&pageNo="+pageNo+"&userTypeId="+usertypeId+"&userId="+userID+"";
+			
 		}
 		
-		var userID= (txnIdValue == 'null' && transactionIDValue == undefined)? -1 : transactionIDValue;
+		
 	
 		////console.log ("source--->" +source);
 		
-		window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&email="+emailId+"&phoneNo="+phone+"&username="+username+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&featureId="+featureId+"&status="+status+"&source="+source+"&pageSize="+pageSize+"&pageNo="+pageNo+"&userTypeId="+usertypeId+"&userId="+userID+"";
+		
 	}
 
 
