@@ -30,7 +30,7 @@ import org.apache.log4j.Logger;
 
 public class BasicApplicationNew {
 
-     public static void main(String[] args) {
+     public static void main1(String[] args) {
 
           final String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
           final String DB_URL = "jdbc:oracle:thin:@dmc-prod-db:1521/dmcproddb";
