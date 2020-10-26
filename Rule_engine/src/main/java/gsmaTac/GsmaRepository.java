@@ -43,7 +43,7 @@ class GsmaDbDao {
                getRadioInterface = getRadioInterface.contains("]") ? getRadioInterface.replace("]", " ") : getRadioInterface;
                logger.debug("gsma_tac_db getRadioInterface ...." + getRadioInterface);
                String sqlqry = "insert into  gsma_tac_db ( created_on, status_message,  device_id, band_name ,model_name,internal_model_name ,marketing_name,equipment_type ,sim_support,"
-                       + " nfc ,    wlan,bluetooth  ,lpwan  ,manufacturer_or_applicant, tac_approved_date , gsma_approved_tac, operating_system , device_certify_body , radio_interface ,  status_code , brand_name , modified_on ) "
+                       + " nfc ,    wlan,bluetooth  ,lpwan  ,manufacturer_or_applicant, tac_approved_date , gsma_approved_tac, operating_system , device_certify_body , radio_interface ,  status_code , brand_name , modified_on, brand_name_new , model_name_new ) "
                        + "  Values ( " + now + ", "
                        + " '" + product.getStatusMessage() + "', '" + product.getDeviceId() + "', "
                        + " '" + product.getBrandName() + "' ,"
@@ -51,7 +51,7 @@ class GsmaDbDao {
                        + "'" + product.getInternalModelName() + "',"
                        + " '" + product.getMarketingName() + "', '" + product.getEquipmentType() + "', '" + product.getSimSupport() + "', '" + product.getNfcSupport() + "',"
                        + " '" + product.getWlanSupport() + "', '" + product.getBlueToothSupport() + "', '" + product.getLpwan() + "', '" + product.getManufacturer() + "', '" + product.getTacApprovedDate() + "', '" + product.getGsmaApprovedTac() + "', '" + getOperatingSystem + "', '" + getDeviceCertifybody + "', '" + getRadioInterface + "', '" + product.getStatusCode() + "', "
-                       + " '" + product.getBrandName() + "', " + now + "   "
+                       + " '" + product.getBrandName() + "', " + now + " , '" + product.getBrandName().toUpperCase() + "'  , '" + product.getModelName().toUpperCase() + "'      "
                        + ") ";
 
                stmt.executeQuery(sqlqry);
@@ -189,5 +189,10 @@ class GsmaDbDao {
           return map;
      }
 }
+
+
+
+
+
 
 
