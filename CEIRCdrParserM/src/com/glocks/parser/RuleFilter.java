@@ -59,7 +59,7 @@ public class RuleFilter {
                try {
                     logger.debug("Rule Started .." + device_info.get("rule_name"));
                     output = RuleEngineApplication.startRuleEngine(my_arr, conn, bw);
-                    logger.info("Rule End .." + device_info.get("rule_name") + "; Rule Output:" + output + " ;  Expected O/T : " + device_info.get("output"));
+                    logger.debug("Rule End .." + device_info.get("rule_name") + "; Rule Output:" + output + " ;  Expected O/T : " + device_info.get("output"));
                } catch (Exception e) {
                     logger.error("Error1 " + e);
                }
@@ -1526,6 +1526,7 @@ public class RuleFilter {
 ////				 // System.out.println("Breaking the Rules");
 ////				break;
 ////			}
+
 
 
 

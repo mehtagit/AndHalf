@@ -1,13 +1,9 @@
 package com.glocks.db;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Objects;
-
 import com.glocks.constants.PropertyReader;
-import java.sql.SQLException;
-import java.util.logging.Level;
-
+import java.sql.SQLException; 
 import org.apache.log4j.Logger;
 
 public class MySQLConnection {

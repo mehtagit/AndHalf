@@ -154,8 +154,8 @@ public class CdrParserProcess {
                RuleFilter rule_filter = new RuleFilter();
                // CDR File Writer
                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date date = new Date();  
-  String  sdfTime =    sdf.format(date); 
+               Date date = new Date();
+               String sdfTime = sdf.format(date);
                boolean isOracle = conn.toString().contains("oracle");
                String dateFunction = Util.defaultDateNow(isOracle);
                logger.debug("fileParseLimit " + fileParseLimit);
@@ -165,6 +165,7 @@ public class CdrParserProcess {
                }
                logger.debug("...,. ");
                while ((line = br.readLine()) != null) {
+                    logger.debug(" Line Started ");
 //                    logger.debug("Line  started  " + line);
                     data = line.split(",", -1);
 
@@ -177,7 +178,8 @@ public class CdrParserProcess {
                          device_info.put("system_type", data[4].trim());
                          device_info.put("source", data[5].trim());
                          device_info.put("raw_cdr_file_name", data[6].trim());
-                         device_info.put("imei_arrival_time", data[7].trim().substring(data[7].trim().indexOf("202"), data[7].trim().indexOf("202") + 8));
+//                         device_info.put("imei_arrival_time",     data[7].trim().substring(data[7].trim().indexOf("202"), data[7].trim().indexOf("202") + 8));
+                         device_info.put("imei_arrival_time", data[7].trim());
                          device_info.put("operator", operator.trim());
                          device_info.put("file_name", fileName.trim());
                          device_info.put("record_time", sdfTime);
@@ -246,7 +248,7 @@ public class CdrParserProcess {
                                    }
                               }
                               logger.debug("Failed Condition Success");
-                              String gsmaTac = getValidInvalidTac(conn, device_info.get("IMEI").substring(0, 8) );
+                              String gsmaTac = getValidInvalidTac(conn, device_info.get("IMEI").substring(0, 8));
                               output = checkDeviceUsageDB(conn, device_info.get("IMEI").substring(0, 14), device_info.get("MSISDN"));
                               if (output == 0) {                                         // imei not found in usagedb
                                    my_query = "insert into device_usage_db (actual_imei,msisdn,imsi,create_filename,update_filename,"
@@ -351,6 +353,11 @@ public class CdrParserProcess {
                          logger.info("query : " + my_query);
                          if (my_query.contains("insert")) {
                               stmt.executeUpdate(my_query);
+                              try {
+                                   conn.commit();
+                              } catch (Exception e) {
+                              }
+
                          } else {
                               bw1.write(my_query + ";");
                               bw1.newLine();
@@ -799,7 +806,7 @@ public class CdrParserProcess {
           ResultSet rs1 = null;
           Statement stmt = null;
           int counts = 0;
-          
+
           try {
                query = "select count(*) from gsma_tac_db  where  DEVICE_ID='" + imeiTac + "'";
                logger.debug("get [" + query + "]");
