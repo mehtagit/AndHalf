@@ -11,7 +11,7 @@
 
 */
 function activeDeviceGraph() {
-	[31,48,52,53].forEach(function(reportnameId) {
+	[31,48,52,53,14].forEach(function(reportnameId) {
 		var graphRequest=null;
 		var chartID=null;
 		var type=null;
@@ -82,6 +82,27 @@ function activeDeviceGraph() {
 			title='User Login Pie Graph';
 			urlHit='./brandModel/data/'+featureFlag;
 		}
+		else if(reportnameId == 14 ){
+			graphRequest={
+					"columns": [
+						    "Date",
+						    "Equipment Type",
+						    "Count"
+						  ],
+					"reportnameId": reportnameId,
+					"file" : 0,
+					"pageSize" :45,
+					"pageNo" :0,
+					"lastDate": false,
+					"groupBy":"Equipment Type"
+						  
+							
+			}
+			chartID='barGraph';
+			type='bar';
+			title='Types of Registered Devices';
+			urlHit='./report/data?Type=registeredDeviceGraph';
+		}
 
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
@@ -113,7 +134,10 @@ function activeDeviceGraph() {
 					
 					graphTopModelNumber(response,chartID,type,title);
 					}
-				
+				else if(reportnameId==14){
+					
+					graph(response,chartID,type,title);
+					}
 				else{
 				
 					graph(response,chartID,type,title);	
@@ -129,20 +153,69 @@ function activeDeviceGraph() {
 
 function graph(response,id,chartType,chartTitle)
 {
-
-
 	var imeiCount=[];
 	var msisdnFrequency=[];
 	var date=[];
 	var pieLabelName=response['columns'];
 	var pieData=[];
-	for(var i=0;i<response['rowData'].length;i++){
-		pieData.push(response['rowData'][i].approvedTAC);
-		pieData.push(response['rowData'][i].rejectedTAC);
-		date.push(response['rowData'][i].createdOn);
-		msisdnFrequency.push(response['rowData'][i].msisdnFrequency);
-		imeiCount.push(response['rowData'][i].imeiCount);
+	var equipmentType=[];
+	var count=[];
+	
+	var notKnown=[]; 
+	var wearable=[]; 
+	var wlanRouter=[]; 
+	var handheld=[]; 
+	var modem=[]; 
+	var vehicle=[]; 
+	var dongle=[]; 
+	var iotDevice=[]; 
+	var smartPhone=[]; 
+	var mobileFeaturePhone=[]; 
+	var na=[]; 
+	var tablet=[]; 
+	var connectedComputer=[]; 
+	var portableIncludePDA=[]; 
+	var eBook=[]; 
+	var module=[]; 
+	
+	 if (chartType=='pie' ){
+		for(var i=0;i<response['rowData'].length;i++){
+			pieData.push(response['rowData'][i].approvedTAC);
+			pieData.push(response['rowData'][i].rejectedTAC);
+			date.push(response['rowData'][i].createdOn);
+			msisdnFrequency.push(response['rowData'][i].msisdnFrequency);
+			imeiCount.push(response['rowData'][i].imeiCount);
+		}
+	}else if(chartType=='line'){
+		for(var i=0;i<response['rowData'].length;i++){
+			pieData.push(response['rowData'][i].approvedTAC);
+			pieData.push(response['rowData'][i].rejectedTAC);
+			date.push(response['rowData'][i].createdOn);
+			msisdnFrequency.push(response['rowData'][i].msisdnFrequency);
+			imeiCount.push(response['rowData'][i].imeiCount);
+		}
+	}else if(chartType='bar'){
+		for(var i=0;i<response['rowData'].length;i++){
+			date.push(response['rowData'][i]['Date']);
+			notKnown.push(response['rowData'][i]['NOT KNOWN']);
+			wearable.push(response['rowData'][i]['Wearable']);
+			wlanRouter.push(response['rowData'][i]['WLAN Router']);
+			handheld.push(response['rowData'][i]['Handheld']);
+			modem.push(response['rowData'][i]['Modem']);
+			vehicle.push(response['rowData'][i]['Vehicle']);
+			dongle.push(response['rowData'][i]['Dongle']);
+			iotDevice.push(response['rowData'][i]['IoT Device']);
+			smartPhone.push(response['rowData'][i]['Smartphone']);
+			mobileFeaturePhone.push(response['rowData'][i]['Mobile Phone/Feature phone']);
+			na.push(response['rowData'][i]['NA']);
+			tablet.push(response['rowData'][i]['Tablet']);
+			connectedComputer.push(response['rowData'][i]['Connected Computer']);
+			portableIncludePDA.push(response['rowData'][i]['Portable(include PDA)']);
+			eBook.push(response['rowData'][i]['e-Book']);
+			module.push(response['rowData'][i]['Module']);
+		}
 	}
+	
 	if(chartType=='pie'){
 /*
 
@@ -295,8 +368,130 @@ function graph(response,id,chartType,chartTitle)
             document.getElementById("LineDeviceReport").href=url;
           //  $("#Top5BrandName").attr("href",url);
             }
-		 	}
+		}
+	
+	else if(chartType == 'bar'){
+		$("#expLineBar").unbind("click").click(function(){
+			var data = response['rowData'];
+			if(data == '')
+				return;
+			JSONToCSVConvertor(data, "Report", true);
+		});
+		var ctx = document.getElementById(''+id+'').getContext('2d');
+		var chart = new Chart(ctx, {
+			// The type of chart we want to create
+			type: ''+chartType+'',
+			
+		   // The data for our dataset
+			data: {
+				labels: date,
+				datasets: [{
+					label: "Not Known",
+					backgroundColor: 'rgb(235, 203, 138)',
+					borderColor:  'rgb(235, 203, 138)',
+					data: notKnown
+				},{
+					label: "Wearable",
+					backgroundColor: 'rgb(241, 15, 0)',
+					borderColor:  'rgb(235, 203, 138)',
+					data: wearable
+				},{
+					label: "WLAN Router",
+					backgroundColor:  'rgb(70, 191, 189)',
+					borderColor: 'rgb(70, 191, 189)',
+					data: wlanRouter
+				},{
+					label: "Handheld",
+					backgroundColor: 'rgb(241, 236, 0)',
+					borderColor:  'rgb(235, 203, 138)',
+					data: handheld
+				},{
+					label: "Modem",
+					backgroundColor: 'rgb(241, 208, 111)',
+					borderColor:  'rgb(235, 203, 138)',
+					data: modem
+				},{
+					label: "Vehicle",
+					backgroundColor: 'rgb(241, 159, 28)',
+					borderColor:  'rgb(235, 203, 138)',
+					data: vehicle
+				},{
+					label: "Dongle",
+					backgroundColor: 'rgb(47, 161, 28)',
+					borderColor:  'rgb(235, 203, 138)',
+					data: dongle
+				},{
+					label: "IoT Device",
+					backgroundColor: 'rgb(188, 112, 28)',
+					borderColor:  'rgb(235, 203, 138)',
+					data: iotDevice
+				},{
+					label: "Smartphone",
+					backgroundColor: 'rgb(175, 239, 224)',
+					borderColor:  'rgb(235, 203, 138)',
+					data: smartPhone
+				},{
+					label: "Mobile Phone/Feature phone",
+					backgroundColor: 'rgb(246, 191, 224)',
+					borderColor:  'rgb(235, 203, 138)',
+					data: mobileFeaturePhone
+				}]
+			},
+			
+			// Configuration options go here
+			options: {
+				responsive: false,
+				maintainAspectRatio: false,
+				animation: {
+					onComplete: captureLineImage
+				},
+				elements: {
+					point:{
+						radius: 0
+					}
+				},
+				plugins: {
+					datalabels: {
+						display: false,
+					},
+					anchor :'end',
+					align :'top',
+					// and if you need to format how the value is displayed...
+					formatter: function(value, context) {
+						return GetValueFormatted(value);
+					}
+				},
 
+				scales: {
+					xAxes: [{
+						gridLines: {
+							display: false
+						},
+						stacked: true, 
+						scaleLabel: {
+							display: true,
+							labelString: 'Date'
+						},
+					}],
+					yAxes: [{
+						gridLines: {
+							display: false
+						},
+						stacked: true ,
+						scaleLabel: {
+							display: true,
+							labelString: 'Number Of Devices'
+						},
+					}]
+				}           
+
+			}
+		});
+function captureLineImage(){  
+    var url=chart.toBase64Image();
+    document.getElementById("lineBarImage").href=url;
+    }
+}
 }
 
 
@@ -322,13 +517,14 @@ $(document).ready(function(){
 
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
+	[31,1,27].forEach(function(reportnameId) {
 	$.ajaxSetup({
 	headers:
 	{ 'X-CSRF-TOKEN': token }
 	});
 	var graphRequest={
 
-			"reportnameId": 31,
+			"reportnameId": reportnameId,
 			"file" : 0,
 			"pageSize" :1,
 			"pageNo" :0
@@ -336,8 +532,10 @@ $(document).ready(function(){
 	
 	$.ajax({
 		type : 'POST',
-		url : './report/count',
+		url : './report/count/'+reportnameId,
 		contentType : "application/json",
+		async: false,
+		
 		data : JSON.stringify(graphRequest),
 		success: function(data){
 		$("#expActiveDeviceTable").unbind("click").click(function(){
@@ -356,7 +554,16 @@ var i=0;
 					if(i == 0){ $('#firstTD').text(data['rowData'][0][key]);}
 					else if(i == 1){$('#secondTD').text(data['rowData'][0][key]);}
 					else if(i == 2){$('#thirdTD').text(data['rowData'][0][key]);}
-					$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b id="+i+++">"+data['rowData'][0][key]+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
+					//alert(data['rowData'][0]['Total Stolen Device Count']);
+					if(data['rowData'][0][key]!=null)
+					{
+						$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b id="+i+++">"+data['rowData'][0][key]+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");	
+						}
+					else{
+						//$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b id="+i+++">0</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
+					}
+
+					//$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b id="+i+++">"+data['rowData'][0][key]+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
 				
 				}
 				$('div#initialloader').delay(300).fadeOut('slow');
@@ -364,10 +571,10 @@ var i=0;
 		}
 	
 	});
-	
+	});
 });
 
-
+/*
 var token = $("meta[name='_csrf']").attr("content");
 var header = $("meta[name='_csrf_header']").attr("content");
 $.ajaxSetup({
@@ -391,7 +598,7 @@ $.ajax({
 	}
 });
 
-
+*/
 
 function graphBrandName(response,id,chartType,chartTitle)
 {
@@ -503,7 +710,7 @@ function graphBrandName(response,id,chartType,chartTitle)
 function graphTopModelNumber(response,id,chartType,chartTitle)
 {
 
-
+   
 	var imeiCount=[];
 	var msisdnFrequency=[];
 	var date1=[];

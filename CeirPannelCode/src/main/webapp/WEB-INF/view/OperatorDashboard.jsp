@@ -301,7 +301,7 @@ th {
                             				<div id="wrapperPage">
                             				<h6 class="m-0 font-weight-bold text-primary" id="dateVal"></h6>
                             				 <div class="split">
-                            						<!-- <div class="col s12 m12 info-div center" id="infoBox"></div> -->
+                            						<div class="col s12 m12 info-div center" id="infoBox"></div>
                            	
                            <div style="display:flex; margin-left: 12px;">
                             
@@ -412,7 +412,7 @@ th {
                 </div>
                 <!-- Card Body -->
                 <div class="card-body" id="noData">
-                   <canvas class="chart-area" id="gaugeGraph" style = "width: 550px; height: 400px; margin: 0 auto">
+                   <canvas class="chart-area" id="pieGraph" style = "width: 550px; height: 400px; margin: 0 auto">
                   </canvas>
                 </div>
               </div>

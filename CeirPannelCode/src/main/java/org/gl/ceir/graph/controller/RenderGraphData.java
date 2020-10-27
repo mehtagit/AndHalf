@@ -21,13 +21,17 @@ import org.gl.ceir.graph.model.GrievanceUserType;
 import org.gl.ceir.graph.model.GrievanceUserTypeModelGrapContent;
 import org.gl.ceir.graph.model.ImeiUsageGraphContent;
 import org.gl.ceir.graph.model.ImeiUsageGraphResponseModel;
+import org.gl.ceir.graph.model.MostStolenBrandContent;
 import org.gl.ceir.graph.model.OperatorTableGraph;
 import org.gl.ceir.graph.model.OperatorTableGraphContent;
 import org.gl.ceir.graph.model.OperatorWiseGraphContant;
 import org.gl.ceir.graph.model.OperatorWiseImei;
+import org.gl.ceir.graph.model.RegisterDeviceGraphContent;
+import org.gl.ceir.graph.model.RegisteredDeviceGraph;
 import org.gl.ceir.graph.model.StockContentReport;
 import org.gl.ceir.graph.model.StockModelGrapContent;
 import org.gl.ceir.graph.model.StockModelRowData;
+import org.gl.ceir.graph.model.StolenGraphContent;
 import org.gl.ceir.graph.model.UserDashboardGraphContent;
 import org.gl.ceir.graph.model.UserDashboardGraphResponseModel;
 import org.gl.ceir.graph.model.UserDashboardResponseModel;
@@ -103,6 +107,13 @@ public class RenderGraphData {
 	OperatorWiseImei operatorWiseImei;
 	@Autowired
 	OperatorTableGraph operatorTableGraph;
+	@Autowired
+	RegisteredDeviceGraph registeredDeviceGraph;
+	
+	@Autowired
+	MostStolenBrandContent mostStolenBrandContent;
+
+	
 	
 	
 	@ResponseBody
@@ -152,6 +163,12 @@ public class RenderGraphData {
 				operatorTableGraph = gson.fromJson(apiResponse, OperatorTableGraph.class);
 				 log.info("::::::graphResponseModel:::::::"+operatorTableGraph);
 				 OperatorTableGraphContent paginationContentList = operatorTableGraph.getContent();
+				 log.info("::::::paginationContentList:::::::"+paginationContentList);
+				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			}else if("registeredDeviceGraph".equals(Type)){
+				registeredDeviceGraph = gson.fromJson(apiResponse, RegisteredDeviceGraph.class);
+				 log.info("::::::graphResponseModel:::::::"+registeredDeviceGraph);
+				 RegisterDeviceGraphContent paginationContentList = registeredDeviceGraph.getContent();
 				 log.info("::::::paginationContentList:::::::"+paginationContentList);
 				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
 			}else {
@@ -223,6 +240,14 @@ public class RenderGraphData {
 				 BlockIMEIGraph paginationContentList = blockIMEIContent.getContent();
 				 log.info(":::::: blockIMEIContent user model paginationContentList:::::::"+paginationContentList);
 				 return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			}
+			else if(featureFlag.equals("MostStolen")) {
+				mostStolenBrandContent = gson.fromJson(apiResponse, 	MostStolenBrandContent.class);
+				 log.info(":::::: mostStolenBrandContent user model graphResponseModel:::::::"+blockIMEIContent);
+				 StolenGraphContent paginationContentList = mostStolenBrandContent.getContent();
+				 log.info(":::::: mostStolenBrandContent user model paginationContentList:::::::"+paginationContentList);
+				 return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+				
 			}
 			}
 			

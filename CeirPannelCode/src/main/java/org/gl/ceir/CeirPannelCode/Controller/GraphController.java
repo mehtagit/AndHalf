@@ -50,5 +50,33 @@ public class GraphController {
 		return  mv;
 	}
 
+	
+	@RequestMapping(value = "/lawfulDashboard",method = {RequestMethod.GET})
+	public ModelAndView lawfulDashboard(){
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("LawfulGraph");
+		return  mv;
+	}
+
+	@RequestMapping(value = "/importerDashboard",method = {RequestMethod.GET})
+	public ModelAndView importerGraphDashboard(){
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("importerGraphDashboard");
+		return  mv;
+	}
+	
+	@RequestMapping(value = "/distributorDashboard",method = {RequestMethod.GET})
+	public ModelAndView distributorGraphDashboard(){
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("distributorGraphDashboard");
+		return  mv;
+	}
+	
+	@RequestMapping(value = "/retailerDashboard",method = {RequestMethod.GET})
+	public ModelAndView retailerGraphDashboard(){
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("retailerGraphDashboard");
+		return  mv;
+	}
 
 }

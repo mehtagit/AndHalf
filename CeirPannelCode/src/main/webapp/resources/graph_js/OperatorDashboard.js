@@ -11,7 +11,7 @@
 
 */
 function activeDeviceGraph() {
-	[29,34,27].forEach(function(reportnameId) {
+	['operatorActive',29,34,27].forEach(function(reportnameId) {
 		var graphRequest=null;
 		var chartID=null;
 		var type=null;
@@ -37,6 +37,23 @@ function activeDeviceGraph() {
 			chartID='lineGraph';
 			type='line';
 			title='User Login HorizontalBar Graph';
+		}
+		else if(reportnameId == 'operatorActive'){
+			urlHit="./report/data?Type=OperatorDashboard";
+			graphRequest={
+					"columns": [
+						"Date",
+						"Operator Name",
+						"Total IMEI"
+						],
+						 "lastDate": true,
+						  "file" : 0, 
+						  "pageSize" :10, 
+						  "pageNo" :0,
+						"groupBy": "Operator Name",
+						"reportnameId": 29
+						}
+			
 		}
 		else if(reportnameId == 27){
 			graphRequest={
@@ -103,6 +120,10 @@ function activeDeviceGraph() {
 				else if(reportnameId==29){
 				graph(response,'lineGraph','line','User Login Line Graph')
 				}
+				else if(reportnameId == 'operatorActive'){
+					graph(response,'pieGraph','pie','User Login Pie Graph')
+					
+					}
 				else if(reportnameId==27){
 	
 	         graph(response,'gaugeGraph','gauge','User Login Doughnut Graph')
@@ -129,6 +150,9 @@ function graph(response,id,chartType,chartTitle)
   var metfone=[];
   var pieLabelName=['Primary','Secondary'];
   var pieData=[];
+
+  var pieOperatorActiveLabelName;
+  var pieOperatorActive=[];
 	   	//console.log("repsonse-->"+JSON.stringify(response));
 		for(var i=0;i<response['rowData'].length;i++){
 	   		QB.push(response['rowData'][i]['QB']);
@@ -142,8 +166,78 @@ function graph(response,id,chartType,chartTitle)
 		pieData.push(parseInt(response['rowData'][0]['Total Paired IMEI']));
 		pieData.push(parseInt(response['rowData'][0]['Total Duplicate IMEI']));
 		
+		if(chartType=='pie'){
+		pieOperatorActiveLabelName=["QB","Seatel", "Smart","Cellcard","Metfone"];
+		//pieOperatorActiveLabelName=response['columns'];
+		pieOperatorActive.push(parseInt(response['rowData'][0]['QB']));
+		pieOperatorActive.push(parseInt(response['rowData'][0]['SEATEL']));
+		pieOperatorActive.push(parseInt(response['rowData'][0]['SMART']));
+		pieOperatorActive.push(parseInt(response['rowData'][0]['CELLCARD']));
+		pieOperatorActive.push(parseInt(response['rowData'][0]['METFONE']));
+		}
 		
-		if(chartType=='line' ){
+		
+	   if(chartType == 'pie'){
+	    	$("#expOperatorActivePair").unbind("click").click(function(){
+		        var data = JSON.stringify(response['rowData']);
+		        //console.log(JSON.stringify(data));
+		        if(data == '')
+		            return;
+		        JSONToCSVConvertor(data, "Operator_Active_Pair_Report", true);
+
+		    });
+	
+			
+
+			var ctx = document.getElementById(''+id+'').getContext('2d');
+
+			var chart = new Chart(ctx, {
+				// The type of chart we want to create
+				type: ''+chartType+'',
+
+				// The data for our dataset
+				data: {
+					labels: pieOperatorActiveLabelName,
+					datasets: [ {
+						backgroundColor: [
+							 '#512DA8','#008B8B','#F20515','#4682B4','#8B4513'],
+							data: pieOperatorActive
+					}]
+				},
+
+				// Configuration options go here
+				options: {
+					responsive: false,
+					maintainAspectRatio: false,
+					animation: {
+	    	        	
+	    	        	onComplete:captureLineImage
+	    	        },
+					plugins: {
+					    datalabels: {
+						      formatter: (value, ctx) => {
+						    	  
+						        let sum = ctx.dataset._meta[0].total;
+						    
+						        let percentage = (value * 100 / sum).toFixed(2) + "%";
+						        return percentage;
+
+
+						      },
+						      color: '#fff',
+						    }
+						  }
+				}
+			});
+
+			function captureLineImage(){  
+	            var url=chart.toBase64Image();
+	            //alert("urll="+url);
+	            document.getElementById("OperatorActiveImage").href=url;
+	          //  $("#Top5BrandName").attr("href",url);
+	            }
+	    }
+	    else if(chartType=='line' ){
 		$("#exp").unbind("click").click(function(){
 	        var data = response['rowData'];
 	        if(data == '')
@@ -249,8 +343,7 @@ function graph(response,id,chartType,chartTitle)
 	    }
 		}
 		
-		
-		
+
 		else if(chartType=='gauge'){
 	    	 $("#expPairingType").unbind("click").click(function(){
 	 	        var data = response['rowData'];
@@ -375,16 +468,82 @@ $.ajax({
 	async:false,
 	data : JSON.stringify({"reportnameId": 28,"file" : 0,"pageSize" :1,"pageNo" :0}),
 	success: function(data){
+		var i=0;
 		Object.keys(data['rowData'][0]).map(function(key){ 
-			if(key != 'Date'){
-				
-				$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b>"+data['rowData'][0][key]+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
+			if(key == 'Date'){
+				$('#dateVal').text('Last Update Date: '+data['rowData'][0][key]);
+				//$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b>"+data['rowData'][0][key]+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
 			}
-			
+			else{
+				if(data['rowData'][0][key]!=null)
+				{
+					$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b id="+i+++">"+data['rowData'][0][key]+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");	
+					}
+				else{
+					//$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b id="+i+++">0</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
+				}
+			}
 		});
 	}
 });
 
+
+
+/*
+//boxes
+$(document).ready(function(){
+	$('div#initialloader').fadeIn('fast');
+	var url;
+
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	[31].forEach(function(reportnameId) {
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	var graphRequest={
+
+			"reportnameId": reportnameId,
+			"file" : 0,
+			"pageSize" :1,
+			"pageNo" :0
+	}
+	
+	$.ajax({
+		type : 'POST',
+		url : './report/count/'+reportnameId,
+		contentType : "application/json",
+		async: false,
+		
+		data : JSON.stringify(graphRequest),
+		success: function(data){
+			var i=0;
+				Object.keys(data['rowData'][0]).map(function(key){ 
+				if(key == 'Date'){
+					$('#dateVal').text('Last Update Date: '+data['rowData'][0][key]);
+				}
+				else{
+				
+					if(data['rowData'][0][key]!=null)
+					{
+						$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b id="+i+++">"+data['rowData'][0][key]+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");	
+						}
+					else{
+						//$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b id="+i+++">0</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
+					}
+
+					//$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b id="+i+++">"+data['rowData'][0][key]+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
+				
+				}
+				$('div#initialloader').delay(300).fadeOut('slow');
+				});
+		}
+	
+	});
+	});
+});
+*/
 
 
 

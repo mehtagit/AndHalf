@@ -5,16 +5,29 @@ import java.util.Collections;
 import org.gl.ceir.CeirPannelCode.Feignclient.AnalyticsFeign;
 import org.gl.ceir.graph.model.ActiveDeviceCountContent;
 import org.gl.ceir.graph.model.ActiveDeviceCountResponseModel;
+import org.gl.ceir.graph.model.ActiveDeviceDeviceResponseModel;
+import org.gl.ceir.graph.model.ActiveIMEICountContent;
+import org.gl.ceir.graph.model.DistributorCountContent;
+import org.gl.ceir.graph.model.DistributorCountResponseModel;
 import org.gl.ceir.graph.model.GraphRequest;
+import org.gl.ceir.graph.model.ImporterCountContent;
+import org.gl.ceir.graph.model.ImporterCountResponseModel;
+import org.gl.ceir.graph.model.LawfulCountContent;
+import org.gl.ceir.graph.model.LawfulCountResponseModel;
 import org.gl.ceir.graph.model.MobileDeviceCountContent;
 import org.gl.ceir.graph.model.MobileDeviceCountResponseModel;
+import org.gl.ceir.graph.model.RetailerCountContent;
+import org.gl.ceir.graph.model.RetailerCountResponseModel;
 import org.gl.ceir.graph.model.UserDashboardCountContent;
 import org.gl.ceir.graph.model.UserDashboardResponseModel;
+import org.gl.ceir.graph.model.UserDashboardUnblockCountContent;
+import org.gl.ceir.graph.model.UserDashboardUnblockResponseModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,8 +48,24 @@ public class GraphDashboardCount {
 	
 	@Autowired
 	MobileDeviceCountResponseModel mobileDeviceCountResponseModel;
-	@PostMapping("/report/count") 
-	public ResponseEntity<?> activeDeviceCount(@RequestBody GraphRequest graphRequest) {
+	@Autowired
+	LawfulCountResponseModel lawfulCountrespnose;
+	@Autowired
+	RetailerCountResponseModel retailerCountResponseModel;
+	@Autowired
+	DistributorCountResponseModel distributorCountResponseModel;
+
+	@Autowired
+	ImporterCountResponseModel importerCountResponseModel;
+	
+	@Autowired
+	UserDashboardUnblockResponseModel userDashboardUnblockResponseModel;
+	
+	@Autowired
+	ActiveDeviceDeviceResponseModel activeIMEICountContent;
+	
+	@PostMapping("/report/count/{featureTag}") 
+	public ResponseEntity<?> activeDeviceCount(@RequestBody GraphRequest graphRequest, @PathVariable("featureTag") int featureTag) {
 		Object response= null;
 		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(),  graphRequest.getPageSize(),  graphRequest.getFile());
 		 
@@ -45,15 +74,31 @@ public class GraphDashboardCount {
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
 			log.info("::::::apiResponse:::::::"+apiResponse);
-			
-			countResponseModel = gson.fromJson(apiResponse, ActiveDeviceCountResponseModel.class);
-			ActiveDeviceCountContent paginationContentList = countResponseModel.getContent();
-			return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			if(featureTag==31) {
+
+				countResponseModel = gson.fromJson(apiResponse, ActiveDeviceCountResponseModel.class);
+				ActiveDeviceCountContent paginationContentList = countResponseModel.getContent();
+				log.info("::::::apiResponse ActiveDevice ="+paginationContentList);
+				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			}
+			else if(featureTag==1) {
+				userDashboardUnblockResponseModel = gson.fromJson(apiResponse, UserDashboardUnblockResponseModel.class);
+				UserDashboardUnblockCountContent paginationContentList = userDashboardUnblockResponseModel.getContent();
+				log.info("::::::apiResponse userDashboardUnblockResponseModel ="+userDashboardUnblockResponseModel);
+				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			}
+			else if(featureTag==27) {
+				activeIMEICountContent = gson.fromJson(apiResponse, ActiveDeviceDeviceResponseModel.class);
+				ActiveIMEICountContent paginationContentList = activeIMEICountContent.getContent();
+				log.info("::::::apiResponse activeIMEICountContent ="+activeIMEICountContent);
+				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			}
 			}
 			catch(Exception e) {
 				e.printStackTrace();
 				return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.SERVICE_UNAVAILABLE);
 			}
+			return null;
 	}
 	
 	
@@ -101,6 +146,67 @@ public class GraphDashboardCount {
 				e.printStackTrace();
 				return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.SERVICE_UNAVAILABLE);
 			}
+	
+	}
+	
+	@PostMapping("/lawful/report/count") 
+	public ResponseEntity<?> lawfulCount(@RequestBody GraphRequest graphRequest) {
+
+		Object response= null;
+		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(),  graphRequest.getPageSize(),  graphRequest.getFile());
+		 
+		 log.info("/lawful/report/count:::::::::countRequest::::::::"+graphRequest+"::::::countResponse:::::::"+response);
+			try {
+			Gson gson= new Gson(); 
+			String apiResponse = gson.toJson(response);
+			log.info("/lawful/report/count::::::apiResponse:::::::"+apiResponse);
+			
+			lawfulCountrespnose = gson.fromJson(apiResponse, LawfulCountResponseModel.class);
+			LawfulCountContent paginationContentList = lawfulCountrespnose.getContent();
+			return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.SERVICE_UNAVAILABLE);
+			}
+	
+	}
+	
+	@PostMapping("/importer/count/{featureFlag}") 
+	public ResponseEntity<?> importerCount(@RequestBody GraphRequest graphRequest , @PathVariable("featureFlag") String featureFlag) {
+
+		Object response= null;
+		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(),  graphRequest.getPageSize(),  graphRequest.getFile());
+		 
+		 log.info("/importer/report/count:::::::::countRequest::::::::"+graphRequest+"::::::countResponse:::::::"+response);
+			try {
+			Gson gson= new Gson(); 
+			String apiResponse = gson.toJson(response);
+			log.info("/importer/report/count::::::apiResponse:::::::"+apiResponse);
+			if(featureFlag.equals("importer")) {
+				importerCountResponseModel = gson.fromJson(apiResponse, ImporterCountResponseModel.class);
+				ImporterCountContent paginationContentList = importerCountResponseModel.getContent();
+				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			}
+			else if(featureFlag.equals("retailer")) {
+				retailerCountResponseModel = gson.fromJson(apiResponse, RetailerCountResponseModel.class);
+				RetailerCountContent paginationContentList = retailerCountResponseModel.getContent();
+				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+					
+			}
+			else if(featureFlag.equals("distributor")) {
+				distributorCountResponseModel = gson.fromJson(apiResponse, DistributorCountResponseModel.class);
+				DistributorCountContent paginationContentList = distributorCountResponseModel.getContent();
+				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+					
+			}
+			
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.SERVICE_UNAVAILABLE);
+			}
+			return null;
 	
 	}
 }
