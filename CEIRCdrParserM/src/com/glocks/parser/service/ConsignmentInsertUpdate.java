@@ -258,7 +258,7 @@ public class ConsignmentInsertUpdate {
                          logger.info("Counnter si " + dvcDbCounter);
                          if (dvcDbCounter == 0) {
                               device_db_query = "insert into device_db (counter ,device_id_type,created_on,device_launch_date,device_status,"
-                                      + "device_type,imei_esn_meid,modified_on,multiple_sim_status,period,sn_of_device, tac  ,txn_id , actual_imei ,   feature_name , tac   ) " // feature_name
+                                      + "device_type,imei_esn_meid,modified_on,multiple_sim_status,period,sn_of_device, tac  ,txn_id , actual_imei ,   feature_name   ) " // feature_name
                                       + "values(1 ,'" + rs1.getString("DeviceIdType") + "'," + "" + dateFunction + "," + "'"
                                       + rs1.getString("Devicelaunchdate") + "'," + "'" + rs1.getString("DeviceStatus") + "',"
                                       + "'" + rs1.getString("DeviceType") + "'," + "'" + rs1.getString("IMEIESNMEID").substring(0, 14) + "',"
@@ -268,7 +268,7 @@ public class ConsignmentInsertUpdate {
                                       + ",'" + txn_id + "'  "
                                       + ",'" + rs1.getString("IMEIESNMEID") + "'  "
                                       + " , '" + operator + "' "
-                                      + " , '" + rs1.getString("IMEIESNMEID").substring(0,8)  + "' "
+                                      
                                       + ")";
                          } else {
                               device_db_query = "update  device_db set counter = " + (dvcDbCounter + 1) + " where imei_esn_meid = '" + rs1.getString("IMEIESNMEID").substring(0, 14) + "' ";
@@ -565,6 +565,7 @@ public class ConsignmentInsertUpdate {
      }
 
 }
+
 
 
 

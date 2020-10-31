@@ -4,7 +4,6 @@ import com.glocks.constants.PropertyReader;
 import com.glocks.dao.MessageConfigurationDbDao;
 import com.glocks.dao.PolicyBreachNotificationDao;
 import com.glocks.files.FileList;
-import static com.glocks.parser.CEIRFeatureFileFunctions.propertyReader;
 import java.io.File;
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -536,9 +535,14 @@ public class CdrParserProcess {
           String query = null;
           DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
           Statement stmt = null;
-          query = "insert into  cdr_file_details_db (created_on ,MODIFIED_ON ,total_inserts_in_usage_db,total_updates_in_usage_db ,total_insert_in_dup_db , total_updates_in_dup_db , total_insert_in_null_db , total_update_in_null_db , P2StartTime , P2EndTime ,operator , file_name, total_records_count , raw_cdr_file_name  ,source  ,foreignMsisdn ) "
-                  + "values(current_timestamp , current_timestamp,'" + usageInsert + "' , '" + usageUpdate + "'  , '" + duplicateInsert + "' , '" + duplicateUpdate + "' "
-                  + " ,'" + nullInsert + "' ,'" + nullUpdate + "', TO_DATE('" + df.format(P2StartTime) + "','YYYY-MM-DD HH24:MI:SS') , TO_DATE('" + df.format(P2EndTime) + "','YYYY-MM-DD HH24:MI:SS') ,   '" + operator + "', '" + fileName + "' , '" + (counter - 3) + "' , '" + raw_cdr_file_name + "' , '" + source + "'  , '" + foreignMsisdn + "'       )  ";
+//          query = "insert into  cdr_file_details_db (created_on ,MODIFIED_ON ,total_inserts_in_usage_db,total_updates_in_usage_db ,total_insert_in_dup_db , total_updates_in_dup_db , total_insert_in_null_db , total_update_in_null_db , P2StartTime , P2EndTime ,operator , file_name, total_records_count , raw_cdr_file_name  ,source  ,foreignMsisdn ) "
+//                  + "values(current_timestamp , current_timestamp,'" + usageInsert + "' , '" + usageUpdate + "'  , '" + duplicateInsert + "' , '" + duplicateUpdate + "' "
+//                  + " ,'" + nullInsert + "' ,'" + nullUpdate + "', TO_DATE('" + df.format(P2StartTime) + "','YYYY-MM-DD HH24:MI:SS') , TO_DATE('" + df.format(P2EndTime) + "','YYYY-MM-DD HH24:MI:SS') ,   '" + operator + "', '" + fileName + "' , '" + (counter - 3) + "' , '" + raw_cdr_file_name + "' , '" + source + "'  , '" + foreignMsisdn + "'       )  ";
+//          logger.info(" qury is " + query);
+
+          query = "update     cdr_file_details_db  set  "
+                  + "created_on = current_timestamp ,MODIFIED_ON=  current_timestamp,total_inserts_in_usage_db ='" + usageInsert + "' ,total_updates_in_usage_db= '" + usageUpdate + "'  ,total_insert_in_dup_db '" + duplicateInsert + "' ,total_updates_in_dup_db= '" + duplicateUpdate + "' "
+                  + " , total_insert_in_null_db = '" + nullInsert + "' ,total_update_in_null_db= '" + nullUpdate + "',P2StartTime=  TO_DATE('" + df.format(P2StartTime) + "','YYYY-MM-DD HH24:MI:SS') ,P2EndTime=  TO_DATE('" + df.format(P2EndTime) + "','YYYY-MM-DD HH24:MI:SS') , operator =  '" + operator + "' ,total_records_count '" + (counter - 3) + "' ,raw_cdr_file_name= '" + raw_cdr_file_name + "' ,source= '" + source + "'  , foreignMsisdn='" + foreignMsisdn + "' where file_name= '" + fileName + "'       )  ";
           logger.info(" qury is " + query);
 
           try {
