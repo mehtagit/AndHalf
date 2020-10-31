@@ -44,7 +44,7 @@ import com.gl.reader.configuration.PropertiesReader;
 import com.gl.reader.constants.Alerts;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
+ 
 @EnableAsync
 @SpringBootConfiguration
 @EnableAutoConfiguration
