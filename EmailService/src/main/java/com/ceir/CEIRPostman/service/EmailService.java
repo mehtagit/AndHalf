@@ -224,16 +224,29 @@ public class EmailService implements Runnable {
 
                                         if (authorityEmail != null && !authorityEmail.isEmpty()) {
 //??to email
+                                             log.info(" authorityEmail Start With Email " + authorityEmail);
                                              try {
-                                                  if (emailUtil.emailValidator(authorityEmail)) {
+//                                                  if (emailUtil.emailValidator(authorityEmail)) 
+                                                  {
+
                                                        body = body.replace("\\n", "\n");
-                                                       String content = messageDb.getValue().replace("\\n", "\n");
-                                                       message = content + "\n" + body;
-                                                       log.info("message content in case of authority email: " + message);
-                                                       log.info("authorityEmail: " + authorityEmail + " fromEmail: " + fromEmail.getValue() + "getSubject: " + messageDb.getSubject());
+
+//                                                       log.info(" TT " + messageDb.getValue());
+//                                                       String content = messageDb.getValue().replace("\\n", "\n");
+//                                                       log.info("ZZ " + content);
+//                                                       message = content + "\n" + body;
+                                                       message = body;
+
+                                                       log.info("  For authority email msg is :::: " + message);
+                                                       log.info("authorityEmail: " + authorityEmail + " fromEmail: " + fromEmail.getValue());
+//                                                       emailStatus = emailUtil.sendEmail(authorityEmail, fromEmail.getValue(),
+//                                                               messageDb.getSubject(), message, notificationData.size(), sNo,
+//                                                               sleepTimeinMilliSec);
+
                                                        emailStatus = emailUtil.sendEmail(authorityEmail, fromEmail.getValue(),
-                                                               messageDb.getSubject(), message, notificationData.size(), sNo,
+                                                               notification.getSubject(), message, notificationData.size(), sNo,
                                                                sleepTimeinMilliSec);
+
                                                        if (emailStatus) {
                                                             totalMailsent++;
                                                             AuthorityNotification authoritNoti = new AuthorityNotification(
