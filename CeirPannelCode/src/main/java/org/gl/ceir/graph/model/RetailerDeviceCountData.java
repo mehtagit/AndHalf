@@ -11,6 +11,10 @@ public class RetailerDeviceCountData {
 	  @SerializedName("Date")
 	  private String date;
 	  
+	  @JsonProperty("Month")
+	  @SerializedName("Month")
+	  private String month;
+	  
 	  @JsonProperty("Retailer")
 	  @SerializedName("Retailer")
 	  private String retailer;
@@ -47,6 +51,40 @@ public class RetailerDeviceCountData {
 	  @SerializedName("Count")
 	  private String count;
 
+
+	  @JsonProperty("Withdrawn By CEIR Admin")
+	  @SerializedName("Withdrawn By CEIR Admin")
+	  private String withdrawnByCEIRAdmin;
+
+	  @JsonProperty("Rejected by CEIR Admin")
+	  @SerializedName("Rejected by CEIR Admin")
+	  private String rejectedbyCEIRAdmin;
+	  
+	  @JsonProperty("Rejected By System")
+	  @SerializedName("Rejected By System")
+	  private String rejectedBySystem;
+	  
+	  @JsonProperty("Processing")
+	  @SerializedName("Processing")
+	  private String processing;
+
+	  @JsonProperty("Pending Approval From CEIR Admin")
+	  @SerializedName("Pending Approval From CEIR Admin")
+	  private String pendingApprovalFromCEIRAdmin;
+	  
+	  @JsonProperty("Approved by CEIR Admin")
+	  @SerializedName("Approved by CEIR Admin")
+	  private String approvedbyCEIRAdmin;
+	  
+	  @JsonProperty("Withdrawn By User")
+	  @SerializedName("Withdrawn By User")
+	  private String withdrawnByUser;
+	  
+	  @JsonProperty("New")
+	  @SerializedName("New")
+	  private String newState;
+	  
+	  
 	public String getDate() {
 		return date;
 	}
@@ -127,11 +165,85 @@ public class RetailerDeviceCountData {
 		this.count = count;
 	}
 
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
+	public String getWithdrawnByCEIRAdmin() {
+		return withdrawnByCEIRAdmin;
+	}
+
+	public void setWithdrawnByCEIRAdmin(String withdrawnByCEIRAdmin) {
+		this.withdrawnByCEIRAdmin = withdrawnByCEIRAdmin;
+	}
+
+	public String getRejectedbyCEIRAdmin() {
+		return rejectedbyCEIRAdmin;
+	}
+
+	public void setRejectedbyCEIRAdmin(String rejectedbyCEIRAdmin) {
+		this.rejectedbyCEIRAdmin = rejectedbyCEIRAdmin;
+	}
+
+	public String getRejectedBySystem() {
+		return rejectedBySystem;
+	}
+
+	public void setRejectedBySystem(String rejectedBySystem) {
+		this.rejectedBySystem = rejectedBySystem;
+	}
+
+	public String getProcessing() {
+		return processing;
+	}
+
+	public void setProcessing(String processing) {
+		this.processing = processing;
+	}
+
+	public String getPendingApprovalFromCEIRAdmin() {
+		return pendingApprovalFromCEIRAdmin;
+	}
+
+	public void setPendingApprovalFromCEIRAdmin(String pendingApprovalFromCEIRAdmin) {
+		this.pendingApprovalFromCEIRAdmin = pendingApprovalFromCEIRAdmin;
+	}
+
+	public String getApprovedbyCEIRAdmin() {
+		return approvedbyCEIRAdmin;
+	}
+
+	public void setApprovedbyCEIRAdmin(String approvedbyCEIRAdmin) {
+		this.approvedbyCEIRAdmin = approvedbyCEIRAdmin;
+	}
+
+	public String getWithdrawnByUser() {
+		return withdrawnByUser;
+	}
+
+	public void setWithdrawnByUser(String withdrawnByUser) {
+		this.withdrawnByUser = withdrawnByUser;
+	}
+
+	public String getNewState() {
+		return newState;
+	}
+
+	public void setNewState(String newState) {
+		this.newState = newState;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("RetailerDeviceCountData [date=");
 		builder.append(date);
+		builder.append(", month=");
+		builder.append(month);
 		builder.append(", retailer=");
 		builder.append(retailer);
 		builder.append(", retailerImporter=");
@@ -150,9 +262,26 @@ public class RetailerDeviceCountData {
 		builder.append(totalRetailer);
 		builder.append(", count=");
 		builder.append(count);
+		builder.append(", withdrawnByCEIRAdmin=");
+		builder.append(withdrawnByCEIRAdmin);
+		builder.append(", rejectedbyCEIRAdmin=");
+		builder.append(rejectedbyCEIRAdmin);
+		builder.append(", rejectedBySystem=");
+		builder.append(rejectedBySystem);
+		builder.append(", processing=");
+		builder.append(processing);
+		builder.append(", pendingApprovalFromCEIRAdmin=");
+		builder.append(pendingApprovalFromCEIRAdmin);
+		builder.append(", approvedbyCEIRAdmin=");
+		builder.append(approvedbyCEIRAdmin);
+		builder.append(", withdrawnByUser=");
+		builder.append(withdrawnByUser);
+		builder.append(", newState=");
+		builder.append(newState);
 		builder.append("]");
 		return builder.toString();
 	}
 
 
+	
 }

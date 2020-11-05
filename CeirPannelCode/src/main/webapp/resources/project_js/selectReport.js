@@ -49,7 +49,9 @@
 						var result= data;
 						$("#tableId").empty();
 						for (i = 0; i < result.length; i++){
-							$('<option>').val(result[i].reportnameId).text(result[i].reportName).appendTo('#tableId');
+							//alert(result[i].reportTrends[0].typeFlag);
+							$('<option>').val(result[i].reportnameId).text(result[i].reportName).attr("trendValue",result[i].reportTrends[0].typeFlag).appendTo('#tableId');
+						//	$('<option>').val(data[i].tagId).text(data[i].interp).attr("docValue",data[i].value).appendTo('#doc_type');
 						}
 
 					},
@@ -64,13 +66,15 @@
 	function hide() {
 		var reportname = $('#tableId').val();
 		var reportInterp = $("#tableId option:selected").text();
-		
+		var trendTypeFlag=$("#tableId option:selected").attr("trendvalue");
+	
 		if(reportname.length == 0){
 			//////console.log("please field input");
 		}else{
 			//sessionStorage.setItem("roleType",roleType);
-		sessionStorage.setItem("reportname", reportname);
-		sessionStorage.setItem("reportInterp", reportInterp);
+		sessionStorage.setItem("reportname",reportname);
+		sessionStorage.setItem("reportInterp",reportInterp);
+		sessionStorage.setItem("trendTypeFlag",trendTypeFlag);
 		window.location.replace("./report?via=other&tableName="+reportname);
 		return false;
 		}

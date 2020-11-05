@@ -553,7 +553,6 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			dataType: "json",
 			success: function(data){
 				data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
-				
 				var elem='<p class="PageHeading">'+data.pageTitle+'</p>';
 				$("#pageHeader").append(elem);
 				var button=data.buttonList;
@@ -904,7 +903,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		else{
 			stockTxnId=$('#transactionID').val();
 		}
-		
+		//alert($("body").attr("data-filterSource"));
 		var StockStatus=parseInt($('#StockStatus').val());
 		var roleType = role;
 		var currentRoleType = $("body").attr("data-stolenselected-roleType");	
@@ -924,6 +923,9 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		//////console.log(" StockStatus=="+StockStatus);
 		}
 	
+		if(stockStartDate!="" ||stockEndDate!="" || stockTxnId!="" || StockStatus!=""){
+		  sourceParam="filter";
+	  }
 		var table = $('#stockTable').DataTable();
 		var info = table.page.info(); 
 		var pageNo=info.page;

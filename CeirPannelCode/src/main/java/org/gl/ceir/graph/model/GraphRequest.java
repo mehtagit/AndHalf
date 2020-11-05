@@ -9,6 +9,19 @@ public class GraphRequest {
 
 	private List<String> columns;
 	private String groupBy;
+	private String dbName;
+	private String endDate ;
+	private int reportnameId;
+	private String searchString;
+	private String startDate ;
+	private String tableName;
+	private String txnId ;
+	private Boolean lastDate;
+	private int file;
+	private int pageSize;
+	private int pageNo;
+	private Integer typeFlag;
+	
 	public List<String> getColumns() {
 		return columns;
 	}
@@ -66,17 +79,7 @@ public class GraphRequest {
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
-	private String dbName;
-	private String endDate ;
-	private int reportnameId;
-	private String searchString;
-	private String startDate ;
-	private String tableName;
-	private String txnId ;
-	private Boolean lastDate;
-	private int file;
-	private int pageSize;
-	private int pageNo;
+	
 	public int getFile() {
 		return file;
 	}
@@ -94,6 +97,19 @@ public class GraphRequest {
 	}
 	public void setPageNo(int pageNo) {
 		this.pageNo = pageNo;
+	}
+	
+	public Boolean getLastDate() {
+		return lastDate;
+	}
+	public void setLastDate(Boolean lastDate) {
+		this.lastDate = lastDate;
+	}
+	public Integer getTypeFlag() {
+		return typeFlag;
+	}
+	public void setTypeFlag(Integer typeFlag) {
+		this.typeFlag = typeFlag;
 	}
 	@Override
 	public String toString() {
@@ -124,15 +140,12 @@ public class GraphRequest {
 		builder.append(pageSize);
 		builder.append(", pageNo=");
 		builder.append(pageNo);
+		builder.append(", typeFlag=");
+		builder.append(typeFlag);
 		builder.append("]");
 		return builder.toString();
 	}
-	public Boolean getLastDate() {
-		return lastDate;
-	}
-	public void setLastDate(Boolean lastDate) {
-		this.lastDate = lastDate;
-	}
+	
 	
 	
 	

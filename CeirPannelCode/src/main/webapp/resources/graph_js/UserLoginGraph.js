@@ -20,7 +20,8 @@ function userloginGraph() {
 			"reportnameId": 18,
 			"file" : 0,
 			"pageSize" :15,
-			"pageNo" :0
+			"pageNo" :0,
+		     "typeFlag": 2
 	}
 		}
 		
@@ -74,7 +75,8 @@ $(document).ready(function(){
 			"reportnameId": 50,
 			"file" : 0,
 			"pageSize" :1,
-			"pageNo" :0
+			"pageNo" :0,
+			"typeFlag": 1
 	}
 	
 	$.ajax({
@@ -108,7 +110,8 @@ var i=0;
 				"reportnameId": 18,
 				"file" : 0,
 				"pageSize" :1,
-				"pageNo" :0
+				"pageNo" :0,
+			     "typeFlag": 2
 		}
 		
 		var token = $("meta[name='_csrf']").attr("content");

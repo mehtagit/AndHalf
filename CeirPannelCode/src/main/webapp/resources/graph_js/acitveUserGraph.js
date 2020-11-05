@@ -28,7 +28,8 @@ function activeDeviceGraph() {
 						"lastDate": true,
 						"file" : 0,
 						"pageSize" :1,
-						"pageNo" :0
+						"pageNo" :0,
+						 "typeFlag": 1
 			}
 			chartID='pieGraph';
 			type='pie';
@@ -36,19 +37,6 @@ function activeDeviceGraph() {
 			urlHit='./report/data';
 		}
 
-		else if(reportnameId == 48){
-			graphRequest={
-
-					"reportnameId": reportnameId,
-					"file" : 0,
-					"pageSize" :10,
-					"pageNo" :0
-			}
-			chartID='lineGraph';
-			type='line';
-			title='User Login Line Graph';
-			urlHit='./report/data';
-		}
 		
 		else if(reportnameId == 52 ){
 			featureFlag="Brand";
@@ -58,7 +46,8 @@ function activeDeviceGraph() {
 					"lastDate": true,
 					"file" : 0,
 					"pageSize" :10,
-					"pageNo" :0
+					"pageNo" :0,
+					 "typeFlag": 1
 			}
 			
 			chartID='pieGraphBrandName';
@@ -74,7 +63,8 @@ function activeDeviceGraph() {
 					"lastDate": true,
 					"file" : 0,
 					"pageSize" :10,
-					"pageNo" :0
+					"pageNo" :0,
+					 "typeFlag": 1
 			}
 			
 			chartID='pieGraphModelNumber';
@@ -94,7 +84,8 @@ function activeDeviceGraph() {
 					"pageSize" :45,
 					"pageNo" :0,
 					"lastDate": false,
-					"groupBy":"Equipment Type"
+					"groupBy":"Equipment Type",
+					 "typeFlag": 2
 						  
 							
 			}
@@ -103,6 +94,20 @@ function activeDeviceGraph() {
 			title='Types of Registered Devices';
 			urlHit='./report/data?Type=registeredDeviceGraph';
 		}
+		else if(reportnameId == 48){
+			graphRequest={
+
+					"reportnameId": reportnameId,
+					"file" : 0,
+					"pageSize" :10,
+					"pageNo" :0
+			}
+			chartID='lineGraph';
+			type='line';
+			title='User Login Line Graph';
+			urlHit='./report/data';
+		}
+		
 
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
@@ -517,25 +522,37 @@ $(document).ready(function(){
 
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
+	var graphRequest="";
 	[31,1,27].forEach(function(reportnameId) {
 	$.ajaxSetup({
 	headers:
 	{ 'X-CSRF-TOKEN': token }
 	});
-	var graphRequest={
+	if(reportnameId==31){
+	 graphRequest={
 
 			"reportnameId": reportnameId,
 			"file" : 0,
 			"pageSize" :1,
-			"pageNo" :0
+			"pageNo" :0,
+			"typeFlag": 1
 	}
-	
+	}
+	else if(reportnameId==1 || reportnameId==27){
+		graphRequest={
+
+				"reportnameId": reportnameId,
+				"file" : 0,
+				"pageSize" :1,
+				"pageNo" :0,
+				"typeFlag": 2
+		}	
+	}
 	$.ajax({
 		type : 'POST',
 		url : './report/count/'+reportnameId,
 		contentType : "application/json",
 		async: false,
-		
 		data : JSON.stringify(graphRequest),
 		success: function(data){
 		$("#expActiveDeviceTable").unbind("click").click(function(){

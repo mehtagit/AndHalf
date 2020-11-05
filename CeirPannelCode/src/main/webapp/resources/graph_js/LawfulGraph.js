@@ -28,7 +28,8 @@ function LawfulGraph() {
 						"lastDate": false,
 						"file" : 0,
 						"pageSize" :40,
-						"pageNo" :0
+						"pageNo" :0,
+						"typeFlag": 2
 			}
 			
 			urlHit='./brandModel/data/'+featureFlag;
@@ -45,7 +46,8 @@ function LawfulGraph() {
 							"lastDate": true,
 							"file" : 0,
 							"pageSize" :40,
-							"pageNo" :0
+							"pageNo" :0,
+							"typeFlag": 2
 				}
 				chartID='Top5Stolen';
 				type='pie';

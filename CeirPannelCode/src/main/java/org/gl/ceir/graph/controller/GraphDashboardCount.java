@@ -16,6 +16,8 @@ import org.gl.ceir.graph.model.LawfulCountContent;
 import org.gl.ceir.graph.model.LawfulCountResponseModel;
 import org.gl.ceir.graph.model.MobileDeviceCountContent;
 import org.gl.ceir.graph.model.MobileDeviceCountResponseModel;
+import org.gl.ceir.graph.model.OperatorBlackGreyCountContent;
+import org.gl.ceir.graph.model.OperatorBlackGreyCountResponse;
 import org.gl.ceir.graph.model.RetailerCountContent;
 import org.gl.ceir.graph.model.RetailerCountResponseModel;
 import org.gl.ceir.graph.model.UserDashboardCountContent;
@@ -64,6 +66,8 @@ public class GraphDashboardCount {
 	@Autowired
 	ActiveDeviceDeviceResponseModel activeIMEICountContent;
 	
+	@Autowired
+	OperatorBlackGreyCountResponse operatorBlackGreyCountResponse;
 	@PostMapping("/report/count/{featureTag}") 
 	public ResponseEntity<?> activeDeviceCount(@RequestBody GraphRequest graphRequest, @PathVariable("featureTag") int featureTag) {
 		Object response= null;
@@ -208,5 +212,31 @@ public class GraphDashboardCount {
 			}
 			return null;
 	
+	}
+	
+	@PostMapping("/operatorReport/count/{featureTag}") 
+	public ResponseEntity<?> operatorReport(@RequestBody GraphRequest graphRequest, @PathVariable("featureTag") int featureTag) {
+		Object response= null;
+		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(),  graphRequest.getPageSize(),  graphRequest.getFile());
+		 
+		 log.info(":::::::::countRequest::::::::"+graphRequest+"::::::countResponse:::::::"+response);
+			try {
+			Gson gson= new Gson(); 
+			String apiResponse = gson.toJson(response);
+			log.info("::::::apiResponse:::::::"+apiResponse);
+			if(featureTag==31) {
+
+				operatorBlackGreyCountResponse = gson.fromJson(apiResponse, OperatorBlackGreyCountResponse.class);
+				OperatorBlackGreyCountContent paginationContentList = operatorBlackGreyCountResponse.getContent();
+				log.info("::::::apiResponse operatorBlackGreyCountResponse ="+paginationContentList);
+				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
+			}
+			
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+				return new ResponseEntity<>(Collections.EMPTY_LIST, HttpStatus.SERVICE_UNAVAILABLE);
+			}
+			return null;
 	}
 }

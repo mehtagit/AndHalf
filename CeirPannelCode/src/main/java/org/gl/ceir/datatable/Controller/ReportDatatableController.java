@@ -16,6 +16,7 @@ import org.gl.ceir.CeirPannelCode.Model.DBReportDataModel;
 import org.gl.ceir.CeirPannelCode.Model.DBrowDataModel;
 import org.gl.ceir.CeirPannelCode.Model.DbListDataHeaders;
 import org.gl.ceir.CeirPannelCode.Model.MapDatatableResponse;
+import org.gl.ceir.CeirPannelCode.Model.ReportResponse;
 import org.gl.ceir.Class.HeadersTitle.DatatableHeaderModel;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.configuration.ConfigParameters;
@@ -33,6 +34,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
@@ -115,10 +117,10 @@ public class ReportDatatableController {
 
 	
 	@PostMapping("tableHeaders")
-	public ResponseEntity<?> headers(@RequestParam("reportnameId") Integer reportnameId){
+	public ResponseEntity<?> headers(@RequestParam("reportnameId") Integer reportnameId, @RequestParam("typeFlag") int typeFlag){
 		List<DatatableHeaderModel> dataTableInputs = new ArrayList<>();
 		try {
-			DBrowDataModel filterrequest = dBTablesFeignClient.tableHeaders(reportnameId);
+			DBrowDataModel filterrequest = dBTablesFeignClient.tableHeaders(reportnameId,typeFlag);
 				for(String header : filterrequest.getColumns()) {
 					dataTableInputs.add(new DatatableHeaderModel(header));
 				}
@@ -161,16 +163,20 @@ public class ReportDatatableController {
 		}
 		pageElement.setButtonList(buttonList);
 
-		/*
-		 * //Dropdown items String[]
-		 * selectParam={"select",Translator.toLocale("select.filterTagId"),"filterTagId"
-		 * ,""}; for(int i=0; i<selectParam.length; i++) { inputFields= new
-		 * InputFields(); inputFields.setType(selectParam[i]); i++;
-		 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
-		 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
-		 * } pageElement.setDropdownList(dropdownList);
-		 */
-
+		//Dropdown items	
+		String[] selectParam= {"select",Translator.toLocale("table.ReportType"),"reportType",""};
+		for(int i=0; i< selectParam.length; i++) {
+		inputFields= new InputFields();
+		inputFields.setType(selectParam[i]);
+		i++;
+		inputFields.setTitle(selectParam[i]);
+		i++;
+		inputFields.setId(selectParam[i]);
+		i++;
+		inputFields.setClassName(selectParam[i]);
+		dropdownList.add(inputFields);
+		}
+		pageElement.setDropdownList(dropdownList);
 		// input type date list
 		String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
 				Translator.toLocale("input.endDate"), "endDate", "" };
@@ -191,5 +197,23 @@ public class ReportDatatableController {
 		pageElement.setInputTypeDateList(inputTypeDateList);
 		pageElement.setUserStatus(userStatus);
 		return new ResponseEntity<>(pageElement, HttpStatus.OK);
+	}
+
+	
+	@ResponseBody
+	@PostMapping("fetchReportType")
+	public ReportResponse fetchReportType(@RequestParam("reportnameId") Integer reportnameId){
+	
+		try {
+			log.info("reportnameId=="+reportnameId);
+			ReportResponse filterrequest = dBTablesFeignClient.fetchReportType(reportnameId);
+				log.info("filterrequest response=="+filterrequest);
+				return filterrequest;	
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+		}
+		return null;
+			
 	}
 }

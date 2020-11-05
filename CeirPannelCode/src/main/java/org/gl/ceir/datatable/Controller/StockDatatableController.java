@@ -252,6 +252,7 @@ public class StockDatatableController {
 	@RequestMapping("stock/pageRendering")
 	public ResponseEntity<?> pageRendering(@RequestParam(name="type",defaultValue = "stock",required = false) String role,@RequestParam(name="sourceType",required = false) String sourceType,HttpSession session){
 		String userType = (String) session.getAttribute("usertype");
+		String userStatus = (String) session.getAttribute("userStatus");
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 
@@ -363,6 +364,7 @@ public class StockDatatableController {
 		//String userTypeRole=(String)session.getAttribute("selectedUserTypeId");
 		//pageElement.setPageTitle(Translator.toLocale("view.stockMgt")+" "+Translator.toLocale("roletype."+userTypeRole));
 		pageElement.setButtonList(buttonList);
+		pageElement.setUserStatus(userStatus);
 		pageElement.setDropdownList(dropdownList);
 		pageElement.setInputTypeDateList(inputTypeDateList);
 		return new ResponseEntity<>(pageElement, HttpStatus.OK); 

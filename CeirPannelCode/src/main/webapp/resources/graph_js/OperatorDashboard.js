@@ -30,7 +30,8 @@ function activeDeviceGraph() {
 						  "reportnameId": 29,
 						  "file" : 0, 
 						  "pageSize" :55, 
-						  "pageNo" :0
+						  "pageNo" :0,
+						  "typeFlag": 1
 			}
 			
 			
@@ -51,7 +52,8 @@ function activeDeviceGraph() {
 						  "pageSize" :10, 
 						  "pageNo" :0,
 						"groupBy": "Operator Name",
-						"reportnameId": 29
+						"reportnameId": 29,
+						"typeFlag": 1
 						}
 			
 		}
@@ -63,7 +65,8 @@ function activeDeviceGraph() {
 					  "reportnameId": 27,
 						  "file" : 0, 
 						  "pageSize" :10, 
-						  "pageNo" :0
+						  "pageNo" :0,
+						  "typeFlag": 2
 			}
 			urlHit='./report/imeiUsageDashBoard';
 		}
@@ -82,7 +85,8 @@ function activeDeviceGraph() {
 						  "reportnameId": 34,
 						  "file" : 0, 
 						  "pageSize" :30, 
-						  "pageNo" :0
+						  "pageNo" :0,
+						  "typeFlag": 2
 			}
 			
 		}
@@ -425,7 +429,8 @@ $(document).ready(function(){
 			  "reportnameId": 29,
 			  "file" : 0, 
 			  "pageSize" :5, 
-			  "pageNo" :0
+			  "pageNo" :0,
+			  "typeFlag": 1
 	}
 	
 	$.ajax({
@@ -489,7 +494,7 @@ $.ajax({
 
 
 
-/*
+
 //boxes
 $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
@@ -507,12 +512,13 @@ $(document).ready(function(){
 			"reportnameId": reportnameId,
 			"file" : 0,
 			"pageSize" :1,
-			"pageNo" :0
+			"pageNo" :0,
+			"typeFlag": 1
 	}
 	
 	$.ajax({
 		type : 'POST',
-		url : './report/count/'+reportnameId,
+		url : './operatorReport/count/'+reportnameId,
 		contentType : "application/json",
 		async: false,
 		
@@ -543,7 +549,7 @@ $(document).ready(function(){
 	});
 	});
 });
-*/
+
 
 
 

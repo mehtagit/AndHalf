@@ -22,7 +22,8 @@ function featureDashboardGraph() {
 			"groupBy": "Stock Status",
 			"file" : 0,
 			"pageSize" :20,
-			"pageNo" :0
+			"pageNo" :0,
+			"typeFlag": 2
 	}
 	}
 		else if(reportnameId==44){
@@ -38,7 +39,8 @@ function featureDashboardGraph() {
 						"groupBy": "Consignment Status",
 						"file" : 0,
 						"pageSize" :20,
-						"pageNo" :0
+						"pageNo" :0,
+						"typeFlag": 2
 				}			
 		}
 else if(reportnameId==16){
@@ -54,7 +56,8 @@ else if(reportnameId==16){
 						"groupBy": "Grievance Status",
 						"file" : 0,
 						"pageSize" :20,
-						"pageNo" :0
+						"pageNo" :0,
+						"typeFlag": 2
 				}			
 		}
 		
@@ -71,7 +74,8 @@ else if(reportnameId==57){
 				"groupBy": "User Type",
 				"file" : 0,
 				"pageSize" :20,
-				"pageNo" :0
+				"pageNo" :0,
+				"typeFlag": 2
 		}			
 }	
 

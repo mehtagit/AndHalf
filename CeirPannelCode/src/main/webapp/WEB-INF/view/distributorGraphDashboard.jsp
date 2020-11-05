@@ -294,11 +294,54 @@ display: none !important;
                             <spring:message code="sidebar.Distributor_Dashboard" />
                             				</h6>
                             				<div id="wrapperPage">
-                            				<h6 class="m-0 font-weight-bold text-primary" id="dateVal"></h6>
+                            				
                             	 				 <div class="split">
+                            	 				 <h6 class="m-0 font-weight-bold text-primary" id="dateVal"></h6>
                             						<div class="col s12 m12 info-div center" id="infoBox"></div>
                            			
                     </div>   
+                     <div class="split">
+                     <h6 class="m-0 font-weight-bold text-primary" id="monthdateVal"></h6>
+                            						<div class="col s12 m12 info-div center" id="infoBox1"></div>
+                           			
+                    </div>   
+                     <div style="display:flex; margin-left: 12px;">
+                            <div class="col-xl-8 col-lg-7">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Monthly stock</h6>
+        <div> <a id="expMonthlyStock">Export</a> | 
+                      <a id="MonthlyStock" download="Monthly_Stock_report.jpg">Download</a></div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                   <canvas class="chart-area" id="lineGraphMonthlyStock" style = "width: 550px; height: 400px; margin: 0 auto">
+                  </canvas>
+                </div>
+              </div>
+            </div>
+             
+             
+             
+             
+             <div class="col-xl-8 col-lg-7">
+              <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
+              <div> <a id="expLineBar">Export</a> | 
+                      <a id="lineBarImage" download="Use_login_graph.jpg">Download</a></div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                 
+                    <canvas class="chart-area" id="barGraph" style = "width: 550px; height: 400px; margin: 0 auto">
+                  </canvas>
+                </div>
+              </div>
+            </div>               
+             </div> 
                     
                
     </div>
@@ -320,6 +363,38 @@ display: none !important;
 <script type="text/javascript" src="${context}/resources/custom_js/bootstrap.min.js"></script>
 
 <script type="text/javascript" src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+
+	<!-- i18n library -->
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/i18n.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/messagestore.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/fallbacks.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/language.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/parser.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/emitter.js"></script>
+
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/bidi.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/history.js"></script>
+
+	<script type="text/javascript"
+		src="${context}/resources/i18n_library/min.js"></script>
+
 
 <script src="${context}/resources/graph_js/chartjs-plugin-datalabel.js"></script>
 <script type="text/javascript"

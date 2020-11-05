@@ -1049,6 +1049,7 @@ function exportConsignmentData()
 	var consignmentTxnId=$('#transactionID').val();
 	var filterConsignmentStatus=parseInt($('#filterConsignmentStatus').val());
 	var consignmentTaxPaidStatus=parseInt($('#taxPaidStatus').val());
+	var displayName = $('#name').val();
 	//var source__val = consignmentStartDate != ''|| consignmentEndDate != ''|| consignmentTxnId != ''|| filterConsignmentStatus != 'NaN'|| consignmentTaxPaidStatus != 'NaN'|| consignmentName != undefined ? 'filter' : $("body").attr("data-session-source");
 
 	var source__val;
@@ -1086,7 +1087,7 @@ function exportConsignmentData()
 	var info = table.page.info(); 
 	var pageNo=info.page;
 	var pageSize =info.length;
-	window.location.href="./exportConsignmnet?consignmentStartDate="+consignmentStartDate+"&consignmentEndDate="+consignmentEndDate+"&consignmentTxnId="+consignmentTxnId+"&filterConsignmentStatus="+filterConsignmentStatus+"&consignmentTaxPaidStatus="+consignmentTaxPaidStatus+"&source="+source__val+"&pageSize="+pageSize+"&pageNo="+pageNo;
+	window.location.href="./exportConsignmnet?consignmentStartDate="+consignmentStartDate+"&consignmentEndDate="+consignmentEndDate+"&consignmentTxnId="+consignmentTxnId+"&filterConsignmentStatus="+filterConsignmentStatus+"&consignmentTaxPaidStatus="+consignmentTaxPaidStatus+"&source="+source__val+"&displayName="+displayName+"&pageSize="+pageSize+"&pageNo="+pageNo;
 }
 
 

@@ -10,6 +10,10 @@ public class ImporterDeviceCountData {
 	  @SerializedName("Date")
 	  private String date;
 	  
+	  @JsonProperty("Month")
+	  @SerializedName("Month")
+	  private String month;
+	  
 	  @JsonProperty("Importer")
 	  @SerializedName("Importer")
 	  private String importer;
@@ -47,12 +51,88 @@ public class ImporterDeviceCountData {
 	  private String count;
 
 	  
+	  @JsonProperty("Withdrawn By CEIR Admin")
+	  @SerializedName("Withdrawn By CEIR Admin")
+	  private String withdrawnByCEIRAdmin;
+
+	
+	  @JsonProperty("Rejected by CEIR Admin")
+	  @SerializedName("Rejected by CEIR Admin")
+	  private String rejectedbyCEIRAdmin;
+	  
+	  @JsonProperty("Rejected By System")
+	  @SerializedName("Rejected By System")
+	  private String rejectedBySystem;
+	  
+	  @JsonProperty("Processing")
+	  @SerializedName("Processing")
+	  private String processing;
+
+	  @JsonProperty("Pending Approval From CEIR Admin")
+	  @SerializedName("Pending Approval From CEIR Admin")
+	  private String pendingApprovalFromCEIRAdmin;
+	  
+	  @JsonProperty("Approved by CEIR Admin")
+	  @SerializedName("Approved by CEIR Admin")
+	  private String approvedbyCEIRAdmin;
+	  
+	  @JsonProperty("Withdrawn By User")
+	  @SerializedName("Withdrawn By User")
+	  private String withdrawnByUser;
+	  
+	  @JsonProperty("Approved")
+	  @SerializedName("Approved")
+	  private String approved;
+	  
+	  
+	  @JsonProperty("Pending Clearance From Customs")
+	  @SerializedName("Pending Clearance From Customs")
+	  private String pendingClearanceFromCustoms;
+	  
+	  @JsonProperty("Pending Clearance from DRT")
+	  @SerializedName("Pending Clearance from DRT")
+	  private String pendingClearancefromDRT;
+	  
+	  
+	  @JsonProperty("Withdrawn By Importer")
+	  @SerializedName("Withdrawn By Importer")
+	  private String withdrawnByImporter;
+	  
+	  
+	  @JsonProperty("Rejected By Customs")
+	  @SerializedName("Rejected By Customs")
+	  private String rejectedByCustoms;
+	  
+	  
+	  @JsonProperty("Rejected by DRT")
+	  @SerializedName("Rejected by DRT")
+	  private String rejectedbyDRT;
+	  
+	  
+	  @JsonProperty("Withdrawn By CEIR")
+	  @SerializedName("Withdrawn By CEIR")
+	  private String withdrawnByCEIR;
+	  
+	  
+	  
+	  @JsonProperty("New")
+	  @SerializedName("New")
+	  private String newState;
+
 	public String getDate() {
 		return date;
 	}
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
 	}
 
 	public String getImporter() {
@@ -127,11 +207,133 @@ public class ImporterDeviceCountData {
 		this.count = count;
 	}
 
+	public String getWithdrawnByCEIRAdmin() {
+		return withdrawnByCEIRAdmin;
+	}
+
+	public void setWithdrawnByCEIRAdmin(String withdrawnByCEIRAdmin) {
+		this.withdrawnByCEIRAdmin = withdrawnByCEIRAdmin;
+	}
+
+	public String getRejectedbyCEIRAdmin() {
+		return rejectedbyCEIRAdmin;
+	}
+
+	public void setRejectedbyCEIRAdmin(String rejectedbyCEIRAdmin) {
+		this.rejectedbyCEIRAdmin = rejectedbyCEIRAdmin;
+	}
+
+	public String getRejectedBySystem() {
+		return rejectedBySystem;
+	}
+
+	public void setRejectedBySystem(String rejectedBySystem) {
+		this.rejectedBySystem = rejectedBySystem;
+	}
+
+	public String getProcessing() {
+		return processing;
+	}
+
+	public void setProcessing(String processing) {
+		this.processing = processing;
+	}
+
+	public String getPendingApprovalFromCEIRAdmin() {
+		return pendingApprovalFromCEIRAdmin;
+	}
+
+	public void setPendingApprovalFromCEIRAdmin(String pendingApprovalFromCEIRAdmin) {
+		this.pendingApprovalFromCEIRAdmin = pendingApprovalFromCEIRAdmin;
+	}
+
+	public String getApprovedbyCEIRAdmin() {
+		return approvedbyCEIRAdmin;
+	}
+
+	public void setApprovedbyCEIRAdmin(String approvedbyCEIRAdmin) {
+		this.approvedbyCEIRAdmin = approvedbyCEIRAdmin;
+	}
+
+	public String getWithdrawnByUser() {
+		return withdrawnByUser;
+	}
+
+	public void setWithdrawnByUser(String withdrawnByUser) {
+		this.withdrawnByUser = withdrawnByUser;
+	}
+
+	public String getNewState() {
+		return newState;
+	}
+
+	public void setNewState(String newState) {
+		this.newState = newState;
+	}
+
+	public String getApproved() {
+		return approved;
+	}
+
+	public void setApproved(String approved) {
+		this.approved = approved;
+	}
+
+	public String getPendingClearanceFromCustoms() {
+		return pendingClearanceFromCustoms;
+	}
+
+	public void setPendingClearanceFromCustoms(String pendingClearanceFromCustoms) {
+		this.pendingClearanceFromCustoms = pendingClearanceFromCustoms;
+	}
+
+	public String getPendingClearancefromDRT() {
+		return pendingClearancefromDRT;
+	}
+
+	public void setPendingClearancefromDRT(String pendingClearancefromDRT) {
+		this.pendingClearancefromDRT = pendingClearancefromDRT;
+	}
+
+	public String getWithdrawnByImporter() {
+		return withdrawnByImporter;
+	}
+
+	public void setWithdrawnByImporter(String withdrawnByImporter) {
+		this.withdrawnByImporter = withdrawnByImporter;
+	}
+
+	public String getRejectedByCustoms() {
+		return rejectedByCustoms;
+	}
+
+	public void setRejectedByCustoms(String rejectedByCustoms) {
+		this.rejectedByCustoms = rejectedByCustoms;
+	}
+
+	public String getRejectedbyDRT() {
+		return rejectedbyDRT;
+	}
+
+	public void setRejectedbyDRT(String rejectedbyDRT) {
+		this.rejectedbyDRT = rejectedbyDRT;
+	}
+
+	public String getWithdrawnByCEIR() {
+		return withdrawnByCEIR;
+	}
+
+	public void setWithdrawnByCEIR(String withdrawnByCEIR) {
+		this.withdrawnByCEIR = withdrawnByCEIR;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("ImporterDeviceCountData [date=");
 		builder.append(date);
+		builder.append(", month=");
+		builder.append(month);
 		builder.append(", importer=");
 		builder.append(importer);
 		builder.append(", importerDistributor=");
@@ -150,9 +352,39 @@ public class ImporterDeviceCountData {
 		builder.append(importerStockFound);
 		builder.append(", count=");
 		builder.append(count);
+		builder.append(", withdrawnByCEIRAdmin=");
+		builder.append(withdrawnByCEIRAdmin);
+		builder.append(", rejectedbyCEIRAdmin=");
+		builder.append(rejectedbyCEIRAdmin);
+		builder.append(", rejectedBySystem=");
+		builder.append(rejectedBySystem);
+		builder.append(", processing=");
+		builder.append(processing);
+		builder.append(", pendingApprovalFromCEIRAdmin=");
+		builder.append(pendingApprovalFromCEIRAdmin);
+		builder.append(", approvedbyCEIRAdmin=");
+		builder.append(approvedbyCEIRAdmin);
+		builder.append(", withdrawnByUser=");
+		builder.append(withdrawnByUser);
+		builder.append(", approved=");
+		builder.append(approved);
+		builder.append(", pendingClearanceFromCustoms=");
+		builder.append(pendingClearanceFromCustoms);
+		builder.append(", pendingClearancefromDRT=");
+		builder.append(pendingClearancefromDRT);
+		builder.append(", withdrawnByImporter=");
+		builder.append(withdrawnByImporter);
+		builder.append(", rejectedByCustoms=");
+		builder.append(rejectedByCustoms);
+		builder.append(", rejectedbyDRT=");
+		builder.append(rejectedbyDRT);
+		builder.append(", withdrawnByCEIR=");
+		builder.append(withdrawnByCEIR);
+		builder.append(", newState=");
+		builder.append(newState);
 		builder.append("]");
 		return builder.toString();
 	}
 
-	  
+
 }
