@@ -41,7 +41,7 @@ public interface DBTablesFeignClient {
 	//----------------------------Report headers Feign------------------------------
 	
 	@RequestMapping(value="/report/columnList" ,method=RequestMethod.POST) 
-	public @ResponseBody DBrowDataModel tableHeaders(@RequestParam("reportnameId") Integer reportnameId);
+	public @ResponseBody DBrowDataModel tableHeaders(@RequestParam("reportnameId") Integer reportnameId,@RequestParam("typeFlag") int typeFlag);
 	
 	
 	//----------------------------DB TableData Feign----------------------------------
@@ -56,4 +56,11 @@ public interface DBTablesFeignClient {
 	
 	@RequestMapping(value="/db/table/details" ,method=RequestMethod.POST) 
 	public @ResponseBody DBrowDataModel dbtableHeaders(@RequestParam("dbName") String dbName, @RequestParam("tableName") String tableName);
+	
+	
+	//----------------------------Report headers Feign------------------------------
+	
+		@RequestMapping(value="report/details" ,method=RequestMethod.POST) 
+		public @ResponseBody ReportResponse fetchReportType(@RequestParam("reportnameId") Integer reportnameId);
+		
 }

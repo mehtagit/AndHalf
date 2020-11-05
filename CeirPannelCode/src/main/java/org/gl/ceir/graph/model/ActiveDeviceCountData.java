@@ -33,13 +33,6 @@ public class ActiveDeviceCountData {
 
 	
 	
-	@JsonProperty("Total Grey IMEI Count")
-	@SerializedName("Total Grey IMEI Count")
-	private String totalGreyIMEI;
-	
-	@JsonProperty("Total BlackList IMEI Count")
-	@SerializedName("Total BlackList IMEI Count")
-	private String totalBlackListIMEI;
 	
 	
 	@JsonProperty("Total GSMA BlackList Count")
@@ -74,9 +67,7 @@ public class ActiveDeviceCountData {
   	@SerializedName("Total Blocked Device Count")
   	private String totalBlockedDeviceCount;
   	
-  	@JsonProperty("Total Tax Paid Device Count")
-  	@SerializedName("Total Tax Paid Device Count")
-  	private String totalTaxPaidDeviceCount;
+  	
      
   	@JsonProperty("Total Model Count")
   	@SerializedName("Total Model Count")
@@ -132,22 +123,6 @@ public class ActiveDeviceCountData {
 
 	public void setRejectedTAC(String rejectedTAC) {
 		this.rejectedTAC = rejectedTAC;
-	}
-
-	public String getTotalGreyIMEI() {
-		return totalGreyIMEI;
-	}
-
-	public void setTotalGreyIMEI(String totalGreyIMEI) {
-		this.totalGreyIMEI = totalGreyIMEI;
-	}
-
-	public String getTotalBlackListIMEI() {
-		return totalBlackListIMEI;
-	}
-
-	public void setTotalBlackListIMEI(String totalBlackListIMEI) {
-		this.totalBlackListIMEI = totalBlackListIMEI;
 	}
 
 	public String getTotalGSMABlackList() {
@@ -214,14 +189,6 @@ public class ActiveDeviceCountData {
 		this.totalBlockedDeviceCount = totalBlockedDeviceCount;
 	}
 
-	public String getTotalTaxPaidDeviceCount() {
-		return totalTaxPaidDeviceCount;
-	}
-
-	public void setTotalTaxPaidDeviceCount(String totalTaxPaidDeviceCount) {
-		this.totalTaxPaidDeviceCount = totalTaxPaidDeviceCount;
-	}
-
 	public String getTotalModelCount() {
 		return totalModelCount;
 	}
@@ -241,7 +208,7 @@ public class ActiveDeviceCountData {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("CountData [date=");
+		builder.append("ActiveDeviceCountData [date=");
 		builder.append(date);
 		builder.append(", totalIMEI=");
 		builder.append(totalIMEI);
@@ -253,10 +220,6 @@ public class ActiveDeviceCountData {
 		builder.append(approvedTAC);
 		builder.append(", rejectedTAC=");
 		builder.append(rejectedTAC);
-		builder.append(", totalGreyIMEI=");
-		builder.append(totalGreyIMEI);
-		builder.append(", totalBlackListIMEI=");
-		builder.append(totalBlackListIMEI);
 		builder.append(", totalGSMABlackList=");
 		builder.append(totalGSMABlackList);
 		builder.append(", totalImporterDevice=");
@@ -273,8 +236,6 @@ public class ActiveDeviceCountData {
 		builder.append(totalStolenDeviceCount);
 		builder.append(", totalBlockedDeviceCount=");
 		builder.append(totalBlockedDeviceCount);
-		builder.append(", totalTaxPaidDeviceCount=");
-		builder.append(totalTaxPaidDeviceCount);
 		builder.append(", totalModelCount=");
 		builder.append(totalModelCount);
 		builder.append(", totalBrandCount=");
@@ -282,9 +243,8 @@ public class ActiveDeviceCountData {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
-	
+
+
 	
 	
 }

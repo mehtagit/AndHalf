@@ -6,13 +6,25 @@ function userloginGraph() {
 	var endDate=year+"-"+month+"-"+day;
 	var startDate=year+"-"+month+"-"+(day-15);
 	*/
-	var graphRequest={
+	var graphRequest=null;
+	var chartID=null;
+	var type=null;
+	var title=null;
+	var urlHit=null;
+	var featureFlag =null;
+	[18].forEach(function(reportnameId) {
+		if(reportnameId == 18){
+			urlHit="./userLoginGraph";
+	 graphRequest={
 
 			"reportnameId": 18,
 			"file" : 0,
 			"pageSize" :15,
-			"pageNo" :0
+			"pageNo" :0,
+		     "typeFlag": 2
 	}
+		}
+		
 	
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -22,7 +34,7 @@ function userloginGraph() {
 	});
 	$.ajax({
 		type : 'POST',
-		url : './userLoginGraph',
+		url :urlHit ,
 		contentType : "application/json",
 		data : JSON.stringify(graphRequest),
 		/*beforeSend : function() {
@@ -30,13 +42,17 @@ function userloginGraph() {
 		},*/
 		success : function(data) {
 			var response = data;
-			graph(response,'lineGraph','line','User Login Line Graph')
-			graph(response,'barGraph','bar','User Login Bar Graph')
+			if(reportnameId == 18 ){
+				graph(response,'lineGraph','line','User Login Line Graph')
+				graph(response,'barGraph','bar','User Login Bar Graph')
+			}
+			
 			//graph(response,'horizontalBarGraph','horizontalBar','User Login HorizontalBar Graph')	
 			
 		},
 		error : function() {
 		}
+	});
 	});
 }
 
@@ -59,7 +75,8 @@ $(document).ready(function(){
 			"reportnameId": 50,
 			"file" : 0,
 			"pageSize" :1,
-			"pageNo" :0
+			"pageNo" :0,
+			"typeFlag": 1
 	}
 	
 	$.ajax({
@@ -93,7 +110,8 @@ var i=0;
 				"reportnameId": 18,
 				"file" : 0,
 				"pageSize" :1,
-				"pageNo" :0
+				"pageNo" :0,
+			     "typeFlag": 2
 		}
 		
 		var token = $("meta[name='_csrf']").attr("content");
@@ -134,13 +152,24 @@ function graph(response,id,chartType,chartTitle)
 	//var pieLabelName=response['columns'];
   var pieLabelName=['No of user logged','Unique user logged'];
   var pieData=[];
+  var BlockedCount=[];
+  var PendingCount=[];
+  var RecoverdCount=[];
+  var StolenCount=[];
+  
 	for(var i=0;i<response['rowData'].length;i++){
 		noOfUsers.push(response['rowData'][i]['Number of user logged']);
 	   	 date.push(response['rowData'][i]['Date']);
 	   	uniqueUsers.push(response['rowData'][i]['Unique user logged']);
 		pieData.push(parseInt(response['rowData'][i]['Number of user logged']));
 		pieData.push(parseInt(response['rowData'][i]['Unique user logged']));
+		
+		BlockedCount.push(response['rowData'][i]['Blocked Count']);
+		PendingCount.push(response['rowData'][i]['Pending Count']);
+		RecoverdCount.push(response['rowData'][i]['Recoverd Count']);
+		StolenCount.push(response['rowData'][i]['Stolen Count']);
 	    }
+ 
 	//console.log("date: "+date);
 	   //console.log("noOfUsers: "+noOfUsers);
 	    //console.log("uniqueUserLogged: "+);	
@@ -455,6 +484,125 @@ function graph(response,id,chartType,chartTitle)
     
    
     }  
+    else if( chartType == 'line'){
+    	
+		$("#expLostStolenGraph").unbind("click").click(function(){
+	        var data = response['rowData'];
+	        if(data == '')
+	            return;
+	        
+	        JSONToCSVConvertor(data, "Lost/Stolen_trend", true);
+	    });
+	   	var ctx = document.getElementById(''+id+'').getContext('2d');
+	    var chart = new Chart(ctx, {
+	      // The type of chart we want to create
+	      type: ''+chartType+'',
+
+	      // The data for our dataset
+	      data: {
+	        labels: date,
+	        datasets: [{
+	            label: "Stolen Count",
+	            borderColor:  'rgb(235, 203, 138)',
+	            data: StolenCount,
+	            fill: false
+	            
+	        },
+	        {
+	            label: "Recoverd Count",
+	            borderColor: 'rgb(70, 191, 189)',
+	            data: RecoverdCount,
+	            fill: false
+	            
+	        },
+	        {
+	            label: "Blocked Count",
+	            borderColor: '#D32F2F',
+	            data: BlockedCount,
+	            fill: false
+	            
+	        },
+	        {
+	            label: "Pending Count",
+	            borderColor:  '#FFA000',
+	            data: PendingCount,
+	            fill: false
+	            
+	        }]
+	      },
+
+	      // Configuration options go here
+	      options: {
+	    	    responsive: false,
+	    	    maintainAspectRatio: false,
+	    	    animation: {
+	    	        onComplete: captureImage
+	    	      },
+	    	    elements: {
+	                point:{
+	                    radius: 0
+	                }
+	            },
+	    	    plugins: {
+				    datalabels: {
+				        display: false,
+				    },
+				    anchor :'end',
+		            align :'top',
+		            // and if you need to format how the value is displayed...
+		            formatter: function(value, context) {
+		                return GetValueFormatted(value);
+		            }
+				},
+				
+	    	    scales: {
+	                xAxes: [{
+	                   gridLines: {
+	                      display: false
+	                   },
+	                   scaleLabel: {
+	                       display: true,
+	                       labelString: 'Date'
+	                     }
+	                }],
+	                yAxes: [{
+	                   gridLines: {
+	                      display: false
+	                   },
+	                   scaleLabel: {
+	                       display: true,
+	                       labelString: 'Device Count'
+	                     }
+	                }]
+	             }           
+	             
+	    	}
+	    });
+	    function captureImage(){  
+	        var url=chart.toBase64Image();
+	        document.getElementById("lostStolenGraphImage").href=url;
+	    }
+		} 
     $('div#initialloader').delay(300).fadeOut('slow');
 }
-    
+
+function setLabelByID(featureId,userTypeId){
+	var res=[];
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		async: false,
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	$.getJSON('./getDropdownList/'+featureId+"/"+userTypeId, function(data) {
+		
+		for (i = 0; i < data.length; i++) {
+			data[i].interp;
+			res.push(data[i].interp);
+		}
+	
+	});
+	
+	return res;
+}

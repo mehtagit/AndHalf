@@ -337,17 +337,19 @@ display: none !important;
              </div>               
                  </div>   
                     
-                    <%-- <div style="display:flex; margin-left: 12px;">
-                            <div class="col-xl-8 col-lg-7">
+                 <%--    <div style="display:flex; margin-left: 12px;" >
+                           <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
-                 
+                  <h6 class="m-0 font-weight-bold text-primary"> Lost/Stolen Device Trend</h6>
+              <div> <a id="expLostStolenGraph">Export</a> | 
+                      <a id="lostStolenGraphImage" download="Lost/Stolen_Device.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
-                   <canvas class="chart-area" id="pieGraph" style = "width: 550px; height: 400px; margin: 0 auto">
+                 
+                    <canvas class="chart-area" id="lostStolenGraph" style = "width: 550px; height: 400px; margin: 0 auto">
                   </canvas>
                 </div>
               </div>
@@ -360,15 +362,21 @@ display: none !important;
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
-              
+                  <h6 class="m-0 font-weight-bold text-primary">Most Stolen Brand</h6>
+              <div> <a id="expTop5StolenGraph">Export</a> | 
+                      <a id="Top5StolenGraphImage" download="Top5Stolen_Device.jpg">Download</a></div>
                 </div>
+               
                 <!-- Card Body -->
                 <div class="card-body">
                  
-                    <canvas class="chart-area" id="donutGraph" style = "width: 550px; height: 400px; margin: 0 auto">
-                  </canvas>
-    </div></div></div></div>--%>
+                    <canvas class="chart-area" id="Top5Stolen" style = "width: 550px; height: 400px; margin: 0 auto">
+                  </canvas></div></div>
+    </div>
+    </div>
+     --%>
+    </div>
+    </div>
     
     
     

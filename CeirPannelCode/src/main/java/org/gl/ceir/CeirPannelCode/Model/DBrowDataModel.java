@@ -13,7 +13,7 @@ public class DBrowDataModel {
 	private List<Map<String, String>> rowData;
 	
 	private String endDate,startDate,txnId,username,userType;
-	private Integer reportnameId,userTypeId,userId,featureId;
+	private Integer reportnameId,userTypeId,userId,featureId,typeFlag;
 	public String getDbName() {
 		return dbName;
 	}
@@ -104,6 +104,12 @@ public class DBrowDataModel {
 	public void setFeatureId(Integer featureId) {
 		this.featureId = featureId;
 	}
+	public Integer getTypeFlag() {
+		return typeFlag;
+	}
+	public void setTypeFlag(Integer typeFlag) {
+		this.typeFlag = typeFlag;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -137,10 +143,12 @@ public class DBrowDataModel {
 		builder.append(userId);
 		builder.append(", featureId=");
 		builder.append(featureId);
+		builder.append(", typeFlag=");
+		builder.append(typeFlag);
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
 	
 	
 }

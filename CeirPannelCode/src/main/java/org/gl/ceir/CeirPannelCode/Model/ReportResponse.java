@@ -1,5 +1,10 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
+import java.util.List;
+
+import org.gl.ceir.graph.model.ReportTrends;
+import org.springframework.stereotype.Component;
+@Component
 public class ReportResponse {
 	private Integer reportnameId,reportCategory;
 	private String reportName;
@@ -13,6 +18,7 @@ public class ReportResponse {
 	private Object keyColumn;
 	private String createdOn;
 	private String modifiedOn;
+	private List<ReportTrends> reportTrends;
 	public Integer getReportnameId() {
 		return reportnameId;
 	}
@@ -91,6 +97,14 @@ public class ReportResponse {
 	public void setModifiedOn(String modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
+	
+	
+	public List<ReportTrends> getReportTrends() {
+		return reportTrends;
+	}
+	public void setReportTrends(List<ReportTrends> reportTrends) {
+		this.reportTrends = reportTrends;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -120,11 +134,11 @@ public class ReportResponse {
 		builder.append(createdOn);
 		builder.append(", modifiedOn=");
 		builder.append(modifiedOn);
+		builder.append(", reportTrends=");
+		builder.append(reportTrends);
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
-	
+
 	
 }
