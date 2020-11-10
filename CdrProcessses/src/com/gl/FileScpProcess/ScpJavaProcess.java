@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.gl.FileScpProcess;
 
 import java.sql.Connection;
@@ -63,7 +62,7 @@ public class ScpJavaProcess {
 //                       + "  select  file_Name  from cdr_pre_processing_report  where  file_Type = 'I' and   tag =  ( "
 //                       + " select  tag  from cdr_pre_processing_report    where source_name = 'all' and  file_type= 'O' and  file_Name like ("
                //                      + " select  concat ( SUBSTR ( FILE_NAME , 0, LENGTH(FILE_NAME)-5 ) , '%' ) from CDR_FILE_DETAILS_DB where status = 'Done' ) ))) ";
-         
+
                query = "select  file_name , OPERATOR_NAME , SOURCE_NAME   from cdr_pre_processing_report  where   FILE_TYPE = 'I'  and tag = ("
                        + " select tag from  cdr_pre_processing_report where SOURCE_NAME != 'all' and  file_type= 'O' and  FILE_NAME  = ("
                        + "  select  file_Name  from cdr_pre_processing_report  where  file_Type = 'I' and   tag =  ( "
@@ -98,6 +97,7 @@ public class ScpJavaProcess {
                          scpProcess.DirectoryBuilderViaSSH(hostIp, port, userName, fileOutputPath);
                          //       scpProcess.uploadFile(hostIp, Integer.parseInt(port), userName, inputFolder + "/" + rs1.getString("OPERATOR_NAME") + "/" + rs1.getString("SOURCE_NAME") + "/", fileOutputPath, rs1.getString("file_name"));
                          scpProcess.moveScpFile(hostIp, Integer.parseInt(port), userName, inputFolder + "/" + rs1.getString("OPERATOR_NAME") + "/" + rs1.getString("SOURCE_NAME") + "/", fileOutputPath, rs1.getString("file_name"));
+                         scpProcess.cdrFileStatusUpdate(conn, rs1.getString("file_name"));
                     }
                     logger.info(" Completed");
                } catch (Exception e) {
@@ -164,6 +164,8 @@ public class ScpJavaProcess {
           boolean uploadStatus = false;
           try {
                //  ssh ceirapp@172.24.2.60 -p 22022 " mv /u01/bin/FileScpProcess-0.0.1-SNAPSHOT.jar /u01/bin/test/ " 
+
+               logger.info(" ssh " + user + "@" + host + " -p " + port + " \" mv " + localFilePath + fileName + " " + hostPath + "  \" ");
                upload = Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", " ssh " + user + "@" + host + " -p " + port + " \" mv " + localFilePath + fileName + " " + hostPath + "  \" "});
 
                upload.waitFor();
@@ -181,6 +183,28 @@ public class ScpJavaProcess {
                }
           }
           return uploadStatus;
+     }
+
+     static void cdrFileStatusUpdate(Connection conn, String fileName) {
+          Statement stmt = null;
+
+          String query = "update CDR_FILE_DETAILS_DB set status = 'Processed' where file_name like  '" + fileName + "%' ";
+          logger.info(" qury is " + query);
+
+          try {
+               stmt = conn.createStatement();
+               stmt.executeUpdate(query);
+               stmt.close();
+          } catch (SQLException e) {
+               logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
+          } finally {
+               try {
+                    stmt.close();
+               } catch (SQLException e) {
+                    logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
+               }
+          }
+
      }
 
 }
