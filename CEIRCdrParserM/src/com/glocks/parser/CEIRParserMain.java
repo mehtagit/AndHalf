@@ -162,7 +162,7 @@ public class CEIRParserMain {
                FileOutputStream fos1 = new FileOutputStream(fout1, true);
                bw1 = new BufferedWriter(new OutputStreamWriter(fos1));
 
-            //               ResultSet my_result_set = operatorDetails(conn, operator);
+//               ResultSet my_result_set = operatorDetails(conn, operator);
 //               if (my_result_set.next()) {
 //                    old_sno = my_result_set.getInt("last_upload_sno");
 //                    split_upload_batch_no = my_result_set.getInt("split_upload_batch_no");
@@ -670,6 +670,9 @@ public class CEIRParserMain {
 }
 
  
+
+
+
 
 
 

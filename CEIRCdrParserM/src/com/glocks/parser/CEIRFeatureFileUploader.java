@@ -163,7 +163,7 @@ public class CEIRFeatureFileUploader {
                          if (!errorfile.exists()) {
                               errorfile.mkdir();
                          }
-                         logger.debug("mkdir Done ");
+                         logger.debug("MKdir Done ");
                          Path temp = Files.move(Paths.get(error_file_path),
                                  Paths.get(errFilEpath + file_details.getString("txn_id") + "/old/" + file_details.getString("txn_id") + "_" + java.time.LocalDateTime.now() + "_P1_error.csv"));
                          if (temp != null) {
@@ -523,6 +523,7 @@ public class CEIRFeatureFileUploader {
 //                    logger.info("File not exists.... ");
 //                    hfr.readFeatureWithoutFile(conn, file_details.getString("feature"), raw_upload_set_no, file_details.getString("txn_id"), file_details.getString("sub_feature"), feature_file_mapping.get("mgnt_table_db"), user_type);
 //                }
+
 
 
 
