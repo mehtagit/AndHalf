@@ -263,6 +263,7 @@ div#error_Modal {
 				<ul id="slide-out" class="side-nav fixed leftside-navigation">
 					<li class="user-details cyan darken-2">
 						<div class="row">
+						
 							<div class="col col s4 m4 l4">
 								<!--  <img src="images/avatar.jpg" alt="" class="circle responsive-img valign profile-image"> -->
 								<p
