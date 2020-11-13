@@ -137,7 +137,8 @@ div#error_Modal {
 	data-selected-username="${username}"
 	data-defaultLink="${defaultLink}"
 	data-currentTime=" <%=currentTime%>"
-	data-dfd=" <%=dfd%>">
+	data-dfd=" <%=dfd%>"
+	data-user-state="${userStatusValue}">
 	<!-- Start Page Loading -->
 	<div id="loader-wrapper">
 		<div id="initialloader"></div>
@@ -269,10 +270,16 @@ div#error_Modal {
 									<spring:message code="page.welcome" />
 									<%=name%>
 									(<%=(String) session.getAttribute("username")%>)
+											<br><%=name%> <span id="userState"></span>
+								
 								</p>
+								
 							</div>
 						</div>
+					
 					</li>
+				
+				
 					<li>
 						<ul class="navData">
 							<c:forEach items="${features}" var="feature">
@@ -824,7 +831,10 @@ data-dismiss="modal">&times;</button> -->
 
 	<script type="text/javascript">
 
+	
+	
 		$(document).ready(function() {
+		
 			
 			<%if (usertypeId == 13 || usertypeId == 20 || usertypeId == 23) {%>
 		//	$("#langlist").val('en');
