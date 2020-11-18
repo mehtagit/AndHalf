@@ -36,7 +36,7 @@ public class MySQLConnection {
                logger.debug("Connnection  Init " + java.time.LocalDateTime.now());
                Class.forName(JDBC_DRIVER);
                conn = DriverManager.getConnection(DB_URL, USER, PASS);
-               conn.setAutoCommit(false);
+               conn.setAutoCommit(true);
                logger.info("Connnection created successfully " + conn + " .. " + java.time.LocalDateTime.now());
                return conn;
           } catch (Exception e) {
