@@ -517,7 +517,7 @@ public class ConsignmentInsertUpdate {
                imei = imei.substring(0, 14);
                stmt = conn.createStatement();
                String qry = "select counter from device_db where imei_esn_meid = '" + imei + "' ";
-               logger.info("" + qry);
+               logger.info("getCounterFromDeviceDb qry " + qry);
                rs = stmt.executeQuery(qry);
                while (rs.next()) {
                     counter = rs.getInt(1);
@@ -565,6 +565,8 @@ public class ConsignmentInsertUpdate {
      }
 
 }
+
+
 
 
 

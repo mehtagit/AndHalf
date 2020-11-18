@@ -437,7 +437,7 @@ public class CEIRFeatureFileFunctions {
                               logger.info(" insert qury  [" + InsrtQry + "]");
                               stmt1.executeUpdate(InsrtQry);
 
-                              dvcDbCounter = new ConsignmentInsertUpdate().getCounterFromDeviceDb(conn, ValImei.substring(0, 14));
+                              dvcDbCounter = new ConsignmentInsertUpdate().getCounterFromDeviceDb(conn, rs.getString("" + ValImei + "").substring(0, 14));
                               if (dvcDbCounter == 0) {
                                    device_db_query = "insert  into device_db( counter ,  CREATED_ON , modified_on , DEVICE_ID_TYPE, DEVICE_STATUS,DEVICE_TYPE,IMEI_ESN_MEID,MULTIPLE_SIM_STATUS,FEATURE_NAME ,TXN_ID,period ,actual_imei ) "
                                            + "values (  1 , " + dateFunction + " , " + dateFunction + " ,  '" + rs.getString("DEVICE_ID_TYPE") + "' , '" + rs.getString("DEVICE_STATUS") + "', '" + ((rs.getString("DEVICE_TYPE") == null) ? "NA" : rs.getString("DEVICE_TYPE")) + "' , '" + rs.getString("" + ValImei + "").substring(0, 14) + "' , '" + rs.getString("MULTI_SIM_STATUS") + "' , 'Register Device' , '" + rs.getString("TXN_ID") + "', '" + period + "'  , '" + rs.getString("" + ValImei + "") + "'     )";
@@ -702,5 +702,6 @@ public class CEIRFeatureFileFunctions {
 //          }
 //
 //     }
+
 
 

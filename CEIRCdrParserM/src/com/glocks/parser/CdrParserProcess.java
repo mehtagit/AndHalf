@@ -140,9 +140,7 @@ public class CdrParserProcess {
                     logger.warn("" + e);
                }
                // if fileName present in SQlFolder , get count of file else make countt 1 
-
                fileParseLimit = getExsistingSqlFileDetails(conn, operator, source, fileName);
-
                fr = new FileReader(file);
                br = new BufferedReader(fr);
                bw1 = getSqlFileWriter(conn, operator, source, fileName);
@@ -158,10 +156,10 @@ public class CdrParserProcess {
                boolean isOracle = conn.toString().contains("oracle");
                String dateFunction = Util.defaultDateNow(isOracle);
                logger.debug("fileParseLimit " + fileParseLimit);
-               for (int i = 0; i <= fileParseLimit; i++) {
-                    br.readLine();
-                    counter++;
-               }
+//               for (int i = 0; i <= fileParseLimit; i++) {
+//                    br.readLine();
+//                    counter++;
+//               }
                logger.debug("...,. ");
                while ((line = br.readLine()) != null) {
                     logger.debug(" Line Started ");
@@ -390,7 +388,7 @@ public class CdrParserProcess {
 
                }   //While End   
                Date p2Endtime = new Date();
-               cdrFileDetailsUpdate(conn, operator, device_info.get("file_name"), usageInsert, usageUpdate, duplicateInsert, duplicateUpdate, nullInsert, nullUpdate, p2Starttime, p2Endtime, device_info.get("source"), counter, device_info.get("raw_cdr_file_name"), foreignMsisdn);
+               cdrFileDetailsUpdate(conn, operator, device_info.get("file_name"), usageInsert, usageUpdate, duplicateInsert, duplicateUpdate, nullInsert, nullUpdate, p2Starttime, p2Endtime, "all", counter, device_info.get("raw_cdr_file_name"), foreignMsisdn);
                try {
                     Map<String, Long> map = sourceTacList.stream()
                             .collect(Collectors.groupingBy(c -> c, Collectors.counting()));
@@ -813,11 +811,13 @@ public class CdrParserProcess {
 //                         lines++;
 //                    }
 //                    reader.close();
-                    try (Stream<String> lines = Files.lines(file1.toPath())) {
-                         fileCount = (int) lines.count();
-                         logger.info("File Count of Sql File: " + fileCount);
-                    }
-
+                    File myObj = new File(fileNameInput1);
+                    if (myObj.delete())  ;
+                    
+//                    try (Stream<String> lines = Files.lines(file1.toPath())) {
+//                         fileCount = (int) lines.count();
+//                         logger.info("File Count of Sql File: " + fileCount);
+//                    }
                } catch (Exception e) {
                     logger.error("File not   exist : " + e);
                }

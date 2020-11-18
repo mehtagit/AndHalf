@@ -371,7 +371,7 @@ public class HexFileReader {
                System.out.println(stringDate);
                actF = new SimpleDateFormat("yyyyMddHHmmssSS"); // actF = new SimpleDateFormat("yyyyMMddHHmmss");
                sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//            String[] fileArray = fileName.split("_");
+//             String[] fileArray = fileName.split("_");
                Statement st5 = conn.createStatement();
                String qry = " select quantity, device_quantity from  " + main_type.trim().toLowerCase() + "_mgmt where txn_id  = '" + txn_id + "'";
                if (main_type.equalsIgnoreCase("Stolen") || main_type.equalsIgnoreCase("Recovery")
@@ -458,7 +458,6 @@ public class HexFileReader {
                     }
                } catch (Exception e) {
                     logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
-
                }
                stmt5.close();
                String errorFilePath = CEIRFeatureFileParser.getErrorFilePath(conn);
@@ -570,28 +569,47 @@ public class HexFileReader {
                               }
 //                              logger.debug("***");
                               for (int v = 0; v < data.length; v++) {
-                                   if (data[v].length() > 25) {
+//                                   if (data[v].length() > 25) {
+                                   if (data[v].length() > 50) {
                                         errorString += " Error Code :CON_FILE_0004, Error Message:   File Contain a Long Field  Record , ";
                                         failed_flag = 0;
                                    }
                               }
-//                              logger.debug("!!!");
-                              if (set.add(imeiV) == false) {
-                                   logger.info("errfor First Wrok set.." + imeiV);
-                                   errorString += "   Error Code :CON_FILE_0008, Error Message:   The record is duplicate in the file,";
-                                   failed_flag = 0; /// added after
-                              }
-//                              logger.debug("@@@");
+                              logger.debug("!!!");
+                              //       if (set.add(imeiV) == false) {  // nov12
+
+                              logger.debug("@@@");
                               if (!(deviceType.contains(data[0].trim().toLowerCase()))) {
                                    errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device Type) is not as per the specifications,";
                                    failed_flag = 0;
                               }
-//                              logger.debug("###");
 
                               if (!(deviceType3.contains(data[1].trim().toLowerCase()))) {
                                    errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Device ID Type) is not as per the specifications,";
                                    failed_flag = 0;
                               }
+
+                              int minDvcTypeIdLength = 14;
+                                   if (data[1].trim().equalsIgnoreCase("esn")) {
+                                        minDvcTypeIdLength = 8;
+                                   }
+                                 if (imeiV.length() < minDvcTypeIdLength) {
+                                        logger.info(" Lenth is Less.." + imeiV);
+                                        errorString += "   Error Code :CON_FILE_0019, Error Message:   The imei_esn_meid is not as per specifications,";
+                                        failed_flag = 0; /// added after
+                                   }
+                              
+                              try {
+                                   logger.debug("###");
+                                   if (set.add(imeiV.substring(0, minDvcTypeIdLength)) == false) {
+                                        logger.info("errfor First Wrok set.." + imeiV);
+                                        errorString += "   Error Code :CON_FILE_0008, Error Message:   The record is duplicate in the file,";
+                                        failed_flag = 0; /// added after
+                                   }
+                              } catch (Exception e) {
+//                                   logger.debug("Excpt e minDvcTypeIdLength  " + e);
+                              }
+
                               logger.debug("###");
                               if (!(deviceType4.contains(data[2].trim().toLowerCase()))) {
                                    errorString += "  Error Code :CON_FILE_0006, Error Message:  The field value(Multiple Sim Status) is not as per the specifications,";
@@ -676,7 +694,7 @@ public class HexFileReader {
                     }
 
                } catch (Exception e) {
-                    logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
+                    logger.error("MandatoryExcept  " + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
                }
 
                br.close();
@@ -820,11 +838,11 @@ public class HexFileReader {
                          if (Objects.nonNull(rs)) {
                               rs.close();
                          }
-                         logger.debug("1212");
-                         if (Objects.nonNull(ps)) {
-                              ps.clearParameters();
-                              ps.close();
-                         }
+//                         logger.debug("1212");
+//                         if (Objects.nonNull(ps)) {
+//                              ps.clearParameters();
+//                              ps.close();
+//                         }
                          logger.debug("Committed Conntion ");
                          conn.commit();
 
