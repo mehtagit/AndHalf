@@ -100,7 +100,7 @@ public class GsmaValueController { //sachin
                     getvals.setFAILED_RULE_ID(usagesValueModel.getFAILED_RULE_ID());
                     getvals.setFAILED_RULE_NAME(usagesValueModel.getFAILED_RULE_NAME());
                     getvals.setFEATURE_NAME(usagesValueModel.getFEATURE_NAME());
-                    getvals.setFOREGIN_RULE(usagesValueModel.getFOREGIN_RULE());
+//                    getvals.setFOREGIN_RULE(usagesValueModel.getFOREGIN_RULE());
                     getvals.setMOBILE_OPERATOR(usagesValueModel.getMOBILE_OPERATOR());
                     getvals.setPERIOD(usagesValueModel.getPERIOD());
                     getvals.setRECORD_TIME(usagesValueModel.getRECORD_TIME());

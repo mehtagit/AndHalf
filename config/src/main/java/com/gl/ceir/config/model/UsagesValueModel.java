@@ -14,7 +14,7 @@ public class UsagesValueModel implements Serializable {
      private String msisdn;
      private String imsi;
      private String actual_imei;
-     private int FOREGIN_RULE;
+//     private int FOREGIN_RULE;
      private String MOBILE_OPERATOR;
      private String PERIOD;
      private String CREATE_FILENAME;
@@ -37,13 +37,13 @@ public class UsagesValueModel implements Serializable {
           this.actual_imei = actual_imei;
      }
 
-     public int getFOREGIN_RULE() {
-          return FOREGIN_RULE;
-     }
-
-     public void setFOREGIN_RULE(int FOREGIN_RULE) {
-          this.FOREGIN_RULE = FOREGIN_RULE;
-     }
+//     public int getFOREGIN_RULE() {
+//          return FOREGIN_RULE;
+//     }
+//
+//     public void setFOREGIN_RULE(int FOREGIN_RULE) {
+//          this.FOREGIN_RULE = FOREGIN_RULE;
+//     }
 
      public String getMOBILE_OPERATOR() {
           return MOBILE_OPERATOR;
@@ -180,12 +180,10 @@ public class UsagesValueModel implements Serializable {
 
      @Override
      public String toString() {
-          return "UsagesValueModel{" + "imei=" + imei + ", msisdn=" + msisdn + ", imsi=" + imsi + ", actual_imei=" + actual_imei + ", FOREGIN_RULE=" + FOREGIN_RULE + ", MOBILE_OPERATOR=" + MOBILE_OPERATOR + ", PERIOD=" + PERIOD + ", CREATE_FILENAME=" + CREATE_FILENAME + ", UPDATE_FILENAME=" + UPDATE_FILENAME + ", SYSTEM_TYPE=" + SYSTEM_TYPE + ", FAILED_RULE_ID=" + FAILED_RULE_ID + ", FAILED_RULE_NAME=" + FAILED_RULE_NAME + ", TAC=" + TAC + ", ACTION=" + ACTION + ", FAILED_RULE_DATE=" + FAILED_RULE_DATE + ", FEATURE_NAME=" + FEATURE_NAME + ", RECORD_TIME=" + RECORD_TIME + ", RECORD_TYPE=" + RECORD_TYPE + '}';
+          return "UsagesValueModel{" + "imei=" + imei + ", msisdn=" + msisdn + ", imsi=" + imsi + ", actual_imei=" + actual_imei + ", MOBILE_OPERATOR=" + MOBILE_OPERATOR + ", PERIOD=" + PERIOD + ", CREATE_FILENAME=" + CREATE_FILENAME + ", UPDATE_FILENAME=" + UPDATE_FILENAME + ", SYSTEM_TYPE=" + SYSTEM_TYPE + ", FAILED_RULE_ID=" + FAILED_RULE_ID + ", FAILED_RULE_NAME=" + FAILED_RULE_NAME + ", TAC=" + TAC + ", ACTION=" + ACTION + ", FAILED_RULE_DATE=" + FAILED_RULE_DATE + ", FEATURE_NAME=" + FEATURE_NAME + ", RECORD_TIME=" + RECORD_TIME + ", RECORD_TYPE=" + RECORD_TYPE + '}';
      }
 
-     
-     
-    
+       
      
      
 
