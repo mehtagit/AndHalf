@@ -250,6 +250,7 @@ var contextpath = "${context}";
 
 <body data-lang-param="${pageContext.response.locale}">
 
+
 <%String userType=request.getParameter("type");
 %>
 

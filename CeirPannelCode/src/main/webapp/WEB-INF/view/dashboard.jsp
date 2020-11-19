@@ -137,7 +137,8 @@ div#error_Modal {
 	data-selected-username="${username}"
 	data-defaultLink="${defaultLink}"
 	data-currentTime=" <%=currentTime%>"
-	data-dfd=" <%=dfd%>">
+	data-dfd=" <%=dfd%>"
+	data-user-state="${userStatusValue}">
 	<!-- Start Page Loading -->
 	<div id="loader-wrapper">
 		<div id="initialloader"></div>
@@ -262,6 +263,7 @@ div#error_Modal {
 				<ul id="slide-out" class="side-nav fixed leftside-navigation">
 					<li class="user-details cyan darken-2">
 						<div class="row">
+						
 							<div class="col col s4 m4 l4">
 								<!--  <img src="images/avatar.jpg" alt="" class="circle responsive-img valign profile-image"> -->
 								<p
@@ -269,10 +271,16 @@ div#error_Modal {
 									<spring:message code="page.welcome" />
 									<%=name%>
 									(<%=(String) session.getAttribute("username")%>)
+											<br><%=name%> <span id="userState"></span>
+								
 								</p>
+								
 							</div>
 						</div>
+					
 					</li>
+				
+				
 					<li>
 						<ul class="navData">
 							<c:forEach items="${features}" var="feature">
@@ -848,7 +856,7 @@ data-dismiss="modal">&times;</button> -->
 					 window.location.href = "./login";
 				} */
 	}
-	</script>
+	
 
 <script type="text/javascript">$( document ).ready(function() { var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 

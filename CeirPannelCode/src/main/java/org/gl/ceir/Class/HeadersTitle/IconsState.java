@@ -1638,13 +1638,14 @@ public class IconsState {
 				+downloadIconTitle+" ></i></a>"; 
 
 
-		if("Disable".equals(userStatus)) {
-			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
-
-			download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
-					+disableDownloadIcon+" aria-hidden=\"true\" title="
-					+downloadIconTitle+" ></i></a>"; 
-		}
+		/*
+		 * if("Disable".equals(userStatus)) {
+		 * log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+		 * 
+		 * download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
+		 * +disableDownloadIcon+" aria-hidden=\"true\" title="
+		 * +downloadIconTitle+" ></i></a>"; }
+		 */
 		String action=download;
 		return action;
 

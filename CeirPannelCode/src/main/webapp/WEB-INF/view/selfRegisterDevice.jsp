@@ -372,7 +372,7 @@ position: fixed;
 
 										<div class="input-field col s12 m6 l6">
 											<input type="text" class="form-control boxBorder boxHeight"
-												id="pin" pattern="[0-9]{1,6}"
+												id="pin" pattern="[0-9]{6,6}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
 												required maxlength="6"> <label for="pin"><spring:message
@@ -417,7 +417,7 @@ position: fixed;
 
 										<div class="input-field col s12 m6">
 											<input type="email" id="endUseremailID"
-												pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$"
+												pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,280}$"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 											

@@ -1066,7 +1066,7 @@ function submitEndUserDeviceInfo(){
 			}
 			
 			else{
-           	
+				$("#uploadPaidStatusbutton").prop('disabled', false);
 				$('#endUserRegisterDeviceDuplicateImei').openModal({dismissible:false});;
 				$('#dupliCateImeiMsg').text($.i18n(data.tag));
 			}
