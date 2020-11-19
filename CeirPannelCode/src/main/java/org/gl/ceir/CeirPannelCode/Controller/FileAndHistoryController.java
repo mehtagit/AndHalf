@@ -23,7 +23,7 @@ import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -233,14 +233,18 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 
 
 @RequestMapping(value="/ManualFileDownload",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-public String ManualSampleFile(@RequestParam(name="userTypeId",required = false) int userTypeId) throws IOException {
+public ResponseEntity<?> ManualSampleFile(@RequestParam(name="userTypeId",required = false) int userTypeId) throws IOException {
 log.info("request send to the manual sample file download api=");
 log.info("userTypeId==="+userTypeId);
-
+HttpHeaders responseHeaders = new HttpHeaders();
+responseHeaders.set("Content-Type","application/pdf");
+responseHeaders.set("Content-Disposition","inline");
 FileExportResponse response=feignCleintImplementation.manualDownloadSampleFile(userTypeId);
 log.info("response from manual sample file download file "+response);
+log.info("responseHeaders: "+responseHeaders);
+return new ResponseEntity<>(response,responseHeaders, HttpStatus.OK);
 
-return "redirect:"+response.getUrl();
+//return "redirect:"+response.getUrl();
 
 }
 }
