@@ -31,7 +31,8 @@
 					dataType : 'json',
 					contentType : 'application/json; charset=utf-8',
 					success: function (data, textStatus, jqXHR) {
-						if(data.statusCode==200 && data.selfRegister == 1){
+		/*				alert(data.selfRegister)
+						if(data.statusCode==200 && (data.selfRegister == 1 || data.selfRegister == 2)){
 							var primaryRole = data.primaryRole;
 							var userId = data.userId;
 							sessionStorage.setItem("primaryRole", primaryRole);
@@ -43,7 +44,8 @@
 								dismissible:false
 							});
 							//window.location.href = "./raiseCCgrievance";
-						}
+						}*/
+						window.location.href = "./raiseCCgrievance";
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
 						//////console.log("error in ajax")

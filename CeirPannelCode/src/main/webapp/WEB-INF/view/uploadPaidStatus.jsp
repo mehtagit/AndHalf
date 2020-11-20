@@ -436,7 +436,7 @@ position: fixed;
 												</div>
 												<div class="input-field col s12 m6 l6">
 													
-													<input type="text" pattern="[0-9]{1,6}"
+													<input type="text" pattern="[0-9]{6,6}"
 														oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 														title= "<spring:message code="validation.postalcode" />" name="streetNumber"
@@ -475,7 +475,7 @@ position: fixed;
 
 											<div class="col s12 m12" style="margin-top: 10px;">
 												<div class="input-field col s12 m6 l6">
-														<input type="email" name="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$"
+														<input type="email" name="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,280}$"
 														oninput="InvalidMsg(this,'input','<spring:message code="validation.emial" />');"
 											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emial" />');"
 														title= "<spring:message code="validation.emial" />" maxlength="280"> <label for="email"><spring:message code="input.email" /><span
@@ -692,11 +692,11 @@ position: fixed;
 														<div class="input-field col s12 m6"
 															style="margin-top: 28px;">
 															<input type="text" id="serialNumber1"  name="serialNumber"
-																pattern="[A-Za-z0-9]{0,15}"
+																pattern="[A-Za-z0-9]{0,16}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 																title= "<spring:message code="validation.15serialNo" />"
-																maxlength="15"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /> <span class="star"></span>
+																maxlength="16"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /> <span class="star"></span>
 															</label>
 														</div>
 

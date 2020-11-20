@@ -68,12 +68,13 @@ function changePassword(){
 	return false;
 }
 
-function updateUSerStatus(){
+function updateUserStatusModal(){
 
-	$("#updateStatusBtn").prop('disabled', true);
+	//$("#updateStatusBtn").prop('disabled', true);
 	var obj="";  
 	obj={
-			status:$("input[name='status']:checked").val()
+			status:$("input[name='status']:checked").val(),
+			password: $("#confirmPassword").val()
 
 	};
 
@@ -113,19 +114,25 @@ function updateUSerStatus(){
 					'en': './resources/i18n/en.json',
 					'km': './resources/i18n/km.json'
 				}).done( function() {
-					$("#userStatusForm #errorMsg").text($.i18n(resp.tag));
+					$("#passwordModal").closeModal();
+					errorMessageReg($.i18n(resp.tag));
+					//$("#userStatusForm #errorMsg").text($.i18n(resp.tag));
 				});
 			}
-			$("#updateStatusBtn").prop('disabled', true);
+			//$("#updateStatusBtn").prop('disabled', true);
 		}, 
 		error: function (xhr, ajaxOptions, thrownError) {
-			$("#updateStatusBtn").prop('disabled', true);
+			//$("#updateStatusBtn").prop('disabled', true);
 		} 
 
 	});
 	return false;
-}
 
+}
+/*function updateUSerStatus(){
+	passwordPopup();
+	}
+*/
 function questionDataByCategory2(){ 
 
 	var token = $("meta[name='_csrf']").attr("content");
