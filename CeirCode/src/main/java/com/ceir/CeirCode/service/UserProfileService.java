@@ -49,6 +49,8 @@ import com.ceir.CeirCode.repoService.UserRepoService;
 import com.ceir.CeirCode.util.CustomMappingStrategy;
 import com.ceir.CeirCode.util.Utility;
 import com.opencsv.CSVWriter;
+import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvBindByPosition;
 import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
@@ -476,13 +478,13 @@ public class UserProfileService {
 					uPFm.setRequestedOn(userProfile.getUser().getCreatedOn().format(dtf));
 					uPFm.setModifiedOn(userProfile.getUser().getModifiedOn().format(dtf));	
 					uPFm.setUserID(userProfile.getUser().getUsername());
-					uPFm.setStatus(userProfile.getUser().getStateInterp());
-					
+					uPFm.setEmail(userProfile.getEmail());
+					uPFm.setPhone(userProfile.getPhoneNo());
 					//uPFm.setStatus(UserStatus.getUserStatusByCode(userProfile.getUser().getCurrentStatus()).getDescription());
 					uPFm.setType(userProfile.getAsTypeName());
 					uPFm.setUserType(userProfile.getUser().getUsertype().getUsertypeName());
+					uPFm.setStatus(userProfile.getUser().getStateInterp());				
 					uPFm.setApprovedBy(userProfile.getUser().getApprovedBy());
-				
 					fileRecords.add(uPFm);
 				}
 				csvWriter.write(fileRecords);

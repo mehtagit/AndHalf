@@ -25,6 +25,7 @@ import com.ceir.CeirCode.util.GenerateRandomDigits;
 import com.ceir.CeirCode.util.HttpResponse;
 import io.swagger.annotations.ApiOperation;
 @RestController  
+@CrossOrigin
 @RequestMapping("/userRegistration")
 public class UserRegistrationController {
 	@Autowired    
@@ -45,28 +46,28 @@ public class UserRegistrationController {
 	@Autowired 
 	SecurityQuestionRepo securityQuestionRepo; 
 	@ApiOperation(value = "usertypes data", response = HttpResponse.class)
-	@CrossOrigin
+	
 	@PostMapping("/getUsertypes") 
 	public ResponseEntity<?> getUsertypes(@RequestParam(defaultValue ="3",required = false,name = "type")int type){
 		return userService.getUsertypeData(type);
 	}
 
 //	@ApiOperation(value = "internal usertypes data", response = HttpResponse.class)
-//	@CrossOrigin
+//	
 //	@PostMapping("/getInternalUsertypes") 
 //	public ResponseEntity<?> getInternalUsertypes(){
 //		return userService.getInternalUsertype();
 //	} 
 	
 	@ApiOperation(value = "usertypes data", response = HttpResponse.class)
-	@CrossOrigin
+	
 	@PostMapping("/usertypeIdByName/{usertype}") 
 	public ResponseEntity<?> usertypeIdByName(@PathVariable("usertype")String usertype){
 		return userService.usertypeIdByName(usertype);
 	}	
 
 	@ApiOperation(value = "security questions list", response = HttpResponse.class)
-	@CrossOrigin
+	
 	@PostMapping("/getSecurityQuestion/{username}")
 	public ResponseEntity<?> getSecurityQuestion(@PathVariable("username")String username){
 		return userService.getSecurityQuestion(username);
@@ -74,7 +75,7 @@ public class UserRegistrationController {
 
 	
 	@ApiOperation(value = "security questions list", response = HttpResponse.class)
-	@CrossOrigin
+	
 	@PostMapping("/getAllSecurityQuestion")
 	public ResponseEntity<?> getSecurityQuestion(){
 		return userService.getSecurityQuestion2();
@@ -83,7 +84,7 @@ public class UserRegistrationController {
 	
 	
 	@ApiOperation(value = "user registration .", response = HttpResponse.class)
-	@CrossOrigin
+	
 	@PostMapping("/registration")
 	public ResponseEntity<?> saveUserRegistration(@RequestBody UserProfile userDetails){
 
@@ -91,7 +92,7 @@ public class UserRegistrationController {
 	} 
 	
 	@ApiOperation(value = "check registration status", response = HttpResponse.class)
-	@CrossOrigin
+	
 	@PostMapping("/checkAvailability/{usertypeId}")
 	public ResponseEntity<?> checkStatus(@PathVariable("usertypeId")Integer usertypeId){
 
@@ -99,7 +100,7 @@ public class UserRegistrationController {
 	} 
 
 	@ApiOperation(value = "update email and phone status", response = HttpResponse.class)
-	@CrossOrigin
+	
 	@PostMapping("/validate")
 	public ResponseEntity<?> UpdateOtpStatus(@RequestBody Otp  otp)
 	{  
@@ -107,7 +108,7 @@ public class UserRegistrationController {
 	}            
 
 	@ApiOperation(value = "otp resend", response = HttpResponse.class)
-	@CrossOrigin
+	
 	@PostMapping("/resendOtp")   
 	public ResponseEntity<?> resendOtp(@RequestBody ResendOtp otp)
 	{     
@@ -115,13 +116,19 @@ public class UserRegistrationController {
 	} 
 	
 	@ApiOperation(value = "otp resend", response = HttpResponse.class)
-	@CrossOrigin
+	
 	@PostMapping("/profileResendOtp")   
 	public ResponseEntity<?> profileResendOtp(@RequestBody ResendOtp otp)
 	{     
 		return userService.profileResendOtp(otp);
 	} 
 	
+	@ApiOperation(value = "soft Delete API", response = HttpResponse.class)
+	@PostMapping("/softDelete")   
+	public ResponseEntity<?> softDelete(@RequestParam(name="currentStatus",required = true ) int currentStatus,@RequestParam(name="username",required = true ) String username)
+	{     	
+		return userService.soft_delete(currentStatus, username);
+	}
 	
 	
 	

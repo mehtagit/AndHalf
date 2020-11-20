@@ -166,7 +166,7 @@ public class UserMgmtService {
 		Userrole userRole=new Userrole(user,userType);
 		role.add(userRole);
 		User output=new User();
-		boolean emailExist=userProfileRepo.existsByEmail(details.getEmail());
+		boolean emailExist=userProfileRepo.existsByEmailAndUser_CurrentStatusNot(details.getEmail(),21);
 		if(emailExist) {
 			log.info("if email already exist in the data");
 			GenricResponse response=new GenricResponse(409,RegistrationTags.Email_Exist.getTag(),RegistrationTags.Email_Exist.getMessage(),"");
@@ -174,7 +174,7 @@ public class UserMgmtService {
 			return response;
 		}
 
-		boolean phoneExist=userProfileRepo.existsByPhoneNo(details.getPhoneNo());
+		boolean phoneExist=userProfileRepo.existsByPhoneNoAndUser_CurrentStatusNot(details.getPhoneNo(),21);
 		if(phoneExist) {
 			log.info("if phone number already exist in the data");
 			GenricResponse response=new GenricResponse(409,RegistrationTags.Phone_Exist.getTag(),RegistrationTags.Phone_Exist.getMessage(),"");
@@ -280,7 +280,7 @@ public class UserMgmtService {
 		UserProfile profile=userData.getUserProfile();
 		if(!details.getEmail().equalsIgnoreCase(profile.getEmail()))
 		{
-			boolean emailExist=userProfileRepo.existsByEmail(details.getEmail());
+			boolean emailExist=userProfileRepo.existsByEmailAndUser_CurrentStatusNot(details.getEmail(),21);
 			if(emailExist) {
 				log.info("if email already exist in the data");
 				GenricResponse response=new GenricResponse(409,RegistrationTags.Email_Exist.getTag(),RegistrationTags.Email_Exist.getMessage(),"");
@@ -291,7 +291,7 @@ public class UserMgmtService {
 
 		if(!details.getPhoneNo().equalsIgnoreCase(profile.getPhoneNo())) 
 		{
-			boolean phoneExist=userProfileRepo.existsByPhoneNo(details.getPhoneNo());
+			boolean phoneExist=userProfileRepo.existsByPhoneNoAndUser_CurrentStatusNot(details.getPhoneNo(),21);
 			if(phoneExist) {
 				log.info("if phone number already exist in the data");
 				GenricResponse response=new GenricResponse(409,RegistrationTags.Phone_Exist.getTag(),RegistrationTags.Phone_Exist.getMessage(),"");

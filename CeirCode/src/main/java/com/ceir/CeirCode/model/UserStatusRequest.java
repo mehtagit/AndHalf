@@ -7,7 +7,13 @@ public class UserStatusRequest {
 	private long featureId;
 	private String username;
 	private long id;
-	
+	private String password;
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public Integer getUserId() {
 		return userId;
 	}
