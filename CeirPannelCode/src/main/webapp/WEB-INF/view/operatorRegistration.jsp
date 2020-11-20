@@ -469,7 +469,7 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="reportingAuthorityName" id="authorityName" maxlength="30" 
+									<input type="text" name="reportingAuthorityName" id="authorityName" maxlength="30"  pattern="[a-zA-Z ]{3,30}" 
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.30alpha" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30alpha" />');" title=""> 
 									<label for="authorityName"><spring:message code="registration.reportingauthorityname" /></label>
 								</div>
