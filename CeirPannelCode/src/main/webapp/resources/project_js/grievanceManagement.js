@@ -967,7 +967,7 @@ var featureId = 6;
 						});
 						$(".add_field_button").attr("disabled", true);
 						$('#fileErrormessage').text('');
-						$('#fileErrormessage').text($.i18n('imageMessage'));
+						$('#fileErrormessage').text($.i18n('imageMessageCSV'));
 
 					}
 					else if(ext=='csv')

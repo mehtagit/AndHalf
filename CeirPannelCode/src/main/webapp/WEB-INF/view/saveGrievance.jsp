@@ -826,7 +826,7 @@ $('div#initialloader').delay(300).fadeOut('slow');
 							});
 							$(".add_field_button").attr("disabled", true);
 							$('#fileErrormessage').text('');
-							$('#fileErrormessage').text($.i18n('imageMessage'));
+							$('#fileErrormessage').text($.i18n('imageMessageCSV'));
 
 						}
 						else if(ext=='csv')
