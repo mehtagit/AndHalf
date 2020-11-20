@@ -175,8 +175,8 @@ public class CdrParserProcess {
                          device_info.put("system_type", data[4].trim());
                          device_info.put("source", data[5].trim());
                          device_info.put("raw_cdr_file_name", data[6].trim());
-//                         device_info.put("imei_arrival_time",     data[7].trim().substring(data[7].trim().indexOf("202"), data[7].trim().indexOf("202") + 8));
-                         device_info.put("imei_arrival_time", data[7].trim());
+//                         device_info.put("imei_arrival_time",     data [7].trim().substring(data [7].trim().indexOf("202"), data [7].trim().indexOf("202") + 8));
+                         device_info.put("imei_arrival_time", (data[7].trim().startsWith("202") ? data[7].trim() : "20" + data[7].trim()));
                          device_info.put("operator", operator.trim());
                          device_info.put("file_name", fileName.trim());
                          device_info.put("record_time", sdfTime);
@@ -813,7 +813,7 @@ public class CdrParserProcess {
 //                    reader.close();
                     File myObj = new File(fileNameInput1);
                     if (myObj.delete())  ;
-                    
+
 //                    try (Stream<String> lines = Files.lines(file1.toPath())) {
 //                         fileCount = (int) lines.count();
 //                         logger.info("File Count of Sql File: " + fileCount);
