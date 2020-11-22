@@ -8,6 +8,8 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 if(roleType=="Immigration")
 	{
+	
+	$("#nationalityLabelId").css("display", "none");
 	$("#chooseUserOption").css("display", "none");
 	$("#priceDiv").css("display", "none");
 	$("#nationalityDiv").css("display", "block");
@@ -52,9 +54,11 @@ $( document ).ready(function() {
 			type : 'GET',
 			success : function(data) {
 				sessionStorage.setItem("nationalId", In);
-				localStorage.setItem("nationalId", In);	
-				sessionStorage.setItem("nationality",data.data.nationality);
+				localStorage.setItem("nationalId", In);
 				
+				if(data.data!=null || data.data==""){
+				sessionStorage.setItem("nationality",data.data.nationality);
+				}
 				if (data.errorCode == 1) {
 					pageRendering(lang);
 					filter(lang,null);

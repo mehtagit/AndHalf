@@ -674,8 +674,8 @@ position: fixed;
 														style="margin-top: 22px;">
 														<input type="text" id="serialNumber1"
 															pattern="[A-Za-z0-9]{0,15}"
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 															 maxlength="15"> <label
 															for="serialNumber1"><spring:message
 																code="input.deviceSerialNumber" />
