@@ -478,6 +478,7 @@ public class Stock {
 		filterRequest.setUserName(userName);
 		filterRequest.setFilteredUserType(filteredUserType);
 		filterRequest.setFilterUserName(filterUserName);
+		filterRequest.setDisplayName(filterUserName);
 		log.info("source=="+source);;
 
 		log.info(" request passed to the stock exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
