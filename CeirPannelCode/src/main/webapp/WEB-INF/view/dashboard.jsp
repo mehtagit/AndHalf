@@ -903,8 +903,36 @@ data-dismiss="modal">&times;</button> -->
 	}
 	
 		function openPDF(url){
-			   var w=window.open(url, '_blank');
-			   w.focus();
+			
+			$.ajax({
+				type : 'GET',
+				url : url,
+				contentType : "application/json",
+				success : function(data) {
+					 $.ajax({
+					    url:data['url'],
+					    type:'HEAD',
+					    error: function()
+					    {
+					        //file not exists
+					      errorMessageReg(("file does not exist"));
+					    },
+					    success: function(result)
+					    {
+					        //file exists
+					    	 var w=window.open(data['url'], '_blank');
+							   w.focus();
+					    }
+					}); 
+					
+					
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+				}
+			});
+			
+			
+			 
 			}
 		</script>
 <script type="text/javascript">$( document ).ready(function() { var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>

@@ -252,7 +252,7 @@ position: fixed;
 												</div>
 											</div>
 											<div class="col s12 m12">
-										<label for="nationality"><spring:message
+										<label for="nationality" id="nationalityLabelId"><spring:message
 												code="input.Nationality" /> <span class="star">*</span></label>
 										<div class=" boxHeight" id="chooseUserOption">
 											<label><input class="with-gap"

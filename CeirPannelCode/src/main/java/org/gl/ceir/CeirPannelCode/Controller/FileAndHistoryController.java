@@ -233,7 +233,7 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 
 
 @RequestMapping(value="/ManualFileDownload",method={org.springframework.web.bind.annotation.RequestMethod.GET}) 
-public String ManualSampleFile(@RequestParam(name="userTypeId",required = false) int userTypeId) throws IOException {
+public ResponseEntity<?> ManualSampleFile(@RequestParam(name="userTypeId",required = false) int userTypeId) throws IOException {
 log.info("request send to the manual sample file download api=");
 log.info("userTypeId==="+userTypeId);
 FileExportResponse response=feignCleintImplementation.manualDownloadSampleFile(userTypeId);
@@ -247,7 +247,7 @@ FileExportResponse response=feignCleintImplementation.manualDownloadSampleFile(u
  * log.info("responseHeaders: "+responseHeaders); return new
  * ResponseEntity<>(response,responseHeaders, HttpStatus.OK);
  */
-return "redirect:"+response.getUrl();
-
+//return "redirect:"+response.getUrl();
+return new ResponseEntity<>(response, HttpStatus.OK);
 }
 }

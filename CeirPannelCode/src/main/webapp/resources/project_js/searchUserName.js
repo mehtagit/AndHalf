@@ -45,7 +45,16 @@
 							});
 							//window.location.href = "./raiseCCgrievance";
 						}*/
-						window.location.href = "./raiseCCgrievance";
+						if(data.statusCode==200 && data.selfRegister == 1){
+							var primaryRole = data.primaryRole;
+							var userId = data.userId;
+							sessionStorage.setItem("primaryRole", primaryRole);
+							sessionStorage.setItem("userId", userId);
+							window.location.href = "./openGrievanceForm?reqType=formPage";	
+							}
+							else{
+							window.location.href = "./raiseCCgrievance";
+							}
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
 						//////console.log("error in ajax")

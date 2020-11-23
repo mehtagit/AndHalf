@@ -661,6 +661,7 @@ function redirectToDashboard(){
 
 function manageAccountPopup(){
 	document.getElementById("userStatusForm").reset();
+	$('#confirmPassword').val('');
 	$("#manageAccount").openModal({
         dismissible:false
     });
