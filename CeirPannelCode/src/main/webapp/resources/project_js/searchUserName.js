@@ -36,14 +36,11 @@
 							var userId = data.userId;
 							sessionStorage.setItem("primaryRole", primaryRole);
 							sessionStorage.setItem("userId", userId);
-							window.location.href = "./openGrievanceForm?reqType=formPage";
-						}else{
-							
-							$('#ErrorPopup').openModal({
-								dismissible:false
-							});
-							//window.location.href = "./raiseCCgrievance";
-						}
+							window.location.href = "./openGrievanceForm?reqType=formPage";	
+							}
+							else{
+							window.location.href = "./raiseCCgrievance";
+							}
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
 						//////console.log("error in ajax")
