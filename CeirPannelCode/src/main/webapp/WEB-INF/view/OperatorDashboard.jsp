@@ -301,7 +301,7 @@ th {
                             				<div id="wrapperPage">
                             				<h6 class="m-0 font-weight-bold text-primary" id="dateVal"></h6>
                             				 <div class="split">
-                            						<!-- <div class="col s12 m12 info-div center" id="infoBox"></div> -->
+                            						<div class="col s12 m12 info-div center" id="infoBox"></div>
                            	
                            <div style="display:flex; margin-left: 12px;">
                             

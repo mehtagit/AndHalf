@@ -426,7 +426,7 @@ select {
 
 														<div class="col s6 m6 ">
 															<label for="deviceIDType"><spring:message
-																	code="select.deviceIDType" /></label> <select
+																	code="select.deviceIDType" /><span class="star" id="deviceIdTypeSpan" style="display: none ; margin-top: -18px;margin-left: 82px;">*</span></label> <select
 																
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"

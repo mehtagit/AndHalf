@@ -44,7 +44,7 @@
 		var userRoleTypeId = $("#role").val();
 		var status =  $('#recentStatus').val();
 		var userID= (txnIdValue == 'null' && transactionIDValue == undefined)? transactionIDValue : transactionIDValue;
-		
+			
 		if(source == 'filter' ) {
 			var filterRequest={
 					"endDate":$('#endDate').val(),
@@ -75,7 +75,8 @@
 				"phoneNo" : $('#phone').val(),
 				"username" : $("body").attr("session-valuetxnid") == "null" ? $('#userName').val() : $("body").attr("session-valuetxnid"),
 		}}
-		
+
+
 
 		if(lang=='km'){
 			var langFile="./resources/i18n/khmer_datatable.json";

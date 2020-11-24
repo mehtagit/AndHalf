@@ -30,7 +30,8 @@ function activeDeviceGraph() {
 						  "reportnameId": 29,
 						  "file" : 0, 
 						  "pageSize" :55, 
-						  "pageNo" :0
+						  "pageNo" :0,
+						  "typeFlag": 1
 			}
 			
 			
@@ -51,7 +52,8 @@ function activeDeviceGraph() {
 						  "pageSize" :10, 
 						  "pageNo" :0,
 						"groupBy": "Operator Name",
-						"reportnameId": 29
+						"reportnameId": 29,
+						"typeFlag": 1
 						}
 			
 		}
@@ -63,7 +65,8 @@ function activeDeviceGraph() {
 					  "reportnameId": 27,
 						  "file" : 0, 
 						  "pageSize" :10, 
-						  "pageNo" :0
+						  "pageNo" :0,
+						  "typeFlag": 2
 			}
 			urlHit='./report/imeiUsageDashBoard';
 		}
@@ -82,7 +85,8 @@ function activeDeviceGraph() {
 						  "reportnameId": 34,
 						  "file" : 0, 
 						  "pageSize" :30, 
-						  "pageNo" :0
+						  "pageNo" :0,
+						  "typeFlag": 2
 			}
 			
 		}
@@ -425,7 +429,8 @@ $(document).ready(function(){
 			  "reportnameId": 29,
 			  "file" : 0, 
 			  "pageSize" :5, 
-			  "pageNo" :0
+			  "pageNo" :0,
+			  "typeFlag": 1
 	}
 	
 	$.ajax({
@@ -468,14 +473,81 @@ $.ajax({
 	async:false,
 	data : JSON.stringify({"reportnameId": 28,"file" : 0,"pageSize" :1,"pageNo" :0}),
 	success: function(data){
+		var i=0;
 		Object.keys(data['rowData'][0]).map(function(key){ 
-			if(key != 'Date'){
-				
-				$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b>"+data['rowData'][0][key]+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
+			if(key == 'Date'){
+				$('#dateVal').text('Last Update Date: '+data['rowData'][0][key]);
+				//$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b>"+data['rowData'][0][key]+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
 			}
-			
+			else{
+				if(data['rowData'][0][key]!=null)
+				{
+					$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b id="+i+++">"+data['rowData'][0][key]+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");	
+					}
+				else{
+					//$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b id="+i+++">0</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
+				}
+			}
 		});
 	}
+});
+
+
+
+
+//boxes
+$(document).ready(function(){
+	$('div#initialloader').fadeIn('fast');
+	var url;
+
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	[31].forEach(function(reportnameId) {
+	$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+	});
+	var graphRequest={
+
+			"reportnameId": reportnameId,
+			"file" : 0,
+			"pageSize" :1,
+			"pageNo" :0,
+			"typeFlag": 1
+	}
+	
+	$.ajax({
+		type : 'POST',
+		url : './operatorReport/count/'+reportnameId,
+		contentType : "application/json",
+		async: false,
+		
+		data : JSON.stringify(graphRequest),
+		success: function(data){
+			var i=0;
+				Object.keys(data['rowData'][0]).map(function(key){ 
+				if(key == 'Date'){
+					$('#dateVal').text('Last Update Date: '+data['rowData'][0][key]);
+				}
+				else{
+				
+					if(data['rowData'][0][key]!=null)
+					{
+						$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b id="+i+++">"+data['rowData'][0][key]+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");	
+						}
+					else{
+						//$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b id="+i+++">0</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
+					}
+
+					//$("#infoBox").append("<div class='round-circle-center-responsive'><div class='round-circle'><h6 class='right' style='width: 105px;'>"+key+"</h6><p class='circle-para right' style='position:absolute;margin-top:62px;width: 180px;margin-left: 5px;padding-right: 0px !important;'><b id="+i+++">"+data['rowData'][0][key]+"</b> </p><div class='icon-div center'><i class='fa fa-puzzle-piece test-icon' aria-hidden='true'></i></div></div>");
+				
+				}
+				$('div#initialloader').delay(300).fadeOut('slow');
+				});
+		}
+	
+	});
+	});
 });
 
 

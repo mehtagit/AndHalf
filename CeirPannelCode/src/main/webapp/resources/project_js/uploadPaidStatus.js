@@ -8,6 +8,8 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 
 if(roleType=="Immigration")
 	{
+	
+	$("#nationalityLabelId").css("display", "none");
 	$("#chooseUserOption").css("display", "none");
 	$("#priceDiv").css("display", "none");
 	$("#nationalityDiv").css("display", "block");
@@ -52,7 +54,11 @@ $( document ).ready(function() {
 			type : 'GET',
 			success : function(data) {
 				sessionStorage.setItem("nationalId", In);
-				localStorage.setItem("nationalId", In);	
+				localStorage.setItem("nationalId", In);
+				
+				if(data.data!=null || data.data==""){
+				sessionStorage.setItem("nationality",data.data.nationality);
+				}
 				if (data.errorCode == 1) {
 					pageRendering(lang);
 					filter(lang,null);
@@ -189,6 +195,7 @@ $(document).ready(function () {
 	$(add_button).click(function (e) { //on add input button click
 		e.preventDefault();
 		var nationType= localStorage.getItem("nationType");
+		
 		if (x < max_fields) { //max input box allowed
 			x++; //text box increment
 //////console.log("nationType=="+nationType);
@@ -1003,6 +1010,7 @@ function submitDeviceInfo(){
 				$('#sucessMessage').text($.i18n(data.tag));
 				}
 			else{
+				$("#uploadPaidStatusbutton").prop('disabled', false);
 				$('#customRegisterDeviceDuplicateImei').openModal({dismissible:false});;
 				$('#dupliCateImeiMsg').text($.i18n(data.tag));
 				$("#uploadPaidStatusbutton").prop('disabled', true);
@@ -1190,6 +1198,9 @@ $(document).ready(function () {
 function regularizedCount(nationType){
 	//////console.log("----"+nationType+"  roleType=="+roleType)
 	var allowed='';
+	
+	sessionStorage.getItem("nationality");
+	
 	if(nationType==undefined && roleType=='Custom')
 		{
 		//////console.log("if condition for regulaised");
@@ -1210,6 +1221,11 @@ function regularizedCount(nationType){
 		//////console.log("else  condition for CEIR admin");
 		nationType=1;
 		var nid= '';
+	}
+	
+	if(sessionStorage.getItem("nationality")!="Cambodian"){
+	
+		nationType=2;
 	}
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");

@@ -984,10 +984,9 @@ public class IconsState {
 					+errorIconTitle+" ></i></a>";
 			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
-			delete="<a onclick="+deleteAction+" class=\"eventNone\"><i class="
-					+disableDeletionIcon+" aria-hidden=\"true\" title="
-					+deleteIconTitle+"></i></a>"; 
-		}
+			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
+					+rejectIconTitle+" ></i></a>";
+		}	
 
 
 
@@ -1639,13 +1638,14 @@ public class IconsState {
 				+downloadIconTitle+" ></i></a>"; 
 
 
-		if("Disable".equals(userStatus)) {
-			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
-
-			download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
-					+disableDownloadIcon+" aria-hidden=\"true\" title="
-					+downloadIconTitle+" ></i></a>"; 
-		}
+		/*
+		 * if("Disable".equals(userStatus)) {
+		 * log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::"+userStatus);
+		 * 
+		 * download="<a href="+downloadURL+"  class="+disableIconClass+"><i class="
+		 * +disableDownloadIcon+" aria-hidden=\"true\" title="
+		 * +downloadIconTitle+" ></i></a>"; }
+		 */
 		String action=download;
 		return action;
 

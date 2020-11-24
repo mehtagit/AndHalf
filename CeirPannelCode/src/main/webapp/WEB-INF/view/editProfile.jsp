@@ -911,6 +911,8 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
 		src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		
+		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	
 	<script type="text/javascript" src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
       <script type="text/javascript" src="${context}/resources/ajax/Profile.js?version=<%= (int) (Math.random() * 10) %>"></script>

@@ -3,8 +3,8 @@
 		var userType=$("body").attr("data-roleType");
 		var featureId="42";
 		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-
-
+		
+	
 		$.i18n().locale = lang;	
 		
 		$.i18n().load( {
@@ -32,14 +32,22 @@
 		//var TagId = sessionStorage.getItem("tagId");
 	
 		var reportnameId = $("body").attr("data-tableName");
+		;
 		//var reportnameId = sessionStorage.getItem("reportname");
 		var reportNameInterp = sessionStorage.getItem("reportInterp");
-		
 		
 		//**************************************************filter table**********************************************
 		
 		function Datatable(lang){
-			
+			var trend=$('#reportType').val();
+			var trendTypeFlag = "";
+			if(trend==undefined || trend=="undefined" )
+				{
+				trendTypeFlag= sessionStorage.getItem("trendTypeFlag");
+				}
+			else{
+				trendTypeFlag=trend;		
+			}
 			var filterRequest={
 					"startDate" : $('#startDate').val(), 
 					"endDate":$('#endDate').val(),
@@ -48,7 +56,8 @@
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"username" : $("body").attr("data-selected-username"),
-					"userId" : parseInt($("body").attr("data-userID"))
+					"userId" : parseInt($("body").attr("data-userID")),
+					"typeFlag": trendTypeFlag
 					//"pageNo": Integer.parseInt(pageNo),
 					//"pageSize":Integer.parseInt(pageSize),
 
@@ -70,7 +79,7 @@
 			});	
 
 		$.ajax({
-				url: 'tableHeaders?reportnameId='+parseInt(reportnameId),
+				url: 'tableHeaders?reportnameId='+parseInt(reportnameId)+"&typeFlag="+trendTypeFlag,
 				type: 'POST',
 				dataType: "json",
 				success: function(result){
@@ -137,6 +146,7 @@
 				url: 'dbReportTable/pageRendering?reportName='+reportNameInterp,
 				type: 'POST',
 				dataType: "json",
+				async:false,
 				success: function(data){
 					data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
 						
@@ -159,7 +169,7 @@
 						}
 					} 
 			
-				/*	// dynamic dropdown portion
+					// dynamic dropdown portion
 					var dropdown=data.dropdownList;
 					for(i=0; i<dropdown.length; i++){
 						var dropdownDiv=
@@ -175,10 +185,10 @@
 									"</select>"+
 									"</div>"+
 							"</div>");
-					}*/
+					}
 
 						$("#dbTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-						$("#dbTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportReportData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#dbTableDiv").append("<div class=' col s3 m5 l4'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportReportData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -193,6 +203,7 @@
 					});
 				}
 			}); 
+			setReportType();
 			//alert("reportNameInterp--->" +reportNameInterp)
 			
 }
@@ -247,5 +258,35 @@
 			
 		}
 		
+		function setReportType(){
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
+			$.ajax({
+				url: './fetchReportType?reportnameId='+parseInt(reportnameId),
+				type: 'POST',
+				contentType : 'application/json; charset=utf-8',
+				async:false,
+				success: function (data, textStatus, jqXHR) {
+					var result= data;
+					if(result.reportTrends.length>1){
+					for (i = 0; i < result.reportTrends.length; i++){
+						//alert(result[i].reportTrends[0].typeFlag);
+						//$('<option>').val(result[i].reportnameId).text(result[i].reportName).appendTo('#reportType');
+						
+						$('<option>').val(result.reportTrends[i].typeFlag).text(result.reportTrends[i].typeFlagInterp).appendTo('#reportType');
+					}
+				}
+					else{
+						$("#reportType").css("display", "none");
+					}
 
-	
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					
+				}
+			});
+		}

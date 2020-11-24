@@ -455,7 +455,9 @@ public class Stock {
 			@RequestParam(name="pageSize") Integer pageSize,
 			@RequestParam(name="pageNo") Integer pageNo,
 			@RequestParam(name="roleType") String roleType,
-			@RequestParam(name="source")String source)
+			@RequestParam(name="source")String source,
+			@RequestParam(name="filteredUserType")String filteredUserType,
+			@RequestParam(name="filterUserName")String filterUserName)
 	{
 		log.info("stockStartDate=="+stockStartDate+ " stockEndDate ="+stockEndDate+" stockTxnId="+stockTxnId+"StockStatus="+stockTxnId+"userType="+userType+"userTypeId="+userTypeId);
 		int userId= (int) session.getAttribute("userid"); 
@@ -474,6 +476,9 @@ public class Stock {
 		filterRequest.setFeatureId(4);
 		filterRequest.setUsername(userName);
 		filterRequest.setUserName(userName);
+		filterRequest.setFilteredUserType(filteredUserType);
+		filterRequest.setFilterUserName(filterUserName);
+		filterRequest.setDisplayName(filterUserName);
 		log.info("source=="+source);;
 
 		log.info(" request passed to the stock exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);

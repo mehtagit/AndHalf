@@ -309,6 +309,12 @@ $("#calender").css("display", "none");
 				if(response.stolenIndividualUserDB.email=="" || response.stolenIndividualUserDB.email==null){
 					$('#singleStolenemail').val('');
 				}
+			
+				if(response.stolenIndividualUserDB.imeiEsnMeid1!="" || response.stolenIndividualUserDB.imeiEsnMeid1!=null){
+					$("#singleStolendeviceIDType").attr("required", true);
+					
+					$("#deviceIdTypeSpan").css("display", "block");	
+				}
 				setOpertorTypeMandaotry();
 			}
 			
@@ -790,6 +796,26 @@ function isLengthValid(val){
 
 
 
+$(document).on("keyup", "#updatesingleStolenimei1", function(e) {
+	var singleStolenimei1=$('#updatesingleStolenimei1').val();
+	if(singleStolenimei1.length<'1' )
+	{
+		$("#singleStolendeviceIDType").attr("required", false);
+		/*$('#currency').attr("disabled",true);*/
+		/*$('#currencyDiv').hide();
+
+		$("#currency")[0].selectedIndex = 0;*/
+		$("#deviceIdTypeSpan").css("display", "none");
+	}
+	else
+	{
+		$('#singleStolendeviceIDType').prop('required',true);
+		//$("#currency").attr("required", true);
+		/*$('#currency').attr("disabled",false);*/
+		$("#deviceIdTypeSpan").css("display", "block");
+
+	}
+});
 
 
 

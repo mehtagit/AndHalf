@@ -224,7 +224,7 @@ function defaultDeviceForm(){
 		}
 	});
 	
-	$.getJSON('./getDropdownList/currency', function(data) {
+	$.getJSON('./getDropdownList/CURRENCY', function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#Currency1');
