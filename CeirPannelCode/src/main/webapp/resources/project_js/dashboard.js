@@ -60,9 +60,8 @@ $(document)
 					sessionStorage.removeItem("data-feature");
 
 					$("#manualDownload").attr(
-							"href",
-							"./Consignment/ManualFileDownload?userTypeId="
-									+ userTypeID);
+							"onclick",
+							"openPDF('./Consignment/ManualFileDownload?userTypeId="+userTypeID+"')");
 
 					$(window).scrollTop(0);
 					var state = $("body").attr("data-user-state");

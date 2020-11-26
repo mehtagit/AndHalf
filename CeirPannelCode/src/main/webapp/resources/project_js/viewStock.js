@@ -439,8 +439,8 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			}
 		
 		var filereduserType =  $('#userType').val() =='null' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
-		var filterUserName=$('#name').val() == 'null' || 'undefined' ?null:$('#name').val();
-		/*var filterRedirect=$("body").attr("data-filterSource");
+				var filterUserName=$('#name').val() == 'null' || 'undefined' ?null:$('#name').val();
+				/*var filterRedirect=$("body").attr("data-filterSource");
 		var selectedUserTypeId='';
 		if(filterRedirect=='noti')
 			{
@@ -464,7 +464,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				"consignmentStatus":parseInt($('#StockStatus').val()),
 				"displayName" : $('#name').val(),
 				"filteredUserType" : filereduserType,
-				"filterUserName":$('#name').val(),
+						"filterUserName":$('#name').val(),
 				"source":$("body").attr("data-Source")
 		}
 		if(lang=='km'){
@@ -918,7 +918,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		
 		////////console.log("userType--->"+userType+"-------------userTypeId------------>"+userTypeId);
 		////////console.log("roleType=="+roleType+" currentRoleType="+currentRoleType+" role="+role);
-		var filteredUserType =  $('#userType').val() =='null' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
+	var filteredUserType =  $('#userType').val() =='null' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
 	//	var filterUserName=$('#name').val() == 'null' || 'undefined' ?null:$('#name').val();
 		var filterUserName=$('#name').val();
 		if(isNaN(StockStatus))

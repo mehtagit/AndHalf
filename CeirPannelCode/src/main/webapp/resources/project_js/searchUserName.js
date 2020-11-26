@@ -31,6 +31,20 @@
 					dataType : 'json',
 					contentType : 'application/json; charset=utf-8',
 					success: function (data, textStatus, jqXHR) {
+		/*				alert(data.selfRegister)
+						if(data.statusCode==200 && (data.selfRegister == 1 || data.selfRegister == 2)){
+							var primaryRole = data.primaryRole;
+							var userId = data.userId;
+							sessionStorage.setItem("primaryRole", primaryRole);
+							sessionStorage.setItem("userId", userId);
+							window.location.href = "./openGrievanceForm?reqType=formPage";
+						}else{
+							
+							$('#ErrorPopup').openModal({
+								dismissible:false
+							});
+							//window.location.href = "./raiseCCgrievance";
+						}*/
 						if(data.statusCode==200 && data.selfRegister == 1){
 							var primaryRole = data.primaryRole;
 							var userId = data.userId;

@@ -188,7 +188,7 @@ function dataByTag(tag,divId,input){
 			var response=JSON.parse(data);
 			if(input==1){
 				var asTypeDropdown=$("#"+divId);  
-				asTypeDropdown.attr('href',response.value);			
+				asTypeDropdown.attr('href',response.value+"?lang="+ $('#langlist').val());			
 			}
 			else if(input==2){
 				var copyRightSpan=$("#"+divId);

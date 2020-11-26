@@ -178,10 +178,15 @@ div#error_Modal {
 					</ul>
 					<ul id="chat-out" class="right hide-on-med-and-down"
 						style="overflow: inherit !important;">
-						<li><a id="manualDownload" download
+						<li>
+						<a id="manualDownload" 
 							style="color: white; cursor: pointer;"><i
 								class="fa fa-download download-icon" aria-hidden="true"
-								title="<spring:message code="title.manual" />" style="color: #fff; line-height: 3;"></i></a></li>
+								title="<spring:message code="title.manual" />" style="color: #fff; line-height: 3;"></i></a>
+								<%-- <a id="manualDownload" download
+							style="color: white; cursor: pointer;"><i
+								class="fa fa-download download-icon" aria-hidden="true"
+								title="<spring:message code="title.manual" />" style="color: #fff; line-height: 3;"></i></a> --%></li>
 						<li>
 							<div id="divLang" style="display: flex; margin: 8px 6px;"
 								class="darken-1">
@@ -217,7 +222,7 @@ div#error_Modal {
 										style="float: left;"></i><span style="float: left"
 										class="dropdownColor"><spring:message
 												code="registration.editinfo" /></span></a></li>
-								<li class="divider"></li>
+					<li class="divider"></li>
 								<li><a onclick="manageAccountPopup();"
 									href="javascript:void(0)"><i
 										class="mdi-action-settings dropdownColor"></i> <span
@@ -271,7 +276,7 @@ div#error_Modal {
 									<spring:message code="page.welcome" />
 									<%=name%>
 									(<%=(String) session.getAttribute("username")%>)
-											<br><%=name%> <span id="userState"></span>
+											<br><span id="userState"></span>
 								
 								</p>
 								
@@ -360,7 +365,7 @@ div#error_Modal {
 		</h6>
 
 		<div class="modal-content">
-			<form id="userStatusForm" onsubmit="return updateUSerStatus()">
+			<form id="userStatusForm" onsubmit="return passwordPopup()">
 				<span style="text-align: center; color: red;" id="errorMsg"></span>
 
 				<p>
@@ -756,6 +761,46 @@ data-dismiss="modal">&times;</button> -->
 		</div>
 	</div>
 
+
+	<!-- 	password Modal -->
+         <div id="passwordModal"  class="modal" style="width: 40%; z-index: 1003;  opacity: 1; transform: scaleX(1); top: 10%;">
+             <h6 class="modal-header"><spring:message code="registration.pleaseenteryourpassword" /></h6>
+            <div class="modal-content" >
+<form  onsubmit="return updateUserStatusModal()">
+                    <div class="row">
+                        
+                           <div class="input-field col s12">
+
+                                <label for="confirmPassword" style="color: #000; font-size: 12px;"><spring:message code="registration.password" /></label>
+                                <input required="required"  type="password" class="password" id="confirmPassword" pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"  maxlength="10"
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');" >
+                                	<div class="input-field-addon">
+							<i class="fa fa-eye-slash teal-text toggle-password"
+								aria-hidden="true"></i>
+						</div>
+                            </div>
+                        
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12 center">
+                            <button type="submit" id="passwordBtn" class="btn"><spring:message code="button.submit" /></button>
+                            <button type="button" class="btn modal-close" style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                            </div>
+                            
+                            	<!-- Modal End -->
+<div class="modal" id="error_Modal_reg" role="dialog">
+		<div class="modal-dialog">
+			<div class="row" id="modalMessageBodyReg"
+					style="text-align: center;"></div>
+			
+		</div>
+		
+	</div>
+                            	<!-- 	password Modal -->
 	<!-- jQuery Library -->
 
 	<!--materialize js-->
@@ -857,7 +902,39 @@ data-dismiss="modal">&times;</button> -->
 				} */
 	}
 	
-
+		function openPDF(url){
+			
+			$.ajax({
+				type : 'GET',
+				url : url,
+				contentType : "application/json",
+				success : function(data) {
+					 $.ajax({
+					    url:data['url'],
+					    type:'HEAD',
+					    error: function()
+					    {
+					        //file not exists
+					      errorMessageReg(("file does not exist"));
+					    },
+					    success: function(result)
+					    {
+					        //file exists
+					    	 var w=window.open(data['url'], '_blank');
+							   w.focus();
+					    }
+					}); 
+					
+					
+				},
+				error : function(xhr, ajaxOptions, thrownError) {
+				}
+			});
+			
+			
+			 
+			}
+		</script>
 <script type="text/javascript">$( document ).ready(function() { var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 
 </body></html>
