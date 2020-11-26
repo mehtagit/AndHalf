@@ -191,6 +191,7 @@ function pageRendering(){
 		type: 'POST',
 		dataType: "json",
 		success: function(data){
+			data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
 			var elem='<p class="PageHeading">'+data.pageTitle+'</p>';
 			$("#pageHeader").append(elem);
 			var button=data.buttonList;
