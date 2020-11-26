@@ -316,7 +316,7 @@ select {
 
 													<div class="input-field col s12 m6">
 														<input type="text" name="sigleRecoveryimeiNumber1"
-															pattern="[0-9]{15,16}" onchange="luhnCheck('sigleRecoveryimeiNumber1','sigleRecoverydeviceIDType')"
+															pattern="[0-9]{15,16}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															maxlength="16" id="sigleRecoveryimeiNumber1" /> <label
@@ -326,7 +326,7 @@ select {
 
 													<div class="input-field col s12 m6">
 														<input type="text" name="imeiNumberTwo"
-															pattern="[0-9]{15,16}" onchange="luhnCheck('sigleRecoveryimeiNumber2','sigleRecoverydeviceIDType')"
+															pattern="[0-9]{15,16}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															maxlength="16" id="sigleRecoveryimeiNumber2"> <label
@@ -336,7 +336,7 @@ select {
 
 													<div class="input-field col s12 m6">
 														<input type="text" name="imeiNumberThree"
-															pattern="[0-9]{15,16}" onchange="luhnCheck('sigleRecoveryimeiNumber3','sigleRecoverydeviceIDType')"
+															pattern="[0-9]{15,16}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															maxlength="16" id="sigleRecoveryimeiNumber3"> <label
@@ -347,7 +347,7 @@ select {
 
 													<div class="input-field col s12 m6">
 														<input type="text" name="imeiNumberFour"
-															pattern="[0-9]{15,16}" onchange="luhnCheck('sigleRecoveryimeiNumber4','sigleRecoverydeviceIDType')"
+															pattern="[0-9]{15,16}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															maxlength="16" id="sigleRecoveryimeiNumber4"> <label

@@ -613,7 +613,7 @@ select {
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumber"
-																pattern="[0-9]{15,16}" onchange="luhnCheck('updatesingleStolenimei1','singleStolendeviceIDType')"
+																pattern="[0-9]{15,16}" 
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																
@@ -626,7 +626,7 @@ select {
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberTwo"
-																pattern="[0-9]{15,16}" onchange="luhnCheck('updatesingleStolenimei2','singleStolendeviceIDType')"
+																pattern="[0-9]{15,16}" 
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																title="<spring:message code=" validation.1516digit" />"
@@ -637,7 +637,7 @@ select {
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberThree"
-																pattern="[0-9]{15,16}" onchange="luhnCheck('updatesingleStolenimei3','singleStolendeviceIDType')"
+																pattern="[0-9]{15,16}" 
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																title="<spring:message code=" validation.1516digit" />"
@@ -649,7 +649,7 @@ select {
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberFour"
-																pattern="[0-9]{15,16}" onchange="luhnCheck('updatesingleStolenimei4','singleStolendeviceIDType')"
+																pattern="[0-9]{15,16}" 
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																title="<spring:message code=" validation.1516digit" />"

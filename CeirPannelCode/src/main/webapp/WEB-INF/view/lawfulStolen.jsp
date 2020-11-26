@@ -612,7 +612,7 @@ select {
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumber" pattern="[0-9]{15,16}" oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"  
-																maxlength="16" id="singleStolenimei1" onchange="luhnCheck('singleStolenimei1','singleStolendeviceIDType')"> 
+																maxlength="16" id="singleStolenimei1" > 
 																<label for="singleStolenimei1"><spring:message code="registration.one" /> <span class="star"> </span> 
 																</label>
 														</div>
@@ -623,7 +623,7 @@ select {
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																
-																maxlength="16" id="singleStolenimei2" onchange="luhnCheck('singleStolenimei2','singleStolendeviceIDType')"> <label
+																maxlength="16" id="singleStolenimei2" > <label
 																for="singleStolenimei12"> <spring:message
 																	code="registration.two" /></label>
 														</div>
@@ -633,7 +633,7 @@ select {
 																pattern="[0-9]{15,16}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																onchange="luhnCheck('singleStolenimei3','singleStolendeviceIDType')"
+																
 																maxlength="16" id="singleStolenimei3"> <label
 																for="singleStolenimei3"> <spring:message code="registration.three" /></label>
 														<p id="errorMsgOnModal" class="deviceErrorTitle"></p>
@@ -644,7 +644,7 @@ select {
 																pattern="[0-9]{15,16}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																onchange="luhnCheck('singleStolenimei4','singleStolendeviceIDType')"
+																
 																maxlength="16" id="singleStolenimei4"> <label
 																for="singleStolenimei4"> <spring:message code="registration.four" /></label>
 														

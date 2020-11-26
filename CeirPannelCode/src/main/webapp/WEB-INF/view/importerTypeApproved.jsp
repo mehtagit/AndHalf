@@ -68,8 +68,11 @@
 <link
 	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<link rel="stylesheet"
+	<link rel="stylesheet"
 	href="${context}/resources/project_css/viewStock.css">
+<link rel="stylesheet"
+	href="${context}/resources/project_css/select2.css">
+	
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 
@@ -351,7 +354,8 @@
 		<script
 		src="${context}/resources/custom_js/moment.min.js"></script>
 	
-		
+		<script type="text/javascript"
+		src="${context}/resources/project_js/select2.js"></script>
 	
 	<script type="text/javascript"
 		src="${context}/resources/project_js/importerTypeApproved.js?version=<%= (int) (Math.random() * 10) %>"></script>

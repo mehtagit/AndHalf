@@ -189,7 +189,7 @@ i.fa.fa-times-circle-o.red-text {
 
 											</div>
 											<div class="input-field col s6 m7">
-												<input type="text" id="DeviceID" onchange="luhnCheck('DeviceID','deviceIdType')" required>
+												<input type="text" id="DeviceID"  required>
 
 											</div>
 
