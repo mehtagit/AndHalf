@@ -309,14 +309,14 @@ code="lang.khmer" /></option>
 														<div class='row'>
 															<div class="input-field col s12 m6">
 																<input type="text" id="IMEIA1" name="IMEI1"
-																	pattern="[0-9]{15,16}" required onchange="luhnCheck('IMEIA1','deviceIdType1')"
+																	pattern="[0-9]{15,16}" required 
 																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																	maxlength="16"> <label for="IMEIA1"><spring:message
 																		code="title.one" /><span class="star">*</span></label>
 															</div>
 															<div class="input-field col s12 m6">
-																<input type="text" id="IMEIB1" name="IMEI2" onchange="luhnCheck('IMEIB1','deviceIdType1')"
+																<input type="text" id="IMEIB1" name="IMEI2" 
 																	pattern="[0-9]{15,16}"
 																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
@@ -325,7 +325,7 @@ code="lang.khmer" /></option>
 															</div>
 
 															<div class="input-field col s12 m6">
-																<input type="text" id="IMEIC1" name="IMEIC3" onchange="luhnCheck('IMEIC1','deviceIdType1')"
+																<input type="text" id="IMEIC1" name="IMEIC3" 
 																	pattern="[0-9]{15,16}"
 																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
@@ -336,7 +336,7 @@ code="lang.khmer" /></option>
 															</div>
 
 															<div class="input-field col s12 m6" id="field">
-																<input type="text" id="IMEID1" name="IMEID4[]" onchange="luhnCheck('IMEID1','deviceIdType1')"
+																<input type="text" id="IMEID1" name="IMEID4[]"
 																	pattern="[0-9]{15,16}"
 																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"

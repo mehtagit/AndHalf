@@ -327,21 +327,34 @@ function luhnCheck(IMEILUHN,IMEIType){
 	if($("#"+IMEIType).val()==0){
 	var IMEIlenth1=$("#"+IMEILUHN).val().length;
 	var IMEI1LastDigit=$("#"+IMEILUHN).val();
+	var x="";
 	//console.log("IMEI1LastDigit=="+IMEI1LastDigit);
+	
 	if (IMEIlenth1==15){
 		 var res=luhn_checksum($("#"+IMEILUHN).val());
 		//console.log(res);
 		if(res==0){
 			//IMEI number passed luhn alogoritham .
 			$('#errorMsgOnModal').text('');
+			x= true;
+		
 		}
 		else
 			{
+			
 			//IMEI number passed not passed luhn alogoritham.
 			$("#"+IMEILUHN).val('');
 			$('#errorMsgOnModal').text('');
 			$('#errorMsgOnModal').text($.i18n('luhnCheckMessage'));
+			x=false;
+			
 			}
 	}
+	else{
+		x="default";
 	}
+	
+	}
+	
+	return x;
 	  }

@@ -563,6 +563,30 @@ $.ajax({
 
 function saveIndivisualStolenRequest(){
 	if($('#singleStolendeviceIDType').val()==0){
+		
+
+		var luhnIMEI1=luhnCheck('singleStolenimei1','singleStolendeviceIDType');
+		var luhnIMEI4="";
+		var luhnIMEI3="";
+		var luhnIMEI2='';
+		if($('#singleStolenimei2').val()!=null || $('#singleStolenimei2').val()!=''){
+			var luhnIMEI2 =luhnCheck('singleStolenimei2','singleStolendeviceIDType')	
+		}
+		else if($('#singleStolenimei3').val()!=null || $('#singleStolenimei3').val()!=''){
+			var luhnIMEI3 = luhnCheck('singleStolenimei3','singleStolendeviceIDType')	
+		}
+		
+		else if($('#singleStolenimei4').val()!=null || $('#singleStolenimei4').val()!=''){
+			 luhnIMEI4= luhnCheck('singleStolenimei4','singleStolendeviceIDType')	
+		}
+		
+		//alert("luhnIMEI1 "+luhnIMEI1+" luhnIMEI2 = "+luhnIMEI2+" luhnIMEI3 "+luhnIMEI3+" luhnIMEI4 = "+luhnIMEI4);
+		if(luhnIMEI1==false || luhnIMEI2==false || luhnIMEI3==false || luhnIMEI4==false)
+		{
+			//alert("failed");
+			return false
+		}
+		
 		var checkIMEI=checkDuplicateImei($('#singleStolenimei1').val(),$('#singleStolenimei2').val(),$('#singleStolenimei3').val(),$('#singleStolenimei4').val());
 		if(checkIMEI===true){
 		$('#errorMsgOnModal').text('');

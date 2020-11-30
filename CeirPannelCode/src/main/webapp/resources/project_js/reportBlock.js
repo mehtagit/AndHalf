@@ -338,6 +338,29 @@ function submitUnBlockImei()
 function submitSingleBlockDevicesRequest()
 {
 	if($('#blockdeviceIdType').val()==0){
+		var luhnIMEI1=luhnCheck('singleblockIMEI1','blockdeviceIdType');
+		var luhnIMEI4="";
+		var luhnIMEI3="";
+		var luhnIMEI2='';
+		if($('#singleblockIMEI2').val()!=null || $('#singleblockIMEI2').val()!=''){
+			var luhnIMEI2 =luhnCheck('singleblockIMEI2','blockdeviceIdType')	
+		}
+		else if($('#singleblockIMEI3').val()!=null || $('#singleblockIMEI3').val()!=''){
+			var luhnIMEI3 = luhnCheck('singleblockIMEI3','blockdeviceIdType')	
+		}
+		
+		else if($('#singleblockIMEI4').val()!=null || $('#singleblockIMEI4').val()!=''){
+			 luhnIMEI4= luhnCheck('singleblockIMEI4','blockdeviceIdType')	
+		}
+		
+		//alert("luhnIMEI1 "+luhnIMEI1+" luhnIMEI2 = "+luhnIMEI2+" luhnIMEI3 "+luhnIMEI3+" luhnIMEI4 = "+luhnIMEI4);
+		if(luhnIMEI1==false || luhnIMEI2==false || luhnIMEI3==false || luhnIMEI4==false)
+		{
+			//alert("failed");
+			return false
+		}
+	
+		
 		var checkIMEI=checkDuplicateImei($('#singleblockIMEI1').val(),$('#singleblockIMEI2').val(),$('#singleblockIMEI3').val(),$('#singleblockIMEI14').val());
 		if(checkIMEI===true){
 		$('#errorMsgOnModal').text('');
@@ -436,6 +459,29 @@ function submitSingleBlockDevicesRequest()
 function submitSingleUnBlockDevicesRequest()
 {
 	if($('#UnblockdeviceIdType').val()==0){
+		
+		var luhnIMEI1=luhnCheck('unbockSingleIMEI1','UnblockdeviceIdType');
+		var luhnIMEI4="";
+		var luhnIMEI3="";
+		var luhnIMEI2='';
+		if($('#unbockSingleIMEI2').val()!=null || $('#unbockSingleIMEI2').val()!=''){
+			var luhnIMEI2 =luhnCheck('unbockSingleIMEI2','UnblockdeviceIdType')	
+		}
+		else if($('#unbockSingleIMEI3').val()!=null || $('#unbockSingleIMEI3').val()!=''){
+			var luhnIMEI3 = luhnCheck('unbockSingleIMEI3','UnblockdeviceIdType')	
+		}
+		
+		else if($('#unbockSingleIMEI4').val()!=null || $('#unbockSingleIMEI4').val()!=''){
+			 luhnIMEI4= luhnCheck('unbockSingleIMEI4','UnblockdeviceIdType')	
+		}
+		
+		//alert("luhnIMEI1 "+luhnIMEI1+" luhnIMEI2 = "+luhnIMEI2+" luhnIMEI3 "+luhnIMEI3+" luhnIMEI4 = "+luhnIMEI4);
+		if(luhnIMEI1==false || luhnIMEI2==false || luhnIMEI3==false || luhnIMEI4==false)
+		{
+			//alert("failed");
+			return false
+		}
+	
 		var checkIMEI=checkDuplicateImei($('#unbockSingleIMEI1').val(),$('#unbockSingleIMEI2').val(),$('#unbockSingleIMEI3').val(),$('#unbockSingleIMEI4').val());
 		if(checkIMEI===true){
 		$('#errorMsgOnModal').text('');
@@ -995,6 +1041,28 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 function updateSingleBlockDevicesRequest()
 {
 	if($('#editblockdeviceIdType').val()==0){
+		var luhnIMEI1=luhnCheck('editsingleblockIMEI1','editblockdeviceIdType');
+		var luhnIMEI4="";
+		var luhnIMEI3="";
+		var luhnIMEI2='';
+		if($('#editsingleblockIMEI2').val()!=null || $('#editsingleblockIMEI2').val()!=''){
+			var luhnIMEI2 =luhnCheck('editsingleblockIMEI2','editblockdeviceIdType')	
+		}
+		else if($('#editsingleblockIMEI3').val()!=null || $('#editsingleblockIMEI3').val()!=''){
+			var luhnIMEI3 = luhnCheck('editsingleblockIMEI3','editblockdeviceIdType')	
+		}
+		
+		else if($('#editsingleblockIMEI4').val()!=null || $('#editsingleblockIMEI4').val()!=''){
+			 luhnIMEI4= luhnCheck('editsingleblockIMEI4','editblockdeviceIdType')	
+		}
+		
+		//alert("luhnIMEI1 "+luhnIMEI1+" luhnIMEI2 = "+luhnIMEI2+" luhnIMEI3 "+luhnIMEI3+" luhnIMEI4 = "+luhnIMEI4);
+		if(luhnIMEI1==false || luhnIMEI2==false || luhnIMEI3==false || luhnIMEI4==false)
+		{
+			//alert("failed");
+			return false
+		}
+	
 		var checkIMEI=checkDuplicateImei($('#editsingleblockIMEI1').val(),$('#editsingleblockIMEI2').val(),$('#editsingleblockIMEI3').val(),$('#editsingleblockIMEI4').val());
 		if(checkIMEI===true){
 		$('#errorMsgOnModal').text('');

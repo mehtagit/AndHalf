@@ -216,7 +216,7 @@ section {
                           </div>
                             
                             <div class="input-field col s12 m3 l3">
-                              <input type="text" name="IMEI" id="imei" maxlength="16" pattern="[0-9\s]{15,16}" value="" onchange="luhnCheck('imei','deviceType')" required/>
+                              <input type="text" name="IMEI" id="imei" maxlength="16" pattern="[0-9\s]{15,16}" value=""  required/>
                               <p id="errorMsgOnModal" class="deviceErrorTitle"></p>
                               <label for="imei" ><spring:message code="input.imei" /><span class="star">*</span></label>
                             </div>

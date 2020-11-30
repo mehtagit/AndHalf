@@ -354,7 +354,7 @@
 		<script
 		src="${context}/resources/custom_js/moment.min.js"></script>
 	
-			<script type="text/javascript"
+		<script type="text/javascript"
 		src="${context}/resources/project_js/select2.js"></script>
 	
 	<script type="text/javascript"

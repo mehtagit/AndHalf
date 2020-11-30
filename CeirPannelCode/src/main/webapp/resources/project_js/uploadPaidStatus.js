@@ -59,6 +59,10 @@ $( document ).ready(function() {
 				if(data.data!=null || data.data==""){
 				sessionStorage.setItem("nationality",data.data.nationality);
 				}
+				else if(data.data==null){
+					
+					sessionStorage.removeItem("nationality")
+				}
 				if (data.errorCode == 1) {
 					pageRendering(lang);
 					filter(lang,null);
@@ -785,6 +789,28 @@ function exportpaidStatus(){
 
 function submitDeviceInfo(){
 	if($('#deviceIdType1').val()==0){
+		
+		var luhnIMEI1=luhnCheck('IMEIA1','deviceIdType1');
+		var luhnIMEI4="";
+		var luhnIMEI3="";
+		var luhnIMEI2='';
+		if($('#IMEIB1').val()!=null || $('#IMEIB1').val()!=''){
+			var luhnIMEI2 =luhnCheck('IMEIB1','deviceIdType1')	
+		}
+		if($('#IMEIC1').val()!=null || $('#IMEIC1').val()!=''){
+			var luhnIMEI3 = luhnCheck('IMEIC1','deviceIdType1')	
+		}
+		
+		if($('#IMEID1').val()!=null || $('#IMEID1').val()!=''){
+			 luhnIMEI4= luhnCheck('IMEID1','deviceIdType1')	
+		}
+		
+		//alert("luhnIMEI1 "+luhnIMEI1+" luhnIMEI2 = "+luhnIMEI2+" luhnIMEI3 "+luhnIMEI3+" luhnIMEI4 = "+luhnIMEI4);
+		if(luhnIMEI1==false || luhnIMEI2==false || luhnIMEI3==false || luhnIMEI4==false)
+		{
+			//alert("failed");
+			return false
+		}
 		var checkIMEI=checkDuplicateImei($('#IMEIA1').val(),$('#IMEIB1').val(),$('#IMEIC1').val(),$('#IMEID1').val());
 		if(checkIMEI===true){
 		$('#errorMsgOnModal').text('');
@@ -1011,9 +1037,9 @@ function submitDeviceInfo(){
 				}
 			else{
 				$("#uploadPaidStatusbutton").prop('disabled', false);
-				$('#customRegisterDeviceDuplicateImei').openModal({dismissible:false});;
+				$('#customRegisterDeviceDuplicateImei').openModal({dismissible:false});
 				$('#dupliCateImeiMsg').text($.i18n(data.tag));
-				$("#uploadPaidStatusbutton").prop('disabled', true);
+				//$("#uploadPaidStatusbutton").prop('disabled', true);
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -1223,10 +1249,15 @@ function regularizedCount(nationType){
 		var nid= '';
 	}
 	
-	if(sessionStorage.getItem("nationality")!="Cambodian"){
-	
+	if(sessionStorage.getItem("nationality")!="Cambodian" && sessionStorage.getItem("nationality")!=null){
+
 		nationType=2;
 	}
+	else if( sessionStorage.getItem("nationality")==null && nationType!=2 ){
+		
+		nationType=1;
+	}
+	
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -1503,11 +1534,11 @@ $(document).on("keyup", "#Price1", function(e) {
 	 $('#nidLabelName').text('');
  	$('#nidLabelName').text($.i18n('Passport Number'));
  	
- 	$('#uploadNidImage').text('');
- 	$('#uploadNidImage').text($.i18n('Upload Passport Image'));
+ 	/*$('#uploadNidImage').text('');
+ 	$('#uploadNidImage').text($.i18n('Upload Passport Image'));*/
  	$("#nidLabelName").append('<span class="star">*</span>');
- 	$("#uploadNidImage").append('<span class="star">*</span>');
- 	
+ 	/*$("#uploadNidImage").append('<span class="star">*</span>');
+ 	*/
  	$("#askVisaDetails").css("display", "block");
  	$("#nationalityDiv").css("display", "block");
  	$("#onVisaNo").prop("checked", true);
@@ -1582,8 +1613,8 @@ $(document).on("keyup", "#Price1", function(e) {
 	 
 	    $('#nidLabelName').text('');
 	 	$('#nidLabelName').text($.i18n('National ID'));
-	 	$('#uploadNidImage').text('');
-	 	$('#uploadNidImage').text($.i18n('Upload ID Image'));
+	 	/*$('#uploadNidImage').text('');
+	 	$('#uploadNidImage').text($.i18n('Upload ID Image'));*/
 	 	
  	$("#askVisaDetails").css("display", "none"); 
  	$("#visaDetails").css("display", "none"); 
@@ -1615,7 +1646,7 @@ $(document).on("keyup", "#Price1", function(e) {
  	$("#entryCountryDiv").css("display", "none");
 
  	$("#nidLabelName").append('<span class="star">*</span>');
- 	$("#uploadNidImage").append('<span class="star">*</span>');
+ //$("#uploadNidImage").append('<span class="star">*</span>');
 
  	allowedCount = regularizedCount(1);
  	if(allowedCount>0)
@@ -1904,3 +1935,14 @@ function deptImageValidation() {
 
 		}
 	}
+	
+	/*
+	 $('#doc_type').on('change', function() {
+		 var doctype = $('#doc_type').val();
+		 if($('option:selected').attr('docvalue')==4){
+			 
+			 $("#docSpanee").css("display", "none");
+			 $('#uploadNidImage').text('');
+			 $('#uploadNidImage').text($.i18n('meesageForOtherDoc'));
+		 }
+	 });*/
