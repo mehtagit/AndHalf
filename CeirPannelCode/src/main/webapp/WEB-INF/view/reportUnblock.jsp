@@ -224,7 +224,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                                 <p style="margin-bottom: 0;"><spring:message code="title.imeiMeidEsn" /> </p>
                                                             </div>
                                                             <div class="input-field col s12 m6">
-                                                                <input type="text" id="unbockSingleIMEI1"  name="IMEI1" pattern="[0-9]{15,16}" onchange="luhnCheck('unbockSingleIMEI1','UnblockdeviceIdType')"
+                                                                <input type="text" id="unbockSingleIMEI1"  name="IMEI1" pattern="[0-9]{15,16}" 
                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                 required   maxlength="16">
@@ -232,7 +232,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6">
-                                                                <input type="text" id="unbockSingleIMEI2" name="IMEI2" pattern="[0-9]{15,16}" onchange="luhnCheck('unbockSingleIMEI2','UnblockdeviceIdType')"
+                                                                <input type="text" id="unbockSingleIMEI2" name="IMEI2" pattern="[0-9]{15,16}" 
                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                     maxlength="16">
@@ -240,7 +240,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                             </div>  
                                                             
                                                             <div class="input-field col s12 m6">
-                                                                <input type="text" id="unbockSingleIMEI3" name="IMEI3" pattern="[0-9]{15,16}" onchange="luhnCheck('unbockSingleIMEI3','UnblockdeviceIdType')"
+                                                                <input type="text" id="unbockSingleIMEI3" name="IMEI3" pattern="[0-9]{15,16}" 
                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                    maxlength="16">
@@ -249,7 +249,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                             </div>
             
                                                             <div class="input-field col s12 m6">
-                                                                <input type="text" id="unbockSingleIMEI4" name="IMEI4[]" pattern="[0-9]{15,16}" onchange="luhnCheck('unbockSingleIMEI4','UnblockdeviceIdType')"
+                                                                <input type="text" id="unbockSingleIMEI4" name="IMEI4[]" pattern="[0-9]{15,16}" 
                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                  maxlength="16">

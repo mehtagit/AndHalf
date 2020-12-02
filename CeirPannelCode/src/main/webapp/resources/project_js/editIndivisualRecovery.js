@@ -170,11 +170,11 @@ function updateIndivisualRecovery()
 		if($('#sigleRecoveryimeiNumber2').val()!=null || $('#sigleRecoveryimeiNumber2').val()!=''){
 			var luhnIMEI2 =luhnCheck('sigleRecoveryimeiNumber2','sigleRecoverydeviceIDType')	
 		}
-		else if($('#sigleRecoveryimeiNumber3').val()!=null || $('#sigleRecoveryimeiNumber3').val()!=''){
+		 if($('#sigleRecoveryimeiNumber3').val()!=null || $('#sigleRecoveryimeiNumber3').val()!=''){
 			var luhnIMEI3 = luhnCheck('sigleRecoveryimeiNumber3','sigleRecoverydeviceIDType')	
 		}
 		
-		else if($('#sigleRecoveryimeiNumber4').val()!=null || $('#sigleRecoveryimeiNumber4').val()!=''){
+		 if($('#sigleRecoveryimeiNumber4').val()!=null || $('#sigleRecoveryimeiNumber4').val()!=''){
 			 luhnIMEI4= luhnCheck('sigleRecoveryimeiNumber4','sigleRecoverydeviceIDType')	
 		}
 		
@@ -197,9 +197,21 @@ function updateIndivisualRecovery()
   $('div#initialloader').fadeIn('fast');
 	var sigleRecoverydeviceBrandName=$('#editsigleRecoverydeviceBrandName').val();
 	var sigleRecoveryimeiNumber1=$('#sigleRecoveryimeiNumber1').val();
+	if(sigleRecoveryimeiNumber1=="" ){
+		sigleRecoveryimeiNumber1=null;
+	}
 	var sigleRecoveryimeiNumber2=$('#sigleRecoveryimeiNumber2').val();
+	if(sigleRecoveryimeiNumber2=="" ){
+		sigleRecoveryimeiNumber2=null;
+	}
 	var sigleRecoveryimeiNumber3=$('#sigleRecoveryimeiNumber3').val();
+	if(sigleRecoveryimeiNumber3=="" ){
+		sigleRecoveryimeiNumber3=null;
+	}
 	var sigleRecoveryimeiNumber4=$('#sigleRecoveryimeiNumber4').val();
+	if(sigleRecoveryimeiNumber4=="" ){
+		sigleRecoveryimeiNumber4=null;
+	}
 	
 	var sigleRecoverydeviceIDType=$('#sigleRecoverydeviceIDType').val();
 	var sigleRecoverydeviceType=$('#sigleRecoverydeviceType').val();

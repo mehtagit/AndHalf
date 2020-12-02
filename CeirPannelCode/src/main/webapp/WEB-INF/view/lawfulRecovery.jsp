@@ -80,7 +80,8 @@
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
-
+<link rel="stylesheet"
+	href="${context}/resources/project_css/select2.css">
 <style>
 .checkboxFont {
 	color: #444;
@@ -904,6 +905,8 @@ onclick="_Services._selectstartDate()"></i></span>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js?version=<%= (int) (Math.random() * 10) %>"
 		async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/select2.js"></script>
 	<script type="text/javascript"
 		src=""
 		async></script>
@@ -957,11 +960,13 @@ onclick="_Services._selectstartDate()"></i></span>
         });
         
         $.getJSON('./productList', function(data) {
+        	$('#select2-sigleRecoverydeviceBrandName-container').empty();
         	for (i = 0; i < data.length; i++) {
         		$('<option>').val(data[i].id).text(data[i].brand_name)
         				.appendTo('#sigleRecoverydeviceBrandName');
         	}
         });
+        $('select#sigleRecoverydeviceBrandName').select2();
 
         $('#sigleRecoverydeviceBrandName').on(
         		'change',
@@ -978,12 +983,14 @@ onclick="_Services._selectstartDate()"></i></span>
 
         			$.getJSON('./productModelList?brand_id=' + brand_id,
         					function(data) {
-        						$("#singleRecoverymodalNumber").empty();
+        				$('#select2-singleRecoverymodalNumber-container').empty();		
+        				$("#singleRecoverymodalNumber").empty();
         						for (i = 0; i < data.length; i++) {
         							$('<option>').val(data[i].id).text(
         									data[i].modelName).appendTo('#singleRecoverymodalNumber');
         						}
         					});
+        			 $('select#singleRecoverymodalNumber').select2();
         		});
 
 

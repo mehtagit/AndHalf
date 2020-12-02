@@ -80,6 +80,10 @@
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
+<link rel="stylesheet"
+	href="${context}/resources/project_css/select2.css">
+
+
 
 <style>
 .checkboxFont {
@@ -1408,7 +1412,8 @@ select {
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
-
+	<script type="text/javascript"
+		src="${context}/resources/project_js/select2.js"></script>
 	
 
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>

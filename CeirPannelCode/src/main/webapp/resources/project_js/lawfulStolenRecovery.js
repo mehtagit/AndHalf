@@ -566,21 +566,24 @@ function saveIndivisualStolenRequest(){
 		
 
 		var luhnIMEI1=luhnCheck('singleStolenimei1','singleStolendeviceIDType');
-		var luhnIMEI4="";
-		var luhnIMEI3="";
-		var luhnIMEI2='';
+		var luhnIMEI4=null;
+		var luhnIMEI3=null;
+		var luhnIMEI2=null;
 		if($('#singleStolenimei2').val()!=null || $('#singleStolenimei2').val()!=''){
+			
 			var luhnIMEI2 =luhnCheck('singleStolenimei2','singleStolendeviceIDType')	
 		}
-		else if($('#singleStolenimei3').val()!=null || $('#singleStolenimei3').val()!=''){
+		
+		 if($('#singleStolenimei3').val()!=null || $('#singleStolenimei3').val()!=''){
+			
 			var luhnIMEI3 = luhnCheck('singleStolenimei3','singleStolendeviceIDType')	
 		}
 		
-		else if($('#singleStolenimei4').val()!=null || $('#singleStolenimei4').val()!=''){
+		 if($('#singleStolenimei4').val()!=null || $('#singleStolenimei4').val()!=''){
 			 luhnIMEI4= luhnCheck('singleStolenimei4','singleStolendeviceIDType')	
 		}
 		
-		//alert("luhnIMEI1 "+luhnIMEI1+" luhnIMEI2 = "+luhnIMEI2+" luhnIMEI3 "+luhnIMEI3+" luhnIMEI4 = "+luhnIMEI4);
+	//	alert("luhnIMEI1 "+luhnIMEI1+" luhnIMEI2 = "+luhnIMEI2+" luhnIMEI3 "+luhnIMEI3+" luhnIMEI4 = "+luhnIMEI4);
 		if(luhnIMEI1==false || luhnIMEI2==false || luhnIMEI3==false || luhnIMEI4==false)
 		{
 			//alert("failed");
@@ -1202,11 +1205,15 @@ headers:
 });
 
 $.getJSON('./productList', function(data) {
+	$('#select2-singleStolendeviceBrandName-container').empty();
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].id).text(data[i].brand_name)
 				.appendTo('#singleStolendeviceBrandName');
 	}
+	
 });
+$('select#singleStolendeviceBrandName').select2();
+
 
 $('#singleStolendeviceBrandName').on(
 		'change',
@@ -1214,6 +1221,7 @@ $('#singleStolendeviceBrandName').on(
 			var brand_id = $('#singleStolendeviceBrandName').val();
 			$.getJSON('./productModelList?brand_id=' + brand_id,
 					function(data) {
+				        $('#select2-singleStolenmodalNumber-container').empty();
 						$("#singleStolenmodalNumber").empty();
 						for (i = 0; i < data.length; i++) {
 							$('<option>').val(data[i].id).text(
@@ -1221,6 +1229,7 @@ $('#singleStolendeviceBrandName').on(
 									'#singleStolenmodalNumber');
 						}
 					});
+			$('select#singleStolenmodalNumber').select2();
 		});
 
 

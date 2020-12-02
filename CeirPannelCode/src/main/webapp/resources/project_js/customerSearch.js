@@ -92,7 +92,11 @@
 
 	$('#deviceType').on('change', function() {
 		var value=parseInt($(this).val());
-
+		var DeviceIdtype=$('#deviceType').val();
+		if(DeviceIdtype=="" || DeviceIdtype==null || DeviceIdtype=="null"){
+			$('#errorMsgOnModal').text('');
+		}
+		else{
 		switch (value) {
 		case 0:
 			$('#imei').val('');
@@ -120,6 +124,7 @@
 			$("#imei").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
 			$('#errorMsgOnModal').text($.i18n('ESNMsg'));
 			break;
+		}
 		}
 
 	}); 

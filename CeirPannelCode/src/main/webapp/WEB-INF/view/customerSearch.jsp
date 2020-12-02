@@ -83,7 +83,9 @@
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 
-
+<link rel="stylesheet"
+	href="${context}/resources/project_css/select2.css">
+	
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
@@ -218,7 +220,7 @@ section {
                             <div class="input-field col s12 m3 l3">
                               <input type="text" name="IMEI" id="imei" maxlength="16" pattern="[0-9\s]{15,16}" value=""  required/>
                               <p id="errorMsgOnModal" class="deviceErrorTitle"></p>
-                              <label for="imei" ><spring:message code="input.imei" /><span class="star">*</span></label>
+                              <label for="imei" ><spring:message code="title.imeiMeidEsn" /><span class="star">*</span></label>
                             </div>
                             
                              <div class="input-field col s12 m3 l3">
