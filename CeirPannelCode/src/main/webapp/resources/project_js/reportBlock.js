@@ -337,12 +337,14 @@ function submitUnBlockImei()
 
 function submitSingleBlockDevicesRequest()
 {
-	if($('#blockdeviceIdType').val()==0){
+if($('#blockdeviceIdType').val()==0){
 		var luhnIMEI1=luhnCheck('singleblockIMEI1','blockdeviceIdType');
-		var luhnIMEI4="";
-		var luhnIMEI3="";
-		var luhnIMEI2='';
+		var luhnIMEI4=null;
+		var luhnIMEI3=null;
+		var luhnIMEI2=null;
+		
 		if($('#singleblockIMEI2').val()!=null || $('#singleblockIMEI2').val()!=''){
+			
 			var luhnIMEI2 =luhnCheck('singleblockIMEI2','blockdeviceIdType')	
 		}
 		else if($('#singleblockIMEI3').val()!=null || $('#singleblockIMEI3').val()!=''){
@@ -352,7 +354,7 @@ function submitSingleBlockDevicesRequest()
 		else if($('#singleblockIMEI4').val()!=null || $('#singleblockIMEI4').val()!=''){
 			 luhnIMEI4= luhnCheck('singleblockIMEI4','blockdeviceIdType')	
 		}
-		
+		//alert("luhnIMEI1="+luhnIMEI1+" luhnIMEI2 ="+luhnIMEI2+" luhnIMEI3="+luhnIMEI3+" luhnIMEI4 ="+luhnIMEI4)
 		//alert("luhnIMEI1 "+luhnIMEI1+" luhnIMEI2 = "+luhnIMEI2+" luhnIMEI3 "+luhnIMEI3+" luhnIMEI4 = "+luhnIMEI4);
 		if(luhnIMEI1==false || luhnIMEI2==false || luhnIMEI3==false || luhnIMEI4==false)
 		{
@@ -461,9 +463,9 @@ function submitSingleUnBlockDevicesRequest()
 	if($('#UnblockdeviceIdType').val()==0){
 		
 		var luhnIMEI1=luhnCheck('unbockSingleIMEI1','UnblockdeviceIdType');
-		var luhnIMEI4="";
-		var luhnIMEI3="";
-		var luhnIMEI2='';
+		var luhnIMEI4=null;
+		var luhnIMEI3=null;
+		var luhnIMEI2=null;
 		if($('#unbockSingleIMEI2').val()!=null || $('#unbockSingleIMEI2').val()!=''){
 			var luhnIMEI2 =luhnCheck('unbockSingleIMEI2','UnblockdeviceIdType')	
 		}
@@ -1040,11 +1042,11 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 
 function updateSingleBlockDevicesRequest()
 {
-	if($('#editblockdeviceIdType').val()==0){
+		if($('#editblockdeviceIdType').val()==0){
 		var luhnIMEI1=luhnCheck('editsingleblockIMEI1','editblockdeviceIdType');
-		var luhnIMEI4="";
-		var luhnIMEI3="";
-		var luhnIMEI2='';
+		var luhnIMEI4=null;
+		var luhnIMEI3=null;
+		var luhnIMEI2=null;
 		if($('#editsingleblockIMEI2').val()!=null || $('#editsingleblockIMEI2').val()!=''){
 			var luhnIMEI2 =luhnCheck('editsingleblockIMEI2','editblockdeviceIdType')	
 		}

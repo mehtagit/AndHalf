@@ -263,7 +263,6 @@ $('body').on('click', '#content', function() {
 });
 
 
-
 function closeViewPage(){
 	var txnId=$("body").attr("data-txnID");
 	var reqSource=$("body").attr("data-source");
@@ -324,6 +323,7 @@ function luhn_checksum(code) {
 }
 
 function luhnCheck(IMEILUHN,IMEIType){
+
 	if($("#"+IMEIType).val()==0){
 	var IMEIlenth1=$("#"+IMEILUHN).val().length;
 	var IMEI1LastDigit=$("#"+IMEILUHN).val();
@@ -337,7 +337,7 @@ function luhnCheck(IMEILUHN,IMEIType){
 			//IMEI number passed luhn alogoritham .
 			$('#errorMsgOnModal').text('');
 			x= true;
-		
+			
 		}
 		else
 			{

@@ -102,7 +102,7 @@ table.dataTable.display tbody tr:first-child td {
 </style>
 </head>
 
-<body data-id="1" data-roleType="${usertype}"
+<body data-roleType="${usertype}" data-id="1"
 	data-userTypeID="${usertypeId}" data-userID="${userid}"
 	data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}">
@@ -211,9 +211,9 @@ table.dataTable.display tbody tr:first-child td {
 	<script type="text/javascript"
 		src=""
 		async></script>
-<%-- <script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
- --%>
-  <script>
+<script type="text/javascript">$( document ).ready(function() {if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
+
+ <%--  <script>
   $( document ).ready(function() { 
 var timeoutTime = <%=session.getLastAccessedTime()%>;
 var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;
@@ -223,5 +223,5 @@ $("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name
 currentTime = data;
 },error: function (jqXHR, textStatus, errorThrown) {}});
 if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
- </script>
+ </script> --%>
 </body></html>

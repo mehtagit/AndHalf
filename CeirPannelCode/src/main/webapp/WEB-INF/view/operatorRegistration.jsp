@@ -345,12 +345,12 @@ var contextpath = "${context}";
 												<div class="row">
 								<div class="input-field col s12 m12 l12">
 									<input type="text" maxlength="200" pattern="[a-zA-Z0-9\s,#'*$-]{5,200}" name="propertyLocation" id="propertyLocation"
-										oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" title="" required /> 
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.address20characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address20characters" />');" title="" required /> 
 										 <label for="propertyLocation"><spring:message code="input.address" /> <span class="star">*</span></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9\s._%-+$@,/]{1,20}"
+									<input type="text" name="street" maxlength="20" id="street" pattern="[A-Za-z0-9 ]{1,20}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.20Characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Characters" />');" title="" required />
 									<label for="street"><spring:message code="input.streetNumber" /> <span class="star">*</span> </label>
 								</div>
@@ -360,7 +360,7 @@ var contextpath = "${context}";
 									<label for="village"><spring:message code="input.village" />  </label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9\s._%-+$@#,/]{3,30}"
+									<input type="text" name="locality" maxlength="30" id="locality" pattern="[A-Za-z0-9 ]{3,30}"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" title="">
 									<label for="locality"><spring:message code="input.locality" /> </label>
 								</div>
@@ -431,8 +431,8 @@ var contextpath = "${context}";
 								</div>
 
 								<div class="input-field col s12 m6 l6" style="margin-top: 22px;">
-									<input type="text" name="employeeID"  id="employeeId" maxlength="30" 
-									oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" title="" required> 
+									<input type="text" name="employeeID"  id="employeeId" maxlength="30" pattern="[A-Za-z0-9]{1,30}"  
+									oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characterswithoutSpecial" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characterswithoutSpecial" />');" title="" required> 
 									<label for="employeeId"><spring:message code="registration.employeeid" /> <span class="star">*</span></label>
 								</div>
 

@@ -248,7 +248,7 @@ var contextpath = "${context}";
 
 </head>
 
-<body data-lang-param="${pageContext.response.locale}">
+<body data-roleType="${usertype}" data-lang-param="${pageContext.response.locale}">
 
 
 <%String userType=request.getParameter("type");
@@ -992,7 +992,7 @@ var contextpath = "${context}";
      
        editOtherProfile();
    	
-       
+       if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";}
        var timeoutTime = <%=session.getLastAccessedTime()%>;
        var timeout = <%=session.getMaxInactiveInterval()%>;
        timeoutTime += timeout;

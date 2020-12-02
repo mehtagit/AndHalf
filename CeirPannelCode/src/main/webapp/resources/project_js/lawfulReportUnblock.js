@@ -13,11 +13,11 @@ function saveIndivisualRecoveryRequest()
 		if($('#sigleRecoveryimeiNumber2').val()!=null || $('#sigleRecoveryimeiNumber2').val()!=''){
 			var luhnIMEI2 =luhnCheck('sigleRecoveryimeiNumber2','sigleRecoverydeviceIDType')	
 		}
-		else if($('#sigleRecoveryimeiNumber3').val()!=null || $('#sigleRecoveryimeiNumber3').val()!=''){
+		 if($('#sigleRecoveryimeiNumber3').val()!=null || $('#sigleRecoveryimeiNumber3').val()!=''){
 			var luhnIMEI3 = luhnCheck('sigleRecoveryimeiNumber3','sigleRecoverydeviceIDType')	
 		}
 		
-		else if($('#sigleRecoveryimeiNumber4').val()!=null || $('#sigleRecoveryimeiNumber4').val()!=''){
+		 if($('#sigleRecoveryimeiNumber4').val()!=null || $('#sigleRecoveryimeiNumber4').val()!=''){
 			 luhnIMEI4= luhnCheck('sigleRecoveryimeiNumber4','sigleRecoverydeviceIDType')	
 		}
 		

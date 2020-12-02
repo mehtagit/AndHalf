@@ -224,7 +224,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                                 <p style="margin-bottom: 0;"><spring:message code="title.imeiMeidEsn" /> </p>
                                                             </div>
                                                             <div class="input-field col s12 m6">
-                                                                <input type="text" id="unbockSingleIMEI1"  name="IMEI1" pattern="[0-9]{15,16}" onchange="luhnCheck('unbockSingleIMEI1','UnblockdeviceIdType')"
+                                                                           <input type="text" id="unbockSingleIMEI1"  name="IMEI1" pattern="[0-9]{15,16}" 
                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                 required   maxlength="16">
@@ -232,7 +232,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6">
-                                                                <input type="text" id="unbockSingleIMEI2" name="IMEI2" pattern="[0-9]{15,16}" onchange="luhnCheck('unbockSingleIMEI2','UnblockdeviceIdType')"
+                                                                                            <input type="text" id="unbockSingleIMEI2" name="IMEI2" pattern="[0-9]{15,16}" 
                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                     maxlength="16">
@@ -240,7 +240,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                             </div>  
                                                             
                                                             <div class="input-field col s12 m6">
-                                                                <input type="text" id="unbockSingleIMEI3" name="IMEI3" pattern="[0-9]{15,16}" onchange="luhnCheck('unbockSingleIMEI3','UnblockdeviceIdType')"
+                                                          <input type="text" id="unbockSingleIMEI3" name="IMEI3" pattern="[0-9]{15,16}" 
                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                    maxlength="16">
@@ -249,7 +249,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                             </div>
             
                                                             <div class="input-field col s12 m6">
-                                                                <input type="text" id="unbockSingleIMEI4" name="IMEI4[]" pattern="[0-9]{15,16}" onchange="luhnCheck('unbockSingleIMEI4','UnblockdeviceIdType')"
+                                                      <input type="text" id="unbockSingleIMEI4" name="IMEI4[]" pattern="[0-9]{15,16}"
                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                  maxlength="16">
@@ -611,7 +611,7 @@ src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random(
 			$('div#initialloader').delay(300).fadeOut('slow');
 		</script>
 
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>
 
 
