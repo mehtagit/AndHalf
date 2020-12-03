@@ -1108,6 +1108,8 @@ public class EnduserServiceImpl {
 		}
 
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+			uPSB.orSearch(new SearchCriteria("nid", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			uPSB.orSearch(new SearchCriteria("visaFileName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			uPSB.orSearch(new SearchCriteria("visaNumber", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			uPSB.orSearch(new SearchCriteria("visaExpiryDate", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			uPSB.orSearch(new SearchCriteria("createdOn", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));

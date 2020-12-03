@@ -439,13 +439,19 @@ public class StockServiceImpl {
 			logger.info("Inside getFilteredUserType block.");
 			specificationBuilder.with(new SearchCriteria("userType", filterRequest.getFilteredUserType(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
+		
+		if(Objects.nonNull(filterRequest.getDisplayName()) && !filterRequest.getDisplayName().isEmpty()) {
+			specificationBuilder.with(new SearchCriteria("user-userProfile-displayName", filterRequest.getDisplayName().trim().replace("  ", " ")
+					, SearchOperation.LIKE, Datatype.STRING));
+		}
 
 		if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
 			specificationBuilder.with(new SearchCriteria("stockStatus", filterRequest.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 		}else {
 			if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
 
-				List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMap = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(filterRequest.getUserTypeId(), filterRequest.getFeatureId());
+				List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMap = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(filterRequest.getUserTypeId(),
+						filterRequest.getFeatureId());
 				logger.debug(dashboardUsersFeatureStateMap);
 
 				List<Integer> stockStatus = new LinkedList<>();
@@ -486,6 +492,12 @@ public class StockServiceImpl {
 
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			specificationBuilder.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			specificationBuilder.orSearch(new SearchCriteria("fileName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			specificationBuilder.orSearch(new SearchCriteria("supplierId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			specificationBuilder.orSearch(new SearchCriteria("suplierName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			specificationBuilder.orSearch(new SearchCriteria("invoiceNumber", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			specificationBuilder.orSearch(new SearchCriteria("quantity", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			specificationBuilder.orSearch(new SearchCriteria("deviceQuantity", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
 
 		return specificationBuilder;

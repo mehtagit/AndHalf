@@ -918,9 +918,14 @@ public class ConsignmentServiceImpl {
 		if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()))
 			cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 
-		if(Objects.nonNull(consignmentMgmt.getDisplayName()) && !consignmentMgmt.getDisplayName().isEmpty())
-			cmsb.addSpecification(cmsb.joinWithMultiple(new SearchCriteria("displayName",consignmentMgmt.getDisplayName(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING)));
-
+//		if(Objects.nonNull(consignmentMgmt.getDisplayName()) && !consignmentMgmt.getDisplayName().isEmpty())
+//			cmsb.addSpecification(cmsb.joinWithMultiple(new SearchCriteria("displayName",consignmentMgmt.getDisplayName(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING)));
+		
+		if(Objects.nonNull(consignmentMgmt.getDisplayName()) && !consignmentMgmt.getDisplayName().isEmpty()) {
+			cmsb.with(new SearchCriteria("user-userProfile-displayName", consignmentMgmt.getDisplayName().trim().replace("  ", " ")
+					, SearchOperation.LIKE, Datatype.STRING));
+		}
+		
 		if(Objects.nonNull(consignmentMgmt.getConsignmentStatus())) {
 			cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 		}else if( !(Objects.nonNull(consignmentMgmt.getTxnId()) && !consignmentMgmt.getTxnId().isEmpty()) && !Objects.nonNull(consignmentMgmt.getTaxPaidStatus())
@@ -976,7 +981,7 @@ public class ConsignmentServiceImpl {
 			cmsb.orSearch(new SearchCriteria("deviceQuantity",consignmentMgmt.getSearchString(), SearchOperation.LIKE,Datatype.STRING));
 			cmsb.orSearch(new SearchCriteria("consignmentNumber",consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING)); 
 			cmsb.orSearch(new SearchCriteria("supplierId",consignmentMgmt.getSearchString(), SearchOperation.LIKE,Datatype.STRING));
-
+			cmsb.orSearch(new SearchCriteria("fileName", consignmentMgmt.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
 
 		return cmsb;

@@ -129,7 +129,18 @@ public class GenericSpecificationBuilder<T> {
 					}
 					else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
-						return cb.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+						if( searchCriteria.getKey().contains("-")) {
+							//logger.info("Search Criteria join key:["+searchCriteria.getKey()+"]");
+							String[] key = (searchCriteria.getKey()).split("-");
+							if( key.length == 2)
+								return cb.equal(root.join(key[0]).get(key[1]).as( String.class ),
+										searchCriteria.getValue().toString());
+							else
+								return cb.equal(root.join(key[0]).join(key[1]).get(key[2]).as( String.class ),
+										searchCriteria.getValue().toString());
+						}else {
+							return cb.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+						}
 					}
 					else if(SearchOperation.EQUALITY_CASE_INSENSITIVE.equals(searchCriteria.getSearchOperation())
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
@@ -168,8 +179,12 @@ public class GenericSpecificationBuilder<T> {
 						if( searchCriteria.getKey().contains("-")) {
 							//logger.info("Search Criteria join key:["+searchCriteria.getKey()+"]");
 							String[] key = (searchCriteria.getKey()).split("-");
-							return cb.like(cb.lower(root.join(key[0]).get(key[1]).as( String.class )),
-									"%"+((String)searchCriteria.getValue()).toLowerCase()+"%");
+							if( key.length == 2)
+								return cb.like(cb.lower(root.join(key[0]).get(key[1]).as( String.class )),
+										"%"+((String)searchCriteria.getValue()).toLowerCase()+"%");
+							else
+								return cb.like(cb.lower(root.join(key[0]).join(key[1]).get(key[2]).as( String.class )),
+										"%"+((String)searchCriteria.getValue()).toLowerCase()+"%");
 						}else {
 							return cb.like(cb.lower(root.get(searchCriteria.getKey()).as( String.class )), "%"+((String)searchCriteria.getValue()).toLowerCase()+"%");
 						}

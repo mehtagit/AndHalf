@@ -516,6 +516,8 @@ public class StolenAndRecoveryServiceImpl {
 		
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			srsb.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			srsb.orSearch(new SearchCriteria("qty", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			srsb.orSearch(new SearchCriteria("deviceQuantity", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
 
 		return srsb;
@@ -1536,7 +1538,7 @@ public class StolenAndRecoveryServiceImpl {
 		return stakeholderfeatureServiceImpl.getFeatureNameById(id);
 	}
 
-	private int countImeiForIndividual(Long imei1, Long imei2, Long imei3, Long imei4) {
+	private int countImeiForIndividual(String imei1, String imei2, String imei3, String imei4) {
 		int count = 0;
 		if(Objects.nonNull(imei1))
 			count++;

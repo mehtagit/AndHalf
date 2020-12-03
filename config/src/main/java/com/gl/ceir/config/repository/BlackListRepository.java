@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.gl.ceir.config.model.BlackList;
@@ -16,6 +17,7 @@ public interface BlackListRepository extends JpaRepository<BlackList, Long> , Jp
 	
 	public BlackList findByMsisdn(Long msisdn);
 
+	@Query("SELECT r FROM BlackList r WHERE imei = :imei OR substr(imei,1,14) =:imei")
 	public BlackList findByImei(String imei);
 	
 	public Optional<BlackList> findById(Long id);

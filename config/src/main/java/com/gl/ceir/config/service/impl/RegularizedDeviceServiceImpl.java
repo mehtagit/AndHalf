@@ -804,6 +804,7 @@ public class RegularizedDeviceServiceImpl {
 					}
 
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.REJECTED_BY_CEIR_ADMIN.getCode());
+					regularizeDeviceDb.setRemark(ceirActionRequest.getRemarks());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_DISAPPROVAL";	
 					receiverUserType = "End User";
 					txnId = regularizeDeviceDb.getTxnId();

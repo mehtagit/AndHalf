@@ -65,8 +65,8 @@ public class FileServiceImpl {
 	public FileDetails getManuals(int userTypeId) {
 
 		String fileName = null;
-		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.manuals_link);
-		switch (userTypeId) {
+		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.manuals_link+"_"+userTypeId);
+		/*switch (userTypeId) {
 		case 1:
 			fileName = "";
 			break;
@@ -114,11 +114,13 @@ public class FileServiceImpl {
 			break;
 		default:
 			break;
-		}
+		}*/
 
-
+//		fileName = ;
+//		return new FileDetails("", "", systemConfigurationDb.getValue().replace("$LOCAL_IP",
+//				propertiesReader.localIp) + fileName);
 		return new FileDetails("", "", systemConfigurationDb.getValue().replace("$LOCAL_IP",
-				propertiesReader.localIp) + fileName);
+				propertiesReader.localIp));
 	}
 
 	public FileDetails downloadUploadedFile(String fileName, String txnId, String fileType, String tag) {

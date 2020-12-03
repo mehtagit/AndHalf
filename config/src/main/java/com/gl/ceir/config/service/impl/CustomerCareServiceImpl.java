@@ -103,7 +103,7 @@ public class CustomerCareServiceImpl {
 					&& "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())) {
 				return fetchDetailsOfImei(imei, "0", listType);
 
-			}else if(Objects.nonNull(customerCareRequest.getMsisdn())){
+			}else if(Objects.nonNull(customerCareRequest.getMsisdn()) || !customerCareRequest.getMsisdn().equals("") ){
 				DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImei(imei);
 
 				if(Objects.isNull(deviceUsageDb)) {
