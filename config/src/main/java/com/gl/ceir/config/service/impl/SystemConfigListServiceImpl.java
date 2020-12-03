@@ -303,6 +303,7 @@ public class SystemConfigListServiceImpl {
 			cmsb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			cmsb.orSearch(new SearchCriteria("displayName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			cmsb.orSearch(new SearchCriteria("tag", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("tagId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
 
 		return cmsb;
