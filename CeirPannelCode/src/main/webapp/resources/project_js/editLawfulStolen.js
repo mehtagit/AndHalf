@@ -55,9 +55,8 @@ $(document).ready(function() {
 		contentType: false,
 		async:false,
 		success: function (data, textStatus, jqXHR) {
-			////console.log(data)
-			$('#select2-editsingleStolendeviceBrandName-container').empty();
-			
+					////console.log(data)
+			$('#select2-editsingleStolendeviceBrandName-container').empty();			
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].id).text(data[i].brand_name)
 						.appendTo('#editsingleStolendeviceBrandName');

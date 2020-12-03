@@ -263,7 +263,6 @@ $('body').on('click', '#content', function() {
 });
 
 
-
 function closeViewPage(){
 	var txnId=$("body").attr("data-txnID");
 	var reqSource=$("body").attr("data-source");

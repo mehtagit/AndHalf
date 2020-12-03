@@ -337,7 +337,7 @@ function submitUnBlockImei()
 
 function submitSingleBlockDevicesRequest()
 {
-	if($('#blockdeviceIdType').val()==0){
+if($('#blockdeviceIdType').val()==0){
 		var luhnIMEI1=luhnCheck('singleblockIMEI1','blockdeviceIdType');
 		var luhnIMEI4=null;
 		var luhnIMEI3=null;
@@ -1042,7 +1042,7 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 
 function updateSingleBlockDevicesRequest()
 {
-	if($('#editblockdeviceIdType').val()==0){
+		if($('#editblockdeviceIdType').val()==0){
 		var luhnIMEI1=luhnCheck('editsingleblockIMEI1','editblockdeviceIdType');
 		var luhnIMEI4=null;
 		var luhnIMEI3=null;
