@@ -80,6 +80,8 @@
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
+<link rel="stylesheet"
+	href="${context}/resources/project_css/select2.css">
 
 <style>
 .checkboxFont {
@@ -316,7 +318,7 @@ select {
 
 													<div class="input-field col s12 m6">
 														<input type="text" name="sigleRecoveryimeiNumber1"
-															pattern="[0-9]{15,16}" onchange="luhnCheck('sigleRecoveryimeiNumber1','sigleRecoverydeviceIDType')"
+															pattern="[0-9]{15,16}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															maxlength="16" id="sigleRecoveryimeiNumber1" /> <label
@@ -326,7 +328,7 @@ select {
 
 													<div class="input-field col s12 m6">
 														<input type="text" name="imeiNumberTwo"
-															pattern="[0-9]{15,16}" onchange="luhnCheck('sigleRecoveryimeiNumber2','sigleRecoverydeviceIDType')"
+															pattern="[0-9]{15,16}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															maxlength="16" id="sigleRecoveryimeiNumber2"> <label
@@ -336,7 +338,7 @@ select {
 
 													<div class="input-field col s12 m6">
 														<input type="text" name="imeiNumberThree"
-															pattern="[0-9]{15,16}" onchange="luhnCheck('sigleRecoveryimeiNumber3','sigleRecoverydeviceIDType')"
+															pattern="[0-9]{15,16}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															maxlength="16" id="sigleRecoveryimeiNumber3"> <label
@@ -347,7 +349,7 @@ select {
 
 													<div class="input-field col s12 m6">
 														<input type="text" name="imeiNumberFour"
-															pattern="[0-9]{15,16}" onchange="luhnCheck('sigleRecoveryimeiNumber4','sigleRecoverydeviceIDType')"
+															pattern="[0-9]{15,16}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															maxlength="16" id="sigleRecoveryimeiNumber4"> <label
@@ -904,6 +906,8 @@ onclick="_Services._selectstartDate()"></i></span>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js?version=<%= (int) (Math.random() * 10) %>"
 		async></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/select2.js"></script>
 	<script type="text/javascript"
 		src=""
 		async></script>
@@ -957,11 +961,13 @@ onclick="_Services._selectstartDate()"></i></span>
         });
         
         $.getJSON('./productList', function(data) {
+        	$('#select2-sigleRecoverydeviceBrandName-container').empty();
         	for (i = 0; i < data.length; i++) {
         		$('<option>').val(data[i].id).text(data[i].brand_name)
         				.appendTo('#sigleRecoverydeviceBrandName');
         	}
         });
+        $('select#sigleRecoverydeviceBrandName').select2();
 
         $('#sigleRecoverydeviceBrandName').on(
         		'change',
@@ -978,12 +984,14 @@ onclick="_Services._selectstartDate()"></i></span>
 
         			$.getJSON('./productModelList?brand_id=' + brand_id,
         					function(data) {
-        						$("#singleRecoverymodalNumber").empty();
+        				$('#select2-singleRecoverymodalNumber-container').empty();		
+        				$("#singleRecoverymodalNumber").empty();
         						for (i = 0; i < data.length; i++) {
         							$('<option>').val(data[i].id).text(
         									data[i].modelName).appendTo('#singleRecoverymodalNumber');
         						}
         					});
+        			 $('select#singleRecoverymodalNumber').select2();
         		});
 
 
@@ -991,7 +999,7 @@ onclick="_Services._selectstartDate()"></i></span>
 </script>
 
 
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>
 <%
 	}else{

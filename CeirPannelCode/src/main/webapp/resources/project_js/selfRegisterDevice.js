@@ -845,6 +845,28 @@ function submitEndUserDeviceInfo(){
 	var formData= new FormData();
 	
 	if($('#deviceIdType1').val()==0){
+		var luhnIMEI1=luhnCheck('IMEIA1','deviceIdType1');
+		var luhnIMEI4="";
+		var luhnIMEI3="";
+		var luhnIMEI2="";
+		if($('#IMEIB1').val()!=null || $('#IMEIB1').val()!=''){
+			var luhnIMEI2 =luhnCheck('IMEIB1','deviceIdType1')	
+		}
+		if($('#IMEIC1').val()!=null || $('#IMEIC1').val()!=''){
+			var luhnIMEI3 = luhnCheck('IMEIC1','deviceIdType1')	
+		}
+		
+		if($('#IMEID1').val()!=null || $('#IMEID1').val()!=''){
+			 luhnIMEI4= luhnCheck('IMEID1','deviceIdType1')	
+		}
+		
+		//alert("luhnIMEI1 "+luhnIMEI1+" luhnIMEI2 = "+luhnIMEI2+" luhnIMEI3 "+luhnIMEI3+" luhnIMEI4 = "+luhnIMEI4);
+		if(luhnIMEI1==false || luhnIMEI2==false || luhnIMEI3==false || luhnIMEI4==false)
+		{
+			//alert("failed");
+			return false
+		}
+		
 		var checkIMEI=checkDuplicateImei($('#IMEIA1').val(),$('#IMEIB1').val(),$('#IMEIC1').val(),$('#IMEID1').val());
 		if(checkIMEI===true){
 		$('#errorMsgOnModal').text('');

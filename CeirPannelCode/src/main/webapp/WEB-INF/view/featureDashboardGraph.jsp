@@ -274,7 +274,7 @@ display: none !important;
 </style>
 
 </head>
-<body data-id="45">
+<body data-id="45" data-roleType="${usertype}">
 	<!-- START MAIN -->
 		<div id="initialloader"></div>
 	<!-- START WRAPPER -->
@@ -430,7 +430,7 @@ display: none !important;
 <script type="text/javascript"
 		src="${context}/resources/graph_js/dashBoardFeatureGraph.js?version=<%= (int) (Math.random() * 10) %>"></script>		
 
-<script type="text/javascript">$( document ).ready(function() {  featureDashboardGraph();  var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {featureDashboardGraph(); if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </html>
 <%
 	} else {

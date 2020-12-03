@@ -34,6 +34,7 @@ window.parent
 				$('<option>').val(data[i].id).text(data[i].brand_name)
 						.appendTo('#productname');
 			}
+			$('select#productname').select2();
 		});
 
 		$('#productname').on(
@@ -42,13 +43,27 @@ window.parent
 					var brand_id = $('#productname').val();
 					$.getJSON('./productModelList?brand_id=' + brand_id,
 							function(data) {
+					/*	$('#select2-modelNumber-container').empty();
 								$("#modelNumber").empty();
 								for (i = 0; i < data.length; i++) {
 									$('<option>').val(data[i].id).text(
 											data[i].modelName).appendTo(
 											'#modelNumber');
 								}
+								*/
+						$('#select2-modelNumber-container').empty();
+								$('#modelNumber').empty();
+								var html='<option value="">Select Model Number</option>';
+								$('#modelNumber').append(html);	
+								for (i = 0; i < data.length; i++){
+									var html='<option value="'+data[i].id+'">'+data[i].modelName+'</option>';
+									$('#modelNumber').append(html);	
+								}
+								
+								
+								
 							});
+					$('select#modelNumber').select2();
 				});
 		
 	

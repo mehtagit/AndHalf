@@ -80,6 +80,10 @@
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
+<link rel="stylesheet"
+	href="${context}/resources/project_css/select2.css">
+
+
 
 <style>
 .checkboxFont {
@@ -612,7 +616,7 @@ select {
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumber" pattern="[0-9]{15,16}" oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"  
-																maxlength="16" id="singleStolenimei1" onchange="luhnCheck('singleStolenimei1','singleStolendeviceIDType')"> 
+																maxlength="16" id="singleStolenimei1" > 
 																<label for="singleStolenimei1"><spring:message code="registration.one" /> <span class="star"> </span> 
 																</label>
 														</div>
@@ -623,7 +627,7 @@ select {
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																
-																maxlength="16" id="singleStolenimei2" onchange="luhnCheck('singleStolenimei2','singleStolendeviceIDType')"> <label
+																maxlength="16" id="singleStolenimei2" > <label
 																for="singleStolenimei12"> <spring:message
 																	code="registration.two" /></label>
 														</div>
@@ -633,7 +637,7 @@ select {
 																pattern="[0-9]{15,16}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																onchange="luhnCheck('singleStolenimei3','singleStolendeviceIDType')"
+																
 																maxlength="16" id="singleStolenimei3"> <label
 																for="singleStolenimei3"> <spring:message code="registration.three" /></label>
 														<p id="errorMsgOnModal" class="deviceErrorTitle"></p>
@@ -644,7 +648,7 @@ select {
 																pattern="[0-9]{15,16}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																onchange="luhnCheck('singleStolenimei4','singleStolendeviceIDType')"
+																
 																maxlength="16" id="singleStolenimei4"> <label
 																for="singleStolenimei4"> <spring:message code="registration.four" /></label>
 														
@@ -1408,7 +1412,8 @@ select {
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
-
+	<script type="text/javascript"
+		src="${context}/resources/project_js/select2.js"></script>
 	
 
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
@@ -1550,7 +1555,7 @@ select {
 <script type="text/javascript">
 /* $('div#initialloader').delay(300).fadeOut('slow'); */
 </script>
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 
 </body></html>
 <%

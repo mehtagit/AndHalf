@@ -244,7 +244,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                                 <p style="margin-bottom: 0;"><spring:message code="title.imeiMeidEsn" /></p>
                                                             </div>
                                                            <div class="input-field col s12 m6">
-                                                                <input type="text" id="singleblockIMEI1" name="IMEI1" pattern="[0-9]{15,16}"  onchange="luhnCheck('singleblockIMEI1','blockdeviceIdType')"
+                                                                <input type="text" id="singleblockIMEI1" name="IMEI1" pattern="[0-9]{15,16}"  
                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                     required   maxlength="16">
@@ -252,7 +252,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6">
-                                                                <input type="text" id="singleblockIMEI2" name="IMEI2" pattern="[0-9]{15,16}" onchange="luhnCheck('singleblockIMEI2','blockdeviceIdType')"
+                                                                <input type="text" id="singleblockIMEI2" name="IMEI2" pattern="[0-9]{15,16}" 
                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                     maxlength="16">
@@ -260,7 +260,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                             </div>  
                                                             
                                                             <div class="input-field col s12 m6">
-                                                                <input type="text" id="singleblockIMEI3" name="IMEI3" pattern="[0-9]{15,16}" onchange="luhnCheck('singleblockIMEI3','blockdeviceIdType')"
+                                                                <input type="text" id="singleblockIMEI3" name="IMEI3" pattern="[0-9]{15,16}" 
                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                     oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                   maxlength="16">
@@ -269,7 +269,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                             </div>
             
                                                             <div class="input-field col s12 m6">
-                                                               <input type="text" id="singleblockIMEI4" name="IMEI4[]" pattern="[0-9]{15,16}" onchange="luhnCheck('singleblockIMEI1','blockdeviceIdType')"
+                                                               <input type="text" id="singleblockIMEI4" name="IMEI4[]" pattern="[0-9]{15,16}"
                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                     oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                   maxlength="16">
@@ -529,7 +529,7 @@ onclick="_Services._selectstartDate()"></i></span>
 	$('div#initialloader').delay(300).fadeOut('slow');
 	</script>	
 
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>
 
 <%

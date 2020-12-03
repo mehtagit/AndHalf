@@ -1336,7 +1336,7 @@ onclick="_Services._selectstartDate()"></i></span>
 </div>
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI1" name="IMEI1" placeholder="" 
-pattern="[0-9]{15,16}" required="required" onchange="luhnCheck('editsingleblockIMEI1','editblockdeviceIdType')"
+pattern="[0-9]{15,16}" required="required" 
 	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 title="" maxlength="16">
@@ -1346,7 +1346,7 @@ title="" maxlength="16">
 
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI2" name="IMEI2" placeholder=""
-pattern="[0-9]{15,16}" onchange="luhnCheck('editsingleblockIMEI2','editblockdeviceIdType')"
+pattern="[0-9]{15,16}" 
 	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 maxlength="16">
@@ -1356,7 +1356,7 @@ maxlength="16">
 
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI3" name="IMEI3" placeholder=""
-pattern="[0-9]{15,16}"  onchange="luhnCheck('editsingleblockIMEI3','editblockdeviceIdType')"
+pattern="[0-9]{15,16}"  
 oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 maxlength="16">
@@ -1367,7 +1367,7 @@ maxlength="16">
 
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI4" name="IMEI4[]" placeholder=""
-pattern="[0-9]{15,16}"  onchange="luhnCheck('editsingleblockIMEI4','editblockdeviceIdType')"
+pattern="[0-9]{15,16}"  
 oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 maxlength="16">
@@ -1757,7 +1757,7 @@ type="submit" ><spring:message code="button.update" /></button>
 			
 		});
 		</script>
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>
 <%
 	} else {

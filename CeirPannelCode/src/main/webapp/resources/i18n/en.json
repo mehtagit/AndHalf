@@ -240,6 +240,7 @@
 	"monthWise.Total Stock Uploaded Importer":"Last month Total Stock Uploaded by Importer count",
 	"monthWise.Total Stock Uploaded Distributor":"Last month Total Stock Uploaded by Distributor count",
 	"monthWise.Total Stock Uploaded Retailer":"Last month Total Stock Uploaded by Retailer count",
-	"imageMessageCSV": "File name should not be more than 30 characters. / File should have extension as png,jpg,jpeg,gif,csv and bmp. / File size should be less than 10 MB"
+	"imageMessageCSV": "File name should not be more than 30 characters. / File should have extension as png,jpg,jpeg,gif,csv and bmp. / File size should be less than 10 MB",
+	"meesageForOtherDoc":"Upload Document"
 	
 	}

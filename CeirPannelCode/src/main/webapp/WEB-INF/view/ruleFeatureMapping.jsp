@@ -443,6 +443,7 @@ if (currentTime < dfd) {
 	<script type="text/javascript">
 		$(document).ready(
 				function() {
+					if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";}
 					var timeoutTime =
 	<%=session.getLastAccessedTime()%>
 		;

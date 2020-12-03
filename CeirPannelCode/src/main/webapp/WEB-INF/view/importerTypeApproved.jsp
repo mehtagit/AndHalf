@@ -68,8 +68,11 @@
 <link
 	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<link rel="stylesheet"
+	<link rel="stylesheet"
 	href="${context}/resources/project_css/viewStock.css">
+<link rel="stylesheet"
+	href="${context}/resources/project_css/select2.css">
+	
 <link rel="stylesheet"
 	href="${context}/resources/project_css/iconStates.css">
 
@@ -351,7 +354,8 @@
 		<script
 		src="${context}/resources/custom_js/moment.min.js"></script>
 	
-		
+		<script type="text/javascript"
+		src="${context}/resources/project_js/select2.js"></script>
 	
 	<script type="text/javascript"
 		src="${context}/resources/project_js/importerTypeApproved.js?version=<%= (int) (Math.random() * 10) %>"></script>
@@ -362,7 +366,7 @@
 	<script type="text/javascript">
 		populateCountries("country");
 	</script>
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>
 <%
 	} else {
