@@ -171,18 +171,18 @@
 	
 	"IMEI_LUHN_CHECK":"IMEI does not pass the checksum algorithm",
 	"EXISTS_IN_TAC_DB":"The device does  not have a  valid TAC",
-	"EXIST_IN_RETAILER_DB":"IMEI/ESN/MEID is already present in the system",
-	"EXIST_IN_END_USER_DB":"IMEI/ESN/MEID is already present in the system",
+	"EXIST_IN_RETAILER_DB":"IMEI/MEID is already present in the system",
+	"EXIST_IN_END_USER_DB":"IMEI/MEID is already present in the system",
 	"EXIST_IN_MANUFACTURER_DB":"The device is not marked as tax paid in the CEIR system.",
 	"EXIST_IN_CUSTOM_DB":"The device is not marked as tax paid in the CEIR system.",
-	"LBD":"The device with IMEI/ESN/MEID  is marked as stolen/blocked in the CEIR system",
-	"EXISTS_IN_USAGE_DB":"IMEI/ESN/MEID is already in use in the network",
-	"EXIST_IN_VIP_LIST":"IMEI/ESN/MEID is already present in the system",
-	"IMEI_NULL":"IMEI/ESN/MEID is missing in the record.",
-	"EXIST_IN_BLACKLIST_DB":"The device with IMEI/ESN/MEID  is marked as stolen/blocked in the CEIR system",
-	"IMEI_LENGTH":"IMEI/ESN/MEID is not as per the 3GPP specification",
-	"EXIST_IN_GSMABLACKLIST_DB":"The device with IMEI/ESN/MEID  is marked as stolen/blocked globally",
-	"EXIST_IN_DISTRIBUTOR_DB":"IMEI/ESN/MEID is already present in the system",
+	"LBD":"The device with IMEI/MEID  is marked as stolen/blocked in the CEIR system",
+	"EXISTS_IN_USAGE_DB":"IMEI/MEID is already in use in the network",
+	"EXIST_IN_VIP_LIST":"IMEI/MEID is already present in the system",
+	"IMEI_NULL":"IMEI/MEID is missing in the record.",
+	"EXIST_IN_BLACKLIST_DB":"The device with IMEI/MEID  is marked as stolen/blocked in the CEIR system",
+	"IMEI_LENGTH":"IMEI/MEID is not as per the 3GPP specification",
+	"EXIST_IN_GSMABLACKLIST_DB":"The device with IMEI/MEID  is marked as stolen/blocked globally",
+	"EXIST_IN_DISTRIBUTOR_DB":"IMEI/MEID is already present in the system",
 	"EXIST_IN_IMPORTER_DB":"This device is not importer",
 	"TRCRegister_futureRef": "Your request for TAC upload has been received successfully. The Transaction ID for the same is",
 	"REGISTER_TYPE_APPROVE_REJECTED":"Type Approved for TAC already exists.",
@@ -241,6 +241,8 @@
 	"monthWise.Total Stock Uploaded Distributor":"Last month Total Stock Uploaded by Distributor count",
 	"monthWise.Total Stock Uploaded Retailer":"Last month Total Stock Uploaded by Retailer count",
 	"imageMessageCSV": "File name should not be more than 30 characters. / File should have extension as png,jpg,jpeg,gif,csv and bmp. / File size should be less than 10 MB",
-	"meesageForOtherDoc":"Upload Document"
+	"imageMessageGrievance": "File name should not be more than 30 characters. / File should have extension as png,jpg,jpeg,gif,csv,pdf,docx and bmp. / File size should be less than 10 MB",
+	"meesageForOtherDoc":"Upload Document",
+		"state":"State"
 	
 	}

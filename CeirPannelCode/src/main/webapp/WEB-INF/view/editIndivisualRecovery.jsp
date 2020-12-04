@@ -81,7 +81,8 @@
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 <link rel="stylesheet"
 	href="${context}/resources/project_css/intlTelInput.css">
-
+<link rel="stylesheet"
+	href="${context}/resources/project_css/select2.css">
 <style>
         .checkboxFont {
             color: #444;
@@ -658,7 +659,8 @@ onclick="_Services._selectstartDate()"></i></span>
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>
-		
+		<script type="text/javascript"
+		src="${context}/resources/project_js/select2.js"></script>	
 		<script>
 		
 		$.i18n().load( {
@@ -725,7 +727,7 @@ onclick="_Services._selectstartDate()"></i></span>
 </script>
 		
 
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>
 <%
 	}else{

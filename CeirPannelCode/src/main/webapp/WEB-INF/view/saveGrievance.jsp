@@ -803,10 +803,10 @@ $('div#initialloader').delay(300).fadeOut('slow');
 							//alert("----"+fileSize);*/
 						fileSize = Math.floor(fileSize/1000);
 						$('#FilefieldId').val(id);
-						////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
+						
 						var fileExtension =ext.toLowerCase();
-						////console.log("file type: "+fileExtension);
-						var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv"];
+						
+						var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv","pdf","docx"];
 						var isInArray =extArray.includes(fileExtension);
 						
 						$('#removeFileInput').val(id);

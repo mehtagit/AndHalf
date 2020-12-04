@@ -37,7 +37,7 @@ $.i18n().load( {
 });
 
 $( document ).ready(function() {
-	
+	var userStatus = $("body").attr("data-userStatus");
 	var In = $("body").attr("session-value");
 	 var loggedUserType=$("body").attr("data-roleType");
 	if((loggedUserType=='Custom' || loggedUserType=='Immigration') && $("body").attr("data-filterSource")!='dashboard' ){
@@ -72,23 +72,27 @@ $( document ).ready(function() {
 					$("#submitbtn").css("display", "none");
 					$("#btnLink").css({display: "block"});
 				} 
-				else if (data.errorCode == 0 && In == null) {
-				
-					$("#user123").css("display", "none");
-					$("#user456").css("display", "block");
-					$("#addbutton").css("display", "block");
-					$("#submitbtn").css("display", "none");
+				else if (data.errorCode == 0 && In == null) { 
+						$("#user123").css("display", "none");
+						$("#user456").css("display", "block");
+						$("#addbutton").css("display", "block");
+						$("#submitbtn").css("display", "none");
+					
 				} 
 				else
-				{
-				
-					$("#user123").css("display", "block");
-					$("#user456").css("display", "none");
-					$("#addbutton").css("display", "none");
-					$("#submitbtn").css("display", "none");
-					$("#btnLink").css({display: "none"});
-					$('div#initialloader').delay(300).fadeOut('slow');
-				}
+					if(userStatus=="Disable" || userStatus=="Deactivate"){
+						$("#user123").css("display", "block");
+						$('div#initialloader').delay(300).fadeOut('slow');
+						$('#userDisabledModel').openModal({dismissible:false});
+					}
+					else{
+						$("#user123").css("display", "block");
+						$("#user456").css("display", "none");
+						$("#addbutton").css("display", "none");
+						$("#submitbtn").css("display", "none");
+						$("#btnLink").css({display: "none"});
+						$('div#initialloader').delay(300).fadeOut('slow');
+					}
 				$('#nationalID').val(In);
 				regularizedCount();
 			},

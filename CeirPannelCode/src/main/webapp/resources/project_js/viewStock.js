@@ -921,13 +921,16 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	var filteredUserType =  $('#userType').val() =='null' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
 	//	var filterUserName=$('#name').val() == 'null' || 'undefined' ?null:$('#name').val();
 		var filterUserName=$('#name').val();
+		if(filterUserName==undefined || filterUserName=="undefined"){
+			filterUserName=null;
+		}
 		if(isNaN(StockStatus))
 		{
 		StockStatus='';
 		//////console.log(" StockStatus=="+StockStatus);
 		}
 	
-		if(stockStartDate!="" ||stockEndDate!="" || stockTxnId!="" || StockStatus!="" || filteredUserType!="" || filterUserName!="" ){
+		if(stockStartDate!="" ||stockEndDate!="" || stockTxnId!="" || StockStatus!="" || filteredUserType!=undefined || filterUserName!=undefined ){
 		  sourceParam="filter";
 	  }
 		var table = $('#stockTable').DataTable();

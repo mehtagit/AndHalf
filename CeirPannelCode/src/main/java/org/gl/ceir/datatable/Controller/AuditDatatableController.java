@@ -163,7 +163,7 @@ public class AuditDatatableController {
 		 
 			
 			//input type date list		
-			String[] dateParam= {"date","Start Date","startDate","","date","End Date","endDate","","text","Transaction ID","transactionID","","text","User Name","userName",""};
+			String[] dateParam= {"date","Start Date","startDate","","date","End Date","endDate","","text","Transaction ID","transactionID","","text","User ID","userName",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

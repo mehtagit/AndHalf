@@ -364,7 +364,7 @@ function enableEndUserAddMore(id,removeFileDivId){
 	////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var fileExtension =ext.toLowerCase();
 	////console.log("file type: "+fileExtension);
-	var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv"];
+	var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv","pdf","docx"];
 	var isInArray =extArray.includes(fileExtension);
 	
 	$('#removeFileInput').val(id);
@@ -382,7 +382,7 @@ function enableEndUserAddMore(id,removeFileDivId){
 		});
 		$(".endUser_add_field_button").attr("disabled", true);
 		$('#fileErrormessage').text('');
-		$('#fileErrormessage').text($.i18n('imageMessageCSV'));
+		$('#fileErrormessage').text($.i18n('imageMessageGrievance'));
 
 	}
 	else if(ext=='csv')
@@ -425,7 +425,7 @@ function enableEndUserReplyAddMore(id,removeFileDivId){
 	////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var fileExtension =ext.toLowerCase();
 	////console.log("file type: "+fileExtension);
-	var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv"];
+	var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv","pdf","docx"];
 	var isInArray =extArray.includes(fileExtension);
 	
 	$('#removeFileInput').val(id);
@@ -443,7 +443,7 @@ function enableEndUserReplyAddMore(id,removeFileDivId){
 		});
 		$(".add_field_button").attr("disabled", true);
 		$('#fileErrormessage').text('');
-		$('#fileErrormessage').text($.i18n('imageMessage'));
+		$('#fileErrormessage').text($.i18n('imageMessageGrievance'));
 
 	}
 	else if(ext=='csv')

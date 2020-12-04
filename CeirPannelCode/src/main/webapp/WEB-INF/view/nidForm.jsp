@@ -164,7 +164,8 @@ section {
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
-	data-selected-consignmentStatus="${consignmentStatus}">
+	data-selected-consignmentStatus="${consignmentStatus}"
+	data-userStatus="${userStatus}">
 
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -214,6 +215,7 @@ section {
 							<button type="button" class="btn"  id="submit" onclick="hide();"><spring:message code="button.submit" /></button>
 						</div>
 						<div class="col s12 m12"><p id="errorMsgOnModal" class="nidValidationMsg"><spring:message code="validation.12NID" /></p></div>
+						<div class="col s12 m12"><p id="UserDisableMsg" class="nidValidationMsg" style="display: none;"><spring:message code="account.disabled"/></p></div>
 					</div>
 				</div>
 			</div>
