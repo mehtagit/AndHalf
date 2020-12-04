@@ -218,7 +218,7 @@ position: fixed;
 	data-selected-consignmentStatus="${consignmentStatus}" 
 	session-value="${not empty param.NID ? param.NID : 'null'}"
 	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
-	data-filterSource="${filterSource}">
+	data-filterSource="${filterSource}" data-userStatus="${userStatus}">
 
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -1281,6 +1281,31 @@ position: fixed;
 						<div class="input-field col s12 center">
 							<button  class="modal-close  btn"><spring:message
 									code="modal.ok" /></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div id="userDisabledModel" class="modal">
+			<h6 class="modal-header">
+				<spring:message code="modal.header.userDisabled" />
+			</h6>
+			<div class="modal-content">
+
+				<div class="row">
+					<h6 id="dupliCateImeiMsg">
+						<spring:message code="account.disabled" />
+					</h6>
+					
+				</div>
+				<div class="row">
+					<div class="input-field col s12 center">
+						<div class="input-field col s12 center">
+							<%-- <button  class="modal-close  btn"><spring:message
+									code="modal.ok" /></button> --%>
+							<a href="./uploadPaidStatus?FeatureId=12" class="btn" data-original-title="" title=""><spring:message
+									code="modal.ok" /></a>
 						</div>
 					</div>
 				</div>
