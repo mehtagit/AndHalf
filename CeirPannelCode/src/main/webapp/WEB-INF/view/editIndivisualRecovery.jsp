@@ -242,11 +242,11 @@
                                                               </div>
 
                                                               <div class="input-field col s12 m6">
-                                                                <input type="text" name="sigleRecoveryserialNumber" id="sigleRecoveryserialNumber" placeholder="" pattern="[a-zA-Z0-9]{0,15}" 
+                                                                <input type="text" name="sigleRecoveryserialNumber" id="sigleRecoveryserialNumber" placeholder="" pattern="[a-zA-Z0-9]{0,25}" 
                                                                  title=""
                                                                              oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');" 
                                                           oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
-                                                                  maxlength="15">
+                                                                  maxlength="25">
                                                                 <label for="sigleRecoveryserialNumber"><spring:message code="input.deviceSerialNumber" /></label>
                                                             </div>
                                                             

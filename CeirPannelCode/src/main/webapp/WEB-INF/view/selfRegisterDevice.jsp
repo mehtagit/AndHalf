@@ -673,10 +673,10 @@ position: fixed;
 													<div class="input-field col s12 m6"
 														style="margin-top: 22px;">
 														<input type="text" id="serialNumber1"
-															pattern="[A-Za-z0-9]{0,16}"
+															pattern="[A-Za-z0-9]{0,25}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
-															 maxlength="16"> <label
+															 maxlength="25"> <label
 															for="serialNumber1"><spring:message
 																code="input.deviceSerialNumber" />
 														</label>

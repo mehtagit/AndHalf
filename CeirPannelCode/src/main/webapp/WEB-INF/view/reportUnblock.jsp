@@ -168,10 +168,10 @@ padding: 0 !important;
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6" style="margin-top: 21px;">
-                                                                <input type="text" id="unbockSingleSerialNumber" name="unbockSingleserialNumber" pattern="[A-Za-z0-9]{1,15}"
+                                                                <input type="text" id="unbockSingleSerialNumber" name="unbockSingleserialNumber" pattern="[A-Za-z0-9]{1,25}"
                                                                    oninput="InvalidMsg(this,'select','<spring:message code="validation.numberfirst" />');" 
-                                                                   oninvalid="InvalidMsg(this,'select','<spring:message code="validation.numberfirst" />');"
-                                                                     maxlength="15">
+                                                                   oninvalid="InvalidMsg(this,'select','<spring:message code="validation.15serialNo" />');"
+                                                                     maxlength="25">
                                                                 <label for="serialNumber"><spring:message code="operator.deviceserial" /></label>
                                                             </div>
                                                             
