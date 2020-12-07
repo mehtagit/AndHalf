@@ -167,10 +167,10 @@
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6" style="margin-top: 21px;">
-                                                                <input type="text" id="singleblockserialNumber" name="serialNumber" pattern="[A-Za-z0-9]{1,15}" 
+                                                                <input type="text" id="singleblockserialNumber" name="serialNumber" pattern="[A-Za-z0-9]{1,25}" 
                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.numberfirst" />');" 
-                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.numberfirst" />');"
-                                                                     maxlength="15">
+                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+                                                                     maxlength="25">
                                                                         <label for="singleblockserialNumber"><spring:message code="operator.deviceserial" /></label>
                                                             </div>
                                         

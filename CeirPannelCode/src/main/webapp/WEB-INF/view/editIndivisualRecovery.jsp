@@ -81,7 +81,8 @@
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 <link rel="stylesheet"
 	href="${context}/resources/project_css/intlTelInput.css">
-
+<link rel="stylesheet"
+	href="${context}/resources/project_css/select2.css">
 <style>
         .checkboxFont {
             color: #444;
@@ -241,11 +242,11 @@
                                                               </div>
 
                                                               <div class="input-field col s12 m6">
-                                                                <input type="text" name="sigleRecoveryserialNumber" id="sigleRecoveryserialNumber" placeholder="" pattern="[a-zA-Z0-9]{0,15}" 
+                                                                <input type="text" name="sigleRecoveryserialNumber" id="sigleRecoveryserialNumber" placeholder="" pattern="[a-zA-Z0-9]{0,25}" 
                                                                  title=""
                                                                              oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');" 
                                                           oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
-                                                                  maxlength="15">
+                                                                  maxlength="25">
                                                                 <label for="sigleRecoveryserialNumber"><spring:message code="input.deviceSerialNumber" /></label>
                                                             </div>
                                                             
@@ -658,7 +659,8 @@ onclick="_Services._selectstartDate()"></i></span>
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>
-		
+		<script type="text/javascript"
+		src="${context}/resources/project_js/select2.js"></script>	
 		<script>
 		
 		$.i18n().load( {

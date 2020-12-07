@@ -28,6 +28,7 @@ $(document).ready(function() {
 	$.getJSON('./productList', function(data) {
 	 	//////console.log("start");
 		//////console.log(data)
+	    $('#select2-editsigleRecoverydeviceBrandName-container').empty();
 	 		for (i = 0; i < data.length; i++) {
 	 			
 	 			$('<option>').val(data[i].id).text(data[i].brand_name)
@@ -37,6 +38,7 @@ $(document).ready(function() {
 		/* setBrandName();*/
 		 
 	 	})
+	 	$('select#editsigleRecoverydeviceBrandName').select2();
 	 	 $('div#initialloader').fadeIn('fast');
 	 	  setTimeout(function(){ 
 	 		 
@@ -354,6 +356,7 @@ $('#editsigleRecoverydeviceBrandName').on(
 
 			$.getJSON('./productModelList?brand_id=' + brand_id,
 					function(data) {
+				 $('#select2-editsingleRecoverymodalNumber-container').empty();
 						$("#editsingleRecoverymodalNumber").empty();
 						for (i = 0; i < data.length; i++) {
 							$('<option>').val(data[i].id).text(
@@ -361,6 +364,7 @@ $('#editsigleRecoverydeviceBrandName').on(
 									'#editsingleRecoverymodalNumber');
 						}
 					});
+			$('select#editsingleRecoverymodalNumber').select2();
 		});
 function setBrandName()
 {

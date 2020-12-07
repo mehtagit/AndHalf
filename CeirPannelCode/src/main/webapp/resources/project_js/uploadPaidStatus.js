@@ -63,7 +63,7 @@ $( document ).ready(function() {
 					
 					sessionStorage.removeItem("nationality")
 				}
-				if (data.errorCode == 1) { 
+				if (data.errorCode == 1) {
 					pageRendering(lang);
 					filter(lang,null);
 					$("#user123").css("display", "none");

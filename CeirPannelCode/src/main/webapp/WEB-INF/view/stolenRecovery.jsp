@@ -1126,8 +1126,8 @@ position: fixed;
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6" style="margin-top: 21px;">
-                                                                <input type="text" id="viewsingleblockserialNumber" name="serialNumber" placeholder="" pattern="[0-9]{1,15}" required="required"
-                                                                    title="Please enter your device serial number first" disabled="disabled" maxlength="15">
+                                                                <input type="text" id="viewsingleblockserialNumber" name="serialNumber" placeholder="" pattern="[0-9]{1,25}" required="required"
+                                                                    title="Please enter your device serial number first" disabled="disabled" maxlength="25">
                                                                 <label for="viewsingleblockserialNumber"><spring:message code="input.deviceSerialNumber" /></label>
                                                             </div>
                                                             </div>
@@ -1242,10 +1242,10 @@ enctype="multipart/form-data">
 
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockserialNumber" name="serialNumber" placeholder=""
-pattern="[A-Za-z0-9]{1,15}" 
+pattern="[A-Za-z0-9]{1,25}" 
 oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
-title="Please enter your device serial number first" maxlength="15">
+title="Please enter your device serial number first" maxlength="25">
 <label for="editsingleblockserialNumber">
 <spring:message code="input.deviceSerialNumber" /> <span class="star"></span></label>
 </div>

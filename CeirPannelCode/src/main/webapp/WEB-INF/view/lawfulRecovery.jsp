@@ -301,10 +301,10 @@ select {
 														style="margin-top: 22px;">
 														<input type="text" name="sigleRecoveryserialNumber"
 															id="sigleRecoveryserialNumber"
-															pattern="[a-zA-Z0-9]{0,15}"
+															pattern="[a-zA-Z0-9]{0,25}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
-															maxlength="15"> <label
+															maxlength="25"> <label
 															for="sigleRecoveryserialNumber"><spring:message
 																code="input.deviceSerialNumber" /></label>
 													</div>

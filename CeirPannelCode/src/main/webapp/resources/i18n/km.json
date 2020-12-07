@@ -170,18 +170,18 @@
 	
 	"IMEI_LUHN_CHECK":"អ៊ីអ៊ីអាយមិនឆ្លងកាត់ក្បួនដោះស្រាយឆេកសាំទេ",
 	"EXISTS_IN_TAC_DB":"ឧបករណ៍មិនមាន TAC ត្រឹមត្រូវទេ",
-	"EXIST_IN_RETAILER_DB":"IMEI / ESN / MEID មានរួចហើយនៅក្នុងប្រព័ន្ធ",
-	"EXIST_IN_END_USER_DB":"IMEI / ESN / MEID មានរួចហើយនៅក្នុងប្រព័ន្ធ",
+	"EXIST_IN_RETAILER_DB":"IMEI / MEID មានរួចហើយនៅក្នុងប្រព័ន្ធ",
+	"EXIST_IN_END_USER_DB":"IMEI /  MEID មានរួចហើយនៅក្នុងប្រព័ន្ធ",
 	"EXIST_IN_MANUFACTURER_DB":"ឧបករណ៍នេះមិនត្រូវបានសម្គាល់ជាពន្ធដែលបានបង់នៅក្នុងប្រព័ន្ធអេស៊ីអេស។",
 	"EXIST_IN_CUSTOM_DB":"ឧបករណ៍នេះមិនត្រូវបានសម្គាល់ជាពន្ធដែលបានបង់នៅក្នុងប្រព័ន្ធអេស៊ីអេស។",
-	"LBD":"ឧបករណ៍ដែលមាន IMEI / ESN / MEID ត្រូវបានសម្គាល់ថាត្រូវបានគេលួច / រារាំងនៅក្នុងប្រព័ន្ធ CEIR",
-	"EXISTS_IN_USAGE_DB":"IMEI / ESN / MEID បានប្រើប្រាស់រួចហើយនៅក្នុងបណ្តាញ",
-	"EXIST_IN_VIP_LIST":"IMEI / ESN / MEID មានរួចហើយនៅក្នុងប្រព័ន្ធ",
-	"IMEI_NULL":"IMEI / ESN / MEID បានបាត់នៅក្នុងកំណត់ត្រា។",
-	"EXIST_IN_BLACKLIST_DB":"ឧបករណ៍ដែលមាន IMEI / ESN / MEID ត្រូវបានសម្គាល់ថាត្រូវបានគេលួច / រារាំងនៅក្នុងប្រព័ន្ធ CEIR",
-	"IMEI_LENGTH":"IMEI / ESN / MEID មិនដូចទៅនឹងការបញ្ជាក់របស់ 3GPP ទេ",
-	"EXIST_IN_GSMABLACKLIST_DB":"ឧបករណ៍ដែលមាន IMEI / ESN / MEID ត្រូវបានសម្គាល់ថាបានលួច / រារាំងទូទាំងពិភពលោក",
-	"EXIST_IN_DISTRIBUTOR_DB":"IMEI / ESN / MEID មានរួចហើយនៅក្នុងប្រព័ន្ធ",
+	"LBD":"ឧបករណ៍ដែលមាន IMEI /  MEID ត្រូវបានសម្គាល់ថាត្រូវបានគេលួច / រារាំងនៅក្នុងប្រព័ន្ធ CEIR",
+	"EXISTS_IN_USAGE_DB":"IMEI  / MEID បានប្រើប្រាស់រួចហើយនៅក្នុងបណ្តាញ",
+	"EXIST_IN_VIP_LIST":"IMEI  / MEID មានរួចហើយនៅក្នុងប្រព័ន្ធ",
+	"IMEI_NULL":"IMEI /  MEID បានបាត់នៅក្នុងកំណត់ត្រា។",
+	"EXIST_IN_BLACKLIST_DB":"ឧបករណ៍ដែលមាន IMEI /  MEID ត្រូវបានសម្គាល់ថាត្រូវបានគេលួច / រារាំងនៅក្នុងប្រព័ន្ធ CEIR",
+	"IMEI_LENGTH":"IMEI /  MEID មិនដូចទៅនឹងការបញ្ជាក់របស់ 3GPP ទេ",
+	"EXIST_IN_GSMABLACKLIST_DB":"ឧបករណ៍ដែលមាន IMEI / MEID ត្រូវបានសម្គាល់ថាបានលួច / រារាំងទូទាំងពិភពលោក",
+	"EXIST_IN_DISTRIBUTOR_DB":"IMEI / MEID មានរួចហើយនៅក្នុងប្រព័ន្ធ",
 	"EXIST_IN_IMPORTER_DB":"ឧបករណ៍នេះមិនមែនជាអ្នកនាំចូលទេ",
 	"TRCRegister_futureRef": "ការស្នើសុំរបស់អ្នកសម្រាប់ការបញ្ចូលឯកសារចូលប្រព័ន្ធត្រូវបានទទួលដោយជោគជ័យ។ លេខសម្គាល់ប្រតិបត្តិការដូចគ្នា",
 	"REGISTER_TYPE_APPROVE_REJECTED":"ប្រភេទដែលបានអនុម័តសម្រាប់ TAC មានរួចហើយ។",
@@ -222,6 +222,8 @@
 	"duplicateImeiMessage":"រកឃើញ IMEI ស្ទួនសូមបញ្ចូល IMEI ដែលប្លែកពីគេ",
 	"luhnCheckMessage":"IMEI មិនមានសុពលភាពទេខណៈដែលការត្រួតពិនិត្យក្បួនដោះស្រាយរបស់លូហាន់មិនបានឆ្លងកាត់។",
 	"imageMessageCSV": "ឈ្មោះឯកសារមិនគួរលើសពី ៣០ តួអក្សរទេ។ / ឯកសារគួរតែមានផ្នែកបន្ថែមដូចជា png, jpg, jpeg, gif, csv និង bmp ។ / ទំហំឯកសារគួរតិចជាង ១០ មេហ្គាបៃ ",
-	"meesageForOtherDoc":"ផ្ទុកឯកសារឡើង"
+	"imageMessageGrievance":"ឈ្មោះឯកសារមិនគួរលើសពី ៣០ តួអក្សរទេ។ / ឯកសារគួរតែមានផ្នែកបន្ថែមដូចជា png, jpg, jpeg, gif, csv, pdf, docx និង bmp ។ / ទំហំឯកសារគួរតិចជាង ១០ មេហ្គាបៃ ",
+	"meesageForOtherDoc":"ផ្ទុកឯកសារឡើង",
+		"state":"រដ្ឋ"
 	}
 			
