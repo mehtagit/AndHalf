@@ -471,9 +471,19 @@ $(".add_field_button").attr("disabled", false);
 
 
 function enableReplySelectFile(){
-	$("#docTypeFile1").attr("disabled", false);
+	/*$("#docTypeFile1").attr("disabled", false);
 	$("#docTypeFile1").attr("required", true);
-	$("#docTypeFile1Label").append('<span class="star">*</span>');
+	$("#docTypeFile1Label").append('<span class="star">*</span>');*/
+	if($('#docTypetag1').val() != ''){
+		$("#docTypeFile1").attr("disabled", false);
+		$("#docTypeFile1").attr("required", true);
+		$("#removestar1").find(".star").remove();
+		$("#docTypeFile1Label").append('<span class="star">*</span>');
+	}else{
+		$("#docTypeFile1").attr("required", false);
+		$('#filetextField1').val('');
+		$("#removestar1").find(".star").remove();
+	}
 }
 
 //**************************************************Grievance table**********************************************

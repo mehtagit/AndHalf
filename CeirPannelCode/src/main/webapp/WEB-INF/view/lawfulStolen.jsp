@@ -1532,12 +1532,12 @@
 	</script>
 
 	<script type="text/javascript"
+		src="${context}/resources/project_js/select2.js"></script>
+	<script type="text/javascript"
 		src="${context}/resources/project_js/stolenRecovery.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/lawfulStolenRecovery.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
-	<script type="text/javascript"
-		src="${context}/resources/project_js/select2.js"></script>
 <script type="text/javascript">
 /* $('div#initialloader').delay(300).fadeOut('slow'); */
 </script>
