@@ -9,6 +9,7 @@ import com.gl.ceir.factory.service.impl.CloseGrievance;
 import com.gl.ceir.factory.service.impl.ConsignmentRevenueService;
 import com.gl.ceir.factory.service.impl.DeviceTaxReminder;
 import com.gl.ceir.factory.service.impl.FindUserReg;
+import com.gl.ceir.factory.service.impl.RemoveFromBlacklist;
 import com.gl.ceir.factory.service.impl.RemoveIncompleteUser;
 import com.gl.ceir.factory.service.impl.VisaExpire;
 
@@ -35,6 +36,10 @@ public class Starter {
 	
 	@Autowired
 	FindUserReg findUserReg;
+   
+   @Autowired
+	RemoveFromBlacklist removeFromBlacklist;
+   
 	
 	public Service start(String name) {
 		
@@ -53,9 +58,16 @@ public class Starter {
 			return removeIncompleteUser;
 		case ProcessName.FIND_USER_REG:
 			return findUserReg;
-			
+         case ProcessName.REMOVE_FROM_BLACKLIST:
+			return removeFromBlacklist;
 		default:
 			return null;
 		}
 	}
 }
+
+
+
+
+
+
