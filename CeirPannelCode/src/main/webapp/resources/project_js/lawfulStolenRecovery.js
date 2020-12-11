@@ -1223,6 +1223,8 @@ $('#singleStolendeviceBrandName').on(
 					function(data) {
 				        $('#select2-singleStolenmodalNumber-container').empty();
 						$("#singleStolenmodalNumber").empty();
+						var html='<option value="">Select Model Number</option>';
+						$('#singleStolenmodalNumber').append(html);
 						for (i = 0; i < data.length; i++) {
 							$('<option>').val(data[i].id).text(
 									data[i].modelName).appendTo(
