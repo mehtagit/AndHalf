@@ -20,6 +20,19 @@ $(document).ready(function () {
 
 $('div#initialloader').fadeIn('fast');
 function DeviceDetails(){
+if($('#deviceIdType').val()==0){
+		
+		var luhnIMEI1=luhnCheck('DeviceID','deviceIdType');
+		
+		
+		//alert("luhnIMEI1 "+luhnIMEI1+" luhnIMEI2 = "+luhnIMEI2+" luhnIMEI3 "+luhnIMEI3+" luhnIMEI4 = "+luhnIMEI4);
+		if(luhnIMEI1==false)
+		{
+			//alert("failed");
+			return false
+		}
+}
+	
 	$('div#initialloader').fadeIn('fast');
 	
 	var RequestData={

@@ -372,7 +372,7 @@ position: fixed;
 
 										<div class="input-field col s12 m6 l6">
 											<input type="text" class="form-control boxBorder boxHeight"
-												id="pin" pattern="[0-9]{1,6}"
+												id="pin" pattern="[0-9]{6,6}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
 												required maxlength="6"> <label for="pin"><spring:message
@@ -417,7 +417,7 @@ position: fixed;
 
 										<div class="input-field col s12 m6">
 											<input type="email" id="endUseremailID"
-												pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$"
+												pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,280}$"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 											
@@ -673,10 +673,10 @@ position: fixed;
 													<div class="input-field col s12 m6"
 														style="margin-top: 22px;">
 														<input type="text" id="serialNumber1"
-															pattern="[A-Za-z0-9]{0,15}"
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
-															 maxlength="15"> <label
+															pattern="[A-Za-z0-9]{0,25}"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+															 maxlength="25"> <label
 															for="serialNumber1"><spring:message
 																code="input.deviceSerialNumber" />
 														</label>
@@ -735,7 +735,7 @@ position: fixed;
 													</div>
 
 													<div class="input-field col s12 m6">
-														<input type="text" id="IMEIA1" pattern="[0-9]{15,16}" onchange="luhnCheck('IMEIA1','deviceIdType1')"
+														<input type="text" id="IMEIA1" pattern="[0-9]{15,16}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															required maxlength="16"> <label for="IMEIA1"><spring:message
@@ -743,7 +743,7 @@ position: fixed;
 													</div>
 
 													<div class="input-field col s12 m6">
-														<input type="text" id="IMEIB1" pattern="[0-9]{15,16}" onchange="luhnCheck('IMEIB1','deviceIdType1')"
+														<input type="text" id="IMEIB1" pattern="[0-9]{15,16}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															title="<spring:message code="validation.1516digit" />"
@@ -751,7 +751,7 @@ position: fixed;
 																code="title.two" /></label>
 													</div>
 													<div class="input-field col s12 m6">
-														<input type="text" id="IMEIC1" pattern="[0-9]{15,16}" onchange="luhnCheck('IMEIC1','deviceIdType1')"
+														<input type="text" id="IMEIC1" pattern="[0-9]{15,16}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															title="<spring:message code="validation.1516digit" />"
@@ -761,7 +761,7 @@ position: fixed;
 													</div>
 
 													<div class="input-field col s12 m6">
-														<input type="text" id="IMEID1" pattern="[0-9]{15,16}" onchange="luhnCheck('IMEID1','deviceIdType1')"
+														<input type="text" id="IMEID1" pattern="[0-9]{15,16}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															title="<spring:message code="validation.1516digit" />"

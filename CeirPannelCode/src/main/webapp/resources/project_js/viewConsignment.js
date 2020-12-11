@@ -1050,6 +1050,9 @@ function exportConsignmentData()
 	var filterConsignmentStatus=parseInt($('#filterConsignmentStatus').val());
 	var consignmentTaxPaidStatus=parseInt($('#taxPaidStatus').val());
 	var displayName = $('#name').val();
+	if(displayName==undefined || displayName=="undefined"){
+		displayName=null;
+	}
 	//var source__val = consignmentStartDate != ''|| consignmentEndDate != ''|| consignmentTxnId != ''|| filterConsignmentStatus != 'NaN'|| consignmentTaxPaidStatus != 'NaN'|| consignmentName != undefined ? 'filter' : $("body").attr("data-session-source");
 
 	var source__val;
@@ -1077,10 +1080,10 @@ function exportConsignmentData()
 	}
 
 	////console.log("2------>"+"consignmentStartDate---" +consignmentStartDate+  "consignmentEndDate---" +consignmentEndDate +  "consignmentTxnId---" +consignmentTxnId+  "filterConsignmentStatus---" +filterConsignmentStatus+  "consignmentTaxPaidStatus---" +consignmentTaxPaidStatus);
-	if(consignmentStartDate != '' || consignmentEndDate != '' || consignmentTxnId != '' || filterConsignmentStatus != '' || consignmentTaxPaidStatus != '' ){
-		source__val = 'filter'
+	if(consignmentStartDate != ''  || consignmentEndDate != ''  || consignmentTxnId != ''  || filterConsignmentStatus != ''  || consignmentTaxPaidStatus != ''  || displayName!=undefined  ){
+		source__val = 'filter';
 	}else{
-		source__val = $("body").attr("data-session-source")
+		source__val = $("body").attr("data-session-source");
 	}
 	//////console.log("source__val-->"+ source__val);
 	var table = $('#consignmentLibraryTable').DataTable();

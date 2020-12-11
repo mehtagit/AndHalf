@@ -364,7 +364,7 @@ function enableEndUserAddMore(id,removeFileDivId){
 	////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var fileExtension =ext.toLowerCase();
 	////console.log("file type: "+fileExtension);
-	var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv"];
+	var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv","pdf","docx"];
 	var isInArray =extArray.includes(fileExtension);
 	
 	$('#removeFileInput').val(id);
@@ -382,7 +382,7 @@ function enableEndUserAddMore(id,removeFileDivId){
 		});
 		$(".endUser_add_field_button").attr("disabled", true);
 		$('#fileErrormessage').text('');
-		$('#fileErrormessage').text($.i18n('imageMessage'));
+		$('#fileErrormessage').text($.i18n('imageMessageGrievance'));
 
 	}
 	else if(ext=='csv')
@@ -425,7 +425,7 @@ function enableEndUserReplyAddMore(id,removeFileDivId){
 	////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 	var fileExtension =ext.toLowerCase();
 	////console.log("file type: "+fileExtension);
-	var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv"];
+	var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv","pdf","docx"];
 	var isInArray =extArray.includes(fileExtension);
 	
 	$('#removeFileInput').val(id);
@@ -443,7 +443,7 @@ function enableEndUserReplyAddMore(id,removeFileDivId){
 		});
 		$(".add_field_button").attr("disabled", true);
 		$('#fileErrormessage').text('');
-		$('#fileErrormessage').text($.i18n('imageMessage'));
+		$('#fileErrormessage').text($.i18n('imageMessageGrievance'));
 
 	}
 	else if(ext=='csv')
@@ -471,9 +471,19 @@ $(".add_field_button").attr("disabled", false);
 
 
 function enableReplySelectFile(){
-	$("#docTypeFile1").attr("disabled", false);
+	/*$("#docTypeFile1").attr("disabled", false);
 	$("#docTypeFile1").attr("required", true);
-	$("#docTypeFile1Label").append('<span class="star">*</span>');
+	$("#docTypeFile1Label").append('<span class="star">*</span>');*/
+	if($('#docTypetag1').val() != ''){
+		$("#docTypeFile1").attr("disabled", false);
+		$("#docTypeFile1").attr("required", true);
+		$("#removestar1").find(".star").remove();
+		$("#docTypeFile1Label").append('<span class="star">*</span>');
+	}else{
+		$("#docTypeFile1").attr("required", false);
+		$('#filetextField1').val('');
+		$("#removestar1").find(".star").remove();
+	}
 }
 
 //**************************************************Grievance table**********************************************

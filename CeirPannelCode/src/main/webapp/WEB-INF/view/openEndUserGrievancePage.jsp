@@ -194,7 +194,7 @@ var contextpath = "${context}";
                                 <div class="col s12 m12 l12">
                                     <div class="row">
                                         <div class="input-field col s12 m4">
-                                            <input type="text" id="firstName"  name="firstName" pattern="[a-zA-Z]{0,20}" required="required"
+                                            <input type="text" id="firstName"  name="firstName" pattern="[a-zA-Z]{0,20}" required="required" maxlength="20"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"/>
                                             <label for="firstName"><spring:message code="input.firstName" /> <span class="star">*</span></label>
@@ -216,19 +216,19 @@ var contextpath = "${context}";
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" id="contactNumber" name="contactNumber" pattern="[0-9]{10,12}"
+                                            <input type="text" id="contactNumber" name="contactNumber" pattern="[0-9]{7,15}"
  													oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
-												  required   maxlength="10" />
+												  required   maxlength="15" />
                                             <label for="contactNumber"><spring:message code="input.contact" /><span
                                                     class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="email" id="emailID" name="emailID" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" 
+                                            <input type="email" id="emailID" name="emailID" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,280}$" 
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
-												required maxlength="30" />
+												required maxlength="280" />
                                             <label for="emailID"><spring:message code="input.EmailID" /> <span class="star"> *</span></label>
                                         </div>
 
@@ -529,7 +529,7 @@ var contextpath = "${context}";
 
 </div>
 
-<div class="file-field col s12 m6">
+<div class="file-field col s12 m6" id="removestar1">
 <h6 id="docTypeFile1Label" style="color: #000;"><spring:message code="input.supportingdocument" /></h6>
 <div class="btn">
 <span><spring:message code="input.selectfile" /></span>
@@ -540,7 +540,7 @@ oninvalid="InvalidMsg(this,'input','<spring:message code="validation.NoChosen" /
 
 </div>
 <div class="file-path-wrapper">
-<input class="file-path validate" type="text" multiple
+<input class="file-path validate" type="text" id="filetextField1" multiple
 placeholder="<spring:message code="input.selectfile" />">
 <div>
 <p id="myFiles"></p>

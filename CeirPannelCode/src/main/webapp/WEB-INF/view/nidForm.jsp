@@ -164,7 +164,8 @@ section {
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	data-selected-consignmentTxnId="${consignmentTxnId}"
-	data-selected-consignmentStatus="${consignmentStatus}">
+	data-selected-consignmentStatus="${consignmentStatus}"
+	data-userStatus="${userStatus}">
 
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -214,6 +215,7 @@ section {
 							<button type="button" class="btn"  id="submit" onclick="hide();"><spring:message code="button.submit" /></button>
 						</div>
 						<div class="col s12 m12"><p id="errorMsgOnModal" class="nidValidationMsg"><spring:message code="validation.12NID" /></p></div>
+						<div class="col s12 m12"><p id="UserDisableMsg" class="nidValidationMsg" style="display: none;"><spring:message code="account.disabled"/></p></div>
 					</div>
 				</div>
 			</div>
@@ -275,7 +277,7 @@ section {
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"
 		src="" async></script>
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>
 <%
 } else {

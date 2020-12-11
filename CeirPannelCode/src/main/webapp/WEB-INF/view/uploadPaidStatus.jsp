@@ -218,7 +218,7 @@ position: fixed;
 	data-selected-consignmentStatus="${consignmentStatus}" 
 	session-value="${not empty param.NID ? param.NID : 'null'}"
 	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
-	data-filterSource="${filterSource}">
+	data-filterSource="${filterSource}" data-userStatus="${userStatus}">
 
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
@@ -252,7 +252,7 @@ position: fixed;
 												</div>
 											</div>
 											<div class="col s12 m12">
-										<label for="nationality"><spring:message
+										<label for="nationality" id="nationalityLabelId"><spring:message
 												code="input.Nationality" /> <span class="star">*</span></label>
 										<div class=" boxHeight" id="chooseUserOption">
 											<label><input class="with-gap"
@@ -288,7 +288,7 @@ position: fixed;
 
 												<div class="file-field col s12 m4"
 													style="margin-top: -15px;">
-													<h6 style="color: #000;" id="uploadNidImage"><spring:message code="input.uploadNidProof" /> <span class="star">*</span>
+													<h6 style="color: #000;" id="uploadNidImage"><spring:message code="input.supportingdocument" /> <span class="star">*</span>
 													</h6>
 													<div class="btn">
 														<span><spring:message code="input.selectfile" /></span> <input type="file"
@@ -436,7 +436,7 @@ position: fixed;
 												</div>
 												<div class="input-field col s12 m6 l6">
 													
-													<input type="text" pattern="[0-9]{1,6}"
+													<input type="text" pattern="[0-9]{6,6}"
 														oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
 														title= "<spring:message code="validation.postalcode" />" name="streetNumber"
@@ -475,7 +475,7 @@ position: fixed;
 
 											<div class="col s12 m12" style="margin-top: 10px;">
 												<div class="input-field col s12 m6 l6">
-														<input type="email" name="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$"
+														<input type="email" name="email" id="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,280}$"
 														oninput="InvalidMsg(this,'input','<spring:message code="validation.emial" />');"
 											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emial" />');"
 														title= "<spring:message code="validation.emial" />" maxlength="280"> <label for="email"><spring:message code="input.email" /><span
@@ -692,11 +692,11 @@ position: fixed;
 														<div class="input-field col s12 m6"
 															style="margin-top: 28px;">
 															<input type="text" id="serialNumber1"  name="serialNumber"
-																pattern="[A-Za-z0-9]{0,15}"
+																pattern="[A-Za-z0-9]{0,25}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 																title= "<spring:message code="validation.15serialNo" />"
-																maxlength="15"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /> <span class="star"></span>
+																maxlength="25"> <label for="serialNumber1"> <spring:message code="input.deviceSerialNumber" /> <span class="star"></span>
 															</label>
 														</div>
 
@@ -753,7 +753,7 @@ position: fixed;
 															<p><spring:message code="title.imeiMeidEsn" /></p>
 															<div class='row'>
 																<div class="input-field col s12 m6">
-																	<input type="text" id="IMEIA1" name="IMEI1" onchange="luhnCheck('IMEIA1','deviceIdType1')"
+																	<input type="text" id="IMEIA1" name="IMEI1"
 																		pattern="[0-9]{15,16}" 
 																		oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 											                            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
@@ -764,7 +764,7 @@ position: fixed;
 																</div>
 
 																<div class="input-field col s12 m6">
-																	<input type="text" id="IMEIB1" name="IMEI2" onchange="luhnCheck('IMEIB1','deviceIdType1')"
+																	<input type="text" id="IMEIB1" name="IMEI2" 
 																		pattern="[0-9]{15,16}"
 																		oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 											                            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
@@ -773,7 +773,7 @@ position: fixed;
 																</div>
 
 																<div class="input-field col s12 m6">
-																	<input type="text" id="IMEIC1" name="IMEIC3" onchange="luhnCheck('IMEIC1','deviceIdType1')"
+																	<input type="text" id="IMEIC1" name="IMEIC3" 
 																		pattern="[0-9]{15,16}"
 																		oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 											                            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
@@ -783,7 +783,7 @@ position: fixed;
 																</div>
 
 																<div class="input-field col s12 m6" id="field">
-																	<input type="text" id="IMEID1" name="IMEID4[]" onchange="luhnCheck('IMEID1','deviceIdType1')"
+																	<input type="text" id="IMEID1" name="IMEID4[]" 
 																		pattern="[0-9]{15,16}"
 																		oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 											                            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
@@ -1286,6 +1286,31 @@ position: fixed;
 				</div>
 			</div>
 		</div>
+		
+		<div id="userDisabledModel" class="modal">
+			<h6 class="modal-header">
+				<spring:message code="modal.header.userDisabled" />
+			</h6>
+			<div class="modal-content">
+
+				<div class="row">
+					<h6 id="dupliCateImeiMsg">
+						<spring:message code="account.disabled" />
+					</h6>
+					
+				</div>
+				<div class="row">
+					<div class="input-field col s12 center">
+						<div class="input-field col s12 center">
+							<%-- <button  class="modal-close  btn"><spring:message
+									code="modal.ok" /></button> --%>
+							<a href="./uploadPaidStatus?FeatureId=12" class="btn" data-original-title="" title=""><spring:message
+									code="modal.ok" /></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -1360,7 +1385,7 @@ $("label[for='phone']").addClass('active');
 
 
  </script>
-		<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
+		<script type="text/javascript">$( document ).ready(function() {if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>
 <%
 } else {

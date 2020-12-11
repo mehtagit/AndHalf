@@ -55,7 +55,8 @@ $(document).ready(function() {
 		contentType: false,
 		async:false,
 		success: function (data, textStatus, jqXHR) {
-			////console.log(data)
+					////console.log(data)
+			$('#select2-editsingleStolendeviceBrandName-container').empty();			
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].id).text(data[i].brand_name)
 						.appendTo('#editsingleStolendeviceBrandName');
@@ -66,6 +67,7 @@ $(document).ready(function() {
 
 		}
 	});
+	$('select#editsingleStolendeviceBrandName').select2();
 	
 	$('div#initialloader').fadeIn('fast');
 	  setTimeout(function(){ 
@@ -75,26 +77,6 @@ $(document).ready(function() {
 	
 	  
 	  
-		/*var promise = new Promise(function(resolve, reject) {
-			//alert("promise");
-			$.getJSON('./productList', function(data) {
-				////console.log(data)
-				
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].id).text(data[i].brand_name)
-							.appendTo('#editsingleStolendeviceBrandName');
-				}
-			});
-		resolve();	
-		});
-
-		promise.then(function() {
-			//alert("then");
-			$('div#initialloader').fadeIn('fast');
-			 setTimeout(function(){ viewIndivisualStolen(); }, 5000);
-			viewIndivisualStolen();
-		});*/
-		
 	
 });
 
@@ -309,6 +291,12 @@ $("#calender").css("display", "none");
 				if(response.stolenIndividualUserDB.email=="" || response.stolenIndividualUserDB.email==null){
 					$('#singleStolenemail').val('');
 				}
+			
+				if(response.stolenIndividualUserDB.imeiEsnMeid1!="" || response.stolenIndividualUserDB.imeiEsnMeid1!=null){
+					$("#singleStolendeviceIDType").attr("required", true);
+					
+					$("#deviceIdTypeSpan").css("display", "block");	
+				}
 				setOpertorTypeMandaotry();
 			}
 			
@@ -329,6 +317,29 @@ $("#calender").css("display", "none");
 function updateIndivisualStolen()
 {
 	if($('#singleStolendeviceIDType').val()==0){
+		
+		var luhnIMEI1=luhnCheck('updatesingleStolenimei1','singleStolendeviceIDType');
+		var luhnIMEI4="";
+		var luhnIMEI3="";
+		var luhnIMEI2='';
+		if($('#updatesingleStolenimei2').val()!=null || $('#updatesingleStolenimei2').val()!=''){
+			var luhnIMEI2 =luhnCheck('updatesingleStolenimei2','singleStolendeviceIDType')	
+		}
+		 if($('#updatesingleStolenimei3').val()!=null || $('#updatesingleStolenimei3').val()!=''){
+			var luhnIMEI3 = luhnCheck('updatesingleStolenimei3','singleStolendeviceIDType')	
+		}
+		
+		 if($('#updatesingleStolenimei4').val()!=null || $('#updatesingleStolenimei4').val()!=''){
+			 luhnIMEI4= luhnCheck('updatesingleStolenimei4','singleStolendeviceIDType')	
+		}
+		
+		//alert("luhnIMEI1 "+luhnIMEI1+" luhnIMEI2 = "+luhnIMEI2+" luhnIMEI3 "+luhnIMEI3+" luhnIMEI4 = "+luhnIMEI4);
+		if(luhnIMEI1==false || luhnIMEI2==false || luhnIMEI3==false || luhnIMEI4==false)
+		{
+			//alert("failed");
+			return false
+		}
+		
 		var checkIMEI=checkDuplicateImei($('#updatesingleStolenimei1').val(),$('#updatesingleStolenimei2').val(),$('#updatesingleStolenimei3').val(),$('#updatesingleStolenimei4').val());
 		if(checkIMEI===true){
 		$('#errorMsgOnModal').text('');
@@ -362,10 +373,21 @@ function updateIndivisualStolen()
 
 	var singleStolendeviceBrandName=$('#editsingleStolendeviceBrandName').val();
 	var updatesingleStolenimei1=$('#updatesingleStolenimei1').val();
+	if(updatesingleStolenimei1=="" ){
+		updatesingleStolenimei1=null;
+	}
 	var updatesingleStolenimei2=$('#updatesingleStolenimei2').val();
+	if(updatesingleStolenimei2=="" ){
+		updatesingleStolenimei2=null;
+	}
 	var updatesingleStolenimei3=$('#updatesingleStolenimei3').val();
+	if(updatesingleStolenimei3=="" ){
+		updatesingleStolenimei3=null;
+	}
 	var updatesingleStolenimei4=$('#updatesingleStolenimei4').val();
-
+	if(updatesingleStolenimei4=="" ){
+		updatesingleStolenimei4=null;
+	}
 	var singleStolendeviceIDType=$('#singleStolendeviceIDType').val();
 	var singleStolendeviceType=$('#singleStolendeviceType').val();
 	var singleStolenOperator=$('#singleStolenOperator').val();
@@ -698,6 +720,7 @@ function changeBrandValue(brand_id){
 		});
 	$.getJSON('./productModelList?brand_id=' + brand_id,
 			function(data) {
+		$('#select2-editsingleStolenmodalNumber-container').empty();
 				$("#editsingleStolenmodalNumber").empty();
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].id).text(
@@ -705,6 +728,7 @@ function changeBrandValue(brand_id){
 							'#editsingleStolenmodalNumber');
 				}
 			});
+	$('select#editsingleStolenmodalNumber').select2();
 }
 
 
@@ -790,6 +814,26 @@ function isLengthValid(val){
 
 
 
+$(document).on("keyup", "#updatesingleStolenimei1", function(e) {
+	var singleStolenimei1=$('#updatesingleStolenimei1').val();
+	if(singleStolenimei1.length<'1' )
+	{
+		$("#singleStolendeviceIDType").attr("required", false);
+		/*$('#currency').attr("disabled",true);*/
+		/*$('#currencyDiv').hide();
+
+		$("#currency")[0].selectedIndex = 0;*/
+		$("#deviceIdTypeSpan").css("display", "none");
+	}
+	else
+	{
+		$('#singleStolendeviceIDType').prop('required',true);
+		//$("#currency").attr("required", true);
+		/*$('#currency').attr("disabled",false);*/
+		$("#deviceIdTypeSpan").css("display", "block");
+
+	}
+});
 
 
 

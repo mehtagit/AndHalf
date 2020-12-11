@@ -15,6 +15,7 @@ public class UserStatus {
 	private List<Integer> roles ;
 	private String usertype;
 	private Integer selfRegister;
+	private String password;
 	public Integer getSelfRegister() {
 		return selfRegister;
 	}
@@ -122,8 +123,16 @@ public class UserStatus {
 		builder.append(usertype);
 		builder.append(", selfRegister=");
 		builder.append(selfRegister);
+		builder.append(", password=");
+		builder.append(password);
 		builder.append("]");
 		return builder.toString();
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	

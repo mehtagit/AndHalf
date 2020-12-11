@@ -87,6 +87,8 @@
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
+<link rel="stylesheet"
+	href="${context}/resources/project_css/select2.css">
 
 <style>
 .checkboxFont {
@@ -426,7 +428,7 @@ select {
 
 														<div class="col s6 m6 ">
 															<label for="deviceIDType"><spring:message
-																	code="select.deviceIDType" /></label> <select
+																	code="select.deviceIDType" /><span class="star" id="deviceIdTypeSpan" style="display: none ; margin-top: -18px;margin-left: 82px;">*</span></label> <select
 																
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
@@ -613,7 +615,7 @@ select {
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumber"
-																pattern="[0-9]{15,16}" onchange="luhnCheck('updatesingleStolenimei1','singleStolendeviceIDType')"
+																pattern="[0-9]{15,16}" 
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																
@@ -626,7 +628,7 @@ select {
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberTwo"
-																pattern="[0-9]{15,16}" onchange="luhnCheck('updatesingleStolenimei2','singleStolendeviceIDType')"
+																pattern="[0-9]{15,16}" 
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																title="<spring:message code=" validation.1516digit" />"
@@ -637,7 +639,7 @@ select {
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberThree"
-																pattern="[0-9]{15,16}" onchange="luhnCheck('updatesingleStolenimei3','singleStolendeviceIDType')"
+																pattern="[0-9]{15,16}" 
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																title="<spring:message code=" validation.1516digit" />"
@@ -649,7 +651,7 @@ select {
 
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberFour"
-																pattern="[0-9]{15,16}" onchange="luhnCheck('updatesingleStolenimei4','singleStolendeviceIDType')"
+																pattern="[0-9]{15,16}" 
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																title="<spring:message code=" validation.1516digit" />"
@@ -1318,13 +1320,15 @@ onclick="_Services._selectstartDate()"></i></span>
 		
 		<script type="text/javascript" src="${context}/resources/js/intlTelInput.js"></script>
 		<script type="text/javascript" src="${context}/resources/js/utils.js"></script>
+			<script type="text/javascript"
+		src="${context}/resources/project_js/select2.js"></script>
+		
 <script type="text/javascript"
 		src="${context}/resources/project_js/lawfulStolenRecovery.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/editLawfulStolen.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	
 
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>
 <%
 } else {

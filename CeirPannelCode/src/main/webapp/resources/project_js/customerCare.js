@@ -292,6 +292,7 @@ error: function (jqXHR, textStatus, errorThrown) {
 
 function setStakeHolderData(name,date,featureId,status,txnId,imei)
 {
+	$('div#initialloader').fadeIn('fast');
 	var formData= new FormData();	
 	//////console.log("name=="+name+"  date=="+date+" featureId= "+featureId+"  status="+status+ "  txnId="+txnId);
 	var customerCareRequest={
@@ -321,7 +322,7 @@ function setStakeHolderData(name,date,featureId,status,txnId,imei)
 		"contentType" :false,
 		success: function (data, textStatus, jqXHR) {
 		
-			
+			$('div#initialloader').delay(300).fadeOut('slow');
 			var  assigneIdLabel=$.i18n('assigneIdLabel');
 			 var assigneNameLabel=$.i18n('assigneNameLabel');
 	    if(data.errorCode==3)

@@ -949,7 +949,7 @@ var featureId = 6;
 					////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 					var fileExtension =ext.toLowerCase();
 					////console.log("file type: "+fileExtension);
-					var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv"];
+					var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv","pdf","docx"];
 					var isInArray =extArray.includes(fileExtension);
 					
 					$('#removeFileInput').val(id);
@@ -967,7 +967,7 @@ var featureId = 6;
 						});
 						$(".add_field_button").attr("disabled", true);
 						$('#fileErrormessage').text('');
-						$('#fileErrormessage').text($.i18n('imageMessage'));
+						$('#fileErrormessage').text($.i18n('imageMessageCSV'));
 
 					}
 					else if(ext=='csv')

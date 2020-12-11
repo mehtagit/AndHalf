@@ -250,7 +250,7 @@ var contextpath = "${context}";
 </head>
 
 
-<body>
+<body data-roleType="${usertype}">
 <!-- Modal End -->
 <!-- START CONTENT -->
 	<section id="content" id="mainPage">
@@ -931,7 +931,7 @@ onchange="InvalidMsg(this,'select','<spring:message code="validation.selectField
         //	 $("select[required]").css({position: "absolute", display: "inline", height: 0, padding: 0, width: 0});
        populateCountries("country", "state");  
        editProfile();
-   	
+       if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";}
        var timeoutTime = <%=session.getLastAccessedTime()%>;
        var timeout = <%=session.getMaxInactiveInterval()%>;
        timeoutTime += timeout;

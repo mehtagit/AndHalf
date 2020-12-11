@@ -28,6 +28,7 @@ $(document).ready(function() {
 	$.getJSON('./productList', function(data) {
 	 	//////console.log("start");
 		//////console.log(data)
+	    $('#select2-editsigleRecoverydeviceBrandName-container').empty();
 	 		for (i = 0; i < data.length; i++) {
 	 			
 	 			$('<option>').val(data[i].id).text(data[i].brand_name)
@@ -37,6 +38,7 @@ $(document).ready(function() {
 		/* setBrandName();*/
 		 
 	 	})
+	 	$('select#editsigleRecoverydeviceBrandName').select2();
 	 	 $('div#initialloader').fadeIn('fast');
 	 	  setTimeout(function(){ 
 	 		 
@@ -139,6 +141,11 @@ headers:
 			if(response.stolenIndividualUserDB.imeiEsnMeid4=="" || response.stolenIndividualUserDB.imeiEsnMeid4==null){
 				$('#sigleRecoveryimeiNumber4').val('');	
 			}
+			if(response.stolenIndividualUserDB.imeiEsnMeid1!="" || response.stolenIndividualUserDB.imeiEsnMeid1!=null){
+				$("#singleStolendeviceIDType").attr("required", true);
+				
+				$("#deviceIdTypeSpan").css("display", "none");	
+			}
 		}
 		
 		},
@@ -157,6 +164,30 @@ headers:
 function updateIndivisualRecovery()
 {
 	if($('#sigleRecoverydeviceIDType').val()==0){
+		
+		var luhnIMEI1=luhnCheck('sigleRecoveryimeiNumber1','sigleRecoverydeviceIDType');
+		var luhnIMEI4="";
+		var luhnIMEI3="";
+		var luhnIMEI2='';
+		if($('#sigleRecoveryimeiNumber2').val()!=null || $('#sigleRecoveryimeiNumber2').val()!=''){
+			var luhnIMEI2 =luhnCheck('sigleRecoveryimeiNumber2','sigleRecoverydeviceIDType')	
+		}
+		 if($('#sigleRecoveryimeiNumber3').val()!=null || $('#sigleRecoveryimeiNumber3').val()!=''){
+			var luhnIMEI3 = luhnCheck('sigleRecoveryimeiNumber3','sigleRecoverydeviceIDType')	
+		}
+		
+		 if($('#sigleRecoveryimeiNumber4').val()!=null || $('#sigleRecoveryimeiNumber4').val()!=''){
+			 luhnIMEI4= luhnCheck('sigleRecoveryimeiNumber4','sigleRecoverydeviceIDType')	
+		}
+		
+		//alert("luhnIMEI1 "+luhnIMEI1+" luhnIMEI2 = "+luhnIMEI2+" luhnIMEI3 "+luhnIMEI3+" luhnIMEI4 = "+luhnIMEI4);
+		if(luhnIMEI1==false || luhnIMEI2==false || luhnIMEI3==false || luhnIMEI4==false)
+		{
+			//alert("failed");
+			return false
+		}
+	
+		
 		var checkIMEI=checkDuplicateImei($('#sigleRecoveryimeiNumber1').val(),$('#sigleRecoveryimeiNumber2').val(),$('#sigleRecoveryimeiNumber3').val(),$('#sigleRecoveryimeiNumber4').val());
 		if(checkIMEI===true){
 		$('#errorMsgOnModal').text('');
@@ -168,9 +199,21 @@ function updateIndivisualRecovery()
   $('div#initialloader').fadeIn('fast');
 	var sigleRecoverydeviceBrandName=$('#editsigleRecoverydeviceBrandName').val();
 	var sigleRecoveryimeiNumber1=$('#sigleRecoveryimeiNumber1').val();
+	if(sigleRecoveryimeiNumber1=="" ){
+		sigleRecoveryimeiNumber1=null;
+	}
 	var sigleRecoveryimeiNumber2=$('#sigleRecoveryimeiNumber2').val();
+	if(sigleRecoveryimeiNumber2=="" ){
+		sigleRecoveryimeiNumber2=null;
+	}
 	var sigleRecoveryimeiNumber3=$('#sigleRecoveryimeiNumber3').val();
+	if(sigleRecoveryimeiNumber3=="" ){
+		sigleRecoveryimeiNumber3=null;
+	}
 	var sigleRecoveryimeiNumber4=$('#sigleRecoveryimeiNumber4').val();
+	if(sigleRecoveryimeiNumber4=="" ){
+		sigleRecoveryimeiNumber4=null;
+	}
 	
 	var sigleRecoverydeviceIDType=$('#sigleRecoverydeviceIDType').val();
 	var sigleRecoverydeviceType=$('#sigleRecoverydeviceType').val();
@@ -313,6 +356,7 @@ $('#editsigleRecoverydeviceBrandName').on(
 
 			$.getJSON('./productModelList?brand_id=' + brand_id,
 					function(data) {
+				 $('#select2-editsingleRecoverymodalNumber-container').empty();
 						$("#editsingleRecoverymodalNumber").empty();
 						for (i = 0; i < data.length; i++) {
 							$('<option>').val(data[i].id).text(
@@ -320,6 +364,7 @@ $('#editsigleRecoverydeviceBrandName').on(
 									'#editsingleRecoverymodalNumber');
 						}
 					});
+			$('select#editsingleRecoverymodalNumber').select2();
 		});
 function setBrandName()
 {
@@ -382,3 +427,25 @@ function isLengthValid(val){
 	}
 }
 */
+
+
+$(document).on("keyup", "#updatesingleStolenimei1", function(e) {
+	var singleStolenimei1=$('#updatesingleStolenimei1').val();
+	if(singleStolenimei1.length<'1' )
+	{
+		$("#singleStolendeviceIDType").attr("required", false);
+		/*$('#currency').attr("disabled",true);*/
+		/*$('#currencyDiv').hide();
+
+		$("#currency")[0].selectedIndex = 0;*/
+		$("#deviceIdTypeSpan").css("display", "none");
+	}
+	else
+	{
+		$('#singleStolendeviceIDType').prop('required',true);
+		//$("#currency").attr("required", true);
+		/*$('#currency').attr("disabled",false);*/
+		$("#deviceIdTypeSpan").css("display", "block");
+
+	}
+});

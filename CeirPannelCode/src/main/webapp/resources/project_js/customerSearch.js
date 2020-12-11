@@ -12,6 +12,19 @@
 	});	
 	
 	function hide() {
+		
+		if($('#deviceType').val()==0){
+			
+			var luhnIMEI1=luhnCheck('imei','deviceType');
+			
+			
+			//alert("luhnIMEI1 "+luhnIMEI1+" luhnIMEI2 = "+luhnIMEI2+" luhnIMEI3 "+luhnIMEI3+" luhnIMEI4 = "+luhnIMEI4);
+			if(luhnIMEI1==false)
+			{
+				//alert("failed");
+				return false
+			}
+	}
 		//var deviceDropDown =  document.getElementById("deviceType");
 		var deviceIdType =  $("#deviceType option:selected").text();
 		var deviceIdvalue = $("#deviceType").val();
@@ -79,7 +92,11 @@
 
 	$('#deviceType').on('change', function() {
 		var value=parseInt($(this).val());
-
+		var DeviceIdtype=$('#deviceType').val();
+		if(DeviceIdtype=="" || DeviceIdtype==null || DeviceIdtype=="null"){
+			$('#errorMsgOnModal').text('');
+		}
+		else{
 		switch (value) {
 		case 0:
 			$('#imei').val('');
@@ -107,6 +124,7 @@
 			$("#imei").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationESN11')+"')");
 			$('#errorMsgOnModal').text($.i18n('ESNMsg'));
 			break;
+		}
 		}
 
 	}); 

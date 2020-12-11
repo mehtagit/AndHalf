@@ -60,24 +60,32 @@ $(document)
 					sessionStorage.removeItem("data-feature");
 
 					$("#manualDownload").attr(
-							"href",
-							"./Consignment/ManualFileDownload?userTypeId="
-									+ userTypeID);
+							"onclick",
+							"openPDF('./Consignment/ManualFileDownload?userTypeId="+userTypeID+"')");
 
 					$(window).scrollTop(0);
-					var state = $("body").attr("data-user-state");
-					if (state == '3') {
-						$('#userState').text("State : Enabled");
+					
+					$.i18n().locale = langParameter;
 
-					}
+					$.i18n().load({
 
-					else if (state == '5') {
-						$('#userState').text("State : Disabled");
+						'en' : './resources/i18n/en.json',
+						'km' : './resources/i18n/km.json'
+					}).done(function() {
+						var state = $("body").attr("data-user-state");
+						if (state == '3') {
+							$('#userState').text(""+$.i18n('state')+" : Enabled");
 
-					}
+						}
 
-				});
+						else if (state == '5') {
+							$('#userState').text(""+$.i18n('state')+" : Disabled");
 
+						}
+
+					});
+					});
+					
 // var password = document.getElementById("password");
 // var confirm_password = document.getElementById("confirm_password");
 

@@ -81,7 +81,8 @@
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 <link rel="stylesheet"
 	href="${context}/resources/project_css/intlTelInput.css">
-
+<link rel="stylesheet"
+	href="${context}/resources/project_css/select2.css">
 <style>
         .checkboxFont {
             color: #444;
@@ -241,11 +242,11 @@
                                                               </div>
 
                                                               <div class="input-field col s12 m6">
-                                                                <input type="text" name="sigleRecoveryserialNumber" id="sigleRecoveryserialNumber" placeholder="" pattern="[a-zA-Z0-9]{0,15}" 
+                                                                <input type="text" name="sigleRecoveryserialNumber" id="sigleRecoveryserialNumber" placeholder="" pattern="[a-zA-Z0-9]{0,25}" 
                                                                  title=""
                                                                              oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');" 
                                                           oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
-                                                                  maxlength="15">
+                                                                  maxlength="25">
                                                                 <label for="sigleRecoveryserialNumber"><spring:message code="input.deviceSerialNumber" /></label>
                                                             </div>
                                                             
@@ -257,12 +258,12 @@
 															<input type="text" name="sigleRecoveryimeiNumber1" pattern="[0-9]{15,16}" 
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-														  maxlength="16" id="sigleRecoveryimeiNumber1" onchange="luhnCheck('sigleRecoveryimeiNumber1','sigleRecoverydeviceIDType')"/> 
+														  maxlength="16" id="sigleRecoveryimeiNumber1" /> 
 															<label for="sigleRecoveryimeiNumber1"><spring:message code="registration.one" /> <span class="star"> </span></label>
 														</div>
 														
 														<div class="input-field col s12 m6">
-															<input type="text" name="imeiNumberTwo" pattern="[0-9]{15,16}"  onchange="luhnCheck('sigleRecoveryimeiNumber2','sigleRecoverydeviceIDType')"
+															<input type="text" name="imeiNumberTwo" pattern="[0-9]{15,16}"  
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 													  maxlength="16" 	id="sigleRecoveryimeiNumber2" > <label
@@ -270,7 +271,7 @@
 														</div>
 														
 														<div class="input-field col s12 m6">
-															<input type="text" name="imeiNumberThree" pattern="[0-9]{15,16}" onchange="luhnCheck('sigleRecoveryimeiNumber3','sigleRecoverydeviceIDType')"
+															<input type="text" name="imeiNumberThree" pattern="[0-9]{15,16}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 														  maxlength="16" 	id="sigleRecoveryimeiNumber3" > <label
@@ -279,7 +280,7 @@
 														</div>
 														
 														<div class="input-field col s12 m6">
-															<input type="text" name="imeiNumberFour" pattern="[0-9]{15,16}" onchange="luhnCheck('sigleRecoveryimeiNumber4','sigleRecoverydeviceIDType')"
+															<input type="text" name="imeiNumberFour" pattern="[0-9]{15,16}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															  maxlength="16" 	id="sigleRecoveryimeiNumber4" > <label
@@ -658,7 +659,8 @@ onclick="_Services._selectstartDate()"></i></span>
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dragableModal.js"></script>
-		
+		<script type="text/javascript"
+		src="${context}/resources/project_js/select2.js"></script>	
 		<script>
 		
 		$.i18n().load( {
@@ -725,7 +727,7 @@ onclick="_Services._selectstartDate()"></i></span>
 </script>
 		
 
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>
 <%
 	}else{

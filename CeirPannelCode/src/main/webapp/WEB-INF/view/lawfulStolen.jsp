@@ -12,25 +12,27 @@
 	
 	 long accessTime = session.getLastAccessedTime();
 	 long currentTime= new Date().getTime(); 
-     long dfd= accessTime +timeout;
+	 long dfd= accessTime +timeout;
 	 if( currentTime< dfd){
 	/*  response.setHeader("Refresh", timeout + "; URL = ../login");
 	 System.out.println("timeout========"+timeout); 
 	if (session.getAttribute("usertype") != null) { */
 %>
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!-- Security Tags -->
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <sec:csrfMetaTags />
 <!-- Security Tags -->
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <c:set var="context" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en" class="no-js">
 <head><title>CEIR Portal</title>
-<!--<title>Stolen</title>-->
+<!--<title>Indivisual Recovery</title>-->
 
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -39,17 +41,15 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta content="" name="description" />
 <meta content="" name="author" />
-
-		<!-- Security Tags -->
+<!-- Security Tags -->
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <!-- Security Tags -->
-		
+
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
-<!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
- -->
+
 <!-- Favicons-->
 <link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <!-- CORE CSS-->
@@ -57,11 +57,10 @@
 	rel="stylesheet" media="screen,projection">
 <link href="${context}/resources/css/style.css" type="text/css"
 	rel="stylesheet" media="screen,projection">
-<link
-	href="${context}/resources/js/plugins/data-tables/css/jquery.dataTables.min.css"
-	type="text/css" rel="stylesheet" media="screen,projection">
-<%-- <link href="${context}/resources/css/jquery-datepicker2.css"
-	type="text/css" rel="stylesheet" media="screen,projection"> --%>
+
+<!-- Custome CSS-->
+<link href="" type="text/css"
+	rel="stylesheet" media="screen,projection">
 <link
 	href="${context}/resources/font/font-awesome/css/font-awesome.min.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
@@ -72,7 +71,7 @@
 <link
 	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-<%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
+
 <link rel="stylesheet"
 	href="${context}/resources/project_css/stolenRecovery.css">
 <link rel="stylesheet"
@@ -80,59 +79,50 @@
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
-
+<link rel="stylesheet"
+	href="${context}/resources/project_css/intlTelInput.css">
+<link rel="stylesheet"
+	href="${context}/resources/project_css/select2.css">
 <style>
-.checkboxFont {
-	color: #444;
-	font-size: 16px;
-	margin-right: 10px;
-}
-section#content {
+        .checkboxFont {
+            color: #444;
+            font-size: 16px;
+            margin-right: 10px;
+        }
 
-    position: absolute;
-}
-.section {
-	padding-top: 0.5rem;
-}
+        .section {
+            padding-top: 0.5rem;
+        }
 
-.welcomeMsg {
-	padding-bottom: 50px !important;
-	line-height: 1.5 !important;
-	text-align: center;
-}
+        .welcomeMsg {
+            padding-bottom: 50px !important;
+            line-height: 1.5 !important;
+            text-align: center;
+        }
 
-.file-label {
-	font-size: 0.9rem;
-}
+        .file-label {
+           font-size: 0.9rem;
+       }
 
-.contact-label {
-    margin-top: -7px;
-    margin-bottom: 0;
-    font-size: 0.8rem;
-}
-.blockingType {
-	height: 4.6rem;
-	margin-bottom: 5px;
-}
+       .contact-label {
+            margin-top: -17px;
+            margin-bottom: 0;
+            font-size: 0.8rem;
+        }
+        
+        select {
+			margin-bottom: 5px;
+			height: 2.2rem;
+		}
+		
+		.iti--allow-dropdown input, .iti--allow-dropdown input[type=text] {
+			margin-bottom: 5px !important;
+		}
+    </style>
 
-textarea.materialize-textarea {
-	height: unset !important;
-	max-height: 300px !important;
-}
-
-select {
-	margin-bottom: 5px;
-	height: 2.2rem;
-}
-
-.iti--allow-dropdown input, .iti--allow-dropdown input[type=text] {
-	margin-bottom: 5px !important;
-}
-</style>
 
 
 </head>
-
 <body  data-id="5" data-roleType="${usertype}"
 	data-userTypeID="${usertypeId}" data-userID="${userid}"
 	data-operatorTypeId="${operatorTypeId}"
@@ -612,7 +602,7 @@ select {
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumber" pattern="[0-9]{15,16}" oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"  
-																maxlength="16" id="singleStolenimei1" onchange="luhnCheck('singleStolenimei1','singleStolendeviceIDType')"> 
+																maxlength="16" id="singleStolenimei1" > 
 																<label for="singleStolenimei1"><spring:message code="registration.one" /> <span class="star"> </span> 
 																</label>
 														</div>
@@ -623,7 +613,7 @@ select {
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																
-																maxlength="16" id="singleStolenimei2" onchange="luhnCheck('singleStolenimei2','singleStolendeviceIDType')"> <label
+																maxlength="16" id="singleStolenimei2" > <label
 																for="singleStolenimei12"> <spring:message
 																	code="registration.two" /></label>
 														</div>
@@ -633,7 +623,7 @@ select {
 																pattern="[0-9]{15,16}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																onchange="luhnCheck('singleStolenimei3','singleStolendeviceIDType')"
+																
 																maxlength="16" id="singleStolenimei3"> <label
 																for="singleStolenimei3"> <spring:message code="registration.three" /></label>
 														<p id="errorMsgOnModal" class="deviceErrorTitle"></p>
@@ -644,7 +634,7 @@ select {
 																pattern="[0-9]{15,16}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																onchange="luhnCheck('singleStolenimei4','singleStolendeviceIDType')"
+																
 																maxlength="16" id="singleStolenimei4"> <label
 																for="singleStolenimei4"> <spring:message code="registration.four" /></label>
 														
@@ -1408,7 +1398,6 @@ select {
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
 
-
 	
 
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
@@ -1543,6 +1532,8 @@ select {
 	</script>
 
 	<script type="text/javascript"
+		src="${context}/resources/project_js/select2.js"></script>
+	<script type="text/javascript"
 		src="${context}/resources/project_js/stolenRecovery.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/lawfulStolenRecovery.js?version=<%= (int) (Math.random() * 10) %>"></script>
@@ -1550,7 +1541,7 @@ select {
 <script type="text/javascript">
 /* $('div#initialloader').delay(300).fadeOut('slow'); */
 </script>
-<script type="text/javascript">$( document ).ready(function() {var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
+<script type="text/javascript">$( document ).ready(function() {if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 
 </body></html>
 <%
