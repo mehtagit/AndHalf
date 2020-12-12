@@ -342,7 +342,7 @@ position: fixed;
                                             </div> -->
                       	<div class="input-field col s12 m6 l6">
 							<input type="text" id="editfrequency" name="frequency"
-								placeholder="" pattern="[A-Za-z0-9 \s]{0,160}" maxlength="30"
+								placeholder="" pattern="[A-Za-z0-9 \s]{0,50}" maxlength="50"
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 								required> <label for="editfrequency"><spring:message

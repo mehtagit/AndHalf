@@ -664,18 +664,18 @@ select {
 <div class="col s12 m6">
 <spring:message code="operator.blocking" /> <label style="margin-right: 2%;"> <input
 type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" 
-value="Immediate"
-onchange="document.getElementById('calender').style.display = 'none';"
+value="Immediate"  onchange="setDateMandatoryOrOptional('Immediate','stolenDatePeriodedit')"
+onclick="document.getElementById('calender').style.display = 'none';"
 name="stolenBlockPeriod">
 <spring:message code="operator.immediate" />
-</label> <label style="margin-right: 2%;"> <input type="radio"
+</label> <label style="margin-right: 2%;"> <input type="radio" onchange="setDateMandatoryOrOptional('Default','stolenDatePeriodedit')"
 name="editbulkBlockdeviceradio" class="blocktypeRadio" value="Default" id="editIndivisualDefaultPeriod" title=""
-onchange="document.getElementById('calender').style.display = 'none';"
+onclick="document.getElementById('calender').style.display = 'none';"
 name="stolenBlockPeriod">
 <spring:message code="operator.default" />
 </label> <label> <input type="radio" name="editbulkBlockdeviceradio" 
-value="tilldate" class="blocktypeRadio"
-onchange="document.getElementById('calender').style.display = 'block';"
+value="tilldate" class="blocktypeRadio" onchange="setDateMandatoryOrOptional('tilldate','stolenDatePeriodedit')"
+onclick="document.getElementById('calender').style.display = 'block';"
 name="stolenBlockPeriod">
 <spring:message code="operator.later" /></label>
 

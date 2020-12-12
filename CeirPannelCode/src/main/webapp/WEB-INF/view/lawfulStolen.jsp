@@ -177,7 +177,7 @@
 														<input type="text" name="singleStolenfirstName"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-															required pattern="[a-zA-Z ]{1,20}" maxlength="20"
+															required pattern="[a-zA-Z]{1,20}" maxlength="20"
 															id="singleStolenfirstName"> <label
 															for="singleStolenfirstName"> <spring:message
 																code="input.firstName" /> <span class="star"> *</span></label>
@@ -564,15 +564,15 @@
 															</p>
 															<label style="margin-right: 2%;"> <input
 																type="radio" class="blocktypeRadio" 
-																value="Immediate"
+																value="Immediate" onchange="setDateMandatoryOrOptional('Immediate','stolenDatePeriod')"
 																onclick="document.getElementById('calender').style.display = 'none';"
 																name="stolenBlockPeriod" checked> <spring:message code="operator.immediate" />
 															</label> <label style="margin-right: 2%;"> <input
-																type="radio" class="blocktypeRadio" value="Default" id="defaultDatePeriod" title=""
-																onclick="document.getElementById('calender').style.display = 'none';"
+																type="radio" class="blocktypeRadio" value="Default" id="defaultDatePeriod" title="" 
+																onclick="document.getElementById('calender').style.display = 'none';" onchange="setDateMandatoryOrOptional('Default','stolenDatePeriod')"
 																name="stolenBlockPeriod"> <spring:message code="operator.default" />
 															</label> <label> <input type="radio" required="required"
-																value="tilldate" class="blocktypeRadio"
+																value="tilldate" class="blocktypeRadio" onchange="setDateMandatoryOrOptional('tilldate','stolenDatePeriod')"
 																onclick="document.getElementById('calender').style.display = 'block';"
 																name="stolenBlockPeriod"> <spring:message code="operator.later" />
 															</label>
@@ -828,7 +828,7 @@
 											onsubmit="return saveCompanyStolenRequest()" method="POST"
 											enctype="multipart/form-data">
 											<div class="input-field col s12 m6">
-												<input type="text" name="companyName" pattern=[A-Za-z]{1,50}
+												<input type="text" name="companyName"  pattern="[a-zA-Z ]{1,30}"
 													maxlength="30"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
@@ -947,7 +947,7 @@
 
 											<div class="input-field col s12 m4">
 												<input type="text" name="bulkStolenfirstName" id="firstName"
-													pattern="[a-zA-Z ]{1,20}"
+													pattern="[a-zA-Z]{1,20}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													required maxlength="20"> <label for="firstName">
@@ -958,7 +958,7 @@
 
 											<div class="input-field col s12 m4">
 												<input type="text" name="middleName"
-													pattern="[a-zA-Z ]{1,20}"
+													pattern="[a-zA-Z]{1,20}"
 													oninput="InvalidMsg(this,'input','<spring:message code="
 													validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','
@@ -970,7 +970,7 @@
 
 											<div class="input-field col s12 m4">
 												<input type="text" name="lastName" id="bulkStolenlastName"
-													pattern="[a-zA-Z ]{1,20}"
+													pattern="[a-zA-Z]{1,20}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													required maxlength="20"> <label for="bulkStolenlastName">
@@ -1187,17 +1187,17 @@
 													<spring:message code="operator.blocking" />
 												</p>
 												<label style="margin-right: 2%;"> <input
-													type="radio" class="bulkblocktypeRadio" value="Immediate"
+													type="radio" class="bulkblocktypeRadio" value="Immediate" onchange="setDateMandatoryOrOptional('Immediate','stolenBulkDatePeriod')"
 													onclick="document.getElementById('stolenCalender').style.display = 'none';"
 													name="stolenBulkBlockPeriod" checked> <spring:message
 														code="operator.immediate" />
 												</label> <label style="margin-right: 2%;"> <input
 													type="radio" class="bulkblocktypeRadio" value="Default"  id="bulkDefaultPeiod" title=""
-													onclick="document.getElementById('stolenCalender').style.display = 'none';"
+													onclick="document.getElementById('stolenCalender').style.display = 'none';" onchange="setDateMandatoryOrOptional('Default','stolenBulkDatePeriod')"
 													name="stolenBulkBlockPeriod"> <spring:message
 														code="operator.default" />
 												</label> <label> <input type="radio" required="required"
-													value="tilldate" class="bulkblocktypeRadio"
+													value="tilldate" class="bulkblocktypeRadio" onchange="setDateMandatoryOrOptional('tilldate','stolenBulkDatePeriod')"
 													onclick="document.getElementById('stolenCalender').style.display = 'block';"
 													name="stolenBulkBlockPeriod"> <spring:message
 														code="operator.later" />
@@ -1239,8 +1239,8 @@
 												<input type="text" name="bulkStolenDate" id='bulkStolenDate'
 													class='form-control datepick' autocomplete='off'
 													
-													oninput="InvalidMsg(this,'input','<spring:message code=" validation.requiredMsg" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code=" validation.requiredMsg" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.requiredMsg" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.requiredMsg" />');"
 													
 													required /> <label for="bulkStolenDate"
 													class="center-align"> <spring:message

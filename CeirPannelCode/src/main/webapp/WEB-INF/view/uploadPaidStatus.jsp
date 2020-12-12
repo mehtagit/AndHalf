@@ -378,7 +378,8 @@ position: fixed;
 
 												<div class="input-field col s12 m6 l6">
 													<input type="text" pattern="[a-zA-Z0-9\s,'*$-]{0,20}"
-														oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+														oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+														 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 														title= "<spring:message code="validation.20Character" />"
 														name="streetNumber"
 														class="form-control boxBorder boxHeight" id="streetNumber"
