@@ -320,7 +320,7 @@ var contextpath = "${context}";
 
 								<div class="input-field col s12 m4 l4">
 									<input type="text" name="middleName" id="middleName" pattern="<spring:eval expression="@environment.getProperty('pattern.name')" />" maxlength="20"
-										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');" 
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" 
 										title="<spring:message code="validation.20Character" />" />
 									<label for="middleName"><spring:message code="input.middleName" /></label>
 								</div>

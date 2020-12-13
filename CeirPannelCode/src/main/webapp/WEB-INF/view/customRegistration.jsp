@@ -617,7 +617,7 @@ var contextpath = "${context}";
 
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="answer" class="answer" id="answer1" pattern="<spring:eval expression="@environment.getProperty('pattern.securityAnswer')" />" maxlength="50"
-										oninput="InvalidMsg(this,'input');" oninvalid="InvalidMsg(this,'input');"
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeric" />');"
 										title="<spring:message code="validation.50alphanumeric" />" required /> 
 										<label> <spring:message code="registration.answer2" /> <span class="star">*</span></label>
 								</div>
