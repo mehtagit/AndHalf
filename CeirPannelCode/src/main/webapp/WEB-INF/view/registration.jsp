@@ -909,7 +909,7 @@ String usertypeId="${usertypeId}";
       function myFunction() {
           var x = document.getElementById("type").value;
           if (x == '0') {
-          	//$("input[name='vatStatus']").prop('checked',true);
+          	// $("input[name='vatStatus']").prop('checked',true);
           	vatShowHide();
           	$("input[name='vatStatus']").attr('disabled', false);
               document.getElementById("uploadFile").style.display = "block";

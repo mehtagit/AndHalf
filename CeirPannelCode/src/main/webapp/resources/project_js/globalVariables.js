@@ -358,3 +358,16 @@ function luhnCheck(IMEILUHN,IMEIType){
 	
 	return x;
 	  }
+
+
+
+function setDateMandatoryOrOptional(defaultValue,calenderId){
+if(defaultValue=="tilldate"){
+	 $("#"+calenderId).attr('required', '');
+	
+}
+else{
+	$("#"+calenderId).removeAttr('required');
+}
+	
+}

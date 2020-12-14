@@ -810,16 +810,16 @@
 													<spring:message code="operator.blocking" />
 												</p>
 												<label style="margin-right: 2%;"> <input
-													type="radio" class="blocktypeRadio"  value="Immediate"
+													type="radio" class="blocktypeRadio"  value="Immediate" onchange="setDateMandatoryOrOptional('Immediate','stolenBulkDatePeriod')"
 													onclick="document.getElementById('stolenCalender').style.display = 'none';"
 													name="stolenBulkBlockPeriod" checked> <spring:message
 														code="operator.immediate" />
-												</label> <label style="margin-right: 2%;"> <input
+												</label> <label style="margin-right: 2%;"> <input onchange="setDateMandatoryOrOptional('Default','stolenBulkDatePeriod')"
 													type="radio" class="blocktypeRadio" value="Default" id="editBulkDefaultPeriod" title=""
 													onclick="document.getElementById('stolenCalender').style.display = 'none';"
 													name="stolenBulkBlockPeriod"> <spring:message
 														code="operator.default" />
-												</label> <label> <input type="radio" required="required"
+												</label> <label> <input type="radio" required="required" onchange="setDateMandatoryOrOptional('tilldate','stolenBulkDatePeriod')"
 													value="tilldate" class="blocktypeRadio"
 													onclick="document.getElementById('stolenCalender').style.display = 'block';"
 													name="stolenBulkBlockPeriod"> <spring:message

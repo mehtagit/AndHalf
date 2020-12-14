@@ -891,7 +891,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 	var role = currentRoleType == null ? roleType : currentRoleType;
 
-//**********************************************************Export Excel file************************************************************************
+	//**********************************************************Export Excel file************************************************************************
 	function exportStockData()
 	{
 		
@@ -922,7 +922,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	//	var filterUserName=$('#name').val() == 'null' || 'undefined' ?null:$('#name').val();
 		var filterUserName=$('#name').val();
 		if(filterUserName==undefined || filterUserName=="undefined"){
-			filterUserName=null;
+			filterUserName="";
 		}
 		if(isNaN(StockStatus))
 		{
