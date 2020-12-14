@@ -63,7 +63,7 @@ class GsmaDbDao {
 
                stmt.executeQuery(sqlqry);
                logger.info(" sqlqry " + sqlqry);
-                System.out.println(" sqlqry " + sqlqry);
+               System.out.println(" sqlqry " + sqlqry);
                logger.info("product.getBrandName()" + product.getBrandName());
                if (!product.getBrandName().equals("NA")) {
                     logger.info("Excecution start for brand and Model");
@@ -151,8 +151,4 @@ class GsmaDbDao {
      }
 
 }
-
-
-
-
 

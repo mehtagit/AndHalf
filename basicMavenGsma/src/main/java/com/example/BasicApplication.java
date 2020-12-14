@@ -40,18 +40,16 @@ public class BasicApplication {
           }
      }
 
-     public static void main(String[] args) {
-
-          startGsmaApps(args[0]);
-     }
-
-     public static void main1(String[] args) {
+//     public static void main(String[] args) {     //Basic
+//          startGsmaApps(args[0]);
+//     }
+     public static void main(String[] args) {       // 
 
           BasicApplication bs = new BasicApplication();
           try {
                bs.gsmaApplication();
           } catch (Exception e) {
-               logger.info("C y " + e);
+               logger.info("Exception :  " + e);
 
           }
 
@@ -89,21 +87,24 @@ public class BasicApplication {
           try {
                LogWriter ls = new LogWriter();
                Statement stmt = conn.createStatement();
-               ResultSet rs1 = stmt.executeQuery("select   distinct tac  from device_usage_db  ");
+
+//               ResultSet rs1 = stmt.executeQuery("select   distinct tac  from device_usage_db  ");
+               ResultSet rs1 = stmt.executeQuery("select   distinct tac  from device_usage_db  where FEATURE_NAME = 'U' ");
                Set<String> hash_Set = new HashSet<String>();
                while (rs1.next()) {
                     hash_Set.add(rs1.getString(1));
                }
-               rs1 = stmt.executeQuery("select  device_id from gsma_tac_db ");
-               while (rs1.next()) {
-                    hash_Set.remove(rs1.getString(1));
-               }
-               rs1 = stmt.executeQuery("select tac  from gsma_invalid_tac_db");
-               while (rs1.next()) {
-                    hash_Set.remove(rs1.getString(1));
-               }
-               rs1.close();
+//               rs1 = stmt.executeQuery("select  device_id from gsma_tac_db ");
+//               while (rs1.next()) {
+//                    hash_Set.remove(rs1.getString(1));
+//               }
+//               rs1 = stmt.executeQuery("select tac  from gsma_invalid_tac_db");
+//               while (rs1.next()) {
+//                    hash_Set.remove(rs1.getString(1));
+//               }
+
 //          
+               rs1.close();
                logger.info("Remaining size  ." + hash_Set.size());
                for (String imei_tac : hash_Set) {
 
@@ -187,7 +188,7 @@ public class BasicApplication {
           logger.info("httpPostUrl." + httpPostUrl);
           BasicApplication obj = new BasicApplication();
           try {
-                System.out.println("imei_tac  ." + imei_tac);
+               System.out.println("imei_tac  ." + imei_tac);
                SSLContext sslContext = SSLContexts.custom()
                        .loadKeyMaterial(obj.readStore(), KEYPASS.toCharArray()) // use null as second param if you don't have a separate key password
                        .build();
@@ -198,7 +199,7 @@ public class BasicApplication {
                HttpClient httpClient = HttpClients.custom().setSslcontext(sslContext).build();
                HttpPost request = new HttpPost(httpPostUrl);
                logger.info("request ." + request);
-               
+
                String auth = EncriptonService.getAuth(imei_tac, APIKey, Password, Salt_String, Organization_Id, Secretkey);      // for original.. ta 
                request.addHeader("Authorisation", auth);
                logger.info("auth ." + auth);
@@ -213,7 +214,7 @@ public class BasicApplication {
 
                Gson gson = new Gson();
                GsmaEntity product = gson.fromJson(message, GsmaEntity.class);
-                System.out.println("Product Report : " + message);
+               System.out.println("Product Report : " + message);
 
                try {
                     if (product.getGsmaApprovedTac().equals("Yes")) {
