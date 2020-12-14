@@ -36,12 +36,9 @@ public class EXIST_IN_GSMABLACKLIST_DB {
             break;
             case "Reject": {
                 logger.debug("Action is Reject");
-
-                String fileString = args[15] + " , Error Description : IMEI/ESN/MEID is already present in the System  ";
-
+                String fileString = args[15] + " , Error Code :CON_RULE_0017, Error Description :IMEI/ESN/MEID  is Blacklisted By Gsma ";
                  bw.write(fileString);
                 bw.newLine();
-
             }
             break;
             case "Block": {
@@ -50,7 +47,6 @@ public class EXIST_IN_GSMABLACKLIST_DB {
             break;
             case "Report": {
                 logger.debug("Action is Report");
-
             }
             break;
             case "SYS_REG": {
@@ -63,16 +59,14 @@ public class EXIST_IN_GSMABLACKLIST_DB {
             break;
             case "NAN": {
                 logger.debug("Action is NAN");
-                String fileString = args[15] + " , Error Code :CON_RULE_0023, Error Description :Something went Wrong while Checking  Status of Imei .Try after Some Time.   ";
+                String fileString = args[15] + " , Error Code :CON_RULE_0023, Error Description :System Won't able to establish connection to Gsma Blacklist server. Please try again after Some Time.";
                  bw.write(fileString);
                 bw.newLine();
             }
             break;
-            
             default:
                 logger.debug(" The Action " + args[13] + "  is Not Defined  ");
         }
-
          return "Success";
         } catch (Exception e) {
             logger.debug(" Error " + e);

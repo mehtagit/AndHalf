@@ -69,7 +69,6 @@ public class EXISTS_IN_GREYLIST_DB {
             break;
             case "Reject": {
                 logger.debug("Action is Reject");
-
                 String fileString = args[15] + " ,Error Code :CON_RULE_0019, Error Description : IMEI/ESN/MEID is already present in the system  ";
                  bw.write(fileString);
                 bw.newLine();

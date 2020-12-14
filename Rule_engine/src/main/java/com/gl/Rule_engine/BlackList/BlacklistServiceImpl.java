@@ -56,7 +56,7 @@ public class BlacklistServiceImpl {
                limiter = " fetch next 1 rows only  ";
           }
           boolean isOracle = conn.toString().contains("oracle");
-          String dateFunction = Util.defaultDate(isOracle);
+          String dateFunction = "current_timestamp";
           Statement stmt = null;
           String query = " insert into blacklist_imei_db (blacklist_status , ref_code , deviceid, created_on , modified_on)"
                   + "values ('" + blacklistTacDb.getBlacklistStatus() + "', '" + blacklistTacDb.getRefCode() + "' , '" + blacklistTacDb.getDeviceid() + "' , " + dateFunction + " , " + dateFunction + "  )";
@@ -93,7 +93,7 @@ public class BlacklistServiceImpl {
      private void insertBlckListTacDeviceDetail(Connection conn, BlacklistTacDeviceDetailsDb btdd, int id) {
           Statement stmt = null;
           boolean isOracle = conn.toString().contains("oracle");
-          String dateFunction = Util.defaultDate(isOracle);
+          String dateFunction = "current_timestamp";
           String query = " insert into  blacklist_imei_device_details_db ( bluetooth,brand_name, device_type, manufacturer,marketing_name, model_name , nfc ,operating_system , wlan , blacklist_tac_db_id ,created_on) "
                   + " values( '" + btdd.getBluetooth() + "','" + btdd.getBrandName() + "', '" + btdd.getDeviceType() + "', '" + btdd.getManufacturer() + "','" + btdd.getMarketingName() + "','" + btdd.getModelName() + "','" + btdd.getNFC() + "',  '" + btdd.getOperatingSystem() + "', '" + btdd.getWLAN() + "', '" + id + "' ," + dateFunction + "     ) ";
           logger.debug("uqry " + query);
@@ -121,7 +121,7 @@ public class BlacklistServiceImpl {
                stmt = conn.createStatement();
                String query = null;
                boolean isOracle = conn.toString().contains("oracle");
-               String dateFunction = Util.defaultDate(isOracle);
+               String dateFunction = "current_timestamp";
                for (BlacklistTacDeviceHistoryDb btr : blacklistTacDeviceHistoryDb) {
                     logger.debug("..." + btr.getAction() + "..." + btr.getCountry() + "..." + btr.getDateReported());
                     query = " insert  into blacklist_imei_device_history_db ( action,country, date_reported,organisation,organisation_type,reason ,blacklist_tac_db_id , created_on) "
@@ -139,29 +139,6 @@ public class BlacklistServiceImpl {
                     java.util.logging.Logger.getLogger(BlacklistServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
                }
           }
-     }
-
-     void insertInvalidTac(Connection conn, BlacklistTacDb blacklistTacDb) {
-          boolean isOracle = conn.toString().contains("oracle");
-          String dateFunction = Util.defaultDate(isOracle);
-          Statement stmt = null;
-          String query = " insert into blacklist_imei_invalid_db ( tac ,created_on , modified_on )" // gsma_blacklist_tac_invalid_db earlier
-                  + "values ( '" + blacklistTacDb.getDeviceid() + "' , " + dateFunction + "  , " + dateFunction + " )";
-          logger.debug("query .." + query);
-          try {
-               stmt = conn.createStatement();
-               stmt.executeUpdate(query);
-               logger.debug("Inserted in blck Tac Db");
-          } catch (Exception e) {
-               logger.debug("Error " + e);
-          } finally {
-               try {
-                    stmt.close();
-               } catch (Exception ex) {
-                    java.util.logging.Logger.getLogger(BlacklistServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-               }
-          }
-
      }
 
      String getBlacklistStatus(Connection conn, String Imei) {
@@ -194,7 +171,6 @@ public class BlacklistServiceImpl {
                          stats = rs1.getString("blacklist_status");
                     }
                }
-
                stmt.close();
                logger.debug("  BlacklistSTatuss " + stats);
           } catch (Exception e) {
@@ -212,4 +188,58 @@ public class BlacklistServiceImpl {
           return stats;
      }
 
+     String getBlacklistUrl(Connection conn) {
+          String stats = null;
+          Statement stmt = null;
+          ResultSet rs0 = null;
+          ResultSet rs1 = null;
+          String query = null;
+
+          try {
+               query = "  select value  from system_configuration_db where tag = 'GSMA_BLACKLIST_URL' ";
+               logger.debug("Query  [" + query + "]");
+               stmt = conn.createStatement();
+               rs0 = stmt.executeQuery(query);
+               while (rs0.next()) {
+                    stats = rs0.getString(1);
+               }
+               stmt.close();
+               logger.debug("  BlacklistSTatuss url " + stats);
+
+          } catch (Exception e) {
+               logger.debug("Error at   getBlack listStatus" + e);
+          } finally {
+               try {
+                    rs0.close();
+                    rs1.close();
+                    stmt.close();
+               } catch (Exception ex) {
+                    java.util.logging.Logger.getLogger(BlacklistServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+               }
+          }
+          return stats;
+     }
 }
+
+//     void insertInvalidTac(Connection conn, BlacklistTacDb blacklistTacDb) {
+//          boolean isOracle = conn.toString().contains("oracle");
+//          String dateFunction = Util.defaultDate(isOracle);
+//          Statement stmt = null;
+//          String query = " insert into blacklist_imei_invalid_db ( tac ,created_on , modified_on )" // gsma_blacklist_tac_invalid_db earlier
+//                  + "values ( '" + blacklistTacDb.getDeviceid() + "' , " + dateFunction + "  , " + dateFunction + " )";
+//          logger.debug("query .." + query);
+//          try {
+//               stmt = conn.createStatement();
+//               stmt.executeUpdate(query);
+//               logger.debug("Inserted in blck Tac Db");
+//          } catch (Exception e) {
+//               logger.debug("Error " + e);
+//          } finally {
+//               try {
+//                    stmt.close();
+//               } catch (Exception ex) {
+//                    java.util.logging.Logger.getLogger(BlacklistServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+//               }
+//          }
+//
+//     }

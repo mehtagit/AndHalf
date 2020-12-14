@@ -30,20 +30,23 @@ public class EncriptonBlacklistService {
     static String Salt_String = "DCDW";
     static String Organization_Id = "505";
     static String Secretkey = "GSMAESencryption";
-    static String url = "https://devicecheck.gsma.com/imeirtl/leadclookup";
+//    static String url = "https://devicecheck.gsma.com/imeirtl/leadclookup";
 
     public static String startBlacklistApp(String Imei, Connection conn) {
         LogWriter logWriter = new LogWriter();
         String status = null;
         BlacklistServiceImpl lacklistServiceImpl = new BlacklistServiceImpl();
         String rslt = lacklistServiceImpl.getBlacklistStatus(conn, Imei);
+        String url = lacklistServiceImpl.getBlacklistUrl(conn);
+       
         if (rslt.equalsIgnoreCase("NA")) {
             String deviceId = Imei;
             logWriter.writeLogBlacklist("Start with Imei " + Imei);
             String abc = getSHA(APIKey + Password + deviceId);
             String auth = encrypt(Salt_String + Organization_Id + "=" + abc, Secretkey);
             logger.debug("the auth key is =" + auth);
-            String message = verifyGSMA(deviceId, auth);
+            String message = verifyGSMA(deviceId, auth ,url);
+            
             if (message.equalsIgnoreCase("NAN")) {
                 status = "NAN";
             } else {
@@ -53,11 +56,11 @@ public class EncriptonBlacklistService {
         } else {
             status = rslt;
         }
-        logger.debug("Final status");
+        logger.debug("Final status"  + status);
         return status;
     }
 
-    public static String verifyGSMA(String deviceId, String auth) {
+    public static String verifyGSMA(String deviceId, String auth , String url) {
         URI uri = null;
         HttpHeaders headers = null;
         MultiValueMap<String, String> map = null;
@@ -80,7 +83,7 @@ public class EncriptonBlacklistService {
             request = new HttpEntity<>(map, headers);
 
             httpResponse = restTemplate.postForEntity(uri, request, String.class);
-            logger.debug("Response Body:[" + httpResponse.getBody() + "]");
+            logger.info("Response Body:  [" + httpResponse.getBody() + "]");
             respons = httpResponse.getBody();
         } catch (Exception ex) {
             logger.info(" Error :" + ex);
