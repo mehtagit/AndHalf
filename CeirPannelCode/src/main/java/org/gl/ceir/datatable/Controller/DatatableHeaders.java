@@ -492,6 +492,16 @@ public class DatatableHeaders {
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}
+			
+			//Visa Headers
+			else if("systemAddressHeaders".equals(role)) {
+				
+				String[] headers = {"Province","District","Commune","Villege","table.action"};	
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+			}
 
 			//DEFAULT PORTION  
 			else {
