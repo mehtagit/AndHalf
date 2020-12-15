@@ -5,9 +5,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.aspectj.lang.annotation.RequiredTypes;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GsmaFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
+import org.gl.ceir.CeirPannelCode.Model.AddressModel;
+import org.gl.ceir.CeirPannelCode.Model.AddressResponse;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
@@ -138,6 +141,33 @@ public class ProjectDropdownController {
 		
 	}
 
+	
+	
+	@PostMapping("/getallDistrict") 
+	public @ResponseBody AddressResponse getAllDistricts (@RequestBody AddressModel addressModel)  {
+		log.info("request send to the getAllDistrictDropdown api="+addressModel);
+		AddressResponse response= feignCleintImplementation.getAllTagsDistrictFeign(addressModel);
+		log.info("response from getAllDistrictDropdown api "+response);
+		return response;
 
+		}
+	
+	@PostMapping("/getallCommune")
+	public @ResponseBody AddressResponse getAllCommune (@RequestBody AddressModel addressModel)  {
+		log.info("request send to the getAllCommuneDropdown api="+addressModel);
+		AddressResponse response= feignCleintImplementation.getAllCommuneFeign(addressModel);
+		log.info("response from getAllCommuneDropdown api "+response);
+		return response;
+
+		}
+	
+	@PostMapping("/getallVillage")
+	public @ResponseBody AddressResponse getAllvillage(@RequestBody AddressModel addressModel)  {
+		log.info("request send to the getAllvillageDropdown api="+addressModel);
+		AddressResponse response= feignCleintImplementation.getAllVillageFeign(addressModel);
+		log.info("response from getAllvillageDropdown api "+response);
+		return response;
+
+		}
 	
 }
