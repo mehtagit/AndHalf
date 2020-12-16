@@ -6,7 +6,10 @@ import org.springframework.stereotype.Component;
 public class AddressResponse {
 	private String province;
 	private String district;
-
+	private Long districtID;
+	private String commune;
+	private Long communeID;
+	private String village;
 	private long id;
 
 	@Override
@@ -16,6 +19,14 @@ public class AddressResponse {
 		builder.append(province);
 		builder.append(", district=");
 		builder.append(district);
+		builder.append(", districtID=");
+		builder.append(districtID);
+		builder.append(", commune=");
+		builder.append(commune);
+		builder.append(", communeID=");
+		builder.append(communeID);
+		builder.append(", village=");
+		builder.append(village);
 		builder.append(", id=");
 		builder.append(id);
 		builder.append("]");
@@ -44,6 +55,38 @@ public class AddressResponse {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public Long getDistrictID() {
+		return districtID;
+	}
+
+	public void setDistrictID(Long districtID) {
+		this.districtID = districtID;
+	}
+
+	public String getCommune() {
+		return commune;
+	}
+
+	public void setCommune(String commune) {
+		this.commune = commune;
+	}
+
+	public Long getCommuneID() {
+		return communeID;
+	}
+
+	public void setCommuneID(Long communeID) {
+		this.communeID = communeID;
+	}
+
+	public String getVillage() {
+		return village;
+	}
+
+	public void setVillage(String village) {
+		this.village = village;
 	}
 	
 }

@@ -475,20 +475,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 					@RequestParam(value = "file", defaultValue = "0") Integer file,
 					@RequestParam(value = "source", defaultValue = "menu") String source);
 					
-					//*******************************District DropDown****************************************
-					
-					@PostMapping("/getDistrict")
-					public @ResponseBody AddressResponse getAllTagsDistrictFeign(AddressModel addressModel);
-					
-					//*******************************Commune DropDown****************************************
-					
-					@PostMapping("/getCommune")
-					public @ResponseBody AddressResponse getAllCommuneFeign(AddressModel addressModel);
-					
-					//*******************************Village DropDown****************************************
-					
-					@PostMapping("/getVillage")
-					public @ResponseBody AddressResponse getAllVillageFeign(AddressModel addressModel);
+
 							
 }					
 

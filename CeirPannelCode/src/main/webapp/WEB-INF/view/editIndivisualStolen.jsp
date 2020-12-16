@@ -208,12 +208,12 @@ select {
 
 													<div class="input-field col s12 m4">
 														<input type="text" name="lastName" placeholder=""
-															required="required" pattern="[a-zA-Z]{1,30}" title=""
+															 pattern="[a-zA-Z]{1,30}" title=""
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															maxlength="30" id="singleStolenlastName"> <label
 															for="lastName"> <spring:message
-																code="input.lastName" /> <span class="star">*</span>
+																code="input.lastName" /> <span class="star"></span>
 														</label>
 													</div>
 
@@ -265,7 +265,7 @@ select {
 															class="star">*</span></label>
 													</div>
 
-													<div class="input-field col s12 m6 l6">
+													<div class="input-field col s12 m4">
 														<input type="email" name="email" id="singleStolenemail"
 															placeholder=""
 															pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title=""
@@ -275,7 +275,7 @@ select {
 																code="input.email" /> </label>
 													</div>
 
-													<div class="input-field col s12 m6 l6" style="margin-top:4px;">
+													<div class="input-field col s12 m4" style="margin-top:0px;">
 														<p class="contact-label">
 															<spring:message code="registration.altcontactnumber" />
 															<span class="star">*</span>
@@ -288,6 +288,18 @@ select {
 															maxlength="15">
 														<!-- <label for="phone">Alternate Contact Number <span class="star">*</span></label> -->
 													</div>
+													<div class="col s12 m4">
+															<label><spring:message
+																	code="registration.complainttype" /> <span
+																class="star">*</span></label> <select class="browser-default"
+																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+																required="required" id="singleStolenComplaintType">
+																<option value=""  selected>
+																	<spring:message code="registration.selectcomplainttype" /></option>
+
+															</select>
+														</div>
 													<!-- </div>
 
                                                         <div class="col s12 m12"> -->
@@ -300,7 +312,7 @@ select {
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 															maxlength="200" required="required"> <label
 															for="address"><spring:message
-																code="input.address" /> <span class="star">*</span></label>
+																code="input.addressLawfull" /> <span class="star">*</span></label>
 													</div>
 
 													<div class="input-field col s12 m6 l6">
@@ -459,14 +471,14 @@ select {
                                                                 </select>
                                                               </div> -->
 
-														<div class=" col s12 m6">
-															<%-- <input type="text" name="modalNumber" placeholder=""
+													<%-- 	<div class=" col s12 m6">
+															<input type="text" name="modalNumber" placeholder=""
 																id="singleStolenmodalNumber"
 																pattern="[a-zA-Z0-9 ]{0,30}" title=""
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 																maxlength="30"> <label for="modalNumber"><spring:message
-																	code="table.ModelNumber" /></label> --%>
+																	code="table.ModelNumber" /></label>
 																	
 															<label for="editsingleStolenmodalNumber"><spring:message
 														code="registration.modelnumber" /> <span class="star"></span></label>
@@ -477,7 +489,7 @@ select {
 														<spring:message code="registration.selectmodelnumber" /></option>
 
 												</select>		
-														</div>
+														</div> --%>
 
 														<div class="col s12 m6">
 															<p class="contact-label">
@@ -593,18 +605,7 @@ select {
 															</select>
 														</div>
 
-														<div class="col s12 m6 l6">
-															<label><spring:message
-																	code="registration.complainttype" /> <span
-																class="star">*</span></label> <select class="browser-default"
-																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-																required="required" id="singleStolenComplaintType">
-																<option value=""  selected>
-																	<spring:message code="registration.selectcomplainttype" /></option>
-
-															</select>
-														</div>
+														
 
 														<div class="col s12 m12"
 															style="margin-top: 30px; font-weight: bold;">
@@ -876,7 +877,7 @@ onclick="_Services._selectstartDate()"></i></span>
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
 																class="materialize-textarea"></textarea>
 															<label for="textarea1"><spring:message
-																	code="input.remarks" /> </label>
+																	code="input.remarksLawfull" /> </label>
 														</div>
 														
 															<div class="input-field col s12 m12" style="display: none;" id="singleDeviceRejectRemarkDiv">
