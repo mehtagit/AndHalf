@@ -358,3 +358,32 @@ function luhnCheck(IMEILUHN,IMEIType){
 	
 	return x;
 	  }
+
+
+
+function setDateMandatoryOrOptional(defaultValue,calenderId){
+if(defaultValue=="tilldate"){
+	 $("#"+calenderId).attr('required', '');
+	
+}
+else{
+	$("#"+calenderId).removeAttr('required');
+}
+	
+}
+
+
+
+function setMandatoryandOptional(village,locality,district,commune){
+	var addressType=$('#addressType').val();
+	if(addressType==2)
+		{
+		$(".starAddress").css("display", "none");
+	//	$("#"+district+","+"#"+commune).css("display", "none");
+		$("#"+village+","+"#"+locality+","+"#"+district+","+"#"+commune).attr("required", false);
+		}
+	else{
+		$(".starAddress").css("display", "block");
+		$("#"+district+","+"#"+commune).attr("required", true);
+	}
+}

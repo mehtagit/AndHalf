@@ -255,7 +255,7 @@
 
                                                             <div class="input-field col s12 m6">
                                                                 <textarea id="sigleRecovery" class="materialize-textarea"></textarea>
-                                                                <label for="sigleRecovery"><spring:message code="input.remarks" /> </label>
+                                                                <label for="sigleRecovery"><spring:message code="input.remarksLawfull" /> </label>
                                                             </div>
                                                             </div>
                                                         </div>
@@ -303,7 +303,7 @@
                                                           oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
                                                           maxlength="10000"
                                                            class="materialize-textarea" placeholder=""></textarea>
-                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
+                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarksLawfull" /></label>
                                                     </div>
                                                     
                                                     <div class="input-field col s12 m6" style="display: none;" id="bulkRecoveryRemarkRejectDiv">
@@ -630,7 +630,7 @@ onclick="_Services._selectstartDate()"></i></span>
             	$('#headingType').text('');
             	$('#headingType').text(recoveryCompany);
             	  $("#bulkRecoveryDiv").find("input,select,textarea,button").prop("disabled",true);
-            	  
+            	  $("#bulkRecoveryDiv").find("select").attr("style", "pointer-events: none;");
             	  $("#editCompanyRecoveryButton").css("display", "none");
           		$(".star").css("display", "none");
           		 $("#bulkRecoveryRemarkRejectDiv").css("display", "block");

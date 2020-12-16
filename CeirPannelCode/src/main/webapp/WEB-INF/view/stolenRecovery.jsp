@@ -1273,19 +1273,19 @@ required="required"></textarea>
 <div class="row" id="editBlockTimePeriod">
 <div class="col s12 m6">
 <spring:message code="operator.blocking" /> <label style="margin-right: 2%;"> <input
-type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" 
+type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio"  onchange="setDateMandatoryOrOptional('Immediate','stolenDatePeriodedit')"
 value="Immediate"
-onchange="document.getElementById('calender').style.display = 'none';"
+onclick="document.getElementById('calender').style.display = 'none';"
 name="stolenBlockPeriod">
 <spring:message code="operator.immediate" />
-</label> <label style="margin-right: 2%;"> <input type="radio"
+</label> <label style="margin-right: 2%;"> <input type="radio" onchange="setDateMandatoryOrOptional('Default','stolenDatePeriodedit')"
 name="editbulkBlockdeviceradio" class="blocktypeRadio" value="Default"
-onchange="document.getElementById('calender').style.display = 'none';"
+onclick="document.getElementById('calender').style.display = 'none';"
 name="stolenBlockPeriod">
 <spring:message code="operator.default" />
-</label> <label> <input type="radio" name="editbulkBlockdeviceradio" required="required"
+</label> <label> <input type="radio" name="editbulkBlockdeviceradio"  onchange="setDateMandatoryOrOptional('tilldate','stolenDatePeriodedit')"
 value="tilldate" class="blocktypeRadio"
-onchange="document.getElementById('calender').style.display = 'block';"
+onclick="document.getElementById('calender').style.display = 'block';"
 name="stolenBlockPeriod">
 <spring:message code="operator.later" /></label>
 
@@ -1478,17 +1478,17 @@ title="" maxlength="16" value="1500" disabled>
 													<spring:message code="operator.blocking" />
 												</p>
 												<label style="margin-right: 2%;"> <input
-													type="radio" class="editbulkblocktypeRadio"  value="Immediate"
+													type="radio" class="editbulkblocktypeRadio"  value="Immediate" onchange="setDateMandatoryOrOptional('Immediate','editstolenBulkDatePeriod')"
 													onclick="document.getElementById('bulkeditcalender').style.display = 'none';"
 													name="editbulkblocktypeName" checked> <spring:message
 														code="operator.immediate" />
 												</label> <label style="margin-right: 2%;"> <input
-													type="radio" class="editbulkblocktypeRadio" value="Default" id="editbulkblocktypeRadioId"
+													type="radio" class="editbulkblocktypeRadio" value="Default" id="editbulkblocktypeRadioId" onchange="setDateMandatoryOrOptional('Default','editstolenBulkDatePeriod')"
 													onclick="document.getElementById('bulkeditcalender').style.display = 'none';"
 													name="editbulkblocktypeName"> <spring:message
 														code="operator.default" />
 												</label> <label> <input type="radio" required="required"
-													value="tilldate" class="editbulkblocktypeRadio"
+													value="tilldate" class="editbulkblocktypeRadio" onchange="setDateMandatoryOrOptional('tilldate','editstolenBulkDatePeriod')"
 													onclick="document.getElementById('bulkeditcalender').style.display = 'block';"
 													name="editbulkblocktypeName"> <spring:message
 														code="operator.later" />

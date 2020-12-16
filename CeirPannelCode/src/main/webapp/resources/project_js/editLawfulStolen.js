@@ -17,6 +17,7 @@ populateCountries("singleDevicecountry", "singleDevicestate");
 	populateCountries("country", "state");
 	populateStates("country", "state");
 	
+	$("#singleDevicecountry").attr("style", "pointer-events: none;");
 	
 setTimeout(function(){
 
@@ -102,7 +103,7 @@ function viewIndivisualStolen()
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
 			////console.log(response)
-
+			$('.browser-default').attr("style", "pointer-events: none;");
 			$('#singleStolenfirstName').val(response.stolenIndividualUserDB.firstName);
 			$('#singleStolenmiddleName').val(response.stolenIndividualUserDB.middleName);
 			if(response.stolenIndividualUserDB.middleName=="" || response.stolenIndividualUserDB.middleName==null){
@@ -653,8 +654,10 @@ function viewPageType() {
 		
    		
    		$("#singleDeviceRejectRemarkDiv").css("display", "block");
-		$("#SingleForm").find("input,select,textarea,button").prop(
+		$("#SingleForm").find("input,textarea,button").prop(
 				"disabled", true);
+		$("#SingleForm").find("select").attr("style", "pointer-events: none;");
+		
 		  $("#operator3span").css("display", "none");
 		  $("#operator4span").css("display", "none");
 		  $("#operator5span").css("display", "none");

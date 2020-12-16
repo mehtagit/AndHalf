@@ -13295,3 +13295,17 @@ a#wholePageImage {
     margin: 10px 20px !important;
     color: #fff !important;
 }
+
+/* .list::-webkit-scrollbar {
+    -webkit-appearance: scrollbartrack-vertical !important;
+}    
+ */
+/* ::-webkit-scrollbar {
+    -webkit-appearance: none !important;
+    width: 11px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #529dba;
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+} */
