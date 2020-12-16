@@ -371,3 +371,21 @@ else{
 }
 	
 }
+
+
+
+function setMandatoryandOptional(village,locality,district,commune){
+	var addressType=$('#addressType').val();
+	if(addressType==2)
+		{
+		alert("1");
+		$(".starAddress").css("display", "none");
+	//	$("#"+district+","+"#"+commune).css("display", "none");
+		$("#"+village+","+"#"+locality+","+"#"+district+","+"#"+commune).attr("required", false);
+		}
+	else{
+		alert("2");
+		$(".starAddress").css("display", "block");
+		$("#"+district+","+"#"+commune).attr("required", true);
+	}
+}

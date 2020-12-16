@@ -239,7 +239,7 @@ select {
                                                                  maxlength="30">
                                                                 <label for="sigleRecoverydeviceBrandName"><spring:message code="registration.devicebrandname" /></label> --%>
 													</div>
-													<div class="col s12 m6">
+													<%-- <div class="col s12 m6">
 
 														<label for="singleRecoverymodalNumber"><spring:message
 																code="registration.modelnumber" /> <span
@@ -252,7 +252,7 @@ select {
 																<spring:message code="registration.selectmodelnumber" /></option>
 
 														</select>
-													</div>
+													</div> --%>
 													<%-- 
                                                             <div class="input-field col s12 m6" style="margin-top: 22px;">
                                                                 <input type="text" name="sigleRecoveryimeiNumber" id="sigleRecoveryimeiNumber" 
@@ -537,7 +537,7 @@ onclick="_Services._selectstartDate()"></i></span>
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
 															maxlength="10000" class="materialize-textarea"></textarea>
 														<label for="sigleRecovery"><spring:message
-																code="input.remarks" /> </label>
+																code="input.remarksLawfull" /> </label>
 													</div>
 												</div>
 											</div>
@@ -625,7 +625,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												maxlength="10000" class="materialize-textarea"
 												style="height: auto; max-height: 300px;"></textarea>
 											<label for="bulkRecoveryRemark"><spring:message
-													code="input.remarks" /></label>
+													code="input.remarksLawfull" /></label>
 										</div>
 
 										<%--    <div class="col s12 m6">

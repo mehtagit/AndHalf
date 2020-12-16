@@ -588,7 +588,7 @@
 											</div>
 
 											<div class="col s12 m12" style="margin-top: 30px;">
-												<h5><spring:message code="registration.authorizedpersonnel" /></h5>
+												<h5><spring:message code="registration.authorizedpersonnelLawfull" /></h5>
 												<hr>
 											</div>
 											<!-- <div class="col s12 m12">
@@ -878,7 +878,7 @@
 											<div class="input-field col s12 m6" style="margin-top: 22px;margin-right: -2px;">
 												<textarea id="deviceBulkStolenRemark" placeholder=""
 													class="materialize-textarea"></textarea>
-												<label for="textarea1"><spring:message code="input.remarks" /></label>
+												<label for="textarea1"><spring:message code="input.remarksLawfull" /></label>
 											</div>
 											<div class="input-field col s12 m12" style="display: none;" id="bulkDeviceRejectRemarkDiv">
 															<textarea id="bulkDeviceRejectRemark" maxlength="10000"
@@ -1070,7 +1070,8 @@
    $("#firFilePreview").css("display", "block");
    $("#uploadFirSingle").css("display", "none");
 	$("#editRecoverySampleFile").css("display", "none");
-	   $("#Bulkform").find("input,select,textarea,button").prop("disabled",true);
+	   $("#Bulkform").find("input,textarea,button").prop("disabled",true);
+	   $("#Bulkform").find("select").attr("style", "pointer-events: none;");
 	   $("#deviceBulkStolenFile").css("display", "none");
 	   $("#dviceFileText").css("display", "none");
 	   $("#companyStolenButton").css("display", "none");
@@ -1124,6 +1125,8 @@ else{
 			            "state3"
 			        );
 		 
+			        
+			        $("#country3").attr("style", "pointer-events: none;");
         var input2 = document.querySelector("#singleStolenphone2");
         window.intlTelInput(input2, {
             utilsScript: "${context}/resources/js/utils.js",

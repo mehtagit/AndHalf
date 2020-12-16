@@ -182,14 +182,14 @@
                                                      <input type="text" id="selectedBrandName" style="display: none;">           
                                                             </div>
                                                             
-                                                            <div class=" col s12 m6">
-                                                                <%-- <input type="text" name="sigleRecoverydeviceBrandName" id="sigleRecoverydeviceBrandName" placeholder="" 
+                                                           <%--  <div class=" col s12 m6">
+                                                                <input type="text" name="sigleRecoverydeviceBrandName" id="sigleRecoverydeviceBrandName" placeholder="" 
                                                                 pattern="[a-zA-Z]{0,30}" 
                                                                  title="" 
                                                                  oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');" 
                                                                  oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
                                                                   maxlength="30">
-                                                                <label for="sigleRecoverydeviceBrandName"><spring:message code="registration.devicebrandname" /></label> --%>
+                                                                <label for="sigleRecoverydeviceBrandName"><spring:message code="registration.devicebrandname" /></label>
                                                               
                                                                <label for="editsingleRecoverymodalNumber"><spring:message
 														code="registration.modelnumber" /> <span id="modalNumerSpan" class="star" style="display: none;">*</span></label>
@@ -202,7 +202,7 @@
 
 												</select>
                                                                 
-                                                            </div>
+                                                            </div> --%>
 																<input type="text" id="pageViewType" value="${viewType}" style="display: none;">
 																<input type="text" id="existingStolenTxnId" style="display:none" value="${stolenTxnId}" >
                                                             <%-- <div class="input-field col s12 m6" style="margin-top: 22px;">
@@ -387,7 +387,7 @@
                                                                 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
                                                          	maxlength="10000"
                                                                  class="materialize-textarea"></textarea>
-                                                                <label for="sigleRecovery"><spring:message code="input.remarks" /> </label>
+                                                                <label for="sigleRecovery"><spring:message code="input.remarksLawfull" /> </label>
                                                             </div>
                                                             <div class="input-field col s12 m6" style="display: none;" id="sigleRecoveryRejectDiv">
                                                                 <textarea id="sigleRecoveryReject" placeholder="" 
@@ -479,7 +479,7 @@ onclick="_Services._selectstartDate()"></i></span>
 
                                                     <div class="input-field col s12 m6">
                                                         <textarea id="bulkRecoveryRemark" class="materialize-textarea"></textarea>
-                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
+                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarksLawfull" /></label>
                                                     </div>
 
                                                     <div class="file-field col s12 m6">
@@ -681,6 +681,7 @@ onclick="_Services._selectstartDate()"></i></span>
 	            	 $("#indivisualEditRecoveryButton").css("display", "none");
 	          		$(".star").css("display", "none");
 	            	  $("#singleRecoveryDiv").find("input,select,textarea,button").prop("disabled",true);
+	            	  $("#singleRecoveryDiv").find("select").attr("style", "pointer-events: none;");
 	            	  $("#sigleRecoveryRejectDiv").css("display", "block");
 	            	  
 	            	}
