@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class DBrowDataModel {
 	private String dbName;
 	private String tableName;
-	private Integer pageNo, pageSize;
+	private Integer pageNo, pageSize,unitId;
 	private List<String> columns;
 	private List<Map<String, String>> rowData;
 	
@@ -37,6 +37,12 @@ public class DBrowDataModel {
 	}
 	public void setPageSize(Integer pageSize) {
 		this.pageSize = pageSize;
+	}
+	public Integer getUnitId() {
+		return unitId;
+	}
+	public void setUnitId(Integer unitId) {
+		this.unitId = unitId;
 	}
 	public List<String> getColumns() {
 		return columns;
@@ -115,6 +121,8 @@ public class DBrowDataModel {
 		builder.append(pageNo);
 		builder.append(", pageSize=");
 		builder.append(pageSize);
+		builder.append(", unitId=");
+		builder.append(unitId);
 		builder.append(", columns=");
 		builder.append(columns);
 		builder.append(", rowData=");
@@ -137,9 +145,48 @@ public class DBrowDataModel {
 		builder.append(userId);
 		builder.append(", featureId=");
 		builder.append(featureId);
+		builder.append(", getDbName()=");
+		builder.append(getDbName());
+		builder.append(", getTableName()=");
+		builder.append(getTableName());
+		builder.append(", getPageNo()=");
+		builder.append(getPageNo());
+		builder.append(", getPageSize()=");
+		builder.append(getPageSize());
+		builder.append(", getUnitId()=");
+		builder.append(getUnitId());
+		builder.append(", getColumns()=");
+		builder.append(getColumns());
+		builder.append(", getRowData()=");
+		builder.append(getRowData());
+		builder.append(", getEndDate()=");
+		builder.append(getEndDate());
+		builder.append(", getStartDate()=");
+		builder.append(getStartDate());
+		builder.append(", getTxnId()=");
+		builder.append(getTxnId());
+		builder.append(", getUsername()=");
+		builder.append(getUsername());
+		builder.append(", getUserType()=");
+		builder.append(getUserType());
+		builder.append(", getReportnameId()=");
+		builder.append(getReportnameId());
+		builder.append(", getUserTypeId()=");
+		builder.append(getUserTypeId());
+		builder.append(", getUserId()=");
+		builder.append(getUserId());
+		builder.append(", getFeatureId()=");
+		builder.append(getFeatureId());
+		builder.append(", getClass()=");
+		builder.append(getClass());
+		builder.append(", hashCode()=");
+		builder.append(hashCode());
+		builder.append(", toString()=");
+		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 	
 	

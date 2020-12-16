@@ -58,7 +58,8 @@
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"username" : $("body").attr("data-selected-username"),
-					"userId" : parseInt($("body").attr("data-userID"))
+					"userId" : parseInt($("body").attr("data-userID")),
+					"unitId" : $("#unitId").val()
 					//"pageNo": Integer.parseInt(pageNo),
 					//"pageSize":Integer.parseInt(pageSize),
 
@@ -218,21 +219,16 @@
 			var filterRequest={
 					"startDate" : $('#startDate').val(), 
 					"endDate":$('#endDate').val(),
-					"reportnameId" : parseInt(reportnameId),
+					"reportnameId" : 1,
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"username" : $("body").attr("data-selected-username"),
 					"userId" : parseInt($("body").attr("data-userID")),
+					"unitId" : $("unitId").val(),
 					"pageNo":parseInt(pageNo),
-					"pageSize":parseInt(pageSize),
-					
-					
-					
-					
-					
-					
-			}
+					"pageSize":parseInt(pageSize)
+				}
 			//////console.log(JSON.stringify(filterRequest))
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
