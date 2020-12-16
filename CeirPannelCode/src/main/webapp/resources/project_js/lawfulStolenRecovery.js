@@ -273,6 +273,8 @@ function setAllDropdowns(){
 		}
 	});
 
+	
+	
 	//Source Type-----------dropdown
 	$.getJSON('./getSourceTypeDropdown/SOURCE_TYPE/'+featureId+'', function(data) {
 		for (i = 0; i < data.length; i++) {
@@ -491,6 +493,13 @@ $.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
 	}
 });
 
+$.getJSON('./getSourceTypeDropdown/DOC_TYPE/12', function(data) {
+
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].tagId).text(data[i].interp).attr("docValue",data[i].value).appendTo('#docTypetag1');
+
+	}
+});
 
 $.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
 
@@ -1595,3 +1604,228 @@ $(document).on("keyup", "#singleStolenimei1", function(e) {
 
 	}
 });
+
+
+function setContactIMEINumber(multiplesimstatus,IMEIContact1,IMEIContact2,IMEIContact3,IMEIContact4){
+	
+	
+if($('#'+multiplesimstatus).val()==1){
+	$("#"+IMEIContact1).css("display", "block");
+	$("#"+IMEIContact2).css("display", "none");
+	$("#"+IMEIContact3).css("display", "none");
+	$("#"+IMEIContact4).css("display", "none");
+}
+else if($('#'+multiplesimstatus).val()==2){
+
+	$("#"+IMEIContact1).css("display", "block");
+	$("#"+IMEIContact2).css("display", "block");
+	$("#"+IMEIContact3).css("display", "none");
+	$("#"+IMEIContact4).css("display", "none");
+	
+}
+else if($('#'+multiplesimstatus).val()==3){
+
+	$("#"+IMEIContact1).css("display", "block");
+	$("#"+IMEIContact2).css("display", "block");
+	$("#"+IMEIContact3).css("display", "block");
+	$("#"+IMEIContact4).css("display", "none");
+	
+}
+else if($('#'+multiplesimstatus).val()==4){
+		$("#"+IMEIContact1).css("display", "block");
+		$("#"+IMEIContact2).css("display", "block");
+		$("#"+IMEIContact3).css("display", "block");
+		$("#"+IMEIContact4).css("display", "block");
+}
+else if($('#'+multiplesimstatus).val()==""){
+	$("#"+IMEIContact1).css("display", "none");
+	$("#"+IMEIContact2).css("display", "none");
+	$("#"+IMEIContact3).css("display", "none");
+	$("#"+IMEIContact4).css("display", "none");
+}
+
+}
+
+function enableSelectFile() {
+	if($('#docTypetag1').val() != ''){
+		$("#docTypeFile1").attr("disabled", false);
+		$("#docTypeFile1").attr("required", true);
+		$("#removestar").find(".star").remove();
+		$("#supportingdocumentFile").append('<span class="star">*</span>');
+	}else{
+		$("#docTypeFile1").attr("required", false);
+		$('#filetextField').val('');
+		$("#removestar").find(".star").remove();
+	}
+}
+
+function enableAddMore(id,removeFileDivId) {
+
+    var uploadedFileName = $("#"+id).val();
+	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+	////alert("file extension=="+uploadedFileName)
+	var ext = uploadedFileName.split('.').pop();
+
+	var fileSize = ($("#"+id)[0].files[0].size);
+	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
+		//alert("----"+fileSize);*/
+	fileSize = Math.floor(fileSize/1000);
+	$('#FilefieldId').val(id);
+	
+	var fileExtension =ext.toLowerCase();
+	
+	var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv","pdf","docx"];
+	var isInArray =extArray.includes(fileExtension);
+	
+	$('#removeFileInput').val(id);
+	$('#removeFileId').val(removeFileDivId);
+	////console.log("isInArray: "+isInArray)
+	if (uploadedFileName.length > 30) {
+		$('#fileFormateModal').openModal();
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageValidationName'));
+	} 
+	else if(isInArray ==false)
+	{
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
+		$(".add_field_button").attr("disabled", true);
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageMessageCSV'));
+
+	}
+	else if(ext=='csv')
+	{
+		
+		if(fileSize>='10000'){
+			$(".add_field_button").attr("disabled", true);
+			window.parent.$('#fileFormateModal').openModal({
+				dismissible:false
+			});
+			
+		}
+		
+	}
+	else if(fileSize>=5000){
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageSize'));	
+		$(".add_field_button").attr("disabled", true);
+	}
+	
+	$(".add_field_button").attr("disabled", false);
+}
+
+
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+});
+		
+		$.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
+			//console.log(data);
+
+			localStorage.setItem("maxCount", data.value);
+
+		});
+
+		//var max_fields = 2; //maximum input boxes allowed
+		var max_fields = localStorage.getItem("maxCount");
+		if (max_fields==0 || max_fields==1){
+			 //console.log("1111");
+			 $(".add_field_button").prop('disabled', true);
+		 }
+		
+		var wrapper = $(".mainDiv"); //Fields wrapper
+		var add_button = $(".add_field_button"); //Add button ID
+		var x = 1; //initlal text box count
+		var id = 2;
+
+		$(".add_field_button")
+				.click(
+						function(e) { //on add input button click
+							e.preventDefault();
+							var placeholderValue = $
+									.i18n('selectFilePlaceHolder');
+							if (x < max_fields) { //max input box allowed
+								x++; //text box increment
+								$(wrapper)
+										.append(
+												'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'
+														+ $
+																.i18n('documenttype')
+														+ '<span class="star">*</span> </label><select required id="docTypetag'
+														+ id
+														+ '" oninput="InvalidMsg(this,\'select\',\''
+														+ $
+																.i18n('selectDocumentType')
+														+ '\');"  oninvalid="InvalidMsg(this,\'select\',\''
+														+ $
+																.i18n('selectDocumentType')
+														+ '\');"  class="browser-default"> <option value="" disabled selected>'
+														+ $
+																.i18n('selectDocumentType')
+														+ ' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'
+														+ $
+																.i18n('selectDocumentType')
+														+ ' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'
+														+ $
+																.i18n('selectfile')
+														+ '</span><input required onchange=enableAddMore("docTypeFile'+id+'","filediv'+id+'") id="docTypeFile'
+														+ id
+														+ '" type="file" oninput="InvalidMsg(this,\'fileType\',\''
+														+ $
+																.i18n('selectfile')
+														+ '\');"  oninvalid="InvalidMsg(this,\'fileType\',\''
+														+ $
+																.i18n('selectfile')
+														+ '\');" name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+placeholderValue+'" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" id="remove_field_icon'+id+'" class="remove_field btn right btn-info" onclick="remove_field('+id+')">-</div></div></div>'); //add input box
+							}
+							  
+								if(x==max_fields){
+ 									
+									 $(".add_field_button").prop('disabled', true);
+								}
+								$.getJSON('./getSourceTypeDropdown/DOC_TYPE/12', function(
+										data) { 	
+
+									for (i = 0; i < data.length; i++) {
+										//////console.log(data[i].interp);
+										var optionId = id - 1;
+										$('<option>').val(data[i].tagId).text(
+												data[i].interp).appendTo(
+												'#docTypetag' + optionId);
+										$('<option>').val(data[i].value).text(
+												data[i].tagId).appendTo(
+												'#docTypetagValue' + optionId);
+										//////console.log('#docTypetag' + optionId);
+
+									}
+								});
+
+							id++;
+
+						});
+		
+		/* $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
+			e.preventDefault();
+			var  Iid = id - 1;
+			alert(Iid);
+			$('#filediv' + Iid).remove();
+			$(this).parent('div').remove();
+			x--;
+			id--;
+
+		}) */
+		
+		function remove_field(fieldId ){
+			$('#filediv' + fieldId).remove();
+			$(this).parent('div').remove();
+			$(".add_field_button").prop('disabled', false);
+			x--;
+			}
