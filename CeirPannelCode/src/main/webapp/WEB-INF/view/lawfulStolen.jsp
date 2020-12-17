@@ -370,8 +370,8 @@
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 															required maxlength="30"> <label for="singleStolendistrict" >
-															<spring:message code="input.district" /> <span id="singleStolendistrict"
-															class=" star starAddress"> *</span>
+															<spring:message code="input.district" /> <span id="singleStolendistrictLabel"
+															class="star"> *</span>
 														</label>
 													</div>
 
