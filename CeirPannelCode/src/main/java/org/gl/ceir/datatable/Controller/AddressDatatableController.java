@@ -148,7 +148,7 @@ public class AddressDatatableController {
 			
 		
 		  //Dropdown items 
-		  String[] selectParam={"select",Translator.toLocale("table.province"),"proviance","","select",Translator.toLocale("table.district"),"district","","select",Translator.toLocale("table.commune"),"commune","","select",Translator.toLocale("table.village"),"village",""}; 
+		  String[] selectParam={"select",Translator.toLocale("input.province"),"proviance","","select",Translator.toLocale("input.district"),"district","","select",Translator.toLocale("input.commune"),"commune","","select",Translator.toLocale("input.village"),"village",""}; 
 		  for(int i=0; i<selectParam.length; i++) { 
 				inputFields= new InputFields();
 		  inputFields.setType(selectParam[i]); 

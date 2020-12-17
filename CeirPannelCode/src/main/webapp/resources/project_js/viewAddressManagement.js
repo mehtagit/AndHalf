@@ -222,13 +222,19 @@
 	}
 
 		function AddAddress(){
-			$('#addCurrency').openModal({
+			$('#addAddressModal').openModal({
 		        dismissible:false
 		    });
 			//var tagDropDown =  document.getElementById("tag");
 			//var displayName = tagDropDown.options[tagDropDown.selectedIndex].text;
 		}
 		
+		 function resetButtons(){
+			 $('input[name=group1]').attr('checked',false);
+			 $('input[name=group2]').attr('checked',false);
+			 $('input[name=group3]').attr('checked',false);
+			 $('input[name=group4]').attr('checked',false);
+		 }
 	
 	/*----------------------------------- Save Field ----------------------------------------- */
 		

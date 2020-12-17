@@ -143,6 +143,41 @@
 		<!--end container-->
 	</section>
 	
+	<div id="addAddressModal" class="modal">
+           <h6 class="modal-header"><spring:message code="sidebar.Address_Management" /></h6>
+           <div class="modal-content">
+            <div class="row">
+              
+                   <h5 class="center">
+						<label> <input name="group1" type="radio" value="0"
+							onclick="userChangeStatus('status');"/>
+							<span class="checkboxFont"> <spring:message code="input.province" /></span></label>
+									
+						 <label> <input name="group2" type="radio" value="1"
+							onclick="userChangeStatus('roleType')"/>
+							<span class="checkboxFont"> <spring:message code="input.district" /></span>
+						</label> 
+						
+						<label> <input name="group3" type="radio" value="2"
+							onclick="userChangeStatus('roleType')"/>
+							<span class="checkboxFont"> <spring:message code="input.commune" /></span>
+						</label> 
+						
+						<label> <input name="group4" type="radio" value="3"
+							onclick="userChangeStatus('roleType')"/>
+							<span class="checkboxFont"> <spring:message code="input.village" /></span>
+						</label> 
+					</h5>
+							  
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <button class="btn modal-close" onclick = "resetButtons()"style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+                </div>
+            </div>
+        </div>
+    </div>
+	
  	<div id="addCurrency" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
         <h6 class="modal-header">Add Address </h6>
         <div class="modal-content">
