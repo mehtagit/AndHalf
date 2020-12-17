@@ -869,6 +869,7 @@ function getDistrict(current) {
 				type : 'POST',
 				data : JSON.stringify(request),
 				dataType : 'json',
+				async: false,
 				contentType : 'application/json; charset=utf-8',
 				success : function(data, textStatus, jqXHR) {
 					var result = data;
@@ -907,6 +908,7 @@ function getCommune(current) {
 				type : 'POST',
 				data : JSON.stringify(request),
 				dataType : 'json',
+				async: false,
 				contentType : 'application/json; charset=utf-8',
 				success : function(data, textStatus, jqXHR) {
 					var result = data;
@@ -943,6 +945,7 @@ function getVillage(current) {
 				url : './getallVillage',
 				type : 'POST',
 				data : JSON.stringify(request),
+				async: false,
 				dataType : 'json',
 				contentType : 'application/json; charset=utf-8',
 				success : function(data, textStatus, jqXHR) {
