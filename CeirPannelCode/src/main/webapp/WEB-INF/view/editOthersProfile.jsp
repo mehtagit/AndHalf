@@ -356,6 +356,56 @@ var contextpath = "${context}";
 										<label for="propertyLocation"><spring:message code="input.address" /> <span class="star">*</span></label>
 								</div>
 
+<div class="col s12 m6 l6">
+									<label><spring:message code="table.country" /> <span
+										class="star">*</span></label> <select id="country"
+										class="browser-default" class="mySelect"
+										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required></select>
+								</div>
+
+								<div class="col s12 m6 l6">
+									<label><spring:message code="input.province" /> <span
+										class="star">*</span></label> <select id="state"
+										class="browser-default" class="mySelect"
+										onchange="getDistrict(this);InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required></select>
+								</div>
+
+
+
+
+								<div class="col s12 m6 l6">
+									<label><spring:message code="input.district" /><span
+										class="star">*</span></label> <select
+										id="district" class="browser-default" class="mySelect"
+										onchange="getCommune(this);InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required></select>
+								</div>
+
+
+								<div class="col s12 m6 l6">
+									<label><spring:message code="input.commune" /><span
+										class="star">*</span></label> <select
+										id="commune" class="browser-default" class="mySelect"
+										onchange="getVillage(this);InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required></select>
+								</div>
+								<div class="col s12 m6 l6">
+									<label><spring:message code="input.village" /></label> <select
+										id="village" class="browser-default" class="mySelect"
+										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" ></select>
+
+
+								</div>
+
+
 								<div class="input-field col s12 m6 l6">
 									<input placeholder="" type="text" name="street" maxlength="20" id="street" pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.20Characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Characters" />');"
@@ -363,53 +413,27 @@ var contextpath = "${context}";
 									<label for="street"><spring:message code="input.streetNumber" /> <span class="star">*</span>
 									</label>
 								</div>
-									<div class="input-field col s12 m6 l6">
-									<input placeholder="" type="text" name="village" maxlength="30" id="village" pattern="[A-Za-z0-9\s._%-+$@,/]{3,30}"
-									oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-									 />
-									<label for="village"> <spring:message code="input.village" /></label>
-								</div>
-								<div class="input-field col s12 m6 l6">
+					
+							</div>
+
+<div class="row">
+<div class="input-field col s12 m6 l6">
 									<input placeholder="" type="text" name="locality" maxlength="30" id="locality" pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 										 />
 									<label for="locality"><spring:message code="input.locality" /></label>
 								</div>
 
-								<div class="input-field col s12 m6 l6">
-									<input placeholder="" type="text" name="district" maxlength="30" id="district" pattern="[A-Za-z0-9\s._%-+$@,/]{3,30}"
-									oninput="InvalidMsg(this,'input','<spring:message code="validation.address20characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address20characters" />');"
-										required />
-									<label for="district"><spring:message code="input.district" /> <span class="star">*</span></label>
-								</div>
-								<div class="input-field col s12 m6 l6">
-									<input placeholder="" type="text" name="commune" maxlength="30" id="commune" pattern="[A-Za-z0-9\s._%-+$@,/]{0,30}"
-									oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-										 required />
-									<label for="commune"><spring:message code="input.commune" /> <span class="star">*</span></label>
-								</div>
 
 								<div class="input-field col s12 m6 l6">
 									<input placeholder=""  type="text" name="postalCode" maxlength="6" id="postalCode" pattern="<spring:eval expression="@environment.getProperty('pattern.postal')" />"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');" title="">
 									<label for="postalCode"><spring:message code="input.postalCode" /></label>
 								</div>
-								
-								
-								
-								<div class="col s12 m6 l6">
-									<label><spring:message code="table.country" /> <span class="star">*</span></label>
-									<select id="country" class="browser-default" class="mySelect" 
-									oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" style="padding-left: 0;" required></select>
 								</div>
-
-								<div class="col s12 m6 l6">
-									<label><spring:message code="input.province" /> <span class="star">*</span></label>
-									<select id="state" class="browser-default" class="mySelect" 
-									oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" style="padding-left: 0;" required></select>
-								</div>
-								
-								<%if(usertypeId==7){ %>
+							
+							<div class="row">
+							<%if(usertypeId==7){ %>
 								
 									<div class="input-field col s12 m6 l6">
 									<input disabled="disabled" placeholder="" type="text" name="arrivalPort" id="arrivalPort"/>
@@ -422,16 +446,10 @@ var contextpath = "${context}";
 									<label for="passportNo"><spring:message code="registration.portAddress" /> <span class="star">*</span></label>
 								</div>						
 								<%} %>
+								</div>
 								
-								<%-- <div class="input-field col s12 m6 l6">
-									<input type="text" maxlength="200" pattern="[A-Za-z0-9\s]{0,200}" name="arrivalPortLocation" id="arrivalPortLocation"
-									oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')" 
-										title="<spring:message code="validation.200character" />" required /> 
-									<label for="arrivalPortLocation" class="">Port Address <span class="star">*</span></label>
-								</div> --%>
 								
-							</div>
-
+									
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
 									<input disabled="disabled" placeholder="" type="text" name="passportNo" id="passportNo"/>
