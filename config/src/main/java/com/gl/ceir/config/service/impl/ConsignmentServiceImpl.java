@@ -921,7 +921,9 @@ public class ConsignmentServiceImpl {
 //		if(Objects.nonNull(consignmentMgmt.getDisplayName()) && !consignmentMgmt.getDisplayName().isEmpty())
 //			cmsb.addSpecification(cmsb.joinWithMultiple(new SearchCriteria("displayName",consignmentMgmt.getDisplayName(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING)));
 		
-		if(Objects.nonNull(consignmentMgmt.getDisplayName()) && !consignmentMgmt.getDisplayName().isEmpty()) {
+		if(Objects.nonNull(consignmentMgmt.getDisplayName()) && !consignmentMgmt.getDisplayName().isEmpty() 
+				&& !consignmentMgmt.getDisplayName().equalsIgnoreCase("null") && !consignmentMgmt.getDisplayName().equalsIgnoreCase("undefined")) {
+			logger.info("User display name:["+consignmentMgmt.getDisplayName()+"]");
 			cmsb.with(new SearchCriteria("user-userProfile-displayName", consignmentMgmt.getDisplayName().trim().replace("  ", " ")
 					, SearchOperation.LIKE, Datatype.STRING));
 		}
@@ -929,9 +931,10 @@ public class ConsignmentServiceImpl {
 		if(Objects.nonNull(consignmentMgmt.getConsignmentStatus())) {
 			cmsb.with(new SearchCriteria("consignmentStatus", consignmentMgmt.getConsignmentStatus(), SearchOperation.EQUALITY, Datatype.STRING));
 		}else if( !(Objects.nonNull(consignmentMgmt.getTxnId()) && !consignmentMgmt.getTxnId().isEmpty()) && !Objects.nonNull(consignmentMgmt.getTaxPaidStatus())
-				&& !(Objects.nonNull(consignmentMgmt.getDisplayName()) && !consignmentMgmt.getDisplayName().isEmpty())){
+				&& !(Objects.nonNull(consignmentMgmt.getDisplayName()) && !consignmentMgmt.getDisplayName().isEmpty()
+						&& !consignmentMgmt.getDisplayName().equalsIgnoreCase("null") && !consignmentMgmt.getDisplayName().equalsIgnoreCase("undefined"))){
 			if(Objects.nonNull(consignmentMgmt.getFeatureId()) && Objects.nonNull(consignmentMgmt.getUserTypeId())) {
-
+				logger.info("User type id:["+consignmentMgmt.getFeatureId()+"] and userTypeId:["+consignmentMgmt.getUserTypeId()+"]");
 				List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMaps = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(consignmentMgmt.getUserTypeId(), consignmentMgmt.getFeatureId());
 				logger.info(dashboardUsersFeatureStateMaps);
 				List<Integer> consignmentStatus = new LinkedList<>();
@@ -1638,7 +1641,6 @@ public class ConsignmentServiceImpl {
 		if(filterRequest.getStartDate().isEmpty()) {
 			filterRequest.setStartDate(null);
 		}
-
 		if(filterRequest.getEndDate().isEmpty()) {
 			filterRequest.setEndDate(null);
 		}
@@ -1659,13 +1661,14 @@ public class ConsignmentServiceImpl {
 			return Boolean.FALSE;
 		}
 
-		if(Objects.nonNull(filterRequest.getDisplayName())) {
+		if(Objects.nonNull(filterRequest.getDisplayName()) && !filterRequest.getDisplayName().isEmpty()
+				&& !filterRequest.getDisplayName().equalsIgnoreCase("null") && !filterRequest.getDisplayName().equalsIgnoreCase("undefined") ) {
 			return Boolean.FALSE;
 		}
 		if(Objects.nonNull(filterRequest.getConsignmentStatus()) ) {
 			return Boolean.FALSE;
 		}
-		if(Objects.nonNull(filterRequest.getFilteredUserType())) {
+		if(Objects.nonNull(filterRequest.getFilteredUserType()) && !filterRequest.getFilteredUserType().isEmpty()) {
 			return Boolean.FALSE;
 		}
 		return Boolean.TRUE;

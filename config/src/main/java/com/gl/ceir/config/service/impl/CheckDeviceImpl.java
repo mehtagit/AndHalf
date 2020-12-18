@@ -33,7 +33,7 @@ public class CheckDeviceImpl {
 	public GenricResponse checkDevices( CheckDevice checkDevice) {
 		logger.info("inside check device and daa given: "+checkDevice);
 		    ImeiValidate imeiValidate=new ImeiValidate("CheckImei",checkDevice.getDeviceIdType(),
-	        		"default",checkDevice.getDeviceId());
+	        		"default", checkDevice.getDeviceId() );
 	        try {
                 logger.info("going to save audit trail: ");  
                 AuditTrail auditTrail = new AuditTrail(0, 

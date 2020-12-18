@@ -374,6 +374,7 @@ public class StockServiceImpl {
 		try {
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info("statusList " + statusList);
+			logger.info("Request to export filtered Stocks = " + filterRequest);
 			List<StockMgmt> stockMgmts = stockManagementRepository.findAll(buildSpecification(filterRequest, statusList, source).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			logger.info(statusList);
@@ -435,8 +436,9 @@ public class StockServiceImpl {
 				specificationBuilder.with(new SearchCriteria("portAddress", userProfile.getPortAddress(), SearchOperation.EQUALITY, Datatype.INT));
 		}
 
-		if(Objects.nonNull(filterRequest.getFilteredUserType()) && !filterRequest.getFilteredUserType().isEmpty()) {
-			logger.info("Inside getFilteredUserType block.");
+		if(Objects.nonNull(filterRequest.getFilteredUserType()) && !filterRequest.getFilteredUserType().isEmpty() 
+				&& !filterRequest.getFilteredUserType().equalsIgnoreCase("null")) {
+			logger.info("Inside getFilteredUserType block and user type is ["+filterRequest.getFilteredUserType()+"]");
 			specificationBuilder.with(new SearchCriteria("userType", filterRequest.getFilteredUserType(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
 		
@@ -837,7 +839,7 @@ public class StockServiceImpl {
 			logger.info("CONFIG : file_consignment_download_link [" + link + "]");
 
 			String filePath = filepath.getValue();
-
+			logger.info("Request to export filtered Stocks = " + filterRequest);
 			return exportFileFactory
 					.getObject(filterRequest.getUserType().toUpperCase(), 4)
 					.export(filterRequest, source, dtf, dtf2, filePath, link);

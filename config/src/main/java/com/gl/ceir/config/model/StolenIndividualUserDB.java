@@ -140,8 +140,32 @@ public class StolenIndividualUserDB implements Serializable {
 	@JsonIgnore
 	StolenandRecoveryMgmt stolenandRecoveryMgmt;
 
+	@Column(length = 50)
+	private String nationality;
 	
+	private Integer addressType;
 	
+	@Transient
+	private String addressTypeInterp;
+	
+	public Integer getAddressType() {
+		return addressType;
+	}
+	public void setAddressType(Integer addressType) {
+		this.addressType = addressType;
+	}
+	public String getAddressTypeInterp() {
+		return addressTypeInterp;
+	}
+	public void setAddressTypeInterp(String addressTypeInterp) {
+		this.addressTypeInterp = addressTypeInterp;
+	}
+	public String getNationality() {
+		return nationality;
+	}
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
 	public String getContactNumber2() {
 		return contactNumber2;
 	}

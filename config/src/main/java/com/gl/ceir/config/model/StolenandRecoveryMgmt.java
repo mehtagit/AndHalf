@@ -2,6 +2,8 @@ package com.gl.ceir.config.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -113,6 +116,21 @@ public class StolenandRecoveryMgmt implements Serializable {
 	
 	private Integer deviceQuantity;
 
+	@OneToMany(
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+	private List<StolenAttachedFileInfo> attachedFiles = new ArrayList<>();
+	
+	public List<StolenAttachedFileInfo> getAttachedFiles() {
+		return attachedFiles;
+	}
+
+	public void setAttachedFiles(List<StolenAttachedFileInfo> attachedFiles) {
+		this.attachedFiles = attachedFiles;
+	}
+
+	
 	public Long getCeirAdminId() {
 		return ceirAdminId;
 	}
