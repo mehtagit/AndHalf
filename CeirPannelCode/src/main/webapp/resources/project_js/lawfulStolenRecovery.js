@@ -693,8 +693,8 @@ function saveIndivisualStolenRequest(){
 
 	var nationality=$('#nationality').val();
 	var addressType=$('#addressType').val();
-	var fileFileDetails=$('#uploadFirSingle').val();
-	fileFileDetails=fileFileDetails.replace(/^.*[\\\/]/, '');
+//	var fileFileDetails=$('#uploadFirSingle').val();
+//	fileFileDetails=fileFileDetails.replace(/^.*[\\\/]/, '');
 
 	var fieldId = 1;
 	var fileInfo = [];
@@ -722,7 +722,7 @@ function saveIndivisualStolenRequest(){
 					"fileName" : $('#docTypeFile' + fieldId).val()
 							.replace('C:\\fakepath\\', '')
 				}
-				formData.append('files[]', $('#docTypeFile'
+				formData.append('firFileName[]', $('#docTypeFile'
 						+ fieldId)[0].files[0]);
 
 				documentFileName = $('#docTypeFile' + fieldId)

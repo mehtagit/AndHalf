@@ -114,11 +114,10 @@ public class LawfulFormController
 		return mv;
 	}
 
-
-
-	@PostMapping("lawfulIndivisualStolen")
+	//@PostMapping("lawfulIndivisualStolen")
+	@RequestMapping(value= {"lawfulIndivisualStolen"},method= RequestMethod.POST,consumes = "multipart/form-data") 
 	public @ResponseBody GenricResponse register(@RequestParam(name="file",required = false) MultipartFile file,
-			@RequestParam(name="firFileName",required = false) MultipartFile[] firFileName,
+			@RequestParam(name="firFileName[]",required = false) MultipartFile[] firFileName,
 			HttpServletRequest request,HttpSession session) {
 		log.info("-inside controllerlawfulIndivisualStolen-------request---------");
 
@@ -181,6 +180,11 @@ public class LawfulFormController
 			e.printStackTrace();
 		}
 		
+		for (int i=0;i<lawfulIndivisualStolen.getAttachedFiles().size();i++) {
+			lawfulIndivisualStolen.getAttachedFiles().get(i).setTxnId(txnNumber);
+			//grievanceRequest.getMultifile().get(i).getDocType();
+			
+		}
 		
 		int i=0;
 		for( MultipartFile fileFir : firFileName) {
