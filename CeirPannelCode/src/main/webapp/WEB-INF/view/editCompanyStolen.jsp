@@ -1085,6 +1085,7 @@ else{
 	$('#headingType').text(editstolenCompany);
 	$("#Bulkform").find("input,select,textarea,button").prop("disabled",false);
 	$("#bulkDeviceRejectRemarkDiv").css("display", "none");
+	$("#singleRecoveryDiv").find("select").attr("style", "pointer-events: block;");
 	
 }	
 	}	
