@@ -873,13 +873,13 @@ function getDistrict(current) {
 				contentType : 'application/json; charset=utf-8',
 				success : function(data, textStatus, jqXHR) {
 					var result = data;
-					$('#district').empty();
+					$('#district','#districtForCommune').empty();
 					var html='<option value="">Select District</option>';
 					$('#district').append(html);	
 					 for (i = 0; i < result.length; i++) {
 						
 						var html='<option value="'+result[i].id+'">'+result[i].district+'</option>';
-						$('#district').append(html);	
+						$('#district','#districtForCommune').append(html);	
 					} 
 
 				},

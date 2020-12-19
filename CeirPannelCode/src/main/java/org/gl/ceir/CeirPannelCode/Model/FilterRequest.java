@@ -9,6 +9,8 @@ public class FilterRequest {
 	private Double dollar,riel;
 	private int roleTypeId;
 	private String state,ruleName;
+	public String province,district,commune,village,country;
+	private int districtID,communeID;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -489,6 +491,48 @@ public class FilterRequest {
 	public void setRuleName(String ruleName) {
 		this.ruleName = ruleName;
 	}
+	public String getProvince() {
+		return province;
+	}
+	public void setProvince(String province) {
+		this.province = province;
+	}
+	public String getDistrict() {
+		return district;
+	}
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+	public String getCommune() {
+		return commune;
+	}
+	public void setCommune(String commune) {
+		this.commune = commune;
+	}
+	public String getVillage() {
+		return village;
+	}
+	public void setVillage(String village) {
+		this.village = village;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	public int getDistrictID() {
+		return districtID;
+	}
+	public void setDistrictID(int districtID) {
+		this.districtID = districtID;
+	}
+	public int getCommuneID() {
+		return communeID;
+	}
+	public void setCommuneID(int communeID) {
+		this.communeID = communeID;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -652,6 +696,20 @@ public class FilterRequest {
 		builder.append(state);
 		builder.append(", ruleName=");
 		builder.append(ruleName);
+		builder.append(", province=");
+		builder.append(province);
+		builder.append(", district=");
+		builder.append(district);
+		builder.append(", commune=");
+		builder.append(commune);
+		builder.append(", village=");
+		builder.append(village);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", districtID=");
+		builder.append(districtID);
+		builder.append(", communeID=");
+		builder.append(communeID);
 		builder.append("]");
 		return builder.toString();
 	}

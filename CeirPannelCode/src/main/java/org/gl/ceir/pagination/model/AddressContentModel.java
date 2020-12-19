@@ -1,17 +1,35 @@
-package org.gl.ceir.CeirPannelCode.Model;
+package org.gl.ceir.pagination.model;
 
 import org.springframework.stereotype.Component;
 
 @Component
-public class AddressResponse {
+public class AddressContentModel {
+
+	private Integer id;
+	private String createdOn;
+	private String country;
 	private String province;
 	private String district;
-	private Long districtID;
 	private String commune;
-	private Long communeID;
 	private String village;
-	private String counrty;
-	private long id;
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getCreatedOn() {
+		return createdOn;
+	}
+	public void setCreatedOn(String createdOn) {
+		this.createdOn = createdOn;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
 	public String getProvince() {
 		return province;
 	}
@@ -24,23 +42,11 @@ public class AddressResponse {
 	public void setDistrict(String district) {
 		this.district = district;
 	}
-	public Long getDistrictID() {
-		return districtID;
-	}
-	public void setDistrictID(Long districtID) {
-		this.districtID = districtID;
-	}
 	public String getCommune() {
 		return commune;
 	}
 	public void setCommune(String commune) {
 		this.commune = commune;
-	}
-	public Long getCommuneID() {
-		return communeID;
-	}
-	public void setCommuneID(Long communeID) {
-		this.communeID = communeID;
 	}
 	public String getVillage() {
 		return village;
@@ -48,41 +54,27 @@ public class AddressResponse {
 	public void setVillage(String village) {
 		this.village = village;
 	}
-	public String getCounrty() {
-		return counrty;
-	}
-	public void setCounrty(String counrty) {
-		this.counrty = counrty;
-	}
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("AddressResponse [province=");
+		builder.append("AddressContentModel [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", province=");
 		builder.append(province);
 		builder.append(", district=");
 		builder.append(district);
-		builder.append(", districtID=");
-		builder.append(districtID);
 		builder.append(", commune=");
 		builder.append(commune);
-		builder.append(", communeID=");
-		builder.append(communeID);
 		builder.append(", village=");
 		builder.append(village);
-		builder.append(", counrty=");
-		builder.append(counrty);
-		builder.append(", id=");
-		builder.append(id);
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
 	
 	
 }

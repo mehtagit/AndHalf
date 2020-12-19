@@ -39,12 +39,18 @@
 		
 		function addressFieldTable(lang){
 			
+			var filterDistrict = $('#district').val() =="" || $('#district').val() == undefined ? null : $("#district option:selected").text();
+			var filterCommune = $('#commune').val() =="" || $('#commune').val() == undefined ? null : $("#commune option:selected").text();
+			var filterVillage = $('#village').val() ==""|| $('#village').val() == undefined ? null : $("#village option:selected").text();
+			
 			var filterRequest={
-					"endDate":$('#endDate').val(),
-					"startDate":$('#startDate').val(),
-					"currency" : parseInt($("#currencyType").val()),
-					"year" : parseInt($('#year').val()),
-					"userId":parseInt(userId),
+					"startDate": $('#startDate').val(),
+					"endDate":  $('#startDate').val(),
+					"province" : $("#proviance").val(),
+					"district" : filterDistrict,
+					"commune" :  filterCommune,
+					"village" :  filterVillage,
+					"userId":parseInt(userId), 
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
@@ -137,7 +143,7 @@
 						if(date[i].type === "date"){
 							$("#AddressTableDiv").append("<div class='input-field col s6 m2'>"+
 									"<div id='enddatepicker' class='input-group'>"+
-									"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
+									"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
 									"<label for="+date[i].id+">"+date[i].title
 									+"</label>"+
 									"<span	class='input-group-addon' style='color: #ff4081'>"+
@@ -171,7 +177,7 @@
 					}
 
 						$("#AddressTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-						//$("#CurrencyTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#AddressTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportAddressData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -183,50 +189,152 @@
 			//populateCountries( "country",    "state");
 	        //$("#country").val("Cambodia");
 			setDropdown();
-	        populateStates("proviance");
-	        
-			
-			
-	}
+	   }
 
-
+	
 
 		
 	function setDropdown(){
-		var request ={
-				  "province" : $("#proviance").val()
+		$.getJSON('./getAllProvince', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].province).text(data[i].province)
+				.appendTo('#proviance');
 			}
+		});
+		
+	}
+	
+	$(document).on('change', '#proviance', function(){
+		getAllDistrict($('#proviance').val());
+		
+	});	
+	
+	
+	
+
+	
+	function getAllDistrict(current) {
+		var request = {
+				 "province" : $("#proviance").val()
+		}
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajaxSetup({
-			headers:
-			{ 'X-CSRF-TOKEN': token }
-		});
-		$.ajax({
-			url: './getallDistrict',
-			type: 'POST',
-			data : JSON.stringify(request),
-			dataType : 'json',
-			contentType : 'application/json; charset=utf-8',
-			success: function (data, textStatus, jqXHR) {
-				var result = data.data;
-				for (i = 0; i < result.length; i++){
-					$('<option>').val(result[i].id).text(result[i].district).appendTo('#district');
-				}
-				
-			},
-			error: function (jqXHR, textStatus, errorThrown) {
-				//////console.log("error in ajax")
+			headers : {
+				'X-CSRF-TOKEN' : token
 			}
 		});
-	}
+		$.ajax({
+					url : './getallDistrict',
+					type : 'POST',
+					data : JSON.stringify(request),
+					dataType : 'json',
+					async: false,
+					contentType : 'application/json; charset=utf-8',
+					success : function(data, textStatus, jqXHR) {
+						var result = data;
+						$('#district').empty();
+						var html='<option value="">Select District</option>';
+						$('#district').append(html);	
+						 for (i = 0; i < result.length; i++) {
+							
+							var html='<option value="'+result[i].id+'">'+result[i].district+'</option>';
+							$('#district').append(html);	
+						} 
 
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						//////console.log("error in ajax")
+					}
+				});
+	}
+	
+	$(document).on('change', '#district', function(){
+		getCommune();
+		//getCommune();
+	});	
+	
+	function getCommune() {
+		var request = {
+			"districtID" : parseInt($('#district').val())
+		}
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers : {
+				'X-CSRF-TOKEN' : token
+			}
+		});
+		$.ajax({
+					url : './getallCommune',
+					type : 'POST',
+					data : JSON.stringify(request),
+					dataType : 'json',
+					async: false,
+					contentType : 'application/json; charset=utf-8',
+					success : function(data, textStatus, jqXHR) {
+						var result = data;
+						$('#commune').empty();
+						var html='<option value="">Select Commune</option>';
+						$('#commune').append(html);	
+						 for (i = 0; i < result.length; i++) {
+							
+							var html='<option value="'+result[i].id+'">'+result[i].commune+'</option>';
+							$('#commune').append(html);	
+						} 
+
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						//////console.log("error in ajax")
+					}
+				});
+	}
+	
+	$(document).on('change', '#commune', function(){
+		getVillage();
+		
+	});	
+	
+	function getVillage() {
+		var request = {
+			"communeID" : parseInt($('#commune').val())
+		}
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers : {
+				'X-CSRF-TOKEN' : token
+			}
+		});
+		$.ajax({
+					url : './getallVillage',
+					type : 'POST',
+					data : JSON.stringify(request),
+					async: false,
+					dataType : 'json',
+					contentType : 'application/json; charset=utf-8',
+					success : function(data, textStatus, jqXHR) {
+						var result = data;
+						$('#village').empty();
+						var html='<option value="">Select Village</option>';
+						$('#village').append(html);	
+						 for (i = 0; i < result.length; i++) {
+							
+							var html='<option value="'+result[i].id+'">'+result[i].village+'</option>';
+							$('#village').append(html);	
+						} 
+
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						//////console.log("error in ajax")
+					}
+				});
+	}
 		function AddAddress(){
 			$('#addAddressModal').openModal({
 		        dismissible:false
 		    });
-			//var tagDropDown =  document.getElementById("tag");
-			//var displayName = tagDropDown.options[tagDropDown.selectedIndex].text;
+			
 		}
 		
 		 function resetButtons(){
@@ -236,211 +344,385 @@
 			 $('input[name=group4]').attr('checked',false);
 		 }
 	
-	/*----------------------------------- Save Field ----------------------------------------- */
-		
-	function submitPort(){
-		
-		var request={
-				
-				"month" : $('#addMonth').val(),
-				"year" : $('#addYear').val(),
-				"currency": $('#currency').val(),
-				"riel":   parseFloat($('#cambodianRiel').val()),
-				"dollar": parseFloat($('#dollar').val()),
-				"userId":parseInt(userId),
-				"featureId":parseInt(featureId),
-				"userTypeId": parseInt($("body").attr("data-userTypeID")),
-				"userType":$("body").attr("data-roleType"),
-				"username" : $("body").attr("data-selected-username")
-		}
-		
-		//////console.log("request------------->" +JSON.stringify(request))
-		var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
-		$.ajaxSetup({
-			headers:
-			{ 'X-CSRF-TOKEN': token }
-		});
-		$.ajax({
-			url : './add-currency',
-			data : JSON.stringify(request),
-			dataType : 'json',
-			contentType : 'application/json; charset=utf-8',
-			type : 'POST',
-			success : function(data, textStatus, jqXHR) {
-					$("#confirmField").openModal({
-				        dismissible:false
-				    });
-					$.i18n().locale = lang;	
-					$.i18n().load( {
-						'en': './resources/i18n/en.json',
-						'km': './resources/i18n/km.json'
-					} ).done( function() { 
-						if(data.errorCode==200){
-							$('#sucessMessage').text('');
-							$('#sucessMessage').text($.i18n('Curr_Save_Sucess'));
-						}else if(data.errorCode==3){
-							$('#sucessMessage').text('');
-							$('#sucessMessage').text($.i18n('Curr_Already_Exist'));
-						}else if(data.errorCode==1){
-							$('#sucessMessage').text('');
-							$('#sucessMessage').text($.i18n('Curr_Year_Null'));
-						}else if(data.errorCode==2){
-							$('#sucessMessage').text('');
-							$('#sucessMessage').text($.i18n('Curr_Month_Null'));
-						}else if(data.errorCode==500){
-							$('#sucessMessage').text('');
-							$('#sucessMessage').text($.i18n('Curr_Save_Fail'));
-						}
-					});
-					
-				
-			},
-			error : function(jqXHR, textStatus, errorThrown) {
-				////console.log("error in ajax")
-			}
-		});
-			
-			return false
-	}
+	
 
-
-  
-	/*--------------------------------- Edit Model View -----------------------------------*/
-	
-	
-	function currencyViewByID(id){
-		$("#editId").val(id);
-		
-		var request ={
-				"dataId" :  parseInt(id),
-				"userId": parseInt(userId),
+	function exportAddressData(){
+		var table = $('#AddressManagementLibraryTable').DataTable();
+		var info = table.page.info(); 
+		var pageNo=info.page;
+		var pageSize =info.length;
+		var filterDistrict = $('#district').val() == ""|| $('#district').val() == undefined ? null : $("#district option:selected").text();
+		var filterCommune = $('#commune').val() == ""|| $('#commune').val() == undefined ? null : $("#commune option:selected").text();
+		var filterVillage = $('#village').val() == ""|| $('#village').val() == undefined ? null : $("#village option:selected").text();
+		var filterRequest={
+				"startDate": $('#startDate').val(),
+				"province" : $("#proviance").val(),
+				"district" : filterDistrict,
+				"commune" :  filterCommune,
+				"village" :  filterVillage,
+				"userId":parseInt(userId), 
 				"featureId":parseInt(featureId),
 				"userTypeId": parseInt($("body").attr("data-userTypeID")),
 				"userType":$("body").attr("data-roleType"),
-				"username" : $("body").attr("data-selected-username")
+				"username" : $("body").attr("data-selected-username"),
+				//"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				//"userType" : $("body").attr("data-roleType"),
+				"pageNo":parseInt(pageNo),
+				"pageSize":parseInt(pageSize)
 		}
+		
+		////console.log(JSON.stringify(filterRequest))
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
 		$.ajaxSetup({
 			headers:
 			{ 'X-CSRF-TOKEN': token }
 		});
-		$.ajax({
-				url: './currencyViewByID',
-				type: 'POST',
-				data : JSON.stringify(request),
-				dataType : 'json',
-				contentType : 'application/json; charset=utf-8',
-				success: function (data, textStatus, jqXHR) {
-						var result = data.data
-						$("#editCurrencyModal").openModal({
-					        dismissible:false
-					    });
-						currencyEditPopupData(result);
-						//////console.log(JSON.stringify(result));
-				},
-				error: function (jqXHR, textStatus, errorThrown) {
-					////console.log("error in ajax")
-				}
-			});	
-		}
-	
-	
-	function currencyEditPopupData(result){
-		$("#editId").val(result.id);
-		$("#editMonth").val(result.month);
-		$("#editYear").val(result.year);
-		$("#editCurrency").val(result.currency);
-		$("#editCambodianRiel").val(result.riel);
-		$("#editDollar").val(result.dollar);
 		
-		$("label[for='editMonth']").addClass('active');
-		$("label[for='editYear']").addClass('active');
-		$("label[for='editCurrency']").addClass('active');
-		$("label[for='editCambodianRiel']").addClass('active');
-		$("label[for='editDollar']").addClass('active');
-	}
-	
-	
-	/*---------------------------------- Update Field-------------------------------------*/
-	
-	
-	function updateCurrency(){
-		
-		var request ={ 
-				"id" : parseInt($("#editId").val()),
-				"month" : $('#editMonth').val(),
-				"year" : $('#editYear').val(),
-				"currency": $('#editCurrency').val(),
-				"riel":   parseFloat($('#editCambodianRiel').val()),
-				"dollar": parseFloat($('#editDollar').val()),
-				"userId":parseInt(userId),
-				"featureId":parseInt(featureId),
-				"userTypeId": parseInt($("body").attr("data-userTypeID")),
-				"userType":$("body").attr("data-roleType"),
-				"username" : $("body").attr("data-selected-username")
-		}
-		var token = $("meta[name='_csrf']").attr("content");
-		var header = $("meta[name='_csrf_header']").attr("content");
-		$.ajaxSetup({
-			headers:
-			{ 'X-CSRF-TOKEN': token }
-		});
-		//////console.log("request--->" +JSON.stringify(request))
 		$.ajax({
-			url: './updateCurrency',
+			url: './exportAddress',
 			type: 'POST',
-			data : JSON.stringify(request),
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
+			data : JSON.stringify(filterRequest),
 			success: function (data, textStatus, jqXHR) {
-				$("#editCurrencyModal").closeModal();	
-				$("#updateFieldsSuccess").openModal({
-			        dismissible:false
-			    });
-				$.i18n().locale = lang;	
-				$.i18n().load( {
-					'en': './resources/i18n/en.json',
-					'km': './resources/i18n/km.json'
-				} ).done( function() { 
-					if(data.errorCode==200){
-						$('#updateFieldMessage').text('');
-						$('#updateFieldMessage').text($.i18n('Curr_Update_Sucess'));
-					}else if(data.errorCode==1){
-						$('#updateFieldMessage').text('');
-						$('#updateFieldMessage').text($.i18n('Curr_Year_Null'));
-					}else if(data.errorCode==2){
-						$('#updateFieldMessage').text('');
-						$('#updateFieldMessage').text($.i18n('Curr_Month_Null'));
-					}else if(data.errorCode==3){
-						$('#updateFieldMessage').text('');
-						$('#updateFieldMessage').text($.i18n('Curr_Already_Exist'));
-					}else if(data.errorCode==500){
-						$('#updateFieldMessage').text('');
-						$('#updateFieldMessage').text($.i18n('Curr_Update_Fail'));
-					}
+				  window.location.href = data.url;
 
-				});
 			},
 			error: function (jqXHR, textStatus, errorThrown) {
-				////console.log("error in ajax")
+				
 			}
-		});	
+		});
+		}
+	
+	function DeleteByID(id){
+		$("#DeleteAddressModal").openModal({
+	        dismissible:false
+	    });
+		$("#deleteFieldId").val(id);
 		
-		return false
-	}
-
-
-	function resetFields(){
-		$('#addMonth').val("");
-		$('#addYear').val("");
-		$('#currency').val("");
-		$('#cambodianRiel').val("");
-		$('#dollar').val("");
-		$("label[for='number']").removeClass('active');
-		$("label[for='cambodianRiel']").removeClass('active');
+	}	
+	
+	
+	
+	function confirmantiondelete(){
+		var request ={
+				"userId" : $("body").attr("data-userID"),
+				"id"  : parseInt($("#deleteFieldId").val()),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
+		}
+		//////console.log(JSON.stringify(request));
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
+		
+		$.ajax({
+			url : './deleteAddress',
+			data : JSON.stringify(request),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			type : 'DELETE',
+			success : function(data, textStatus, xhr) {
+				////console.log(data);
+				$("#DeleteAddressModal").closeModal();
+				$("#closeDeleteModal").openModal({
+			        dismissible:false
+			    });
+				
+				$("#materialize-lean-overlay-3").css("display","none");
+			},
+			error : function() {
+				////console.log("Error");
+			}
+		});
 	}
 	
+	
+	
+	function AddSystemAddress(entity){
+		if (entity == "province"){
+			$("#addProvinceModal").openModal({
+				dismissible:false
+			});
+			populateCountries("country", "state");
+			$("#country").val("Cambodia");
+		}else if(entity == "district"){
+			$("#addDistrictModal").openModal({
+				dismissible:false
+			});
+			//populateCountries("country1", "state");
+			//$("#country1").val("Cambodia");
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
+			$.getJSON('./getAllProvince', function(data) {
+				$('#provinceForDistrict').empty();
+				var html='<option value="">Select Province</option>';
+				$('#provinceForDistrict').append(html);	
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].province).text(data[i].province)
+					.appendTo('#provinceForDistrict');
+				}
+			});
+		}else if(entity == "commune"){
+			$("#addCommuneModal").openModal({
+				dismissible:false
+			});
+		}else if(entity == "village"){
+			$("#addVillageModal").openModal({
+				dismissible:false
+			});
+		}
+	}
+	
+	
+	 function saveProvince(){
+		// var counrty = $('#country').val() =="" || $('#country').val() == undefined ? null : $("#country option:selected").text();
+		 //var province = $('#addProvince').val() =="" || $('#addProvince').val() == undefined ? null : $("#addProvince option:selected").text();
+		 	var Request={
+					"country" : $("#country").val(),
+					"province" : $("#addProvince").val(),
+					"username" : $("body").attr("data-selected-username"),
+					"userId" : parseInt(userId),
+				}
+			//console.log("Request-->"+JSON.stringify(Request));
+		 	var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
+			$.ajax({
+				url : './addProvince',
+				data : JSON.stringify(Request),
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				type : 'POST',
+				success : function(data) {
+					$("#confirmSaveModal").openModal({
+					 	   dismissible:false
+				    });
+					
+				$('#successMessage').text('Province Added Successfully.');
+				},
+				error : function() {
+					//alert("Failed");
+				}
+			});
+		 return false
+	}
+	 
+	 function saveDistrict(){
+		 	//var district = $('#addDistrict').val() =="" || $('#addDistrict').val() == undefined ? null : $("#addDistrict option:selected").text();
+		 	var Request={
+					"province" : $("#provinceForDistrict").val(),
+					"district": $('#addDistrict').val(),
+					"username" : $("body").attr("data-selected-username"),
+					"userId" : parseInt(userId),
+				}
+			//console.log("Request-->"+JSON.stringify(Request));
+		 	var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
+			$.ajax({
+				url : './addDistrict',
+				data : JSON.stringify(Request),
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				type : 'POST',
+				success : function(data) {
+					$("#confirmSaveModal").openModal({
+					 	   dismissible:false
+				    });
+					
+				$('#successMessage').text('District Added Successfully.');
+				},
+				error : function() {
+					//alert("Failed");
+				}
+			});
+		 return false
+	}
+	 
+	 function saveCommune(){
+		 	var Request={
+		 			"districtID": parseInt($('#districtForCommune').val()),
+					"commune": $('#addCommune').val(),
+					"username" : $("body").attr("data-selected-username"),
+					"userId" : parseInt(userId),
+				}
+			//console.log("Request-->"+JSON.stringify(Request));
+		 	var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
+			$.ajax({
+				url : './addCommune',
+				data : JSON.stringify(Request),
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				type : 'POST',
+				success : function(data) {
+					$("#confirmSaveModal").openModal({
+					 	   dismissible:false
+				    });
+					
+				$('#successMessage').text('Commune Added Successfully.');
+				},
+				error : function() {
+					//alert("Failed");
+				}
+			});
+		 return false
+	}
+	 
+	 function saveVillage(){
+		 var Request={
+		 			"communeID": parseInt($('#communeForVillage').val()),
+		 			"village": $('#addVillage').val(),
+					"username" : $("body").attr("data-selected-username"),
+					"userId" : parseInt(userId),
+				}
+			//console.log("Request-->"+JSON.stringify(Request));
+		 	var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
+			$.ajax({
+				url : './addVillage',
+				data : JSON.stringify(Request),
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				type : 'POST',
+				success : function(data) {
+					$("#confirmSaveModal").openModal({
+					 	   dismissible:false
+				    });
+					
+				$('#successMessage').text('Village Added Successfully.');
+				},
+				error : function() {
+					//alert("Failed");
+				}
+			});
+		 return false
+	}
+	 
+	 $(document).on('change', '#provinceForDistrict', function(){
+		 getmodelDistrict();
+			//getCommune();
+		});	
+	 
+	 function getmodelDistrict(current) {
+			var request = {
+					 "province" : $("#provinceForDistrict").val()
+			}
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers : {
+					'X-CSRF-TOKEN' : token
+				}
+			});
+			$.ajax({
+						url : './getallDistrict',
+						type : 'POST',
+						data : JSON.stringify(request),
+						dataType : 'json',
+						async: false,
+						contentType : 'application/json; charset=utf-8',
+						success : function(data, textStatus, jqXHR) {
+							var result = data;
+							$('#districtForCommune').empty();
+							var html='<option value="">Select District</option>';
+							$('#districtForCommune').append(html);	
+							 for (i = 0; i < result.length; i++) {
+								
+								var html='<option value="'+result[i].id+'">'+result[i].district+'</option>';
+								$('#districtForCommune').append(html);	
+							} 
 
+						},
+						error : function(jqXHR, textStatus, errorThrown) {
+							//////console.log("error in ajax")
+						}
+					});
+		}
+	 
+	 
+	 
+	 $(document).on('change', '#districtForCommune', function(){
+		 getmodelCommune();
+			//getCommune();
+		});	
+	 
+	 function getmodelCommune() {
+			var request = {
+				"districtID" : parseInt($('#districtForCommune').val())
+			}
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers : {
+					'X-CSRF-TOKEN' : token
+				}
+			});
+			$.ajax({
+						url : './getallCommune',
+						type : 'POST',
+						data : JSON.stringify(request),
+						dataType : 'json',
+						async: false,
+						contentType : 'application/json; charset=utf-8',
+						success : function(data, textStatus, jqXHR) {
+							var result = data;
+							$('#communeForVillage').empty();
+							var html='<option value="">Select Commune</option>';
+							$('#communeForVillage').append(html);	
+							 for (i = 0; i < result.length; i++) {
+								
+								var html='<option value="'+result[i].id+'">'+result[i].commune+'</option>';
+								$('#communeForVillage').append(html);	
+							} 
+
+						},
+						error : function(jqXHR, textStatus, errorThrown) {
+							//////console.log("error in ajax")
+						}
+					});
+		}
+	 
+	/* function closeConfirmantionModel(){
+		 $("#addProvinceModal").closeModal({
+				dismissible:false
+			});
+		 $("#addDistrictModal").closeModal({
+				dismissible:false
+			});
+		 $("#addCommuneModal").closeModal({
+				dismissible:false
+			});
+		 $("#addVillageModal").closeModal({
+				dismissible:false
+			});
+		 
+	 }
+	 */
 	

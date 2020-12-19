@@ -166,4 +166,10 @@ public class ProjectDropdownController {
 
 		}
 	
-}
+	@ResponseBody
+	@GetMapping("getAllProvince")
+	public List<AddressResponse> getAllProvince() {
+		List<AddressResponse> dropdown = userLoginFeignImpl.getAllProvinceFeign();
+		return dropdown;
+	}
+}		
