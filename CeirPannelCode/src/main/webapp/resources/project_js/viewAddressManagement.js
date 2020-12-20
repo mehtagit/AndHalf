@@ -198,7 +198,7 @@
 		$.getJSON('./getAllProvince', function(data) {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].province).text(data[i].province)
-				.appendTo('#proviance');
+				.appendTo('#proviance','#provinceForCommune');
 			}
 		});
 		
@@ -209,6 +209,16 @@
 		
 	});	
 	
+	$(document).on('change', '#provinceForCommune', function(){
+		 getmodelDistrict();
+			//getCommune();
+	});	
+	
+	
+	$(document).on('change', '#provinceForVillage', function(){
+		getDistrictForVillage();
+			//getCommune();
+	});	
 	
 	
 
@@ -294,6 +304,8 @@
 		getVillage();
 		
 	});	
+	
+
 	
 	function getVillage() {
 		var request = {
@@ -478,10 +490,28 @@
 			$("#addCommuneModal").openModal({
 				dismissible:false
 			});
+			$.getJSON('./getAllProvince', function(data) {
+				$('#provinceForCommune').empty();
+				var html='<option value="">Select Province</option>';
+				$('#provinceForCommune').append(html);	
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].province).text(data[i].province)
+					.appendTo('#provinceForCommune');
+				}
+			});
 		}else if(entity == "village"){
 			$("#addVillageModal").openModal({
 				dismissible:false
 			});
+			$.getJSON('./getAllProvince', function(data) {
+				$('#provinceForVillage').empty();
+				var html='<option value="">Select Province</option>';
+				$('#provinceForVillage').append(html);	
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].province).text(data[i].province)
+					.appendTo('#provinceForVillage');
+				}
+			});	
 		}
 	}
 	
@@ -561,6 +591,7 @@
 		 	var Request={
 		 			"districtID": parseInt($('#districtForCommune').val()),
 					"commune": $('#addCommune').val(),
+					"province" : $('#provinceForCommune').val(),
 					"username" : $("body").attr("data-selected-username"),
 					"userId" : parseInt(userId),
 				}
@@ -593,8 +624,10 @@
 	 
 	 function saveVillage(){
 		 var Request={
+				    "province" : $('#provinceForVillage').val(),
 		 			"communeID": parseInt($('#communeForVillage').val()),
 		 			"village": $('#addVillage').val(),
+		 			"districtID": parseInt($('#districtForVillage').val()),
 					"username" : $("body").attr("data-selected-username"),
 					"userId" : parseInt(userId),
 				}
@@ -625,14 +658,45 @@
 		 return false
 	}
 	 
-	 $(document).on('change', '#provinceForDistrict', function(){
-		 getmodelDistrict();
-			//getCommune();
-		});	
+	 function getDistrictForVillage(){
+			var request = {
+					 "province" : $("#provinceForVillage").val()
+			}
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers : {
+					'X-CSRF-TOKEN' : token
+				}
+			});
+			$.ajax({
+						url : './getallDistrict',
+						type : 'POST',
+						data : JSON.stringify(request),
+						dataType : 'json',
+						async: false,
+						contentType : 'application/json; charset=utf-8',
+						success : function(data, textStatus, jqXHR) {
+							var result = data;
+							$('#districtForVillage').empty();
+							var html='<option value="">Select District</option>';
+							$('#districtForVillage').append(html);	
+							 for (i = 0; i < result.length; i++) {
+								
+								var html='<option value="'+result[i].id+'">'+result[i].district+'</option>';
+								$('#districtForVillage').append(html);	
+							} 
+
+						},
+						error : function(jqXHR, textStatus, errorThrown) {
+							//////console.log("error in ajax")
+						}
+					});
+	 }
 	 
 	 function getmodelDistrict(current) {
 			var request = {
-					 "province" : $("#provinceForDistrict").val()
+					 "province" : $("#provinceForCommune").val()
 			}
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
@@ -668,14 +732,14 @@
 	 
 	 
 	 
-	 $(document).on('change', '#districtForCommune', function(){
+	 $(document).on('change', '#districtForVillage', function(){
 		 getmodelCommune();
 			//getCommune();
 		});	
 	 
 	 function getmodelCommune() {
 			var request = {
-				"districtID" : parseInt($('#districtForCommune').val())
+				"districtID" : parseInt($('#districtForVillage').val())
 			}
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");

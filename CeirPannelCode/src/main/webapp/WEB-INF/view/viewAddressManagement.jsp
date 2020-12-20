@@ -272,6 +272,17 @@
                                 <div class="col s12 m12 l12">
                    	   
                                    <div class="row"  style="margin-top: 10px">
+                                   
+                                   	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
+											<label><spring:message code="input.province" /> <span
+										class="star">*</span></label> <select id="provinceForCommune"
+										class="browser-default" class="mySelect"
+										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required></select>
+										</div> 
+										
+                                   
                                         	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
 											<label><spring:message code="input.district" /> <span
 										class="star">*</span></label> <select id="districtForCommune"
@@ -308,8 +319,26 @@
 								  <div class="row" id="singleInput">
 								  <h6 class="modal-header "> Add Village</h6>
                                 <div class="col s12 m12 l12">
-                   	   
+                   	   					
                                    <div class="row"  style="margin-top: 10px">
+                                   <div class="col s12 m6 l6" style="margin-bottom: 5px;">
+											<label><spring:message code="input.province" /> <span
+										class="star">*</span></label> <select id="provinceForVillage"
+										class="browser-default" class="mySelect"
+										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required></select>
+									</div> 
+                                   
+                                   			<div class="col s12 m6 l6" style="margin-bottom: 5px;">
+											<label><spring:message code="input.district" /> <span
+										class="star">*</span></label> <select id="districtForVillage"
+										class="browser-default" class="mySelect"
+										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required></select>
+										</div> 
+                                   
                                         	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
 											<label><spring:message code="input.commune" /> <span
 										class="star">*</span></label> <select id="communeForVillage"
@@ -351,7 +380,7 @@
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a class="btn modal-close" ><spring:message code="modal.ok" /></a>
+                    <a href="./addressManagement?FeatureId=53" class="btn modal-close" ><spring:message code="modal.ok" /></a>
                     <%-- <a onclick="closeConfirmantionModel()"
 						class="modal-close modal-trigger btn" type="submit"><spring:message code="modal.ok" /></a> --%>
                 </div>
