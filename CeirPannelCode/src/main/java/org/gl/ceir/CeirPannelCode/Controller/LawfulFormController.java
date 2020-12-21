@@ -114,11 +114,10 @@ public class LawfulFormController
 		return mv;
 	}
 
-
-
-	@PostMapping("lawfulIndivisualStolen")
+	//@PostMapping("lawfulIndivisualStolen")
+	@RequestMapping(value= {"lawfulIndivisualStolen"},method= RequestMethod.POST,consumes = "multipart/form-data") 
 	public @ResponseBody GenricResponse register(@RequestParam(name="file",required = false) MultipartFile file,
-			@RequestParam(name="firFileName",required = false) MultipartFile firFileName,
+			@RequestParam(name="firFileName[]",required = false) MultipartFile[] firFileName,
 			HttpServletRequest request,HttpSession session) {
 		log.info("-inside controllerlawfulIndivisualStolen-------request---------");
 
@@ -180,46 +179,94 @@ public class LawfulFormController
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-
-		if(firFileName==null) {
-			log.info("fir file is empty");	
+		
+		for (int i=0;i<lawfulIndivisualStolen.getAttachedFiles().size();i++) {
+			lawfulIndivisualStolen.getAttachedFiles().get(i).setTxnId(txnNumber);
+			//grievanceRequest.getMultifile().get(i).getDocType();
+			
 		}
-		else {
+		
+		int i=0;
+		for( MultipartFile fileFir : firFileName) {
+
+			log.info("-----"+ fileFir.getOriginalFilename());
+			log.info("++++"+ fileFir);
+
+			String tagName=lawfulIndivisualStolen.getAttachedFiles().get(i).getDocType();
+			log.info("doctype Name==="+tagName+"value of index="+i);
+
+
 			try {
 
-				byte[] bytes = firFileName.getBytes();
-				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
-				File dir = new File(rootPath + File.separator);
+				byte[] bytes =
+						fileFir.getBytes(); String rootPath = urlToUpload.getValue()+txnNumber+"/"+tagName+"/"; 
+						File dir =   new File(rootPath + File.separator);
+						File dir1 =   new File(urlToUpload.getValue()+txnNumber+"/" + File.separator);
+						if (!dir.exists())
+							{
+							dir.mkdirs(); // Create the file on server // Calendar now = Calendar.getInstance();
+							dir.setReadable(true,false);
+							dir.setWritable(true,false);
+							dir.setExecutable(true,false);
+							dir1.setReadable(true,false);
+							dir1.setWritable(true,false);
+							dir1.setExecutable(true,false);
+							}
+						File serverFile = new File(rootPath+fileFir.getOriginalFilename());
+						log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+						stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+						serverFile.setExecutable(true,false);
+						serverFile.setReadable(true,false);
+						serverFile.setWritable(true,false);
+						stream.write(bytes); stream.close();
 
-				if (!dir.exists()) {
-					dir.mkdirs();
-					dir.setExecutable(true,false);
-					dir.setReadable(true,false);
-					dir.setWritable(true,false);
-				}
-				// Create the file on server 
-				File serverFile = new File(rootPath+firFileName.getOriginalFilename());
-				log.info("uploaded file path on server" + serverFile); BufferedOutputStream
-				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-				serverFile.setExecutable(true,false);
-				serverFile.setReadable(true,false);
-				serverFile.setWritable(true,false);
-				stream.write(bytes); 
-				stream.close();
-				fileCopyRequest.setFilePath(rootPath);
-				fileCopyRequest.setTxnId(txnNumber);
-				fileCopyRequest.setFileName(firFileName.getOriginalFilename());
-				fileCopyRequest.setServerId(propertyReader.serverId);
-				log.info("request passed to move file to other server=="+fileCopyRequest);
-				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
-				log.info("file move api response==="+fileRespnose);
-				//lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
-			} 
-			catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
+						fileCopyRequest.setFilePath(rootPath);
+						fileCopyRequest.setTxnId(txnNumber);
+						fileCopyRequest.setFileName(fileFir.getOriginalFilename());
+						fileCopyRequest.setServerId(propertyReader.serverId);
+						log.info("request passed to move file to other server=="+fileCopyRequest);
+						GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+						log.info("file move api response==="+fileRespnose);
+
+						//  grievanceRequest.setFileName(file.getOriginalFilename());
+
 			}
+			catch (Exception e) { //
+				// TODO: handle exception e.printStackTrace(); }
+
+				// set reaquest parameters into model class
+
+			}
+			i++;
+
+
 		}
+
+		/*
+		 * if(firFileName==null) { log.info("fir file is empty"); } else { try {
+		 * 
+		 * byte[] bytes = firFileName.getBytes(); String rootPath
+		 * =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; File dir = new
+		 * File(rootPath + File.separator);
+		 * 
+		 * if (!dir.exists()) { dir.mkdirs(); dir.setExecutable(true,false);
+		 * dir.setReadable(true,false); dir.setWritable(true,false); } // Create the
+		 * file on server File serverFile = new
+		 * File(rootPath+firFileName.getOriginalFilename());
+		 * log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+		 * stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+		 * serverFile.setExecutable(true,false); serverFile.setReadable(true,false);
+		 * serverFile.setWritable(true,false); stream.write(bytes); stream.close();
+		 * fileCopyRequest.setFilePath(rootPath); fileCopyRequest.setTxnId(txnNumber);
+		 * fileCopyRequest.setFileName(firFileName.getOriginalFilename());
+		 * fileCopyRequest.setServerId(propertyReader.serverId);
+		 * log.info("request passed to move file to other server=="+fileCopyRequest);
+		 * GenricResponse
+		 * fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(
+		 * fileCopyRequest); log.info("file move api response==="+fileRespnose);
+		 * //lawfulIndivisualStolen.setFileName(file.getOriginalFilename()); } catch
+		 * (Exception e) { // TODO: handle exception e.printStackTrace(); } }
+		 */
 		log.info("request passed to the save regularizeDeviceDbs api"+lawfulIndivisualStolen);
 		GenricResponse response = null;
 		try {
@@ -468,8 +515,9 @@ public class LawfulFormController
 	}
 
 
-	@PostMapping("lawfulIndivisualStolenUpdate")
-	public @ResponseBody GenricResponse updateStolenRequest(@RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="firFileName",required = false) MultipartFile firFileName,HttpServletRequest request,HttpSession session) {
+	//@PostMapping("lawfulIndivisualStolenUpdate")
+	@RequestMapping(value= {"lawfulIndivisualStolenUpdate"},method= RequestMethod.POST,consumes = "multipart/form-data")
+	public @ResponseBody GenricResponse updateStolenRequest(@RequestParam(name="file",required = false) MultipartFile file,@RequestParam(name="firFileName[]",required = false) MultipartFile[] firFileName,HttpServletRequest request,HttpSession session) {
 		log.info("-inside controller lawfulIndivisualStolen update-------request---------");
 		String userName=session.getAttribute("username").toString();
 		Integer userId= (Integer) session.getAttribute("userid");
@@ -552,64 +600,110 @@ public class LawfulFormController
 				e.printStackTrace();
 			}
 		}
+		
+		
+		
+		
+		int i=0;
+		for( MultipartFile fileFir : firFileName) {
 
-		if(firFileName==null) {
-			log.info("fir file is empty");	
-		}
-		else {
+			log.info("-----"+ fileFir.getOriginalFilename());
+			log.info("++++"+ fileFir);
+
+			String tagName=lawfulIndivisualStolen.getAttachedFiles().get(i).getDocType();
+			log.info("doctype Name==="+tagName+"value of index="+i);
+
+
 			try {
 
+				byte[] bytes =
+						fileFir.getBytes(); String rootPath = urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"+tagName+"/"; 
+						File dir =   new File(rootPath + File.separator);
+						File dir1 =   new File(urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/" + File.separator);
+						if (!dir.exists())
+							{
+							dir.mkdirs(); // Create the file on server // Calendar now = Calendar.getInstance();
+							dir.setReadable(true,false);
+							dir.setWritable(true,false);
+							dir.setExecutable(true,false);
+							dir1.setReadable(true,false);
+							dir1.setWritable(true,false);
+							dir1.setExecutable(true,false);
+							}
+						File serverFile = new File(rootPath+fileFir.getOriginalFilename());
+						log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+						stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+						serverFile.setExecutable(true,false);
+						serverFile.setReadable(true,false);
+						serverFile.setWritable(true,false);
+						stream.write(bytes); stream.close();
 
+						fileCopyRequest.setFilePath(rootPath);
+						fileCopyRequest.setTxnId(lawfulIndivisualStolen.getTxnId());
+						fileCopyRequest.setFileName(fileFir.getOriginalFilename());
+						fileCopyRequest.setServerId(propertyReader.serverId);
+						log.info("request passed to move file to other server=="+fileCopyRequest);
+						GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
+						log.info("file move api response==="+fileRespnose);
 
-				byte[] bytes = firFileName.getBytes();
-				String rootPath =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; 
-				File tmpDir = new File(rootPath+firFileName.getOriginalFilename());
-				tmpDir.setExecutable(true,false);
-				tmpDir.setReadable(true,false);
-				tmpDir.setWritable(true,false);
-				boolean exists = tmpDir.exists();
-				if(exists) {
+						//  grievanceRequest.setFileName(file.getOriginalFilename());
 
-					Path temp = Files.move 
-							(Paths.get(urlToUpload.getValue()+"/"+lawfulIndivisualStolen.getTxnId()+"/"+firFileName.getOriginalFilename()), 
-									Paths.get(urlToMove.getValue()+movedFileTime+"_"+firFileName.getOriginalFilename())); 
-					String movedPath=urlToMove.getValue()+movedFileTime+"_"+firFileName.getOriginalFilename();	
-
-					log.info("file is already exist, moved to this "+movedFileTime+"_"+movedPath+" path. ");
-					tmpDir.delete();
-				}
-
-				File dir = new File(rootPath + File.separator);
-
-				if (!dir.exists()) {
-					dir.mkdirs();
-					dir.setExecutable(true,false);
-					dir.setReadable(true,false);
-					dir.setWritable(true,false);
-				}
-				// Create the file on server 
-				File serverFile = new File(rootPath+firFileName.getOriginalFilename());
-				log.info("uploaded file path on server" + serverFile); BufferedOutputStream
-				stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-				serverFile.setExecutable(true,false);
-				serverFile.setReadable(true,false);
-				serverFile.setWritable(true,false);
-				stream.write(bytes); 
-				stream.close();
-				fileCopyRequest.setFilePath(rootPath);
-				fileCopyRequest.setTxnId(lawfulIndivisualStolen.getTxnId());
-				fileCopyRequest.setFileName(firFileName.getOriginalFilename());
-				fileCopyRequest.setServerId(propertyReader.serverId);
-				log.info("request passed to move file to other server=="+fileCopyRequest);
-				GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
-				log.info("file move api response==="+fileRespnose);
-				//lawfulIndivisualStolen.setFileName(file.getOriginalFilename());
-			} 
-			catch (Exception e) {
-				// TODO: handle exception
-				e.printStackTrace();
 			}
+			catch (Exception e) { //
+				// TODO: handle exception e.printStackTrace(); }
+
+				// set reaquest parameters into model class
+
+			}
+			i++;
+
+
 		}
+
+		/*
+		 * if(firFileName==null) { log.info("fir file is empty"); } else { try {
+		 * 
+		 * 
+		 * 
+		 * byte[] bytes = firFileName.getBytes(); String rootPath
+		 * =urlToUpload.getValue()+lawfulIndivisualStolen.getTxnId()+"/"; File tmpDir =
+		 * new File(rootPath+firFileName.getOriginalFilename());
+		 * tmpDir.setExecutable(true,false); tmpDir.setReadable(true,false);
+		 * tmpDir.setWritable(true,false); boolean exists = tmpDir.exists(); if(exists)
+		 * {
+		 * 
+		 * Path temp = Files.move
+		 * (Paths.get(urlToUpload.getValue()+"/"+lawfulIndivisualStolen.getTxnId()+"/"+
+		 * firFileName.getOriginalFilename()),
+		 * Paths.get(urlToMove.getValue()+movedFileTime+"_"+firFileName.
+		 * getOriginalFilename())); String
+		 * movedPath=urlToMove.getValue()+movedFileTime+"_"+firFileName.
+		 * getOriginalFilename();
+		 * 
+		 * log.info("file is already exist, moved to this "+movedFileTime+"_"+
+		 * movedPath+" path. "); tmpDir.delete(); }
+		 * 
+		 * File dir = new File(rootPath + File.separator);
+		 * 
+		 * if (!dir.exists()) { dir.mkdirs(); dir.setExecutable(true,false);
+		 * dir.setReadable(true,false); dir.setWritable(true,false); } // Create the
+		 * file on server File serverFile = new
+		 * File(rootPath+firFileName.getOriginalFilename());
+		 * log.info("uploaded file path on server" + serverFile); BufferedOutputStream
+		 * stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+		 * serverFile.setExecutable(true,false); serverFile.setReadable(true,false);
+		 * serverFile.setWritable(true,false); stream.write(bytes); stream.close();
+		 * fileCopyRequest.setFilePath(rootPath);
+		 * fileCopyRequest.setTxnId(lawfulIndivisualStolen.getTxnId());
+		 * fileCopyRequest.setFileName(firFileName.getOriginalFilename());
+		 * fileCopyRequest.setServerId(propertyReader.serverId);
+		 * log.info("request passed to move file to other server=="+fileCopyRequest);
+		 * GenricResponse
+		 * fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(
+		 * fileCopyRequest); log.info("file move api response==="+fileRespnose);
+		 * //lawfulIndivisualStolen.setFileName(file.getOriginalFilename()); } catch
+		 * (Exception e) { // TODO: handle exception e.printStackTrace(); } }
+		 */
 		log.info("request passed to the update stolen  api"+lawfulIndivisualStolen);
 		GenricResponse response = null;
 		try {

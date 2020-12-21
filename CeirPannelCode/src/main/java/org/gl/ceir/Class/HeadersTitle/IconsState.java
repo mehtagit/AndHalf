@@ -74,14 +74,14 @@ public class IconsState {
 		
 		
 		// state related Code 
-		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+		String error="<a onclick="+errorURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+"></i></a>";
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\" ><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
 				+downloadIconTitle+" ></i></a>"; 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-		String edit="<a onclick="+editAction+"><i class="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\" ><i class="
 				+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
@@ -3259,6 +3259,22 @@ public class IconsState {
 		historyTitle=Translator.toLocale("titles.history");
 	}
 
+	/********************************** Icons for currency Management**********************************/ 
 
+	public String addressManagementIcons(String id, String userStatus) { 
+		executePostConstruct();
+
+		String deleteAction= "DeleteByID('"+id+"')";
+
+		// state related Code 
+		
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+				+deletionIcon+" aria-hidden=\"true\"  title="
+				+deleteIconTitle+"></i></a>"; 
+
+		String action=delete;
+		return action;
+
+	}
 
 }

@@ -150,21 +150,21 @@
               
                    <h5 class="center">
 						<label> <input name="group1" type="radio" value="0"
-							onclick="userChangeStatus('status');"/>
+							onclick="AddSystemAddress('province');"/>
 							<span class="checkboxFont"> <spring:message code="input.province" /></span></label>
 									
 						 <label> <input name="group2" type="radio" value="1"
-							onclick="userChangeStatus('roleType')"/>
+							onclick="AddSystemAddress('district')"/>
 							<span class="checkboxFont"> <spring:message code="input.district" /></span>
 						</label> 
 						
 						<label> <input name="group3" type="radio" value="2"
-							onclick="userChangeStatus('roleType')"/>
+							onclick="AddSystemAddress('commune')"/>
 							<span class="checkboxFont"> <spring:message code="input.commune" /></span>
 						</label> 
 						
 						<label> <input name="group4" type="radio" value="3"
-							onclick="userChangeStatus('roleType')"/>
+							onclick="AddSystemAddress('village')"/>
 							<span class="checkboxFont"> <spring:message code="input.village" /></span>
 						</label> 
 					</h5>
@@ -177,129 +177,251 @@
             </div>
         </div>
     </div>
-	
- 	<div id="addCurrency" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header">Add Address </h6>
-        <div class="modal-content">
-          	<form action="" onsubmit="return submitPort()" method="post" >
-                <div class="row" style="margin-top: 10px;">
-					
-					<!-- <div class="input-field col s12 m6" style="margin-top: 22px;">
-						<input type="text" name="month"
-						id='month' class='form-control datepick'
-						autocomplete='off'  required /> 
-						<label for="month" class="center-align">Month <span class="star">*</span>
-						</label> <span class="input-group-addon" style="color: #ff4081"><i
-												class="fa fa-calendar" aria-hidden="true"></i></span>
-					
-					</div> -->
-					<div class="col s12 m6">
-					<label for="port" class="active">Month<span class="star">  *</span></label>
-                     	 <select class="browser-default" id="addMonth" required="required">
-                                <option value="" selected >Select Month</option>
-                          </select>
-                        
-                        
-                    </div>
-					
-					<div class="col s12 m6">
-					<label for="port" class="active">Year<span class="star">  *</span></label>
-                     	 <select class="browser-default" id="addYear" required="required">
-                                <option value="" selected>Select Year</option>
-                          </select>
-                        
-                        
-                    </div>
-					
-					<div class="col s12 m6">
-					<label for="port" class="active">Currency<span class="star">  *</span></label>
-                     	 <select class="browser-default" id="currency" required="required">
-                                <option value=""  selected>Select Currency</option>
-                          </select>
-                        
-                        
-                    </div>
-					
-					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="number" id="cambodianRiel" name=""  pattern="[0-9]" title="Please enter numeric numbers"  maxlength="" required="required">
-                        <label for="cambodianRiel" class="">Cambodian Riel <span class="star"> *</span></label>
-                    </div>
-                    
-                    <div class="input-field col s12 m6">
-                        <input type="number" id="dollar" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
-                        <label for="number" class="">US Dollar <span class="star"> *</span></label>
-                    </div>
-
-					 <div class="col s12 m12 center" style="margin-top: 20px;">
-                        <button class="btn" type="submit">Submit</button>
-                        <a href="#" onclick="resetFields()" class="btn modal-close" id="Cancel" style="margin-left: 10px;">Cancel</a>
-                    </div>
+    
+    <div id="addProvinceModal" class="modal">
+               <form action="" onsubmit="return saveProvince()" method="POST"
+								enctype="multipart/form-data" >
+								  <div class="row" id="singleInput">
+								  <h6 class="modal-header "> Add Province</h6>
+                                <div class="col s12 m12 l12">
+                   	   
+                                   <div class="row"  style="margin-top: 10px">
+                                        	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
+											<label><spring:message code="table.country" /> <!-- <span
+										class="star">*</span> --></label> <select id="country"
+										class="browser-default" class="mySelect"
+										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required disabled></select>
+										</div> 
+                                       		
+                                       
+										
+									<div class="input-field col s12 m6" style="margin-top: 22px;">
+										<input type="text" name="province" id="addProvince"
+							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+							maxlength="50" required/> <label for="addProvince"
+							class="center-align"><spring:message
+								code="input.province" /> <span class="star">*</span></label>
+								</div>		
+                          </div>
+                               <div class="row">
+                                            <div class="input-field col s12 center" style="padding: 20px 0;">
+                                                <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
+                                                 <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
+                                               	<button type="button" onclick = "resetButtons()" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
+                                            </div>
+									</div>	
+                                  </div>
+                         </div></form>
+        </div> 
+        
+         <div id="addDistrictModal" class="modal">
+               <form action="" onsubmit="return saveDistrict()" method="POST"
+								enctype="multipart/form-data" >
+								  <div class="row" id="singleInput">
+								  <h6 class="modal-header ">Add District</h6>
+                                <div class="col s12 m12 l12">
+                   	   
+                                   <div class="row"  style="margin-top: 10px">
+                                        	<%-- <div class="col s12 m6 l6" style="margin-bottom: 5px;">
+											<label><spring:message code="table.country" /> <span
+										class="star">*</span></label> <select id="country1"
+										class="browser-default" class="mySelect"
+										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required></select>
+										</div>  --%>
+                                        	
+                                        	
+                                        	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
+											<label><spring:message code="input.province" /> <span
+										class="star">*</span></label> <select id="provinceForDistrict"
+										class="browser-default" class="mySelect"
+										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required></select>
+										</div> 
+                                       		
+                                       
+										
+									<div class="input-field col s12 m6" style="margin-top: 22px;">
+										<input type="text" name="district" id="addDistrict"
+							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+							maxlength="50" required/> <label for="addDistrict"
+							class="center-align"><spring:message
+								code="input.district" /> <span class="star">*</span></label>
+								</div>		
+                          </div>
+                               <div class="row">
+                                            <div class="input-field col s12 center" style="padding: 20px 0;">
+                                                <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
+                                                 <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
+                                               	<button type="button" onclick = "resetButtons()" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
+                                            </div>
+									</div>	
+                                  </div>
+                         </div></form>
+        </div> 
+        
+          <div id="addCommuneModal" class="modal">
+               <form action="" onsubmit="return saveCommune()" method="POST"
+								enctype="multipart/form-data" >
+								  <div class="row" id="singleInput">
+								  <h6 class="modal-header "> Add Commune</h6>
+                                <div class="col s12 m12 l12">
+                   	   
+                                   <div class="row"  style="margin-top: 10px">
+                                   
+                                   	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
+											<label><spring:message code="input.province" /> <span
+										class="star">*</span></label> <select id="provinceForCommune"
+										class="browser-default" class="mySelect"
+										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required></select>
+										</div> 
+										
+                                   
+                                        	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
+											<label><spring:message code="input.district" /> <span
+										class="star">*</span></label> <select id="districtForCommune"
+										class="browser-default" class="mySelect"
+										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required></select>
+										</div> 
+                                       		
+                                       
+										
+									<div class="input-field col s12 m6" style="margin-top: 22px;">
+										<input type="text" name="commune" id="addCommune"
+							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+							maxlength="50" required/> <label for="addCommune"
+							class="center-align"><spring:message
+								code="input.commune" /> <span class="star">*</span></label>
+								</div>		
+                          </div>
+                               <div class="row">
+                                            <div class="input-field col s12 center" style="padding: 20px 0;">
+                                                <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
+                                                 <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
+                                               	<button type="button" onclick = "resetButtons()" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
+                                            </div>
+									</div>	
+                                  </div>
+                         </div></form>
+        </div> 
+		
+		<div id="addVillageModal" class="modal">
+               <form action="" onsubmit="return saveVillage()" method="POST"
+								enctype="multipart/form-data" >
+								  <div class="row" id="singleInput">
+								  <h6 class="modal-header "> Add Village</h6>
+                                <div class="col s12 m12 l12">
+                   	   					
+                                   <div class="row"  style="margin-top: 10px">
+                                   <div class="col s12 m6 l6" style="margin-bottom: 5px;">
+											<label><spring:message code="input.province" /> <span
+										class="star">*</span></label> <select id="provinceForVillage"
+										class="browser-default" class="mySelect"
+										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required></select>
+									</div> 
+                                   
+                                   			<div class="col s12 m6 l6" style="margin-bottom: 5px;">
+											<label><spring:message code="input.district" /> <span
+										class="star">*</span></label> <select id="districtForVillage"
+										class="browser-default" class="mySelect"
+										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required></select>
+										</div> 
+                                   
+                                        	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
+											<label><spring:message code="input.commune" /> <span
+										class="star">*</span></label> <select id="communeForVillage"
+										class="browser-default" class="mySelect"
+										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required></select>
+										</div> 
+                                       		
+                                       
+										
+									<div class="input-field col s12 m6" style="margin-top: 22px;">
+										<input type="text" name="village" id="addVillage"
+							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+							maxlength="50" required/> <label for="addVillage"
+							class="center-align"><spring:message
+								code="input.village" /> <span class="star">*</span></label>
+								</div>		
+                          </div>
+                               <div class="row">
+                                            <div class="input-field col s12 center" style="padding: 20px 0;">
+                                                <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
+                                                 <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
+                                               	<button type="button" onclick = "resetButtons()" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
+                                            </div>
+									</div>	
+                                  </div>
+                         </div></form>
+        </div> 
+        
+        <div id="confirmSaveModal" class="modal">
+         <h6 class="modal-header"><spring:message code="registration.changeUserStatus" /></h6>
+          <div class="modal-content">
+            <div class="row">
+                <form action="">
+                  
+                    <h6 id ="successMessage"></h6>
+                </form>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="./addressManagement?FeatureId=53" class="btn modal-close" ><spring:message code="modal.ok" /></a>
+                    <%-- <a onclick="closeConfirmantionModel()"
+						class="modal-close modal-trigger btn" type="submit"><spring:message code="modal.ok" /></a> --%>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+    	</div>
+	<div id="DeleteAddressModal" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.header.deleteAddress" /></h6>
+		<div class="modal-content">
+		<div class="row">
+				<h6><spring:message code="modal.message.Address.delete" /></h6>
+			</div> 
+			<input type="text" id="deleteFieldId" hidden>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a onclick="confirmantiondelete()"
+						class="modal-close modal-trigger btn" type="submit"><spring:message code="modal.yes" /></a>
+					<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+				</div>
+			</div>
+		</div>
+	</div>	
+	
+	<div id="closeDeleteModal" class="modal">
+			<h6 class="modal-header"><spring:message code="modal.header.deleteAddress" /></h6>
+			<div class="modal-content">
 		
-		
-		 	<div id="editCurrencyModal" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header">Edit Exchange Rate</h6>
-        <div class="modal-content">
-          	<form action="" onsubmit="return updateCurrency()" method="post" >
-                <div class="row" style="margin-top: 10px;">
-					
-					<div class="col s12 m6">
-					<label for="port" class="active">Month</label>
-                     	 <select class="browser-default"  id="editMonth" required="required"  disabled>
-                                <option value="" selected>Select Month</option>
-                          </select>
-                        
-                         <input type="text" id="editId" hidden>
-                    </div>
-					
-					<div class="col s12 m6">
-					<label for="port" class="active">Year</label>
-                     	 <select class="browser-default" id="editYear" required="required" disabled>
-                                <option value=""  selected>Select Year</option>
-                          </select>
-                    </div>
-					
-					<div class="col s12 m6">
-					<label for="editCurrency" class="active">Currency</label>
-                     	 <select class="browser-default" id="editCurrency" required="required" disabled>
-                                <option value=""  selected>Select Currency</option>
-                          </select>
-                        
-                        
-                    </div>
-					
-					<div class="input-field col s12 m6" style="margin-top: 23px;">
-                        <input type="number" id="editCambodianRiel" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
-                        <label for="editCambodianRiel" class="">Cambodian Riel <span class="star"> *</span></label>
-                    </div>
-                    
-                    <div class="input-field col s12 m6">
-                        <input type="number" id="editDollar" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
-                        <label for="editDollar" class="">US Dollar <span class="star">  *</span></label>
-                    </div>
+			
+			<div class="row">
 
-					 <div class="col s12 m12 center" style="margin-top: 20px;">
-                        <button class="btn" type="submit">Submit</button>
-                        <a href="#" class="btn modal-close" id="Cancel" style="margin-left: 10px;">Cancel</a>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-		
+				<h6 id="tacModalText"><spring:message code="modal.message.AddressDeleted" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a href="" class="modal-close btn"
+						style="margin-left: 10px;">OK</a>
+				</div>
+			</div>
+		</div>
+	</div>
 	
-	
-	
-		
-	   	
-	
-	
-		
-		
-		
 	
 <!--materialize js-->
 	<script type="text/javascript"
@@ -368,10 +490,11 @@
 
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewAddressManagement.js?version=<%= (int) (Math.random() * 10) %>"></script>
+<%-- 	<script type="text/javascript"
+		src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script> --%>
 			<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/project_js/_dateFunction.js?version=<%= (int) (Math.random() * 10) %>" async></script>
+	
 			<script type="text/javascript"
 		src="" async></script>
 <script type="text/javascript">$( document ).ready(function() {if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
