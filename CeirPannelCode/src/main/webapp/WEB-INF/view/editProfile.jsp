@@ -535,6 +535,56 @@ input[type="checkbox"] {
 											code="input.address" /> <span class="star">*</span></label>
 								</div>
 
+<div class="col s12 m6 l6">
+									<label><spring:message code="table.country" /> <span
+										class="star">*</span></label> <select id="country"
+										class="browser-default" class="mySelect"
+										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required></select>
+								</div>
+
+								<div class="col s12 m6 l6">
+									<label><spring:message code="input.province" /> <span
+										class="star">*</span></label> <select id="state"
+										class="browser-default" class="mySelect"
+										onchange="getDistrict(this);InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required></select>
+								</div>
+
+
+
+
+								<div class="col s12 m6 l6">
+									<label><spring:message code="input.district" /><span
+										class="star">*</span></label> <select
+										id="district" class="browser-default" class="mySelect"
+										onchange="getCommune(this);InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required></select>
+								</div>
+
+
+								<div class="col s12 m6 l6">
+									<label><spring:message code="input.commune" /><span
+										class="star">*</span></label> <select
+										id="commune" class="browser-default" class="mySelect"
+										onchange="getVillage(this);InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required></select>
+								</div>
+								<div class="col s12 m6 l6">
+									<label><spring:message code="input.village" /></label> <select
+										id="village" class="browser-default" class="mySelect"
+										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" ></select>
+
+
+								</div>
+
+
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="street" maxlength="20"
 										class="form-control boxBorder boxHeight" id="street"
@@ -545,16 +595,10 @@ input[type="checkbox"] {
 										required> <label for="street"><spring:message
 											code="input.streetNumber" /> <span class="star">*</span> </label>
 								</div>
-								<div class="input-field col s12 m6 l6">
-									<input type="text" name="village" maxlength="30"
-										class="form-control boxBorder boxHeight" id="village"
-										pattern="[A-Za-z0-9\s._%-+$@,/]{3,30}" placeholder=""
-										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');">
-									<label for="village"><spring:message
-											code="input.village" /> </label>
-								</div>
-								<div class="input-field col s12 m6 l6">
+							</div>
+
+<div class="row">
+		<div class="input-field col s12 m6 l6">
 									<input type="text" name="locality" maxlength="30"
 										class="form-control boxBorder boxHeight" id="locality"
 										placeholder=""
@@ -565,24 +609,7 @@ input[type="checkbox"] {
 											code="input.locality" /> </label>
 								</div>
 
-								<div class="input-field col s12 m6 l6">
-									<input type="text" name="district" placeholder=""
-										maxlength="30" class="form-control boxBorder boxHeight"
-										id="district" pattern="[A-Za-z0-9\s._%-+$@,/]{3,30}"
-										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-										required> <label for="district"><spring:message
-											code="input.district" /> <span class="star">*</span> </label>
-								</div>
-								<div class="input-field col s12 m6 l6">
-									<input type="text" placeholder="" name="commune" maxlength="30"
-										class="form-control boxBorder boxHeight" id="commune"
-										pattern="[A-Za-z0-9\s._%-+$@,/]{0,30}"
-										oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-										required> <label for="commune"><spring:message
-											code="input.commune" /> <span class="star">*</span> </label>
-								</div>
+							
 								<div class="input-field col s12 m6 l6">
 									<input  type="text" placeholder=""
 										name="postalCode" maxlength="6"
@@ -593,35 +620,7 @@ input[type="checkbox"] {
 									<label for="postalCode"><spring:message
 											code="input.postalCode" /></label>
 								</div>
-
-
-
-								<div class="input-field col s12 m6 l6">
-									<p
-										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-										<spring:message code="table.country" />
-										<span class="star">*</span>
-									</p>
-									<select id="country" class="browser-default" class="mySelect"
-										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
-								</div>
-
-								<div class="input-field col s12 m6 l6">
-									<p
-										style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
-										<spring:message code="input.province" />
-										<span class="star">*</span>
-									</p>
-									<select id="state" class="browser-default" class="mySelect"
-										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
-								</div>
-							</div>
-
-
+</div>
 							<div class="row">
 								<div class="col s12 m6 l6" style="margin-bottom: 10px;">
 									<label for="vatNumber"><spring:message

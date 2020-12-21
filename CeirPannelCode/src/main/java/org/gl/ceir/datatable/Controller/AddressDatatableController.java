@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.Feignclient.UserLoginFeignImpl;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
@@ -17,8 +18,8 @@ import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
-import org.gl.ceir.pagination.model.CurrencyContantModel;
-import org.gl.ceir.pagination.model.CurrencyPaginationModel;
+import org.gl.ceir.pagination.model.AddressContentModel;
+import org.gl.ceir.pagination.model.AddressPaginitionModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,14 +47,14 @@ public class AddressDatatableController {
 	@Autowired
 	IconsState iconState;
 	@Autowired
-	UserProfileFeignImpl userProfileFeignImpl;
+	AddressContentModel addressContentModel;
 	@Autowired
-	CurrencyContantModel currencyContantModel;
+	AddressPaginitionModel addressPaginitionModel;
 	@Autowired
-	CurrencyPaginationModel currencyPaginationModel;
+	UserLoginFeignImpl userLoginFeignImpl;
 	
 	@PostMapping("addressManagementData")
-	public ResponseEntity<?> viewCurrencyRecord(@RequestParam(name="type",defaultValue = "currencyManagement",required = false) String role, HttpServletRequest request,HttpSession session) {
+	public ResponseEntity<?> viewCurrencyRecord(@RequestParam(name="type",defaultValue = "addressManagement",required = false) String role, HttpServletRequest request,HttpSession session) {
 		//String userType = (String) session.getAttribute("usertype");
 		//int userId=	(int) session.getAttribute("userid");
 		int file=0;
@@ -68,29 +69,27 @@ public class AddressDatatableController {
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 		try {
 			log.info("request send to the filter api ="+filterrequest);
-			Object response = userProfileFeignImpl.viewCurrencyRequest(filterrequest,pageNo,pageSize,file);
+			Object response = userLoginFeignImpl.viewAllLocality(filterrequest,pageNo,pageSize,file);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
-			currencyPaginationModel = gson.fromJson(apiResponse, CurrencyPaginationModel.class);
-			List<CurrencyContantModel> paginationContentList = currencyPaginationModel.getContent();
+			addressPaginitionModel = gson.fromJson(apiResponse, AddressPaginitionModel.class);
+			List<AddressContentModel> paginationContentList = addressPaginitionModel.getContent();
 			if(paginationContentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
 			}
 			else {
-			for(CurrencyContantModel dataInsideList : paginationContentList) 
+			for(AddressContentModel dataInsideList : paginationContentList) 
 				{
 				   String id= String.valueOf(dataInsideList.getId());	
-				   String createdOn= dataInsideList.getCreatedOn();
-				   String modifiedOn = (String) dataInsideList.getModifiedOn();
-				   String month= dataInsideList.getMonthInterp();
-				   String year = dataInsideList.getYear();
-				   String currency= String.valueOf(dataInsideList.getCurrencyInterp());
-				   String riel= String.valueOf(dataInsideList.getRiel());
-				   String dollar = String.valueOf(dataInsideList.getDollar());
+				   String createdOn = dataInsideList.getCreatedOn();
+				   String province = dataInsideList.getProvince();	
+				   String district = (String) dataInsideList.getDistrict();
+				   String commune= dataInsideList.getCommune();
+				   String village = dataInsideList.getVillage();
 				   String userStatus = (String) session.getAttribute("userStatus");	  
-				   String action=iconState.currencyManagementIcons(id,userStatus);			   
-				   Object[] finalData={createdOn,modifiedOn,month,year,action}; 
+				   String action=iconState.addressManagementIcons(id,userStatus);			   
+				   Object[] finalData={createdOn,province,district,commune,village,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
@@ -98,8 +97,8 @@ public class AddressDatatableController {
 			}
 		}
 			//data set on ModelClass
-			datatableResponseModel.setRecordsTotal(currencyPaginationModel.getNumberOfElements());
-			datatableResponseModel.setRecordsFiltered(currencyPaginationModel.getTotalElements());
+			datatableResponseModel.setRecordsTotal(addressPaginitionModel.getNumberOfElements());
+			datatableResponseModel.setRecordsFiltered(addressPaginitionModel.getTotalElements());
 			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
 	}catch(Exception e) {
 		datatableResponseModel.setRecordsTotal(null);
@@ -131,7 +130,7 @@ public class AddressDatatableController {
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names = { "HeaderButton","Add", "AddAddress()", "btnLink",
+			String[] names = { "HeaderButton","Add Address", "AddAddress()", "btnLink",
 					"FilterButton", Translator.toLocale("button.filter"),"addressFieldTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
@@ -148,7 +147,7 @@ public class AddressDatatableController {
 			
 		
 		  //Dropdown items 
-		  String[] selectParam={"select",Translator.toLocale("table.province"),"proviance","","select",Translator.toLocale("table.district"),"district","","select",Translator.toLocale("table.commune"),"commune","","select",Translator.toLocale("table.village"),"village",""}; 
+		  String[] selectParam={"select",Translator.toLocale("input.province"),"proviance","","select",Translator.toLocale("input.district"),"district","","select",Translator.toLocale("input.commune"),"commune","","select",Translator.toLocale("input.village"),"village",""}; 
 		  for(int i=0; i<selectParam.length; i++) { 
 				inputFields= new InputFields();
 		  inputFields.setType(selectParam[i]); 
@@ -164,7 +163,7 @@ public class AddressDatatableController {
 		 
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

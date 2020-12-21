@@ -374,6 +374,7 @@ else{
 
 
 
+
 function setMandatoryandOptional(village,locality,district,commune){
 	var addressType=$('#addressType').val();
 	if(addressType==2)
