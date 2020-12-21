@@ -374,15 +374,19 @@ else{
 
 
 
+
 function setMandatoryandOptional(village,locality,district,commune){
 	var addressType=$('#addressType').val();
 	if(addressType==2)
 		{
 		$(".starAddress").css("display", "none");
+		$(".starAddressDistrict").css("display", "none");
+		
 	//	$("#"+district+","+"#"+commune).css("display", "none");
 		$("#"+village+","+"#"+locality+","+"#"+district+","+"#"+commune).attr("required", false);
 		}
 	else{
+		$(".starAddressDistrict").css("display", "block");
 		$(".starAddress").css("display", "block");
 		$("#"+district+","+"#"+commune).attr("required", true);
 	}

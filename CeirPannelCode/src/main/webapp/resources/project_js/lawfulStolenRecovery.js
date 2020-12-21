@@ -691,9 +691,107 @@ function saveIndivisualStolenRequest(){
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 	//////console.log("**** file name"+uploadedFileName)
 
-	var fileFileDetails=$('#uploadFirSingle').val();
-	fileFileDetails=fileFileDetails.replace(/^.*[\\\/]/, '');
+	var nationality=$('#nationality').val();
+	var addressType=$('#addressType').val();
+//	var fileFileDetails=$('#uploadFirSingle').val();
+//	fileFileDetails=fileFileDetails.replace(/^.*[\\\/]/, '');
 
+	var fieldId = 1;
+	var fileInfo = [];
+	var formData = new FormData();
+	var fileData = [];
+	var documentFileNameArray = [];
+	var x;
+	var filename = '';
+	var filediv;
+	var i = 0;
+	var formData = new FormData();
+	var docTypeTagIdValue = '';
+	var filename = '';
+	var filesameStatus = false;
+	var documenttype = false;
+	var docTypeTag = '';
+
+	/* $('.fileDiv').each( */
+			for(var j=1;j<id;j++){
+			
+				
+				if(typeof  $('#docTypetag' + fieldId).val()!== "undefined"){
+					var x = {
+					"docType" : $('#docTypetag' + fieldId).val(),
+					"fileName" : $('#docTypeFile' + fieldId).val()
+							.replace('C:\\fakepath\\', '')
+				}
+				formData.append('firFileName[]', $('#docTypeFile'
+						+ fieldId)[0].files[0]);
+
+				documentFileName = $('#docTypeFile' + fieldId)
+						.val().replace('C:\\fakepath\\', '')
+				docTypeTag = $('#docTypetag' + fieldId).val();
+
+				var fileIsSame = documentFileNameArray
+						.includes(documentFileName);
+
+				var documentTypeTag = documentFileNameArray
+						.includes(docTypeTag);
+
+				if (filesameStatus != true) {
+					filesameStatus = fileIsSame;
+				}
+
+				if (documenttype != true) {
+					documenttype = documentTypeTag;
+
+				}
+				documentFileNameArray.push(documentFileName);
+				documentFileNameArray.push(docTypeTag);
+
+				
+				
+				if(!x['docType']=='')
+					{
+					//console.log("if");
+					fileInfo.push(x);
+					}
+				else{
+					//console.log("else");
+					
+				}
+				
+				
+				}
+				fieldId++;
+				i++;
+				
+			}
+
+	if (filesameStatus == true) {
+
+		$('#fileFormateModal').openModal({
+			dismissible : false
+		});
+		$('#fileErrormessage').text('')
+		$('#fileErrormessage').text($.i18n('duplicateFileName'));
+		// $("#saveGrievancesubmitButton").prop('disabled', false);
+        $('div#initialloader').delay(300).fadeOut('slow');
+		return false;
+
+	}
+
+	if (documenttype == true) {
+
+		$('#fileFormateModal').openModal({
+			dismissible : false
+		});
+		$('#fileErrormessage').text('')
+		$('#fileErrormessage').text($.i18n('documentTypeName'));
+$('div#initialloader').delay(300).fadeOut('slow');
+//$("#saveGrievancesubmitButton").prop('disabled', false);
+		return false;
+
+	}
+	
+	
 	var stolenIndividualUserDB={
 			"alternateContactNumber": singleStolenphone1,
 			"commune": singleStolencommune,
@@ -738,23 +836,26 @@ function saveIndivisualStolenRequest(){
 			"remark": singleDeviceRemark,
 			"street": singleStolenstreetNumber,
 			"village":singleStolenvillage,
-			"nidFileName":uploadedFileName
+			"nidFileName":uploadedFileName,
+			"addressType":addressType,
+			"nationality":nationality
 	}
 
 
 	var request={
 			"dateOfStolen":IndivisualStolenDate,
+			"attachedFiles" : fileInfo,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,
 			"requestType":0,
 			"sourceType":5,
 			"deviceQuantity":1,
-			"firFileName":fileFileDetails,
 			"complaintType": singleStolenComplaintType,
 			"operatorTypeId":singleStolenOperator,
 			"stolenIndividualUserDB":stolenIndividualUserDB
 	}
-	formData.append('firFileName', $('#uploadFirSingle')[0].files[0]);
+	//formData.append('firFileName', $('#uploadFirSingle')[0].files[0]);
+	formData.append('fileInfo[]', JSON.stringify(fileInfo));
 	formData.append('file', $('#singleStolenFile')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
 	var token = $("meta[name='_csrf']").attr("content");
@@ -1647,6 +1748,7 @@ else if($('#'+multiplesimstatus).val()==""){
 }
 
 function enableSelectFile() {
+	 
 	if($('#docTypetag1').val() != ''){
 		$("#docTypeFile1").attr("disabled", false);
 		$("#docTypeFile1").attr("required", true);
@@ -1717,6 +1819,7 @@ function enableAddMore(id,removeFileDivId) {
 	}
 	
 	$(".add_field_button").attr("disabled", false);
+	$(".add_field_button_edit").attr("disabled", false);
 }
 
 
@@ -1793,10 +1896,11 @@ $.ajaxSetup({
 								}
 								$.getJSON('./getSourceTypeDropdown/DOC_TYPE/12', function(
 										data) { 	
-
+									
 									for (i = 0; i < data.length; i++) {
 										//////console.log(data[i].interp);
 										var optionId = id - 1;
+										 
 										$('<option>').val(data[i].tagId).text(
 												data[i].interp).appendTo(
 												'#docTypetag' + optionId);
@@ -1809,6 +1913,7 @@ $.ajaxSetup({
 								});
 
 							id++;
+							
 
 						});
 		
@@ -1827,5 +1932,76 @@ $.ajaxSetup({
 			$('#filediv' + fieldId).remove();
 			$(this).parent('div').remove();
 			$(".add_field_button").prop('disabled', false);
+			$(".add_field_button_edit").attr("disabled", false);
 			x--;
 			}
+		
+		
+		var idedit = 2;
+		$(".add_field_button_edit")
+		.click(
+				function(e) { //on add input button click
+					e.preventDefault();
+					var placeholderValue = $
+							.i18n('selectFilePlaceHolder');
+					if (x < max_fields) { //max input box allowed
+						x++; //text box increment
+						$(wrapper)
+								.append(
+										'<div id="filediv'+idedit+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'
+												+ $
+														.i18n('documenttype')
+												+ '<span class="star">*</span> </label><select required id="docTypetag'
+												+ idedit
+												+ '" oninput="InvalidMsg(this,\'select\',\''
+												+ $
+														.i18n('selectDocumentType')
+												+ '\');"  oninvalid="InvalidMsg(this,\'select\',\''
+												+ $
+														.i18n('selectDocumentType')
+												+ '\');"  class="browser-default"> <option value="" disabled selected>'
+												+ $
+														.i18n('selectDocumentType')
+												+ ' </option></select><select id="docTypetagValue'+idedit+'" style="display:none" class="browser-default"> <option value="" disabled selected>'
+												+ $
+														.i18n('selectDocumentType')
+												+ ' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'
+												+ $
+														.i18n('selectfile')
+												+ '</span><input required onchange=enableAddMore("docTypeFile'+idedit+'","filediv'+idedit+'") id="docTypeFile'
+												+ id
+												+ '" type="file" oninput="InvalidMsg(this,\'fileType\',\''
+												+ $
+														.i18n('selectfile')
+												+ '\');"  oninvalid="InvalidMsg(this,\'fileType\',\''
+												+ $
+														.i18n('selectfile')
+												+ '\');" name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+placeholderValue+'" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" id="remove_field_icon'+idedit+'" class="remove_field btn right btn-info" onclick="remove_field('+idedit+')">-</div></div></div>'); //add input box
+					}
+					  
+						if(x==max_fields){
+								
+							 $(".add_field_button_edit").prop('disabled', true);
+						}
+						$.getJSON('./getSourceTypeDropdown/DOC_TYPE/12', function(
+								data) { 	
+							
+							for (i = 0; i < data.length; i++) {
+								//////console.log(data[i].interp);
+								var optionId = idedit;
+								 
+								$('<option>').val(data[i].tagId).text(
+										data[i].interp).appendTo(
+										'#docTypetag' + optionId);
+								$('<option>').val(data[i].value).text(
+										data[i].tagId).appendTo(
+										'#docTypetagValue' + optionId);
+								//////console.log('#docTypetag' + optionId);
+
+							}
+						});
+
+						idedit++;
+					
+
+				});

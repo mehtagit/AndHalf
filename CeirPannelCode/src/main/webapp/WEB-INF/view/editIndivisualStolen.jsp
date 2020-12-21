@@ -125,6 +125,16 @@ select {
 .iti--allow-dropdown input, .iti--allow-dropdown input[type=text] {
 	margin-bottom: 5px !important;
 }
+.starAddress{
+		margin-top: -19px;
+    margin-left:62px;
+    color: red;
+		}
+		.starAddressDistrict{
+		margin-top: -19px;
+    margin-left:43px;
+    color: red;
+		}
 </style>
 
 
@@ -264,6 +274,39 @@ select {
 																code="registration.nid/passportnumber" /> <span
 															class="star">*</span></label>
 													</div>
+													
+													
+													<div class="input-field col s12 m4 l6" id="nationalityDiv" style="margin-top: 29px;">
+											
+												<p
+														style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+													<spring:message code="input.Nationality" /><span class="star">*</span>
+													</p>
+												<select id="nationality" class="browser-default"
+														class="mySelect"
+														oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											            oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+														title= "<spring:message code="validation.selectFieldMsg" />"
+														 style="padding-left: 0;"></select>
+												 <%-- <label for="nationality" class=""><spring:message
+													code="input.Nationality" /> <span class="star">*</span></label> --%>
+										</div> 
+										
+										<div class="input-field col s12 m4 l6"  style="margin-top: 29px;">
+											
+												<p
+														style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+													<spring:message code="input.addressType" /><span class="star">*</span>
+													</p>
+												<select id="addressType" class="browser-default"
+														class="mySelect" onchange="setMandatoryandOptional('singleStolenvillage','singleStolenlocality','singleStolendistrict','singleStolencommune','singleStolendistrict','singleStolenCommune')"
+														oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+											            oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+														title= "<spring:message code="validation.selectFieldMsg" />"
+														 style="padding-left: 0;"></select>
+												 <%-- <label for="nationality" class=""><spring:message
+													code="input.Nationality" /> <span class="star">*</span></label> --%>
+										</div>
 
 													<div class="input-field col s12 m4">
 														<input type="email" name="email" id="singleStolenemail"
@@ -357,7 +400,8 @@ select {
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															maxlength="30"> <label for="district"> <spring:message
-																code="input.district" /><span class="star">*</span></label>
+																code="input.district" /><span id="singleStolendistrictLabel"
+															class="star starAddressDistrict"> *</span></label>
 													</div>
 
 													<div class="input-field col s12 m6 l6">
@@ -367,7 +411,7 @@ select {
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															maxlength="30"> <label for="commune"><spring:message
-																code="input.commune" /> <span class="star">*</span> </label>
+																code="input.commune" /> <span class=" star starAddress" id="singleStolenCommune">*</span> </label>
 													</div>
 
 													<div class="input-field col s12 m6 l6">
@@ -460,37 +504,23 @@ select {
 																		code="select.deviceType" /></option>
 															</select>
 														</div>
+														<div class="col s12 m6 l6">
+															<label> <spring:message
+																	code="select.multiSimStatus" /> <span class="star">*
+																	</span></label> <select class="browser-default" required="required" 
+																onchange="setContactIMEINumber('singleStolenSimStatus','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
+																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+																id="singleStolenSimStatus">
+																<option value=""  selected>
+																	<spring:message code="select.multiSimStatus" />
+																</option>
 
-														<!-- <div class="col s6 m6 selectDropdwn">
-                                                                <label for="deviceStatus">Device Status <span class="star">*</span></label>
-                                                                <select id="deviceStatus" class="browser-default">
-                                                                  <option value="" disabled selected>Device Status</option>
-                                                                  <option value="New">New</option>
-                                                                  <option value="used">used</option>
-                                                                  <option value="Refurbished">Refurbished</option>
-                                                                </select>
-                                                              </div> -->
+															</select>
+														</div>
 
-													<%-- 	<div class=" col s12 m6">
-															<input type="text" name="modalNumber" placeholder=""
-																id="singleStolenmodalNumber"
-																pattern="[a-zA-Z0-9 ]{0,30}" title=""
-																oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-																maxlength="30"> <label for="modalNumber"><spring:message
-																	code="table.ModelNumber" /></label>
-																	
-															<label for="editsingleStolenmodalNumber"><spring:message
-														code="registration.modelnumber" /> <span class="star"></span></label>
-												<select id="editsingleStolenmodalNumber" class="browser-default"
-													onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-													<option value=""  selected>
-														<spring:message code="registration.selectmodelnumber" /></option>
-
-												</select>		
-														</div> --%>
-
+														
+												<div id="IMEIndContact1" style="display: none">	
 														<div class="col s12 m6">
 															<p class="contact-label">
 																<spring:message code="input.contactNum" />
@@ -508,21 +538,22 @@ select {
                                                                 <input type="text" name="operator" id="operator" maxlength="10">
                                                                 <label for="operator">Operator <span class="star">*</span></label>
                                                             </div> -->
-
-														<div class="col s12 m6 l6">
-															<label><spring:message code="table.Operator" />
-																<span class="star">*</span></label> <select
-																class="browser-default" required="required"
-																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-																id="singleStolenOperator">
-																<option value=""  selected>
-																	<spring:message code="registration.selectoperator" /></option>
-
-															</select>
+														
+														<div class="input-field col s12 m6">
+															<input type="text" name="imeiNumber"
+																pattern="[0-9]{15,16}" 
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																
+																title="<spring:message code=" validation.1516digit" />"
+																maxlength="16" id="updatesingleStolenimei1"> <label
+																for="updatesingleStolenimei1"> <spring:message
+																	code="registration.one.IMEI" /> <span class="star">
+																	</span></label>
 														</div>
-
-														<div class="col s12 m6" style="margin-right: 1px;">
+														</div>
+														<div id="IMEIndContact2" style="display: none"">
+														<div class="col s12 m6" style="margin-right: 0px;">
 															<p class="contact-label">
 																<spring:message code="input.contactNum2" />
 																<span class="star"></span>
@@ -530,20 +561,21 @@ select {
 															<input type="text" name="phone2" id="singleStolenphone3"
 																pattern="[0-9\s,+]{7,15}" maxlength="15" oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" >
 														</div>
-
+													 
 														
 
-														<div class="col s12 m6 l6" style="margin-right: -1px;">
-															<label id="operatorLabel3"> <spring:message code="operator.Operator2" />
-																<span class="star" id="operator3span" style="display: none;margin-top: -18px;margin-left: 59px;">*</span></label> 
-																<select class="browser-default" id="singleStolenOperator3"
-																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-																<option value=""  selected>
-																	<spring:message code="registration.selectoperator" />
-																</option>
-															</select>
+														<div class="input-field col s12 m6">
+															<input type="text" name="imeiNumberTwo"
+																pattern="[0-9]{15,16}" 
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																title="<spring:message code=" validation.1516digit" />"
+																maxlength="16" id="updatesingleStolenimei2"> <label
+																for="updatesingleStolenimei2"> <spring:message
+																	code="registration.two.IMEI" /></label>
 														</div>
+														</div>
+														<div id="IMEIndContact3" style="display: none"">
 														<div class="col s12 m6">
 															<p class="contact-label">
 																<spring:message code="input.contactNum3" />
@@ -555,18 +587,20 @@ select {
 
 														
 
-														<div class="col s12 m6 l6">
-															<label id="operatorLabel4"> <spring:message code="operator.Operator3" />
-																<span class="star" id="operator4span" style="display: none;margin-top: -18px;margin-left: 59px;">*</span></label> <select
-																class="browser-default" id="singleStolenOperator4"
-																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-																<option value=""  selected>
-																	<spring:message code="registration.selectoperator" />
-																</option>
-															</select>
+														<div class="input-field col s12 m6">
+															<input type="text" name="imeiNumberThree"
+																pattern="[0-9]{15,16}" 
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+																title="<spring:message code=" validation.1516digit" />"
+																maxlength="16" id="updatesingleStolenimei3"> <label
+																for="updatesingleStolenimei3"> <spring:message
+																	code="registration.three.IMEI" /></label>
+																	<p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top: -136px;margin-left: 173px;"></p>
 														</div>
-														<div class="col s12 m6" style="margin-right: 1px;">
+														</div>
+														<div id="IMEIndContact4" style="display: none"">
+														<div class="col s12 m6" style="margin-right: 0px;">
 															<p class="contact-label">
 																<spring:message code="input.contactNum4" />
 																<span class="star"></span>
@@ -576,81 +610,7 @@ select {
 														</div>
 
 														
-
-														<div class="col s12 m6 l6" style="margin-right: -1px;">
-															<label id="operatorLabel3"> <spring:message code="operator.Operator4" />
-																<span class="star" id="operator5span" style="display: none;margin-top: -18px;margin-left: 59px;"> *</span></label> <select
-																class="browser-default" id="singleStolenOperator5"
-																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
-																<option value=""  selected>
-																	<spring:message code="registration.selectoperator" />
-																</option>
-															</select>
-														</div>
-														
-
-
-														<div class="col s12 m6 l6">
-															<label> <spring:message
-																	code="select.multiSimStatus" /> <span class="star">
-																	</span></label> <select class="browser-default" 
-																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-																id="singleStolenSimStatus">
-																<option value=""  selected>
-																	<spring:message code="select.multiSimStatus" />
-																</option>
-
-															</select>
-														</div>
-
-														
-
-														<div class="col s12 m12"
-															style="margin-top: 30px; font-weight: bold;">
-															<h6>
-																<spring:message code="registration.imei/meid/esnnumber" />
-															</h6>
-														</div>
-
-														<div class="input-field col s12 m6">
-															<input type="text" name="imeiNumber"
-																pattern="[0-9]{15,16}" 
-																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																
-																title="<spring:message code=" validation.1516digit" />"
-																maxlength="16" id="updatesingleStolenimei1"> <label
-																for="updatesingleStolenimei1"> <spring:message
-																	code="registration.one" /> <span class="star">
-																	</span></label>
-														</div>
-
-														<div class="input-field col s12 m6">
-															<input type="text" name="imeiNumberTwo"
-																pattern="[0-9]{15,16}" 
-																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																title="<spring:message code=" validation.1516digit" />"
-																maxlength="16" id="updatesingleStolenimei2"> <label
-																for="updatesingleStolenimei2"> <spring:message
-																	code="registration.two" /></label>
-														</div>
-
-														<div class="input-field col s12 m6">
-															<input type="text" name="imeiNumberThree"
-																pattern="[0-9]{15,16}" 
-																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-																title="<spring:message code=" validation.1516digit" />"
-																maxlength="16" id="updatesingleStolenimei3"> <label
-																for="updatesingleStolenimei3"> <spring:message
-																	code="registration.three" /></label>
-																	<p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top: -136px;margin-left: 173px;"></p>
-														</div>
-
-														<div class="input-field col s12 m6">
+	<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberFour"
 																pattern="[0-9]{15,16}" 
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
@@ -658,8 +618,12 @@ select {
 																title="<spring:message code=" validation.1516digit" />"
 																maxlength="16" id="updatesingleStolenimei4"> <label
 																for="updatesingleStolenimei4"> <spring:message
-																	code="registration.four" /></label>
+																	code="registration.four.IMEI" /></label>
 														</div>
+														</div>
+ 
+
+													
 														
 														<div class="row" id="editBlockTimePeriod">
 <div class="col s12 m6">
@@ -805,7 +769,7 @@ onclick="_Services._selectstartDate()"></i></span>
 																	code="registration.postalcode" /> <span class="star">*</span></label>
 														</div>
 
-														<div class="col s12 m6 l6">
+														<div class="col s12 m4">
 															<label><spring:message code="table.country" /> <span
 																class="star">*</span></label> <select id="singleDevicecountry"
 																class="browser-default"
@@ -814,7 +778,7 @@ onclick="_Services._selectstartDate()"></i></span>
 																class="mySelect" style="padding-left: 0;" required></select>
 														</div>
 
-														<div class="col s12 m6 l6">
+														<div class="col s12 m4">
 															<label><spring:message code="input.province" />
 																<span class="star">*</span></label> <select
 																id="singleDevicestate" class="browser-default"
@@ -822,7 +786,7 @@ onclick="_Services._selectstartDate()"></i></span>
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																class="mySelect" style="padding-left: 0;" required></select>
 														</div>
-														<div class="input-field col s12 m6" data-original-title=""
+														<div class="input-field col s12 m4" data-original-title=""
 															title="">
 															<input type="text" name="IndivisualStolenDate"
 																id="IndivisualStolenDate"
@@ -842,7 +806,7 @@ onclick="_Services._selectstartDate()"></i></span>
 																data-original-title="" title=""></i></span>
 														</div>
 
-														<div class="file-field col s12 m6" data-original-title=""
+														<%-- <div class="file-field col s12 m6" data-original-title=""
 															title="">
 															<h6 class="form-label"
 																style="margin: 0; font-size: 0.9rem;"
@@ -868,8 +832,53 @@ onclick="_Services._selectstartDate()"></i></span>
 																	data-original-title=""> <a id="firImageLink"
 																	class="imgPreviewLink" style="display: none;"><spring:message code="input.preView" /></a>
 															</div>
-														</div>
+														</div> --%>
+														
+														<div id="mainDiv" class="mainDiv">
+<div id="filediv" class="fileDiv">
+<div class="row">
 
+<div class="col s12 m6 l6" style="margin-top: 8px;">
+<label for="Category"><spring:message code="input.documenttype" /></label>
+<select class="browser-default" id="docTypetag1" onchange="enableSelectFile()" >
+<option value="" selected><spring:message code="select.documenttype" /> </option>
+
+</select>
+<select class="browser-default" id="docTypetagValue1" 
+oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
+oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+style="display: none;">
+<option value="" disabled selected><spring:message code="select.documenttype" /></option>
+
+</select>
+</div>
+<div class="file-field col s12 m6" id="removestar">
+<h6 id="supportingdocumentFile" style="color: #000;"> <spring:message code="input.supportingdocument" /></h6>
+<div class="btn">
+<span><spring:message code="input.selectfile" /></span>
+<input type="file" name="files[]" id="docTypeFile1"  disabled="disabled" onchange="enableAddMore('docTypeFile1','filediv')"
+oninput="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" 
+oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.NoChosen" />');" >
+</div>
+<div class="file-path-wrapper">
+<input class="file-path validate" type="text"  id="filetextField"
+placeholder="<spring:message code="grievanceFileMessage" />">
+<div>
+<p id="myFiles"></p>
+</div>
+</div>
+</div>
+</div>
+
+
+</div>
+
+</div>
+<div class="col s12 m6 right">
+<button class="btn right add_field_button_edit" type="button" disabled="disabled"><span
+style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></button>
+</div>
+														
 														<div class="input-field col s12 m12">
 															<textarea id="singleDeviceRemark" maxlength="10000"
 																placeholder=""
@@ -889,6 +898,7 @@ onclick="_Services._selectstartDate()"></i></span>
 															<label for="textarea1"><spring:message
 																	code="input.remarksRejected" /> </label>
 														</div>
+														<div class="chat-message clearfix" id="chatMsg"></div>
 													</div>
 												</div>
 											</div>

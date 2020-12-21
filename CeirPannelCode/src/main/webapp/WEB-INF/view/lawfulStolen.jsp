@@ -123,6 +123,11 @@
     margin-left:53px;
     color: red;
 		}
+		.starAddressDistrict{
+		margin-top: -19px;
+    margin-left:43px;
+    color: red;
+		}
     </style>
 
 
@@ -370,8 +375,8 @@
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 															required maxlength="30"> <label for="singleStolendistrict" >
-															<spring:message code="input.district" /> <span id="singleStolendistrict"
-															class=" star starAddress"> *</span>
+															<spring:message code="input.district" /> <span id="singleStolendistrictLabel"
+															class="star starAddressDistrict"> *</span>
 														</label>
 													</div>
 

@@ -103,7 +103,7 @@ function viewIndivisualStolen()
 		contentType: false,
 		success: function (response, textStatus, jqXHR) {
 			////console.log(response)
-			$('.browser-default').attr("style", "pointer-events: none;");
+			//$('.browser-default').attr("style", "pointer-events: none;");
 			$('#singleStolenfirstName').val(response.stolenIndividualUserDB.firstName);
 			$('#singleStolenmiddleName').val(response.stolenIndividualUserDB.middleName);
 			if(response.stolenIndividualUserDB.middleName=="" || response.stolenIndividualUserDB.middleName==null){
@@ -112,10 +112,22 @@ function viewIndivisualStolen()
 			$('#singleStolenlastName').val(response.stolenIndividualUserDB.lastName);
 			$('#singleStolennIDPassportNumber').val(response.stolenIndividualUserDB.nid);
 			$('#singleStolenemail').val(response.stolenIndividualUserDB.email);
+			$('#nationality').val(response.stolenIndividualUserDB.nationality);
+			$('#addressType').val(response.stolenIndividualUserDB.addressType).change();
 			if(response.stolenIndividualUserDB.email=="" || response.stolenIndividualUserDB.email==null){
 				$('#singleStolenemail').val('NA');
 			}
-
+				 
+			for(var i=0; i<response.attachedFiles.length; i++)
+			{ 
+					if(response.attachedFiles[i].docType == null){
+						response.attachedFiles[i].docType == "";
+					}else{
+						$("#chatMsg").append("<div class='chat-message-content clearfix'><span class='document-Type' ><b>Document Type : </b>"+response.attachedFiles[i].docType+"</span>  <a onclick=fileDownload('"+response.attachedFiles[i].fileName+"','actual','"+response.txnId+"','"+response.attachedFiles[i].docType+"') >"+response.attachedFiles[i].fileName+"</a></div>");
+					}	
+				
+			}
+			
 			previousVal = "";
 			function InputChangeListener()
 			{
@@ -128,11 +140,6 @@ function viewIndivisualStolen()
 			}
 
 			setInterval(InputChangeListener, 200);
-
-			
-
-
-
 
 			previousVal2 = "";
 			function InputChangeListener2()
@@ -208,7 +215,7 @@ function viewIndivisualStolen()
 			$('#singleStolenOperator3').val(response.stolenIndividualUserDB.operator2);
 			$('#singleStolenOperator4').val(response.stolenIndividualUserDB.operator3);
 			$('#singleStolenOperator5').val(response.stolenIndividualUserDB.operator4);
-			$('#singleStolenSimStatus').val(response.stolenIndividualUserDB.multiSimStatus);
+			$('#singleStolenSimStatus').val(response.stolenIndividualUserDB.multiSimStatus).change();
 			$('#singleStolenComplaintType').val(response.complaintType);
 			$('#singleDeviceAddress').val(response.stolenIndividualUserDB.deviceStolenPropertyLocation);
 			$('#singleDevicestreetNumber').val(response.stolenIndividualUserDB.deviceStolenStreet);
@@ -434,6 +441,107 @@ function updateIndivisualStolen()
 		singleStolendeviceType=null;
 	}
 	
+	var nationality=$('#nationality').val();
+	var addressType=$('#addressType').val();
+//	var fileFileDetails=$('#uploadFirSingle').val();
+//	fileFileDetails=fileFileDetails.replace(/^.*[\\\/]/, '');
+
+	var fieldId = 1;
+	var fileInfo = [];
+	var formData = new FormData();
+	var fileData = [];
+	var documentFileNameArray = [];
+	var x;
+	var filename = '';
+	var filediv;
+	var i = 0;
+	var formData = new FormData();
+	var docTypeTagIdValue = '';
+	var filename = '';
+	var filesameStatus = false;
+	var documenttype = false;
+	var docTypeTag = '';
+
+	/* $('.fileDiv').each( */
+			for(var j=1;j<idedit;j++){
+			
+				
+				if(typeof  $('#docTypetag' + fieldId).val()!== "undefined"){
+					var x = {
+					"docType" : $('#docTypetag' + fieldId).val(),
+					"fileName" : $('#docTypeFile' + fieldId).val()
+							.replace('C:\\fakepath\\', '')
+				}
+				formData.append('firFileName[]', $('#docTypeFile'
+						+ fieldId)[0].files[0]);
+
+				documentFileName = $('#docTypeFile' + fieldId)
+						.val().replace('C:\\fakepath\\', '')
+				docTypeTag = $('#docTypetag' + fieldId).val();
+
+				var fileIsSame = documentFileNameArray
+						.includes(documentFileName);
+
+				var documentTypeTag = documentFileNameArray
+						.includes(docTypeTag);
+
+				if (filesameStatus != true) {
+					filesameStatus = fileIsSame;
+				}
+
+				if (documenttype != true) {
+					documenttype = documentTypeTag;
+
+				}
+				documentFileNameArray.push(documentFileName);
+				documentFileNameArray.push(docTypeTag);
+
+				
+				
+				if(!x['docType']=='')
+					{
+					//console.log("if");
+					fileInfo.push(x);
+					}
+				else{
+					//console.log("else");
+					
+				}
+				
+				
+				}
+				fieldId++;
+				i++;
+				
+			}
+
+	if (filesameStatus == true) {
+
+		$('#fileFormateModal').openModal({
+			dismissible : false
+		});
+		$('#fileErrormessage').text('')
+		$('#fileErrormessage').text($.i18n('duplicateFileName'));
+		// $("#saveGrievancesubmitButton").prop('disabled', false);
+        $('div#initialloader').delay(300).fadeOut('slow');
+		return false;
+
+	}
+
+	if (documenttype == true) {
+
+		$('#fileFormateModal').openModal({
+			dismissible : false
+		});
+		$('#fileErrormessage').text('')
+		$('#fileErrormessage').text($.i18n('documentTypeName'));
+$('div#initialloader').delay(300).fadeOut('slow');
+//$("#saveGrievancesubmitButton").prop('disabled', false);
+		return false;
+
+	}
+
+	
 	var stolenIndividualUserDB={
 			"alternateContactNumber": singleStolenphone1,
 			"commune": singleStolencommune,
@@ -479,7 +587,9 @@ function updateIndivisualStolen()
 			"remark": singleDeviceRemark,
 			"street": singleStolenstreetNumber,
 			"village":singleStolenvillage,
-			"nidFileName":indivisualStolenfileName
+			"nidFileName":indivisualStolenfileName,
+			"addressType":addressType,
+			"nationality":nationality
 
 	}
 	var request={
@@ -493,10 +603,11 @@ function updateIndivisualStolen()
 			"sourceType":5,
 			"firFileName":uploadFirFile,
 			"complaintType":$('#singleStolenComplaintType').val(),
-			"stolenIndividualUserDB":stolenIndividualUserDB
+			"stolenIndividualUserDB":stolenIndividualUserDB,
+			"attachedFiles" : fileInfo
 	}
 	formData.append('file', $('#singleStolenFile')[0].files[0]);
-	formData.append('firFileName', $('#uploadFirSingle')[0].files[0]);
+	formData.append('fileInfo[]', JSON.stringify(fileInfo));
 	formData.append("request",JSON.stringify(request));
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -634,6 +745,7 @@ $.i18n().load({
 
 function viewPageType() {
 	if ($('#pageViewType').val() == 'view') {
+	 
 		$('#headingType').text('');
 		$('#headingType').text(stolenIndivisual);
 		$("#passportImageDiv").removeClass("btn");
@@ -661,12 +773,21 @@ function viewPageType() {
 		  $("#operator3span").css("display", "none");
 		  $("#operator4span").css("display", "none");
 		  $("#operator5span").css("display", "none");
+		  $("#docTypetagValue1").css("display", "none");
+		  $("#editsingleStolendeviceBrandName").attr("style", "pointer-events: none;");  
 	} else {
+		 
 		$('#headingType').text('');
 		$("#singleDeviceRejectRemarkDiv").css("display", "none");
 		$('#headingType').text(editstolenIndivisual);
-		$("#SingleForm").find("input,select,textarea,button").prop(
-				"disabled", false);
+		$("#SingleForm").find("input,select,textarea,button").prop("disabled", false);
+		$("#SingleForm").find("select").attr("style", "pointer-events: block;");
+		$(".add_field_button").attr("disabled", true);
+		$(".add_field_button_edit").attr("disabled", true);
+		$("#docTypeFile1").attr("disabled", true);
+		$("#docTypetagValue1").css("display", "none");
+		$("#singleDevicecountry").attr("style", "pointer-events: none;");
+		
 	}
 
 }
@@ -684,6 +805,8 @@ populateCountries("country3", "state3");
 populateStates("country3", "state3");
 
 
+populateCountries("nationality", "");
+//populateStates("nationality", "");
 setTimeout(function(){
 
 
