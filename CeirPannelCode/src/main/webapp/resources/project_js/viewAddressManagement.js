@@ -463,12 +463,15 @@
 			$("#addProvinceModal").openModal({
 				dismissible:false
 			});
+			$('#addProvince').val("");
 			populateCountries("country", "state");
 			$("#country").val("Cambodia");
 		}else if(entity == "district"){
 			$("#addDistrictModal").openModal({
 				dismissible:false
 			});
+			$('#provinceForDistrict').val("");
+			$('#addDistrict').val("");
 			//populateCountries("country1", "state");
 			//$("#country1").val("Cambodia");
 			var token = $("meta[name='_csrf']").attr("content");
@@ -490,6 +493,9 @@
 			$("#addCommuneModal").openModal({
 				dismissible:false
 			});
+			$('#provinceForCommune').val("");
+			$('#districtForCommune').val("");
+			$('#addCommune').val("");
 			$.getJSON('./getAllProvince', function(data) {
 				$('#provinceForCommune').empty();
 				var html='<option value="">Select Province</option>';
@@ -503,6 +509,10 @@
 			$("#addVillageModal").openModal({
 				dismissible:false
 			});
+			$('#provinceForVillage').val("");
+			$('#districtForVillage').val("");
+			$('#communeForVillage').val("");
+			$('#addVillage').val("");
 			$.getJSON('./getAllProvince', function(data) {
 				$('#provinceForVillage').empty();
 				var html='<option value="">Select Province</option>';
