@@ -125,6 +125,16 @@ select {
 .iti--allow-dropdown input, .iti--allow-dropdown input[type=text] {
 	margin-bottom: 5px !important;
 }
+.starAddress{
+		margin-top: -19px;
+    margin-left:62px;
+    color: red;
+		}
+		.starAddressDistrict{
+		margin-top: -19px;
+    margin-left:43px;
+    color: red;
+		}
 </style>
 
 
@@ -390,7 +400,8 @@ select {
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															maxlength="30"> <label for="district"> <spring:message
-																code="input.district" /><span class="star">*</span></label>
+																code="input.district" /><span id="singleStolendistrictLabel"
+															class="star starAddressDistrict"> *</span></label>
 													</div>
 
 													<div class="input-field col s12 m6 l6">
@@ -400,7 +411,7 @@ select {
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															maxlength="30"> <label for="commune"><spring:message
-																code="input.commune" /> <span class="star">*</span> </label>
+																code="input.commune" /> <span class=" star starAddress" id="singleStolenCommune">*</span> </label>
 													</div>
 
 													<div class="input-field col s12 m6 l6">
@@ -495,8 +506,8 @@ select {
 														</div>
 														<div class="col s12 m6 l6">
 															<label> <spring:message
-																	code="select.multiSimStatus" /> <span class="star">
-																	</span></label> <select class="browser-default"
+																	code="select.multiSimStatus" /> <span class="star">*
+																	</span></label> <select class="browser-default" required="required" 
 																onchange="setContactIMEINumber('singleStolenSimStatus','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
@@ -864,7 +875,7 @@ placeholder="<spring:message code="grievanceFileMessage" />">
 
 </div>
 <div class="col s12 m6 right">
-<button class="btn right add_field_button" type="button" disabled="disabled"><span
+<button class="btn right add_field_button_edit" type="button" disabled="disabled"><span
 style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></button>
 </div>
 														

@@ -1748,6 +1748,7 @@ else if($('#'+multiplesimstatus).val()==""){
 }
 
 function enableSelectFile() {
+	 
 	if($('#docTypetag1').val() != ''){
 		$("#docTypeFile1").attr("disabled", false);
 		$("#docTypeFile1").attr("required", true);
@@ -1818,6 +1819,7 @@ function enableAddMore(id,removeFileDivId) {
 	}
 	
 	$(".add_field_button").attr("disabled", false);
+	$(".add_field_button_edit").attr("disabled", false);
 }
 
 
@@ -1894,10 +1896,11 @@ $.ajaxSetup({
 								}
 								$.getJSON('./getSourceTypeDropdown/DOC_TYPE/12', function(
 										data) { 	
-
+									
 									for (i = 0; i < data.length; i++) {
 										//////console.log(data[i].interp);
 										var optionId = id - 1;
+										 
 										$('<option>').val(data[i].tagId).text(
 												data[i].interp).appendTo(
 												'#docTypetag' + optionId);
@@ -1910,6 +1913,7 @@ $.ajaxSetup({
 								});
 
 							id++;
+							
 
 						});
 		
@@ -1928,5 +1932,76 @@ $.ajaxSetup({
 			$('#filediv' + fieldId).remove();
 			$(this).parent('div').remove();
 			$(".add_field_button").prop('disabled', false);
+			$(".add_field_button_edit").attr("disabled", false);
 			x--;
 			}
+		
+		
+		var idedit = 2;
+		$(".add_field_button_edit")
+		.click(
+				function(e) { //on add input button click
+					e.preventDefault();
+					var placeholderValue = $
+							.i18n('selectFilePlaceHolder');
+					if (x < max_fields) { //max input box allowed
+						x++; //text box increment
+						$(wrapper)
+								.append(
+										'<div id="filediv'+idedit+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'
+												+ $
+														.i18n('documenttype')
+												+ '<span class="star">*</span> </label><select required id="docTypetag'
+												+ idedit
+												+ '" oninput="InvalidMsg(this,\'select\',\''
+												+ $
+														.i18n('selectDocumentType')
+												+ '\');"  oninvalid="InvalidMsg(this,\'select\',\''
+												+ $
+														.i18n('selectDocumentType')
+												+ '\');"  class="browser-default"> <option value="" disabled selected>'
+												+ $
+														.i18n('selectDocumentType')
+												+ ' </option></select><select id="docTypetagValue'+idedit+'" style="display:none" class="browser-default"> <option value="" disabled selected>'
+												+ $
+														.i18n('selectDocumentType')
+												+ ' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'
+												+ $
+														.i18n('selectfile')
+												+ '</span><input required onchange=enableAddMore("docTypeFile'+idedit+'","filediv'+idedit+'") id="docTypeFile'
+												+ id
+												+ '" type="file" oninput="InvalidMsg(this,\'fileType\',\''
+												+ $
+														.i18n('selectfile')
+												+ '\');"  oninvalid="InvalidMsg(this,\'fileType\',\''
+												+ $
+														.i18n('selectfile')
+												+ '\');" name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+placeholderValue+'" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" id="remove_field_icon'+idedit+'" class="remove_field btn right btn-info" onclick="remove_field('+idedit+')">-</div></div></div>'); //add input box
+					}
+					  
+						if(x==max_fields){
+								
+							 $(".add_field_button_edit").prop('disabled', true);
+						}
+						$.getJSON('./getSourceTypeDropdown/DOC_TYPE/12', function(
+								data) { 	
+							
+							for (i = 0; i < data.length; i++) {
+								//////console.log(data[i].interp);
+								var optionId = idedit;
+								 
+								$('<option>').val(data[i].tagId).text(
+										data[i].interp).appendTo(
+										'#docTypetag' + optionId);
+								$('<option>').val(data[i].value).text(
+										data[i].tagId).appendTo(
+										'#docTypetagValue' + optionId);
+								//////console.log('#docTypetag' + optionId);
+
+							}
+						});
+
+						idedit++;
+					
+
+				});

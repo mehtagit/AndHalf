@@ -113,7 +113,7 @@ function viewIndivisualStolen()
 			$('#singleStolennIDPassportNumber').val(response.stolenIndividualUserDB.nid);
 			$('#singleStolenemail').val(response.stolenIndividualUserDB.email);
 			$('#nationality').val(response.stolenIndividualUserDB.nationality);
-			$('#addressType').val(response.stolenIndividualUserDB.addressType);
+			$('#addressType').val(response.stolenIndividualUserDB.addressType).change();
 			if(response.stolenIndividualUserDB.email=="" || response.stolenIndividualUserDB.email==null){
 				$('#singleStolenemail').val('NA');
 			}
@@ -463,7 +463,7 @@ function updateIndivisualStolen()
 	var docTypeTag = '';
 
 	/* $('.fileDiv').each( */
-			for(var j=1;j<id;j++){
+			for(var j=1;j<idedit;j++){
 			
 				
 				if(typeof  $('#docTypetag' + fieldId).val()!== "undefined"){
@@ -603,7 +603,8 @@ $('div#initialloader').delay(300).fadeOut('slow');
 			"sourceType":5,
 			"firFileName":uploadFirFile,
 			"complaintType":$('#singleStolenComplaintType').val(),
-			"stolenIndividualUserDB":stolenIndividualUserDB
+			"stolenIndividualUserDB":stolenIndividualUserDB,
+			"attachedFiles" : fileInfo
 	}
 	formData.append('file', $('#singleStolenFile')[0].files[0]);
 	formData.append('fileInfo[]', JSON.stringify(fileInfo));
@@ -767,18 +768,26 @@ function viewPageType() {
    		$("#singleDeviceRejectRemarkDiv").css("display", "block");
 		$("#SingleForm").find("input,textarea,button").prop(
 				"disabled", true);
-		//$("#SingleForm").find("select").attr("style", "pointer-events: none;");
+		$("#SingleForm").find("select").attr("style", "pointer-events: none;");
 		
 		  $("#operator3span").css("display", "none");
 		  $("#operator4span").css("display", "none");
 		  $("#operator5span").css("display", "none");
+		  $("#docTypetagValue1").css("display", "none");
+		  $("#editsingleStolendeviceBrandName").attr("style", "pointer-events: none;");  
 	} else {
 		 
 		$('#headingType').text('');
 		$("#singleDeviceRejectRemarkDiv").css("display", "none");
 		$('#headingType').text(editstolenIndivisual);
 		$("#SingleForm").find("input,select,textarea,button").prop("disabled", false);
-		//$("#SingleForm").find("select").attr("style", "pointer-events: block;");
+		$("#SingleForm").find("select").attr("style", "pointer-events: block;");
+		$(".add_field_button").attr("disabled", true);
+		$(".add_field_button_edit").attr("disabled", true);
+		$("#docTypeFile1").attr("disabled", true);
+		$("#docTypetagValue1").css("display", "none");
+		$("#singleDevicecountry").attr("style", "pointer-events: none;");
+		
 	}
 
 }
