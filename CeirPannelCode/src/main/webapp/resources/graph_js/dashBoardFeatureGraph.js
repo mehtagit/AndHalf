@@ -21,7 +21,7 @@ function featureDashboardGraph() {
 			"reportnameId": reportnameId,
 			"groupBy": "Stock Status",
 			"file" : 0,
-			"pageSize" :20,
+			"pageSize" :10,
 			"pageNo" :0,
 			"typeFlag": 2
 	}
@@ -38,7 +38,7 @@ function featureDashboardGraph() {
 						"reportnameId": reportnameId,
 						"groupBy": "Consignment Status",
 						"file" : 0,
-						"pageSize" :20,
+						"pageSize" :10,
 						"pageNo" :0,
 						"typeFlag": 2
 				}			
@@ -55,7 +55,7 @@ else if(reportnameId==16){
 						"reportnameId": reportnameId,
 						"groupBy": "Grievance Status",
 						"file" : 0,
-						"pageSize" :20,
+						"pageSize" :10,
 						"pageNo" :0,
 						"typeFlag": 2
 				}			
@@ -73,7 +73,7 @@ else if(reportnameId==57){
 				"reportnameId": reportnameId,
 				"groupBy": "User Type",
 				"file" : 0,
-				"pageSize" :20,
+				"pageSize" :10,
 				"pageNo" :0,
 				"typeFlag": 2
 		}			

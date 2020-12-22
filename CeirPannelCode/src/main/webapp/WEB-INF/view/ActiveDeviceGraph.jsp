@@ -297,7 +297,7 @@ th {
 							<a id="wholePageImage">Download</a>
 								<div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display:block !important">
                             <h6 class="fixPage-modal-header ">
-                            <spring:message code="sidebar.User_Dashboard" />
+                            <spring:message code="sidebar.Active_Device_Dashboard" />
                             				</h6>
                             				<div id="wrapperPage">
                             				<h6 class="m-0 font-weight-bold text-primary" id="dateVal"></h6>
@@ -409,9 +409,10 @@ th {
 </div> 
             
                    
-                    
+                    <div class="split">
+<div class="col s12 m12 info-div center" id="infoBox"></div>
                      <div style="display:flex; margin-left: 12px;">
-                   <div class="col-xl-8 col-lg-7"  style=" width: 50.5% !important;">
+                   <div class="col-xl-8 col-lg-7"  style=" width: 100% !important;">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -447,7 +448,7 @@ th {
             </div>   
              </div>
              
-             
+             </div>
              
          <%--     <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
