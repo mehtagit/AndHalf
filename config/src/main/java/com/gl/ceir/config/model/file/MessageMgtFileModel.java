@@ -26,6 +26,9 @@ public class MessageMgtFileModel {
 	@CsvBindByPosition(position = 4)
 	private String userType;
 
+	@CsvBindByName(column = "Feature")
+	@CsvBindByPosition(position = 5)
+	private String featureName;
 	public MessageMgtFileModel() {
 		
 	}
@@ -92,8 +95,18 @@ public class MessageMgtFileModel {
 		builder.append(value);
 		builder.append(", userType=");
 		builder.append(userType);
+		builder.append(", featureName=");
+		builder.append(featureName);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	public String getFeatureName() {
+		return featureName;
+	}
+
+	public void setFeatureName(String featureName) {
+		this.featureName = featureName;
 	}
 	
 }

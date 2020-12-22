@@ -817,9 +817,9 @@ public class ConfigurationManagementServiceImpl {
 					fileModel.setModifiedOn(modified.format(dtf)); 
 					fileModel.setDescription(messageConfigurationDb.getDescription() == null ? "NA" : messageConfigurationDb.getDescription());
 					fileModel.setValue(messageConfigurationDb.getValue() == null ? "NA" : messageConfigurationDb.getValue());
-				
-					 fileModel.setUserType(messageConfigurationDb.getChannelInterp());
+				 fileModel.setUserType(messageConfigurationDb.getChannelInterp());
 						
+				 fileModel.setFeatureName(messageConfigurationDb.getFeatureName() == null ? "NA"  : messageConfigurationDb.getFeatureName());
 					
 					
 					/*fileModel.setUserType(messageConfigurationDb.getChannelInterp());	*/			
