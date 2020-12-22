@@ -29,7 +29,11 @@ public enum RegistrationTags {
     User_Fail_Update("User_Fail_Update","User has been failed to update"),
 	User_Delete("User_Delete","User has been Deleted Successfully"),
 	User_Fail("User_Fail","Unable to delete user"),
-	No_Question_Mapped("No_Question_Mapped","This feature works only for external users");
+	No_Question_Mapped("No_Question_Mapped","This feature works only for external users"),
+    Success_Save("success","Sucessfully saved"),
+   Exception("exception","Exception occured"),
+   exist("exist","already exist in DB"),
+	delete_successfully("deleted","Successfully deleted");
 	private String tag;
 	private String message;
 	

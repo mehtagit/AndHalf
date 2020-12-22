@@ -103,10 +103,14 @@ public class ReqHeadersService {
 			uPSB.with(new SearchCriteria("createdOn",filterRequest.getEndDate(), SearchOperation.LESS_THAN, Datatype.DATE));
 
 
-		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-		uPSB.orSearch(new SearchCriteria("userAgent", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		if(Objects.nonNull(filterRequest.getUsername()) && !filterRequest.getUsername().isEmpty()){
+		uPSB.orSearch(new SearchCriteria("username", filterRequest.getUsername(), SearchOperation.LIKE, Datatype.STRING));
 		}
 		
+		if(Objects.nonNull(filterRequest.getPublicIp()) && !filterRequest.getPublicIp().isEmpty()){
+			uPSB.orSearch(new SearchCriteria("publicIp", filterRequest.getPublicIp(), SearchOperation.LIKE, Datatype.STRING));
+			}
+			
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 		uPSB.orSearch(new SearchCriteria("publicIp", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		uPSB.orSearch(new SearchCriteria("userAgent", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
@@ -191,7 +195,7 @@ public class ReqHeadersService {
 					adFm.setPublicIp(req.getPublicIp());
 					adFm.setUserAgent(req.getUserAgent());
 					adFm.setUsername(req.getUsername());
-					System.out.println(adFm.toString());
+					
 					fileRecords.add(adFm);
 				}
 				csvWriter.write(fileRecords);
