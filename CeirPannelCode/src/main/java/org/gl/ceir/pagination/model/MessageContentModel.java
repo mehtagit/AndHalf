@@ -15,21 +15,8 @@ public class MessageContentModel {
 	private String description;
 	private Integer channel;
 	private String channelInterp;
+	private String subject,featureName;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-	
-	
-	private long userId;
-
-	private String userName;
-
-	private long userTypeId;
-
-	private long featureId;
-
-	private String roleType;
-
-	private String userType;
-	
 	public Integer getId() {
 		return id;
 	}
@@ -78,6 +65,18 @@ public class MessageContentModel {
 	public void setChannelInterp(String channelInterp) {
 		this.channelInterp = channelInterp;
 	}
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+	public String getFeatureName() {
+		return featureName;
+	}
+	public void setFeatureName(String featureName) {
+		this.featureName = featureName;
+	}
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
 	}
@@ -103,58 +102,14 @@ public class MessageContentModel {
 		builder.append(channel);
 		builder.append(", channelInterp=");
 		builder.append(channelInterp);
+		builder.append(", subject=");
+		builder.append(subject);
+		builder.append(", featureName=");
+		builder.append(featureName);
 		builder.append(", additionalProperties=");
 		builder.append(additionalProperties);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", userName=");
-		builder.append(userName);
-		builder.append(", userTypeId=");
-		builder.append(userTypeId);
-		builder.append(", featureId=");
-		builder.append(featureId);
-		builder.append(", roleType=");
-		builder.append(roleType);
-		builder.append(", userType=");
-		builder.append(userType);
 		builder.append("]");
 		return builder.toString();
-	}
-	public long getUserId() {
-		return userId;
-	}
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	public long getUserTypeId() {
-		return userTypeId;
-	}
-	public void setUserTypeId(long userTypeId) {
-		this.userTypeId = userTypeId;
-	}
-	public long getFeatureId() {
-		return featureId;
-	}
-	public void setFeatureId(long featureId) {
-		this.featureId = featureId;
-	}
-	public String getRoleType() {
-		return roleType;
-	}
-	public void setRoleType(String roleType) {
-		this.roleType = roleType;
-	}
-	public String getUserType() {
-		return userType;
-	}
-	public void setUserType(String userType) {
-		this.userType = userType;
 	}
 	
 	

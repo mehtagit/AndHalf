@@ -381,13 +381,14 @@ function setMandatoryandOptional(village,locality,district,commune){
 		{
 		$(".starAddress").css("display", "none");
 		$(".starAddressDistrict").css("display", "none");
-		
+		$("#singleStolenCommuneLabelID,#singleStolenDistrictLabelID").find(".star").remove();
 	//	$("#"+district+","+"#"+commune).css("display", "none");
 		$("#"+village+","+"#"+locality+","+"#"+district+","+"#"+commune).attr("required", false);
 		}
 	else{
-		$(".starAddressDistrict").css("display", "block");
-		$(".starAddress").css("display", "block");
+		$("#singleStolenCommuneLabelID,#singleStolenDistrictLabelID").append('<span class="star">*</span>');
+		//$(".starAddressDistrict").css("display", "block");
+		//$(".starAddress").css("display", "block");
 		$("#"+district+","+"#"+commune).attr("required", true);
 	}
 }

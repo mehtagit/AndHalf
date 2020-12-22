@@ -50,7 +50,7 @@ $(document).ready(function() {
 	});
 
 	$.ajax({
-		url: './productList',
+		url: './getDropdownList/TOP_BRAND',
 		type: 'GET',
 		processData: false,
 		contentType: false,
@@ -59,7 +59,7 @@ $(document).ready(function() {
 					////console.log(data)
 			$('#select2-editsingleStolendeviceBrandName-container').empty();			
 			for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].id).text(data[i].brand_name)
+				$('<option>').val(data[i].id).text(data[i].interp)
 						.appendTo('#editsingleStolendeviceBrandName');
 			}
 		},
@@ -175,7 +175,16 @@ function viewIndivisualStolen()
 			$('#singleStolenpin').val(response.stolenIndividualUserDB.postalCode);
 			$('#country').val(response.stolenIndividualUserDB.country).change();
 			$('#state').val(response.stolenIndividualUserDB.province);
-			$('#editsingleStolendeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName).change();
+			if(isNaN(response.stolenIndividualUserDB.deviceBrandName)){
+				$("label[for='OtherBrandNameLabel']").addClass('active');
+				$('#editsingleStolendeviceBrandName').val("930").change();
+				$('#OtherBrandName').val(response.stolenIndividualUserDB.deviceBrandName);
+			}
+			else{
+				 
+				$('#editsingleStolendeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName).change();	
+			}
+			
 			////alert(response.stolenIndividualUserDB.deviceBrandName);
 			$('#editsingleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
 			$('#singleStolenFileName').val(response.stolenIndividualUserDB.nidFileName);
@@ -380,6 +389,11 @@ function updateIndivisualStolen()
 
 
 	var singleStolendeviceBrandName=$('#editsingleStolendeviceBrandName').val();
+	
+	if($('#editsingleStolendeviceBrandName').val()==930){
+		singleStolendeviceBrandName= $('#OtherBrandName').val();
+		 
+	}
 	var updatesingleStolenimei1=$('#updatesingleStolenimei1').val();
 	if(updatesingleStolenimei1=="" ){
 		updatesingleStolenimei1=null;

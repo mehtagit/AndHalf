@@ -84,9 +84,11 @@ public class MessageDatatableController {
 					   String value = dataInsideList.getValue().replaceAll("<","&lt;").replaceAll(">","&gt;");
 					   String channel = dataInsideList.getChannelInterp();
 					   String userStatus = (String) session.getAttribute("userStatus");
+					   String subject = dataInsideList.getSubject() == null ? "NA" : dataInsideList.getSubject();
+					   String feature =  dataInsideList.getFeatureName() == null ? "NA" : dataInsideList.getFeatureName();;
 					   //log.info("----Id------"+Id+"-------id----------------"+id+"---userName-----"+username);
 					   String action=iconState.adminMessageIcons(userStatus,tag);			   
-					   Object[] finalData={createdOn,modifiedOn,description,value,channel,action}; 
+					   Object[] finalData={createdOn,modifiedOn,feature,subject,description,value,channel,action}; 
 						List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);	
@@ -146,7 +148,7 @@ public class MessageDatatableController {
 			
 			
 			//Dropdown items			
-			String[] selectParam= {"select","Channel","channel","",};
+			String[] selectParam= {"select","Channel","channel","","select","Feature","feature",""};
 			for(int i=0; i< selectParam.length; i++) {
 				inputFields= new InputFields();
 				inputFields.setType(selectParam[i]);
