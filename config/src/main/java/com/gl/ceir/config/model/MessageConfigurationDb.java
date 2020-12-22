@@ -52,8 +52,7 @@ public class MessageConfigurationDb implements Serializable {
 	private String subject;
 
 	
-	
-	
+	private String featureName;
 	@Transient
 	private long userId;
 	@Transient
@@ -174,6 +173,8 @@ public class MessageConfigurationDb implements Serializable {
 		builder.append(active);
 		builder.append(", subject=");
 		builder.append(subject);
+		builder.append(", featureName=");
+		builder.append(featureName);
 		builder.append(", userId=");
 		builder.append(userId);
 		builder.append(", userName=");
@@ -236,6 +237,14 @@ public class MessageConfigurationDb implements Serializable {
 
 	public void setUserType(String userType) {
 		this.userType = userType;
+	}
+
+	public String getFeatureName() {
+		return featureName;
+	}
+
+	public void setFeatureName(String featureName) {
+		this.featureName = featureName;
 	}
 	
 	
