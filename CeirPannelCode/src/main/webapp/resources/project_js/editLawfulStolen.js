@@ -202,7 +202,7 @@ function viewIndivisualStolen()
 			if(response.stolenIndividualUserDB.imeiEsnMeid4=="" || response.stolenIndividualUserDB.imeiEsnMeid4==null){
 				$('#updatesingleStolenimei4').val("NA");	
 			}
-			$('#singleStolendeviceIDType').val(response.stolenIndividualUserDB.deviceIdType).change();
+			$('#singleStolendeviceIDType').val(response.stolenIndividualUserDB.deviceIdType);
 			$('#singleStolendeviceType').val(response.stolenIndividualUserDB.deviceType);
 			$('#editsingleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
 			/*$('#singleStolenFileName').val(response.fileName);*/
@@ -819,7 +819,7 @@ populateCountries("country3", "state3");
 populateStates("country3", "state3");
 
 
-populateCountries("nationality", "");
+//populateCountries("nationality", "");
 //populateStates("nationality", "");
 setTimeout(function(){
 

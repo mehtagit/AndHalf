@@ -593,7 +593,7 @@
 																	<spring:message code="registration.selectMultiplestLawfull" />
 																</option>
 	
-															</select>
+															</select><p id="errorMsgOnModal" class="deviceErrorTitle"></p>
 														</div>
 															<div id="IMEIndContact1" style="display: none">
 														
@@ -611,7 +611,7 @@
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"  
 																maxlength="16" id="singleStolenimei1" > 
 																<label for="singleStolenimei1"><spring:message code="registration.one.IMEI" /> <span class="star"> </span> 
-																</label><p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-left: 33%;margin-top: 7px;"></p>
+																</label>
 														</div>
 														</div>
 														<div id="IMEIndContact2" style="display: none">
@@ -1550,7 +1550,8 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 
 	<script type="text/javascript"
 		src="" async></script>
-		
+			<script type="text/javascript"
+		src="${context}/resources/project_js/nationality.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		<script type="text/javascript" src="${context}/resources/js/intlTelInput.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		<script type="text/javascript" src="${context}/resources/js/utils.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script>
@@ -1571,7 +1572,7 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 		populateCountries("country3", "state3");
 		populateStates("country3", "state3");
 
-		populateCountries("nationality", "");
+		//populateCountries("nationality", "");
 		
 		
 		populateCountries("country");

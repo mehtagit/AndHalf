@@ -30,6 +30,7 @@ function activeDeviceGraph() {
 						"pageSize" :1,
 						"pageNo" :0,
 						 "typeFlag": 1
+						
 			}
 			chartID='pieGraph';
 			type='pie';

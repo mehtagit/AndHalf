@@ -23,7 +23,8 @@ function featureDashboardGraph() {
 			"file" : 0,
 			"pageSize" :10,
 			"pageNo" :0,
-			"typeFlag": 2
+			"typeFlag": 2,
+			 "dayDataLimit":15
 	}
 	}
 		else if(reportnameId==44){
@@ -40,7 +41,7 @@ function featureDashboardGraph() {
 						"file" : 0,
 						"pageSize" :10,
 						"pageNo" :0,
-						"typeFlag": 2
+						"typeFlag": 2,"dayDataLimit":15
 				}			
 		}
 else if(reportnameId==16){
@@ -57,7 +58,7 @@ else if(reportnameId==16){
 						"file" : 0,
 						"pageSize" :10,
 						"pageNo" :0,
-						"typeFlag": 2
+						"typeFlag": 2,"dayDataLimit":15
 				}			
 		}
 		
@@ -75,7 +76,7 @@ else if(reportnameId==57){
 				"file" : 0,
 				"pageSize" :10,
 				"pageNo" :0,
-				"typeFlag": 2
+				"typeFlag": 2,"dayDataLimit":15
 		}			
 }	
 

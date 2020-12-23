@@ -57,8 +57,8 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"username" : $("body").attr("data-selected-username")
-					
+					"username" : $("#userName").val() == "" ? null : $("body").attr("data-selected-username"),
+					"publicIp" : $('#publicIp').val()
 			}				
 			if(lang=='km'){
 				var langFile="./resources/i18n/khmer_datatable.json";
@@ -226,7 +226,8 @@
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"userId" : parseInt($("body").attr("data-userID")),
-					"username" : $("body").attr("data-selected-username")
+					"username" : $("#userName").val() == "" ? null : $("body").attr("data-selected-username"),
+					"publicIp" : $('#publicIp').val()
 					
 					
 			}
