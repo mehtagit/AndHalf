@@ -560,7 +560,7 @@ select {
 																maxlength="16" id="updatesingleStolenimei1"> <label
 																for="updatesingleStolenimei1"> <spring:message
 																	code="registration.one.IMEI" /> <span class="star">
-																	</span></label>
+																	</span></label><p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-left: 33%;margin-top: 7px;"></p>
 														</div>
 														</div>
 														<div id="IMEIndContact2" style="display: none"">
@@ -607,7 +607,7 @@ select {
 																maxlength="16" id="updatesingleStolenimei3"> <label
 																for="updatesingleStolenimei3"> <spring:message
 																	code="registration.three.IMEI" /></label>
-																	<p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top: -136px;margin-left: 173px;"></p>
+																	<!-- <p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top: -136px;margin-left: 173px;"></p> -->
 														</div>
 														</div>
 														<div id="IMEIndContact4" style="display: none"">

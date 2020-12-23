@@ -202,7 +202,7 @@ function viewIndivisualStolen()
 			if(response.stolenIndividualUserDB.imeiEsnMeid4=="" || response.stolenIndividualUserDB.imeiEsnMeid4==null){
 				$('#updatesingleStolenimei4').val("NA");	
 			}
-			$('#singleStolendeviceIDType').val(response.stolenIndividualUserDB.deviceIdType);
+			$('#singleStolendeviceIDType').val(response.stolenIndividualUserDB.deviceIdType).change();
 			$('#singleStolendeviceType').val(response.stolenIndividualUserDB.deviceType);
 			$('#editsingleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
 			/*$('#singleStolenFileName').val(response.fileName);*/

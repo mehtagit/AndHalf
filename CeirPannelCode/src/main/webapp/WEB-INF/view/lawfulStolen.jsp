@@ -593,7 +593,7 @@
 																	<spring:message code="registration.selectMultiplestLawfull" />
 																</option>
 	
-															</select><p id="errorMsgOnModal" class="deviceErrorTitle"></p>
+															</select>
 														</div>
 															<div id="IMEIndContact1" style="display: none">
 														
@@ -611,7 +611,7 @@
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"  
 																maxlength="16" id="singleStolenimei1" > 
 																<label for="singleStolenimei1"><spring:message code="registration.one.IMEI" /> <span class="star"> </span> 
-																</label>
+																</label><p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-left: 33%;margin-top: 7px;"></p>
 														</div>
 														</div>
 														<div id="IMEIndContact2" style="display: none">
