@@ -5,7 +5,7 @@ import com.opencsv.bean.CsvBindByPosition;
 
 public class MessageMgtFileModel {
 
-	@CsvBindByName(column = "Create On")
+	@CsvBindByName(column = "Created On")
 	@CsvBindByPosition(position = 0)
 	private String createdOn;
 	
