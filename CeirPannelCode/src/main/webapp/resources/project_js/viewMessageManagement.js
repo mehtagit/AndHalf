@@ -225,13 +225,14 @@ function setViewPopupData(data){
 	data.value=="" || data.value==null ? $("#viewValue").val('NA') : $("#viewValue").val(data.value);
 	data.description=="" || data.description==null ? $("#description").val('NA') : $("#description").val(data.description);
 	data.channelInterp=="" || data.channelInterp==null ? $("#viewChannel").val('NA') : $('#viewChannel').val(data.channelInterp);
-	
+	data.featureName=="" || data.featureName==null ? $("#viewFeature").val('NA') : $('#viewFeature').val(data.featureName);
+	data.subject=="" || data.subject==null ? $("#viewSubject").val('NA') : $('#viewSubject').val(data.subject);
 	$("label[for='viewTag']").addClass('active');
 	$("label[for='viewValue']").addClass('active');
 	$("label[for='description']").addClass('active');
 	$("label[for='viewChannel']").addClass('active');
-	
-
+	$("label[for='viewFeature']").addClass('active');
+	$("label[for='viewSubject']").addClass('active');
 }
 
 function updateDetails(tag){
@@ -276,6 +277,9 @@ function setEditData(data){
 	$("#editValue").val(data.value);
 	$("#editdescription").val(data.description);
 	$("#editChannel").val(data.channelInterp);
+	data.featureName=="" || data.featureName==null ? $("#editFeature").val('NA') : $('#editFeature').val(data.featureName);
+	data.subject=="" || data.subject==null ? $("#editSubject").val('NA') : $('#editSubject').val(data.subject);
+	$("label[for='editSubject']").addClass('active');
 }
 
 
@@ -292,7 +296,8 @@ function updateMessage(){
 			 "userType":$("body").attr("data-roleType"),
 			 "userName" : $("body").attr("data-selected-username"),
 			"roleType":$("body").attr("data-roleType"),
-			"username" : $("body").attr("data-selected-username")
+			"username" : $("body").attr("data-selected-username"),
+			"subject" : $("#editSubject").val()
 	}
 	 var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
