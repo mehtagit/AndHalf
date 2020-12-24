@@ -1,4 +1,4 @@
-<%@ page import="java.util.Date" %>
+ <%@ page import="java.util.Date" %>
 <%
    response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
@@ -560,7 +560,7 @@ select {
 																maxlength="16" id="updatesingleStolenimei1"> <label
 																for="updatesingleStolenimei1"> <spring:message
 																	code="registration.one.IMEI" /> <span class="star">
-																	</span></label><p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top: -136px;margin-left: 173px;"></p>
+																	</span></label><p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top: -56px;margin-left: 173px;"></p>
 														</div>
 														</div>
 														<div id="IMEIndContact2" style="display: none"">

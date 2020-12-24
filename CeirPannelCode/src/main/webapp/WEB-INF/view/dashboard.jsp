@@ -179,14 +179,14 @@ div#error_Modal {
 					<ul id="chat-out" class="right hide-on-med-and-down"
 						style="overflow: inherit !important;">
 						<li>
-						<a id="manualDownload" 
-							style="color: white; cursor: pointer;"><i
+						<form id="manualDownload" autocomplete="off" action="./Consignment/ManualFileDownload">
+						<input type="hidden" name="userTypeId" value="${usertypeId}">
+						<input type="hidden" name="contextName">
+						<a href="javascript:{}" style="color: white; cursor: pointer;" onclick="document.getElementById('manualDownload').submit();">
+						<i
 								class="fa fa-download download-icon" aria-hidden="true"
 								title="<spring:message code="title.manual" />" style="color: #fff; line-height: 3;"></i></a>
-								<%-- <a id="manualDownload" download
-							style="color: white; cursor: pointer;"><i
-								class="fa fa-download download-icon" aria-hidden="true"
-								title="<spring:message code="title.manual" />" style="color: #fff; line-height: 3;"></i></a> --%></li>
+							</form>	
 						<li>
 							<div id="divLang" style="display: flex; margin: 8px 6px;"
 								class="darken-1">
@@ -902,8 +902,7 @@ data-dismiss="modal">&times;</button> -->
 				} */
 	}
 	
-		function openPDF(url){
-			
+		/* function openPDF(url){
 			$.ajax({
 				type : 'GET',
 				url : url,
@@ -920,8 +919,8 @@ data-dismiss="modal">&times;</button> -->
 					    success: function(result)
 					    {
 					        //file exists
-					    	 var w=window.open(data['url'], '_blank');
-							   w.focus();
+					    	 var w=window.open($("body").attr("data-context")+"/"+data['url'], '_blank');
+							   w.focus(); 
 					    }
 					}); 
 					
@@ -933,7 +932,7 @@ data-dismiss="modal">&times;</button> -->
 			
 			
 			 
-			}
+			} */
 		</script>
 <script type="text/javascript">$( document ).ready(function() {if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>

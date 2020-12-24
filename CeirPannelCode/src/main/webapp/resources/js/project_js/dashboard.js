@@ -59,9 +59,9 @@ $(document)
 					isActive(featurID);
 					sessionStorage.removeItem("data-feature");
 
-					$("#manualDownload").attr(
+					/*$("#manualDownload").attr(
 							"onclick",
-							"openPDF('./Consignment/ManualFileDownload?userTypeId="+userTypeID+"')");
+							"openPDF('./Consignment/ManualFileDownload?userTypeId="+userTypeID+"')"); */
 
 					$(window).scrollTop(0);
 					
