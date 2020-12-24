@@ -58,10 +58,10 @@ $(document)
 					$('div#initialloader').delay(300).fadeOut('slow');
 					isActive(featurID);
 					sessionStorage.removeItem("data-feature");
-
+/*
 					$("#manualDownload").attr(
-							"onclick",
-							"openPDF('./Consignment/ManualFileDownload?userTypeId="+userTypeID+"')");
+							"onsubmit",
+							"return openPDF('./Consignment/ManualFileDownload?userTypeId="+userTypeID+"')");*/
 
 					$(window).scrollTop(0);
 					
