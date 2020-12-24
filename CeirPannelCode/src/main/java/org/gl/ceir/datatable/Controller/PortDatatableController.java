@@ -129,7 +129,7 @@ public class PortDatatableController {
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle(Translator.toLocale("table.portManagement"));
+		pageElement.setPageTitle(Translator.toLocale("sidebar.Port_Management"));
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();

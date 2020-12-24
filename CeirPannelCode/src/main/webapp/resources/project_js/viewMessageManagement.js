@@ -17,7 +17,7 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 //**************************************************Message Detail table**********************************************
 
 function messageManagementDatatable(){
-	//var Feature=  $("#feature").val() =='null' ? null : $("#Feature").val();
+	var Feature=  $("#feature").val() == '' || $("#feature").val() == undefined ? null : $("#feature").val();
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
@@ -30,7 +30,7 @@ function messageManagementDatatable(){
 			"userName" : $("body").attr("data-selected-username"),
 			"username" : $("body").attr("data-selected-username"),
 			"roleType":$("body").attr("data-roleType"),
-			"featureName" : $("#feature").val()
+			"featureName" : Feature
 	}
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -332,7 +332,7 @@ function exportData(){
 	var info = table.page.info(); 
 	var pageNo=info.page;
 	var pageSize =info.length;
-
+	var Feature=  $("#feature").val() == '' || $("#feature").val() == undefined ? null : $("#feature").val();
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
@@ -343,7 +343,7 @@ function exportData(){
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
 			"userName" : $("body").attr("data-selected-username"),
-			"featureName" : $("#feature").val(),
+			"featureName" : Feature,
 			"pageNo":parseInt(pageNo),
 			"pageSize":parseInt(pageSize)
 			
