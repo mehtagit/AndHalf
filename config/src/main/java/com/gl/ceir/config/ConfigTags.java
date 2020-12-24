@@ -7,6 +7,7 @@ public interface ConfigTags {
 	String page_size_for_Notification = "page_size_for_Notification";
 	String sample_file_link = "sample_file_link";
 	String manuals_link = "manuals_link";
+	String manuals_file_name = "manuals_file_name";
 
 	String system_error_filepath = "system_error_filepath";
 	String system_error_file_link = "system_error_file_link";

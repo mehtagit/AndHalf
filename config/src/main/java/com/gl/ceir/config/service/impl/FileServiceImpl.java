@@ -65,6 +65,7 @@ public class FileServiceImpl {
 	public FileDetails getManuals(int userTypeId) {
 
 		String fileName = null;
+		SystemConfigurationDb systemConfigurationDb1  = configurationManagementServiceImpl.findByTag(ConfigTags.manuals_file_name+"_"+userTypeId);
 		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.manuals_link+"_"+userTypeId);
 		/*switch (userTypeId) {
 		case 1:
@@ -119,7 +120,7 @@ public class FileServiceImpl {
 //		fileName = ;
 //		return new FileDetails("", "", systemConfigurationDb.getValue().replace("$LOCAL_IP",
 //				propertiesReader.localIp) + fileName);
-		return new FileDetails("", "", systemConfigurationDb.getValue().replace("$LOCAL_IP",
+		return new FileDetails(systemConfigurationDb1.getValue(), "", systemConfigurationDb.getValue().replace("$LOCAL_IP",
 				propertiesReader.localIp));
 	}
 
