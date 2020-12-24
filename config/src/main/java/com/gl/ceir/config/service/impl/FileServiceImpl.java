@@ -66,6 +66,7 @@ public class FileServiceImpl {
 
 		String fileName = null;
 		SystemConfigurationDb systemConfigurationDb1  = configurationManagementServiceImpl.findByTag(ConfigTags.manuals_file_name+"_"+userTypeId);
+		
 		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.manuals_link+"_"+userTypeId);
 		/*switch (userTypeId) {
 		case 1:
