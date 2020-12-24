@@ -51,7 +51,7 @@ public class MessageConfigurationDb implements Serializable {
 	
 	private String subject;
 
-	
+	@Column(name = "FEATURE_NAME", insertable = false, updatable = false)
 	private String featureName;
 	@Transient
 	private long userId;
