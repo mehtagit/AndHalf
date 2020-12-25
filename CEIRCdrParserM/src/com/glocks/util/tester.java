@@ -2,7 +2,12 @@ package com.glocks.util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneId;
 import java.util.Calendar;
+import java.util.Date;
 import org.apache.commons.lang.StringUtils;
 
 class tester {
@@ -119,8 +124,7 @@ class tester {
 //           System.out.println("---------" + operator);
 //          String intermPath = str.replace(fileName, "");
 //          System.out.println(intermPath);
-          String imei_tac = "0123456";
-
+//          String imei_tac = "0123456";
 //          if (imei_tac.length() == 7) {
 //               imei_tac = "0" + imei_tac;
 //          }
@@ -165,11 +169,67 @@ class tester {
 //          String MyString = "tHiS is SomE Statement";
 //          String MyString1 = StringUtils.capitalize(MyString);
 //          System.out.println("" + MyString1);
-          SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd-MMM-yy"); //
-          Calendar cal = Calendar.getInstance();
-          cal.add(Calendar.DATE, -45);
-          String date = dateFormat1.format(cal.getTime());
-          System.out.println("Date from which Data is calculated" + date);
+//          SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd-MMM-yy"); //
+//          Calendar cal = Calendar.getInstance();
+//          cal.add(Calendar.DATE, -45);
+//          String date = dateFormat1.format(cal.getTime());
+//          System.out.println("Date from which Data is calculated" + date)
+//  "{"list":["ruleName":"USER_REG", "ruleName":"EXISTS_IN_GSMA_TAC_DB"]}"Type a message
+//String a = "xyz";
+//String ad  =  " \"sachin \" " + ":" +  "\"" + a +   "\""   ;
+//          System.out.println(ad);
+//     }
+//          String created_on = "2020-11-11.0.0. 0. 0";
+//          String modified_on = "2020-9-21.11.0. 9. 471000000";
+//          SimpleDateFormat format = new SimpleDateFormat("yyyy-M-yy.HH.mm.ss");
+//          Date d1 = null;
+//          Date d2 = null;
+//          long diff = 0L;
+//          try {
+//               d1 = format.parse(created_on);
+//               d2 = format.parse(modified_on);
+//               diff = d2.getTime() - d1.getTime();
+//               System.out.println("d!!!!  " + d1);
+//
+//          } catch (Exception e) {
+//               e.printStackTrace();
+//          }
+//          System.out.println("diff// " + diff);
+//     }
+//          String a = "BTKK20200401000002161625.dat";
+//          System.out.println(a.substring(a.indexOf("202"),   a.indexOf("202") + 8 ));
+//          
+//           SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//  Date date = new Date();  
+//    System.out.println(sdf.format(date));  
+          Date date = new Date();
+          LocalDate currentDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+          int day = currentDate.getDayOfMonth();
+          Month month = currentDate.getMonth();
+          int year = currentDate.getYear();
+          System.out.println("Day: " + day);
+          System.out.println("Month: " + month);
+          System.out.println("Year: " + year);
+
+          SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yy");
+//    Date date = new Date();  
+          System.out.println(formatter.format(date).toUpperCase());
+
+//          String fromDate = DateUtil.nextDate(-5, "yyyy-MM-dd");
+          String testdate = "5";
+//          String fromDate = DateUtil.nextDate(Integer.parseInt(testdate.ge) * -1);
+//
+//          System.out.println(" fromDate  " + fromDate);
+
+
+
+         LocalDateTime myObj = LocalDateTime.now();
+           System.out.println("   ...   " + myObj);
+            String timeSec = myObj.toString().substring ((myObj.toString().length()-3)   ,  (myObj.toString().length())  );
+            System.out.println(";;;;;;;;;;;;;;; " + timeSec);
+
+
 
      }
 

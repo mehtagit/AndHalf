@@ -318,12 +318,14 @@ public class ConsignmentInsertUpdate {
                          if (stolenRecvryBlock == 1) {
                               insertFromImporterManufactor(conn, rs1, stolnRcvryDetails, feature_file_management, feature_file_mapping, dateFunction, period, txn_id, operator, sub_feature);
                          } else {
-                              try {
+//                              try {
                                    logger.info("device_db_query:  : " + device_db_query);
                                    stmt2.executeUpdate(device_db_query);
-                              } catch (Exception e) {
-                                   logger.error("Error in device_db   " + e);
-                              }
+                             
+//                              } catch (Exception e) {
+//                                   logger.error("Error in device_db   " + e);
+//                              }
+                              
                          }
                          split_upload_batch_count++;
                          if (split_upload_batch_count == split_upload_batch_no) {
@@ -565,6 +567,8 @@ public class ConsignmentInsertUpdate {
      }
 
 }
+
+
 
 
 

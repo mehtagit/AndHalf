@@ -130,7 +130,7 @@ public class CdrParserProcess {
                String server_origin = propertyReader.getPropValue("serverName").trim();
                logger.info("  serverName   " + server_origin);
 //             
-               stmt = conn.createStatement();
+               //   stmt = conn.createStatement();
                file = new File(filePath + fileName);
                int fileCount = 0;
                try (Stream<String> lines = Files.lines(file.toPath())) {
@@ -162,12 +162,12 @@ public class CdrParserProcess {
 //               }
                logger.debug("...,. ");
                while ((line = br.readLine()) != null) {
+                    stmt = conn.createStatement();
                     logger.debug(" Line Started ");
 //                    logger.debug("Line  started  " + line);
                     data = line.split(",", -1);
 
                     if ((((data[2].trim().startsWith("19") || data[2].trim().startsWith("00")) ? data[2].substring(2) : data[2])).startsWith("855") && data[1].trim().startsWith("456")) {
-
                          device_info.put("IMEI", data[0].trim());
                          device_info.put("IMSI", data[1].trim());
                          device_info.put("MSISDN", ((data[2].trim().startsWith("19") || data[2].trim().startsWith("00")) ? data[2].substring(2) : data[2]));
@@ -176,7 +176,14 @@ public class CdrParserProcess {
                          device_info.put("source", data[5].trim());
                          device_info.put("raw_cdr_file_name", data[6].trim());
 //                         device_info.put("imei_arrival_time",     data [7].trim().substring(data [7].trim().indexOf("202"), data [7].trim().indexOf("202") + 8));
-                         device_info.put("imei_arrival_time", (data[7].trim().startsWith("202") ? data[7].trim() : "20" + data[7].trim()));
+                         String imei_arrivalTime = null;
+                         if (data[7].trim().startsWith("20")) {
+                              imei_arrivalTime = data[7].trim().startsWith("202") ? data[7].trim() : "20" + data[7].trim();
+                         } else {
+                              imei_arrivalTime = data[7].trim().substring(data[7].trim().indexOf("202"), (data[7].trim().indexOf("202") + 8));
+                         }
+//                         device_info.put("imei_arrival_time", (data[7].trim().startsWith("202") ? data[7].trim() : "20" + data[7].trim()));
+                         device_info.put("imei_arrival_time", imei_arrivalTime);
                          device_info.put("operator", operator.trim());
                          device_info.put("file_name", fileName.trim());
                          device_info.put("record_time", sdfTime);
@@ -279,7 +286,7 @@ public class CdrParserProcess {
                                            + ")";
                                    usageInsert++;
                               }
-                              if (output == 1) {                        // imei found with same msisdn  update_raw_cdr_file_name , update_imei_arrival_time  
+                              if (output == 1) {  //  new ArrivalTime  came  from file  >  arrival time in db already                      // imei found with same msisdn  update_raw_cdr_file_name , update_imei_arrival_time  
                                    my_query = "update device_usage_db set "
                                            + "update_filename = '" + device_info.get("file_name")
                                            //								+"', updated_on=TO_DATE('"+device_info.get("record_time")+"','yyyy/mm/dd hh24:mi:ss')"
@@ -372,19 +379,18 @@ public class CdrParserProcess {
                               try {
                                    conn.commit();
                               } catch (Exception e) {
+                                   logger.info("Exception in insert :: : " + e);
                               }
-
                          } else {
                               bw1.write(my_query + ";");
                               bw1.newLine();
                          }
                          counter++;
-
-                         logger.info("Remaining List : " + (fileCount - counter));
-
+                         logger.info("Remaining List :: " + (fileCount - counter));
                     } else {
                          foreignMsisdn++;
                     }
+                    stmt.close();  //
 
                }   //While End   
                Date p2Endtime = new Date();
@@ -464,6 +470,8 @@ public class CdrParserProcess {
                          status = 2;                                                 // imei found with different msisdn
                     }
                }
+               rs1.close();
+               stmt.close();
           } catch (Exception e) {
                logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
           } finally {
@@ -471,7 +479,7 @@ public class CdrParserProcess {
                     rs1.close();
                     stmt.close();
 
-               } catch (SQLException e) {
+               } catch (Exception e) {
                     logger.error("  :/ " + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
                }
           }
@@ -527,6 +535,9 @@ public class CdrParserProcess {
                          rule_details.add(rule);
                     }
                }
+               rs1.close();
+               stmt.close();
+
           } catch (Exception e) {
                logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
           } finally {
@@ -834,6 +845,9 @@ public class CdrParserProcess {
           String query = null;
           ResultSet rs1 = null;
           Statement stmt = null;
+
+          ResultSet rs2 = null;
+          Statement stmt2 = null;
           int counts = 0;
 
           try {
@@ -849,26 +863,33 @@ public class CdrParserProcess {
                } else {
                     query = "select count(*) from gsma_invalid_tac_db  where  tac ='" + imeiTac + "'";
                     logger.debug("get [" + query + "]");
-                    stmt = conn.createStatement();
-                    rs1 = stmt.executeQuery(query);
-                    while (rs1.next()) {
-                         counts = rs1.getInt(1);
+                    stmt2 = conn.createStatement();
+                    rs2 = stmt.executeQuery(query);
+                    while (rs2.next()) {
+                         counts = rs2.getInt(1);
                     }
                     if (counts != 0) {
                          rsltTac = "I";
                     } else {
                          rsltTac = "U";
                     }
+                    rs2.close();
+                    stmt2.close();
                }
 
+               rs1.close();
+               stmt.close();
           } catch (Exception e) {
                logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
           } finally {
                try {
                     rs1.close();
                     stmt.close();
-               } catch (SQLException e) {
-                    logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
+
+                    rs2.close();
+                    stmt2.close();
+               } catch (Exception e) {
+//                    logger.error("This  Error in try Catch Can Be Ignored :" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
 //                    e.printStackTrace();
                }
           }

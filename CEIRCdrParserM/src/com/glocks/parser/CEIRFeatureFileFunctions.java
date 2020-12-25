@@ -409,6 +409,7 @@ public class CEIRFeatureFileFunctions {
           boolean isOracle = conn.toString().contains("oracle");
           String dateFunction = Util.defaultDate(isOracle);
           String period = new HexFileReader().checkGraceStatus(conn);
+          
           try {
                String ValImei = "";
                for (int i = 1; i < 5; i++) {
@@ -426,13 +427,14 @@ public class CEIRFeatureFileFunctions {
                     }
                     query = "select * from regularize_device_db where  txn_id = '" + txn_id + "' and  " + ValImei + " is not null   ";
                     logger.info(" / " + query);
+                    // 0 tax paid , 1 - not tax Paid, 2 : regulized   , 3  ????
                     stmt = conn.createStatement();
                     stmt1 = conn.createStatement();
                     rs = stmt.executeQuery(query);
                     int dvcDbCounter = 0;
                     try {
                          while (rs.next()) {
-                              InsrtQry = "insert  into device_custom_db(CREATED_ON , modified_on , DEVICE_ID_TYPE, DEVICE_STATUS,DEVICE_TYPE,IMEI_ESN_MEID,MULTIPLE_SIM_STATUS,FEATURE_NAME ,TXN_ID,user_id , period , actual_imei) "
+                              InsrtQry = "insert  into device_custom_db( CREATED_ON , modified_on , DEVICE_ID_TYPE, DEVICE_STATUS,DEVICE_TYPE,IMEI_ESN_MEID,MULTIPLE_SIM_STATUS,FEATURE_NAME ,TXN_ID,user_id , period , actual_imei) "
                                       + "values (" + dateFunction + " , " + dateFunction + " ,  '" + rs.getString("DEVICE_ID_TYPE") + "' , '" + rs.getString("DEVICE_STATUS") + "', '" + ((rs.getString("DEVICE_TYPE") == null) ? "NA" : rs.getString("DEVICE_TYPE")) + "'  , '" + rs.getString("" + ValImei + "").substring(0, 14) + "' , '" + rs.getString("MULTI_SIM_STATUS") + "' , 'Register Device' , '" + rs.getString("TXN_ID") + "','" + rs.getString("TAX_COLLECTED_BY") + "' , '" + period + "'   , '" + rs.getString("" + ValImei + "") + "'   )";
                               logger.info(" insert qury  [" + InsrtQry + "]");
                               stmt1.executeUpdate(InsrtQry);
@@ -488,7 +490,6 @@ public class CEIRFeatureFileFunctions {
                } catch (SQLException e) {
                     logger.error("Error.." + e);
                }
-
           }
 
      }
@@ -702,6 +703,11 @@ public class CEIRFeatureFileFunctions {
 //          }
 //
 //     }
+
+
+
+
+
 
 
 
