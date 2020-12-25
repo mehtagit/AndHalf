@@ -89,7 +89,8 @@ public class BasicApplication {
                Statement stmt = conn.createStatement();
 
 //               ResultSet rs1 = stmt.executeQuery("select   distinct tac  from device_usage_db  ");
-               ResultSet rs1 = stmt.executeQuery("select   distinct tac  from device_usage_db  where FEATURE_NAME = 'U' ");
+//               ResultSet rs1 = stmt.executeQuery("select   distinct tac  from device_usage_db  where FEATURE_NAME = 'U' ");
+               ResultSet rs1 = stmt.executeQuery("    select distinct tac   from device_usage_db where (tac not in(select device_id from gsma_tac_db) and tac not in(select tac from gsma_invalid_tac_db)) ");
                Set<String> hash_Set = new HashSet<String>();
                while (rs1.next()) {
                     hash_Set.add(rs1.getString(1));
