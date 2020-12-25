@@ -39,7 +39,6 @@ class EXIST_IN_TAX_PAID_DB {
                     logger.debug("Error" + e);
                }
                if (res1 != 0) {
-//                logger.debug("Yes");
                     res = "Yes";
                } else {
                     res = "No";

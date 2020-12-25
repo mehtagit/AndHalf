@@ -72,9 +72,9 @@ class EXISTS_IN_ALL_ACTIVE_DB {
                     }
                     break;
                     case "Reject": {
-                         String fileString = args[15] + " ,  Error Code :CON_RULE_0033 ,Error Description : IMEI/ESN/MEID  and MSISDN is Not  present in System ";
-                         bw.write(fileString);
-                         bw.newLine();
+//                         String fileString = args[15] + " ,  Error Code :CON_RULE_0033 ,Error Description : IMEI/ESN/MEID  and MSISDN is Not  present in System ";
+//                         bw.write(fileString);
+//                         bw.newLine();
                     }
                     break;
                     case "Block": {
