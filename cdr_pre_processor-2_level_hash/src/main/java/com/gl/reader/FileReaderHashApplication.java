@@ -44,7 +44,7 @@ import com.gl.reader.configuration.PropertiesReader;
 import com.gl.reader.constants.Alerts;
 import java.io.PrintWriter;
 import java.io.StringWriter;
- 
+
 @EnableAsync
 @SpringBootConfiguration
 @EnableAutoConfiguration
@@ -943,6 +943,8 @@ public class FileReaderHashApplication {
                BufferedReader br = Files.newBufferedReader(pathToFile, StandardCharsets.US_ASCII);
                String line = br.readLine();
                while (line != null) {
+                    itotalCount++;  // dec
+                    totalCount++;  //dec
                     inputOffset += line.getBytes(StandardCharsets.US_ASCII).length + 1; //1 is for line separator
                     String[] attributes = line.split(propertiesReader.commaDelimiter, -1);
                     if (attributes[0].equalsIgnoreCase("role-of-Node")) {
@@ -980,8 +982,8 @@ public class FileReaderHashApplication {
                          } else {
                               recordType = "100";
                          }
-                         totalCount++;
-                         itotalCount++;
+//                         totalCount++;
+//                         itotalCount++;
                          Book book = createBookIms(imei, imsi, msisdn, systemType, recordType, folderName, fileName, eventTime);
                          //error log
                          if (imei.equals("") || imsi.equals("") || msisdn.equals("")) {
@@ -996,9 +998,9 @@ public class FileReaderHashApplication {
                               }
                               line = br.readLine();
                               error++;
-                              totalCount++;
+//                              totalCount++;
                               ierror++;
-                              itotalCount++;
+//                              itotalCount++;
                               continue;
                          }
                          if (BookHashMap.containsKey(book.getIMEI())) {
@@ -1025,8 +1027,8 @@ public class FileReaderHashApplication {
                          line = br.readLine();
                          error++;
                          ierror++;
-                         totalCount++;
-                         itotalCount++;
+//                         totalCount++;
+//                         itotalCount++;
                     }
                }
                br.close();
