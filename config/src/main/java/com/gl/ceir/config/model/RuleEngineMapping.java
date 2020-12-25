@@ -15,16 +15,9 @@ import io.swagger.annotations.ApiModel;
 @ApiModel
 @Entity
 public class RuleEngineMapping implements Serializable {
-
-    /**
-     *
-     */
+ 
     private static final long serialVersionUID = 1L;
-
-    
-    
-    
-    
+ 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -150,3 +143,4 @@ public class RuleEngineMapping implements Serializable {
     }
 
 }
+

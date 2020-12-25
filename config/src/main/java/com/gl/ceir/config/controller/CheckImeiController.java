@@ -27,7 +27,7 @@ public class CheckImeiController {  //sachin
     public MappingJacksonValue CheckImeiValues(@RequestBody CheckImeiValuesEntity checkImeiValuesEntity) {
         String user_type = checkImeiValuesEntity.getUser_type().trim();
         String feature = checkImeiValuesEntity.getFeature().trim().replaceAll(" ", "");
-        Long imei = checkImeiValuesEntity.getImei();
+        String imei = checkImeiValuesEntity.getImei();
         Long imei_type = checkImeiValuesEntity.getImei_type();
         logger.info("Feature   " + feature + user_type);
         logger.info("UsrType   " + user_type);
@@ -45,7 +45,7 @@ public class CheckImeiController {  //sachin
             cImsg.setStatus("Fail");
         }
         mapping = new MappingJacksonValue(cImsg);
-        logger.info("Response of View =" + mapping);
+//        logger.info("Response of View =" + mapping);
         return mapping;
     }
 

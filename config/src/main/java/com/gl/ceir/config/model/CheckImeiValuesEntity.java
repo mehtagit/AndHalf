@@ -12,7 +12,7 @@ package com.gl.ceir.config.model;
 public class CheckImeiValuesEntity {
     
     
-     String user_type;  String feature ; Long imei; Long imei_type ;
+     String user_type;  String feature ; String imei; Long imei_type ;
 
     public String getUser_type() {
         return user_type;
@@ -30,14 +30,7 @@ public class CheckImeiValuesEntity {
         this.feature = feature;
     }
 
-    public Long getImei() {
-        return imei;
-    }
-
-    public void setImei(Long imei) {
-        this.imei = imei;
-    }
-
+  
     public Long getImei_type() {
         return imei_type;
     }
@@ -45,6 +38,15 @@ public class CheckImeiValuesEntity {
     public void setImei_type(Long imei_type) {
         this.imei_type = imei_type;
     }
+
+    public String getImei() {
+        return imei;
+    }
+
+    public void setImei(String imei) {
+        this.imei = imei;
+    }
             
+    
     
 }
