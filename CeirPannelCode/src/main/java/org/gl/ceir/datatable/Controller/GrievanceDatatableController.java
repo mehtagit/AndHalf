@@ -98,7 +98,8 @@ public class GrievanceDatatableController {
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String modifiedOn = dataInsideList.getModifiedOn();
-						String txnId = dataInsideList.getTxnId();
+						//String txnId = dataInsideList.getTxnId();
+						String txnId = dataInsideList.getTxnId() == null ? "NA" : dataInsideList.getTxnId();
 						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
 						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
 						String grievanceStatus = dataInsideList.getStateInterp();
@@ -115,7 +116,7 @@ public class GrievanceDatatableController {
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String modifiedOn = dataInsideList.getModifiedOn();
-						String txnId = dataInsideList.getTxnId();
+						String txnId = dataInsideList.getTxnId() == null ? "NA" : dataInsideList.getTxnId();
 						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
 						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
 						String grievanceStatus = dataInsideList.getStateInterp();
@@ -133,7 +134,7 @@ public class GrievanceDatatableController {
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String modifiedOn = dataInsideList.getModifiedOn();
-						String txnId = dataInsideList.getTxnId();
+						String txnId = dataInsideList.getTxnId() == null ? "NA" : dataInsideList.getTxnId();
 						//String userDisplayName = dataInsideList.getUserDisplayName();
 						String userName = dataInsideList.getUserDisplayName();
 						String userTypeName = dataInsideList.getUserType();
@@ -154,7 +155,7 @@ public class GrievanceDatatableController {
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String modifiedOn = dataInsideList.getModifiedOn();
-						String txnId = dataInsideList.getTxnId();
+						String txnId = dataInsideList.getTxnId() == null ? "NA" : dataInsideList.getTxnId();
 						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
 						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
 						String grievanceStatus = dataInsideList.getStateInterp();
@@ -173,7 +174,7 @@ public class GrievanceDatatableController {
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String modifiedOn = dataInsideList.getModifiedOn();
-						String txnId = dataInsideList.getTxnId();
+						String txnId = dataInsideList.getTxnId() == null ? "NA" : dataInsideList.getTxnId();
 						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
 						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
 						String grievanceStatus = dataInsideList.getStateInterp();
@@ -192,7 +193,7 @@ public class GrievanceDatatableController {
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
 					String createdOn = dataInsideList.getCreatedOn();
 					String modifiedOn = dataInsideList.getModifiedOn();
-					String txnId = dataInsideList.getTxnId();
+					String txnId = dataInsideList.getTxnId() == null ? "NA" : dataInsideList.getTxnId();
 					String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
 					String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
 					String grievanceStatus = dataInsideList.getStateInterp();
@@ -210,7 +211,7 @@ public class GrievanceDatatableController {
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String modifiedOn = dataInsideList.getModifiedOn();
-						String txnId = dataInsideList.getTxnId();
+						String txnId = dataInsideList.getTxnId() == null ? "NA" : dataInsideList.getTxnId();
 						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
 						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
 						String grievanceStatus = dataInsideList.getStateInterp();
@@ -227,7 +228,7 @@ public class GrievanceDatatableController {
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String modifiedOn = dataInsideList.getModifiedOn();
-						String txnId = dataInsideList.getTxnId();
+						String txnId = dataInsideList.getTxnId() == null ? "NA" : dataInsideList.getTxnId();
 						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
 						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
 						String grievanceStatus = dataInsideList.getStateInterp();
@@ -246,7 +247,7 @@ public class GrievanceDatatableController {
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String modifiedOn = dataInsideList.getModifiedOn();
-						String txnId = dataInsideList.getTxnId();
+						String txnId = dataInsideList.getTxnId() == null ? "NA" : dataInsideList.getTxnId();
 						String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
 						String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
 						String grievanceStatus = dataInsideList.getStateInterp();
@@ -264,7 +265,7 @@ public class GrievanceDatatableController {
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
 						String createdOn = dataInsideList.getCreatedOn();
 						String modifiedOn = dataInsideList.getModifiedOn();
-						String txnId = dataInsideList.getTxnId();
+						String txnId = dataInsideList.getTxnId() == null ? "NA" : dataInsideList.getTxnId();
 						//String userDisplayName = dataInsideList.getUserDisplayName();
 						String userName = dataInsideList.getUserDisplayName();
 						String userTypeName = dataInsideList.getUserType();
@@ -285,7 +286,7 @@ public class GrievanceDatatableController {
 					for (GrievanceContentModel dataInsideList : paginationContentList) {
 					String createdOn = dataInsideList.getCreatedOn();
 					String modifiedOn = dataInsideList.getModifiedOn();
-					String txnId = dataInsideList.getTxnId();
+					String txnId = dataInsideList.getTxnId() == null ? "NA" : dataInsideList.getTxnId();
 					String grievanceId = String.valueOf(dataInsideList.getGrievanceId());
 					String StatusofGrievance = String.valueOf(dataInsideList.getGrievanceStatus());
 					String grievanceStatus = dataInsideList.getStateInterp();

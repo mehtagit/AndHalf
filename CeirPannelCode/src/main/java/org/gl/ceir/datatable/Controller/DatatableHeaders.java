@@ -435,7 +435,7 @@ public class DatatableHeaders {
 			//IP Log Management
 			
 			else if("ipLogManagementHeaders".equals(role)) {
-				String[] headers = {"table.creationDate","table.UserName","table.publicIp","table.userAgent"};
+				String[] headers = {"table.creationDate","table.UserName","table.publicIp","table.browser","table.userAgent"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

@@ -83,10 +83,11 @@ public class IPLogManagementDatatable {
 				   String modifiedOn = (String) dataInsideList.getModifiedOn();
 				   String username = dataInsideList.getUsername();
 				   String publicIp = dataInsideList.getPublicIp();
+				   String browser = dataInsideList.getBrowser();
 				   String userAgent = dataInsideList.getUserAgent();
 				   //String userStatus = (String) session.getAttribute("userStatus");	  
 				   //String action = iconState.alertManagementIcons(id);
-				   Object[] finalData={createdOn,username,publicIp,userAgent}; 
+				   Object[] finalData={createdOn,username,publicIp,browser,userAgent}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	

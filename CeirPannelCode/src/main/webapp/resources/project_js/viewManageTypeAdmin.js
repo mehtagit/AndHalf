@@ -429,6 +429,8 @@ function setImporterViewPopupData(data, projectPath) {
 	$('#viewFrequency').val(data.frequencyRange);
 	$("#viewImportertac").val(data.tac);
 	$("#viewtxnId").val(data.txnId);
+	//$("#viewRemark").val(data.remark);
+	data.remark=="" || data.remark==null ? $("#viewRemark").val('NA') : $('#viewRemark').val(data.remark);
 
 	var result = data;
 	var importerViewResponse = [];

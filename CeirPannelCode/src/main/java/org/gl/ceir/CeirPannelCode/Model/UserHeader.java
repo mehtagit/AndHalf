@@ -4,6 +4,7 @@ public class UserHeader {
 
 	private String userAgent;
 	private String publicIp;
+	private String browser;
 	public String getUserAgent() {
 		return userAgent;
 	}
@@ -18,7 +19,21 @@ public class UserHeader {
 	}
 	@Override
 	public String toString() {
-		return "UserHeader [userAgent=" + userAgent + ", publicIp=" + publicIp + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserHeader [userAgent=");
+		builder.append(userAgent);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
+		builder.append("]");
+		return builder.toString();
+	}
+	public UserHeader(String userAgent, String publicIp,String browser) {
+		super();
+		this.userAgent = userAgent;
+		this.publicIp = publicIp;
+		this.browser=browser;
 	}
 	public UserHeader(String userAgent, String publicIp) {
 		super();
@@ -27,6 +42,12 @@ public class UserHeader {
 	}
 	public UserHeader() {
 		super();
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
 	}
 	
 }
