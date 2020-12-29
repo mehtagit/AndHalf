@@ -98,86 +98,91 @@ public class ConfigurationManagementServiceImpl {
 
 	@Autowired
 	StateMgmtServiceImpl stateMgmtServiceImpl;
-	
+
 	@Autowired
 	SystemValidation systemValidation;
-	
-	
-	
-	public List<SystemConfigurationDb> getAllInfo(){
+
+	public List<SystemConfigurationDb> getAllInfo() {
 		try {
 			return systemConfigurationDbRepository.findAll();
 		} catch (Exception e) {
-			logger.info("Exception found="+e.getMessage());
+			logger.info("Exception found=" + e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
 
-	public Page<SystemConfigurationDb> filterSystemConfiguration(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
+	public Page<SystemConfigurationDb> filterSystemConfiguration(FilterRequest filterRequest, Integer pageNo,
+			Integer pageSize) {
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-			Page<SystemConfigurationDb> page = systemConfigurationDbRepository.findAll(buildSpecification_system(filterRequest).build(),pageable);
+			Page<SystemConfigurationDb> page = systemConfigurationDbRepository
+					.findAll(buildSpecification_system(filterRequest).build(), pageable);
 
-			for(SystemConfigurationDb systemConfigurationDb : page.getContent()) {	
-				systemConfigurationDb.setTypeInterp(interpSetter.setConfigInterp(Tags.CONFIG_TYPE, systemConfigurationDb.getType()));
+			for (SystemConfigurationDb systemConfigurationDb : page.getContent()) {
+				systemConfigurationDb
+						.setTypeInterp(interpSetter.setConfigInterp(Tags.CONFIG_TYPE, systemConfigurationDb.getType()));
 			}
-			
-		
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 
-					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
-					Features.SYSTEM_MANAGEMENT, SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
+
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(),
+					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
+					Long.valueOf(filterRequest.getFeatureId()), Features.SYSTEM_MANAGEMENT, SubFeatures.VIEW, "", "NA",
+					filterRequest.getRoleType()));
 			logger.info("SYSTEM_MANAGEMENT : successfully inserted in Audit trail.");
 			return page;
 
 		} catch (Exception e) {
-			logger.info("Exception found="+e.getMessage());
+			logger.info("Exception found=" + e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
 
-	public SystemConfigurationDb findByTag(SystemConfigurationDb systemConfigurationDb){
+	public SystemConfigurationDb findByTag(SystemConfigurationDb systemConfigurationDb) {
 		try {
-			SystemConfigurationDb systemConfigurationDb2 = systemConfigurationDbRepository.getByTag(systemConfigurationDb.getTag());
-			systemConfigurationDb2.setTypeInterp(interpSetter.setConfigInterp(Tags.CONFIG_TYPE, systemConfigurationDb2.getType()));
+			SystemConfigurationDb systemConfigurationDb2 = systemConfigurationDbRepository
+					.getByTag(systemConfigurationDb.getTag());
+			systemConfigurationDb2
+					.setTypeInterp(interpSetter.setConfigInterp(Tags.CONFIG_TYPE, systemConfigurationDb2.getType()));
 			return systemConfigurationDb2;
 		} catch (Exception e) {
-			logger.info("Exception found="+e.getMessage());
+			logger.info("Exception found=" + e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
 
-	public SystemConfigurationDb findByTag(String tag){
+	public SystemConfigurationDb findByTag(String tag) {
 		try {
 			return systemConfigurationDbRepository.getByTag(tag);
 		} catch (Exception e) {
-			logger.info("Exception found="+e.getMessage());
+			logger.info("Exception found=" + e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
 
-	
-	
 	@Transactional
 	public GenricResponse updateSystemInfo(SystemConfigurationDb systemConfigurationDb) {
 		try {
-			logger.info("UserType for validation :" +systemConfigurationDb.getUserType());
-			
-			GenricResponse response = systemValidation.validateFieldsByObject(systemConfigurationDb,systemConfigurationDb.getUserType(),5);
-			if(response.getErrorCode()==201) {
-				logger.info("validation failed with error Code : " +response.getErrorCode());
-				//return new  GenricResponse(0, "Validation Failed", "");
-				return new GenricResponse(201, "System_configuration_failed","System configuration update failed. value regex not matched", "");
-			}else{
+			logger.info("UserType for validation :" + systemConfigurationDb.getUserType());
+
+			GenricResponse response = systemValidation.validateFieldsByObject(systemConfigurationDb,
+					systemConfigurationDb.getUserType(), 5);
+			if (response.getErrorCode() == 201) {
+				logger.info("validation failed with error Code : " + response.getErrorCode());
+				// return new GenricResponse(0, "Validation Failed", "");
+				return new GenricResponse(201, "System_configuration_failed",
+						"System configuration update failed. value regex not matched", "");
+			} else {
 				logger.info("Everything is valid. Processed for Update");
-				GenricResponse genricResponse = validateUpdateRequest(systemConfigurationDb.getTag(), systemConfigurationDb.getValue());
-				if(genricResponse.getErrorCode() != 0) {
+				GenricResponse genricResponse = validateUpdateRequest(systemConfigurationDb.getTag(),
+						systemConfigurationDb.getValue());
+				if (genricResponse.getErrorCode() != 0) {
 					return genricResponse;
 				}
 
-				SystemConfigurationDb systemConfigurationDb2 = systemConfigurationDbRepository.getByTag(systemConfigurationDb.getTag());
+				SystemConfigurationDb systemConfigurationDb2 = systemConfigurationDbRepository
+						.getByTag(systemConfigurationDb.getTag());
 				logger.info("Persisted data " + systemConfigurationDb2);
 
-				if(Objects.isNull(systemConfigurationDb2)) {
+				if (Objects.isNull(systemConfigurationDb2)) {
 					return new GenricResponse(15, "This Id does not exist", "");
 				}
 
@@ -186,50 +191,50 @@ public class ConfigurationManagementServiceImpl {
 				systemConfigurationDb2.setRemark(systemConfigurationDb.getRemark());
 				systemConfigurationDbRepository.save(systemConfigurationDb2);
 
-				return new GenricResponse(200, "System_configuration_update","System configuration update Sucessfully", "");
+				return new GenricResponse(200, "System_configuration_update", "System configuration update Sucessfully",
+						"");
 
 			}
-		}catch (Exception e) {
-				logger.info(e.getMessage(), e);
-				throw new ResourceServicesException(this.getClass().getName(), e.getMessage());	
-			}
-			
-			
-			
-			
+		} catch (Exception e) {
+			logger.info(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}
+
 	}
 
-	public List<MessageConfigurationDb> getMessageConfigAllDetails(){
+	public List<MessageConfigurationDb> getMessageConfigAllDetails() {
 
 		try {
 
 			return messageConfigurationDbRepository.findAll();
 
 		} catch (Exception e) {
-			logger.info("Exception found="+e.getMessage());
+			logger.info("Exception found=" + e.getMessage());
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}	
+		}
 
 	}
 
-	public Page<MessageConfigurationDb> filterMessageConfiguration(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
+	public Page<MessageConfigurationDb> filterMessageConfiguration(FilterRequest filterRequest, Integer pageNo,
+			Integer pageSize) {
 		try {
 
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-			Page<MessageConfigurationDb> page = messageConfigurationDbRepository.findAll(buildSpecification(filterRequest).build(), pageable);
+			Page<MessageConfigurationDb> page = messageConfigurationDbRepository
+					.findAll(buildSpecification(filterRequest).build(), pageable);
 
-			for(MessageConfigurationDb messageConfigurationDb : page.getContent()) {	
-				messageConfigurationDb.setChannelInterp(interpSetter.setConfigInterp(Tags.CHANNEL, messageConfigurationDb.getChannel()));
+			for (MessageConfigurationDb messageConfigurationDb : page.getContent()) {
+				messageConfigurationDb.setChannelInterp(
+						interpSetter.setConfigInterp(Tags.CHANNEL, messageConfigurationDb.getChannel()));
 			}
 
-			
 //audit trail entry
-			auditTrailRepository.save(new AuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getUserName(), 
-					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
-					Features.MESSAGE_MANAGEMENT, SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
+			auditTrailRepository.save(new AuditTrail(Long.valueOf(filterRequest.getUserId()),
+					filterRequest.getUserName(), Long.valueOf(filterRequest.getUserTypeId()),
+					filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
+					Features.MESSAGE_MANAGEMENT, SubFeatures.VIEW, "", "NA", filterRequest.getRoleType()));
 			logger.info("MESSAGE_MANAGEMENT : successfully inserted in Audit trail.");
-			
-			
+
 			return page;
 
 		} catch (Exception e) {
@@ -238,65 +243,71 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
-	public MessageConfigurationDb getMessageConfigDetailsByTag(MessageConfigurationDb messageConfigurationDb){
+	public MessageConfigurationDb getMessageConfigDetailsByTag(MessageConfigurationDb messageConfigurationDb) {
 		try {
 
-			MessageConfigurationDb messageConfigurationDb2 = messageConfigurationDbRepository.getByTag(messageConfigurationDb.getTag());
-			messageConfigurationDb2.setChannelInterp(interpSetter.setConfigInterp(Tags.CHANNEL, messageConfigurationDb2.getChannel()));
+			MessageConfigurationDb messageConfigurationDb2 = messageConfigurationDbRepository
+					.getByTag(messageConfigurationDb.getTag());
+			messageConfigurationDb2
+					.setChannelInterp(interpSetter.setConfigInterp(Tags.CHANNEL, messageConfigurationDb2.getChannel()));
 
 			return messageConfigurationDb2;
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}	
+		}
 	}
 
 	@Transactional
 	public GenricResponse updateMessageInfo(MessageConfigurationDb messageConfigurationDb) {
 		try {
-			GenricResponse genricResponse = validateUpdateRequest(messageConfigurationDb.getTag(), messageConfigurationDb.getValue());
-			if(genricResponse.getErrorCode() != 0) {
+			GenricResponse genricResponse = validateUpdateRequest(messageConfigurationDb.getTag(),
+					messageConfigurationDb.getValue());
+			if (genricResponse.getErrorCode() != 0) {
 				return genricResponse;
 			}
 
 			MessageConfigurationDb mcd = messageConfigurationDbRepository.getByTag(messageConfigurationDb.getTag());
 
-			if(Objects.isNull(mcd)) {
-				return new GenricResponse(15, "This id does not exist","");
+			if (Objects.isNull(mcd)) {
+				return new GenricResponse(15, "This id does not exist", "");
 			}
 
 			mcd.setValue(messageConfigurationDb.getValue());
 			mcd.setDescription(messageConfigurationDb.getDescription());
 			mcd.setSubject(messageConfigurationDb.getSubject());
-		//	mcd.setFeatureName(mcd.getFeatureName() == null ? "NA" : mcd.getFeatureName());
-			mcd.setActive(0);	
+			// mcd.setFeatureName(mcd.getFeatureName() == null ? "NA" :
+			// mcd.getFeatureName());
+			mcd.setActive(0);
 			logger.info("Persisted message data " + messageConfigurationDb);
 			messageConfigurationDbRepository.save(mcd);
 
-			return new  GenricResponse(0, "Message config info update sucessfully", "");
+			return new GenricResponse(0, "Message config info update sucessfully", "");
 
 		} catch (Exception e) {
 
 			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());	
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
 
-	public PolicyConfigurationDb getPolicyConfigDetailsByTag(PolicyConfigurationDb messageConfigurationDb){
+	public PolicyConfigurationDb getPolicyConfigDetailsByTag(PolicyConfigurationDb messageConfigurationDb) {
 		try {
 
-			PolicyConfigurationDb policyConfigurationDb = policyConfigurationDbRepository.getByTag(messageConfigurationDb.getTag());
-			policyConfigurationDb.setStatusInterp(interpSetter.setConfigInterp(Tags.IS_ACTIVE, policyConfigurationDb.getStatus()));
+			PolicyConfigurationDb policyConfigurationDb = policyConfigurationDbRepository
+					.getByTag(messageConfigurationDb.getTag());
+			policyConfigurationDb
+					.setStatusInterp(interpSetter.setConfigInterp(Tags.IS_ACTIVE, policyConfigurationDb.getStatus()));
 			return policyConfigurationDb;
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}	
+		}
 	}
 
-	public PolicyConfigurationDb getPolicyConfigDetailsByTag(String tag){
+	public PolicyConfigurationDb getPolicyConfigDetailsByTag(String tag) {
 		try {
 
 			return policyConfigurationDbRepository.getByTag(tag);
@@ -304,53 +315,60 @@ public class ConfigurationManagementServiceImpl {
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}	
+		}
 	}
 
-	public Page<PolicyConfigurationDb> filterPolicyConfiguration(FilterRequest filterRequest, Integer pageNo, Integer pageSize){
+	public Page<PolicyConfigurationDb> filterPolicyConfiguration(FilterRequest filterRequest, Integer pageNo,
+			Integer pageSize) {
 		List<StateMgmtDb> statusList = null;
 		try {
 
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-			GenericSpecificationBuilder<PolicyConfigurationDb> sb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
+			GenericSpecificationBuilder<PolicyConfigurationDb> sb = new GenericSpecificationBuilder<>(
+					propertiesReader.dialect);
 
-			if(Objects.nonNull(filterRequest.getTag()))
-				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
+			if (Objects.nonNull(filterRequest.getTag()))
+				sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY_CASE_INSENSITIVE,
+						Datatype.STRING));
 
-			if(Objects.nonNull(filterRequest.getStatus()))
-				sb.with(new SearchCriteria("status", filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+			if (Objects.nonNull(filterRequest.getStatus()))
+				sb.with(new SearchCriteria("status", filterRequest.getStatus(), SearchOperation.EQUALITY,
+						Datatype.STRING));
 
-			if(Objects.nonNull(filterRequest.getType()))
+			if (Objects.nonNull(filterRequest.getType()))
 				sb.with(new SearchCriteria("type", filterRequest.getType(), SearchOperation.EQUALITY, Datatype.STRING));
 
-			if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-				sb.orSearch(new SearchCriteria("tag", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-				sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-				sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			if (Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()) {
+				sb.orSearch(new SearchCriteria("tag", filterRequest.getSearchString(), SearchOperation.LIKE,
+						Datatype.STRING));
+				sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE,
+						Datatype.STRING));
+				sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE,
+						Datatype.STRING));
 			}
 
 			Page<PolicyConfigurationDb> page = policyConfigurationDbRepository.findAll(sb.build(), pageable);
 
-			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
+			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(),
+					filterRequest.getUserTypeId());
 
-			for(PolicyConfigurationDb policyConfigurationDb : page.getContent()) {
+			for (PolicyConfigurationDb policyConfigurationDb : page.getContent()) {
 
-				for(StateMgmtDb stateMgmtDb : statusList) {
-					if(policyConfigurationDb.getType() == stateMgmtDb.getState()) {
-						policyConfigurationDb.setTypeInterp(stateMgmtDb.getInterp()); 
-						break; 
-					} 
+				for (StateMgmtDb stateMgmtDb : statusList) {
+					if (policyConfigurationDb.getType() == stateMgmtDb.getState()) {
+						policyConfigurationDb.setTypeInterp(stateMgmtDb.getInterp());
+						break;
+					}
 				}
 				getInterp(policyConfigurationDb);
 
-				
-				auditTrailRepository.save(new AuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getUserName(), 
-						Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
-						Features.POLICY_MANAGEMENT, SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
+				auditTrailRepository.save(new AuditTrail(Long.valueOf(filterRequest.getUserId()),
+						filterRequest.getUserName(), Long.valueOf(filterRequest.getUserTypeId()),
+						filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
+						Features.POLICY_MANAGEMENT, SubFeatures.VIEW, "", "NA", filterRequest.getRoleType()));
 				logger.info("POLICY_MANAGEMENT : successfully inserted in Audit trail ");
-				
+
 			}
-	
 
 			return page;
 
@@ -360,7 +378,7 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
-	public List<PolicyConfigurationDb> getPolicyConfigDetails(){
+	public List<PolicyConfigurationDb> getPolicyConfigDetails() {
 		try {
 
 			return policyConfigurationDbRepository.findAll();
@@ -368,21 +386,20 @@ public class ConfigurationManagementServiceImpl {
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}	
+		}
 	}
 
-	
-	
 	@Transactional
 	public GenricResponse updatePolicyInfo(PolicyConfigurationDb policyConfigurationDb) {
 		try {
-			GenricResponse genricResponse = validateUpdateRequest(policyConfigurationDb.getTag(), policyConfigurationDb.getValue());
-			if(genricResponse.getErrorCode() != 0) {
+			GenricResponse genricResponse = validateUpdateRequest(policyConfigurationDb.getTag(),
+					policyConfigurationDb.getValue());
+			if (genricResponse.getErrorCode() != 0) {
 				return genricResponse;
 			}
 
 			PolicyConfigurationDb mcd = policyConfigurationDbRepository.getByTag(policyConfigurationDb.getTag());
-			if(Objects.isNull(mcd)) {
+			if (Objects.isNull(mcd)) {
 				return new GenricResponse(15, "This tag does not exist", "");
 			}
 
@@ -391,12 +408,12 @@ public class ConfigurationManagementServiceImpl {
 			policyConfigurationDb.setActive(mcd.getActive());
 			policyConfigurationDbRepository.save(policyConfigurationDb);
 
-			return new  GenricResponse(0, "Policy config info update sucessfully", "");
+			return new GenricResponse(0, "Policy config info update sucessfully", "");
 
 		} catch (Exception e) {
 
 			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());	
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
 
@@ -425,20 +442,23 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
-	public GenricResponse saveNotification(String channelType, String message, Long userId, Long featureId, String featureName, 
-			String subFeature, String featureTxnId, String subject, int retryCount, String referTable, String roleType, String receiverUserType) {
+	public GenricResponse saveNotification(String channelType, String message, Long userId, Long featureId,
+			String featureName, String subFeature, String featureTxnId, String subject, int retryCount,
+			String referTable, String roleType, String receiverUserType) {
 		try {
 
-			Notification notification = notificationRepository.save(new Notification(channelType, message, userId, featureId, featureName, 
-					subFeature, featureTxnId, subject, retryCount, referTable, roleType, receiverUserType));
+			Notification notification = notificationRepository
+					.save(new Notification(channelType, message, userId, featureId, featureName, subFeature,
+							featureTxnId, subject, retryCount, referTable, roleType, receiverUserType));
 
-			return new GenricResponse(0, "Notification have been saved Sucessfully", Long.toString(notification.getId()));
+			return new GenricResponse(0, "Notification have been saved Sucessfully",
+					Long.toString(notification.getId()));
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
+
 	public GenricResponse saveAllNotifications(List<Notification> notifications) {
 		try {
 
@@ -451,7 +471,7 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
-	public List<SystemConfigListDb> getSystemConfigListByTag(String tag){
+	public List<SystemConfigListDb> getSystemConfigListByTag(String tag) {
 		try {
 
 			logger.debug("getSystemConfigListByTag : " + tag);
@@ -464,12 +484,14 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
-	public List<SystemConfigListDb> getSystemConfigListByTagAndUserType(String tagId, int userTypeId){
+	public List<SystemConfigListDb> getSystemConfigListByTagAndUserType(String tagId, int userTypeId) {
 		try {
 
 			logger.debug("getSystemConfigListByTag : " + tagId);
 
-			List<SystemConfigListDb> systemConfigListDbs = getSystemConfigListDb(systemConfigListRepository.findByTag(tagId, new Sort(Sort.Direction.ASC, "listOrder")), systemConfigUserwiseRepository.findByTagIdAndUserTypeId(tagId, userTypeId));
+			List<SystemConfigListDb> systemConfigListDbs = getSystemConfigListDb(
+					systemConfigListRepository.findByTag(tagId, new Sort(Sort.Direction.ASC, "listOrder")),
+					systemConfigUserwiseRepository.findByTagIdAndUserTypeId(tagId, userTypeId));
 
 			return addOtherToLastPostion(systemConfigListDbs);
 
@@ -479,12 +501,14 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
-	public List<SystemConfigListDb> getSystemConfigListByTagAndFeatureId(String tagId, int featureId){
+	public List<SystemConfigListDb> getSystemConfigListByTagAndFeatureId(String tagId, int featureId) {
 		try {
 
 			logger.debug("getSystemConfigListByTag : " + tagId);
 
-			List<SystemConfigListDb> systemConfigListDbs = getSystemConfigListDb(systemConfigListRepository.findByTag(tagId, new Sort(Sort.Direction.ASC, "listOrder")), systemConfigUserwiseRepository.findByTagIdAndFeatureId(tagId, featureId));
+			List<SystemConfigListDb> systemConfigListDbs = getSystemConfigListDb(
+					systemConfigListRepository.findByTag(tagId, new Sort(Sort.Direction.ASC, "listOrder")),
+					systemConfigUserwiseRepository.findByTagIdAndFeatureId(tagId, featureId));
 
 			return addOtherToLastPostion(systemConfigListDbs);
 
@@ -494,15 +518,16 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
-	private List<SystemConfigListDb> getSystemConfigListDb(List<SystemConfigListDb> systemConfigListDbs, List<SystemConfigUserwiseDb> systemConfigUserwiseDbs){
+	private List<SystemConfigListDb> getSystemConfigListDb(List<SystemConfigListDb> systemConfigListDbs,
+			List<SystemConfigUserwiseDb> systemConfigUserwiseDbs) {
 
 		List<SystemConfigListDb> systemConfigListDbResult = new LinkedList<>();
 
-		for(SystemConfigListDb systemConfigListDb : systemConfigListDbs) {
+		for (SystemConfigListDb systemConfigListDb : systemConfigListDbs) {
 
-			for(SystemConfigUserwiseDb systemConfigUserwiseDb : systemConfigUserwiseDbs) {
+			for (SystemConfigUserwiseDb systemConfigUserwiseDb : systemConfigUserwiseDbs) {
 
-				if(systemConfigListDb.getValue() == systemConfigUserwiseDb.getValue()) {
+				if (systemConfigListDb.getValue() == systemConfigUserwiseDb.getValue()) {
 					systemConfigListDbResult.add(systemConfigListDb);
 					break;
 				}
@@ -513,19 +538,19 @@ public class ConfigurationManagementServiceImpl {
 	}
 
 	private GenricResponse validateUpdateRequest(String tag, String value) {
-		if(Objects.isNull(tag)) {
+		if (Objects.isNull(tag)) {
 			logger.info("Receiving tag as null.");
-			return new GenricResponse(1, "Receiving tag as null.","");
+			return new GenricResponse(1, "Receiving tag as null.", "");
 		}
-		if(Objects.isNull(value) && !value.isEmpty()) {
+		if (Objects.isNull(value) && !value.isEmpty()) {
 			logger.info("Value of a tag can't be set to null or empty.");
-			return new GenricResponse(2, "Value of a tag can't be set to null or empty.","");
+			return new GenricResponse(2, "Value of a tag can't be set to null or empty.", "");
 		}
 
-		return new GenricResponse(0, "","");
+		return new GenricResponse(0, "", "");
 	}
 
-	public SystemConfigurationDb saveSystemConfiguration(SystemConfigurationDb systemConfigurationDb){
+	public SystemConfigurationDb saveSystemConfiguration(SystemConfigurationDb systemConfigurationDb) {
 		try {
 			return systemConfigurationDbRepository.save(systemConfigurationDb);
 		} catch (Exception e) {
@@ -534,7 +559,7 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
-	public MessageConfigurationDb saveMessageConfiguration(MessageConfigurationDb messageConfigurationDb){
+	public MessageConfigurationDb saveMessageConfiguration(MessageConfigurationDb messageConfigurationDb) {
 		try {
 			return messageConfigurationDbRepository.save(messageConfigurationDb);
 		} catch (Exception e) {
@@ -543,7 +568,7 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
-	public PolicyConfigurationDb savePolicyConfiguration(PolicyConfigurationDb policyConfigurationDb){
+	public PolicyConfigurationDb savePolicyConfiguration(PolicyConfigurationDb policyConfigurationDb) {
 		try {
 			return policyConfigurationDbRepository.save(policyConfigurationDb);
 		} catch (Exception e) {
@@ -552,100 +577,104 @@ public class ConfigurationManagementServiceImpl {
 		}
 	}
 
-	public List<SystemConfigListDb> addOtherToLastPostion(List<SystemConfigListDb> systemConfigListDbs){
-		//Others list
-		List<SystemConfigListDb> others = systemConfigListDbs.stream().filter(e -> "other".equalsIgnoreCase(e.getInterp())).collect(Collectors.toList());
+	public List<SystemConfigListDb> addOtherToLastPostion(List<SystemConfigListDb> systemConfigListDbs) {
+		// Others list
+		List<SystemConfigListDb> others = systemConfigListDbs.stream()
+				.filter(e -> "other".equalsIgnoreCase(e.getInterp())).collect(Collectors.toList());
 
-		//Removed Other
-		systemConfigListDbs = systemConfigListDbs.stream().filter(e -> !"other".equalsIgnoreCase(e.getInterp())).collect(Collectors.toList());
-		//Other list appended
+		// Removed Other
+		systemConfigListDbs = systemConfigListDbs.stream().filter(e -> !"other".equalsIgnoreCase(e.getInterp()))
+				.collect(Collectors.toList());
+		// Other list appended
 		systemConfigListDbs.addAll(others);
 
 		return systemConfigListDbs;
 	}
 
+	private GenericSpecificationBuilder<MessageConfigurationDb> buildSpecification(FilterRequest filterRequest) {
+		GenericSpecificationBuilder<MessageConfigurationDb> sb = new GenericSpecificationBuilder<>(
+				propertiesReader.dialect);
 
-	
-	private GenericSpecificationBuilder<MessageConfigurationDb> buildSpecification(FilterRequest filterRequest){
-		GenericSpecificationBuilder<MessageConfigurationDb> sb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
+		if (Objects.nonNull(filterRequest.getTag()))
+			sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY_CASE_INSENSITIVE,
+					Datatype.STRING));
 
-		if(Objects.nonNull(filterRequest.getTag()))
-			sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
+		if (Objects.nonNull(filterRequest.getChannel()))
+			sb.with(new SearchCriteria("channel", filterRequest.getChannel(), SearchOperation.EQUALITY,
+					Datatype.STRING));
 
-		if(Objects.nonNull(filterRequest.getChannel()))
-			sb.with(new SearchCriteria("channel", filterRequest.getChannel(), SearchOperation.EQUALITY, Datatype.STRING));
-
-		if(Objects.nonNull(filterRequest.getFeatureName()))
-			sb.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
-
-
-		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-			sb.orSearch(new SearchCriteria("tag", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			sb.orSearch(new SearchCriteria("featureName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			
+		if (Objects.nonNull(filterRequest.getFeatureName()))
+			sb.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY,
+					Datatype.STRING));
+		/*
+		 * if (Objects.nonNull(filterRequest.getFeatureName())) sb.with(new
+		 * SearchCriteria("subject", filterRequest.getSubject(), SearchOperation.LIKE,
+		 * Datatype.STRING));
+		 */
+		if (Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()) {
+			sb.orSearch(
+					new SearchCriteria("tag", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE,
+					Datatype.STRING));
+			sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE,
+					Datatype.STRING));
+			sb.orSearch(new SearchCriteria("featureName", filterRequest.getSearchString(), SearchOperation.LIKE,
+					Datatype.STRING));
+			sb.orSearch(new SearchCriteria("subject", filterRequest.getSearchString(), SearchOperation.LIKE,
+					Datatype.STRING));
 		}
 		return sb;
+	}
+
+	private GenericSpecificationBuilder<SystemConfigurationDb> buildSpecification_system(FilterRequest filterRequest) {
+
+		GenericSpecificationBuilder<SystemConfigurationDb> sb = new GenericSpecificationBuilder<SystemConfigurationDb>(
+				propertiesReader.dialect);
+
+		if (Objects.nonNull(filterRequest.getTag()))
+			sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY_CASE_INSENSITIVE,
+					Datatype.STRING));
+
+		if (Objects.nonNull(filterRequest.getType()))
+			sb.with(new SearchCriteria("type", filterRequest.getType(), SearchOperation.EQUALITY, Datatype.STRING));
+
+		if (Objects.nonNull(filterRequest.getFeatureName()))
+			sb.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY,
+					Datatype.STRING));
+
+		if (Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()) {
+			sb.orSearch(
+					new SearchCriteria("tag", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE,
+					Datatype.STRING));
+			sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE,
+					Datatype.STRING));
 		}
-		
-		
-	
-	
-	private GenericSpecificationBuilder<SystemConfigurationDb> buildSpecification_system(FilterRequest filterRequest){
-	
-	GenericSpecificationBuilder<SystemConfigurationDb> sb = new GenericSpecificationBuilder<SystemConfigurationDb>(propertiesReader.dialect);
-
-	if(Objects.nonNull(filterRequest.getTag()))
-		sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
-
-	if(Objects.nonNull(filterRequest.getType()))
-		sb.with(new SearchCriteria("type", filterRequest.getType(), SearchOperation.EQUALITY, Datatype.STRING));
-
-	if(Objects.nonNull(filterRequest.getFeatureName()))
-		sb.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
-
-
-	if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-		sb.orSearch(new SearchCriteria("tag", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-		sb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-		sb.orSearch(new SearchCriteria("value", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		return sb;
 	}
-	return sb;
-	}
-	
-	
-	
-	
-	
+
 	public void setInterp_system(SystemConfigurationDb systemConfigurationDb) {
-		if(Objects.nonNull(systemConfigurationDb.getType())) {
-			systemConfigurationDb.setTypeInterp(interpSetter.setConfigInterp(Tags.CONFIG_TYPE, systemConfigurationDb.getType()));
-		}	
-	}	
-	
-	
-	
-	
-	
-	
-	
+		if (Objects.nonNull(systemConfigurationDb.getType())) {
+			systemConfigurationDb
+					.setTypeInterp(interpSetter.setConfigInterp(Tags.CONFIG_TYPE, systemConfigurationDb.getType()));
+		}
+	}
+
 	public void setInterp(MessageConfigurationDb messageConfigurationDb) {
-		if(Objects.nonNull(messageConfigurationDb.getChannel())) {
-		messageConfigurationDb.setChannelInterp(interpSetter.setConfigInterp(Tags.CHANNEL, messageConfigurationDb.getChannel()));
-		}	
-	}	
-	
-	
-	
-	
-	private List<MessageConfigurationDb> getAll(FilterRequest filterRequest){
+		if (Objects.nonNull(messageConfigurationDb.getChannel())) {
+			messageConfigurationDb
+					.setChannelInterp(interpSetter.setConfigInterp(Tags.CHANNEL, messageConfigurationDb.getChannel()));
+		}
+	}
+
+	private List<MessageConfigurationDb> getAll(FilterRequest filterRequest) {
 		try {
-			List<MessageConfigurationDb> list = messageConfigurationDbRepository.findAll(buildSpecification(filterRequest).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
+			List<MessageConfigurationDb> list = messageConfigurationDbRepository
+					.findAll(buildSpecification(filterRequest).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
 			logger.info("consignmentMgmts " + list);
 
-			for(MessageConfigurationDb messageConfigurationDb : list) {
-			setInterp(messageConfigurationDb);
+			for (MessageConfigurationDb messageConfigurationDb : list) {
+				setInterp(messageConfigurationDb);
 			}
 
 			logger.info("MessageConfigurationDb list : " + list);
@@ -656,15 +685,13 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
-	
-	
-	
-	private List<SystemConfigurationDb> getAll_system(FilterRequest filterRequest){
+
+	private List<SystemConfigurationDb> getAll_system(FilterRequest filterRequest) {
 		try {
-			List<SystemConfigurationDb> list = systemConfigurationDbRepository.findAll(buildSpecification_system(filterRequest).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
-			for(SystemConfigurationDb systemConfigurationDb : list) {
-			setInterp_system(systemConfigurationDb);
+			List<SystemConfigurationDb> list = systemConfigurationDbRepository.findAll(
+					buildSpecification_system(filterRequest).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
+			for (SystemConfigurationDb systemConfigurationDb : list) {
+				setInterp_system(systemConfigurationDb);
 			}
 			return list;
 
@@ -673,29 +700,28 @@ public class ConfigurationManagementServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
-	
-	/*************************************** Export File for System Mgt ********************************
+
+	/***************************************
+	 * Export File for System Mgt ********************************
 	 *************************************************************************************************/
-	
+
 	public FileDetails exportFile_System(FilterRequest filterRequest) {
 		String fileName = null;
-		Writer writer   = null;
+		Writer writer = null;
 
 		SystemMgtFileModel fileModel = null;
 
-		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
-
-		SystemConfigurationDb filepath =configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
+		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
 		logger.info("CONFIG : file_systemMgt_download_dir [" + filepath + "]");
-		SystemConfigurationDb link =configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
+		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
 		logger.info("CONFIG : file_systemMgt_download_link [" + link + "]");
 
 		StatefulBeanToCsvBuilder<SystemMgtFileModel> builder = null;
-		StatefulBeanToCsv<SystemMgtFileModel> csvWriter      = null;
-		List< SystemMgtFileModel> fileRecords                = null;
+		StatefulBeanToCsv<SystemMgtFileModel> csvWriter = null;
+		List<SystemMgtFileModel> fileRecords = null;
 		CustomMappingStrategy<SystemMgtFileModel> mappingStrategy = new CustomMappingStrategy<>();
 
 		try {
@@ -705,77 +731,73 @@ public class ConfigurationManagementServiceImpl {
 			mappingStrategy.setType(SystemMgtFileModel.class);
 
 			builder = new StatefulBeanToCsvBuilder<>(writer);
-			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',')
+					.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
 
-			if( !systemConfigurationDBList.isEmpty() ) {
+			if (!systemConfigurationDBList.isEmpty()) {
 				fileRecords = new ArrayList<>();
-				for( SystemConfigurationDb systemConfigurationDB : systemConfigurationDBList ) {
+				for (SystemConfigurationDb systemConfigurationDB : systemConfigurationDBList) {
 
-					LocalDateTime creation = systemConfigurationDB.getCreatedOn() == null ? LocalDateTime.now() : systemConfigurationDB.getCreatedOn();
-					LocalDateTime modified = systemConfigurationDB.getModifiedOn() == null ? LocalDateTime.now() : systemConfigurationDB.getModifiedOn();
-					
-					fileModel = new SystemMgtFileModel(
-							creation.format(dtf), 
-							modified.format(dtf), 
-							systemConfigurationDB.getDescription() == null ? "NA" : systemConfigurationDB.getDescription(),
-							systemConfigurationDB.getValue() == null ? "NA" : systemConfigurationDB.getValue(), 
+					LocalDateTime creation = systemConfigurationDB.getCreatedOn() == null ? LocalDateTime.now()
+							: systemConfigurationDB.getCreatedOn();
+					LocalDateTime modified = systemConfigurationDB.getModifiedOn() == null ? LocalDateTime.now()
+							: systemConfigurationDB.getModifiedOn();
+
+					fileModel = new SystemMgtFileModel(creation.format(dtf), modified.format(dtf),
+							systemConfigurationDB.getDescription() == null ? "NA"
+									: systemConfigurationDB.getDescription(),
+							systemConfigurationDB.getValue() == null ? "NA" : systemConfigurationDB.getValue(),
 							systemConfigurationDB.getTypeInterp());
 					fileRecords.add(fileModel);
 				}
 
 				csvWriter.write(fileRecords);
-			}else {
-				csvWriter.write( new SystemMgtFileModel());
+			} else {
+				csvWriter.write(new SystemMgtFileModel());
 			}
 
-			
-			FileDetails fileDetails = new FileDetails( fileName, filepath.getValue(), link.getValue().replace("$LOCAL_IP",
-					propertiesReader.localIp) + fileName );
+			FileDetails fileDetails = new FileDetails(fileName, filepath.getValue(),
+					link.getValue().replace("$LOCAL_IP", propertiesReader.localIp) + fileName);
 			logger.info(fileDetails);
 			return fileDetails;
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}finally {
+		} finally {
 			try {
 
-				if( writer != null )
+				if (writer != null)
 					writer.close();
-			} catch (IOException e) {}
+			} catch (IOException e) {
+			}
 		}
 
 	}
-	
-	
-	
-	
-	
-	/*************************************** Export File for Message Mgt ********************************
-	 *********************************************************************Ranjeet****************************/
-	
+
+	/***************************************
+	 * Export File for Message Mgt ******************************** Ranjeet
+	 ****************************/
+
 	public FileDetails exportFile_Message(FilterRequest filterRequest) {
-		
 
 		String fileName = null;
-		
-		Writer writer   = null;
+
+		Writer writer = null;
 
 		MessageMgtFileModel fileModel = null;
-		
 
-		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
-
-		SystemConfigurationDb filepath =configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
+		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
 		logger.info("CONFIG : file_messageMgt_download_dir [" + filepath + "]");
-		SystemConfigurationDb link =configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
+		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
 		logger.info("CONFIG : file_messageMgt_download_link [" + link + "]");
 
 		StatefulBeanToCsvBuilder<MessageMgtFileModel> builder = null;
-		StatefulBeanToCsv<MessageMgtFileModel> csvWriter      = null;
-		List< MessageMgtFileModel> fileRecords                = null;
+		StatefulBeanToCsv<MessageMgtFileModel> csvWriter = null;
+		List<MessageMgtFileModel> fileRecords = null;
 		CustomMappingStrategy<MessageMgtFileModel> mappingStrategy = new CustomMappingStrategy<>();
 
 		try {
@@ -785,55 +807,64 @@ public class ConfigurationManagementServiceImpl {
 			mappingStrategy.setType(MessageMgtFileModel.class);
 
 			builder = new StatefulBeanToCsvBuilder<>(writer);
-			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
-			
-			//csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',')
+					.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
 
-/*			if( !messageConfigurationDbList.isEmpty() ) {
+			// csvWriter =
+			// builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+
+			/*
+			 * if( !messageConfigurationDbList.isEmpty() ) { fileRecords = new
+			 * ArrayList<>(); for( MessageConfigurationDb messageConfigurationDb :
+			 * messageConfigurationDbList ) {
+			 * 
+			 * 
+			 * LocalDateTime creation = messageConfigurationDb.getCreatedOn() == null ?
+			 * LocalDateTime.now() : messageConfigurationDb.getCreatedOn(); LocalDateTime
+			 * modified = messageConfigurationDb.getModifiedOn() == null ?
+			 * LocalDateTime.now() : messageConfigurationDb.getModifiedOn();
+			 * 
+			 * fileModel = new MessageMgtFileModel(creation.format(dtf),
+			 * modified.format(dtf), messageConfigurationDb.getDescription() == null ? "NA"
+			 * : messageConfigurationDb.getDescription(), messageConfigurationDb.getValue()
+			 * == null ? "NA" : messageConfigurationDb.getValue(),
+			 * messageConfigurationDb.getChannelInterp() == null ? "NA" :
+			 * messageConfigurationDb.getChannelInterp()); fileRecords.add(fileModel); }
+			 * 
+			 * 
+			 * 
+			 * csvWriter.write(fileRecords); }
+			 */
+			if (!messageConfigurationDbList.isEmpty()) {
 				fileRecords = new ArrayList<>();
-				for( MessageConfigurationDb messageConfigurationDb : messageConfigurationDbList ) {
+				for (MessageConfigurationDb messageConfigurationDb : messageConfigurationDbList) {
+					fileModel = new MessageMgtFileModel();
+					LocalDateTime creation = messageConfigurationDb.getCreatedOn() == null ? LocalDateTime.now()
+							: messageConfigurationDb.getCreatedOn();
+					LocalDateTime modified = messageConfigurationDb.getModifiedOn() == null ? LocalDateTime.now()
+							: messageConfigurationDb.getModifiedOn();
+					fileModel.setCreatedOn(creation.format(dtf));
+					fileModel.setModifiedOn(modified.format(dtf));
+					fileModel.setFeatureName(messageConfigurationDb.getFeatureName() == null ? "NA"
+							: messageConfigurationDb.getFeatureName());
+					fileModel.setSubject(messageConfigurationDb.getSubject());
 
-					
-					LocalDateTime creation = messageConfigurationDb.getCreatedOn() == null ? LocalDateTime.now() : messageConfigurationDb.getCreatedOn();
-					LocalDateTime modified = messageConfigurationDb.getModifiedOn() == null ? LocalDateTime.now() : messageConfigurationDb.getModifiedOn();
-					
-					fileModel = new MessageMgtFileModel(creation.format(dtf), 
-							modified.format(dtf), 
-							messageConfigurationDb.getDescription() == null ? "NA" : messageConfigurationDb.getDescription(),
-							messageConfigurationDb.getValue() == null ? "NA" : messageConfigurationDb.getValue(),
-							messageConfigurationDb.getChannelInterp() == null ? "NA" : messageConfigurationDb.getChannelInterp());
+					fileModel.setDescription(messageConfigurationDb.getDescription() == null ? "NA"
+							: messageConfigurationDb.getDescription());
+					fileModel.setValue(
+							messageConfigurationDb.getValue() == null ? "NA" : messageConfigurationDb.getValue());
+					fileModel.setUserType(messageConfigurationDb.getChannelInterp());
+
+					/* fileModel.setUserType(messageConfigurationDb.getChannelInterp()); */
+					logger.debug(fileModel);
 					fileRecords.add(fileModel);
 				}
 
-			
-				
-				csvWriter.write(fileRecords);
-			}*/
-			if( !messageConfigurationDbList.isEmpty() ) {
-				fileRecords = new ArrayList<>();
-				for( MessageConfigurationDb messageConfigurationDb : messageConfigurationDbList ) {
-					fileModel= new MessageMgtFileModel();
-					LocalDateTime creation = messageConfigurationDb.getCreatedOn() == null ? LocalDateTime.now() : messageConfigurationDb.getCreatedOn();
-					LocalDateTime modified = messageConfigurationDb.getModifiedOn() == null ? LocalDateTime.now() : messageConfigurationDb.getModifiedOn();
-					fileModel.setCreatedOn(creation.format(dtf));
-					fileModel.setModifiedOn(modified.format(dtf)); 
-					fileModel.setDescription(messageConfigurationDb.getDescription() == null ? "NA" : messageConfigurationDb.getDescription());
-					fileModel.setValue(messageConfigurationDb.getValue() == null ? "NA" : messageConfigurationDb.getValue());
-				 fileModel.setUserType(messageConfigurationDb.getChannelInterp());
-						
-				 fileModel.setFeatureName(messageConfigurationDb.getFeatureName() == null ? "NA"  : messageConfigurationDb.getFeatureName());
-					
-					
-					/*fileModel.setUserType(messageConfigurationDb.getChannelInterp());	*/			
-					logger.debug(fileModel);					
-					fileRecords.add(fileModel);					
-				}			
-				
 				csvWriter.write(fileRecords);
 			}
-			
+
 			else {
-				csvWriter.write( new MessageMgtFileModel());
+				csvWriter.write(new MessageMgtFileModel());
 			}
 
 			/*
@@ -843,108 +874,102 @@ public class ConfigurationManagementServiceImpl {
 			 * SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
 			 * logger.info("AUDIT : Saved file export request in audit.");
 			 */
-			FileDetails fileDetails = new FileDetails( fileName, filepath.getValue(), link.getValue().replace("$LOCAL_IP",
-					propertiesReader.localIp) + fileName );
+			FileDetails fileDetails = new FileDetails(fileName, filepath.getValue(),
+					link.getValue().replace("$LOCAL_IP", propertiesReader.localIp) + fileName);
 			logger.info(fileDetails);
 			return fileDetails;
 
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}finally {
+		} finally {
 			try {
 
-				if( writer != null )
+				if (writer != null)
 					writer.close();
-			} catch (IOException e) {}
-		}
-
-	
-		
-		
-		/*
-		String fileName = null;
-		Writer writer   = null;
-
-		MessageMgtFileModel fileModel = null;
-
-		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
-
-
-		SystemConfigurationDb filepath =configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
-		logger.info("CONFIG : file_messageMgt_download_dir [" + filepath + "]");
-		SystemConfigurationDb link =configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
-		logger.info("CONFIG : file_messageMgt_download_link [" + link + "]");
-
-		StatefulBeanToCsvBuilder<MessageMgtFileModel> builder = null;
-		StatefulBeanToCsv<MessageMgtFileModel> csvWriter      = null;
-		List< MessageMgtFileModel> fileRecords                = null;
-		CustomMappingStrategy<MessageMgtFileModel> mappingStrategy = new CustomMappingStrategy<>();
-
-		try {
-			List<MessageConfigurationDb> messageConfigurationDbList = getAll(filterRequest);
-			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_MessageMgt.csv";
-			writer = Files.newBufferedWriter(Paths.get(filepath.getValue() + fileName));
-			mappingStrategy.setType(MessageMgtFileModel.class);
-
-			builder = new StatefulBeanToCsvBuilder<>(writer);
-			//csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
-			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
-
-			if( !messageConfigurationDbList.isEmpty() ) {
-				fileRecords = new ArrayList<>();
-				for( MessageConfigurationDb messageConfigurationDb : messageConfigurationDbList ) {
-
-					
-					LocalDateTime creation = messageConfigurationDb.getCreatedOn() == null ? LocalDateTime.now() : messageConfigurationDb.getCreatedOn();
-					LocalDateTime modified = messageConfigurationDb.getModifiedOn() == null ? LocalDateTime.now() : messageConfigurationDb.getModifiedOn();
-					
-					fileModel = new MessageMgtFileModel(creation.format(dtf), 
-							modified.format(dtf), 
-							messageConfigurationDb.getDescription() == null ? "NA" : messageConfigurationDb.getDescription(),
-							messageConfigurationDb.getValue() == null ? "NA" : messageConfigurationDb.getValue(),
-							messageConfigurationDb.getChannelInterp() == null ? "NA" : messageConfigurationDb.getChannelInterp());
-					fileRecords.add(fileModel);
-				}
-
-			
-				
-				csvWriter.write(fileRecords);
-			}else {
-				csvWriter.write( new MessageMgtFileModel());
+			} catch (IOException e) {
 			}
-
-			
-			 * auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "",
-			 * Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
-			 * Long.valueOf(filterRequest.getFeatureId()), Features.CONSIGNMENT,
-			 * SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
-			 * logger.info("AUDIT : Saved file export request in audit.");
-			 
-			FileDetails fileDetails = new FileDetails( fileName, filepath.getValue(), link.getValue() + fileName );
-			logger.info(fileDetails);
-			return fileDetails;
-
-		} catch (Exception e) {
-			logger.error(e.getMessage(), e);
-			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}finally {
-			try {
-
-				if( writer != null )
-					writer.close();
-			} catch (IOException e) {}
 		}
 
-	*/}
-	
-	
+		/*
+		 * String fileName = null; Writer writer = null;
+		 * 
+		 * MessageMgtFileModel fileModel = null;
+		 * 
+		 * DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		 * DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+		 * 
+		 * 
+		 * SystemConfigurationDb filepath
+		 * =configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
+		 * logger.info("CONFIG : file_messageMgt_download_dir [" + filepath + "]");
+		 * SystemConfigurationDb link
+		 * =configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
+		 * logger.info("CONFIG : file_messageMgt_download_link [" + link + "]");
+		 * 
+		 * StatefulBeanToCsvBuilder<MessageMgtFileModel> builder = null;
+		 * StatefulBeanToCsv<MessageMgtFileModel> csvWriter = null; List<
+		 * MessageMgtFileModel> fileRecords = null;
+		 * CustomMappingStrategy<MessageMgtFileModel> mappingStrategy = new
+		 * CustomMappingStrategy<>();
+		 * 
+		 * try { List<MessageConfigurationDb> messageConfigurationDbList =
+		 * getAll(filterRequest); fileName =
+		 * LocalDateTime.now().format(dtf2).replace(" ", "_") + "_MessageMgt.csv";
+		 * writer = Files.newBufferedWriter(Paths.get(filepath.getValue() + fileName));
+		 * mappingStrategy.setType(MessageMgtFileModel.class);
+		 * 
+		 * builder = new StatefulBeanToCsvBuilder<>(writer); //csvWriter =
+		 * builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar
+		 * (CSVWriter.NO_QUOTE_CHARACTER).build(); csvWriter =
+		 * builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar
+		 * (CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+		 * 
+		 * if( !messageConfigurationDbList.isEmpty() ) { fileRecords = new
+		 * ArrayList<>(); for( MessageConfigurationDb messageConfigurationDb :
+		 * messageConfigurationDbList ) {
+		 * 
+		 * 
+		 * LocalDateTime creation = messageConfigurationDb.getCreatedOn() == null ?
+		 * LocalDateTime.now() : messageConfigurationDb.getCreatedOn(); LocalDateTime
+		 * modified = messageConfigurationDb.getModifiedOn() == null ?
+		 * LocalDateTime.now() : messageConfigurationDb.getModifiedOn();
+		 * 
+		 * fileModel = new MessageMgtFileModel(creation.format(dtf),
+		 * modified.format(dtf), messageConfigurationDb.getDescription() == null ? "NA"
+		 * : messageConfigurationDb.getDescription(), messageConfigurationDb.getValue()
+		 * == null ? "NA" : messageConfigurationDb.getValue(),
+		 * messageConfigurationDb.getChannelInterp() == null ? "NA" :
+		 * messageConfigurationDb.getChannelInterp()); fileRecords.add(fileModel); }
+		 * 
+		 * 
+		 * 
+		 * csvWriter.write(fileRecords); }else { csvWriter.write( new
+		 * MessageMgtFileModel()); }
+		 * 
+		 * 
+		 * auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), "",
+		 * Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
+		 * Long.valueOf(filterRequest.getFeatureId()), Features.CONSIGNMENT,
+		 * SubFeatures.VIEW, "", "NA",filterRequest.getRoleType()));
+		 * logger.info("AUDIT : Saved file export request in audit.");
+		 * 
+		 * FileDetails fileDetails = new FileDetails( fileName, filepath.getValue(),
+		 * link.getValue() + fileName ); logger.info(fileDetails); return fileDetails;
+		 * 
+		 * } catch (Exception e) { logger.error(e.getMessage(), e); throw new
+		 * ResourceServicesException(this.getClass().getName(), e.getMessage());
+		 * }finally { try {
+		 * 
+		 * if( writer != null ) writer.close(); } catch (IOException e) {} }
+		 * 
+		 */}
+
 	public void getInterp(PolicyConfigurationDb policyConfigurationDb) {
 
-			if(Objects.nonNull( policyConfigurationDb.getStatus()))
-				policyConfigurationDb.setStatusInterp(interpSetter.setConfigInterp(Tags.IS_ACTIVE, policyConfigurationDb.getStatus()));
-			}
+		if (Objects.nonNull(policyConfigurationDb.getStatus()))
+			policyConfigurationDb
+					.setStatusInterp(interpSetter.setConfigInterp(Tags.IS_ACTIVE, policyConfigurationDb.getStatus()));
+	}
 
 }
-

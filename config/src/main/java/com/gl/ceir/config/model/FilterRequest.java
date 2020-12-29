@@ -51,6 +51,7 @@ public class FilterRequest {
 	
 	private String displayName;
 	
+	private String subject;
 	public String getFilteredUserType() {
 		return filteredUserType;
 	}
@@ -363,8 +364,18 @@ public class FilterRequest {
 		builder.append(remark);
 		builder.append(", displayName=");
 		builder.append(displayName);
+		builder.append(", subject=");
+		builder.append(subject);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 	
 }
