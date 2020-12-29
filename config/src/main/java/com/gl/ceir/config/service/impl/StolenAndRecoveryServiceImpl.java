@@ -336,7 +336,7 @@ public class StolenAndRecoveryServiceImpl {
 			logger.info(stolenandRecoveryMgmtPage.getContent());
 			if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
 				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER, filterRequest.getRoleType(), filterRequest.getRequestType(),filterRequest.getFeatureId());
-			}else {
+			} else {
 				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
 			}
 			return stolenandRecoveryMgmtPage;
