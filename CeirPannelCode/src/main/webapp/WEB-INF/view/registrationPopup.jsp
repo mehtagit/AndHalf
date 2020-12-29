@@ -321,8 +321,8 @@ input[type="checkbox"] {
 			</div>
 			<div class="input-field col s12 center">
 				<div class="input-field col s12 center">
-					<a href="JavaScript:Void(0);" class="btn" type="submit"
-						name="add_user" id="add_user"><spring:message code="modal.ok" /></a>
+					<a href="${context}/DMC" class="btn"
+						name="add_user" id="add_user"><spring:message code="modal.ok" /></a>	
 					<%-- <a href="#"
 						class="modal-close btn" style="margin-left: 10px;"><spring:message
 							code="modal.no" /></a> --%>
