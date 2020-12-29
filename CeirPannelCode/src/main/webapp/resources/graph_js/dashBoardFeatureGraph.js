@@ -219,7 +219,7 @@ function graph(response,id,chartType,chartTitle,pieLabelName,GraphImageId,GraphE
     			},
     	        scales: {
     	          xAxes: [{ 
-    	          	stacked: false,
+    	          	stacked: true,
     	          	scaleLabel: {
     	                display: true,
     	                labelString: 'Count'

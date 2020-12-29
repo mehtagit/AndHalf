@@ -227,7 +227,8 @@ select {
 																code="registration.devicebrandname" /> <span
 															class="star"></span></label> <select
 															id="sigleRecoverydeviceBrandName" class="browser-default"
-															onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+															onchange="changeSelectDropDownToText('sigleRecoverydeviceBrandName')"
+															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
 															<option value=""  selected><spring:message
 																	code="registration.selectproduct" />
@@ -262,17 +263,27 @@ select {
                                                                 <label for="sigleRecoveryimeiNumber"> <spring:message code="registration.imei/meid/esnnumber" /><span class="star"> *</span></label>
                                                             </div> --%>
 
-													<div class="col s6 m6 ">
+													<div class="col s6 m6 " style="margin-top: 4px;">
 														<label for="sigleRecoverydeviceIDType"><spring:message
-																code="select.deviceIDType" /> <span class="star">
-																*</span></label> <select id="sigleRecoverydeviceIDType"
+																code="select.deviceIDType" /> <!-- <span class="star">
+																*</span> --></label> <select id="sigleRecoverydeviceIDType"
 															class="browser-default"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															required>
+															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
 															<option value=""  selected><spring:message
 																	code="select.deviceIDType" /></option>
 														</select>
+													</div>
+													
+													<div class="input-field  col s12 m12" id="OtherBrandNameDiv" style="display: none">
+														<input type="text" name="brandName" id="OtherBrandName"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,50}"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+															required maxlength="50"> <label
+															for="singleStolencommune"> <spring:message
+																code="registration.devicebrandname" /> <span class=" star"> *</span>
+														</label>
 													</div>
 
 													<div class="col s6 m6 ">
@@ -290,6 +301,7 @@ select {
 														<label for="sigleRecoverydeviceSimStatus"> <spring:message
 																code="select.multiSimStatus" /></label> <select
 															id="sigleRecoverydeviceSimStatus" class="browser-default"
+															onchange="setContactIMEINumber('sigleRecoverydeviceSimStatus','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
 															<option value=""  selected><spring:message
@@ -309,13 +321,14 @@ select {
 																code="input.deviceSerialNumber" /></label>
 													</div>
 
+													
+										           	<div id="IMEIndContact1" style="display: none">	
 													<div class="col s12 m12"
 														style="margin-top: 10px; font-weight: bold;">
 														<h6>
 															<spring:message code="registration.imei/meid/esnnumber" />
 														</h6>
 													</div>
-
 													<div class="input-field col s12 m6">
 														<input type="text" name="sigleRecoveryimeiNumber1"
 															pattern="[0-9]{15,16}" 
@@ -325,7 +338,8 @@ select {
 															for="sigleRecoveryimeiNumber1"><spring:message
 																code="registration.one" /> <span class="star"> </span></label>
 													</div>
-
+													</div>
+													<div id="IMEIndContact2" style="display: none">
 													<div class="input-field col s12 m6">
 														<input type="text" name="imeiNumberTwo"
 															pattern="[0-9]{15,16}" 
@@ -335,7 +349,8 @@ select {
 															for="sigleRecoveryimeiNumber2"><spring:message
 																code="registration.two" /></label>
 													</div>
-
+													</div>
+													<div id="IMEIndContact3" style="display: none">						
 													<div class="input-field col s12 m6">
 														<input type="text" name="imeiNumberThree"
 															pattern="[0-9]{15,16}" 
@@ -346,7 +361,8 @@ select {
 																code="registration.three" /></label>
 														<p id="errorMsgOnModal" class="deviceErrorTitle"></p>
 													</div>
-
+													</div>
+													<div id="IMEIndContact4" style="display: none">	
 													<div class="input-field col s12 m6">
 														<input type="text" name="imeiNumberFour"
 															pattern="[0-9]{15,16}" 
@@ -355,7 +371,7 @@ select {
 															maxlength="16" id="sigleRecoveryimeiNumber4"> <label
 															for="sigleRecoveryimeiNumber4"><spring:message
 																code="registration.four" /></label>
-													</div>
+													</div></div>
 
 													<div class="col s12 m12" style="margin-top: 30px;">
 														<h5>
@@ -960,10 +976,10 @@ onclick="_Services._selectstartDate()"></i></span>
         { 'X-CSRF-TOKEN': token }
         });
         
-        $.getJSON('./productList', function(data) {
+        $.getJSON('./getDropdownList/TOP_BRAND', function(data) {
         	$('#select2-sigleRecoverydeviceBrandName-container').empty();
         	for (i = 0; i < data.length; i++) {
-        		$('<option>').val(data[i].id).text(data[i].brand_name)
+        		$('<option>').val(data[i].id).text(data[i].interp)
         				.appendTo('#sigleRecoverydeviceBrandName');
         	}
         });
@@ -994,7 +1010,8 @@ onclick="_Services._selectstartDate()"></i></span>
         			 $('select#singleRecoverymodalNumber').select2();
         		});
 
-
+    	$("#country1").val("Cambodia").change();
+		$("#country1").attr("style", "pointer-events: none;");
 
 </script>
 

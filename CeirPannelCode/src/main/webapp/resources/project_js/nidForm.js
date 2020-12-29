@@ -79,3 +79,10 @@
 
 	
 	}
+	
+	function viewAll(){
+		alert("1");
+		In=null;
+		alert("--"+In);
+		window.location.replace("./uploadPaidStatus?via=other&NID="+In);
+	}

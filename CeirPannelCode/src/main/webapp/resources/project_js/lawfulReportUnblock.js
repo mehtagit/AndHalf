@@ -39,6 +39,7 @@ var formData= new FormData();
 $("#singleDeviceRecovery").prop('disabled', true);
 $('div#initialloader').fadeIn('fast');
 	var sigleRecoverydeviceBrandName=$('#sigleRecoverydeviceBrandName').val();
+	
 	var sigleRecoveryimeiNumber1=$('#sigleRecoveryimeiNumber1').val();
 	var sigleRecoveryimeiNumber2=$('#sigleRecoveryimeiNumber2').val();
 	var sigleRecoveryimeiNumber3=$('#sigleRecoveryimeiNumber3').val();
@@ -75,7 +76,10 @@ $('div#initialloader').fadeIn('fast');
 	var singleStolenmodalNumber=$('#singleRecoverymodalNumber').val();
 	var singleStolendeviceBrandName=$('#sigleRecoverydeviceBrandName').val();
 
-	 
+	if($('#sigleRecoverydeviceBrandName').val()==930){
+		sigleRecoverydeviceBrandName= $('#OtherBrandName').val();
+		
+	}
 	
 	var stolenIndividualUserDB={
 			"deviceBrandName": sigleRecoverydeviceBrandName,
@@ -97,7 +101,7 @@ $('div#initialloader').fadeIn('fast');
 			"deviceStolenCountry":country1,
 			"deviceSerialNumber":sigleRecoveryserialNumber,
 			"modelNumber":singleStolenmodalNumber,
-			"deviceBrandName": singleStolendeviceBrandName
+			
 			
 	}
 	

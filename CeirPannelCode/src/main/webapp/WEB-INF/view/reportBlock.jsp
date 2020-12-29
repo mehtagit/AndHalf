@@ -166,7 +166,7 @@
                                                                 </select>
                                                             </div>
                                         
-                                                            <div class="input-field col s12 m6" style="margin-top: 21px;">
+                                                            <div class="input-field col s12 m6" style="margin-top: 23px;">
                                                                 <input type="text" id="singleblockserialNumber" name="serialNumber" pattern="[A-Za-z0-9]{1,25}" 
                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.numberfirst" />');" 
                                                                     oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
@@ -309,7 +309,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                       required   maxlength="7" >
                                                         <label for="blockbulkquantity"><spring:message code="input.quantity" /> <span class="star">*</span></label>
                                                     </div>
-                                                    <div class="input-field col s12 m6" style="margin-top: 22px;">
+                                                    <div class="input-field col s12 m6" style="margin-top: 28px;">
                                                         <input type="text" id="blockbulkDeviceQuantity" name="blockbulkDeviceQuantity" pattern="[0-9]{1,7}" 
                                                         oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
                                                         oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
@@ -317,7 +317,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         <label for="blockbulkDeviceQuantity"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>
                                                     </div>
                                                     
-                                                    <div class="file-field input-field col s12 m6" style="margin-top: -7px;">
+                                                    <div class="file-field input-field col s12 m6" style="margin-top: -88px;">
                                                         <p style="color: #000;"><spring:message code="operator.upload" /> <span class="star">*</span></p>
                                                         <div class="btn">
                                                             <span><spring:message code="operator.file" /></span>
@@ -331,7 +331,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         </div>
                                                     </div>
 
-<div class="input-field col s12 m6" style="margin-top: 0px;">
+<div class="input-field col s12 m6" style="margin-top: 18px;">
                                                                 <textarea id="blockbulkRemark"  class="materialize-textarea" 
                                                                 oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" 
                                                                 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"

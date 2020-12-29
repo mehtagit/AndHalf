@@ -271,7 +271,7 @@ position: fixed;
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');"
 											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');"
 													 required maxlength="12" name="nationalID" placeholder="" disabled="disabled" value="" /> <label for="nationalID" id="nidLabelName"
-														class="center-align ml-10"><spring:message code="input.nidText" /> <span class="star">*</span> </label>
+														class="center-align ml-10"><spring:message code="input.nid" /> <span class="star">*</span> </label>
 												</div>
 
 													<div class="col s12 m4" style="margin-top: -10px;">
@@ -340,8 +340,7 @@ position: fixed;
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 												title="" maxlength="25"> --%>
-												<p
-														style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
+												<p style="margin-top: -18px; margin-bottom: -3px; font-size: 12px;">
 													<spring:message code="input.Nationality" /><span class="star">*</span>
 													</p>
 												<select id="nationality" class="browser-default"
@@ -691,7 +690,7 @@ position: fixed;
 														</div>
 
 														<div class="input-field col s12 m6"
-															style="margin-top: 28px;">
+															style="margin-top: 23px;">
 															<input type="text" id="serialNumber1"  name="serialNumber"
 																pattern="[A-Za-z0-9]{0,25}"
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
