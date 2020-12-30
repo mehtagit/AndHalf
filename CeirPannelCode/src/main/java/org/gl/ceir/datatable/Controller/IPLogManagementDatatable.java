@@ -83,10 +83,11 @@ public class IPLogManagementDatatable {
 				   String modifiedOn = (String) dataInsideList.getModifiedOn();
 				   String username = dataInsideList.getUsername();
 				   String publicIp = dataInsideList.getPublicIp();
+				   String browser = dataInsideList.getBrowser();
 				   String userAgent = dataInsideList.getUserAgent();
 				   //String userStatus = (String) session.getAttribute("userStatus");	  
 				   //String action = iconState.alertManagementIcons(id);
-				   Object[] finalData={createdOn,username,publicIp,userAgent}; 
+				   Object[] finalData={createdOn,username,publicIp,browser,userAgent}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
@@ -143,18 +144,12 @@ public class IPLogManagementDatatable {
 			pageElement.setButtonList(buttonList);
 			
 		
-		/*
-		 * //Dropdown items String[]
-		 * selectParam={"select",Translator.toLocale("table.currency"),"currencyType",""
-		 * }; for(int i=0; i<selectParam.length; i++) { inputFields= new InputFields();
-		 * inputFields.setType(selectParam[i]); i++;
-		 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
-		 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
-		 * } pageElement.setDropdownList(dropdownList);
-		 */
+		
+		  
+		 
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text","User ID","userName","","text","Public IP","publicIp",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

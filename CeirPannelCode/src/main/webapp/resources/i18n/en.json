@@ -243,6 +243,7 @@
 	"imageMessageCSV": "File name should not be more than 30 characters. / File should have extension as png,jpg,jpeg,gif,csv and bmp. / File size should be less than 10 MB",
 	"imageMessageGrievance": "File name should not be more than 30 characters. / File should have extension as png,jpg,jpeg,gif,csv,pdf,docx and bmp. / File size should be less than 10 MB",
 	"meesageForOtherDoc":"Upload Document",
-		"state":"State"
+		"state":"State",
+		"user_exceed_limit":"User creation limit for the usertype exceeded !!"
 	
 	}

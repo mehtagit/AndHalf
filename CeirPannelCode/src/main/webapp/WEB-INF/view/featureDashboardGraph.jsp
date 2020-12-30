@@ -288,7 +288,7 @@ display: none !important;
 					<div class="row">
 						<div class="col s12 m12 l12">
 							<div class="row card-panel">
-							<a id="wholePageImage">Download</a>
+							<a id="wholePageImage" href="javascript:void(0);" onclick="graphImageDownload('Feature_dashboard')">Download</a>
 								<div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display:block !important">
                             <h6 class="fixPage-modal-header ">
                             <spring:message code="sidebar.Feature_Dashboard" />

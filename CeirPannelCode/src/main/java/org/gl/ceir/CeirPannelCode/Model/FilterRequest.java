@@ -10,6 +10,7 @@ public class FilterRequest {
 	private int roleTypeId;
 	private String state,ruleName;
 	public String province,district,commune,village,country;
+	public String publicIp;
 	private int districtID,communeID;
 	public String getStartDate() {
 		return startDate;
@@ -521,6 +522,12 @@ public class FilterRequest {
 	public void setCountry(String country) {
 		this.country = country;
 	}
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
 	public int getDistrictID() {
 		return districtID;
 	}
@@ -706,6 +713,8 @@ public class FilterRequest {
 		builder.append(village);
 		builder.append(", country=");
 		builder.append(country);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
 		builder.append(", districtID=");
 		builder.append(districtID);
 		builder.append(", communeID=");
@@ -713,6 +722,7 @@ public class FilterRequest {
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 	
 	

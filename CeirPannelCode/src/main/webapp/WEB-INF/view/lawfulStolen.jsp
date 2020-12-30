@@ -120,12 +120,12 @@
 		}
 		.starAddress{
 		margin-top: -19px;
-    margin-left:53px;
+    margin-left:70px;
     color: red;
 		}
 		.starAddressDistrict{
 		margin-top: -19px;
-    margin-left:43px;
+    margin-left:50px;
     color: red;
 		}
     </style>
@@ -374,9 +374,9 @@
 															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-															required maxlength="30"> <label for="singleStolendistrict" >
+															required maxlength="30"> <label for="singleStolendistrict" id="singleStolenDistrictLabelID" >
 															<spring:message code="input.district" /> <span id="singleStolendistrictLabel"
-															class="star starAddressDistrict"> *</span>
+															class="star"> *</span>
 														</label>
 													</div>
 
@@ -385,9 +385,9 @@
 															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-															required maxlength="30"> <label
+															required maxlength="30"> <label id="singleStolenCommuneLabelID"
 															for="singleStolencommune"> <spring:message
-																code="input.commune" /> <span class=" star starAddress" id="singleStolenCommune"> *</span>
+																code="input.commune" /> <span class=" star" id="singleStolenCommune"> *</span>
 														</label>
 													</div>
 
@@ -439,7 +439,8 @@
 															<label for="singleStolendeviceBrandName"><spring:message
 													code="registration.devicebrandname" /> <span class="star">*</span></label>
 											<select id="singleStolendeviceBrandName" class="browser-default"
-												onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												onchange="changeSelectDropDownToText('singleStolendeviceBrandName')"
+												oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												required>
 												<option value=""  selected><spring:message
@@ -459,7 +460,18 @@
 																</option>
 															</select>
 														</div>
-
+ 													
+ 													
+ 													<div class="input-field  col s12 m12" id="OtherBrandNameDiv" style="display: none">
+														<input type="text" name="brandName" id="OtherBrandName"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,50}"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+															required maxlength="50"> <label
+															for="singleStolencommune"> <spring:message
+																code="registration.devicebrandname" /> <span class=" star"> *</span>
+														</label>
+													</div>
 														<div class="col s6 m6 ">
 															<label for="deviceType"> <spring:message
 																	code="select.deviceType" /></label> <select
@@ -578,12 +590,13 @@
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
 																<option value=""  selected>
-																	<spring:message code="registration.selectMultiplest" />
+																	<spring:message code="registration.selectMultiplestLawfull" />
 																</option>
-
+	
 															</select>
 														</div>
 															<div id="IMEIndContact1" style="display: none">
+														
                                                          <div class="col s12 m6">
 															<p class="contact-label">
 																<spring:message code="input.contactNum" />
@@ -598,7 +611,7 @@
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"  
 																maxlength="16" id="singleStolenimei1" > 
 																<label for="singleStolenimei1"><spring:message code="registration.one.IMEI" /> <span class="star"> </span> 
-																</label>
+																</label><p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-left: 45%;"></p>
 														</div>
 														</div>
 														<div id="IMEIndContact2" style="display: none">
@@ -641,7 +654,7 @@
 																
 																maxlength="16" id="singleStolenimei3"> <label
 																for="singleStolenimei3"> <spring:message code="registration.three.IMEI" /></label>
-														<p id="errorMsgOnModal" class="deviceErrorTitle"></p>
+														
 														</div>
 														</div>
 														
@@ -667,6 +680,7 @@
 														</div>
 
 														</div>
+														
 														
 														<div class="col s12 m12">
 															<p style="margin-top: 3px; margin-bottom: 5px">
@@ -1453,6 +1467,8 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 			<div class="row">
 				<h6 id="fileErrormessage"><spring:message code="fileValidationName" /><br> <br> <spring:message code="fileValidationFormate" /> <br><br> <spring:message code="fileValidationSize" /> </h6>
 				<input type="text" id="FilefieldId" style="display: none;">
+				<input type="text" id='removeFileId' style="display: none;">
+			<input type="text" id='removeFileInput' style="display: none">
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
@@ -1534,7 +1550,8 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 
 	<script type="text/javascript"
 		src="" async></script>
-		
+			<script type="text/javascript"
+		src="${context}/resources/project_js/nationality.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		<script type="text/javascript" src="${context}/resources/js/intlTelInput.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		<script type="text/javascript" src="${context}/resources/js/utils.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script>
@@ -1555,7 +1572,7 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 		populateCountries("country3", "state3");
 		populateStates("country3", "state3");
 
-		populateCountries("nationality", "");
+		//populateCountries("nationality", "");
 		
 		
 		populateCountries("country");
@@ -1656,6 +1673,11 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 		
 		$("#country3").val("Cambodia").change();
 		$("#country3").attr("style", "pointer-events: none;");
+		
+		$("#country2").val("Cambodia").change();
+		$("#country2").attr("style", "pointer-events: none;");
+		
+		
 	
 	</script>
 

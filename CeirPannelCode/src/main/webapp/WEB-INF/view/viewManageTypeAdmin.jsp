@@ -236,12 +236,27 @@ position: fixed;
 					</div>
 				</div>
 				
-				<div class="input-field col s12 m6 l6" style="width: 402px;margin-left: 1px;">
-						<input type="text" id="viewManufacturercountry" name="Country" style="padding-left: 8px;"
+				<div class="row">
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewManufacturercountry" name="Country" 
 							placeholder="" disabled=""> <label
 							for="viewManufacturercountry" class="active"><spring:message
 								code="input.Country" /></label>
 				</div>
+				
+				<div class="input-field col s12 m6 l6">
+					<textarea id="viewRemark" class="materialize-textarea"
+						style="height: 0px;" readonly="readonly" placeholder=""></textarea>
+					<label for="viewRemark" class=""><spring:message
+							code="input.remarks" /></label>
+
+					<!--   <input type="textarea" name="Remark" placeholder="Remark" id="remark" readonly="readonly" maxlength="15" />
+                                               <label for="TransactionId" class="center-align">Remark</label> -->
+				</div>
+			</div>
+				
+				
+				
 				<div class="modal-content">
 					<div id="live-chat">
 						<div class="chat">

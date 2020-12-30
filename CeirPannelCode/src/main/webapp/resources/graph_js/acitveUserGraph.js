@@ -27,9 +27,10 @@ function activeDeviceGraph() {
 						"reportnameId": reportnameId,
 						"lastDate": true,
 						"file" : 0,
-						"pageSize" :1,
+						"pageSize" :1000,
 						"pageNo" :0,
-						 "typeFlag": 1
+						 "typeFlag": 1,"dayDataLimit":15
+						
 			}
 			chartID='pieGraph';
 			type='pie';
@@ -45,9 +46,9 @@ function activeDeviceGraph() {
 					"reportnameId": reportnameId,
 					"lastDate": true,
 					"file" : 0,
-					"pageSize" :10,
+					"pageSize" :1000,
 					"pageNo" :0,
-					 "typeFlag": 1
+					 "typeFlag": 1,"dayDataLimit":15
 			}
 			
 			chartID='pieGraphBrandName';
@@ -62,9 +63,9 @@ function activeDeviceGraph() {
 					"reportnameId": reportnameId,
 					"lastDate": true,
 					"file" : 0,
-					"pageSize" :10,
+					"pageSize" :1000,
 					"pageNo" :0,
-					 "typeFlag": 1
+					 "typeFlag": 1,"dayDataLimit":15
 			}
 			
 			chartID='pieGraphModelNumber';
@@ -81,11 +82,11 @@ function activeDeviceGraph() {
 						  ],
 					"reportnameId": reportnameId,
 					"file" : 0,
-					"pageSize" :45,
+					"pageSize" :1000,
 					"pageNo" :0,
 					"lastDate": false,
 					"groupBy":"Equipment Type",
-					 "typeFlag": 2
+					 "typeFlag": 2,"dayDataLimit":15
 						  
 							
 			}
@@ -99,8 +100,8 @@ function activeDeviceGraph() {
 
 					"reportnameId": reportnameId,
 					"file" : 0,
-					"pageSize" :10,
-					"pageNo" :0
+					"pageSize" :1000,
+					"pageNo" :0,"dayDataLimit":15
 			}
 			chartID='lineGraph';
 			type='line';

@@ -27,9 +27,10 @@ function LawfulGraph() {
 						"reportnameId": reportnameId,
 						"lastDate": false,
 						"file" : 0,
-						"pageSize" :40,
+						"pageSize" :1000,
 						"pageNo" :0,
-						"typeFlag": 2
+						"typeFlag": 2,
+						 "dayDataLimit":15
 			}
 			
 			urlHit='./brandModel/data/'+featureFlag;
@@ -45,9 +46,9 @@ function LawfulGraph() {
 							"reportnameId": reportnameId,
 							"lastDate": true,
 							"file" : 0,
-							"pageSize" :40,
+							"pageSize" :1000,
 							"pageNo" :0,
-							"typeFlag": 2
+							"typeFlag": 2, "dayDataLimit":15
 				}
 				chartID='Top5Stolen';
 				type='pie';

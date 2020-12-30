@@ -29,9 +29,9 @@ function activeDeviceGraph() {
 						  "groupBy": "Operator Name",
 						  "reportnameId": 29,
 						  "file" : 0, 
-						  "pageSize" :55, 
+						  "pageSize" :1000, 
 						  "pageNo" :0,
-						  "typeFlag": 1
+						  "typeFlag": 1,"dayDataLimit":15
 			}
 			
 			
@@ -49,11 +49,11 @@ function activeDeviceGraph() {
 						],
 						 "lastDate": true,
 						  "file" : 0, 
-						  "pageSize" :10, 
+						  "pageSize" :1000, 
 						  "pageNo" :0,
 						"groupBy": "Operator Name",
 						"reportnameId": 29,
-						"typeFlag": 1
+						"typeFlag": 1,"dayDataLimit":15
 						}
 			
 		}
@@ -64,9 +64,10 @@ function activeDeviceGraph() {
 					  "lastDate": true,
 					  "reportnameId": 27,
 						  "file" : 0, 
-						  "pageSize" :10, 
+						  "pageSize" :1000, 
 						  "pageNo" :0,
-						  "typeFlag": 2
+						  "typeFlag": 2,
+						  "dayDataLimit":15
 			}
 			urlHit='./report/imeiUsageDashBoard';
 		}
@@ -84,9 +85,9 @@ function activeDeviceGraph() {
 						  "groupBy": "Operator Name",
 						  "reportnameId": 34,
 						  "file" : 0, 
-						  "pageSize" :30, 
+						  "pageSize" :1000, 
 						  "pageNo" :0,
-						  "typeFlag": 2
+						  "typeFlag": 2, "dayDataLimit":15
 			}
 			
 		}

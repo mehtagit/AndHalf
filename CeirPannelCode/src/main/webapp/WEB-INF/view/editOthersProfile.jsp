@@ -359,7 +359,7 @@ var contextpath = "${context}";
 <div class="col s12 m6 l6">
 									<label><spring:message code="table.country" /> <span
 										class="star">*</span></label> <select id="country"
-										class="browser-default" class="mySelect"
+										class="browser-default" class="mySelect" disabled
 										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										style="padding-left: 0;" required></select>

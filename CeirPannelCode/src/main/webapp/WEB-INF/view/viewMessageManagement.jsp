@@ -148,6 +148,17 @@
 
 					</div>
 					
+					<div class="input-field col s12 m6" style="margin-top:22px">
+					<input type="text" id="viewFeature" placeholder="" disabled>
+					<label for="viewFeature" class=""><spring:message code="table.feature" /></label>
+
+					</div>
+					
+					<div class="input-field col s12 m6" >
+					<textarea id="viewSubject" class="materialize-textarea" readonly="readonly" style="min-height:8rem"></textarea>
+					<label for="viewSubject" class=""><spring:message code="table.subject" /> </label>
+
+					</div>
 					
 					<div class="input-field col s12 m6" >
 					<textarea id="viewValue" class="materialize-textarea" readonly="readonly" style="min-height:8rem"></textarea>
@@ -206,7 +217,17 @@
 
 					</div>
 					
+					<div class="input-field col s12 m6">
+					<input type="text" id="editFeature" placeholder="" disabled>
+					<label for="editFeature" class=""><spring:message code="table.feature" /></label>
+
+					</div>
 					
+					<div class="input-field col s12 m6" >
+					<textarea id="editSubject" class="materialize-textarea" style="min-height:8rem"></textarea>
+					<label for="editSubject" class=""><spring:message code="table.subject" /> </label>
+
+					</div>
 				
 					
 					<div class="input-field col s12 m6">

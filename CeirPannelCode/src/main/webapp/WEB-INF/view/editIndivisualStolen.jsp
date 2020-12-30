@@ -1,4 +1,4 @@
-<%@ page import="java.util.Date" %>
+ <%@ page import="java.util.Date" %>
 <%
    response.setHeader("Cache-Control", "no-cache");
 	response.setHeader("Cache-Control", "no-store");
@@ -399,9 +399,9 @@ select {
 															title=""
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-															maxlength="30"> <label for="district"> <spring:message
+															maxlength="30"> <label for="district" id="singleStolenDistrictLabelID"> <spring:message
 																code="input.district" /><span id="singleStolendistrictLabel"
-															class="star starAddressDistrict"> *</span></label>
+															class="star">  </span></label>
 													</div>
 
 													<div class="input-field col s12 m6 l6">
@@ -410,8 +410,8 @@ select {
 															required="required" title=""
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-															maxlength="30"> <label for="commune"><spring:message
-																code="input.commune" /> <span class=" star starAddress" id="singleStolenCommune">*</span> </label>
+															maxlength="30"> <label for="commune" id="singleStolenCommuneLabelID"><spring:message
+																code="input.commune" /> <span class=" star" id="singleStolenCommune">  </span> </label>
 													</div>
 
 													<div class="input-field col s12 m6 l6">
@@ -451,7 +451,7 @@ select {
 													</div>
 
 													<div>
-														<div class="col s12 m6"">
+														<div class="col s12 m6">
 															<%-- <input type="text" name="deviceBrandName" placeholder=""
 																id="singleStolendeviceBrandName"
 																pattern="[a-zA-Z]{0,20}" title=""
@@ -464,7 +464,7 @@ select {
 													code="registration.devicebrandname" /> <span class="star">*</span></label>
 											<select id="editsingleStolendeviceBrandName" class="browser-default" 
 												
-												onchange="changeBrandValue(this.value)"
+												onchange="changeSelectDropDownToText('editsingleStolendeviceBrandName')"
 												oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												required>
@@ -484,7 +484,7 @@ select {
 
 														<div class="col s6 m6 ">
 															<label for="deviceIDType"><spring:message
-																	code="select.deviceIDType" /><span class="star" id="deviceIdTypeSpan" style="display: none ; margin-top: -18px;margin-left: 82px;">*</span></label> <select
+																	code="select.deviceIDType" /><span class="star" id="deviceIdTypeSpan" style="display: none ; margin-top: -18px;margin-left: 82px;"> *</span></label> <select
 																
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
@@ -494,7 +494,18 @@ select {
 															</select>
 														</div>
 
-														<div class="col s6 m6 ">
+														
+													<div class="input-field col s12 m12" id="OtherBrandNameDiv" style="display: none">
+														<input type="text" name="brandName" id="OtherBrandName"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,50}"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+															required maxlength="50"> <label
+															for="OtherBrandNameLabel"> <spring:message
+																code="registration.devicebrandname" /> <span class=" star"> *</span>
+														</label>
+													</div>
+														<div class="col s12 m6 ">
 															<label for="deviceType"><spring:message
 																	code="select.deviceType" /></label> <select
 																oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
@@ -513,12 +524,12 @@ select {
 																oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																id="singleStolenSimStatus">
 																<option value=""  selected>
-																	<spring:message code="select.multiSimStatus" />
+																	<spring:message code="registration.selectMultiplestLawfull" />
 																</option>
 
 															</select>
 														</div>
-
+														
 														
 												<div id="IMEIndContact1" style="display: none">	
 														<div class="col s12 m6">
@@ -549,7 +560,7 @@ select {
 																maxlength="16" id="updatesingleStolenimei1"> <label
 																for="updatesingleStolenimei1"> <spring:message
 																	code="registration.one.IMEI" /> <span class="star">
-																	</span></label>
+																	</span></label><p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top: -56px;margin-left: 173px;"></p>
 														</div>
 														</div>
 														<div id="IMEIndContact2" style="display: none"">
@@ -596,7 +607,7 @@ select {
 																maxlength="16" id="updatesingleStolenimei3"> <label
 																for="updatesingleStolenimei3"> <spring:message
 																	code="registration.three.IMEI" /></label>
-																	<p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top: -136px;margin-left: 173px;"></p>
+																	
 														</div>
 														</div>
 														<div id="IMEIndContact4" style="display: none"">
@@ -1232,8 +1243,11 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 					<br>
 					<spring:message code="fileValidationSize" />
 				</h6>
+				
+				<input type="text" id='removeFileId' style="display: none;">
 				<input type="text" id="FilefieldId" style="display: none;">
 				<input type="text" id="existingFileName" style="display: none;">
+					<input type="text" id='removeFileInput' style="display: none">
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
@@ -1333,7 +1347,8 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 		<script type="text/javascript" src="${context}/resources/js/utils.js"></script>
 			<script type="text/javascript"
 		src="${context}/resources/project_js/select2.js"></script>
-		
+		<script type="text/javascript"
+		src="${context}/resources/project_js/nationality.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"
 		src="${context}/resources/project_js/lawfulStolenRecovery.js?version=<%= (int) (Math.random() * 10) %>"></script>
 <script type="text/javascript"

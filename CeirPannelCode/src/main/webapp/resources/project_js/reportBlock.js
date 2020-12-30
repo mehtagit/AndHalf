@@ -976,15 +976,17 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
            $('#singleBlockDeviceHeading').text($.i18n('editBlockDevice'));
 		}
  		$("#editblockImeiDevice").openModal({dismissible:false});
-
+ 		$("#editblockdeviceIdType").val(data.singleImeiDetails.deviceIdType).change();
 		if(data.singleImeiDetails.secondImei==null && data.singleImeiDetails.thirdImei==null && data.singleImeiDetails.fourthImei==null  )
 		{
+			
 			$("#editsingleblockIMEI2").val("");
 			$("#editsingleblockIMEI3").val("");
 			$("#editsingleblockIMEI4").val("");
 		}
 		else if(data.singleImeiDetails.secondImei==null && data.singleImeiDetails.thirdImei==null && data.singleImeiDetails.fourthImei!=null )
 		{
+			
 			$("#editsingleblockIMEI2").val("");
 			$("#editsingleblockIMEI3").val("");
 			$("#editsingleblockIMEI4").val(data.singleImeiDetails.fourthImei);
@@ -997,12 +999,14 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 		}
 		else if(data.singleImeiDetails.secondImei==null && data.singleImeiDetails.thirdImei!=null && data.singleImeiDetails.fourthImei==null)
 		{
+			
 			$("#editsingleblockIMEI2").val("");
 			$("#editsingleblockIMEI3").val(data.singleImeiDetails.thirdImei);
 			$("#editsingleblockIMEI4").val("");
 		}
 		else if(data.singleImeiDetails.secondImei!=null && data.singleImeiDetails.thirdImei!=null && data.singleImeiDetails.fourthImei!=null)
 		{
+			
 			$("#editsingleblockIMEI2").val(data.singleImeiDetails.secondImei);
 			$("#editsingleblockIMEI3").val(data.singleImeiDetails.thirdImei);
 			$("#editsingleblockIMEI4").val(data.singleImeiDetails.fourthImei);
@@ -1012,7 +1016,7 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 		}
 		////console.log("device id type="+data.singleImeiDetails.deviceIdType);
 		$("#editblockdeviceType").val(data.singleImeiDetails.deviceType).change();
-		$("#editblockdeviceIdType").val(data.singleImeiDetails.deviceIdType).change();
+	
 		$("#editblockmultipleSimStatus").val(data.singleImeiDetails.multipleSimStatus);
 		$("#editsingleblockserialNumber").val(data.singleImeiDetails.deviceSerialNumber);
 		$("#editsingleblockremark").val(data.singleImeiDetails.remark);

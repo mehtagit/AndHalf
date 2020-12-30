@@ -17,7 +17,7 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 //**************************************************Message Detail table**********************************************
 
 function messageManagementDatatable(){
-	
+	var feature=  $("#feature").val() == "" || $("#feature").val() == undefined ? null : $("#feature").val();
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
@@ -29,7 +29,8 @@ function messageManagementDatatable(){
 			"userType":$("body").attr("data-roleType"),
 			"userName" : $("body").attr("data-selected-username"),
 			"username" : $("body").attr("data-selected-username"),
-			"roleType":$("body").attr("data-roleType")
+			"roleType":$("body").attr("data-roleType"),
+			"featureName" : feature
 	}
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -139,7 +140,7 @@ function pageRendering(){
 			
 			
 			$("#messageTableDiv").append("<div class='col s12 m2 l2'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
-			$("#messageTableDiv").append("<div class=' col s3 m2 l8'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>Export<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+			$("#messageTableDiv").append("<div class=' col s3 m1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>Export<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -152,6 +153,10 @@ function pageRendering(){
 		}
 
 	}); 
+	setAllDropdown();
+};
+
+function setAllDropdown(){
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -165,7 +170,13 @@ function pageRendering(){
 			.appendTo('#channel');
 		}
 	});
-};
+	
+	$.getJSON('./getAllfeatures', function(data) {
+		for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].name).text(data[i].name).appendTo('#feature');
+		}
+	});
+}
 
 
 $('.datepicker').on('mousedown',function(event){
@@ -321,6 +332,7 @@ function exportData(){
 	var info = table.page.info(); 
 	var pageNo=info.page;
 	var pageSize =info.length;
+	var feature=  $("#feature").val() == "" || $("#feature").val() == undefined ? null : $("#feature").val();
 
 	var filterRequest={
 			"endDate":$('#endDate').val(),
@@ -332,6 +344,7 @@ function exportData(){
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
 			"userName" : $("body").attr("data-selected-username"),
+			"featureName" : feature,
 			"pageNo":parseInt(pageNo),
 			"pageSize":parseInt(pageSize)
 			

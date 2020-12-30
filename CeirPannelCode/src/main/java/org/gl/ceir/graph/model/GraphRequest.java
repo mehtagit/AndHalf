@@ -20,7 +20,7 @@ public class GraphRequest {
 	private int file;
 	private int pageSize;
 	private int pageNo;
-	private Integer typeFlag;
+	private Integer typeFlag,dayDataLimit;
 	
 	public List<String> getColumns() {
 		return columns;
@@ -111,6 +111,12 @@ public class GraphRequest {
 	public void setTypeFlag(Integer typeFlag) {
 		this.typeFlag = typeFlag;
 	}
+	public Integer getDayDataLimit() {
+		return dayDataLimit;
+	}
+	public void setDayDataLimit(Integer dayDataLimit) {
+		this.dayDataLimit = dayDataLimit;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -142,11 +148,12 @@ public class GraphRequest {
 		builder.append(pageNo);
 		builder.append(", typeFlag=");
 		builder.append(typeFlag);
+		builder.append(", dayDataLimit=");
+		builder.append(dayDataLimit);
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
+	 
 	
 	
 }

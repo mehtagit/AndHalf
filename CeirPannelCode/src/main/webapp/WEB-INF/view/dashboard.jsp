@@ -138,8 +138,7 @@ div#error_Modal {
 	data-defaultLink="${defaultLink}"
 	data-currentTime=" <%=currentTime%>"
 	data-dfd=" <%=dfd%>"
-	data-user-state="${userStatusValue}"
-	data-context="${context}">
+	data-user-state="${userStatusValue}">
 	<!-- Start Page Loading -->
 	<div id="loader-wrapper">
 		<div id="initialloader"></div>
@@ -182,7 +181,7 @@ div#error_Modal {
 						<li>
 						<form id="manualDownload" autocomplete="off" action="./Consignment/ManualFileDownload">
 						<input type="hidden" name="userTypeId" value="${usertypeId}">
-						<input type="hidden" name="contextName" value="${context}">
+						<input type="hidden" name="contextName">
 						<a href="javascript:{}" style="color: white; cursor: pointer;" onclick="document.getElementById('manualDownload').submit();">
 						<i
 								class="fa fa-download download-icon" aria-hidden="true"
