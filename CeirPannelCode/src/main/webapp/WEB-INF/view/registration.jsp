@@ -368,8 +368,8 @@ input[type="checkbox"] {
 										maxlength="20"
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-										required /> <label for="lastName"> <spring:message
-											code="input.lastName" /> <span class="star">*</span>
+										 /> <label for="lastName"> <spring:message
+											code="input.lastName" />
 									</label>
 								</div>
 

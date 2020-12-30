@@ -328,8 +328,8 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m4 l4">
 									<input placeholder="" type="text" name="lastName" id="lastName" pattern="<spring:eval expression="@environment.getProperty('pattern.name')" />"  maxlength="20"
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-									required />
-									<label for="lastName"> <spring:message code="input.lastName" /> <span class="star">*</span>
+									 />
+									<label for="lastName"> <spring:message code="input.lastName" />
 									</label>
 								</div>
 	<%if(usertypeId==9){ %>
@@ -566,7 +566,7 @@ var contextpath = "${context}";
 								<div class="input-field col s12 m6 l6">
 									<input   placeholder="" type="text" name="authorityEmail"   id="authorityEmail" maxlength="280"  pattern="<spring:eval expression="@environment.getProperty('pattern.mail')" />" 
 									oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');" oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');">
-									<label for="authorityEmail"> <spring:message code="registration.ReportingAuthorityEmailid" /><span class="star">*</span></label>
+									<label for="authorityEmail"> <spring:message code="registration.ReportingAuthorityEmailid" /></label>
 								</div>
 
 								<div class="input-field col s12 m6 l6">
