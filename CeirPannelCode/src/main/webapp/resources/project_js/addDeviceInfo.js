@@ -9,9 +9,9 @@ var roleType = $("body").attr("data-roleType");
 	 
 	 if(roleType=="Immigration")
 		 {
-		 $("#taxStatusDiv").css("display", "none");
+		// $("#taxStatusDiv").css("display", "none");
 		 $("#priceDiv").css("display", "none");
-			$("#taxStatus1").attr("required", false);
+			//$("#taxStatus1").attr("required", false);
 		 }
 var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	$.i18n().locale = lang_param;
@@ -216,6 +216,11 @@ function defaultDeviceForm(){
 					.appendTo('#taxStatus1');
 					//////console.log("...........");} 
 				    }
+					 if(parseInt($("body").attr("data-userTypeID"))==18){
+					 		$('#taxStatus1').prop('disabled', 'disabled');
+					 		//$("#priceDiv").css("display", "none");
+					 		$('#taxStatus1').val("1");
+					 	}
 				
 			}
 				 incrementedCurrent=current+1;

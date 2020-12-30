@@ -9,21 +9,21 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 if(roleType=="Immigration")
 	{
 	
-	$("#nationalityLabelId").css("display", "none");
-	$("#chooseUserOption").css("display", "none");
+	//$("#nationalityLabelId").css("display", "none");
+	//$("#chooseUserOption").css("display", "none");
 	$("#priceDiv").css("display", "none");
-	$("#nationalityDiv").css("display", "block");
-	$("#entryCountryDiv").css("display", "block");
+//	$("#nationalityDiv").css("display", "block");
+	//$("#entryCountryDiv").css("display", "block");
 	$("#askVisaDetails").css("display", "block");
 	$('#doc_type').val('0');
-	$("#taxStatusDiv").css("display", "none");
+	//$("#taxStatusDiv").css("display", "none");
 	$("#priceDiv").css("display", "none");
-	$('#nidLabelName').text('');
-	$('#nidLabelName').text($.i18n('Passport Number'));
- 	$('#uploadNidImage').text('');
- 	$('#uploadNidImage').text($.i18n('Upload Passport Image'));
- 	$("#nidLabelName").append('<span class="star">*</span>');
- 	$("#uploadNidImage").append('<span class="star">*</span>');
+	//$('#nidLabelName').text('');
+	//$('#nidLabelName').text($.i18n('Passport Number'));
+ 	//$('#uploadNidImage').text('');
+ 	//$('#uploadNidImage').text($.i18n('Upload Passport Image'));
+ 	//$("#nidLabelName").append('<span class="star">*</span>');
+ 	//$("#uploadNidImage").append('<span class="star">*</span>');
  	$("#taxStatus1").attr("required", false);
 	}
 
@@ -71,6 +71,16 @@ $( document ).ready(function() {
 					$("#addbutton").css("display", "block");
 					$("#submitbtn").css("display", "none");
 					$("#btnLink").css({display: "block"});
+				} 
+				else if (data.errorCode == 2) {
+					pageRendering(lang);
+					filter(lang,null);
+					$("#user123").css("display", "none");
+					$("#user456").css("display", "block");
+					$("#addbutton").css("display", "block");
+					$("#submitbtn").css("display", "none");
+					$("#btnLink").css({display: "none"});
+					 
 				} 
 				else if (data.errorCode == 0 && In == null) { 
 						$("#user123").css("display", "none");
@@ -1137,7 +1147,7 @@ $(document).ready(function () {
 	headers:
 	{ 'X-CSRF-TOKEN': token }
 	});
-	$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
+	/*$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 		var checkAllowedCount =localStorage.getItem("allowed");	
 		////alert("222222"+checkAllowedCount);
 		if(checkAllowedCount==0)
@@ -1151,12 +1161,23 @@ $(document).ready(function () {
 			}
 		else{
 		
-		$('#taxStatus1').prop('disabled', 'disabled');
-		$('<option  selected>').val("2").text("Regularized").appendTo('#taxStatus1');
+	//	$('#taxStatus1').prop('disabled', 'disabled');
+		//$('<option  selected>').val("2").text("Regularized").appendTo('#taxStatus1');
 		}
+	});*/
+
+
+	$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
+	for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].value).text(data[i].interp)
+				.appendTo('#taxStatus1');
+              }
+	if(parseInt($("body").attr("data-userTypeID"))==18){
+ 		$('#taxStatus1').prop('disabled', 'disabled');
+ 		 
+ 		$('#taxStatus1').val("1");
+ 	}
 	});
-
-
 
 	$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
 		for (i = 0; i < data.length; i++) {
@@ -1239,7 +1260,8 @@ function regularizedCount(nationType){
 		}
 	else if(nationType==undefined && roleType=='Immigration'){
 		//////console.log("else  condition for regulaised");
-		nationType=2;
+		nationType=1;
+		
 		var nid= nationalId == 'null' ? null : nationalId;
 	}
 	else if(nationType==2)
@@ -1254,9 +1276,10 @@ function regularizedCount(nationType){
 	}
 	
 	if(sessionStorage.getItem("nationality")!="Cambodian" && sessionStorage.getItem("nationality")!=null){
-
+		
 		nationType=2;
 	}
+	 
 	else if( sessionStorage.getItem("nationality")==null && nationType!=2 ){
 		
 		nationType=1;
@@ -1664,7 +1687,11 @@ $(document).on("keyup", "#Price1", function(e) {
 	}
  	
  	$("#priceDiv").css("display", "block");
- 	
+ 	if(parseInt($("body").attr("data-userTypeID"))==18){
+ 		$('#taxStatus1').prop('disabled', 'disabled');
+ 		$("#priceDiv").css("display", "none");
+ 		$('#taxStatus1').val("1");
+ 	}
  	var removeBulkDiv;
  	$('.deviceInformation').each(function(){
  		removeBulkDiv=id-1;

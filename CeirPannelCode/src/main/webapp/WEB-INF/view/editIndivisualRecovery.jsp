@@ -173,7 +173,7 @@
                                                               <label for="editsigleRecoverydeviceBrandName"><spring:message
 													code="registration.devicebrandname" /> <span class="star"></span></label>
 											<select id="editsigleRecoverydeviceBrandName" class="browser-default"
-												
+												onchange="changeSelectDropDownToText('editsigleRecoverydeviceBrandName')"
 												oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
 												<option value=""  selected><spring:message
@@ -220,7 +220,16 @@
                                                                   <option value="" disabled selected><spring:message code="select.deviceIDType" /></option>
                                                                 </select>
                                                               </div>
-
+																<div class="input-field  col s12 m12" id="OtherBrandNameDiv" style="display: none">
+														<input type="text" name="brandName" id="OtherBrandName"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,50}"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+															required maxlength="50"> <label
+															for="OtherBrandNameLabel"> <spring:message
+																code="registration.devicebrandname" /> <span class=" star"> *</span>
+														</label>
+													</div>
                                                               <div class="col s6 m6 ">
                                                                 <label for="sigleRecoverydeviceType"> <spring:message code="select.deviceType" /></label>
                                                                 <select class="browser-default"
@@ -234,6 +243,7 @@
                                                               <div class="col s6 m6 ">
                                                                 <label for="sigleRecoverydeviceSimStatus"><spring:message code="select.multiSimStatus" /> </label>
                                                                 <select id="sigleRecoverydeviceSimStatus" 
+                                                                onchange="setContactIMEINumber('sigleRecoverydeviceSimStatus','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
                                                                  oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                                  oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
                                                                  class="browser-default">
@@ -249,7 +259,7 @@
                                                                   maxlength="25">
                                                                 <label for="sigleRecoveryserialNumber"><spring:message code="input.deviceSerialNumber" /></label>
                                                             </div>
-                                                            
+                                                            <div id="IMEIndContact1" style="display: none">
                                                             <div class="col s12 m12" style="margin-top: 10px; font-weight: bold;">
 															<h6><spring:message code="registration.imei/meid/esnnumber" /></h6>
 														</div>
@@ -260,8 +270,8 @@
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 														  maxlength="16" id="sigleRecoveryimeiNumber1" /> 
 															<label for="sigleRecoveryimeiNumber1"><spring:message code="registration.one" /> <span class="star"> </span></label>
-														</div>
-														
+														</div></div>
+														  <div id="IMEIndContact2" style="display: none">
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberTwo" pattern="[0-9]{15,16}"  
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
@@ -269,7 +279,8 @@
 													  maxlength="16" 	id="sigleRecoveryimeiNumber2" > <label
 																for="sigleRecoveryimeiNumber2"><spring:message code="registration.two" /></label>
 														</div>
-														
+														</div>
+														  <div id="IMEIndContact3" style="display: none">
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberThree" pattern="[0-9]{15,16}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
@@ -277,7 +288,8 @@
 														  maxlength="16" 	id="sigleRecoveryimeiNumber3" > <label
 																for="sigleRecoveryimeiNumber3"><spring:message code="registration.three" /></label>
 																<p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top: -136px;margin-left: 173px;"></p>
-														</div>
+														</div></div>
+														  <div id="IMEIndContact4" style="display: none">
 														
 														<div class="input-field col s12 m6">
 															<input type="text" name="imeiNumberFour" pattern="[0-9]{15,16}" 
@@ -286,7 +298,7 @@
 															  maxlength="16" 	id="sigleRecoveryimeiNumber4" > <label
 																for="sigleRecoveryimeiNumber4"><spring:message code="registration.four" /></label>
 														</div>
-
+														</div>
                                                             <div class="col s12 m12" style="margin-top: 30px;">
                                                                 <h5><spring:message code="registration.placeofdevicerecovery" /></h5>
                                                                 <hr>
@@ -723,7 +735,7 @@ onclick="_Services._selectstartDate()"></i></span>
             "bulkRecoverystate"
         );
        
-       
+    	
       
 </script>
 		

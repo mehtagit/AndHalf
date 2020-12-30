@@ -11,15 +11,17 @@
 	
 
 
-	$('#wholePageImage').on('click', function() {
+	 function graphImageDownload(ImageName) {
+		 var downloadImage=ImageName+".png";
+		
 		html2canvas($('#wrapperPage'), {
 			onrendered: function(canvas) {                                      
 				var img = canvas.toDataURL("image/png"),
 				uri = img.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
-				saveAs(uri, 'graph.png');
+				saveAs(uri, downloadImage);
 			}
 		}); 
-	});
+		}
 	
 	$('#activeDeviceDownload').on('click', function() {
 		html2canvas($('#activeDeviceTable'), {

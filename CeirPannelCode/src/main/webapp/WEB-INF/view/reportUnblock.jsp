@@ -167,7 +167,7 @@ padding: 0 !important;
                                                                 </select>
                                                             </div>
                                         
-                                                            <div class="input-field col s12 m6" style="margin-top: 21px;">
+                                                            <div class="input-field col s12 m6" style="margin-top: 23px;">
                                                                 <input type="text" id="unbockSingleSerialNumber" name="unbockSingleserialNumber" pattern="[A-Za-z0-9]{1,25}"
                                                                    oninput="InvalidMsg(this,'select','<spring:message code="validation.numberfirst" />');" 
                                                                    oninvalid="InvalidMsg(this,'select','<spring:message code="validation.15serialNo" />');"
@@ -186,7 +186,7 @@ padding: 0 !important;
                                                           
                                                         </select>
                                                     </div>
-                                                            <div class="input-field col s12 m6">
+                                                            <div class="input-field col s12 m6" style="margin-top: 27px;">
                                                                 <textarea id="unbockSingleRemark"  class="materialize-textarea" 
                                                                 oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" 
                                                                 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
@@ -293,7 +293,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                         <label for="unblockbulkquantity"><spring:message code="input.quantity" /> <span class="star"> *</span></label>
                                                     </div>
                                                     
-                                                    <div class="input-field col s12 m6 " style="margin-top: 22px;">
+                                                    <div class="input-field col s12 m6 " style="margin-top: 28px;">
                                                         <input type="text" id="unblockbulkDevicequantity" name="unblockbulkDevicequantity" pattern="[0-9]{1,7}" 
                                                         oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
                                                         oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
@@ -301,7 +301,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                         <label for="unblockbulkDevicequantity"><spring:message code="input.devicequantity" /> <span class="star"> *</span></label>
                                                     </div>
                                                     
-                                                    <div class="file-field input-field col s12 m6" style="margin-top: 1px;">
+                                                    <div class="file-field input-field col s12 m6" style="margin-top: -87px;">
                                                         <p style="color: #000;"><spring:message code="operator.upload" /> <span class="star"> *</span></p>
                                                         <div class="btn">
                                                             <span><spring:message code="operator.file" /></span>

@@ -25,13 +25,13 @@ $(document).ready(function() {
 	$.ajaxSetup({
 		async: false
 		});
-	$.getJSON('./productList', function(data) {
+	$.getJSON('./getDropdownList/TOP_BRAND', function(data) {
 	 	//////console.log("start");
 		//////console.log(data)
 	    $('#select2-editsigleRecoverydeviceBrandName-container').empty();
 	 		for (i = 0; i < data.length; i++) {
 	 			
-	 			$('<option>').val(data[i].id).text(data[i].brand_name)
+	 			$('<option>').val(data[i].id).text(data[i].interp)
 	 					.appendTo('#editsigleRecoverydeviceBrandName');
 	 			
 	 		}
@@ -71,13 +71,22 @@ headers:
 
 		
 		 //	//alert(response.stolenIndividualUserDB.deviceBrandName);
-		$('#editsigleRecoverydeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName).change();
+			if(isNaN(response.stolenIndividualUserDB.deviceBrandName)){
+				$("label[for='OtherBrandNameLabel']").addClass('active');
+				$('#editsigleRecoverydeviceBrandName').val("930").change();
+				$('#OtherBrandName').val(response.stolenIndividualUserDB.deviceBrandName);
+			}
+			else{
+				 
+				$('#editsigleRecoverydeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName).change();	
+			}
+		//$('#editsigleRecoverydeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName).change();
 		$('#selectedBrandName').val(response.stolenIndividualUserDB.deviceBrandName);
 		$('#editsingleRecoverymodalNumber').val(response.stolenIndividualUserDB.modelNumber);
 		$('#brandNameValue').val(response.stolenIndividualUserDB.deviceBrandName);
 		$('#sigleRecoverydeviceIDType').val(response.stolenIndividualUserDB.deviceIdType);
 		$('#sigleRecoverydeviceType').val(response.stolenIndividualUserDB.deviceType);
-		$('#sigleRecoverydeviceSimStatus').val(response.stolenIndividualUserDB.multiSimStatus);
+		$('#sigleRecoverydeviceSimStatus').val(response.stolenIndividualUserDB.multiSimStatus).change();
 		$('#sigleRecoveryserialNumber').val(response.stolenIndividualUserDB.deviceSerialNumber);
 		if(response.stolenIndividualUserDB.deviceSerialNumber=="" || response.stolenIndividualUserDB.deviceSerialNumber==null){
 			$('#sigleRecoveryserialNumber').val('NA');	
@@ -242,6 +251,10 @@ function updateIndivisualRecovery()
 	if(sigleRecoverydeviceType==''){
 		sigleRecoverydeviceType=null;
 	}
+	if($('#editsigleRecoverydeviceBrandName').val()==930){
+		sigleRecoverydeviceBrandName= $('#OtherBrandName').val();
+		
+	}
 	
 	var stolenIndividualUserDB={
 			"deviceBrandName": sigleRecoverydeviceBrandName,
@@ -338,7 +351,7 @@ function updateIndivisualRecovery()
  			});
  }*/
 
-$('#editsigleRecoverydeviceBrandName').on(
+/*$('#editsigleRecoverydeviceBrandName').on(
 		'change',
 		function() {
 			var brand_id = $('#editsigleRecoverydeviceBrandName').val();
@@ -365,7 +378,7 @@ $('#editsigleRecoverydeviceBrandName').on(
 						}
 					});
 			$('select#editsingleRecoverymodalNumber').select2();
-		});
+		});*/
 function setBrandName()
 {
 	var selectedBrandName = $('#selectedBrandName').val()
@@ -449,3 +462,6 @@ $(document).on("keyup", "#updatesingleStolenimei1", function(e) {
 
 	}
 });
+
+
+$("#country1").attr("style", "pointer-events: none;");
