@@ -16,6 +16,7 @@ public class MessageContentModel {
 	private Integer channel;
 	private String channelInterp;
 	private String subject,featureName;
+	private String featureId,userTypeId,userType,userName,username,roleType;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
@@ -106,10 +107,58 @@ public class MessageContentModel {
 		builder.append(subject);
 		builder.append(", featureName=");
 		builder.append(featureName);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", roleType=");
+		builder.append(roleType);
 		builder.append(", additionalProperties=");
 		builder.append(additionalProperties);
 		builder.append("]");
 		return builder.toString();
+	}
+	public String getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(String featureId) {
+		this.featureId = featureId;
+	}
+	public String getUserTypeId() {
+		return userTypeId;
+	}
+	public void setUserTypeId(String userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getRoleType() {
+		return roleType;
+	}
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
 	}
 	
 	

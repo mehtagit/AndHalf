@@ -224,7 +224,7 @@
 					</div>
 					
 					<div class="input-field col s12 m6" >
-					<textarea id="editSubject" class="materialize-textarea" readonly="readonly" style="min-height:8rem"></textarea>
+					<textarea id="editSubject" class="materialize-textarea" style="min-height:8rem"></textarea>
 					<label for="editSubject" class=""><spring:message code="table.subject" /> </label>
 
 					</div>

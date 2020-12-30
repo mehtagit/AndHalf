@@ -95,8 +95,9 @@ public class LoginService {
 		UserHeader header=registerService.getUserHeaders(request);
 		user.setUserAgent(header.getUserAgent());
 		user.setPublicIp(header.getPublicIp());
+		user.setBrowser(header.getBrowser());
 		log.info("user data:  "+user);
-        log.info("user agent=  "+user.getUserAgent() +" public ip of user: "+user.getPublicIp());		
+        log.info("user agent=  "+user.getUserAgent() +" public ip of user: "+user.getPublicIp()+" browser :"+header.getBrowser());		
 		String validCaptcha=(String)session.getAttribute("captcha_security");
 		log.info("captcha from session:  "+validCaptcha); 
 		if(user.getCaptcha().equals(validCaptcha)) {

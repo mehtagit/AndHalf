@@ -11,6 +11,13 @@ public class IPLogContentModel {
 	private String createdOn;
 	private String modifiedOn;
 	private String username;
+	private String browser;
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -62,6 +69,8 @@ public class IPLogContentModel {
 		builder.append(modifiedOn);
 		builder.append(", username=");
 		builder.append(username);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}
