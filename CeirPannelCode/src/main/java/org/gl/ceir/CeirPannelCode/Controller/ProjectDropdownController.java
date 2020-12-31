@@ -172,4 +172,18 @@ public class ProjectDropdownController {
 		List<AddressResponse> dropdown = userLoginFeignImpl.getAllProvinceFeign();
 		return dropdown;
 	}
+	
+	@ResponseBody
+	@GetMapping("getDistinctFeatureList")
+	public List<String> getDistinctFeatureList() {
+		List<String> dropdown = userLoginFeignImpl.getDistinctFeature();
+		return dropdown;
+	}
+	
+	@ResponseBody
+	@GetMapping("getDistinctUserTypeList")
+	public List<String> getDistinctUserTypeList() {
+		List<String> dropdown = userLoginFeignImpl.getDistinctUserType();
+		return dropdown;
+	}
 }		
