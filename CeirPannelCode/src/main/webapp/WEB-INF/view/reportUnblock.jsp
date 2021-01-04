@@ -301,7 +301,7 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                         <label for="unblockbulkDevicequantity"><spring:message code="input.devicequantity" /> <span class="star"> *</span></label>
                                                     </div>
                                                     
-                                                    <div class="file-field input-field col s12 m6" style="margin-top: -87px;">
+                                                    <div class="file-field input-field col s12 m6" style="margin-top: -75px;">
                                                         <p style="color: #000;"><spring:message code="operator.upload" /> <span class="star"> *</span></p>
                                                         <div class="btn">
                                                             <span><spring:message code="operator.file" /></span>

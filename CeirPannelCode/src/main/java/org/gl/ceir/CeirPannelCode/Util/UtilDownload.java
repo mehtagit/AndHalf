@@ -49,7 +49,7 @@ public class UtilDownload {
 	
 	public String getTxnId() {
 
-		DateFormat dateFormat = new SimpleDateFormat("YYYYMMddHHmmss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date date = new Date();
 		String transactionId = dateFormat.format(date)+randomNumericString(3);	
 		return transactionId;

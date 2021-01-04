@@ -178,9 +178,9 @@ function pageButtons(Url){
 			}
 
 
-			$.getJSON('./getAllfeatures', function(data) {
+			$.getJSON('./getDistinctFeatureList', function(data) {
 				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].name).text(data[i].name).appendTo('#Feature');
+					$('<option>').val(data[i]).text(data[i]).appendTo('#Feature');
 				}
 			});
 			var token = $("meta[name='_csrf']").attr("content");
@@ -191,9 +191,9 @@ function pageButtons(Url){
 			});
 			
 			
-			$.getJSON('./registrationUserType?type=2', function(data) {
+			$.getJSON('./getDistinctUserTypeList', function(data) {
 				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].usertypeName).text(data[i].usertypeName)
+					$('<option>').val(data[i]).text(data[i])
 					.appendTo('#User,#editUser');
 				}
 			});
@@ -262,7 +262,6 @@ function getDetailBy(id){
 
 
 function setData(result){
-console.log("result is : "+JSON.stringify(result))
 	$("#editRule").val(result.name).change();
 	
 	$("#editUser").val(result.userType);
