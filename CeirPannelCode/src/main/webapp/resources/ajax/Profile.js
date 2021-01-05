@@ -782,7 +782,7 @@ function previewFile2(srcFilePath, srcFileName) {
 	if (filePath == null || filePath == "" || filePath == undefined
 			&& fileName == null || fileName == "" || fileName == undefined) {
 	} else if (fileExtension == "jpg" || fileExtension == "jpeg"
-			|| fileExtension == "png" || fileExtension == "gif") {
+			|| fileExtension == "png" || fileExtension == "gif"  || fileExtension == "PNG") {
 		$("#fileSource").attr("src", FinalLink);
 		$("#viewuplodedModel").openModal();
 	} else {

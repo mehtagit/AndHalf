@@ -11,7 +11,8 @@
 
 */
 function activeDeviceGraph() {
-	[31,48,52,53,14].forEach(function(reportnameId) {
+	/*[31,48,52,53,14].forEach(function(reportnameId) {*/
+	[31,14,52,53].forEach(function(reportnameId) {
 		var graphRequest=null;
 		var chartID=null;
 		var type=null;
@@ -177,7 +178,7 @@ function graph(response,id,chartType,chartTitle)
 	var iotDevice=[]; 
 	var smartPhone=[]; 
 	var mobileFeaturePhone=[]; 
-	var na=[]; 
+	/*var na=[]; */
 	var tablet=[]; 
 	var connectedComputer=[]; 
 	var portableIncludePDA=[]; 
@@ -213,7 +214,7 @@ function graph(response,id,chartType,chartTitle)
 			iotDevice.push(response['rowData'][i]['IoT Device']);
 			smartPhone.push(response['rowData'][i]['Smartphone']);
 			mobileFeaturePhone.push(response['rowData'][i]['Mobile Phone/Feature phone']);
-			na.push(response['rowData'][i]['NA']);
+			/*na.push(response['rowData'][i]['NA']);*/
 			tablet.push(response['rowData'][i]['Tablet']);
 			connectedComputer.push(response['rowData'][i]['Connected Computer']);
 			portableIncludePDA.push(response['rowData'][i]['Portable(include PDA)']);
@@ -232,11 +233,16 @@ function graph(response,id,chartType,chartTitle)
 		
 */
 		$("#exportDeviceReport").unbind("click").click(function(){
-	        var data = JSON.stringify(response['rowData']);
-	        //console.log(JSON.stringify(data));
-	        if(data == '')
+	        var data = response['rowData'];
+			var result=[];
+			var obj={
+				"approvedTAC":data[0]['approvedTAC'],
+				  "rejectedTAC":data[0]['rejectedTAC']
+			};
+			result.push(obj);
+			 if(data == '')
 	            return;
-	        JSONToCSVConvertor(data, "Active_Device", true);
+	        JSONToCSVConvertor(result, "TAC_graph", true);
 
 	    });
 		var options = {
@@ -301,7 +307,7 @@ function graph(response,id,chartType,chartTitle)
 	        //console.log(JSON.stringify(data));
 	        if(data == '')
 	            return;
-	        JSONToCSVConvertor(data, "Active_Device", true);
+	        JSONToCSVConvertor(data, "TAC_graph", true);
 
 	    });
 		var ctx = document.getElementById(''+id+'').getContext('2d');
@@ -379,6 +385,7 @@ function graph(response,id,chartType,chartTitle)
 	else if(chartType == 'bar'){
 		$("#expLineBar").unbind("click").click(function(){
 			var data = response['rowData'];
+		
 			if(data == '')
 				return;
 			JSONToCSVConvertor(data, "Report", true);
@@ -650,10 +657,16 @@ function graphBrandName(response,id,chartType,chartTitle)
 */
 		$("#exportBrandReport").unbind("click").click(function(){
 	        var data = JSON.stringify(response['rowData']);
-	        //console.log(JSON.stringify(data));
+	        var result=[];
+	    	for(var i=0;i<response['rowData'].length;i++){
+	    		var obj={"Date":response['rowData'][i]['Date'],"Brand Name":response['rowData'][i]['Brand Name'],"Count":response['rowData'][i]['Count']};
+	    			result.push(obj);
+	    		
+	    	}
+			
 	        if(data == '')
 	            return;
-	        JSONToCSVConvertor(expoData, "Top5Brand", true);
+	        JSONToCSVConvertor(result, "Top5Brand", true);
 
 	    });
 		
@@ -749,9 +762,16 @@ function graphTopModelNumber(response,id,chartType,chartTitle)
 		$("#exportModelReport").unbind("click").click(function(){
 	        var data = JSON.stringify(response['rowData']);
 	        //console.log(JSON.stringify(data));
+	        var result=[];
+	    	for(var i=0;i<response['rowData'].length;i++){
+	    		var obj={"Date":response['rowData'][i]['Date'],"Model Name":response['rowData'][i]['Model Name'],"Count":response['rowData'][i]['Count']};
+	    			result.push(obj);
+	    		
+	    	}
+			
 	        if(data == '')
 	            return;
-	        JSONToCSVConvertor(expoData1, "Top5Model", true);
+	        JSONToCSVConvertor(result, "Top5Model", true);
 
 	    });
 

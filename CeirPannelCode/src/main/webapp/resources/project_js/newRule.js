@@ -33,12 +33,15 @@
 
 		}
 		
-$.getJSON('./registrationUserType?type=2', function(data) {
+
+$.getJSON('./getDistinctUserTypeList', function(data) {
 	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].usertypeName).text(data[i].usertypeName)
+		$('<option>').val(data[i]).text(data[i])
 		.appendTo('#User');
 	}
 });
+
+
 $.getJSON('./ruleName', function(data) {
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].name).text(data[i].name)

@@ -98,5 +98,24 @@ public interface UserLoginFeignImpl {
 
 		@RequestMapping(value= "/saveVillage" , method=RequestMethod.POST) 
 		public GenricResponse AddVillageManagementFeign(@RequestBody FilterRequest filterRequest);
+		
+		
+		
+		
+		
+		@GetMapping("/getDistinctFeature")
+		public @ResponseBody List<String> getDistinctFeature();
+		
+		
+		
+		@GetMapping("/getDistinctUserType")
+		public @ResponseBody List<String> getDistinctUserType();
+		
+		@GetMapping("/getDistinctFeatureName")
+		public @ResponseBody List<String> getDistinctFeatureName();
+		
+		
+		
+		
 }
 

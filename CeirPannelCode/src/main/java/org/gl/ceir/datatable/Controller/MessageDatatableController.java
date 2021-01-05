@@ -84,7 +84,7 @@ public class MessageDatatableController {
 					   String value = dataInsideList.getValue().replaceAll("<","&lt;").replaceAll(">","&gt;");
 					   String channel = dataInsideList.getChannelInterp();
 					   String userStatus = (String) session.getAttribute("userStatus");
-					   String subject = dataInsideList.getSubject() == null ? "NA" : dataInsideList.getSubject();
+					   String subject = dataInsideList.getSubject() == null ? "NA" : dataInsideList.getSubject().replaceAll("<","&lt;").replaceAll(">","&gt;");
 					   String feature =  dataInsideList.getFeatureName() == null ? "NA" : dataInsideList.getFeatureName();;
 					   //log.info("----Id------"+Id+"-------id----------------"+id+"---userName-----"+username);
 					   String action=iconState.adminMessageIcons(userStatus,tag);			   
