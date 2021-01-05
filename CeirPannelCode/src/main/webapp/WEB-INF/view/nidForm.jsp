@@ -213,10 +213,11 @@ section {
 							</c:choose>
 						 --%><div class="input-field col s12 m2 l2">
 							<button type="button" class="btn"  id="submit" onclick="hide();"><spring:message code="button.submit" /></button>
-							<c:choose>
+							<button type="button" class="btn"  id="submit" onclick="viewAll()">View All</button>
+							<%-- <c:choose>
 						<c:when test="${usertype=='Custom'}">
 							<button type="button" class="btn"  id="submit" onclick="viewAll()">View All</button>
-						</c:when></c:choose>
+						</c:when></c:choose> --%>
 						</div>
 						<div class="col s12 m12"><p id="errorMsgOnModal" class="nidValidationMsg"><spring:message code="validation.12NID" /></p></div>
 						<div class="col s12 m12"><p id="UserDisableMsg" class="nidValidationMsg" style="display: none;"><spring:message code="account.disabled"/></p></div>

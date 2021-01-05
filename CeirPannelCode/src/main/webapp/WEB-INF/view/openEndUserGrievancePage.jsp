@@ -211,8 +211,8 @@ var contextpath = "${context}";
                                             <input type="text" id="lastName" name="lastName" pattern="[a-zA-Z]{0,20}" 
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-													 required   maxlength="20" />
-                                            <label for="lastName"><spring:message code="input.lastName" /> <span class="star">*</span></label>
+													    maxlength="20" />
+                                            <label for="lastName"><spring:message code="input.lastName" /> <span class="star"></span></label>
                                         </div>
 
                                         <div class="input-field col s12 m6">

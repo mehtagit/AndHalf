@@ -34,7 +34,7 @@ $(document).ready(function () {
 		}
 	});
 
-	$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
+	$.getJSON('./getDropdownList/LAWFULL_SIM_STATUS', function(data) {
 
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
@@ -843,7 +843,7 @@ $.getJSON('./getTypeDropdownList/BLOCK_CATEGORY/'+$("body").attr("data-userTypeI
 	}
 });
 
-$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
+$.getJSON('./getDropdownList/LAWFULL_SIM_STATUS', function(data) {
 	$("#editblockmultipleSimStatus").empty();
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
@@ -1017,7 +1017,7 @@ function setSingleDeviceViewPopUp(data,popUpType,requestType){
 		////console.log("device id type="+data.singleImeiDetails.deviceIdType);
 		$("#editblockdeviceType").val(data.singleImeiDetails.deviceType).change();
 	
-		$("#editblockmultipleSimStatus").val(data.singleImeiDetails.multipleSimStatus);
+		$("#editblockmultipleSimStatus").val(data.singleImeiDetails.multipleSimStatus).change();
 		$("#editsingleblockserialNumber").val(data.singleImeiDetails.deviceSerialNumber);
 		$("#editsingleblockremark").val(data.singleImeiDetails.remark);
 		$("#editsingleblockIMEI1").val(data.singleImeiDetails.firstImei);
