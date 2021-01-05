@@ -1208,6 +1208,9 @@ $('#redirectToPage').click(function(){
 var userType= $("body").attr("data-roleType");
 var txnID= $("body").attr("data-txnid-value");
 var source= $("body").attr("data-source-value");
+var viewall=sessionStorage.getItem("ViewAll");
+
+sessionStorage.removeItem("ViewAll");
 if (source=='menu'){
 	txnID='';
 }
@@ -1222,7 +1225,15 @@ else if(source=='filter'){
 	   window.location.replace("${context}/uploadPaidStatus?txnID="+txnID+"&source="+source);
 	   }
    else{
-	window.location.replace("${context}/uploadPaidStatus?via=other&NID="+nationalID+"&txnID="+txnID+"&source="+source);  
+	 if(viewall=="ViewAll")  {
+		 
+		 window.location.replace("${context}/uploadPaidStatus?via=other&txnID="+txnID+"&source="+source);
+		 }
+	 
+	 else{
+		 window.location.replace("${context}/uploadPaidStatus?via=other&NID="+nationalID+"&txnID="+txnID+"&source="+source);	 
+	 }
+	  
        }
 	});
 	

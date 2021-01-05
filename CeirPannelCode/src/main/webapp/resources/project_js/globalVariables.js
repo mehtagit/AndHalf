@@ -373,7 +373,28 @@ else{
 }
 
 
-
+function setMandatoryandOptional(village,locality,district,commune,province){
+	var addressType=$('#addressType').val();
+	if(addressType==2)
+		{
+		$(".starAddress").css("display", "none");
+		$(".starAddressDistrict").css("display", "none");
+		$("#singleStolenCommuneLabelID,#singleStolenDistrictLabelID").find(".star").remove();
+	//	$("#"+district+","+"#"+commune).css("display", "none");
+		$("#"+village+","+"#"+locality+","+"#"+district+","+"#"+commune).attr("required", false);
+		$("#"+village+","+"#"+locality+","+"#"+district+","+"#"+commune+","+"#"+province).attr("required", false);
+		$("#"+village+","+"#"+locality+","+"#"+district+","+"#"+commune+","+"#"+province).empty();
+		$("#"+village+","+"#"+district+","+"#"+commune+","+"#"+province).prop('disabled', true);
+		}
+	else{
+		$("#singleStolenCommuneLabelID,#singleStolenDistrictLabelID").append('<span class="star">*</span>');
+		//$(".starAddressDistrict").css("display", "block");
+		//$(".starAddress").css("display", "block");
+		$("#"+district+","+"#"+commune).attr("required", true);
+		$("#"+district+","+"#"+commune+","+"#"+province).attr("required", true);
+		$("#"+village+","+"#"+district+","+"#"+commune+","+"#"+province).prop('disabled', false);
+	}
+}
 
 
 function setContactIMEINumber(multiplesimstatus,IMEIContact1,IMEIContact2,IMEIContact3,IMEIContact4){

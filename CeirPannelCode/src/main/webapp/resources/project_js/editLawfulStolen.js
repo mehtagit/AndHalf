@@ -170,11 +170,12 @@ function viewIndivisualStolen()
 			if(response.stolenIndividualUserDB.locality=="" || response.stolenIndividualUserDB.locality==null){
 				$('#singleStolenlocality').val('NA');
 			}
-			$('#singleStolendistrict').val(response.stolenIndividualUserDB.district);
-			$('#singleStolencommune').val(response.stolenIndividualUserDB.commune);
-			$('#singleStolenpin').val(response.stolenIndividualUserDB.postalCode);
 			$('#country').val(response.stolenIndividualUserDB.country).change();
-			$('#state').val(response.stolenIndividualUserDB.province);
+			$('#state').val(response.stolenIndividualUserDB.province).change();
+			$('#singleStolendistrict').val(response.stolenIndividualUserDB.district).change();
+			$('#singleStolencommune').val(response.stolenIndividualUserDB.commune).change();
+			$('#singleStolenpin').val(response.stolenIndividualUserDB.postalCode);
+		
 			if(isNaN(response.stolenIndividualUserDB.deviceBrandName)){
 				$("label[for='OtherBrandNameLabel']").addClass('active');
 				$('#editsingleStolendeviceBrandName').val("930").change();

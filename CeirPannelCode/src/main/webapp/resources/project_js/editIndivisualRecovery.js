@@ -88,6 +88,11 @@ headers:
 		$('#sigleRecoverydeviceType').val(response.stolenIndividualUserDB.deviceType);
 		$('#sigleRecoverydeviceSimStatus').val(response.stolenIndividualUserDB.multiSimStatus).change();
 		$('#sigleRecoveryserialNumber').val(response.stolenIndividualUserDB.deviceSerialNumber);
+		$('#country1').val(response.stolenIndividualUserDB.deviceStolenCountry).change();
+		$('#state1').val(response.stolenIndividualUserDB.deviceStolenProvince).change();
+		$('#sigleRecoverydistrict').val(response.stolenIndividualUserDB.deviceStolenDistrict).change();
+		$('#sigleRecoverycommune').val(response.stolenIndividualUserDB.deviceStolenCommune).change();
+		
 		if(response.stolenIndividualUserDB.deviceSerialNumber=="" || response.stolenIndividualUserDB.deviceSerialNumber==null){
 			$('#sigleRecoveryserialNumber').val('NA');	
 		}
@@ -101,11 +106,9 @@ headers:
 		if(response.stolenIndividualUserDB.deviceStolenLocality=="" || response.stolenIndividualUserDB.deviceStolenLocality==null){
 			$('#sigleRecoverylocality').val('NA');	
 		}
-		$('#sigleRecoverydistrict').val(response.stolenIndividualUserDB.deviceStolenDistrict);
-		$('#sigleRecoverycommune').val(response.stolenIndividualUserDB.deviceStolenCommune);
+		
 		$('#sigleRecoverypin').val(response.stolenIndividualUserDB.deviceStolenPostalCode);
-		$('#country1').val(response.stolenIndividualUserDB.deviceStolenCountry).change();
-		$('#state1').val(response.stolenIndividualUserDB.deviceStolenProvince);
+		
 		//$('#sigleRecoverydeviceStatus').val(response.stolenIndividualUserDB.deviceBrandName);
 		$('#sigleRecovery').val(response.remark);
 		if(response.remark=="" || response.remark==null){
