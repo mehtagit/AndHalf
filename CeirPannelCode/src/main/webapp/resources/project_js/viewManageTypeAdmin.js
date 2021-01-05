@@ -381,6 +381,25 @@ function ImporterviewByID(id, actionType, projectPath, modalID) {
 	$('#' + modalID).openModal({
 		dismissible : false
 	});
+	if (actionType == 'view') {
+		// $("#viewImporterModal").openModal();
+		$("#viewtradmark").val("");
+		$("#viewmodelName").val("");
+		$("#viewModelnumber").val("");
+		$("#viewManufacturercountry").val("");
+		$('#viewrequestDate').val("");
+		$('#viewFrequency').val("");
+		$("#viewImportertac").val("");
+		$("#viewtxnId").val("");
+		$("#chatMsg").text("");
+	} else if (actionType == 'edit') {
+		$("#editImportertransactionid").val("");
+		$("#editTradmark").val("");
+		$("#productname").val("");
+		$("#editmanufacturercountry").val("");
+		$('#editfrequency').val("");
+		$('#editImportertac').val("");
+	}
 	window.projectPath = projectPath;
 	
 	var token = $("meta[name='_csrf']").attr("content");

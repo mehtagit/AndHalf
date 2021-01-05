@@ -1710,45 +1710,6 @@ $(document).on("keyup", "#singleStolenimei1", function(e) {
 });
 
 
-function setContactIMEINumber(multiplesimstatus,IMEIContact1,IMEIContact2,IMEIContact3,IMEIContact4){
-	
-	
-if($('#'+multiplesimstatus).val()==1){
-	$("#"+IMEIContact1).css("display", "block");
-	$("#"+IMEIContact2).css("display", "none");
-	$("#"+IMEIContact3).css("display", "none");
-	$("#"+IMEIContact4).css("display", "none");
-}
-else if($('#'+multiplesimstatus).val()==2){
-
-	$("#"+IMEIContact1).css("display", "block");
-	$("#"+IMEIContact2).css("display", "block");
-	$("#"+IMEIContact3).css("display", "none");
-	$("#"+IMEIContact4).css("display", "none");
-	
-}
-else if($('#'+multiplesimstatus).val()==3){
-
-	$("#"+IMEIContact1).css("display", "block");
-	$("#"+IMEIContact2).css("display", "block");
-	$("#"+IMEIContact3).css("display", "block");
-	$("#"+IMEIContact4).css("display", "none");
-	
-}
-else if($('#'+multiplesimstatus).val()==4){
-		$("#"+IMEIContact1).css("display", "block");
-		$("#"+IMEIContact2).css("display", "block");
-		$("#"+IMEIContact3).css("display", "block");
-		$("#"+IMEIContact4).css("display", "block");
-}
-else if($('#'+multiplesimstatus).val()==""){
-	$("#"+IMEIContact1).css("display", "none");
-	$("#"+IMEIContact2).css("display", "none");
-	$("#"+IMEIContact3).css("display", "none");
-	$("#"+IMEIContact4).css("display", "none");
-}
-
-}
 
 function enableSelectFile() {
 	 
@@ -2028,3 +1989,6 @@ function changeSelectDropDownToText(singleStolendeviceBrandName){
 		$("#OtherBrandName").attr("required", false);
 	}
 }	
+
+$("#country").val("Cambodia").change();
+/*$("#country").attr("style", "pointer-events: none;");*/

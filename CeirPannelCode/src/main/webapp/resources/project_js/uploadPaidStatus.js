@@ -318,7 +318,7 @@ $(document).ready(function () {
 				}
 			});
 
-			$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
+			$.getJSON('./getDropdownList/LAWFULL_SIM_STATUS', function(data) {
 				var dropdownid=id-1;
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].value).text(data[i].interp)
@@ -1205,7 +1205,7 @@ $(document).ready(function () {
 		}
 	});
 
-	$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
+	$.getJSON('./getDropdownList/LAWFULL_SIM_STATUS', function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#multipleSimStatus1');
@@ -1966,7 +1966,8 @@ function deptImageValidation() {
 
 		}
 	}
-	
+	$("#country").val("Cambodia").change();
+	$("#country").attr("style", "pointer-events: none;");
 	/*
 	 $('#doc_type').on('change', function() {
 		 var doctype = $('#doc_type').val();

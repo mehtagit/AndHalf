@@ -157,8 +157,8 @@
                                                             </div>
                                         
                                                             <div class="col s12 m6">
-                                                                <label for="blockmultipleSimStatus"><spring:message code="operator.multiplesim" /></label>
-                                                                <select class="browser-default" id="blockmultipleSimStatus"
+                                                                <label for="blockmultipleSimStatus"><spring:message code="registration.selectMultiplestLawfull" /></label>
+                                                                <select class="browser-default" id="blockmultipleSimStatus" onchange="setContactIMEINumber('blockmultipleSimStatus','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
                                                                  oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                                  oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
                                                                     <option value=""  selected><spring:message code="operator.multiplestatus" /></option>
@@ -240,6 +240,8 @@ onclick="_Services._selectstartDate()"></i></span>
 </div>
 </div>
                                                         
+                                                            
+                                                            <div id="IMEIndContact1" style="display: none">
                                                             <div class="col s12 m12">
                                                                 <p style="margin-bottom: 0;"><spring:message code="title.imeiMeidEsn" /></p>
                                                             </div>
@@ -249,24 +251,26 @@ onclick="_Services._selectstartDate()"></i></span>
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                     required   maxlength="16">
                                                                 <label for="singleblockIMEI1"><spring:message code="title.one" /> <span class="star">*</span></label>
-                                                            </div>
-                                        
+                                                                         <p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top:-72px;margin-left:115px;"></p>
+                                                            </div></div>
+                                        					<div id="IMEIndContact2" style="display: none"><p>	
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="singleblockIMEI2" name="IMEI2" pattern="[0-9]{15,16}" 
                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                     maxlength="16">
                                                                 <label for="singleblockIMEI2"><spring:message code="title.two" /></label>
-                                                            </div>  
-                                                            
+                                                            </div></div>  
+                                                            <div id="IMEIndContact3" style="display: none"><p>
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="singleblockIMEI3" name="IMEI3" pattern="[0-9]{15,16}" 
                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                     oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                   maxlength="16">
                                                                 <label for="singleblockIMEI3"><spring:message code="title.three" /></label>
-                                                           <p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top:-146px;margin-left:115px;"></p>
-                                                            </div>
+                                                  
+                                                            </div></div>
+                                                            <div id="IMEIndContact4" style="display: none"><p>
             
                                                             <div class="input-field col s12 m6">
                                                                <input type="text" id="singleblockIMEI4" name="IMEI4[]" pattern="[0-9]{15,16}"
@@ -274,7 +278,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                                     oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                   maxlength="16">
                                                                 <label for="singleblockIMEI4"><spring:message code="title.four" /></label>
-                                                            </div>
+                                                            </div></div>
                                                         </div>
                                                         <span><spring:message code="input.requiredfields" /> <span class="star">*</span></span>
                                                     </div>

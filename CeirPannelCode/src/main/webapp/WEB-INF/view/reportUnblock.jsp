@@ -158,8 +158,8 @@ padding: 0 !important;
                                                             </div>
                                         
                                                             <div class="col s12 m6">
-                                                                <label for="deviceType"><spring:message code="operator.multiplesim" /></label>
-                                                                <select class="browser-default" id="unbockSingleMultipleSimStatus"
+                                                                <label for="deviceType"><spring:message code="registration.selectMultiplestLawfull" /></label>
+                                                                <select class="browser-default" id="unbockSingleMultipleSimStatus" onchange="setContactIMEINumber('unbockSingleMultipleSimStatus','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
                                                                  oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                                  oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
                                                                     <option value=""  selected><spring:message code="operator.multiplesim" /></option>
@@ -220,7 +220,9 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
 </div>
 </div>
                                                         </div> --%>
-                                                            <div class="col s12 m12">
+                                                           
+                                                            <div id="IMEIndContact1" style="display: none">
+                                                             <div class="col s12 m12">
                                                                 <p style="margin-bottom: 0;"><spring:message code="title.imeiMeidEsn" /> </p>
                                                             </div>
                                                             <div class="input-field col s12 m6">
@@ -229,7 +231,9 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                 required   maxlength="16">
                                                                 <label for="IMEI1"><spring:message code="title.one" /> <span class="star">*</span></label>
-                                                            </div>
+                                                                 <p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top:-75px;margin-left:115px;"></p>
+                                                            </div></div>
+                                                             <div id="IMEIndContact2" style="display: none">
                                         
                                                             <div class="input-field col s12 m6">
                                                                                             <input type="text" id="unbockSingleIMEI2" name="IMEI2" pattern="[0-9]{15,16}" 
@@ -237,7 +241,8 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                     maxlength="16">
                                                                 <label for="IMEI2"><spring:message code="title.two" /></label>
-                                                            </div>  
+                                                            </div>  </div>
+                                                             <div id="IMEIndContact3" style="display: none">
                                                             
                                                             <div class="input-field col s12 m6">
                                                           <input type="text" id="unbockSingleIMEI3" name="IMEI3" pattern="[0-9]{15,16}" 
@@ -245,16 +250,16 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                    maxlength="16">
                                                                 <label for="IMEI3"><spring:message code="title.three" /></label>
-                                                               <p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top:-146px;margin-left:115px;"></p>
-                                                            </div>
-            
+                                                              
+                                                            </div></div>
+            												 <div id="IMEIndContact4" style="display: none">
                                                             <div class="input-field col s12 m6">
                                                       <input type="text" id="unbockSingleIMEI4" name="IMEI4[]" pattern="[0-9]{15,16}"
                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                  maxlength="16">
                                                                 <label for="IMEI4"><spring:message code="title.four" /></label>
-                                                            </div>
+                                                            </div></div>
                                                         	<div class="col s12 m12"><span><spring:message code="input.requiredfields" /> <span class="star">*</span></span></div>
                                                          </div>
                                                         </div>
@@ -501,7 +506,7 @@ src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random(
 					}
 				});
 
-				$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
+				$.getJSON('./getDropdownList/LAWFULL_SIM_STATUS', function(data) {
 					
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].value).text(data[i].interp)
