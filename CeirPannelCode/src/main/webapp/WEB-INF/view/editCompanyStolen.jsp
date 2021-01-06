@@ -600,8 +600,8 @@
 												<input type="text" name="pin"
 													class="form-control boxBorder boxHeight" id="bulkStolenpin" placeholder=""
 													pattern="[0-9]{6,6}" title=""  required="required"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
 													maxlength="6"> <label for="pin"><spring:message code="input.postalCode" />
 													<span class="star">*</span>
 												</label>
@@ -772,8 +772,8 @@
 												<input type="text" name="pin" placeholder=""
 													class="form-control boxBorder boxHeight"
 													id="deviceBulkStolenpin" pattern="[0-9]{6,6}" title="" maxlength="6"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
 													 required="required"> <label
 													for="pin"><spring:message code="input.postalCode" /><span class="star">*</span></label>
 											</div>

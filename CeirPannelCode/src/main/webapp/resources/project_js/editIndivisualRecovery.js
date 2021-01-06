@@ -35,6 +35,7 @@ $(document).ready(function() {
 	 					.appendTo('#editsigleRecoverydeviceBrandName');
 	 			
 	 		}
+	 		$("#editsigleRecoverydeviceBrandName").eq(0).removeAttr("tabindex");
 		/* setBrandName();*/
 		 
 	 	})

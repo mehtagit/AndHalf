@@ -317,7 +317,7 @@
                                                             
                                                             <div class="col s12 m6 l6">
                                                                 <label><spring:message code="table.country" /> <span class="star">*</span></label>
-                                                                <select id="country1" class="browser-default" class="mySelect" 
+                                                                <select id="country1" class="browser-default" class="mySelect"  disabled="disabled"
                                                                 oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                                 oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
                                                                     style="padding-left: 0;" required></select>
@@ -382,7 +382,7 @@
         
                                                             
                             
-                                                            <div class="input-field col s12 m6 l6">
+                                                            <div class="input-field col s12 m6 l6" style="margin-left: 1px;">
                                                                 <input type="text" name="sigleRecoverylocality" class="form-control boxBorder boxHeight" placeholder=""
                                                                     id="sigleRecoverylocality" maxlength="30" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" 
                                                                     title=""
@@ -392,11 +392,11 @@
                                                             </div>
                                 
                                 
-                                                            <div class="input-field col s12 m6 l6">
+                                                            <div class="input-field col s12 m6 l6" style="    margin-right: -1px">
                                                                 <input type="text" name="sigleRecoverypin" class="form-control boxBorder boxHeight" placeholder=""
                                                                     id="sigleRecoverypin" maxlength="6" pattern="[0-9]{6,6}" required="required"
-                                                                    title="" oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');" 
-                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');">
+                                                                    title="" oninput="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');" 
+                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');">
                                                                 <label for="sigleRecoverypin"><spring:message code="input.postalCode" /> <span class="star">*</span></label>
                                                             </div>
                             
@@ -468,7 +468,7 @@ onclick="_Services._selectstartDate()"></i></span>
 </div>
 </div>
 </div> --%>
-                                                             <div class="input-field col s12 m6">
+                                                             <div class="input-field col s12 m6" style="margin-top: 26px">
 											<input type="text" name="deviceRecoveryDevice" placeholder=""
 												id='bulkRecoveryDate' class='form-control datepick'
 												autocomplete='off' 

@@ -472,6 +472,8 @@ function  showBulkRecovery(){
 
 	$('#singleRecoveryForm').trigger("reset");
 	$('#bulkRecoveryForm').trigger("reset");
+	$("#bulkRecoverycountry").val("Cambodia").change();
+	//$("#bulkRecoverycountry").attr("style", "pointer-events: none;");
 
 }
 
@@ -1289,6 +1291,7 @@ function confirmRejectInformation(){
 */
 
 function clearFileName() {
+	alert("A");
 	var fieldId=$('#FilefieldId').val();
 	
 	if(fieldId=='singleStolenFile')
@@ -1326,14 +1329,25 @@ headers:
 });
 
 $.getJSON('./getDropdownList/TOP_BRAND', function(data) {
-	$('#select2-singleStolendeviceBrandName-container').empty();
+	
+	/*var html='<option value="">Select Brand Name</option>';
+	$('#singleStolendeviceBrandName').append(html);*/	
+	//$('#select2-singleStolendeviceBrandName-container').empty();
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].id).text(data[i].interp)
 				.appendTo('#singleStolendeviceBrandName');
 	}
-	
+	$("#singleStolendeviceBrandName").eq(0).removeAttr("tabindex");
 });
-$('select#singleStolendeviceBrandName').select2();
+var dataFiltersorce= $("body").attr("data-filtersorce");
+var dataSource= $("body").attr("data-source");
+alert("dataSource----"+dataSource);
+if(dataFiltersorce=="" || dataFiltersorce==null && dataSource==null || dataSource==""){
+	
+	$('select#singleStolendeviceBrandName').select2();	
+}
+
+
 
 
 $('#singleStolendeviceBrandName').on(
@@ -1971,12 +1985,46 @@ $.ajaxSetup({
 				});
 
 		function clearFileName() {
+			
+			var fieldId=$('#FilefieldId').val();
+			//var existingFileName=$('#existingFileName').val();
+			////alert("existingFileName=="+existingFileName);
+			////alert(fieldId);
+		 
+			if(fieldId=='singleStolenFile')
+			{
+			$('#'+fieldId).val('');
+			$('#singleStolenFileName').val('');
+			}
+		else if(fieldId=='uploadFirSingle')
+			{
+			$('#'+fieldId).val('');
+			$('#uploadFirSingleName').val('');
+			}
+			
+		else if(fieldId=='deviceBulkStolenFile')
+		{
+		$('#'+fieldId).val('');
+		$('#deviceBulkStolenFileName').val('');
+		}
+			
+		else if(fieldId=='uploadFirBulk')
+		{
+		$('#'+fieldId).val('');
+		$('#uploadFirSingleBulkName').val('');
+		}
+		else if(fieldId=='bulkRecoveryFile')
+		{
+		$('#'+fieldId).val('');
+		$('#bulkRecoveryFileName').val('');
+		}
 			$('#fileFormateModal').closeModal();
+	/*		$('#fileFormateModal').closeModal();
 			var fieldInput=$('#removeFileInput').val();
 			$('#'+fieldInput).val('');
 			var inputPlaceHolder=$('#removeFileId').val();
-			 
-			$('#'+inputPlaceHolder).find('input:text').val(''); 
+			 alert()
+			$('#'+fileName).val(''); */
 
 			}
 function changeSelectDropDownToText(singleStolendeviceBrandName){

@@ -128,6 +128,11 @@
     margin-left:50px;
     color: red;
 		}
+		selectlawfull:disabled {
+    
+    border-bottom: 1px dotted rgba(0, 0, 0, 0.26);
+    padding-left: 5px;
+}
     </style>
 
 
@@ -334,11 +339,11 @@
 													</div>
 														<div class="col s12 m6 l6">
 														<label> <spring:message code="input.Country" /><span
-															class="star"> *</span></label> <select id="country"
+															class="star"> *</span></label> <select id="country" 
 															class="browser-default" class="mySelect"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															required style="padding-left: 0;"></select>
+															required style="padding-left: 0; color: rgb(53, 52, 52);"></select>
 													</div>
 													<div class="col s12 m6 l6">
 														<label> <spring:message code="input.province" />
@@ -433,8 +438,8 @@
 														<input type="text" name="pin"
 															class="form-control boxBorder boxHeight"
 															id="singleStolenpin" pattern="[0-9]{6,6}"
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
 															maxlength="6" required > <label for="singleStolenpin">
 															<spring:message code="input.postalCode" /><span
 															class="star"> *</span>
@@ -777,9 +782,9 @@
 														
 														<div class="col s12 m6">
 															<label> <spring:message code="input.Country" /><span
-																class="star"> *</span></label> <select id="singleDevicecountry"
+																class="star"> *</span></label> <select id="singleDevicecountry" disabled="disabled"
 																class="browser-default" class="mySelect" onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-																style="padding-left: 0;" required></select>
+																style="padding-left: 0; color: rgb(53, 52, 52);" required></select>
 														</div>
 
 														<div class="col s12 m6">
@@ -873,7 +878,18 @@
 																class="star"> </span>
 															</label>
 														</div>
-
+													<div class="input-field col s12 m6">
+															<input type="text" name="pin"
+																class="form-control boxBorder boxHeight"
+																id="singleDevicepin" pattern="[0-9]{6,6}"
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
+																required maxlength="6"> <label for="singleDevicepin">
+																<spring:message code="registration.postalcode" /><span
+																class="star"> *</span>
+															</label>
+														</div>
+																		
 													<div class="input-field col s12 m6">
 															<input type="text" name="IndivisualStolenDate"
 																id='IndivisualStolenDate' class='form-control datepick'
@@ -887,17 +903,7 @@
 																class="fa fa-calendar" aria-hidden="true"></i></span>
 														</div>
 
-														<div class="input-field col s12 m6">
-															<input type="text" name="pin"
-																class="form-control boxBorder boxHeight"
-																id="singleDevicepin" pattern="[0-9]{6,6}"
-																oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-																required maxlength="6"> <label for="singleDevicepin">
-																<spring:message code="registration.postalcode" /><span
-																class="star"> *</span>
-															</label>
-														</div>
+														
 
 														
 
@@ -1032,11 +1038,11 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 											
 												<div class="col s12 m6 l6">
 												<label> <spring:message code="input.Country" /><span
-													class="star"> *</span></label> <select id="country2"
+													class="star"> *</span></label> <select id="country2" disabled="disabled"
 													class="browser-default" class="mySelect"
 													oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-													required style="padding-left: 0;"></select>
+													required style="padding-left: 0; color: rgb(53, 52, 52);"></select>
 											</div>
 
 											<div class="col s12 m6 l6">
@@ -1062,7 +1068,7 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 										id="bulkStolendistrict" class="browser-default" class="mySelect"
 										onchange="getCommune(this,'bulkStolencommune','bulkStolenvillage');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select> 
+										style="padding-left: 0;  font-size: 14.5px;" required></select> 
 												</label>
 											</div>
 
@@ -1130,8 +1136,8 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 												<input type="text" name="pin"
 													class="form-control boxBorder boxHeight" id="bulkStolenpin"
 													pattern="[0-9]{6,6}"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
 													required maxlength="6"> <label for="bulkStolenpin"> <spring:message
 														code="registration.postalcode" /> <span class="star">
 														*</span>
@@ -1178,9 +1184,9 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 													pattern="[a-zA-Z]{1,20}"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-													required maxlength="20"> <label for="bulkStolenlastName">
+													 maxlength="20"> <label for="bulkStolenlastName">
 													<spring:message code="input.lastName" /> <span
-													class="star"> *</span>
+													class="star"></span>
 												</label>
 											</div>
 
@@ -1232,11 +1238,11 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 											</div>
 											<div class="col s12 m6 l6">
 												<label> <spring:message code="input.Country" /><span
-													class="star"> *</span></label> <select id="country3"
-													class="browser-default" class="mySelect"
+													class="star"> *</span></label> <select id="country3" disabled="disabled"
+													class="browser-default " class="mySelect"
 													oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-													required style="padding-left: 0;"></select>
+													required style="padding-left: 0; color: rgb(53, 52, 52);"></select>
 											</div>
 
 											<div class="col s12 m6 l6">
@@ -1245,7 +1251,7 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 													class="browser-default" class="mySelect" 
 													oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 													oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-													 style="padding-left: 0;" required></select>
+													 style="padding-left: 0; " required></select>
 											</div>
 											
 											<div class="col s12 m6 l6">
@@ -1260,7 +1266,7 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 										id="deviceBulkStolendistrict" class="browser-default" class="mySelect"
 										onchange="getCommune(this,'deviceBulkStolencommune','deviceBulkStolenvillage');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
+										style="padding-left: 0;font-size: 14.5px" required></select>
 												</label>
 											</div>
 
@@ -1331,8 +1337,8 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 												<input type="text" name="pin"
 													class="form-control boxBorder boxHeight"
 													id="deviceBulkStolenpin" pattern="[0-9]{6,6}"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
 													required maxlength="6"> <label for="deviceBulkStolenpin">
 													<spring:message code="registration.postalcode" /><span
 													class="star"> *</span>
@@ -1357,7 +1363,7 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 											</div>
 
 											<div class="input-field col s12 m6 l6"
-												style="margin-top: 22px;">
+												style="margin-top: 16px;">
 												<input type="text" name="quantity"
 													class="form-control boxBorder boxHeight" 
 													id="deviceBulkStolenquantity" maxlength="7"
@@ -1706,6 +1712,7 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 		
 		
 		function isImageValid(id) {
+		
 			var uploadedFileName = $("#"+id).val();
 			uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 			//alert("file extension=="+uploadedFileName)
@@ -1760,15 +1767,15 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 		} */
 		
 		$("#singleDevicecountry").val("Cambodia").change();
-		$("#singleDevicecountry").attr("style", "pointer-events: none;");
+		//$("#singleDevicecountry").attr("style", "pointer-events: none;");
 		
 		
 		
 		$("#country3").val("Cambodia").change();
-		$("#country3").attr("style", "pointer-events: none;");
+		//$("#country3").attr("style", "pointer-events: none;");
 		
 		$("#country2").val("Cambodia").change();
-		$("#country2").attr("style", "pointer-events: none;");
+		//$("#country2").attr("style", "pointer-events: none;");
 		
 		populateCountries("country", "state");
 		populateStates("country", "state");
