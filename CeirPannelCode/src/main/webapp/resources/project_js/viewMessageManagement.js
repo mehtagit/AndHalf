@@ -171,9 +171,9 @@ function setAllDropdown(){
 		}
 	});
 	
-	$.getJSON('./getAllfeatures', function(data) {
+	$.getJSON('./getDistinctFeatureNameList', function(data) {
 		for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].name).text(data[i].name).appendTo('#feature');
+		$('<option>').val(data[i]).text(data[i]).appendTo('#feature');
 		}
 	});
 }

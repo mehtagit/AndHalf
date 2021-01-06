@@ -226,6 +226,10 @@ function graph(response,id,chartType,chartTitle,pieLabelName,GraphImageId,GraphE
     	              },
     	            
     	            gridLines: { display: false },
+    	            ticks: {
+    	                autoSkip: true,
+    	                maxTicksLimit: 3
+    	              }
     	            }],
     	          yAxes: [{ 
     	          	stacked: true,

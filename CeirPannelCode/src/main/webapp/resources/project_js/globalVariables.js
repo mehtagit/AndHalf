@@ -375,20 +375,43 @@ else{
 
 
 
-function setMandatoryandOptional(village,locality,district,commune){
-	var addressType=$('#addressType').val();
-	if(addressType==2)
-		{
-		$(".starAddress").css("display", "none");
-		$(".starAddressDistrict").css("display", "none");
-		$("#singleStolenCommuneLabelID,#singleStolenDistrictLabelID").find(".star").remove();
-	//	$("#"+district+","+"#"+commune).css("display", "none");
-		$("#"+village+","+"#"+locality+","+"#"+district+","+"#"+commune).attr("required", false);
-		}
-	else{
-		$("#singleStolenCommuneLabelID,#singleStolenDistrictLabelID").append('<span class="star">*</span>');
-		//$(".starAddressDistrict").css("display", "block");
-		//$(".starAddress").css("display", "block");
-		$("#"+district+","+"#"+commune).attr("required", true);
-	}
+
+function setContactIMEINumber(multiplesimstatus,IMEIContact1,IMEIContact2,IMEIContact3,IMEIContact4){
+	
+	
+if($('#'+multiplesimstatus).val()==1){
+	$("#"+IMEIContact1).css("display", "block");
+	$("#"+IMEIContact2).css("display", "none");
+	$("#"+IMEIContact3).css("display", "none");
+	$("#"+IMEIContact4).css("display", "none");
+}
+else if($('#'+multiplesimstatus).val()==2){
+
+	$("#"+IMEIContact1).css("display", "block");
+	$("#"+IMEIContact2).css("display", "block");
+	$("#"+IMEIContact3).css("display", "none");
+	$("#"+IMEIContact4).css("display", "none");
+	
+}
+else if($('#'+multiplesimstatus).val()==3){
+
+	$("#"+IMEIContact1).css("display", "block");
+	$("#"+IMEIContact2).css("display", "block");
+	$("#"+IMEIContact3).css("display", "block");
+	$("#"+IMEIContact4).css("display", "none");
+	
+}
+else if($('#'+multiplesimstatus).val()==4){
+		$("#"+IMEIContact1).css("display", "block");
+		$("#"+IMEIContact2).css("display", "block");
+		$("#"+IMEIContact3).css("display", "block");
+		$("#"+IMEIContact4).css("display", "block");
+}
+else if($('#'+multiplesimstatus).val()==""){
+	$("#"+IMEIContact1).css("display", "none");
+	$("#"+IMEIContact2).css("display", "none");
+	$("#"+IMEIContact3).css("display", "none");
+	$("#"+IMEIContact4).css("display", "none");
+}
+
 }

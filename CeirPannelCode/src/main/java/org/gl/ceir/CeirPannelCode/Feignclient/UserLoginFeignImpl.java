@@ -111,6 +111,11 @@ public interface UserLoginFeignImpl {
 		@GetMapping("/getDistinctUserType")
 		public @ResponseBody List<String> getDistinctUserType();
 		
+		@GetMapping("/getDistinctFeatureName")
+		public @ResponseBody List<String> getDistinctFeatureName();
+		
+		
+		
 		
 }
 

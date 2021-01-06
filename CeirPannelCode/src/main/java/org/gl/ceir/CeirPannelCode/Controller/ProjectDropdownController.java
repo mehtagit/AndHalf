@@ -186,4 +186,11 @@ public class ProjectDropdownController {
 		List<String> dropdown = userLoginFeignImpl.getDistinctUserType();
 		return dropdown;
 	}
+	
+	@ResponseBody
+	@GetMapping("getDistinctFeatureNameList")
+	public List<String> getDistinctFeatureNameList() {
+		List<String> dropdown = userLoginFeignImpl.getDistinctFeatureName();
+		return dropdown;
+	}
 }		

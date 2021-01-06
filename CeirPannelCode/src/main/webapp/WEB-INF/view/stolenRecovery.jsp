@@ -1231,8 +1231,8 @@ enctype="multipart/form-data">
 <div class="row">
 <div class="col s12 m6">
 <label for="editblockmultipleSimStatus">
-<spring:message code="select.multiSimStatus" /> <span class="star"></span></label>
-<select class="browser-default" id="editblockmultipleSimStatus" >
+<spring:message code="registration.selectMultiplestLawfull" /> <span class="star"></span></label>
+<select class="browser-default" id="editblockmultipleSimStatus" onchange="setContactIMEINumber('editblockmultipleSimStatus','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')" >
 <option value=""  selected>
 <spring:message code="select.multiSimStatus" />
 </option>
@@ -1329,6 +1329,7 @@ onclick="_Services._selectstartDate()"></i></span>
 </div>
 <div class="row">
 <div class="row input_fields_wrap">
+<div id="IMEIndContact1" style="display: none">
 <div class="col s12 m12">
 <p style="margin-bottom: 0;">
 <spring:message code="title.imeiMeidEsn" />
@@ -1341,9 +1342,9 @@ pattern="[0-9]{15,16}" required="required"
 	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 title="" maxlength="16">
 <label for="editsingleblockIMEI1">
-<spring:message code="title.one" /> <span class="star">*</span></label>
-</div>
-
+<spring:message code="title.one" /> <span class="star">*</span></label><p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top:-75px;margin-left:115px;"></p>
+</div></div>
+<div id="IMEIndContact2" style="display: none">
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI2" name="IMEI2" placeholder=""
 pattern="[0-9]{15,16}" 
@@ -1352,7 +1353,8 @@ pattern="[0-9]{15,16}"
 maxlength="16">
 <label for="editsingleblockIMEI2">
 <spring:message code="title.two" /></label>
-</div>
+</div></div>
+<div id="IMEIndContact3" style="display: none">
 
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI3" name="IMEI3" placeholder=""
@@ -1362,9 +1364,9 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />
 maxlength="16">
 <label for="editsingleblockIMEI3">
 <spring:message code="title.three" /></label>
-   <p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top:-146px;margin-left:115px;"></p>
-</div>
-
+   
+</div></div>
+<div id="IMEIndContact4" style="display: none">
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI4" name="IMEI4[]" placeholder=""
 pattern="[0-9]{15,16}"  
@@ -1376,7 +1378,7 @@ maxlength="16">
 <input type="text" id="editsingleblockTxnid" style="display: none">
 <input type="text" id="editsingleblocRequestType" style="display: none">
 
-</div>
+</div></div>
 </div>
 </div>
 <span>
