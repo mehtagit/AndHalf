@@ -1968,7 +1968,7 @@ function deptImageValidation() {
 		}
 	}
 	$("#country").val("Cambodia").change();
-	$("#country").attr("style", "pointer-events: none;");
+//	$("#country").attr("style", "pointer-events: none;");
 	/*
 	 $('#doc_type').on('change', function() {
 		 var doctype = $('#doc_type').val();

@@ -1291,7 +1291,7 @@ function confirmRejectInformation(){
 */
 
 function clearFileName() {
-	alert("A");
+
 	var fieldId=$('#FilefieldId').val();
 	
 	if(fieldId=='singleStolenFile')
@@ -1341,7 +1341,7 @@ $.getJSON('./getDropdownList/TOP_BRAND', function(data) {
 });
 var dataFiltersorce= $("body").attr("data-filtersorce");
 var dataSource= $("body").attr("data-source");
-alert("dataSource----"+dataSource);
+
 if(dataFiltersorce=="" || dataFiltersorce==null && dataSource==null || dataSource==""){
 	
 	$('select#singleStolendeviceBrandName').select2();	

@@ -330,10 +330,10 @@ position: fixed;
 												<spring:message code="input.Country" />
 												<span class="star">*</span>
 											</p>
-											<select id="country" class="browser-default" class="mySelect"
+											<select id="country" class="browser-default" class="mySelect" disabled="disabled"
 												oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-												style="padding-left: 0;" required></select>
+												style="padding-left: 0;color: rgb(53, 52, 52);"" required></select>
 										</div>
 
 										<div class="input-field col s12 m6 l6"

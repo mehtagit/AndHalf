@@ -379,7 +379,8 @@ function setMandatoryandOptional(village,locality,district,commune,province){
 		{
 		$(".starAddress").css("display", "none");
 		$(".starAddressDistrict").css("display", "none");
-		$("#singleStolenCommuneLabelID,#singleStolenDistrictLabelID").find(".star").remove();
+		$(".stateLabel").css("display", "none");
+		$("#singleStolenCommuneLabelID,#singleStolenDistrictLabelID,#provianceLabel").find(".star").remove();
 	//	$("#"+district+","+"#"+commune).css("display", "none");
 		$("#"+village+","+"#"+locality+","+"#"+district+","+"#"+commune).attr("required", false);
 		$("#"+village+","+"#"+locality+","+"#"+district+","+"#"+commune+","+"#"+province).attr("required", false);
@@ -387,7 +388,7 @@ function setMandatoryandOptional(village,locality,district,commune,province){
 		$("#"+village+","+"#"+district+","+"#"+commune+","+"#"+province).prop('disabled', true);
 		}
 	else{
-		$("#singleStolenCommuneLabelID,#singleStolenDistrictLabelID").append('<span class="star">*</span>');
+		$("#singleStolenCommuneLabelID,#singleStolenDistrictLabelID,#provianceLabel").append('<span class="star">*</span>');
 		//$(".starAddressDistrict").css("display", "block");
 		//$(".starAddress").css("display", "block");
 		$("#"+district+","+"#"+commune).attr("required", true);

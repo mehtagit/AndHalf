@@ -346,8 +346,8 @@
 															required style="padding-left: 0; color: rgb(53, 52, 52);"></select>
 													</div>
 													<div class="col s12 m6 l6">
-														<label> <spring:message code="input.province" />
-															 <span class="star"> *</span></label> <select id="state"
+														<label id="provianceLabel"> <spring:message code="input.province" />
+															 <span class="star stateLabel" > *</span></label> <select id="state"
 															class="browser-default" class="mySelect"
 															style="padding-left: 0;" onchange="getDistrict(this,'singleStolendistrict','singleStolencommune');"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
@@ -371,7 +371,7 @@
 										id="singleStolendistrict" class="browser-default" class="mySelect"
 										onchange="getCommune(this,'singleStolencommune','singleStolenvillage');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
+										style="padding-left: 0;font-size: 14.5px;" required></select>
 													</div>
 
 													<div class="col s12 m6 l6">
@@ -811,7 +811,7 @@
 										id="singleDevicedistrict" class="browser-default" class="mySelect"
 										onchange="getCommune(this,'singleDevicecommune','singleDevicevillage');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
+										style="padding-left: 0;font-size: 14.5px;" required></select>
 																
 														</div>
 
