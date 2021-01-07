@@ -1,8 +1,7 @@
 package com.ceir.CeirCode.model;
 
 public class UserHeader {
-
-	private String userAgent;
+private String userAgent;
 	private String publicIp;
 	public String getUserAgent() {
 		return userAgent;
@@ -16,9 +15,25 @@ public class UserHeader {
 	public void setPublicIp(String publicIp) {
 		this.publicIp = publicIp;
 	}
+	private String browser;
+	public String getBrowser() {
+	return browser;
+}
+public void setBrowser(String browser) {
+	this.browser = browser;
+}
+	
 	@Override
 	public String toString() {
-		return "UserHeader [userAgent=" + userAgent + ", publicIp=" + publicIp + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserHeader [browser=");
+		builder.append(browser);
+		builder.append(", userAgent=");
+		builder.append(userAgent);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append("]");
+		return builder.toString();
 	}
 	public UserHeader(String userAgent, String publicIp) {
 		super();

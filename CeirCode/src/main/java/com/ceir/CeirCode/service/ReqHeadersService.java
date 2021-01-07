@@ -27,6 +27,7 @@ import com.ceir.CeirCode.SpecificationBuilder.GenericSpecificationBuilder;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
 import com.ceir.CeirCode.exceptions.ResourceServicesException;
 import com.ceir.CeirCode.filemodel.AlertDbFile;
+import com.ceir.CeirCode.filemodel.LocalityFile;
 import com.ceir.CeirCode.filemodel.ReqHeaderFile;
 import com.ceir.CeirCode.filtermodel.AlertDbFilter;
 import com.ceir.CeirCode.filtermodel.ReqHeaderFilter;
@@ -43,9 +44,11 @@ import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
 import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
 import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
 import com.ceir.CeirCode.repoService.UserRepoService;
+import com.ceir.CeirCode.util.CustomMappingStrategy;
 import com.ceir.CeirCode.util.HttpResponse;
 import com.ceir.CeirCode.util.Utility;
 import com.opencsv.CSVWriter;
+import com.opencsv.bean.MappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
@@ -174,8 +177,9 @@ public class ReqHeadersService {
 		StatefulBeanToCsvBuilder<ReqHeaderFile> builder = null;
 		StatefulBeanToCsv<ReqHeaderFile> csvWriter      = null;
 		List<ReqHeaderFile> fileRecords       = null;
-		//HeaderColumnNameTranslateMappingStrategy<UserProfileFileModel> mapStrategy = null;
+		MappingStrategy<ReqHeaderFile> mapStrategy = new CustomMappingStrategy<>();
 		try {
+			mapStrategy.setType(ReqHeaderFile.class);
 			List<RequestHeaders> alertDbData = this.getAll(filterRequest);
 			//if( alertDbData.getSize()> 0 ) {
 				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_IPLog.csv";
@@ -184,17 +188,23 @@ public class ReqHeadersService {
 			  //}
 			 			log.info(" file path plus filke name: "+Paths.get(filePath+fileName));
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
-			builder = new StatefulBeanToCsvBuilder<ReqHeaderFile>(writer);
-			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+			
+			builder = new StatefulBeanToCsvBuilder<>(writer);
+			csvWriter = builder.withMappingStrategy(mapStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+
+			
+			
 			if( alertDbData.size() > 0 ) {
 				//List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag("GRIEVANCE_CATEGORY");
 				fileRecords = new ArrayList<ReqHeaderFile>(); 
 				for( RequestHeaders req : alertDbData ) {
 					adFm = new ReqHeaderFile();
 					adFm.setCreatedOn(utility.converedtlocalTime(req.getCreatedOn()));
-					adFm.setPublicIp(req.getPublicIp());
-					adFm.setUserAgent(req.getUserAgent());
 					adFm.setUsername(req.getUsername());
+					adFm.setPublicIp(req.getPublicIp());
+					adFm.setBrowser(req.getBrowser());
+					adFm.setUserAgent(req.getUserAgent());
+					
 					
 					fileRecords.add(adFm);
 				}

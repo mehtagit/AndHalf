@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,7 +74,6 @@ public class UserMgmtService {
 
 	@Autowired
 	UserService userService;
-
 
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
@@ -206,9 +207,7 @@ public class UserMgmtService {
 				userLimit=Long.parseLong(systemConfigData.getValue());				
 			}
 			catch(Exception e) {
-				log.info("user creation limit is exceeded for "+UsertypeData.getByCode(usertypeId).getDescription());
-				RunningAlertDb alertDb=new RunningAlertDb("alert001"," user creation limit is exceeded for "+UsertypeData.getByCode(usertypeId).getDescription() +" usertype",AlertStatus.Init.getCode());
-				alertDbRepo.saveAlertDb(alertDb);
+				
 				log.info(e.toString());
 			}
 
@@ -217,9 +216,14 @@ public class UserMgmtService {
 		long count=userRepoService.countByUsertypeId(details.getUsertypeId());
 		log.info("total users find by this usertype= "+count);
 		log.info("now going to compare these two above values");
+		Optional<Usertype> usertypeDetail=Optional.ofNullable(usertypeRepo.findById(details.getUsertypeId()));
+		
 		if(count>=userLimit) {
 			log.info("if usertype count greater than total users limit then we don't able to create new user now");
-			GenricResponse response=new GenricResponse(409,"","User creation limit for the usertype is now exceeded","");
+			log.info("user creation limit is exceeded for "+usertypeDetail.get().getUsertypeName());
+			RunningAlertDb alertDb=new RunningAlertDb("alert001"," user creation limit is exceeded for "+usertypeDetail.get().getUsertypeName() +" usertype",AlertStatus.Init.getCode());
+			alertDbRepo.saveAlertDb(alertDb);
+			GenricResponse response=new GenricResponse(409,RegistrationTags.user_exceed_limit.getTag(),RegistrationTags.user_exceed_limit.getMessage(),"");
 			return  response;
 		}
 

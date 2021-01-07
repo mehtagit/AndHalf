@@ -127,7 +127,8 @@ public class LoginService
 			User UserData=userRepo.findByUsername(user.getUsername());
 			if(UserData!= null) 
 			{ 
-				RequestHeaders header=new RequestHeaders(userLogin.getUserAgent(),userLogin.getPublicIp(),UserData.getUsername());
+				RequestHeaders header=new RequestHeaders(userLogin.getUserAgent(),userLogin.getPublicIp(),UserData.getUsername(),userLogin.getBrowser());
+			
 				headerService.saveRequestHeader(header);
 				userService.saveUserTrail(UserData, "User Management","Login",41);
 				if(UserData.getPassword().equals(user.getPassword()))

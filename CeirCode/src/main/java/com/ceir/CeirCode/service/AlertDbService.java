@@ -115,7 +115,7 @@ public class AlertDbService {
 	public List<AlertDb> getAll(AlertDbFilter filterRequest) {
 
 		try {
-			List<AlertDb> systemConfigListDbs = alertDbRepo.findAll( buildSpecification(filterRequest).build());
+			List<AlertDb> systemConfigListDbs = alertDbRepo.findAll( buildSpecification(filterRequest).build(),new Sort(Sort.Direction.ASC, "alertId"));
 
 			return systemConfigListDbs;
 

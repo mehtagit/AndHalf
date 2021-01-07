@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,21 +25,18 @@ import com.ceir.CeirCode.SpecificationBuilder.GenericSpecificationBuilder;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
 import com.ceir.CeirCode.exceptions.ResourceServicesException;
 import com.ceir.CeirCode.filemodel.RunningAlertFile;
-import com.ceir.CeirCode.filtermodel.AlertDbFilter;
 import com.ceir.CeirCode.filtermodel.RunningAlertFilter;
-import com.ceir.CeirCode.model.AlertDb;
 import com.ceir.CeirCode.model.FileDetails;
-import com.ceir.CeirCode.model.RequestHeaders;
 import com.ceir.CeirCode.model.RunningAlertDb;
 import com.ceir.CeirCode.model.SearchCriteria;
 import com.ceir.CeirCode.model.SystemConfigListDb;
 import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.User;
-import com.ceir.CeirCode.model.constants.AlertStatus;
 import com.ceir.CeirCode.model.constants.Features;
 import com.ceir.CeirCode.model.constants.SubFeatures;
 import com.ceir.CeirCode.repo.RunningAlertDbRepo;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
+import com.ceir.CeirCode.repo.SystemConfigDbRepository;
 import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
 import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
 import com.ceir.CeirCode.repoService.UserRepoService;
@@ -76,7 +74,8 @@ public class RunningAlertDbService {
 	@Autowired
 	ReqHeaderRepoService headerService;
 
-
+@Autowired
+SystemConfigDbRepository systemConfigDbRepository;
 	private GenericSpecificationBuilder<RunningAlertDb> buildSpecification(RunningAlertFilter filterRequest){
 
 		GenericSpecificationBuilder<RunningAlertDb> rASB = new GenericSpecificationBuilder<RunningAlertDb>(propertiesReader.dialect);	
@@ -155,6 +154,9 @@ public class RunningAlertDbService {
 		String fileName = null;
 		Writer writer   = null;
 		RunningAlertFile adFm = null;
+		Integer pageNo = 0;
+		Integer pageSize = Integer.valueOf(systemConfigDbRepository.findByTag("file.max-file-record").getValue());
+		
 		SystemConfigurationDb alertDbDowlonadDir=systemConfigurationDbRepoImpl.getDataByTag("file.download-dir");
 		SystemConfigurationDb alertDbDowlonadLink=systemConfigurationDbRepoImpl.getDataByTag("file.download-link");
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -168,7 +170,7 @@ public class RunningAlertDbService {
 		StatefulBeanToCsv<RunningAlertFile> csvWriter      = null;
 		List<RunningAlertFile> fileRecords       = null;
 		try {
-			List<RunningAlertDb> alertDbData = getAll(runAlertFilter);
+			List<RunningAlertDb> alertDbData = viewRunningAlertData(runAlertFilter,pageNo,pageSize).getContent();
 			fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_RunningAlert.csv";
 			log.info(" file path plus filke name: "+Paths.get(filePath+fileName));
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));

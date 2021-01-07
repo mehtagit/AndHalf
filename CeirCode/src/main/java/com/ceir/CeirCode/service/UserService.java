@@ -897,26 +897,32 @@ public class UserService {
 
 				log.info("then going to fetch data from system configuration db by tag "+map.get(usertypeId));
 				SystemConfigurationDb systemConfigData=systemConfigurationDbRepoImpl.getDataByTag(map.get(usertypeId));
-				long userLimit=0;
-				if(systemConfigData!=null) {
+
+				long userLimit = 0;
+				if (systemConfigData != null) {
 					try {
-						log.info("value got by tag= "+systemConfigData.getValue());
-						userLimit=Long.parseLong(systemConfigData.getValue());				
-					}
-					catch(Exception e) {
-						RunningAlertDb alertDb=new RunningAlertDb("alert001"," user creation limit is exceeded for "+usertype.getUsertypeName() +" usertype",AlertStatus.Init.getCode());
-						alertDbRepo.saveAlertDb(alertDb);
+						log.info("value got by tag= " + systemConfigData.getValue());
+						userLimit = Long.parseLong(systemConfigData.getValue());
+					} catch (Exception e) {
+
 						log.info(e.toString());
 					}
-
 				}
+
 
 				long count=userRepoService.countByUsertypeId(usertypeId);
 				log.info("total users find by this usertype= "+count);
-				log.info("now going to compare these two above values");
+
+				
+				log.info("usertype count greater than total users limit then we don't able to create new user now");
 				if(count>=userLimit) {
-					log.info("if usertype count greater than total users limit then we don't able to create new user now");
-					HttpResponse response=new HttpResponse(RegistrationTags.Reg_userlimit_exceed.getMessage(),409,RegistrationTags.Reg_userlimit_exceed.getTag());
+					log.info("user creation limit is exceeded for " + usertype.getUsertypeName());
+					RunningAlertDb alertDb = new RunningAlertDb("alert001",
+							" user creation limit is exceeded for " + usertype.getUsertypeName() + " usertype",
+							AlertStatus.Init.getCode());
+					alertDbRepo.saveAlertDb(alertDb);
+					HttpResponse response=new HttpResponse(RegistrationTags.user_exceed_limit.getMessage(),409,RegistrationTags.user_exceed_limit.getTag());
+					log.info("response after alert generation "+response);
 					return new ResponseEntity<>(response,HttpStatus.OK);
 				}
 
