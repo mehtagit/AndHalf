@@ -62,6 +62,7 @@ $(document).ready(function() {
 				$('<option>').val(data[i].id).text(data[i].interp)
 						.appendTo('#editsingleStolendeviceBrandName');
 			}
+			
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 			////console.log("error in ajax")
@@ -69,7 +70,7 @@ $(document).ready(function() {
 		}
 	});
 	$('select#editsingleStolendeviceBrandName').select2();
-	
+	$("#editsingleStolendeviceBrandName").eq(0).removeAttr("tabindex");
 	$('div#initialloader').fadeIn('fast');
 	  setTimeout(function(){ 
 	 		 
@@ -170,11 +171,12 @@ function viewIndivisualStolen()
 			if(response.stolenIndividualUserDB.locality=="" || response.stolenIndividualUserDB.locality==null){
 				$('#singleStolenlocality').val('NA');
 			}
-			$('#singleStolendistrict').val(response.stolenIndividualUserDB.district);
-			$('#singleStolencommune').val(response.stolenIndividualUserDB.commune);
-			$('#singleStolenpin').val(response.stolenIndividualUserDB.postalCode);
 			$('#country').val(response.stolenIndividualUserDB.country).change();
-			$('#state').val(response.stolenIndividualUserDB.province);
+			$('#state').val(response.stolenIndividualUserDB.province).change();
+			$('#singleStolendistrict').val(response.stolenIndividualUserDB.district).change();
+			$('#singleStolencommune').val(response.stolenIndividualUserDB.commune).change();
+			$('#singleStolenpin').val(response.stolenIndividualUserDB.postalCode);
+		
 			if(isNaN(response.stolenIndividualUserDB.deviceBrandName)){
 				$("label[for='OtherBrandNameLabel']").addClass('active');
 				$('#editsingleStolendeviceBrandName').val("930").change();
@@ -228,6 +230,10 @@ function viewIndivisualStolen()
 			$('#singleStolenComplaintType').val(response.complaintType);
 			$('#singleDeviceAddress').val(response.stolenIndividualUserDB.deviceStolenPropertyLocation);
 			$('#singleDevicestreetNumber').val(response.stolenIndividualUserDB.deviceStolenStreet);
+			$('#singleDevicecountry').val(response.stolenIndividualUserDB.deviceStolenCountry).change();
+			$('#singleDevicestate').val(response.stolenIndividualUserDB.deviceStolenProvince).change();
+			$('#singleDevicedistrict').val(response.stolenIndividualUserDB.deviceStolenDistrict).change();
+			$('#singleDevicecommune').val(response.stolenIndividualUserDB.deviceStolenCommune).change();
 			$('#singleDevicevillage').val(response.stolenIndividualUserDB.deviceStolenVillage);
 			if(response.stolenIndividualUserDB.deviceStolenVillage=="" || response.stolenIndividualUserDB.deviceStolenVillage==null){
 				$('#singleDevicevillage').val("NA");	
@@ -236,12 +242,10 @@ function viewIndivisualStolen()
 			if(response.stolenIndividualUserDB.deviceStolenLocality=="" || response.stolenIndividualUserDB.deviceStolenLocality==null){
 				$('#singleDevicelocality').val("NA");	
 			}
-			$('#singleDevicedistrict').val(response.stolenIndividualUserDB.deviceStolenDistrict);
-			$('#singleDevicecommune').val(response.stolenIndividualUserDB.deviceStolenCommune);
+		
 			$('#singleDevicepin').val(response.stolenIndividualUserDB.deviceStolenPostalCode);
 
-			$('#singleDevicecountry').val(response.stolenIndividualUserDB.deviceStolenCountry).change();
-			$('#singleDevicestate').val(response.stolenIndividualUserDB.deviceStolenProvince);
+			
 			$('#singleDeviceRemark').val(response.stolenIndividualUserDB.remark);
 			if(response.stolenIndividualUserDB.remark=="" || response.stolenIndividualUserDB.remark==null){
 				$('#singleDeviceRemark').val("NA");	
@@ -782,7 +786,7 @@ function viewPageType() {
    		$("#singleDeviceRejectRemarkDiv").css("display", "block");
 		$("#SingleForm").find("input,textarea,button").prop(
 				"disabled", true);
-		$("#SingleForm").find("select").attr("style", "pointer-events: none;");
+		//$("#SingleForm").find("select").attr("style", "pointer-events: none;");
 		
 		  $("#operator3span").css("display", "none");
 		  $("#operator4span").css("display", "none");

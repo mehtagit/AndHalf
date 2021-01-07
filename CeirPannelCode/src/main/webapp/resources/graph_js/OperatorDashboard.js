@@ -129,10 +129,10 @@ function activeDeviceGraph() {
 					graph(response,'pieGraph','pie','User Login Pie Graph')
 					
 					}
-				else if(reportnameId==27){
+			/*	else if(reportnameId==27){
 	
 	         graph(response,'gaugeGraph','gauge','User Login Doughnut Graph')
-				}
+				}*/
 			},
 			error : function() {
 			}
@@ -160,7 +160,7 @@ function graph(response,id,chartType,chartTitle)
   var pieOperatorActive=[];
 	   	//console.log("repsonse-->"+JSON.stringify(response));
 		for(var i=0;i<response['rowData'].length;i++){
-	   		QB.push(response['rowData'][i]['QB']);
+	   		//QB.push(response['rowData'][i]['QB']);
 	   		seatel.push(response['rowData'][i]['SEATEL']);
 	   		smart.push(response['rowData'][i]['SMART']);
 	   		cellcard.push(response['rowData'][i]['CELLCARD']);
@@ -172,9 +172,9 @@ function graph(response,id,chartType,chartTitle)
 		pieData.push(parseInt(response['rowData'][0]['Total Duplicate IMEI']));
 		
 		if(chartType=='pie'){
-		pieOperatorActiveLabelName=["QB","Seatel", "Smart","Cellcard","Metfone"];
+		pieOperatorActiveLabelName=["Seatel", "Smart","Cellcard","Metfone"];
 		//pieOperatorActiveLabelName=response['columns'];
-		pieOperatorActive.push(parseInt(response['rowData'][0]['QB']));
+		//pieOperatorActive.push(parseInt(response['rowData'][0]['QB']));
 		pieOperatorActive.push(parseInt(response['rowData'][0]['SEATEL']));
 		pieOperatorActive.push(parseInt(response['rowData'][0]['SMART']));
 		pieOperatorActive.push(parseInt(response['rowData'][0]['CELLCARD']));
@@ -205,7 +205,7 @@ function graph(response,id,chartType,chartTitle)
 					labels: pieOperatorActiveLabelName,
 					datasets: [ {
 						backgroundColor: [
-							 '#512DA8','#008B8B','#F20515','#4682B4','#8B4513'],
+							 '#008B8B','#F20515','#4682B4','#8B4513'],
 							data: pieOperatorActive
 					}]
 				},
@@ -248,7 +248,7 @@ function graph(response,id,chartType,chartTitle)
 	        if(data == '')
 	            return;
 	        
-	        JSONToCSVConvertor(data, "Report", true);
+	        JSONToCSVConvertor(data, "Operator_Wise_Trend", true);
 	    });
 	   	var ctx = document.getElementById(''+id+'').getContext('2d');
 	    var chart = new Chart(ctx, {
@@ -258,13 +258,13 @@ function graph(response,id,chartType,chartTitle)
 	      // The data for our dataset
 	      data: {
 	        labels: date,
-	        datasets: [{
+	        datasets: [/*{
 	            label: "QB",
 	            borderColor:  'rgb(235, 203, 138)',
 	            data: QB,
 	            fill: false
 	            
-	        },
+	        },*/
 	        {
 	            label: "Seatel",
 	            borderColor: 'rgb(70, 191, 189)',
@@ -450,11 +450,11 @@ $(document).ready(function(){
 
 				$('div#initialloader').delay(300).fadeOut('slow');
 				for(var i=0;i<data['rowData'].length;i++){
-					if(i == 0){ $('#firstTD').text(data['rowData'][i]['Total IMEI']);}
-					else if(i == 1){$('#secondTD').text(data['rowData'][i]['Total IMEI']);}
-					else if(i == 2){$('#thirdTD').text(data['rowData'][i]['Total IMEI']);}
-					else if(i == 3){$('#fourthTD').text(data['rowData'][i]['Total IMEI']);}
-					else if(i == 4){$('#fifthTD').text(data['rowData'][i]['Total IMEI']);}
+					if(i == 0){ $('#firstTD').text(data['rowData'][i]['Total IMEI Count']);}
+					else if(i == 1){$('#secondTD').text(data['rowData'][i]['Total IMEI Count']);}
+					else if(i == 2){$('#thirdTD').text(data['rowData'][i]['Total IMEI Count']);}
+					else if(i == 3){$('#fourthTD').text(data['rowData'][i]['Total IMEI Count']);}
+					else if(i == 4){$('#fifthTD').text(data['rowData'][i]['Total IMEI Count']);}
 				}
 			
 		}

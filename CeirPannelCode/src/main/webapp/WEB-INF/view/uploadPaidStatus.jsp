@@ -381,12 +381,12 @@ position: fixed;
 														style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;">
 														<spring:message code="table.country" /> <span class="star">*</span>
 													</p>
-													<select id="country" class="browser-default"
+													<select id="country" class="browser-default" disabled="disabled"
 														class="mySelect"
 														oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											            oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 														title= "<spring:message code="validation.selectFieldMsg" />"
-														 style="padding-left: 0;" required></select>
+														 style="padding-left: 0; color: rgb(53, 52, 52);" required></select>
 												</div>
 
 												<div class="input-field col s12 m6 l6">
