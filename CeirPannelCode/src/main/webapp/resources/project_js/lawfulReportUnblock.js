@@ -270,5 +270,6 @@ function saveCompanyRecoveryRequest(){
 	return false;
 
 }
-
+$("#bulkRecoverycountry").val("Cambodia").change();
+/*$("#bulkRecoverycountry").attr("style", "pointer-events: none;");*/
 

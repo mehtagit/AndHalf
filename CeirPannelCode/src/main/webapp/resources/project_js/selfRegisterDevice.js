@@ -61,7 +61,7 @@ populateCountries(
 
 
 $("#country").val("Cambodia").change();
-$("#country").attr("style", "pointer-events: none;");
+//$("#country").attr("style", "pointer-events: none;");
 
 function showCambodianUserForm()
 {

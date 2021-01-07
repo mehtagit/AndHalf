@@ -30,6 +30,10 @@ headers:
 		$('#bulkStolencompanyName').val(response.stolenOrganizationUserDB.companyName);
 		$('#bulkStolenaddress').val(response.stolenOrganizationUserDB.propertyLocation);
 		$('#bulkStolenstreetNumber').val(response.stolenOrganizationUserDB.street);
+		$('#country2').val(response.stolenOrganizationUserDB.country).change();
+		$('#state2').val(response.stolenOrganizationUserDB.province).change();
+		$('#bulkStolendistrict').val(response.stolenOrganizationUserDB.district).change();
+		$('#bulkStolencommune').val(response.stolenOrganizationUserDB.commune).change();;
 		$('#bulkStolenvillage').val(response.stolenOrganizationUserDB.village);
 		if(response.stolenOrganizationUserDB.village=="" || response.stolenOrganizationUserDB.village==null){
 			$('#bulkStolenvillage').val("NA");
@@ -38,11 +42,9 @@ headers:
 		if(response.stolenOrganizationUserDB.locality=="" || response.stolenOrganizationUserDB.locality==null){
 			$('#bulkStolenlocality').val("NA");
 		}
-		$('#bulkStolendistrict').val(response.stolenOrganizationUserDB.district);
-		$('#bulkStolencommune').val(response.stolenOrganizationUserDB.commune);
+		
 		$('#bulkStolenpin').val(response.stolenOrganizationUserDB.postalCode);
-		$('#country2').val(response.stolenOrganizationUserDB.country).change();
-		$('#state2').val(response.stolenOrganizationUserDB.province);
+		
 		
 		$('#firstName').val(response.stolenOrganizationUserDB.personnelFirstName);
 		$('#bulkStolenmiddleName').val(response.stolenOrganizationUserDB.personnelMiddleName);
@@ -52,7 +54,7 @@ headers:
 		$('#bulkStolenlastName').val(response.stolenOrganizationUserDB.personnelLastName);
 		$('#deviceBulkStolenaddress').val(response.stolenOrganizationUserDB.incidentPropertyLocation);
 		$('#deviceBulkStolenstreetNumber').val(response.stolenOrganizationUserDB.incidentStreet);
-		$('#deviceBulkStolenvillage').val(response.stolenOrganizationUserDB.incidentVillage);
+		
 		if(response.stolenOrganizationUserDB.incidentVillage=="" || response.stolenOrganizationUserDB.incidentVillage==null){
 			$('#deviceBulkStolenvillage').val("NA");
 		}
@@ -60,10 +62,12 @@ headers:
 		if(response.stolenOrganizationUserDB.incidentLocality=="" || response.stolenOrganizationUserDB.incidentLocality==null){
 			$('#deviceBulkStolenlocality').val("NA");
 		}
-		$('#deviceBulkStolendistrict').val(response.stolenOrganizationUserDB.incidentDistrict);
-		$('#deviceBulkStolencommune').val(response.stolenOrganizationUserDB.incidentCommune);
-		$('#deviceBulkStolenpin').val(response.stolenOrganizationUserDB.incidentPostalCode);
 		$('#country3').val(response.stolenOrganizationUserDB.incidentCountry).change();
+		$('#state3').val(response.stolenOrganizationUserDB.incidentProvince).change();
+		$('#deviceBulkStolendistrict').val(response.stolenOrganizationUserDB.incidentDistrict).change();
+		$('#deviceBulkStolencommune').val(response.stolenOrganizationUserDB.incidentCommune).change();
+		$('#deviceBulkStolenvillage').val(response.stolenOrganizationUserDB.incidentVillage);
+		$('#deviceBulkStolenpin').val(response.stolenOrganizationUserDB.incidentPostalCode);
 		
 		$('#deviceBulkStolenComplaint').val(response.complaintType);
 		$('#bulkStolenofficeEmail').val(response.stolenOrganizationUserDB.email);
@@ -74,7 +78,7 @@ headers:
 		if(response.stolenOrganizationUserDB.phoneNo=="" || response.stolenOrganizationUserDB.phoneNo==null){
 			$('#bulkStolenContact').val("NA");
 		}
-		$('#state3').val(response.stolenOrganizationUserDB.incidentProvince);
+		
 		$('#singleStolenComplaintType').val(response.complaintType);
 		$('#deviceBulkStolenquantity').val(response.qty);
 		$('#devicequantity').val(response.deviceQuantity);

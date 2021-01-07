@@ -395,11 +395,11 @@ select {
 													</div>
 													<div class="col s12 m6 l6">
 														<label><spring:message code="table.country" /> <span
-															class="star">*</span></label> <select id="country1"
+															class="star">*</span></label> <select id="country1" disabled="disabled"
 															class="browser-default" class="mySelect"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															required style="padding-left: 0;"></select>
+															required style="padding-left: 0; color: rgb(53, 52, 52);"></select>
 													</div>
 
 													<div class="col s12 m6 l6">
@@ -492,8 +492,8 @@ select {
 														<input type="text" name="sigleRecoverypin"
 															class="form-control boxBorder boxHeight"
 															id="sigleRecoverypin" maxlength="6" pattern="[0-9]{6,6}"
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
 															required /> <label for="sigleRecoverypin"> <spring:message
 																code="input.postalCode" /><span class="star"> *</span></label>
 													</div>
@@ -738,11 +738,11 @@ onclick="_Services._selectstartDate()"></i></span>
 										
 											<div class="col s12 m6 l6">
 											<label> <spring:message code="table.country" /><span
-												class="star"> *</span></label> <select id="bulkRecoverycountry"
+												class="star"> *</span></label> <select id="bulkRecoverycountry" disabled="disabled"
 												class="browser-default" class="mySelect"
 												oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-												required style="padding-left: 0;"></select>
+												required style="padding-left: 0; color: rgb(53, 52, 52);"></select>
 										</div>
 
 										<div class="col s12 m6 l6">
@@ -836,8 +836,8 @@ onclick="_Services._selectstartDate()"></i></span>
 											<input type="text" name="bulkRecoverypin"
 												class="form-control boxBorder boxHeight"
 												id="bulkRecoverypin" pattern="[0-9]{6,6}"
-												oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
 												required maxlength="6"> <label for="bulkRecoverypin">
 												<spring:message code="input.postalCode" /><span
 												class="star"> *</span>
@@ -1023,11 +1023,12 @@ onclick="_Services._selectstartDate()"></i></span>
         });
         
         $.getJSON('./getDropdownList/TOP_BRAND', function(data) {
-        	$('#select2-sigleRecoverydeviceBrandName-container').empty();
+        
         	for (i = 0; i < data.length; i++) {
         		$('<option>').val(data[i].id).text(data[i].interp)
         				.appendTo('#sigleRecoverydeviceBrandName');
         	}
+        	$("#sigleRecoverydeviceBrandName").eq(0).removeAttr("tabindex");
         });
         $('select#sigleRecoverydeviceBrandName').select2();
 
@@ -1057,9 +1058,8 @@ onclick="_Services._selectstartDate()"></i></span>
         		});
 
     	$("#country1").val("Cambodia").change();
-		$("#country1").attr("style", "pointer-events: none;");
-		$("#bulkRecoverycountry").val("Cambodia").change();
-		$("#bulkRecoverycountry").attr("style", "pointer-events: none;");
+		//$("#country1").attr("style", "pointer-events: none;");
+	
 </script>
 
 

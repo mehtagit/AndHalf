@@ -71,6 +71,7 @@ $( document ).ready(function() {
 					$("#addbutton").css("display", "block");
 					$("#submitbtn").css("display", "none");
 					$("#btnLink").css({display: "block"});
+					sessionStorage.removeItem("ViewAll");
 				} 
 				else if (data.errorCode == 2) {
 					pageRendering(lang);
@@ -80,7 +81,7 @@ $( document ).ready(function() {
 					$("#addbutton").css("display", "block");
 					$("#submitbtn").css("display", "none");
 					$("#btnLink").css({display: "none"});
-					 
+					sessionStorage.setItem("ViewAll","ViewAll");
 				} 
 				else if (data.errorCode == 0 && In == null) { 
 						$("#user123").css("display", "none");
@@ -1967,7 +1968,7 @@ function deptImageValidation() {
 		}
 	}
 	$("#country").val("Cambodia").change();
-	$("#country").attr("style", "pointer-events: none;");
+//	$("#country").attr("style", "pointer-events: none;");
 	/*
 	 $('#doc_type').on('change', function() {
 		 var doctype = $('#doc_type').val();
