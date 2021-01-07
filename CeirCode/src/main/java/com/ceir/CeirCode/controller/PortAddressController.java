@@ -70,6 +70,7 @@ public class PortAddressController {
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 			@RequestParam(value = "file", defaultValue = "0") Integer file){
 		MappingJacksonValue mapping = null;
+		if (file == 0) {
 			Page<PortAddress> portAddressData  = portAddressService.portAddressInfo(filter, pageNo, pageSize);
 			mapping = new MappingJacksonValue(portAddressData);
 			
@@ -83,6 +84,12 @@ public class PortAddressController {
 					}
 				}
 				mapping = new MappingJacksonValue(portAddressData);
+		}else {
+			FileDetails fileDetails = portAddressService.getFile(filter);
+			mapping = new MappingJacksonValue(fileDetails);
+		}	
+		
+		
 			return mapping;		
 	}
 	
