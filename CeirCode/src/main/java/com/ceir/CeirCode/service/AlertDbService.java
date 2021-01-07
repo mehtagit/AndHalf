@@ -115,7 +115,7 @@ public class AlertDbService {
 	public List<AlertDb> getAll(AlertDbFilter filterRequest) {
 
 		try {
-			List<AlertDb> systemConfigListDbs = alertDbRepo.findAll( buildSpecification(filterRequest).build());
+			List<AlertDb> systemConfigListDbs = alertDbRepo.findAll( buildSpecification(filterRequest).build(),new Sort(Sort.Direction.ASC, "alertId"));
 
 			return systemConfigListDbs;
 
@@ -161,8 +161,8 @@ public class AlertDbService {
 		String fileName = null;
 		Writer writer   = null;
 		AlertDbFile adFm = null;
-		SystemConfigurationDb alertDbDowlonadDir=systemConfigurationDbRepoImpl.getDataByTag("Alertdb_Download_Dir");
-		SystemConfigurationDb alertDbDowlonadLink=systemConfigurationDbRepoImpl.getDataByTag("Alertdb_Download_link");
+		SystemConfigurationDb alertDbDowlonadDir=systemConfigurationDbRepoImpl.getDataByTag("file.download-dir");
+		SystemConfigurationDb alertDbDowlonadLink=systemConfigurationDbRepoImpl.getDataByTag("file.download-link");
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String filePath  = alertDbDowlonadDir.getValue();
 		log.info("filePath:  "+filePath);

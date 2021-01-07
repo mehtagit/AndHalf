@@ -23,8 +23,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.ceir.CeirCode.othermodel.RolesData;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity 
 @Audited
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id"
+)
 public class UserProfile {
 	private static long serialVersionUID = 1L;
 	@Id

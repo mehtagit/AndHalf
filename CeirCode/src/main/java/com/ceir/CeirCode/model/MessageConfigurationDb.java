@@ -1,7 +1,7 @@
 package com.ceir.CeirCode.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,13 +9,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+@Audited
 public class MessageConfigurationDb implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -23,124 +26,129 @@ public class MessageConfigurationDb implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(nullable =false)
+
 	@CreationTimestamp
-	private Date createdOn;
-	@Column(nullable =false)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+	private LocalDateTime createdOn;
+
 	@UpdateTimestamp
-	private Date modifiedOn;
-	@NotNull
-	@NotBlank
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+	private LocalDateTime modifiedOn;
 	private String tag;
-	
-	@NotNull
-	@NotBlank
+
+	@Column(length = 1000)
 	private String value;
-	
-	@NotNull
-	@NotBlank
 	private String description;
-	
+
 	@NotNull
-	private Integer type; // have two values USER/SYSTEM.
+	private Integer channel;
 	@Transient
-	private String typeInterp;
-	
-	private String remark;
-	
+	private String channelInterp;
+
 	@NotNull
 	private Integer active;
-	
+
+	private String subject;
+
+	@Column(name = "FEATURE_NAME", insertable = false, updatable = false)
 	private String featureName;
+	@Transient
+	private long userId;
+	@Transient
+	private String userName;
+	@Transient
+	private long userTypeId;
+	@Transient
+	private long featureId;
+	@Transient
+	private String roleType;
+	@Transient
 	private String userType;
-	private String Subject;
-	private Integer channel;
-	
+
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Date getCreatedOn() {
+
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
-	public void setCreatedOn(Date createdOn) {
+
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
-	public Date getModifiedOn() {
+
+	public LocalDateTime getModifiedOn() {
 		return modifiedOn;
 	}
-	public void setModifiedOn(Date modifiedOn) {
+
+	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
+
 	public String getTag() {
 		return tag;
 	}
+
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
+
 	public String getValue() {
 		return value;
 	}
+
 	public void setValue(String value) {
 		this.value = value;
 	}
+
 	public String getDescription() {
 		return description;
 	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Integer getType() {
-		return type;
+
+	public Integer getChannel() {
+		return channel;
 	}
-	public void setType(Integer type) {
-		this.type = type;
+
+	public void setChannel(Integer channel) {
+		this.channel = channel;
 	}
-	public String getTypeInterp() {
-		return typeInterp;
+
+	public String getChannelInterp() {
+		return channelInterp;
 	}
-	public void setTypeInterp(String typeInterp) {
-		this.typeInterp = typeInterp;
+
+	public void setChannelInterp(String channelInterp) {
+		this.channelInterp = channelInterp;
 	}
-	public String getRemark() {
-		return remark;
-	}
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
+
 	public Integer getActive() {
 		return active;
 	}
+
 	public void setActive(Integer active) {
 		this.active = active;
 	}
-	public String getFeatureName() {
-		return featureName;
-	}
-	public void setFeatureName(String featureName) {
-		this.featureName = featureName;
-	}
-	public String getUserType() {
-		return userType;
-	}
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
-	
+
 	public String getSubject() {
-		return Subject;
+		return subject;
 	}
+
 	public void setSubject(String subject) {
-		Subject = subject;
+		this.subject = subject;
 	}
-	public int getChannel() {
-		return channel;
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
-	public void setChannel(int channel) {
-		this.channel = channel;
-	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -156,25 +164,86 @@ public class MessageConfigurationDb implements Serializable {
 		builder.append(value);
 		builder.append(", description=");
 		builder.append(description);
-		builder.append(", type=");
-		builder.append(type);
-		builder.append(", typeInterp=");
-		builder.append(typeInterp);
-		builder.append(", remark=");
-		builder.append(remark);
+		builder.append(", channel=");
+		builder.append(channel);
+		builder.append(", channelInterp=");
+		builder.append(channelInterp);
 		builder.append(", active=");
 		builder.append(active);
+		builder.append(", subject=");
+		builder.append(subject);
 		builder.append(", featureName=");
 		builder.append(featureName);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", roleType=");
+		builder.append(roleType);
 		builder.append(", userType=");
 		builder.append(userType);
 		builder.append("]");
 		return builder.toString();
 	}
 
+	public long getUserId() {
+		return userId;
+	}
 
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
 
+	public String getUserName() {
+		return userName;
+	}
 
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
+	public long getUserTypeId() {
+		return userTypeId;
+	}
+
+	public void setUserTypeId(long userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+
+	public long getFeatureId() {
+		return featureId;
+	}
+
+	public void setFeatureId(long featureId) {
+		this.featureId = featureId;
+	}
+
+	public String getRoleType() {
+		return roleType;
+	}
+
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
+	}
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
+	public String getFeatureName() {
+		return featureName;
+	}
+
+	public void setFeatureName(String featureName) {
+		this.featureName = featureName;
+	}
 
 }

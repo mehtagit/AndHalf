@@ -244,7 +244,20 @@ public class GenericSpecificationBuilder<T> {
 					}
 					else if(SearchOperation.LIKE.equals(searchCriteria.getSearchOperation())
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
-						return cb.like(cb.lower(root.get(searchCriteria.getKey()).as( String.class )), "%"+((String)searchCriteria.getValue()).toLowerCase()+"%");
+			//			return cb.like(cb.lower(root.get(searchCriteria.getKey()).as( String.class )), "%"+((String)searchCriteria.getValue()).toLowerCase()+"%");
+						if( searchCriteria.getKey().contains("-")) {
+							//logger.info("Search Criteria join key:["+searchCriteria.getKey()+"]");
+							String[] key = (searchCriteria.getKey()).split("-");
+							if( key.length == 2 ) {
+								return cb.like(cb.lower(root.join(key[0]).get(key[1]).as( String.class )),
+								"%"+((String)searchCriteria.getValue()).toLowerCase()+"%");
+								}else {
+								return cb.like(cb.lower(root.join(key[0]).get(key[1]).get(key[2]).as( String.class )),
+								"%"+((String)searchCriteria.getValue()).toLowerCase()+"%");
+								}
+						}else {
+							return cb.like(cb.lower(root.get(searchCriteria.getKey()).as( String.class )), "%"+((String)searchCriteria.getValue()).toLowerCase()+"%");
+						}
 					}
 					else if(SearchOperation.LIKE.equals(searchCriteria.getSearchOperation())
 							&& Datatype.DOUBLE.equals(searchCriteria.getDatatype())) {

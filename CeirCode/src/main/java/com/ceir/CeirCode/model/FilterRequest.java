@@ -1,13 +1,6 @@
 package com.ceir.CeirCode.model;
 
-import java.util.Date;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 public class FilterRequest {
-	
-	
 	public String  startDate;
 	public String   endDate; 
 	private Integer  status;
@@ -21,8 +14,14 @@ public class FilterRequest {
 	private String email;
 	private String phoneNo;
 	private String username;
-	
+	private Long id;
   
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getStartDate() {
 		return startDate;
 	}
@@ -135,6 +134,8 @@ public class FilterRequest {
 		builder.append(phoneNo);
 		builder.append(", username=");
 		builder.append(username);
+		builder.append(", id=");
+		builder.append(id);
 		builder.append("]");
 		return builder.toString();
 	}

@@ -16,7 +16,7 @@ public enum RegistrationTags {
 	REG_REOTP_FAIL("REG_REOTP_FAIL", "Otp failed to resend"),
     LOGIN_WRONG_DETAILS("LOGIN_WRONG_DETAILS","Please enter the correct credentials"),
     LOGIN_UNAUTHORIZED("LOGIN_UNAUTHORIZED","You are not allow to access this account"),
-	Reg_userlimit_exceed("Reg_userlimit_exceed"," We are facing some technical difficulties. Please try after some time."),
+	Reg_userlimit_exceed("Reg_userlimit_exceed","User creation limit for the usertype exceeded !!"),
     Reg_flag_off("Reg_flag_off","This feature is not available as of now"),
     Reg_allowed("Reg_allowed","Registration feature is now working"),
     Email_Exist("Email_Exist","Email already exist in the system"),
@@ -28,8 +28,13 @@ public enum RegistrationTags {
     User_Success_Update("User_Success_Update","User has been sucessfully update"),
     User_Fail_Update("User_Fail_Update","User has been failed to update"),
 	User_Delete("User_Delete","User has been Deleted Successfully"),
-	User_Fail("User_Fail","Unable to delete user");
-	
+	User_Fail("User_Fail","Unable to delete user"),
+	No_Question_Mapped("No_Question_Mapped","This feature works only for external users"),
+    Success_Save("success","Sucessfully saved"),
+   Exception("exception","Exception occured"),
+   exist("exist","already exist in DB"),
+	delete_successfully("deleted","Successfully deleted"),
+	user_exceed_limit("user_exceed_limit","User creation limit for the usertype is now exceeded");
 	private String tag;
 	private String message;
 	

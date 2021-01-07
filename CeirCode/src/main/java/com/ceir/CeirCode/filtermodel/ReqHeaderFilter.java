@@ -7,6 +7,20 @@ public class ReqHeaderFilter extends AllRequest{
 	public String  startDate;
 	public String   endDate;
 	private String searchString;
+	private String publicIp;
+	private String username;
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	public String getStartDate() {
 		return startDate;
 	}
@@ -34,8 +48,10 @@ public class ReqHeaderFilter extends AllRequest{
 		builder.append(endDate);
 		builder.append(", searchString=");
 		builder.append(searchString);
-		builder.append(", toString()=");
-		builder.append(super.toString());
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", username=");
+		builder.append(username);
 		builder.append("]");
 		return builder.toString();
 	}

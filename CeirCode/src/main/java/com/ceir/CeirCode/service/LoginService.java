@@ -127,7 +127,8 @@ public class LoginService
 			User UserData=userRepo.findByUsername(user.getUsername());
 			if(UserData!= null) 
 			{ 
-				RequestHeaders header=new RequestHeaders(userLogin.getUserAgent(),userLogin.getPublicIp(),UserData.getUsername());
+				RequestHeaders header=new RequestHeaders(userLogin.getUserAgent(),userLogin.getPublicIp(),UserData.getUsername(),userLogin.getBrowser());
+			
 				headerService.saveRequestHeader(header);
 				userService.saveUserTrail(UserData, "User Management","Login",41);
 				if(UserData.getPassword().equals(user.getPassword()))
@@ -155,18 +156,24 @@ public class LoginService
 						else {
 						LoginTracking loginTrack = new LoginTracking(1, UserData);
 						loginTrackingRepo.save(loginTrack); 
+						
 						CurrentLogin currentLogin=new CurrentLogin(1, UserData);
 						List<CurrentLogin> currentLoginOutput=currentLoginRepo.findByCurrentUserLogin_Id(UserData.getId());
-						if(currentLoginOutput!=null) {
+						log.info("currentLoginOutput response : "+currentLoginOutput);
+						if(currentLoginOutput == null || currentLoginOutput.isEmpty()) {
+							log.info("inserting into current_login table");
+							currentLoginRepo.save(currentLogin);
+						}
+						else {
+							log.info(" updating  current_login table");
 							for(CurrentLogin loginUser:currentLoginOutput) {
 								loginUser.setCreatedOn(LocalDateTime.now());
 								loginUser.setModifiedOn(LocalDateTime.now());
 							}
 							currentLoginRepo.saveAll(currentLoginOutput);
 						}
-						else {
-							currentLoginRepo.save(currentLogin);
-						}
+						
+						
 						
 						List<Usertype> userRoles=new ArrayList<Usertype>();   
 						List<Userrole> userroleList=new ArrayList<Userrole>();

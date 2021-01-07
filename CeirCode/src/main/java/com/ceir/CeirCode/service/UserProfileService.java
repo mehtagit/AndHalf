@@ -49,6 +49,8 @@ import com.ceir.CeirCode.repoService.UserRepoService;
 import com.ceir.CeirCode.util.CustomMappingStrategy;
 import com.ceir.CeirCode.util.Utility;
 import com.opencsv.CSVWriter;
+import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvBindByPosition;
 import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
@@ -122,11 +124,13 @@ public class UserProfileService {
 		if(Objects.nonNull(filterRequest.getUserRoleTypeId()) && filterRequest.getUserRoleTypeId() !=0 && filterRequest.getUserRoleTypeId()!=-1)
 			uPSB.addSpecification(uPSB.joinWithMultiple(new SearchCriteria("id",filterRequest.getUserRoleTypeId(), SearchOperation.EQUALITY, Datatype.LONG)));
 		
-		if(Objects.nonNull(filterRequest.getUsername()) && !filterRequest.getUsername().isEmpty()) 
-			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("username",filterRequest.getUsername(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING)));
-		
+		if(Objects.nonNull(filterRequest.getUsername()) && !filterRequest.getUsername().isEmpty()) {
+			log.info("username in filterRequest::::::::"+filterRequest.getUsername());
+			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("username",filterRequest.getUsername(), SearchOperation.EQUALITY, Datatype.STRING)));
+		}
 		else if(Objects.nonNull(filterRequest.getStatus()) && filterRequest.getStatus()!=-1) 
 		{
+			log.info("status in filterRequest::::::::"+filterRequest.getStatus());
 			uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("currentStatus",filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INTEGER)));
 		}
 		else
@@ -160,9 +164,9 @@ public class UserProfileService {
 						}
 					}else if("noti".equalsIgnoreCase(source)) {
 						
-						uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("username",user.getUsername(), SearchOperation.EQUALITY, Datatype.STRING)));
+					uPSB.addSpecification(uPSB.joinWithUser(new SearchCriteria("username",filterRequest.getUsername(), SearchOperation.EQUALITY, Datatype.STRING)));
 						
-						//log.info("Skip status check, because source is noti."+user.getUsername());
+				//log.info("Skip status check, because source is noti."+user.getUsername());
 					}
 
 					log.info("Array list to add is = " + stockStatus);
@@ -175,17 +179,24 @@ public class UserProfileService {
 					}
 				}
 			}
-		
-		
+	
 		}
 		
 		
 		uPSB.addSpecification(uPSB.joinWithMultiple(new SearchCriteria("selfRegister",1, SearchOperation.EQUALITY, Datatype.INTEGER)));
 		
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-		//uPSB.orSearchUser(new SearchCriteria("username", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-	    uPSB.orSearchUsertype(new SearchCriteria("usertypeName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-		//uPSB.orSearch(new SearchCriteria("user.username", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		//uPSB.orSearchUser(new SearchCriteria("username", filterRequest.getSearchString(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
+	   // uPSB.orSearchUsertype(new SearchCriteria("usertypeName", filterRequest.getSearchString(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
+		uPSB.orSearch(new SearchCriteria("user-username", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		uPSB.orSearch(new SearchCriteria("user-usertype-usertypeName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		
+		  uPSB.orSearch(new SearchCriteria("createdOn",filterRequest.getSearchString(), SearchOperation.EQUALITY, Datatype.DATE));
+		  uPSB.orSearch(new SearchCriteria("modifiedOn",filterRequest.getSearchString(), SearchOperation.EQUALITY, Datatype.DATE));
+		//  uPSB.orSearch(new SearchCriteria("type", filterRequest.getSearchString(),SearchOperation.LIKE, Datatype.STRING)); 
+		  uPSB.orSearch(new SearchCriteria("email",filterRequest.getSearchString(),SearchOperation.LIKE, Datatype.STRING));
+		  uPSB.orSearch(new SearchCriteria("phoneNo",filterRequest.getSearchString(),SearchOperation.LIKE, Datatype.STRING));
+		 
 		}
 		
 		return uPSB;
@@ -413,8 +424,8 @@ public class UserProfileService {
 		String fileName = null;
 		Writer writer   = null;
 		UserProfileFileModel uPFm = null;
-		SystemConfigurationDb userProfileDowlonadDir=systemConfigurationDbRepoImpl.getDataByTag("USER_PRO_EXP_DIR");
-		SystemConfigurationDb userProfileDowlonadLink=systemConfigurationDbRepoImpl.getDataByTag("USER_PRO_EXP_DOWNLOAD_LINK");
+		SystemConfigurationDb userProfileDowlonadDir=systemConfigurationDbRepoImpl.getDataByTag("file.download-dir");
+		SystemConfigurationDb userProfileDowlonadLink=systemConfigurationDbRepoImpl.getDataByTag("file.download-link");
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		User user=userRepoService.findByUSerId(profileFilter.getUserId());
 		if(user!=null) {
@@ -467,13 +478,13 @@ public class UserProfileService {
 					uPFm.setRequestedOn(userProfile.getUser().getCreatedOn().format(dtf));
 					uPFm.setModifiedOn(userProfile.getUser().getModifiedOn().format(dtf));	
 					uPFm.setUserID(userProfile.getUser().getUsername());
-					uPFm.setStatus(userProfile.getUser().getStateInterp());
-					
+					uPFm.setEmail(userProfile.getEmail());
+					uPFm.setPhone(userProfile.getPhoneNo());
 					//uPFm.setStatus(UserStatus.getUserStatusByCode(userProfile.getUser().getCurrentStatus()).getDescription());
 					uPFm.setType(userProfile.getAsTypeName());
 					uPFm.setUserType(userProfile.getUser().getUsertype().getUsertypeName());
+					uPFm.setStatus(userProfile.getUser().getStateInterp());				
 					uPFm.setApprovedBy(userProfile.getUser().getApprovedBy());
-				
 					fileRecords.add(uPFm);
 				}
 				csvWriter.write(fileRecords);

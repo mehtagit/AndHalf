@@ -238,6 +238,10 @@ public class UserService {
 			User user=userRepo.findByUsername(username);
 			if(user!=null) {
 				List<Securityquestion> securityQuestionList=new ArrayList<Securityquestion>();
+				if(user.getUserSecurityquestion().isEmpty()) {
+					GenricResponse response=new GenricResponse(409,RegistrationTags.No_Question_Mapped.getTag(),"",null);
+					return new ResponseEntity<>(response,HttpStatus.OK);
+				}
 				if(user.getUserSecurityquestion().isEmpty()==false) {
 					for(UserSecurityquestion securityQues:user.getUserSecurityquestion()) {
 						Securityquestion ques=new Securityquestion(securityQues.getSecurityQuestion().getId(),
@@ -509,21 +513,18 @@ public class UserService {
 				}
 			}
 			long rolesOutput=roleCheck(userDetails.getRoles());
-			boolean emailExist=userProfileRepo.existsByEmail(userDetails.getEmail());
+			boolean emailExist=userProfileRepo.existsByEmailAndUser_CurrentStatusNot(userDetails.getEmail(),21);
 			if(emailExist) {
 				HttpResponse response=new HttpResponse(RegistrationTags.Email_Exist.getMessage(),409,RegistrationTags.Email_Exist.getTag());
 				return new ResponseEntity<>(response,HttpStatus.OK);
 			}
-			boolean phoneExist=userProfileRepo.existsByPhoneNo(userDetails.getPhoneNo());
+			boolean phoneExist=userProfileRepo.existsByPhoneNoAndUser_CurrentStatusNot(userDetails.getPhoneNo(),21);
 			if(phoneExist) {
 
 				HttpResponse response=new HttpResponse(RegistrationTags.Phone_Exist.getMessage(),409,RegistrationTags.Phone_Exist.getTag());
 				return new ResponseEntity<>(response,HttpStatus.OK);
 			}
-
-
-
-			log.info("roles output:  "+rolesOutput);
+			log.info("roles output:"+rolesOutput);
 			if(rolesOutput > 0) {
 				List<Long> usertypeList=usertypeCheck();
 				log.info("primary usertypeId is:  "+rolesOutput);	
@@ -778,7 +779,8 @@ public class UserService {
 							
 							  emailUtils.saveNotification("REG_NOTIFY_CEIR_ADMIN_TO_VERIFY_USER",
 							  adminUser.getUserProfile(), 8, "Registration Request",
-							  "user phone and email details validated",  String.valueOf(user.getId()), "NA", mapEmail, "CEIRAdmin",
+							 // "user phone and email details validated",  String.valueOf(user.getId()), "NA", mapEmail, "CEIRAdmin", 
+							  "user phone and email details validated",  user.getUsername(), "NA", mapEmail, "CEIRAdmin",
 							  "CEIRAdmin", "Users");
 							 
 					}	
@@ -895,26 +897,32 @@ public class UserService {
 
 				log.info("then going to fetch data from system configuration db by tag "+map.get(usertypeId));
 				SystemConfigurationDb systemConfigData=systemConfigurationDbRepoImpl.getDataByTag(map.get(usertypeId));
-				long userLimit=0;
-				if(systemConfigData!=null) {
+
+				long userLimit = 0;
+				if (systemConfigData != null) {
 					try {
-						log.info("value got by tag= "+systemConfigData.getValue());
-						userLimit=Long.parseLong(systemConfigData.getValue());				
-					}
-					catch(Exception e) {
-						RunningAlertDb alertDb=new RunningAlertDb("alert001"," user creation limit is exceeded for "+usertype.getUsertypeName() +" usertype",AlertStatus.Init.getCode());
-						alertDbRepo.saveAlertDb(alertDb);
+						log.info("value got by tag= " + systemConfigData.getValue());
+						userLimit = Long.parseLong(systemConfigData.getValue());
+					} catch (Exception e) {
+
 						log.info(e.toString());
 					}
-
 				}
+
 
 				long count=userRepoService.countByUsertypeId(usertypeId);
 				log.info("total users find by this usertype= "+count);
-				log.info("now going to compare these two above values");
+
+				
+				log.info("usertype count greater than total users limit then we don't able to create new user now");
 				if(count>=userLimit) {
-					log.info("if usertype count greater than total users limit then we don't able to create new user now");
-					HttpResponse response=new HttpResponse(RegistrationTags.Reg_userlimit_exceed.getMessage(),409,RegistrationTags.Reg_userlimit_exceed.getTag());
+					log.info("user creation limit is exceeded for " + usertype.getUsertypeName());
+					RunningAlertDb alertDb = new RunningAlertDb("alert001",
+							" user creation limit is exceeded for " + usertype.getUsertypeName() + " usertype",
+							AlertStatus.Init.getCode());
+					alertDbRepo.saveAlertDb(alertDb);
+					HttpResponse response=new HttpResponse(RegistrationTags.user_exceed_limit.getMessage(),409,RegistrationTags.user_exceed_limit.getTag());
+					log.info("response after alert generation "+response);
 					return new ResponseEntity<>(response,HttpStatus.OK);
 				}
 
@@ -1198,6 +1206,7 @@ public class UserService {
 		log.info("get user  data by userid below");  
 		User user=userRepo.findById(userStatus.getUserId());
 		if(user!=null) {
+			if(userStatus.getPassword().trim().equals(user.getPassword())) {
 			Integer userStatus2 = UserStatus.getUserStatusByDesc(userStatus.getStatus()).getCode();
 			user.setPreviousStatus(user.getCurrentStatus()); 
 			user.setCurrentStatus(userStatus2); 
@@ -1255,6 +1264,13 @@ public class UserService {
 				log.info("response send to user:  "+response);
 				return new ResponseEntity<>(response,HttpStatus.OK);	
 			} 
+		}
+			else {
+				log.info("wrong password");
+				HttpResponse response=new HttpResponse(ProfileTags.PRO_CORRECT_PASS.getMessage(),401,ProfileTags.PRO_CORRECT_PASS.getTag());
+				log.info("response send to user:  "+response);
+				return new ResponseEntity<>(response,HttpStatus.OK);					
+			}
 		}    
 		else { 
 			HttpResponse response=new HttpResponse(UpdateUserStatusTags.USER_STATUS_CHANGE_FAIL.getMessage(),
@@ -1673,7 +1689,7 @@ public class UserService {
 					user.setPortAddressName(portAddress.getAddress());
 				}
 
-				SystemConfigurationDb filePath=systemConfigurationRepo.getDataByTag("USER_FILE_DOWNLOAD_PATH");	
+				SystemConfigurationDb filePath=systemConfigurationRepo.getDataByTag("upload_file_link");	
 				if(filePath!=null) {
 					if(user.getNidFilename()!=null || !"null".equalsIgnoreCase(user.getNidFilename())) {
 						user.setNidFilePath(filePath.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+"/"+user.getUser().getUsername()+"/NID/");				
@@ -1752,8 +1768,8 @@ public class UserService {
 				 */
 				User userData=userRepo.findByUserProfile_Id(userProfile.getId());
 				saveUserTrail(userData,"User Management","Update",41);   
-				boolean emailExist=userProfileRepo.existsByEmail(userProfile.getEmail());
-				boolean phoneExist=userProfileRepo.existsByPhoneNo(userProfile.getPhoneNo());
+				boolean emailExist=userProfileRepo.existsByEmailAndUser_CurrentStatusNot(userProfile.getEmail(),21);
+				boolean phoneExist=userProfileRepo.existsByPhoneNoAndUser_CurrentStatusNot(userProfile.getPhoneNo(),21);
 				if(!userProfile.getPhoneNo().equals(userProfileData.getPhoneNo()) &&
 						!userProfile.getEmail().equals(userProfileData.getEmail())) { 
 
@@ -1961,7 +1977,7 @@ public class UserService {
 				if(Objects.nonNull(user.getUser().getApprovedBy())) {
 					user.setApprovedBy(user.getUser().getApprovedBy());
 				}
-				SystemConfigurationDb filePath=systemConfigurationRepo.getDataByTag("USER_FILE_DOWNLOAD_PATH");	
+				SystemConfigurationDb filePath=systemConfigurationRepo.getDataByTag("upload_file_link");	
 				if(filePath!=null) {
 					if(user.getNidFilename()!=null || !"null".equalsIgnoreCase(user.getNidFilename())) {
 						user.setNidFilePath(filePath.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+"/"+user.getUser().getUsername()+"/NID/");				
@@ -2180,5 +2196,18 @@ public class UserService {
 		
 	}
 	
-			
+	public ResponseEntity<?> soft_delete(int currentStatus, String username) {
+		// TODO Auto-generated method stub
+		User user=userRepo.findByUsername(username);
+		try {
+			log.info("we're updating user"+username+"with current_status value is"+currentStatus+" and previous_status was"+user.getCurrentStatus());
+			userRepo.setStatusForUser(currentStatus, user.getCurrentStatus(), username);
+			return new ResponseEntity<>(true,HttpStatus.OK);	
+		}
+		catch(Exception e) {
+			log.info(e.toString());
+			return new ResponseEntity<>(false,HttpStatus.EXPECTATION_FAILED);
+		}
+		
+	}		
 } 

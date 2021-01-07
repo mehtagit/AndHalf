@@ -34,8 +34,14 @@ public class RequestHeaders {
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime modifiedOn;
 	private String username;
+	private String browser;
 	
-	
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	public long getId() {
 		return id;
 	}
@@ -74,14 +80,36 @@ public class RequestHeaders {
 	}
 	@Override
 	public String toString() {
-		return "RequestHeaders [id=" + id + ", userAgent=" + userAgent + ", publicIp=" + publicIp + ", createdOn="
-				+ createdOn + ", modifiedOn=" + modifiedOn + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("RequestHeaders [id=");
+		builder.append(id);
+		builder.append(", userAgent=");
+		builder.append(userAgent);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", browser=");
+		builder.append(browser);
+		builder.append("]");
+		return builder.toString();
 	}
 	public RequestHeaders(String userAgent, String publicIp,String username) {
 		super();
 		this.userAgent = userAgent;
 		this.publicIp = publicIp;
 		this.username=username;
+	}
+	public RequestHeaders(String userAgent, String publicIp, String username, String browser) {
+		super();
+		this.userAgent = userAgent;
+		this.publicIp = publicIp;
+		this.username = username;
+		this.browser = browser;
 	}
 	public RequestHeaders() {
 		super();
