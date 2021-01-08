@@ -1,5 +1,12 @@
 package com.ceir.CeirCode.service;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,22 +26,38 @@ import com.ceir.CeirCode.Constants.SearchOperation;
 import com.ceir.CeirCode.SpecificationBuilder.GenericSpecificationBuilder;
 import com.ceir.CeirCode.SpecificationBuilder.SpecificationBuilder;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
+import com.ceir.CeirCode.exceptions.ResourceServicesException;
+import com.ceir.CeirCode.filemodel.CustomPortFile;
+import com.ceir.CeirCode.filemodel.CustomPortFile;
 import com.ceir.CeirCode.filtermodel.PortAddressFilter;
+import com.ceir.CeirCode.model.AddressObject;
 import com.ceir.CeirCode.model.AllRequest;
+import com.ceir.CeirCode.model.FileDetails;
+import com.ceir.CeirCode.model.Locality;
 import com.ceir.CeirCode.model.PortAddress;
 import com.ceir.CeirCode.model.RequestHeaders;
 import com.ceir.CeirCode.model.SearchCriteria;
 import com.ceir.CeirCode.model.SystemConfigListDb;
+import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.constants.Features;
 import com.ceir.CeirCode.model.constants.SubFeatures;
+import com.ceir.CeirCode.repo.LocalityRepo;
 import com.ceir.CeirCode.repo.PortAddressRepo;
+import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
+import com.ceir.CeirCode.repo.SystemConfigDbRepository;
 import com.ceir.CeirCode.repoService.PortAddressRepoService;
 import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
 import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
 import com.ceir.CeirCode.repoService.SystemConfigurationDbRepoService;
 import com.ceir.CeirCode.response.GenricResponse;
 import com.ceir.CeirCode.response.tags.PortAddsTags;
+import com.ceir.CeirCode.util.CustomMappingStrategy;
 import com.ceir.CeirCode.util.HttpResponse;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.MappingStrategy;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
+
 
 @Service
 public class PortAddressService {
@@ -59,6 +82,13 @@ public class PortAddressService {
 	@Autowired
 	UserService userService;
 	
+	@Autowired
+	SystemConfigDbRepoService systemConfigurationDbRepoImpl;
+	
+	@Autowired
+	SystemConfigDbListRepository systemConfigRepo;
+	@Autowired
+	SystemConfigDbRepository systemConfigDbRepository;
 	public ResponseEntity<?> getDataByPort(Integer port){
 		log.info("inside getDataByPort controller");
 
@@ -228,7 +258,82 @@ public class PortAddressService {
 	}
 	
 	
-	
+	public FileDetails getFile(PortAddressFilter filter) {
+		log.info("inside export custom Port service");
+		log.info("filter data:  "+filter);
+		String fileName = null;
+		Writer writer   = null;
+		CustomPortFile uPFm = null;
+		SystemConfigurationDb dowlonadDir=systemConfigurationDbRepoImpl.getDataByTag("file.download-dir");
+		SystemConfigurationDb dowlonadLink=systemConfigurationDbRepoImpl.getDataByTag("file.download-link");
+		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		Integer pageNo = 0;
+		Integer pageSize = Integer.valueOf(systemConfigDbRepository.findByTag("file.max-file-record").getValue());
+		String filePath  = dowlonadDir.getValue();
+		StatefulBeanToCsvBuilder<CustomPortFile> builder = null;
+		StatefulBeanToCsv<CustomPortFile> csvWriter      = null;
+		List<CustomPortFile> fileRecords       = null;
+		MappingStrategy<CustomPortFile> mapStrategy = new CustomMappingStrategy<>();
+		
+		
+		try {
+			
+			mapStrategy.setType(CustomPortFile.class);
+			List<SystemConfigListDb> portList=systemConfigDbRepoService.getDataByTag("CUSTOMS_PORT");
+			List<PortAddress> list = portAddressInfo(filter, pageNo, pageSize).getContent();
+			for(PortAddress portAddress:list) {
+				for(SystemConfigListDb asType:portList) {
+					Integer value=asType.getValue();
+					if(portAddress.getPort()==value) {
+						portAddress.setPortInterp(asType.getInterp());
+					}
+				}
+			}
+
+			if( list.size()> 0 ) {
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_CustomPort.csv";
+			}else {
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_CustomPort.csv";
+			}
+			log.info(" file path plus file name: "+Paths.get(filePath+fileName));
+			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+//			builder = new StatefulBeanToCsvBuilder<UserProfileFileModel>(writer);
+//			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+//			
+			builder = new StatefulBeanToCsvBuilder<>(writer);
+			csvWriter = builder.withMappingStrategy(mapStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+
+			if( list.size() > 0 ) {
+				//List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag("GRIEVANCE_CATEGORY");
+				fileRecords = new ArrayList<CustomPortFile>(); 
+				for( PortAddress portAddress : list ) {
+					uPFm = new CustomPortFile();
+					uPFm.setCreatedOn(portAddress.getCreatedOn().format(dtf));
+					uPFm.setModifiedOn(portAddress.getModifiedOn().format(dtf));
+					uPFm.setPortInterp(portAddress.getPortInterp());
+					uPFm.setAddress(portAddress.getAddress());
+					
+					fileRecords.add(uPFm);
+				}
+				csvWriter.write(fileRecords);
+			}
+			log.info("fileName::"+fileName);
+			log.info("filePath::::"+filePath);
+			log.info("link:::"+dowlonadLink.getValue());
+			return new FileDetails(fileName, filePath,dowlonadLink.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+fileName ); 
+		
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			try {
+
+				if( writer != null )
+					writer.close();
+			} catch (IOException e) {}
+		}
+
+	}
 
 
 }
