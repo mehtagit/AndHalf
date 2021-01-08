@@ -366,7 +366,7 @@ position: fixed;
 						
 						 <div class="input-field col s12 m6 l6">
 							<input type="text" id="editImportertac" name="tac" placeholder=""
-								 pattern="[A-Za-z0-9 \s]{1,8}"  maxlength="8"
+								 pattern="[A-Za-z0-9 \s]{8,8}"  maxlength="8"
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
 								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
 								required> <label for="tac"><spring:message
@@ -553,7 +553,7 @@ position: fixed;
 				</div>
 				<div class="row">
 						<div class="input-field col s12 m12">
-							<textarea id="rejectTrcRemark"  
+							<textarea id="rejectTrcRemark"  maxlength="250"
 								class="materialize-textarea" 
 							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" style="min-height: 8rem;" required></textarea>
@@ -629,7 +629,7 @@ position: fixed;
 					</div>
 					<div class="row">
 						<div class="input-field col s12 m12">
-							<textarea id="deleteTacRemark"  
+							<textarea id="deleteTacRemark"  maxlength="250"
 								class="materialize-textarea" 
 							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" style="min-height: 8rem;" required></textarea>

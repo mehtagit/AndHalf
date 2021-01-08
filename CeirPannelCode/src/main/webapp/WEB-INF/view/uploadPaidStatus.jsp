@@ -399,7 +399,7 @@ position: fixed;
 													oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 													title= "<spring:message code="validation.selectFieldMsg" />"
-														style="padding-left: 0;" required></select>
+														style="padding-left: 0; color: rgb(53, 52, 52);" required></select>
 												</div>
 												
 												<div class="col s12 m6 l6">
@@ -415,7 +415,9 @@ position: fixed;
 										id="district" class="browser-default" class="mySelect"
 										onchange="getCommune(this,'commune','village');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
+										style="padding-left: 0;" required>
+										<option value=""><spring:message code="select.district" /></option>
+										</select>
 													</label>
 												</div>
 												<div class=" col s12 m6 l6">
@@ -432,7 +434,9 @@ position: fixed;
 										id="commune" class="browser-default" class="mySelect"
 										onchange="getVillage(this,'village');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
+										style="padding-left: 0;" required>
+										<option value=""><spring:message code="select.commune" /></option>
+										</select>
 												</div>
 												<div class=" col s12 m6 l6">
 													<%-- <input type="text" pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
@@ -447,7 +451,9 @@ position: fixed;
 										id="village" class="browser-default" class="mySelect"
 										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" ></select>
+										style="padding-left: 0;" >
+										<option value=""><spring:message code="select.village" /></option>
+										</select>
 													</label>
 												</div>
 												<div class="input-field col s12 m6 l6">

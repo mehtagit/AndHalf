@@ -536,7 +536,9 @@
 										id="bulkStolendistrict" class="browser-default" class="mySelect"
 										onchange="getCommune(this,'bulkStolencommune','bulkStolenvillage');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
+										style="padding-left: 0;" required>
+										<option value=""><spring:message code="select.district" /></option>
+										</select>
 											</div>
 
 											<div class=" col s12 m6 l6">
@@ -551,7 +553,9 @@
 										id="bulkStolencommune" class="browser-default" class="mySelect"
 										onchange="getVillage(this,'bulkStolenvillage');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
+										style="padding-left: 0;" required>
+										<option value=""><spring:message code="select.commune" /></option>
+										</select>
 											</div>
 											
 											<div class="col s12 m6 l6">
@@ -567,7 +571,8 @@
 										id="bulkStolenvillage" class="browser-default" class="mySelect"
 										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" ></select>
+										style="padding-left: 0;" >
+										<option value=""><spring:message code="select.village" /></option></select>
 											</div>
 											
 											<div class="input-field col s12 m6 l6">
@@ -714,7 +719,9 @@
 										id="deviceBulkStolendistrict" class="browser-default" class="mySelect"
 										onchange="getCommune(this,'deviceBulkStolencommune','deviceBulkStolenvillage');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
+										style="padding-left: 0;" required>
+										<option value=""><spring:message code="select.district" /></option>
+										</select>
 											</div>
 
 											<div class=" col s12 m6 l6">
@@ -728,7 +735,8 @@
 										id="deviceBulkStolencommune" class="browser-default" class="mySelect"
 										onchange="getVillage(this,'deviceBulkStolenvillage');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
+										style="padding-left: 0;" required><option value=""><spring:message code="select.commune" /></option>
+										</select>
 											</div>
 											
 											<div class="col s12 m6 l6">
@@ -741,7 +749,9 @@
 										id="deviceBulkStolenvillage" class="browser-default" class="mySelect"
 										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" ></select>
+										style="padding-left: 0;" >
+										<option value=""><spring:message code="select.village" /></option>
+										</select>
 											</div>
 											
 											<div class="input-field col s12 m6 l6">
