@@ -420,7 +420,8 @@ onclick="_Services._selectstartDate()"></i></span>
 										id="bulkRecoverydistrict" class="browser-default" class="mySelect"
 										onchange="getCommune(this,'bulkRecoverycommune','bulkRecoveryvillage');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
+										style="padding-left: 0;" required>
+										<option value=""><spring:message code="select.district" /></option></select>
                                                     </div>
                         
                                                     <div class="col s12 m6 l6">
@@ -433,7 +434,8 @@ onclick="_Services._selectstartDate()"></i></span>
 										id="bulkRecoverycommune" class="browser-default" class="mySelect"
 										onchange="getVillage(this,'bulkRecoveryvillage');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
+										style="padding-left: 0;" required>
+										<option value=""><spring:message code="select.commune" /></option></select>
                                                     </div>
                                                     
                                                     <div class="col s12 m6 l6">
@@ -446,7 +448,9 @@ onclick="_Services._selectstartDate()"></i></span>
 										id=bulkRecoveryvillage class="browser-default" class="mySelect"
 										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" ></select>
+										style="padding-left: 0;" >
+										<option value=""><spring:message code="select.village" /></option>
+										</select>
                                                     </div>
                     								
                                                     <div class="input-field col s12 m6 l6">
