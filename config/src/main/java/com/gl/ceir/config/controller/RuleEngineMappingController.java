@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.model.AuditTrail;
+import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.RuleEngine;
@@ -45,13 +46,20 @@ public class RuleEngineMappingController {
 			@RequestParam(value = "file", defaultValue = "0") Integer file) {
 
 		MappingJacksonValue mapping = null;
-	
+	if(file==0) {
 		logger.info("Request to view filtered rule engine mapping = " + filterRequest);
-		Page<RuleEngineMapping> ruleEngineMapping =  ruleEngineMappingServiceImpl.filterRuleEngineMapping(filterRequest, pageNo, pageSize);
+		Page<RuleEngineMapping> ruleEngineMapping =  ruleEngineMappingServiceImpl.filterRuleEngineMapping(filterRequest, pageNo, pageSize,"view");
 		mapping = new MappingJacksonValue(ruleEngineMapping);
 
 		logger.info("Response of view Request = " + mapping);
+	}
+		else {
+			FileDetails fileDetails = ruleEngineMappingServiceImpl.getFile(filterRequest);
+			mapping = new MappingJacksonValue(fileDetails);
 
+			
+		}
+		
 		return mapping;
 	}
 
