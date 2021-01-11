@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ceir.CeirCode.filtermodel.CurrencyFilter;
 import com.ceir.CeirCode.model.AllRequest;
 import com.ceir.CeirCode.model.Currency;
+import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.SystemConfigListDb;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
 import com.ceir.CeirCode.service.CurrencyService;
@@ -62,6 +63,7 @@ public class CurrencyController {
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 			@RequestParam(value = "file", defaultValue = "0") Integer file){
 		MappingJacksonValue mapping = null;
+		if (file == 0) {
 			Page<Currency> portAddressData  = currencyService.currencyData(filter, pageNo, pageSize);
 			List<SystemConfigListDb> currencyList=systemConfigRepo.getByTag("CURRENCY");
 			for(Currency currency:portAddressData.getContent()) {
@@ -82,6 +84,12 @@ public class CurrencyController {
 			}
 			
 			mapping = new MappingJacksonValue(portAddressData);
+		}else {
+			FileDetails fileDetails = currencyService.getFile(filter);
+			mapping = new MappingJacksonValue(fileDetails);
+			
+		}
+			
 			return mapping;
 	}
 	

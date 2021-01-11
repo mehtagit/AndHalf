@@ -1,5 +1,13 @@
 package com.ceir.CeirCode.service;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.slf4j.Logger;
@@ -12,22 +20,37 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 import com.ceir.CeirCode.Constants.Datatype;
 import com.ceir.CeirCode.Constants.SearchOperation;
 import com.ceir.CeirCode.SpecificationBuilder.GenericSpecificationBuilder;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
+import com.ceir.CeirCode.exceptions.ResourceServicesException;
+import com.ceir.CeirCode.filemodel.ExchangeRateFile;
 import com.ceir.CeirCode.filtermodel.CurrencyFilter;
 import com.ceir.CeirCode.model.AllRequest;
 import com.ceir.CeirCode.model.Currency;
+import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.SearchCriteria;
+import com.ceir.CeirCode.model.SystemConfigListDb;
+import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.constants.Features;
 import com.ceir.CeirCode.model.constants.SubFeatures;
 import com.ceir.CeirCode.repo.CurrencyRepo;
+import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
+import com.ceir.CeirCode.repo.SystemConfigDbRepository;
 import com.ceir.CeirCode.repoService.CurrencyRepoService;
 import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
+import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
+import com.ceir.CeirCode.repoService.SystemConfigurationDbRepoService;
 import com.ceir.CeirCode.response.GenricResponse;
 import com.ceir.CeirCode.response.tags.CurrencyTags;
+import com.ceir.CeirCode.util.CustomMappingStrategy;
 import com.ceir.CeirCode.util.Utility;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.MappingStrategy;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
 @Service
 public class CurrencyService {
@@ -51,8 +74,18 @@ public class CurrencyService {
 
 	@Autowired
 	UserService userService;
-
-
+	
+	@Autowired
+	SystemConfigurationDbRepoService systemConfigDbRepoService;
+	
+	@Autowired
+	SystemConfigDbRepoService systemConfigurationDbRepoImpl;
+	
+	@Autowired
+	SystemConfigDbListRepository systemConfigRepo;
+	
+	@Autowired
+	SystemConfigDbRepository systemConfigDbRepository;
 	public ResponseEntity<?> saveCurrency(Currency currency){
 		log.info("inside save Currency controller");
 		log.info("currency data going to save:  "+currency);
@@ -185,5 +218,94 @@ public class CurrencyService {
 			specification.orSearch(new SearchCriteria("riel", filter.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
 		return currencyrepo.findAll(specification.build(),pageable);
+	}
+	
+	public FileDetails getFile(CurrencyFilter filter) {
+		log.info("inside export currency service");
+		log.info("filter data:  "+filter);
+		String fileName = null;
+		Writer writer   = null;
+		ExchangeRateFile uPFm = null;
+		SystemConfigurationDb dowlonadDir=systemConfigurationDbRepoImpl.getDataByTag("file.download-dir");
+		SystemConfigurationDb dowlonadLink=systemConfigurationDbRepoImpl.getDataByTag("file.download-link");
+		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		Integer pageNo = 0;
+		Integer pageSize = Integer.valueOf(systemConfigDbRepository.findByTag("file.max-file-record").getValue());
+		String filePath  = dowlonadDir.getValue();
+		StatefulBeanToCsvBuilder<ExchangeRateFile> builder = null;
+		StatefulBeanToCsv<ExchangeRateFile> csvWriter      = null;
+		List<ExchangeRateFile> fileRecords       = null;
+		MappingStrategy<ExchangeRateFile> mapStrategy = new CustomMappingStrategy<>();
+		
+		
+		try {
+			mapStrategy.setType(ExchangeRateFile.class);
+			List<SystemConfigListDb> currencyList=systemConfigRepo.getByTag("CURRENCY");
+			List<Currency> list = currencyData(filter, pageNo, pageSize).getContent();
+			for(Currency currency:list) {
+				for(SystemConfigListDb systemConfig:currencyList) {
+					Integer value=systemConfig.getValue();
+					if(currency.getCurrency()==value) {
+						currency.setCurrencyInterp(systemConfig.getInterp());
+					}
+				}
+				if(currency.getMonth()!=null) {
+				String  monthInterp=utility.getMonth(currency.getMonth());
+				if(Objects.nonNull(monthInterp))
+				{
+					currency.setMonthInterp(monthInterp);
+				}
+				
+				} 
+			}
+			
+			
+		
+
+			if( list.size()> 0 ) {
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_CustomPort.csv";
+			}else {
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_CustomPort.csv";
+			}
+			log.info(" file path plus file name: "+Paths.get(filePath+fileName));
+			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+//			builder = new StatefulBeanToCsvBuilder<UserProfileFileModel>(writer);
+//			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+//			
+			builder = new StatefulBeanToCsvBuilder<>(writer);
+			csvWriter = builder.withMappingStrategy(mapStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+
+			if( list.size() > 0 ) {
+				//List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag("GRIEVANCE_CATEGORY");
+				fileRecords = new ArrayList<ExchangeRateFile>(); 
+				for( Currency currency : list ) {
+					uPFm = new ExchangeRateFile();
+					uPFm.setCreatedOn(currency.getCreatedOn().format(dtf));
+					uPFm.setModifiedOn(currency.getModifiedOn().format(dtf));
+					uPFm.setMonthInterp(currency.getMonthInterp());
+					uPFm.setYear(currency.getYear());
+					uPFm.setCurrencyInterp(currency.getCurrencyInterp());
+					uPFm.setRiel(currency.getRiel());
+					uPFm.setDollar(currency.getDollar());
+					fileRecords.add(uPFm);
+				}
+				csvWriter.write(fileRecords);
+			}
+			log.info("fileName::"+fileName);
+			log.info("filePath::::"+filePath);
+			log.info("link:::"+dowlonadLink.getValue());
+			return new FileDetails(fileName, filePath,dowlonadLink.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+fileName ); 
+		
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			try {
+
+				if( writer != null )
+					writer.close();
+			} catch (IOException e) {}
+		}
+
 	}
 }

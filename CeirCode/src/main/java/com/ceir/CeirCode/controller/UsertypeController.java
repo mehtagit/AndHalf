@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ceir.CeirCode.filtermodel.UsertypeFilter;
+import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.SystemConfigListDb;
 import com.ceir.CeirCode.model.UserProfile;
 import com.ceir.CeirCode.model.UserStatusRequest;
@@ -40,21 +41,28 @@ import io.swagger.annotations.ApiOperation;
 	@PostMapping("/usertypeData") 
 	public MappingJacksonValue viewRecord(@RequestBody UsertypeFilter filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize){
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "file", defaultValue = "0") Integer file){
 		MappingJacksonValue mapping = null;
-		Page<Usertype> userTypeData  =usertypeService.viewAllUserytypes(filterRequest, pageNo, pageSize);
-		List<SystemConfigListDb> statusList=systemConfigRepo.getByTag("UserType_Status");
-		if(userTypeData!=null) {
-			for(Usertype usertype:userTypeData.getContent()) {
-				for(SystemConfigListDb status:statusList) {
-					Integer value=status.getValue();
-					if(usertype.getStatus()==value) {
-						usertype.setStatusInterp(status.getInterp());
+		if(file == 0) {
+			Page<Usertype> userTypeData  =usertypeService.viewAllUserytypes(filterRequest, pageNo, pageSize);
+			List<SystemConfigListDb> statusList=systemConfigRepo.getByTag("UserType_Status");
+			if(userTypeData!=null) {
+				for(Usertype usertype:userTypeData.getContent()) {
+					for(SystemConfigListDb status:statusList) {
+						Integer value=status.getValue();
+						if(usertype.getStatus()==value) {
+							usertype.setStatusInterp(status.getInterp());
+						}
 					}
 				}
 			}
+			mapping = new MappingJacksonValue(userTypeData);
+		}else {
+			FileDetails fileDetails = usertypeService.getFile(filterRequest);
+			mapping = new MappingJacksonValue(fileDetails);
 		}
-		mapping = new MappingJacksonValue(userTypeData);
+		
 		return mapping;
 	}
 

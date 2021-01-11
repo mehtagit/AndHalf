@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ceir.CeirCode.filtermodel.UserTypeFeatureFilter;
+import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.SystemConfigListDb;
 import com.ceir.CeirCode.model.UserToStakehoderfeatureMapping;
 import com.ceir.CeirCode.model.Usertype;
@@ -37,8 +38,10 @@ public class UserTypeFeatureController {
 	@PostMapping("/userTypeFeatureData") 
 	public MappingJacksonValue viewRecord(@RequestBody UserTypeFeatureFilter filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize){
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "file", defaultValue = "0") Integer file){
 		MappingJacksonValue mapping = null;
+		if (file == 0) {
 			Page<UserToStakehoderfeatureMapping> userTypeFeatureData  =userTypeFeatureService.viewAllUserTypeFeatures(filterRequest, pageNo, pageSize);
 			mapping = new MappingJacksonValue(userTypeFeatureData);
 			if(userTypeFeatureData!=null) {
@@ -55,6 +58,11 @@ public class UserTypeFeatureController {
 				}
 				}
 			mapping = new MappingJacksonValue(userTypeFeatureData);
+		}else {
+			FileDetails fileDetails = userTypeFeatureService.getFile(filterRequest);
+			mapping = new MappingJacksonValue(fileDetails);
+		}
+			
 		return mapping;
 	}
 
