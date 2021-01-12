@@ -208,7 +208,7 @@ public class EnduserServiceImpl {
 					logger.info("End User with nid [" + data.getNid() + "] does not exist.");
 					return new GenricResponse(0, "User does not exist.", "");
 				}
-			}else if( data.getUserType().equalsIgnoreCase("Custom") ){
+			}else if( data.getUserType().equalsIgnoreCase("Custom") || data.getUserType().equalsIgnoreCase("Immigration") ){
 				List<EndUserDB> endUsers = endUserDbRepository.findByOriginIgnoreCase( data.getUserType() );
 				if( endUsers.isEmpty() ) {
 					logger.info("No device registered by Custom yet.");
@@ -876,14 +876,14 @@ public class EnduserServiceImpl {
 						String message = "Any other user have taken the same action on the visaUpdate [" + payloadTxnId + "]";
 						logger.info(message);
 						return new GenricResponse(10, "", message, payloadTxnId);
-					}
-					
+					}					
 					visaDb.setStatus(RegularizeDeviceStatus.REJECTED_BY_CEIR_ADMIN.getCode());
-					visaDb.setRemark(ceirActionRequest.getRemarks()); 
+					visaDb.setRemark(ceirActionRequest.getRemarks());
 					tag = "Update_Visa_Reject_CEIRAdmin";	
 					receiverUserType = "End User";
 					txnId = visaDb.getTxnId();
 					sufeature=SubFeatures.REJECT;
+					placeholders.put("<Reason>", ceirActionRequest.getRemarks() );
 				}else {
 					return new GenricResponse(2, "unknown operation", "");
 				}

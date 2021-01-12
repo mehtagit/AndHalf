@@ -1253,8 +1253,8 @@ public class StolenAndRecoveryServiceImpl {
 							userProfile_generic_Response_Notification = new UserProfile();
 						userProfile_generic_Response_Notification =
 								userProfileRepository.getByUserId(registerationUser.getId());
-						placeholderMap1.put("<First name>",userProfile_generic_Response_Notification.getFirstName());
-
+						placeholderMap1.put("<First name>", userProfile_generic_Response_Notification.getFirstName() );
+						placeholderMap1.put("<Reason>", consignmentUpdateRequest.getRemarks() );
 						emailUtil.saveNotification(mailTag,
 								userProfile_generic_Response_Notification,
 								consignmentUpdateRequest.getFeatureId(),

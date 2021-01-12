@@ -957,6 +957,7 @@ public class StockServiceImpl {
 					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
 				}else {
 					addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()), consignmentUpdateRequest.getTxnId(), action, consignmentUpdateRequest.getRoleType());
+					placeholderMap.put("<Reason>", consignmentUpdateRequest.getRemarks() );
 					if( customUser != null ) {
 						placeholderMap.put("<First name>", customUser.getUserProfile().getFirstName() );
 						emailUtil.saveNotification(mailTag, 

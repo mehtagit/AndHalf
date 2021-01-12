@@ -809,6 +809,7 @@ public class RegularizedDeviceServiceImpl {
 					receiverUserType = "End User";
 					txnId = regularizeDeviceDb.getTxnId();
 					subFeature = SubFeatures.REJECT;
+					placeholders.put("<Reason>", regularizeDeviceDb.getRemark() );
 				}else {
 					return new GenricResponse(2, "unknown operation", "");
 				}
