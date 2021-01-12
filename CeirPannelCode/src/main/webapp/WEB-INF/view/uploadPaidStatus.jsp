@@ -415,7 +415,7 @@ position: fixed;
 										id="district" class="browser-default" class="mySelect"
 										onchange="getCommune(this,'commune','village');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required>
+										style="padding-left: 0; font-size: 14.5px;  color: rgb(53, 52, 52);" required>
 										<option value=""><spring:message code="select.district" /></option>
 										</select>
 													</label>
@@ -434,7 +434,7 @@ position: fixed;
 										id="commune" class="browser-default" class="mySelect"
 										onchange="getVillage(this,'village');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required>
+										style="padding-left: 0; font-size: 14.5px;" required>
 										<option value=""><spring:message code="select.commune" /></option>
 										</select>
 												</div>
@@ -451,7 +451,7 @@ position: fixed;
 										id="village" class="browser-default" class="mySelect"
 										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" >
+										style="padding-left: 0;font-size: 14.5px;color: rgb(53, 52, 52);" >
 										<option value=""><spring:message code="select.village" /></option>
 										</select>
 													</label>
@@ -697,9 +697,9 @@ position: fixed;
 														</div>
 
 														<div class="col s12 m6">
-																			<label for="multipleSimStatus1"><spring:message code="registration.selectMultiplestLawfull" /> <span class="star"></span>
+																			<label for="multipleSimStatus1"><spring:message code="registration.selectMultiplestLawfull" /> <span class="star">*</span>
 															</label> <select class="browser-default"  onchange="setContactIMEINumber('multipleSimStatus1','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
-															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" required="required"
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 																title= "<spring:message code="validation.selectFieldMsg" />" id="multipleSimStatus1">
 																<option value=""  selected><spring:message code="select.select" />
@@ -1428,3 +1428,5 @@ window.top.location.href = "./login";
 <%
 }
 %>
+
+

@@ -3739,7 +3739,7 @@ S2.define('select2/dropdown/search',[
     });
 
     container.on('open', function () {
-      self.$search.attr('tabindex', 0);
+      self.$search.attr('tabindex', 1);
 
       self.$search.focus();
 

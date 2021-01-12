@@ -370,8 +370,8 @@ select {
 													</div>
 
 													<div class="col s12 m6 l6">
-														<label><spring:message code="input.province" /> <span
-															class="star">*</span></label> <select id="state"
+														<label id="provianceLabel" ><spring:message code="input.province" /> <span
+															class="star"></span></label> <select id="state"
 															onchange="getDistrict(this,'singleStolendistrict','singleStolencommune');"
 															class="browser-default" class="mySelect"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"

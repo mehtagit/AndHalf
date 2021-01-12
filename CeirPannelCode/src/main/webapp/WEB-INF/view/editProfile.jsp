@@ -562,7 +562,8 @@ input[type="checkbox"] {
 										id="district" class="browser-default" class="mySelect"
 										onchange="getCommune(this);InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
+										style="padding-left: 0;" required>
+										<option value=""><spring:message code="select.district" /></option></select>
 								</div>
 
 
@@ -572,14 +573,16 @@ input[type="checkbox"] {
 										id="commune" class="browser-default" class="mySelect"
 										onchange="getVillage(this);InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
+										style="padding-left: 0;" required>
+										<option value=""><spring:message code="select.commune" /></option></select></select>
 								</div>
 								<div class="col s12 m6 l6">
 									<label><spring:message code="input.village" /></label> <select
 										id="village" class="browser-default" class="mySelect"
 										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" ></select>
+										style="padding-left: 0;" >
+										<option value=""><spring:message code="select.village" /></option></select>
 
 
 								</div>

@@ -874,7 +874,8 @@ function getDistrict(current) {
 				success : function(data, textStatus, jqXHR) {
 					var result = data;
 					$('#district,#commune').empty();
-					
+					var html='<option value="">Select Commune</option>';
+					$('#commune').append(html);
 					var html='<option value="">Select District</option>';
 					$('#district').append(html);	
 					 for (i = 0; i < result.length; i++) {
@@ -913,8 +914,9 @@ function getCommune(current) {
 				contentType : 'application/json; charset=utf-8',
 				success : function(data, textStatus, jqXHR) {
 					var result = data;
-					$('#commune').empty();
-					$('#village').empty();
+					$('#commune,#village').empty();
+					var html='<option value="">Select Village</option>';
+					$('#village').append(html);	
 					var html='<option value="">Select Commune</option>';
 					$('#commune').append(html);	
 					 for (i = 0; i < result.length; i++) {

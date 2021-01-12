@@ -379,7 +379,9 @@ position: fixed;
 										id="commune" class="browser-default" class="mySelect"
 										onchange="getVillage(this,'village');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
+										style="padding-left: 0;" required>
+										<option value=""><spring:message code="select.commune" /></option>
+										</select>
 										</div>
 										
 										<div class="col s12 m6 l6">
@@ -665,8 +667,8 @@ position: fixed;
 
 													<div class="col s12 m6">
 														<label for="multipleSimStatus1"><spring:message
-																code="registration.selectMultiplestLawfull" /></label>
-														<select class="browser-default" onchange="setContactIMEINumber('multipleSimStatus1','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
+																code="registration.selectMultiplestLawfull" /><span class="star">*</span></label>
+														<select class="browser-default" required="required" onchange="setContactIMEINumber('multipleSimStatus1','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															 id="multipleSimStatus1">
