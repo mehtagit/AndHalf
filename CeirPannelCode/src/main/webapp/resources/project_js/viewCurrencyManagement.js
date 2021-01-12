@@ -170,7 +170,7 @@
 					}
 
 						$("#CurrencyTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-						//$("#CurrencyTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#CurrencyTableDiv").append("<div class=' col s3 m2 l3'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportCurrencyData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -428,5 +428,47 @@
 		$("label[for='cambodianRiel']").removeClass('active');
 	}
 	
+	function exportCurrencyData(){
+		var table = $('#currencyManagementLibraryTable').DataTable();
+		var info = table.page.info(); 
+		var pageNo=info.page;
+		var pageSize =info.length;
+		
+		var filterRequest={
+				"endDate":$('#endDate').val(),
+				"startDate":$('#startDate').val(),
+				"currency" : parseInt($("#currencyType").val()),
+				"year" : parseInt($('#year').val()),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username"),
+				"pageNo":parseInt(pageNo),
+				"pageSize":parseInt(pageSize)
+		}
+		
+		//console.log(JSON.stringify(filterRequest))
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
+		
+		$.ajax({
+			url: './exportCurrencyData',
+			type: 'POST',
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			data : JSON.stringify(filterRequest),
+			success: function (data, textStatus, jqXHR) {
+				  window.location.href = data.url;
 
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				
+			}
+		});
+	}
 	

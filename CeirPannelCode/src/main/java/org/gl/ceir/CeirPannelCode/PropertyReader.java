@@ -30,4 +30,7 @@ public class PropertyReader {
 	
 	@Value("${downloadFilePath}")
 	public String downloadFilePath;
+	
+	@Value("${propertiesFileLocation}")
+	public String propertiesFileLocation;
 }

@@ -158,7 +158,7 @@
 					}
 
 						$("#FieldTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-						//$("#FieldTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#FieldTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportRuleListData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -271,3 +271,48 @@
 				return false;
 			}
 
+			function exportRuleListData(){
+				var table = $('#table').DataTable();
+				var info = table.page.info(); 
+				var pageNo=info.page;
+				var pageSize =info.length;
+				
+				var state= $("#State").val() =='null' ? undefined : $("#State").val();
+				var filterRequest={
+						  "state": state,
+							"userId":parseInt($("body").attr("data-userID")),
+							"featureId":parseInt(featureId),
+							"userTypeId": parseInt($("body").attr("data-userTypeID")),
+							"userName":$("body").attr("data-selected-username"),
+							"roleType":$("body").attr("data-roleType"),
+							"userType":$("body").attr("data-roleType"),
+							"username" : $("body").attr("data-selected-username"),
+							"pageNo":parseInt(pageNo),
+							"pageSize":parseInt(pageSize)
+						
+				}
+				
+				//console.log(JSON.stringify(filterRequest))
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+					headers:
+					{ 'X-CSRF-TOKEN': token }
+				});
+				
+				$.ajax({
+					url: './exportRuleList',
+					type: 'POST',
+					dataType : 'json',
+					contentType : 'application/json; charset=utf-8',
+					data : JSON.stringify(filterRequest),
+					success: function (data, textStatus, jqXHR) {
+						  window.location.href = data.url;
+
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						
+					}
+				});
+				}		
+					
