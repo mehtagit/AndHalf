@@ -20,6 +20,9 @@ public interface BlackListRepository extends JpaRepository<BlackList, Long> , Jp
 	@Query("SELECT r FROM BlackList r WHERE imei = :imei OR substr(imei,1,14) =:imei")
 	public BlackList findByImei(String imei);
 	
+	@Query("SELECT r FROM BlackList r WHERE (imei = :imei OR substr(imei,1,14) =:imei) and LOWER(deviceIdType) =:deviceIdType")
+	public BlackList findByImeiAndDeviceIdType(String imei, String deviceIdType);
+	
 	public Optional<BlackList> findById(Long id);
 	 
 }

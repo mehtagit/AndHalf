@@ -15,6 +15,8 @@ JpaRepository<SystemConfigListDb, Long>, JpaSpecificationExecutor<SystemConfigLi
 	
 	public List<SystemConfigListDb> findByTag(String tag, Sort sort);
 	
+	public SystemConfigListDb findByTagAndInterpIgnoreCase(String tag, String interp);
+	
 	@Query("SELECT DISTINCT a.tag FROM SystemConfigListDb a")
 	List<String> findDistinctTags();
 	

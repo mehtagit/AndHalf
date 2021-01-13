@@ -99,9 +99,10 @@ public class CustomerCareServiceImpl {
 		String imei = customerCareRequest.getImei();
 
 		try {
-			if(Objects.nonNull(imei) 
-					&& "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())) {
-				return fetchDetailsOfImei(imei, "0", listType);
+//			if(Objects.nonNull(imei) 
+//					&& "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())) {
+			if(Objects.nonNull(imei)) {
+				return fetchDetailsOfImei(imei, "0", customerCareRequest.getDeviceIdType(), listType);
 
 			}else if(Objects.nonNull(customerCareRequest.getMsisdn()) || !customerCareRequest.getMsisdn().equals("") ){
 				DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImei(imei);
@@ -109,7 +110,7 @@ public class CustomerCareServiceImpl {
 				if(Objects.isNull(deviceUsageDb)) {
 					return new GenricResponse(2, GenericMessageTags.NO_DATA.getTag(), GenericMessageTags.NO_DATA.getMessage(), null);
 				}else {
-					return fetchDetailsOfImei(deviceUsageDb.getImei(), "0", listType);
+					return fetchDetailsOfImei(deviceUsageDb.getImei(), "0", customerCareRequest.getDeviceIdType(), listType);
 				}
 			}else {
 				return new GenricResponse(1, GenericMessageTags.INVALID_REQUEST.getMessage(), "", null);
@@ -290,7 +291,42 @@ public class CustomerCareServiceImpl {
 				CustomerCareDeviceState customerCareDeviceState = new CustomerCareDeviceState();
 				customerCareDeviceState.setMsisdn(msisdn);
 				
-				customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(imei, customerCareDeviceState));
+//				customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(imei, customerCareDeviceState));
+				customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(imei, customerCareDeviceState, listType.toLowerCase()));
+				logger.info("Added object of Db [" + o + "] in customerCareDeviceStates");
+				
+			}catch (Exception e) {
+				logger.error("Db [" + o + "] have some issue in fetching data for imei [" + imei + "]", e);
+			}
+		});
+
+		return new GenricResponse(0, GenericMessageTags.SUCCESS.getMessage(), "", customerCareDeviceStates);
+
+	}
+	
+	private GenricResponse fetchDetailsOfImei(String imei, String msisdn, String deviceIdType, String listType) {
+		List<String> list = null;
+		List<CustomerCareDeviceState> customerCareDeviceStates = new LinkedList<>();
+
+		if("device".equals(listType)) {
+			list = customerCareFactory.deviceList;
+		}else {
+			list = customerCareFactory.stateList;
+		}
+
+		list.stream().forEach( o -> {
+			CustomerCareTarget customerCareTarget = customerCareFactory.getObject(o);
+			if(Objects.isNull(customerCareTarget)) {
+				logger.info("Corresponding object of Db [" + o + "] is not defined in the factory ");
+				return;
+			}
+
+			try {
+				CustomerCareDeviceState customerCareDeviceState = new CustomerCareDeviceState();
+				customerCareDeviceState.setMsisdn(msisdn);
+				
+//				customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(imei, customerCareDeviceState));
+				customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(imei, customerCareDeviceState, deviceIdType.toLowerCase()));
 				logger.info("Added object of Db [" + o + "] in customerCareDeviceStates");
 				
 			}catch (Exception e) {

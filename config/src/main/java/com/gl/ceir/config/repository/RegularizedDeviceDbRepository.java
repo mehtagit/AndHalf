@@ -32,6 +32,10 @@ JpaSpecificationExecutor<RegularizeDeviceDb	>, CustomerCareRepo<RegularizeDevice
 	@Query("SELECT r FROM RegularizeDeviceDb r WHERE firstImei = :imei OR substr(firstImei,1,14) =:imei OR secondImei = :imei OR substr(secondImei,1,14) =:imei "
 			+ "OR thirdImei = :imei OR substr(thirdImei,1,14) =:imei OR fourthImei = :imei  OR substr(fourthImei,1,14) =:imei")
 	public RegularizeDeviceDb getByImei(String imei);
+	
+	@Query("SELECT r FROM RegularizeDeviceDb r WHERE (firstImei = :imei OR substr(firstImei,1,14) =:imei OR secondImei = :imei OR substr(secondImei,1,14) =:imei "
+			+ "OR thirdImei = :imei OR substr(thirdImei,1,14) =:imei OR fourthImei = :imei  OR substr(fourthImei,1,14) =:imei) and deviceIdType =:deviceIdType")
+	public RegularizeDeviceDb getByImeiAndDeviceIdType(String imei, Integer deviceIdType);
 
 //	@Query("SELECT count(r) FROM RegularizeDeviceDb r WHERE firstImei = :imei OR secondImei = :imei OR thirdImei = :imei OR fourthImei = :imei")
 	@Query("SELECT count(r) FROM RegularizeDeviceDb r WHERE firstImei = :imei OR substr(firstImei,1,14) =:imei OR secondImei = :imei OR substr(secondImei,1,14) =:imei " + 

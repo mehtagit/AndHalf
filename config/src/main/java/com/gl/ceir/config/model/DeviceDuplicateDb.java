@@ -1,11 +1,14 @@
 package com.gl.ceir.config.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -43,6 +46,7 @@ public class DeviceDuplicateDb {
 	
 //	@JsonIgnore
 	@UpdateTimestamp
+//	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date modifiedOn;    
 	
