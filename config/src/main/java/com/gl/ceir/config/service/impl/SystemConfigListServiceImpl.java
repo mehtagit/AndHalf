@@ -28,6 +28,7 @@ import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
+import com.gl.ceir.config.model.RuleEngine;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
@@ -39,13 +40,17 @@ import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Usertype;
 import com.gl.ceir.config.model.file.SystemConfigListFileModel;
+import com.gl.ceir.config.model.file.SystemConfigListFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.SystemConfigListRepository;
+import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
+import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
 import com.opencsv.CSVWriter;
+import com.opencsv.bean.MappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
@@ -76,6 +81,8 @@ public class SystemConfigListServiceImpl {
 	@Autowired
 	UserRepository userRepository;
 	
+	@Autowired
+	SystemConfigurationDbRepository systemConfigurationDbRepository;
 	public GenricResponse saveSystemConfigList(SystemConfigListDb systemConfigListDb){
 		try {
 			if(Objects.isNull(systemConfigListDb.getTag())) {
@@ -225,72 +232,128 @@ public class SystemConfigListServiceImpl {
 	}
 
 	public FileDetails getFilteredAuditTrailInFile(FilterRequest filterRequest) {
+
+		logger.info("inside system configlist");
+		logger.info("filterRequest data:  "+filterRequest);
 		String fileName = null;
 		Writer writer   = null;
-		SystemConfigListFileModel fileModel = null;
-		
+		SystemConfigListFileModel uPFm = null;
+		SystemConfigurationDb dowlonadDir=systemConfigurationDbRepository.getByTag("file.download-dir");
+		SystemConfigurationDb dowlonadLink=systemConfigurationDbRepository.getByTag("file.download-link");
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
-
-		SystemConfigurationDb filepath = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
-		logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
-		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
-		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
-
-		if(Objects.isNull(filepath) || Objects.isNull(link)) {
-			logger.info("CONFIG: MISSING : file_system_config_list_download_dir or file_system_config_list_download_link not found.");
-			return null;
-		}
-		String filePath = filepath.getValue();
+		Integer pageNo = 0;
+		Integer pageSize = Integer.valueOf(systemConfigurationDbRepository.getByTag("file.max-file-record").getValue());
+		String filePath  = dowlonadDir.getValue();
 		StatefulBeanToCsvBuilder<SystemConfigListFileModel> builder = null;
-		StatefulBeanToCsv<SystemConfigListFileModel> csvWriter = null;
-		List< SystemConfigListFileModel > fileRecords = null;
-
+		StatefulBeanToCsv<SystemConfigListFileModel> csvWriter      = null;
+		List<SystemConfigListFileModel> fileRecords       = null;
+		MappingStrategy<SystemConfigListFileModel> mapStrategy = new CustomMappingStrategy<>();	
+		
 		try {
-			List<SystemConfigListDb> configListDbs = getAll(filterRequest);
-			if( !configListDbs.isEmpty() ) {
-				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
-					fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Config_Tag.csv";
-				}else {
-					fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_ConfigTag.csv";
-				}
+			
+			mapStrategy.setType(SystemConfigListFileModel.class);
+			List<SystemConfigListDb> list = filter(filterRequest, pageNo, pageSize).getContent();
+			
+			if( list.size()> 0 ) {
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_Field.csv";
 			}else {
-				fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Configtag.csv";
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_Field.csv";
 			}
-
+			logger.info(" file path plus file name: "+Paths.get(filePath+fileName));
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
-			builder = new StatefulBeanToCsvBuilder<SystemConfigListFileModel>(writer);
-			csvWriter = builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+//			builder = new StatefulBeanToCsvBuilder<UserProfileFileModel>(writer);
+//			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+//			
+			builder = new StatefulBeanToCsvBuilder<>(writer);
+			csvWriter = builder.withMappingStrategy(mapStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
 
-			if( !configListDbs.isEmpty() ) {
-				fileRecords = new ArrayList<>(); 
-
-				for(SystemConfigListDb systemConfigListDb : configListDbs ) {
-					fileModel = new SystemConfigListFileModel();
-
-					// fileModel.setUserId(auditTrail.getUserId());
+			if( list.size() > 0 ) {
+				//List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag("GRIEVANCE_CATEGORY");
+				fileRecords = new ArrayList<SystemConfigListFileModel>(); 
+				for( SystemConfigListDb systemConfigListDb : list ) {
+					uPFm = new SystemConfigListFileModel();
+					uPFm.setCreatedOn(systemConfigListDb.getCreatedOn().format(dtf));
+					uPFm.setModifiedOn(systemConfigListDb.getModifiedOn().format(dtf));
+					uPFm.setField(systemConfigListDb.getInterp());
+					uPFm.setDisplayName(systemConfigListDb.getDisplayName());
+					uPFm.setFieldID(systemConfigListDb.getTagId());
+					uPFm.setDescription(systemConfigListDb.getDescription());
 					
-					logger.debug(fileModel);
-					fileRecords.add(fileModel);
+					fileRecords.add(uPFm);
 				}
-
 				csvWriter.write(fileRecords);
-			}else {
-				csvWriter.write(new SystemConfigListFileModel());
 			}
-			return new FileDetails( fileName, filePath, link.getValue().replace("$LOCAL_IP",
-					propertiesReader.localIp) + fileName ); 
-
+			logger.info("fileName::"+fileName);
+			logger.info("filePath::::"+filePath);
+			logger.info("link:::"+dowlonadLink.getValue());
+			
+			
+			return new FileDetails(fileName, filePath,dowlonadLink.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+fileName ); 
+		
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}finally {
 			try {
-				if( Objects.nonNull(writer) )
+
+				if( writer != null )
 					writer.close();
 			} catch (IOException e) {}
 		}
-	}
+
+	
+		/*
+		 * String fileName = null; Writer writer = null; SystemConfigListFileModel
+		 * fileModel = null;
+		 * 
+		 * DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		 * DateTimeFormatter dtf2 = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
+		 * 
+		 * SystemConfigurationDb filepath =
+		 * configurationManagementServiceImpl.findByTag(ConfigTags.file_download_dir);
+		 * logger.info("CONFIG : file_consignment_download_dir [" + filepath + "]");
+		 * SystemConfigurationDb link =
+		 * configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
+		 * logger.info("CONFIG : file_consignment_download_link [" + link + "]");
+		 * 
+		 * if(Objects.isNull(filepath) || Objects.isNull(link)) { logger.
+		 * info("CONFIG: MISSING : file_system_config_list_download_dir or file_system_config_list_download_link not found."
+		 * ); return null; } String filePath = filepath.getValue();
+		 * StatefulBeanToCsvBuilder<SystemConfigListFileModel> builder = null;
+		 * StatefulBeanToCsv<SystemConfigListFileModel> csvWriter = null; List<
+		 * SystemConfigListFileModel > fileRecords = null;
+		 * 
+		 * try { List<SystemConfigListDb> configListDbs = getAll(filterRequest); if(
+		 * !configListDbs.isEmpty() ) { if(Objects.nonNull(filterRequest.getUserId()) &&
+		 * (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
+		 * fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") +
+		 * "_Config_Tag.csv"; }else { fileName =
+		 * LocalDateTime.now().format(dtf2).replace(" ", "_") + "_ConfigTag.csv"; }
+		 * }else { fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") +
+		 * "_Configtag.csv"; }
+		 * 
+		 * writer = Files.newBufferedWriter(Paths.get(filePath+fileName)); builder = new
+		 * StatefulBeanToCsvBuilder<SystemConfigListFileModel>(writer); csvWriter =
+		 * builder.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+		 * 
+		 * if( !configListDbs.isEmpty() ) { fileRecords = new ArrayList<>();
+		 * 
+		 * for(SystemConfigListDb systemConfigListDb : configListDbs ) { fileModel = new
+		 * SystemConfigListFileModel();
+		 * 
+		 * // fileModel.setUserId(auditTrail.getUserId());
+		 * 
+		 * logger.debug(fileModel); fileRecords.add(fileModel); }
+		 * 
+		 * csvWriter.write(fileRecords); }else { csvWriter.write(new
+		 * SystemConfigListFileModel()); } return new FileDetails( fileName, filePath,
+		 * link.getValue().replace("$LOCAL_IP", propertiesReader.localIp) + fileName );
+		 * 
+		 * } catch (Exception e) { logger.error(e.getMessage(), e); throw new
+		 * ResourceServicesException(this.getClass().getName(), e.getMessage());
+		 * }finally { try { if( Objects.nonNull(writer) ) writer.close(); } catch
+		 * (IOException e) {} }
+		 */}
 
 	private GenericSpecificationBuilder<SystemConfigListDb> buildSpecification(FilterRequest filterRequest){
 		GenericSpecificationBuilder<SystemConfigListDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
