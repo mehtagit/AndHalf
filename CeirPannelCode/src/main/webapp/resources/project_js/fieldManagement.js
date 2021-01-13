@@ -182,7 +182,7 @@
 					}
 
 						$("#FieldTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-						//$("#FieldTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#FieldTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportFieldData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -208,23 +208,6 @@
 			setDropdown();
 	}
 
-
-		
-		//**********************************************************Export Field file************************************************************************
-		function exportConsignmentData()
-		{
-			var consignmentStartDate=$('#startDate').val();
-			var consignmentEndDate=$('#endDate').val();
-			var consignmentTxnId=$('#transactionID').val();
-			var filterConsignmentStatus=parseInt($('#filterConsignmentStatus').val());
-			var consignmentTaxPaidStatus=parseInt($('#taxPaidStatus').val());
-			
-			var table = $('#fieldManagementLibraryTable').DataTable();
-			var info = table.page.info(); 
-			var pageNo=info.page;
-			var pageSize =info.length;
-			window.location.href="./exportConsignmnet?consignmentStartDate="+consignmentStartDate+"&consignmentEndDate="+consignmentEndDate+"&consignmentTxnId="+consignmentTxnId+"&filterConsignmentStatus="+filterConsignmentStatus+"&consignmentTaxPaidStatus="+consignmentTaxPaidStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
-		}
 
 		
 	function setDropdown(){
@@ -484,4 +467,52 @@
 		$("label[for='addFieldId']").removeClass('active');
 		$("label[for='addInterp']").removeClass('active');
 		$("label[for='description']").removeClass('active');
+	}
+	
+	function exportFieldData(){
+		var table = $('#fieldManagementLibraryTable').DataTable();
+		var info = table.page.info(); 
+		var pageNo=info.page;
+		var pageSize =info.length;
+		
+		
+		window.tag_val= $('#filterTagId').val() == undefined || $('#filterTagId').val() == 'null' ? TagId : $('#filterTagId').val();
+		
+		var filterRequest={
+				"endDate":$('#endDate').val(),
+				"startDate":$('#startDate').val(),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"tag": window.tag_val,
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"username" : $("body").attr("data-selected-username"),
+				"pageNo":parseInt(pageNo),
+				"pageSize":parseInt(pageSize)
+		}
+		
+		//console.log(JSON.stringify(filterRequest))
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
+		
+		$.ajax({
+			url: './exportFieldData',
+			type: 'POST',
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			data : JSON.stringify(filterRequest),
+			success: function (data, textStatus, jqXHR) {
+				  window.location.href = data.url;
+
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				
+			}
+		});
 	}
