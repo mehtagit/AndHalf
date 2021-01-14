@@ -10,15 +10,24 @@ public class UserDashboardMap {
 	@JsonProperty("Date")
 	@SerializedName("Date")
 	private String date;
+	/*
+	 * @JsonProperty("Number of user logged")
+	 * 
+	 * @SerializedName("Number of user logged") private String numberOfUserLogged;
+	 * 
+	 * @JsonProperty("Unique user logged")
+	 * 
+	 * @SerializedName("Unique user logged") private String uniqueUserLogged;
+	 */
 
-	@JsonProperty("Number of user logged")
-	@SerializedName("Number of user logged")
+
+	@JsonProperty("Total User Count")
+	@SerializedName("Total User Count")
 	private String numberOfUserLogged;
      
-	@JsonProperty("Unique user logged")
-	@SerializedName("Unique user logged")
+	@JsonProperty("Unique User Count")
+	@SerializedName("Unique User Count")
 	private String uniqueUserLogged;
-
 
 	public String getDate() {
 		return date;

@@ -158,11 +158,11 @@ function graph(response,id,chartType,chartTitle)
   var StolenCount=[];
   
 	for(var i=0;i<response['rowData'].length;i++){
-		noOfUsers.push(response['rowData'][i]['Number of user logged']);
+		noOfUsers.push(response['rowData'][i]['Total User Count']);
 	   	 date.push(response['rowData'][i]['Date']);
-	   	uniqueUsers.push(response['rowData'][i]['Unique user logged']);
-		pieData.push(parseInt(response['rowData'][i]['Number of user logged']));
-		pieData.push(parseInt(response['rowData'][i]['Unique user logged']));
+	   	uniqueUsers.push(response['rowData'][i]['Unique User Count']);
+		pieData.push(parseInt(response['rowData'][i]['Total User Count']));
+		pieData.push(parseInt(response['rowData'][i]['Unique User Count']));
 		
 		BlockedCount.push(response['rowData'][i]['Blocked Count']);
 		PendingCount.push(response['rowData'][i]['Pending Count']);
