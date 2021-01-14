@@ -487,6 +487,7 @@ select {
 													</div>
 
 													<div>
+													<div class="row">
 														<div class="col s12 m6">
 															<%-- <input type="text" name="deviceBrandName" placeholder=""
 																id="singleStolendeviceBrandName"
@@ -541,6 +542,8 @@ select {
 																code="registration.devicebrandname" /> <span class=" star"> *</span>
 														</label>
 													</div>
+													</div>
+													<div class="row">
 														<div class="col s12 m6 ">
 															<label for="deviceType"><spring:message
 																	code="select.deviceType" /></label> <select
@@ -564,6 +567,7 @@ select {
 																</option>
 
 															</select>
+														</div>
 														</div>
 														
 														

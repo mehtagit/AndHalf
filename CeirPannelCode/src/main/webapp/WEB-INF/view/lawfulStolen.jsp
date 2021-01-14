@@ -483,7 +483,7 @@
 														</div>
 
 												
-
+														<div class="row">	
 														<div class="col s6 m6 ">
 															<label for="deviceIDType"> <spring:message
 																	code="select.deviceIDType" /> <span class="star" id="deviceIdTypeSpan" style="display: none ; margin-top: -18px;margin-left: 82px;">*</span> </label> <select
@@ -505,14 +505,6 @@
 																code="registration.devicebrandname" /> <span class=" star"> *</span>
 														</label>
 													</div>
-														<div class="col s6 m6 ">
-															<label for="deviceType"> <spring:message
-																	code="select.deviceType" /></label> <select
-																class="browser-default" id="singleStolendeviceType">
-																<option value=""  selected>
-																	<spring:message code="select.deviceType" />
-																</option>
-															</select>
 														</div>
 
 
@@ -612,8 +604,16 @@
 																</option>
 															</select>
 														</div> --%>
-
-														
+														<div class="row">
+														<div class="col s6 m6 ">
+															<label for="deviceType"> <spring:message
+																	code="select.deviceType" /></label> <select
+																class="browser-default" id="singleStolendeviceType">
+																<option value=""  selected>
+																	<spring:message code="select.deviceType" />
+																</option>
+															</select>
+														</div>
 														<div class="col s12 m6 l6">
 															<label> <spring:message
 																	code="select.multiSimStatus" />
@@ -627,6 +627,7 @@
 																</option>
 	
 															</select>
+														</div>
 														</div>
 															<div id="IMEIndContact1" style="display: none">
 														
