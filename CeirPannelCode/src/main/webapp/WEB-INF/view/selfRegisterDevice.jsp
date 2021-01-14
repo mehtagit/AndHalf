@@ -347,7 +347,9 @@ position: fixed;
 											onchange="getDistrict(this,'endUserdistrict','commune');"
 												oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-												style="padding-left: 0;" required></select>
+												style="padding-left: 0;" required>
+												<option value=""><spring:message code="select.district" /></option>
+												</select>
 										</div>
 										<div class="col s12 m6 l6">
 											<%-- <input type="text" id="endUserdistrict"
@@ -361,7 +363,9 @@ position: fixed;
 										id="endUserdistrict" class="browser-default" class="mySelect"
 										onchange="getCommune(this,'commune','village');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
+										style="padding-left: 0;" required>
+										<option value=""><spring:message code="select.commune" /></option>
+										</select>
 												 
 										</div>
 										<div class="col s12 m6 l6">
@@ -375,7 +379,9 @@ position: fixed;
 										id="commune" class="browser-default" class="mySelect"
 										onchange="getVillage(this,'village');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
+										style="padding-left: 0;" required>
+										<option value=""><spring:message code="select.commune" /></option>
+										</select>
 										</div>
 										
 										<div class="col s12 m6 l6">
@@ -389,10 +395,12 @@ position: fixed;
 										id="village" class="browser-default" class="mySelect"
 										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" ></select>
+										style="padding-left: 0;" >
+										<option value=""><spring:message code="select.village" /></option>
+										</select>
 										</div>
 										
-										<div class="input-field col s12 m6 l6" style="margin-left: 0px">
+										<div class="input-field col s12 m6 l6" style="margin-left: 0px;margin-top: 23px; ">
 											<input type="text" class="form-control boxBorder boxHeight"
 												id="streetNumber" pattern="[a-zA-Z0-9\s,'*$-]{0,20}"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
@@ -659,8 +667,8 @@ position: fixed;
 
 													<div class="col s12 m6">
 														<label for="multipleSimStatus1"><spring:message
-																code="registration.selectMultiplestLawfull" /></label>
-														<select class="browser-default" onchange="setContactIMEINumber('multipleSimStatus1','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
+																code="registration.selectMultiplestLawfull" /><span class="star">*</span></label>
+														<select class="browser-default" required="required" onchange="setContactIMEINumber('multipleSimStatus1','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															 id="multipleSimStatus1">

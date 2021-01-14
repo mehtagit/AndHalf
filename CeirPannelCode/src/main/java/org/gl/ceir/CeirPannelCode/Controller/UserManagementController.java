@@ -3,6 +3,7 @@ package org.gl.ceir.CeirPannelCode.Controller;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
+import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.NewRule;
@@ -108,4 +109,28 @@ public class UserManagementController {
 		return response;
 
 	}
+	
+	//------------------------------------ Export Field controller ------------------------------------
+
+		@PostMapping("exportUserManagementData")
+		@ResponseBody
+		public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session)
+		{
+			Gson gsonObject=new Gson();
+			Object response;
+			Integer file = 1;	
+			String userType=(String) session.getAttribute("usertype");
+			Integer usertypeId=(int) session.getAttribute("usertypeId");
+			filterRequest.setUserType(userType);
+			filterRequest.setUserTypeId(usertypeId);
+			log.info("filterRequest:::::::::"+filterRequest);
+			response= userProfileFeignImpl.viewSystemUserManagementRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
+			FileExportResponse fileExportResponse;
+			Gson gson= new Gson(); 
+			String apiResponse = gson.toJson(response);
+			fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
+			log.info("response  from  Export user management api="+fileExportResponse);
+
+			return fileExportResponse;
+		}	
 }
