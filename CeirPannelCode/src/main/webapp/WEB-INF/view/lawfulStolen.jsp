@@ -605,6 +605,7 @@
 															</select>
 														</div> --%>
 														<div class="row">
+														
 														<div class="col s6 m6 ">
 															<label for="deviceType"> <spring:message
 																	code="select.deviceType" /></label> <select
