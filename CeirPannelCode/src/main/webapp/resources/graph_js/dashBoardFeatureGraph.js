@@ -278,7 +278,7 @@ function setLabelByID(featureId,userTypeId){
 
 function UserTypeList(){
 	var userTypeList=[];
-	$.getJSON('./registrationUserType?type=1', function(data) {
+	$.getJSON('./registrationUserType', function(data) {
 		for (i = 0; i < data.length; i++) {
 			userTypeList.push(data[i].usertypeName);
 		}
