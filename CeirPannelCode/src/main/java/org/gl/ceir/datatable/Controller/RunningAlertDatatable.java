@@ -17,8 +17,6 @@ import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
-import org.gl.ceir.pagination.model.AlertContentModel;
-import org.gl.ceir.pagination.model.AlertPaginationModel;
 import org.gl.ceir.pagination.model.RunningAlertContent;
 import org.gl.ceir.pagination.model.RunningAlertPagination;
 import org.slf4j.Logger;

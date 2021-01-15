@@ -1,20 +1,16 @@
 package org.gl.ceir.datatable.Controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.DBTablesFeignClient;
-import org.gl.ceir.CeirPannelCode.Model.AttachedFile;
 import org.gl.ceir.CeirPannelCode.Model.DBReportDataModel;
 import org.gl.ceir.CeirPannelCode.Model.DBrowDataModel;
-import org.gl.ceir.CeirPannelCode.Model.DbListDataHeaders;
 import org.gl.ceir.CeirPannelCode.Model.MapDatatableResponse;
 import org.gl.ceir.CeirPannelCode.Model.ReportResponse;
 import org.gl.ceir.Class.HeadersTitle.DatatableHeaderModel;
@@ -24,9 +20,7 @@ import org.gl.ceir.configuration.Translator;
 import org.gl.ceir.pageElement.model.Button;
 import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
-import org.gl.ceir.pagination.model.AlertContentModel;
 import org.gl.ceir.pagination.model.ReportPaginationModel;
-import org.gl.ceir.pagination.model.TrcContentModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

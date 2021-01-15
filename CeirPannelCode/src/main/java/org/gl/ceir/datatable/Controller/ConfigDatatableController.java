@@ -18,8 +18,6 @@ import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
 import org.gl.ceir.pagination.model.ConfigContentModel;
 import org.gl.ceir.pagination.model.ConfigPaginationModel;
-import org.gl.ceir.pagination.model.MessageContentModel;
-import org.gl.ceir.pagination.model.MessagePaginationModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,33 +1,6 @@
 package org.gl.ceir.datatable.Controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
-import org.gl.ceir.CeirPannelCode.Feignclient.TypeApprovedFeignImpl;
-import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
-import org.gl.ceir.CeirPannelCode.Model.constants.ApproveTypeStatus;
-import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
-import org.gl.ceir.Class.HeadersTitle.IconsState;
-import org.gl.ceir.pageElement.model.Button;
-import org.gl.ceir.pageElement.model.InputFields;
-import org.gl.ceir.pageElement.model.PageElement;
-import org.gl.ceir.pagination.model.TrcContentModel;
-import org.gl.ceir.pagination.model.TrcPaginationModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.google.gson.Gson;
 
 @RestController
 public class ManageTypeApproveDatatableController {

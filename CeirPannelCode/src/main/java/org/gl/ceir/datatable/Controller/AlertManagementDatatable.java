@@ -19,8 +19,6 @@ import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
 import org.gl.ceir.pagination.model.AlertContentModel;
 import org.gl.ceir.pagination.model.AlertPaginationModel;
-import org.gl.ceir.pagination.model.CurrencyContantModel;
-import org.gl.ceir.pagination.model.CurrencyPaginationModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
