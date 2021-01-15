@@ -105,7 +105,7 @@ a#newUserLink {
 <body data-msg="${msg}" data-lang-param="${pageContext.response.locale}" data-userID="${userid}">
 <c:remove var="userid" scope="session"/>
 	<!-- //////////////////////////////////////////////////////////////////////////// -->
-
+<div id="initialloader" style="display:none"></div>
 
 
 	<!-- //////////////////////////////////////////////////////////////////////////// -->

@@ -316,3 +316,48 @@
 				});
 				}		
 					
+			
+			
+			
+			
+			
+			
+			
+			
+			function viewByID(id,output){
+				
+				window.xid=id;
+				window.xoutput=output;
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+					headers:
+					{ 'X-CSRF-TOKEN': token }
+				});
+				$.ajax({
+					url : "./viewRuleListAPI/"+id,
+					dataType : 'json',
+					contentType : 'application/json; charset=utf-8',
+					type : 'GET',
+					success : function(data) {
+						var result=JSON.stringify(data);
+						$("#viewModel").openModal({
+					        dismissible:false
+					    });
+					
+						
+						view_data(JSON.parse(result));
+					},
+					error : function() {
+						////console.log("Failed");
+					}
+				});	
+			}
+			
+			
+			function view_data(result){
+				$("#viewName").val(result.name);
+				$("#viewDescription").val(result.description);
+				$("#viewState").val(result.state);
+			}
+		
