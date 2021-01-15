@@ -784,7 +784,7 @@ function viewPageType() {
 		
    		
    		$("#singleDeviceRejectRemarkDiv").css("display", "block");
-		$("#SingleForm").find("input,textarea,button").prop(
+		$("#SingleForm").find("input,textarea,button,select").prop(
 				"disabled", true);
 		//$("#SingleForm").find("select").attr("style", "pointer-events: none;");
 		
