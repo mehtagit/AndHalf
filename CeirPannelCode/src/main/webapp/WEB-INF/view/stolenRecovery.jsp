@@ -1231,8 +1231,8 @@ enctype="multipart/form-data">
 <div class="row">
 <div class="col s12 m6">
 <label for="editblockmultipleSimStatus">
-<spring:message code="registration.selectMultiplestLawfull" /> <span class="star"></span></label>
-<select class="browser-default" id="editblockmultipleSimStatus" onchange="setContactIMEINumber('editblockmultipleSimStatus','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')" >
+<spring:message code="registration.selectMultiplestLawfull" /> <span class="star">*</span></label>
+<select class="browser-default" id="editblockmultipleSimStatus" required="required" onchange="setContactIMEINumber('editblockmultipleSimStatus','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')" >
 <option value=""  selected>
 <spring:message code="select.multiSimStatus" />
 </option>

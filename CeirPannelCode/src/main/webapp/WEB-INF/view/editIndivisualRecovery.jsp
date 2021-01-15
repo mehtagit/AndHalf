@@ -265,11 +265,11 @@
 														</div>
 
 														<div class="input-field col s12 m6">
-															<input type="text" name="sigleRecoveryimeiNumber1" pattern="[0-9]{15,16}" 
+															<input type="text" name="sigleRecoveryimeiNumber1" pattern="[0-9]{15,16}"  required="required"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 														  maxlength="16" id="sigleRecoveryimeiNumber1" /> 
-															<label for="sigleRecoveryimeiNumber1"><spring:message code="registration.one" /> <span class="star"> </span></label>
+															<label for="sigleRecoveryimeiNumber1"><spring:message code="registration.one" />* <span class="star"> </span></label>
 														</div></div>
 														  <div id="IMEIndContact2" style="display: none">
 														<div class="input-field col s12 m6">
