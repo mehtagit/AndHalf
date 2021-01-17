@@ -54,7 +54,6 @@ import com.opencsv.bean.MappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
-
 @Service
 public class SystemConfigListServiceImpl {
 
@@ -80,18 +79,19 @@ public class SystemConfigListServiceImpl {
 
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@Autowired
 	SystemConfigurationDbRepository systemConfigurationDbRepository;
-	public GenricResponse saveSystemConfigList(SystemConfigListDb systemConfigListDb){
+
+	public GenricResponse saveSystemConfigList(SystemConfigListDb systemConfigListDb) {
 		try {
-			if(Objects.isNull(systemConfigListDb.getTag())) {
-				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
+			if (Objects.isNull(systemConfigListDb.getTag())) {
+				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(),
 						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
 
 			systemConfigListDb.setListOrder(0);
-			
+
 			systemConfigListRepository.save(systemConfigListDb);
 			return new GenricResponse(0);
 
@@ -100,14 +100,14 @@ public class SystemConfigListServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
-	public GenricResponse updateSystemConfigList(SystemConfigListDb systemConfigListDb){
+
+	public GenricResponse updateSystemConfigList(SystemConfigListDb systemConfigListDb) {
 		try {
-			if(Objects.isNull(systemConfigListDb.getId())) {
-				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
+			if (Objects.isNull(systemConfigListDb.getId())) {
+				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(),
 						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
-			
+
 			SystemConfigListDb systemConfigListDb2 = systemConfigListRepository.getById(systemConfigListDb.getId());
 			systemConfigListDb2.setDescription(systemConfigListDb.getDescription());
 			systemConfigListDb2.setTagId(systemConfigListDb.getTagId());
@@ -121,16 +121,16 @@ public class SystemConfigListServiceImpl {
 		}
 	}
 
-	public GenricResponse getTagsList(FilterRequest filterRequest){
+	public GenricResponse getTagsList(FilterRequest filterRequest) {
 		try {
-			if(Objects.isNull(filterRequest.getUserId())) {
-				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
+			if (Objects.isNull(filterRequest.getUserId())) {
+				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(),
 						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
 			User user = userRepository.getById(filterRequest.getUserId());
 
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), user.getUsername(), 0L, "System", 0L, 
-					Features.FIELD_MANGEMENT, SubFeatures.VIEW, "","NA","System"));
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), user.getUsername(), 0L, "System", 0L,
+					Features.FIELD_MANGEMENT, SubFeatures.VIEW, "", "NA", "System"));
 //				Features.CONFIG_LIST, SubFeatures.VIEW, ""));
 			/*
 			 * auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(),
@@ -148,26 +148,27 @@ public class SystemConfigListServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
-	public GenricResponse findDistinctTagsWithDescription(FilterRequest filterRequest){
+
+	public GenricResponse findDistinctTagsWithDescription(FilterRequest filterRequest) {
 		try {
-			if(Objects.isNull(filterRequest.getUserId())) {
-				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
+			if (Objects.isNull(filterRequest.getUserId())) {
+				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(),
 						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
 			User user = userRepository.getById(filterRequest.getUserId());
 
-			//auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), user.getUsername(), 0L, "System", 0L, 
-			//		Features.CONFIG_LIST, SubFeatures.VIEW, ""));
-			
-			 auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(),
-			  user.getUsername(), 0L, "SystemAdmin", 0L, Features.FIELD_MANGEMENT,
-			  SubFeatures.VIEW, "","NA","SystemAdmin"));
-			 
+			// auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(),
+			// user.getUsername(), 0L, "System", 0L,
+			// Features.CONFIG_LIST, SubFeatures.VIEW, ""));
+
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), user.getUsername(), 0L, "SystemAdmin",
+					0L, Features.FIELD_MANGEMENT, SubFeatures.VIEW, "", "NA", "SystemAdmin"));
+
 			logger.info("AUDIT : Unique Tags list saved in audit_trail.");
 
 			List<SystemConfigListDb> systemConfigListDbs = systemConfigListRepository.findDistinctTagsWithDescription();
-			systemConfigListDbs=systemConfigListDbs.stream().sorted(Comparator.comparing(SystemConfigListDb::getDisplayName)).collect(Collectors.toList());
+			systemConfigListDbs = systemConfigListDbs.stream()
+					.sorted(Comparator.comparing(SystemConfigListDb::getDisplayName)).collect(Collectors.toList());
 			return new GenricResponse(0, "Sucess", "", systemConfigListDbs);
 
 		} catch (Exception e) {
@@ -176,19 +177,17 @@ public class SystemConfigListServiceImpl {
 		}
 	}
 
-	public GenricResponse findById(FilterRequest filterRequest){
+	public GenricResponse findById(FilterRequest filterRequest) {
 		try {
-			if(Objects.isNull(filterRequest.getId())) {
-				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
+			if (Objects.isNull(filterRequest.getId())) {
+				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(),
 						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
 			User user = userRepository.getById(filterRequest.getUserId());
 
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), user.getUsername(),
-					Usertype.SYSTEM_ADMIN.getCode(), 
-					Usertype.SYSTEM_ADMIN.getName(),
-					0L, 
-					Features.CONFIG_LIST, SubFeatures.VIEW, ""));
+			auditTrailRepository
+					.save(new AuditTrail(filterRequest.getUserId(), user.getUsername(), Usertype.SYSTEM_ADMIN.getCode(),
+							Usertype.SYSTEM_ADMIN.getName(), 0L, Features.CONFIG_LIST, SubFeatures.VIEW, ""));
 			logger.info("AUDIT :  findById saved in audit_trail.");
 
 			SystemConfigListDb systemConfigListDb = systemConfigListRepository.getById(filterRequest.getId());
@@ -203,7 +202,8 @@ public class SystemConfigListServiceImpl {
 	public List<SystemConfigListDb> getAll(FilterRequest filterRequest) {
 
 		try {
-			List<SystemConfigListDb> systemConfigListDbs = systemConfigListRepository.findAll( buildSpecification(filterRequest).build());
+			List<SystemConfigListDb> systemConfigListDbs = systemConfigListRepository
+					.findAll(buildSpecification(filterRequest).build());
 
 			return systemConfigListDbs;
 
@@ -214,13 +214,22 @@ public class SystemConfigListServiceImpl {
 
 	}
 
-	public Page<SystemConfigListDb> filter(FilterRequest filterRequest, Integer pageNo, 
-			Integer pageSize) {
+	public Page<SystemConfigListDb> filter(FilterRequest filterRequest, Integer pageNo, Integer pageSize) {
 
 		try {
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			Page<SystemConfigListDb> page;
+			if ("-1".equals(filterRequest.getTag()) && filterRequest.getDisplayName().isEmpty()) {
+				page = systemConfigListRepository.findAll(pageable);
+				
+			}
+			else if("-1".equals(filterRequest.getTag()) && !filterRequest.getDisplayName().equals(null)) {
+				page = systemConfigListRepository.findAll(buildSpecification(filterRequest).build(), pageable);
+			}
+			else {
 
-			Page<SystemConfigListDb> page = systemConfigListRepository.findAll(buildSpecification(filterRequest).build(), pageable );
+				page = systemConfigListRepository.findAll(buildSpecification(filterRequest).build(), pageable);
+			}
 
 			return page;
 
@@ -234,43 +243,45 @@ public class SystemConfigListServiceImpl {
 	public FileDetails getFilteredAuditTrailInFile(FilterRequest filterRequest) {
 
 		logger.info("inside system configlist");
-		logger.info("filterRequest data:  "+filterRequest);
+		logger.info("filterRequest data:  " + filterRequest);
 		String fileName = null;
-		Writer writer   = null;
+		Writer writer = null;
 		SystemConfigListFileModel uPFm = null;
-		SystemConfigurationDb dowlonadDir=systemConfigurationDbRepository.getByTag("file.download-dir");
-		SystemConfigurationDb dowlonadLink=systemConfigurationDbRepository.getByTag("file.download-link");
-		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		SystemConfigurationDb dowlonadDir = systemConfigurationDbRepository.getByTag("file.download-dir");
+		SystemConfigurationDb dowlonadLink = systemConfigurationDbRepository.getByTag("file.download-link");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		Integer pageNo = 0;
 		Integer pageSize = Integer.valueOf(systemConfigurationDbRepository.getByTag("file.max-file-record").getValue());
-		String filePath  = dowlonadDir.getValue();
+		String filePath = dowlonadDir.getValue();
 		StatefulBeanToCsvBuilder<SystemConfigListFileModel> builder = null;
-		StatefulBeanToCsv<SystemConfigListFileModel> csvWriter      = null;
-		List<SystemConfigListFileModel> fileRecords       = null;
-		MappingStrategy<SystemConfigListFileModel> mapStrategy = new CustomMappingStrategy<>();	
-		
+		StatefulBeanToCsv<SystemConfigListFileModel> csvWriter = null;
+		List<SystemConfigListFileModel> fileRecords = null;
+		MappingStrategy<SystemConfigListFileModel> mapStrategy = new CustomMappingStrategy<>();
+
 		try {
-			
+
 			mapStrategy.setType(SystemConfigListFileModel.class);
 			List<SystemConfigListDb> list = filter(filterRequest, pageNo, pageSize).getContent();
-			
-			if( list.size()> 0 ) {
-				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_Field.csv";
-			}else {
-				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_Field.csv";
+
+			if (list.size() > 0) {
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Field.csv";
+			} else {
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_Field.csv";
 			}
-			logger.info(" file path plus file name: "+Paths.get(filePath+fileName));
-			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+			logger.info(" file path plus file name: " + Paths.get(filePath + fileName));
+			writer = Files.newBufferedWriter(Paths.get(filePath + fileName));
 //			builder = new StatefulBeanToCsvBuilder<UserProfileFileModel>(writer);
 //			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
 //			
 			builder = new StatefulBeanToCsvBuilder<>(writer);
-			csvWriter = builder.withMappingStrategy(mapStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+			csvWriter = builder.withMappingStrategy(mapStrategy).withSeparator(',')
+					.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
 
-			if( list.size() > 0 ) {
-				//List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag("GRIEVANCE_CATEGORY");
-				fileRecords = new ArrayList<SystemConfigListFileModel>(); 
-				for( SystemConfigListDb systemConfigListDb : list ) {
+			if (list.size() > 0) {
+				// List<SystemConfigListDb> systemConfigListDbs =
+				// configurationManagementServiceImpl.getSystemConfigListByTag("GRIEVANCE_CATEGORY");
+				fileRecords = new ArrayList<SystemConfigListFileModel>();
+				for (SystemConfigListDb systemConfigListDb : list) {
 					uPFm = new SystemConfigListFileModel();
 					uPFm.setCreatedOn(systemConfigListDb.getCreatedOn().format(dtf));
 					uPFm.setModifiedOn(systemConfigListDb.getModifiedOn().format(dtf));
@@ -278,30 +289,30 @@ public class SystemConfigListServiceImpl {
 					uPFm.setDisplayName(systemConfigListDb.getDisplayName());
 					uPFm.setFieldID(systemConfigListDb.getTagId());
 					uPFm.setDescription(systemConfigListDb.getDescription());
-					
+
 					fileRecords.add(uPFm);
 				}
 				csvWriter.write(fileRecords);
 			}
-			logger.info("fileName::"+fileName);
-			logger.info("filePath::::"+filePath);
-			logger.info("link:::"+dowlonadLink.getValue());
-			
-			
-			return new FileDetails(fileName, filePath,dowlonadLink.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+fileName ); 
-		
+			logger.info("fileName::" + fileName);
+			logger.info("filePath::::" + filePath);
+			logger.info("link:::" + dowlonadLink.getValue());
+
+			return new FileDetails(fileName, filePath,
+					dowlonadLink.getValue().replace("$LOCAL_IP", propertiesReader.localIp) + fileName);
+
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
-		}finally {
+		} finally {
 			try {
 
-				if( writer != null )
+				if (writer != null)
 					writer.close();
-			} catch (IOException e) {}
+			} catch (IOException e) {
+			}
 		}
 
-	
 		/*
 		 * String fileName = null; Writer writer = null; SystemConfigListFileModel
 		 * fileModel = null;
@@ -355,32 +366,42 @@ public class SystemConfigListServiceImpl {
 		 * (IOException e) {} }
 		 */}
 
-	private GenericSpecificationBuilder<SystemConfigListDb> buildSpecification(FilterRequest filterRequest){
-		GenericSpecificationBuilder<SystemConfigListDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
+	private GenericSpecificationBuilder<SystemConfigListDb> buildSpecification(FilterRequest filterRequest) {
+		GenericSpecificationBuilder<SystemConfigListDb> cmsb = new GenericSpecificationBuilder<>(
+				propertiesReader.dialect);
 
-		if(Objects.nonNull(filterRequest.getTag()))
+		if (Objects.nonNull(filterRequest.getTag()) && !"-1".equals(filterRequest.getTag())) {
 			cmsb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
+		}
 
-
-		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
-			cmsb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			cmsb.orSearch(new SearchCriteria("displayName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			cmsb.orSearch(new SearchCriteria("tag", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
-			cmsb.orSearch(new SearchCriteria("tagId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+		if (Objects.nonNull(filterRequest.getDisplayName()) && filterRequest.getDisplayName()!="") {
+			cmsb.with(new SearchCriteria("interp", filterRequest.getDisplayName(), SearchOperation.EQUALITY, Datatype.STRING));
+		}
+		
+	
+		if (Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()) {
+			cmsb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE,
+					Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("interp", filterRequest.getSearchString(), SearchOperation.LIKE,
+					Datatype.STRING));
+			cmsb.orSearch(
+					new SearchCriteria("tag", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			cmsb.orSearch(new SearchCriteria("tagId", filterRequest.getSearchString(), SearchOperation.LIKE,
+					Datatype.STRING));
 		}
 
 		return cmsb;
 	}
 
-	public GenricResponse deleteValue(FilterRequest filterRequest){
+	public GenricResponse deleteValue(FilterRequest filterRequest) {
 		try {
-			if(Objects.isNull(filterRequest.getUserId())) {
-				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
+			if (Objects.isNull(filterRequest.getUserId())) {
+				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(),
 						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
 			User user = userRepository.getById(filterRequest.getUserId());
 
-			auditTrailRepository.save(new AuditTrail(user.getId(), user.getUsername(), 0L, "System", 0L, 
+			auditTrailRepository.save(new AuditTrail(user.getId(), user.getUsername(), 0L, "System", 0L,
 					Features.CONFIG_LIST, SubFeatures.DELETE, ""));
 			logger.info("AUDIT : Delete Tags list saved in audit_trail.");
 
@@ -393,13 +414,14 @@ public class SystemConfigListServiceImpl {
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
 	}
-	
-	/*
-	private void setInterp(AuditTrail auditTrail) {
-		if(Objects.nonNull(consignmentMgmt.getExpectedArrivalPort()))
-			consignmentMgmt.setExpectedArrivalPortInterp(interpSetter.setConfigInterp(Tags.CUSTOMS_PORT, consignmentMgmt.getExpectedArrivalPort()));
 
-	}
+	/*
+	 * private void setInterp(AuditTrail auditTrail) {
+	 * if(Objects.nonNull(consignmentMgmt.getExpectedArrivalPort()))
+	 * consignmentMgmt.setExpectedArrivalPortInterp(interpSetter.setConfigInterp(
+	 * Tags.CUSTOMS_PORT, consignmentMgmt.getExpectedArrivalPort()));
+	 * 
+	 * }
 	 */
 
 }
