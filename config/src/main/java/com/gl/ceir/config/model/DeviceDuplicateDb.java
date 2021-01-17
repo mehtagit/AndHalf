@@ -30,6 +30,7 @@ public class DeviceDuplicateDb {
 	
 //	@JsonIgnore
 	@CreationTimestamp
+	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	@Column(nullable = false, updatable = false)
 	private Date createdOn;
@@ -46,7 +47,7 @@ public class DeviceDuplicateDb {
 	
 //	@JsonIgnore
 	@UpdateTimestamp
-//	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.DATE)
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date modifiedOn;    
 	
@@ -61,7 +62,7 @@ public class DeviceDuplicateDb {
 	@Column(length = 50)
 	private String updateFilename; 
 	
-	private Date failedRuleDate; 
+//	private Date failedRuleDate;
 	
 	@Column(length = 10)
 	private String tac;
@@ -191,13 +192,13 @@ public class DeviceDuplicateDb {
 		this.updateFilename = updateFilename;
 	}
 
-	public Date getFailedRuleDate() {
+	/*public Date getFailedRuleDate() {
 		return failedRuleDate;
 	}
 
 	public void setFailedRuleDate(Date failedRuleDate) {
 		this.failedRuleDate = failedRuleDate;
-	}
+	}*/
 
 	public String getTac() {
 		return tac;
@@ -213,7 +214,7 @@ public class DeviceDuplicateDb {
 				+ ", mobileOperator=" + mobileOperator + ", period=" + period + ", action=" + action + ", failedRuleId="
 				+ failedRuleId + ", failedRuleName=" + failedRuleName + ", imsi=" + imsi + ", modifiedOn=" + modifiedOn
 				+ ", recordType=" + recordType + ", systemType=" + systemType + ", createFilename=" + createFilename
-				+ ", updateFilename=" + updateFilename + ", failedRuleDate=" + failedRuleDate + ", tac=" + tac + "]";
+				+ ", updateFilename=" + updateFilename + ", tac=" + tac + "]";
 	}
 	
 }
