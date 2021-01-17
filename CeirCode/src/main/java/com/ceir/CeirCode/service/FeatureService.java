@@ -10,9 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
 import com.ceir.CeirCode.model.PeriodValidate;
+import com.ceir.CeirCode.model.RequestHeaders;
 import com.ceir.CeirCode.model.StakeholderFeature;
 import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.User;
+import com.ceir.CeirCode.model.UserLogin;
 import com.ceir.CeirCode.model.UserToStakehoderfeatureMapping;
 import com.ceir.CeirCode.model.Usertype;
 import com.ceir.CeirCode.model.constants.Period;
@@ -20,6 +22,7 @@ import com.ceir.CeirCode.repo.FeatureRepo;
 import com.ceir.CeirCode.repo.UserRepo;
 import com.ceir.CeirCode.repo.UserRoleRepo;
 import com.ceir.CeirCode.repo.UserToStakehoderfeatureMappingRepo;
+import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
 import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
 import com.ceir.CeirCode.repoService.UserFeatureRepoService;
 import com.ceir.CeirCode.response.GenricResponse;
@@ -50,10 +53,27 @@ public class FeatureService {
 	@Autowired
 	FeatureRepo featureRepo;
 	
+	@Autowired
+	ReqHeaderRepoService headerService;
+	@Autowired
+	UserService userService;
+	
+	
 	public ResponseEntity<?> featureData(Integer userId){
 		try {  
+			
 			log.info("user id is: "+userId);
 			User userData=userRepo.findById(userId);
+			/*
+			 * UserLogin userLogin
+			 * RequestHeaders header=new
+			 * RequestHeaders(userLogin.getUserAgent(),userLogin.getPublicIp(),userData.
+			 * getUsername(),userLogin.getBrowser());
+			 * 
+			 * headerService.saveRequestHeader(header); userService.saveUserTrail(userData,
+			 * "User Management","Login",41);
+			 * 
+			 */
 			List<StakeholderFeature> featureList=new ArrayList<StakeholderFeature>();
 			Usertype usertypeData=userData.getUsertype();
 			SystemConfigurationDb systemConfigData=systemConfigurationDbRepoImpl.getDataByTag("GRACE_PERIOD_END_DATE");

@@ -24,8 +24,14 @@ public interface UserRepo extends JpaRepository<User, Long> ,JpaSpecificationExe
 	public List<User> findByUsertype_IdAndCurrentStatus(long usertypeId,Integer status); 	
 	public List<User> findByUsertype_IdAndCurrentStatusAndUserProfile_ArrivalPortAndUserProfile_PortAddress(long usertypeId,Integer status,Integer port,Integer address); 	
 	
+	
 	@Transactional
 	@Modifying
 	@Query(value="update users  set current_Status = :currentStatus ,previous_status = :previousStatus where username = :username",nativeQuery = true)
 	public int setStatusForUser(int currentStatus, int previousStatus,String username);
+	
+	@Transactional
+	@Modifying
+	@Query(value="update users  set current_Status = :currentStatus ,previous_status = :previousStatus where id = :id",nativeQuery = true)
+	public int setStatusForUser(int currentStatus, int previousStatus,long id);
 }

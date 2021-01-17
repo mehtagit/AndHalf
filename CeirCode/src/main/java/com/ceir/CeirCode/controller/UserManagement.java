@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.ceir.CeirCode.filtermodel.UserMgmtFilter;
 import com.ceir.CeirCode.model.AllRequest;
+import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.PortAddress;
 import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.UserDetails;
@@ -62,10 +63,17 @@ public class UserManagement {
 	@PostMapping("/view") 
 	public MappingJacksonValue view(@RequestBody UserMgmtFilter filter,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
-			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize){
+			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
+			@RequestParam(value = "file", defaultValue = "0") Integer file){
 		MappingJacksonValue mapping = null;
-		Page<User> userData  = userService.viewAllRecord(filter, pageNo, pageSize);
+		if(file == 0) {
+		Page<User> userData  = userService.viewAllRecord(filter, pageNo, pageSize,"view");
 		mapping = new MappingJacksonValue(userData);
+		}
+		else {
+			FileDetails fileDetails = userService.getFile(filter);
+			mapping = new MappingJacksonValue(fileDetails);
+		}
 		return mapping;		
 	}
 

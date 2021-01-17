@@ -1,4 +1,5 @@
 package com.ceir.CeirCode.model;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -30,13 +31,13 @@ public class Usertype {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	@CreationTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date createdOn;
+	private LocalDateTime createdOn;
 	
 	@Column(nullable =false)
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
 	@UpdateTimestamp
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private Date modifiedOn;
+	private LocalDateTime modifiedOn;
 
 	@NotAudited
 	@JsonIgnore 
@@ -66,18 +67,7 @@ public class Usertype {
 	public long getId() {
 		return id; 
 	}
-	public Date getCreatedOn() {
-		return createdOn;
-	}
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
-	public Date getModifiedOn() {
-		return modifiedOn;
-	}  
-	public void setModifiedOn(Date modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+	
 	public String getUsertypeName() {
 		return usertypeName;
 	}
@@ -142,6 +132,23 @@ public class Usertype {
 		this.id = id;
 		this.usertypeName = usertypeName;
 	}
+
+	public LocalDateTime getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(LocalDateTime createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public LocalDateTime getModifiedOn() {
+		return modifiedOn;
+	}
+
+	public void setModifiedOn(LocalDateTime modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -170,4 +177,5 @@ public class Usertype {
 		builder.append("]");
 		return builder.toString();
 	}
+	
 }

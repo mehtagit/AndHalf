@@ -1,5 +1,13 @@
 package com.ceir.CeirCode.service;
 
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.slf4j.Logger;
@@ -17,10 +25,18 @@ import com.ceir.CeirCode.Constants.Datatype;
 import com.ceir.CeirCode.Constants.SearchOperation;
 import com.ceir.CeirCode.SpecificationBuilder.GenericSpecificationBuilder;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
+import com.ceir.CeirCode.exceptions.ResourceServicesException;
+import com.ceir.CeirCode.filemodel.ExchangeRateFile;
+import com.ceir.CeirCode.filemodel.UserFeatureFile;
+import com.ceir.CeirCode.filtermodel.CurrencyFilter;
 import com.ceir.CeirCode.filtermodel.UserTypeFeatureFilter;
 import com.ceir.CeirCode.filtermodel.UsertypeFilter;
+import com.ceir.CeirCode.model.Currency;
+import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.RequestHeaders;
 import com.ceir.CeirCode.model.SearchCriteria;
+import com.ceir.CeirCode.model.SystemConfigListDb;
+import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.UserToStakehoderfeatureMapping;
 import com.ceir.CeirCode.model.Usertype;
 import com.ceir.CeirCode.model.constants.Features;
@@ -28,12 +44,21 @@ import com.ceir.CeirCode.model.constants.SubFeatures;
 import com.ceir.CeirCode.othermodel.ChangePeriod;
 import com.ceir.CeirCode.othermodel.ChangeUsertypeStatus;
 import com.ceir.CeirCode.repo.FeatureRepo;
+import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
+import com.ceir.CeirCode.repo.SystemConfigDbRepository;
 import com.ceir.CeirCode.repo.UserToStakehoderfeatureMappingRepo;
 import com.ceir.CeirCode.repo.UsertypeRepo;
 import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
+import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
+import com.ceir.CeirCode.repoService.SystemConfigurationDbRepoService;
 import com.ceir.CeirCode.response.tags.UserTypeFeatureTags;
 import com.ceir.CeirCode.response.tags.UsertypeTags;
+import com.ceir.CeirCode.util.CustomMappingStrategy;
 import com.ceir.CeirCode.util.HttpResponse;
+import com.opencsv.CSVWriter;
+import com.opencsv.bean.MappingStrategy;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
 @Service
 public class UserTypeFeatureService {
@@ -55,7 +80,18 @@ public class UserTypeFeatureService {
 
 	@Autowired
 	UserService userService;
-
+	
+	@Autowired
+	SystemConfigurationDbRepoService systemConfigDbRepoService;
+	
+	@Autowired
+	SystemConfigDbRepoService systemConfigurationDbRepoImpl;
+	
+	@Autowired
+	SystemConfigDbListRepository systemConfigRepo;
+	
+	@Autowired
+	SystemConfigDbRepository systemConfigDbRepository;
 	
 	public Page<UserToStakehoderfeatureMapping>  viewAllUserTypeFeatures(UserTypeFeatureFilter filterRequest, Integer pageNo, Integer pageSize){
 		try { 
@@ -139,5 +175,84 @@ public class UserTypeFeatureService {
 			log.info("response send"+response);
 			return new ResponseEntity<>(response,HttpStatus.OK);	
 		}
+	}
+	
+	public FileDetails getFile(UserTypeFeatureFilter filter) {
+		log.info("inside export user Type Feature service");
+		log.info("filter data:  "+filter);
+		String fileName = null;
+		Writer writer   = null;
+		UserFeatureFile uPFm = null;
+		SystemConfigurationDb dowlonadDir=systemConfigurationDbRepoImpl.getDataByTag("file.download-dir");
+		SystemConfigurationDb dowlonadLink=systemConfigurationDbRepoImpl.getDataByTag("file.download-link");
+		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		Integer pageNo = 0;
+		Integer pageSize = Integer.valueOf(systemConfigDbRepository.findByTag("file.max-file-record").getValue());
+		String filePath  = dowlonadDir.getValue();
+		StatefulBeanToCsvBuilder<UserFeatureFile> builder = null;
+		StatefulBeanToCsv<UserFeatureFile> csvWriter      = null;
+		List<UserFeatureFile> fileRecords       = null;
+		MappingStrategy<UserFeatureFile> mapStrategy = new CustomMappingStrategy<>();
+		
+		
+		try {
+			mapStrategy.setType(UserFeatureFile.class);
+			List<SystemConfigListDb> periodList=systemConfigRepo.getByTag("Period");
+			List<UserToStakehoderfeatureMapping> list = viewAllUserTypeFeatures(filter, pageNo, pageSize).getContent();
+			for(UserToStakehoderfeatureMapping feature:list) {
+			feature.setUsertypeInterp(feature.getUserTypeFeature().getUsertypeName());
+			feature.setFeatureInterp(feature.getStakeholderFeature().getName());
+			for(SystemConfigListDb data:periodList) {
+			Integer value=data.getValue();
+			if(feature.getPeriod()==value) {
+			feature.setPeriodInterp(data.getInterp());
+			}
+			}
+			}
+		
+
+			if( list.size()> 0 ) {
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_CustomPort.csv";
+			}else {
+				fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_CustomPort.csv";
+			}
+			log.info(" file path plus file name: "+Paths.get(filePath+fileName));
+			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+//			builder = new StatefulBeanToCsvBuilder<UserProfileFileModel>(writer);
+//			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+//			
+			builder = new StatefulBeanToCsvBuilder<>(writer);
+			csvWriter = builder.withMappingStrategy(mapStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+
+			if( list.size() > 0 ) {
+				//List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag("GRIEVANCE_CATEGORY");
+				fileRecords = new ArrayList<UserFeatureFile>(); 
+				for( UserToStakehoderfeatureMapping userfeature : list ) {
+					uPFm = new UserFeatureFile();
+					uPFm.setCreatedOn(userfeature.getCreatedOn().format(dtf));
+					uPFm.setModifiedOn(userfeature.getModifiedOn().format(dtf));
+					uPFm.setUsertypeInterp(userfeature.getUsertypeInterp());
+					uPFm.setFeatureInterp(userfeature.getFeatureInterp());
+					uPFm.setPeriodInterp(userfeature.getPeriodInterp());
+					fileRecords.add(uPFm);
+				}
+				csvWriter.write(fileRecords);
+			}
+			log.info("fileName::"+fileName);
+			log.info("filePath::::"+filePath);
+			log.info("link:::"+dowlonadLink.getValue());
+			return new FileDetails(fileName, filePath,dowlonadLink.getValue().replace("$LOCAL_IP",propertiesReader.localIp)+fileName ); 
+		
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			try {
+
+				if( writer != null )
+					writer.close();
+			} catch (IOException e) {}
+		}
+
 	}
 }
