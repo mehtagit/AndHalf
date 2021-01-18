@@ -90,13 +90,7 @@ public class LoginService {
 	public LoginResponse checkLogin(User user,HttpSession session,HttpServletRequest request) {
 		log.info("check login controller ");
 		log.info("session time from properties file."+propertyReader.sessionLogOutTime);
-		UserHeader header=registerService.getUserHeaders(request);
-		user.setUserAgent(header.getUserAgent());
-		user.setPublicIp(header.getPublicIp());
-		user.setBrowser(header.getBrowser());
-		log.info("user data:  "+user);
-        log.info("user agent=  "+user.getUserAgent() +" public ip of user: "+user.getPublicIp()+" browser :"+header.getBrowser());		
-		String validCaptcha=(String)session.getAttribute("captcha_security");
+				String validCaptcha=(String)session.getAttribute("captcha_security");
 		log.info("captcha from session:  "+validCaptcha); 
 		if(user.getCaptcha().equals(validCaptcha)) {
 			Integer userid = (Integer)session.getAttribute("userid");
@@ -303,6 +297,18 @@ public class LoginService {
 		LoginResponse response=userLoginFeignImpl.searchUserDetailFeign(userStatus);
 		log.info(" response searchUserDetail :  "+response);
 		return response;
+	}
+
+	public LoginResponse ipLogInformation(User user, HttpSession session, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		UserHeader header=registerService.getUserHeaders(request);
+		user.setUserAgent(header.getUserAgent());
+		user.setPublicIp(header.getPublicIp());
+		user.setBrowser(header.getBrowser());
+		log.info("user data:  "+user);
+        log.info("user agent=  "+user.getUserAgent() +" public ip of user: "+user.getPublicIp()+" browser :"+header.getBrowser());		
+        return userLoginFeignImpl.ipLog(user);
+		
 	} 
 	
 }

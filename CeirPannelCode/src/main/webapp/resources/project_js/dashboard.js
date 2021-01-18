@@ -61,31 +61,39 @@ $(document)
 
 					$("#manualDownload").attr(
 							"onclick",
-							"openPDF('./Consignment/ManualFileDownload?userTypeId="+userTypeID+"')");
+							"openPDF('./Consignment/ManualFileDownload?userTypeId="
+									+ userTypeID + "')");
 
 					$(window).scrollTop(0);
-					
+
 					$.i18n().locale = langParameter;
 
 					$.i18n().load({
 
 						'en' : './resources/i18n/en.json',
 						'km' : './resources/i18n/km.json'
-					}).done(function() {
-						var state = $("body").attr("data-user-state");
-						if (state == '3') {
-							$('#userState').text(""+$.i18n('state')+" : Enabled");
+					}).done(
+							function() {
+								var state = $("body").attr("data-user-state");
+								if (state == '3') {
+									$('#userState')
+											.text(
+													"" + $.i18n('state')
+															+ " : Enabled");
 
-						}
+								}
 
-						else if (state == '5') {
-							$('#userState').text(""+$.i18n('state')+" : Disabled");
+								else if (state == '5') {
+									$('#userState').text(
+											"" + $.i18n('state')
+													+ " : Disabled");
 
-						}
+								}
 
+							});
+					saveIPLog();
 					});
-					});
-					
+
 // var password = document.getElementById("password");
 // var confirm_password = document.getElementById("confirm_password");
 
@@ -256,3 +264,42 @@ function InvalidRadioMsg(type) {
 	}
 	return false;
 }
+
+
+
+function saveIPLog() {
+	var obj = {
+			username : $("body").attr("data-selected-username"),
+			password : "",
+			captcha : ""
+		}
+
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+
+	if(sessionStorage.getItem("isSessionActive") == "Y"){
+		$.ajaxSetup({
+			headers : {
+				'X-CSRF-TOKEN' : token
+			}
+		});
+
+		$.ajax({
+			type : 'POST',
+			url : contextpath + '/ipLogInfo',
+			contentType : "application/json",
+			data : JSON.stringify(obj),
+			success : function(data) {
+				// console.log("successfully saved");
+				
+			},
+			error : function(xhr, ajaxOptions, thrownError) {
+
+			}
+		});
+	}
+	
+	sessionStorage.removeItem("isSessionActive");	
+}
+
+

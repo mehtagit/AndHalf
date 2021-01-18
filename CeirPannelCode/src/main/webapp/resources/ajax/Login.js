@@ -147,7 +147,9 @@ function login(){
 			var resp=JSON.parse(data);
 			if(resp.statusCode=='200'){
 			//	$('div#initialloader').delay(300).fadeOut('slow');
+				sessionStorage.setItem("isSessionActive","Y");
 				window.location.href="./?lang="+resp.userLanguage;
+				
 			}
 			else if(resp.statusCode=='401'){
 				$("#userId").val(resp.userId);

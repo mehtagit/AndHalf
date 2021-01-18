@@ -60,7 +60,8 @@ public class RegistrationService {
 	GenerateRandomDigits randomDigits;
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
-
+	 UserAgentService userAgentService = new UserAgentService();
+	 UserAgentParser parser;
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	public String registrationView(String usertype,Model model,HttpSession session) {
@@ -507,13 +508,16 @@ public class RegistrationService {
 
 	public UserHeader getUserHeaders(HttpServletRequest request) {
 		
-		UserAgentParser parser = null;
+	
 		try {
-			parser = new UserAgentService().loadParser(Arrays.asList(BrowsCapField.BROWSER, BrowsCapField.BROWSER_TYPE,
-			        BrowsCapField.BROWSER_MAJOR_VERSION,
-			        BrowsCapField.DEVICE_TYPE, BrowsCapField.PLATFORM, BrowsCapField.PLATFORM_VERSION,
-			        BrowsCapField.RENDERING_ENGINE_VERSION, BrowsCapField.RENDERING_ENGINE_NAME,
-			        BrowsCapField.PLATFORM_MAKER, BrowsCapField.RENDERING_ENGINE_MAKER));
+			parser = userAgentService.loadParser();
+			/*
+			 * Arrays.asList(BrowsCapField.BROWSER, BrowsCapField.BROWSER_TYPE,
+			 * BrowsCapField.BROWSER_MAJOR_VERSION, BrowsCapField.DEVICE_TYPE,
+			 * BrowsCapField.PLATFORM, BrowsCapField.PLATFORM_VERSION,
+			 * BrowsCapField.RENDERING_ENGINE_VERSION, BrowsCapField.RENDERING_ENGINE_NAME,
+			 * BrowsCapField.PLATFORM_MAKER, BrowsCapField.RENDERING_ENGINE_MAKER)
+			 */
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
