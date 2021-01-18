@@ -114,7 +114,14 @@ function viewIndivisualStolen()
 			$('#singleStolennIDPassportNumber').val(response.stolenIndividualUserDB.nid);
 			$('#singleStolenemail').val(response.stolenIndividualUserDB.email);
 			$('#nationality').val(response.stolenIndividualUserDB.nationality);
+			
 			$('#addressType').val(response.stolenIndividualUserDB.addressType).change();
+			if($('#pageViewType').val()=="view"){
+				$(".star").css("display", "none");
+				 
+				$("#SingleForm").find("input,textarea,button,select").prop(
+						"disabled", true);
+			}
 			if(response.stolenIndividualUserDB.email=="" || response.stolenIndividualUserDB.email==null){
 				$('#singleStolenemail').val('NA');
 			}

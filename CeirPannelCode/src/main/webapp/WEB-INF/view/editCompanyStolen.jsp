@@ -645,8 +645,8 @@
 												pattern="[a-zA-Z ]{1,20}" title="" 
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-												maxlength="20" required="required">
-												<label for="lastName"><spring:message code="input.lastName" /> <span class="star">*</span></label>
+												maxlength="20" >
+												<label for="lastName"><spring:message code="input.lastName" /> <span class="star"></span></label>
 											</div>
 
 											<div class="input-field col s12 m6">
@@ -754,7 +754,7 @@
 										</select>
 											</div>
 											
-											<div class="input-field col s12 m6 l6">
+											<div class="input-field col s12 m6 l6" style="margin-top: 23px;">
 												<input type="text" name="streetNumber" placeholder=""
 													class="form-control boxBorder boxHeight"
 													id="deviceBulkStolenstreetNumber"  pattern="[a-zA-Z0-9\s,'*$-]{0,20}" title=""
@@ -813,7 +813,7 @@
 											</div>
 											
 											<div class="col s12 m6 l6"
-												style="margin-top: 5px;">
+												style="margin-top: 5px;    margin-left: 1px;">
 												<label for="devicequantity" class="active" id="deviceQuantityLabel"> <spring:message
 														code="input.devicequantity" /><span class="star"> *</span></label>
 												<input type="text" name="devicequantity"
@@ -1122,8 +1122,8 @@
    $("#firFilePreview").css("display", "block");
    $("#uploadFirSingle").css("display", "none");
 	$("#editRecoverySampleFile").css("display", "none");
-	   $("#Bulkform").find("input,textarea,button").prop("disabled",true);
-	   $("#Bulkform").find("select").attr("style", "pointer-events: none;");
+	   $("#Bulkform").find("input,textarea,button,select").prop("disabled",true);
+	   //$("#Bulkform").find("select").attr("style", "pointer-events: none;");
 	   $("#deviceBulkStolenFile").css("display", "none");
 	   $("#dviceFileText").css("display", "none");
 	   $("#companyStolenButton").css("display", "none");

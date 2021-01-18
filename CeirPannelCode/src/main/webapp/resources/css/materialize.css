@@ -10665,7 +10665,7 @@ select.browser-default {
 }
 
 select:disabled {
-	color: rgba(0, 0, 0, 0.3);
+	color: rgba(0, 0, 0, 0.78);
 	border-bottom: 1px dotted rgba(0, 0, 0, 0.26);
 	padding-left: 5px;
 }

@@ -164,7 +164,7 @@ overflow: hidden;
   left: 1px;
   right: auto; }
 .select2-container--default.select2-container--disabled .select2-selection--single {
-  background-color: #eee;
+  background-color: #fff;;
   cursor: default; }
   .select2-container--default.select2-container--disabled .select2-selection--single .select2-selection__clear {
     display: none; }
@@ -440,7 +440,7 @@ overflow: hidden;
 span.select2-selection.select2-selection--single {
     background-color: rgb(255, 255, 255);
     height: 38px !important;
-    border-bottom: 1px solid rgb(158, 158, 158);
+    border-bottom: 1px solid rgb(226, 220, 220);
     border-radius: 0px;
     outline: none !important;
 }

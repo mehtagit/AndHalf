@@ -265,8 +265,8 @@ select {
 
 													<div class="col s6 m6 " style="margin-top: 4px;">
 														<label for="sigleRecoverydeviceIDType"><spring:message
-																code="select.deviceIDType" /> <!-- <span class="star">
-																*</span> --></label> <select id="sigleRecoverydeviceIDType"
+																code="select.deviceIDType" />  <span class="star">
+																*</span></label>  <select id="sigleRecoverydeviceIDType" required="required"
 															class="browser-default"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
@@ -336,7 +336,7 @@ select {
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															maxlength="16" id="sigleRecoveryimeiNumber1" /> <label
 															for="sigleRecoveryimeiNumber1"><spring:message
-																code="registration.one" /> <span class="star"> * </span></label>
+																code="registration.one" /><span class="star"> *</span></label>
 													</div>
 													</div>
 													<div id="IMEIndContact2" style="display: none">
