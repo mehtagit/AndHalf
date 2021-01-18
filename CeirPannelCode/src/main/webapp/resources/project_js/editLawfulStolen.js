@@ -183,7 +183,7 @@ function viewIndivisualStolen()
 			$('#singleStolendistrict').val(response.stolenIndividualUserDB.district).change();
 			$('#singleStolencommune').val(response.stolenIndividualUserDB.commune).change();
 			$('#singleStolenpin').val(response.stolenIndividualUserDB.postalCode);
-		
+			$('#sigleStolenserialNumber').val(response.stolenIndividualUserDB.deviceSerialNumber);
 			if(isNaN(response.stolenIndividualUserDB.deviceBrandName)){
 				$("label[for='OtherBrandNameLabel']").addClass('active');
 				$('#editsingleStolendeviceBrandName').val("930").change();
@@ -256,6 +256,9 @@ function viewIndivisualStolen()
 			$('#singleDeviceRemark').val(response.stolenIndividualUserDB.remark);
 			if(response.stolenIndividualUserDB.remark=="" || response.stolenIndividualUserDB.remark==null){
 				$('#singleDeviceRemark').val("NA");	
+			}
+			if(response.stolenIndividualUserDB.deviceSerialNumber=="" || response.stolenIndividualUserDB.deviceSerialNumber==null){
+				$('#sigleStolenserialNumber').val("NA");	
 			}
 			$('#IndivisualStolenDate').val(response.dateOfStolen);
 			
@@ -397,7 +400,7 @@ function updateIndivisualStolen()
 	var state=$('#state').val();
 	var blockingTimePeriod=$('#stolenDatePeriodedit').val();
 	var blockingType =$('.blocktypeRadio:checked').val();
-
+	var sigleStolenserialNumber=$('#sigleStolenserialNumber').val();
 
 	var singleStolendeviceBrandName=$('#editsingleStolendeviceBrandName').val();
 	
@@ -614,7 +617,8 @@ $('div#initialloader').delay(300).fadeOut('slow');
 			"village":singleStolenvillage,
 			"nidFileName":indivisualStolenfileName,
 			"addressType":addressType,
-			"nationality":nationality
+			"nationality":nationality,
+			"deviceSerialNumber":sigleStolenserialNumber
 
 	}
 	var request={

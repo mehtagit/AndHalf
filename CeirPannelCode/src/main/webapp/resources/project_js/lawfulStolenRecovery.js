@@ -633,6 +633,7 @@ function saveIndivisualStolenRequest(){
 	var singleStolendistrict=$('#singleStolendistrict').val();
 	var singleStolencommune=$('#singleStolencommune').val();
 	var singleStolenpin=$('#singleStolenpin').val();
+	var sigleStolenserialNumber=$('#sigleStolenserialNumber').val();
 	var country=$('#country').val();
 	var state=$('#state').val();
 	var blockingTimePeriod=$('#stolenDatePeriod').val();
@@ -843,7 +844,8 @@ $('div#initialloader').delay(300).fadeOut('slow');
 			"village":singleStolenvillage,
 			"nidFileName":uploadedFileName,
 			"addressType":addressType,
-			"nationality":nationality
+			"nationality":nationality,
+			"deviceSerialNumber":sigleStolenserialNumber,
 	}
 
 

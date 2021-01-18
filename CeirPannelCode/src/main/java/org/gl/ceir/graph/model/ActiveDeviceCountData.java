@@ -23,12 +23,12 @@ public class ActiveDeviceCountData {
 	@SerializedName("Total Paired IMEI")
 	private String totalPairedIMEI;
 	
-	@JsonProperty("Approved TAC")
-	@SerializedName("Approved TAC")
+	@JsonProperty("GSMA Approved TAC Count")
+	@SerializedName("GSMA Approved TAC Count")
 	private String approvedTAC;
 	
-	@JsonProperty("Rejected TAC")
-	@SerializedName("Rejected TAC")
+	@JsonProperty("GSMA Rejected TAC Count")
+	@SerializedName("GSMA Rejected TAC Count")
 	private String rejectedTAC;
 	
 	@JsonProperty("Total GSMA BlackList Count")
@@ -65,12 +65,12 @@ public class ActiveDeviceCountData {
   	
   	
      
-  	@JsonProperty("Total Model Count")
-  	@SerializedName("Total Model Count")
+  	@JsonProperty("Total Device Model Count")
+  	@SerializedName("Total Device Model Count")
   	private String totalModelCount;
   	
-  	@JsonProperty("Total Brand Count")
-  	@SerializedName("Total Brand Count")
+  	@JsonProperty("Total Device Brand Count")
+  	@SerializedName("Total Device Brand Count")
   	private String totalBrandCount;
 
 	public String getDate() {

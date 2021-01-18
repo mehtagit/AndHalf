@@ -629,6 +629,19 @@
 	
 															</select>
 														</div>
+														
+														<div class="input-field col s12 m6"
+														style="margin-top: 22px;">
+														<input type="text" name="sigleStolenserialNumber"
+															id="sigleStolenserialNumber"
+															pattern="[a-zA-Z0-9]{0,25}"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+															maxlength="25"> <label
+															for="sigleStolenserialNumber"><spring:message
+																code="input.deviceSerialNumber" /></label>
+													</div>
+														
 														</div>
 															<div id="IMEIndContact1" style="display: none">
 														
