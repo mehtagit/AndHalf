@@ -256,3 +256,42 @@ function InvalidRadioMsg(type) {
 	}
 	return false;
 }
+
+
+function saveIPLog() {
+	var obj = {
+			username : $("body").attr("data-selected-username"),
+			password : "",
+			captcha : ""
+		}
+
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+
+	if(sessionStorage.getItem("isSessionActive") == "Y"){
+		$.ajaxSetup({
+			headers : {
+				'X-CSRF-TOKEN' : token
+			}
+		});
+
+		$.ajax({
+			type : 'POST',
+			url : contextpath + '/ipLogInfo',
+			contentType : "application/json",
+			data : JSON.stringify(obj),
+			success : function(data) {
+				// console.log("successfully saved");
+				
+			},
+			error : function(xhr, ajaxOptions, thrownError) {
+
+			}
+		});
+	}
+	
+	sessionStorage.removeItem("isSessionActive");	
+}
+
+
+

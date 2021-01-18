@@ -199,7 +199,11 @@ function MostStolenGraph(response,id,chartType,chartTitle)
 		                   scaleLabel: {
 		                       display: true,
 		                       labelString: 'Date'
-		                     }
+		                     },
+		                     ticks: {
+		                    	 autoSkip: true,
+		                    	 maxTicksLimit: 24
+		                    	 }
 		                }],
 		                yAxes: [{
 		                   gridLines: {
@@ -208,7 +212,11 @@ function MostStolenGraph(response,id,chartType,chartTitle)
 		                   scaleLabel: {
 		                       display: true,
 		                       labelString: 'Device Count'
-		                     }
+		                     },
+		                     ticks: {
+		                    	 beginAtZero: true, 
+		                    	 stepSize:1 // this worked as expected 
+		                    	 }
 		                }]
 		             }           
 		             

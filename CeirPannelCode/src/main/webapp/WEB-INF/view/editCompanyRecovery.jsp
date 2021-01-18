@@ -467,8 +467,8 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     <div class="input-field col s12 m6 l6" style="margin-left:1px;">
                                                         <input type="text" name="bulkRecoverylocality" class="form-control boxBorder boxHeight" placeholder=""
                                                             id="bulkRecoverylocality" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
-                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
                                                              maxlength="30">
                                                         <label for="bulkRecoverylocality"> <spring:message code="input.locality" /><span class="star"></span></label>
                                                     </div>

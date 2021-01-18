@@ -341,7 +341,7 @@ display: none !important;
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Grievance Status Wise Graph</h6>
-                   <div> <a id="expGrievanceStatus">Export</a> | 
+                   <div> <a href="javascript:void(0);" id="expGrievanceStatus">Export</a> | 
                       <a id="grievanceBarImg" download="state_Wise_Grievance.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
@@ -360,7 +360,7 @@ display: none !important;
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Grievance User Wise Graph</h6>
-              	<div> <a id="expUserStatus">Export</a> | 
+              	<div> <a href="javascript:void(0);" id="expUserStatus">Export</a> | 
                       <a id="grievanceUserImg" download="User_Wise_Grievance.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
@@ -378,7 +378,7 @@ display: none !important;
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Consignment Status Wise Graph</h6>
-                 <div> <a id="expConsignmentStatus">Export</a> | 
+                 <div> <a href="javascript:void(0);" id="expConsignmentStatus">Export</a> | 
                       <a id="consignmentStatusImg" download="state_Wise_Consignment.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
@@ -397,7 +397,7 @@ display: none !important;
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Stock Status Wise Graph</h6>
-              <div> <a id="expStockStatus">Export</a> | 
+              <div> <a href="javascript:void(0);" id="expStockStatus">Export</a> | 
                       <a id="stockStatusImg" download="state_Wise_Stock.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->

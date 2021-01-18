@@ -595,11 +595,11 @@ input[type='search'] {
 														<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star"></span>
 														</label> 
 														<c:choose>
-												<c:when test = "${viewInformation.multiSimStatusInterp=='' || viewInformation.multiSimStatusInterp==null}">
+												<c:when test = "${viewInformation.multiSimStatus=='' || viewInformation.multiSimStatus==null}">
 														<input type="text" value="NA" readonly="readonly">
 														</c:when>
 														<c:otherwise>
-														<input type="text" value="${viewInformation.multiSimStatusInterp}" readonly="readonly">
+														<input type="text" value="${viewInformation.multiSimStatus}" readonly="readonly">
 														</c:otherwise>
 														</c:choose>
 													</div>

@@ -31,6 +31,10 @@ public interface UserLoginFeignImpl {
 	@PostMapping("/Login/checkUser") 
 	public LoginResponse checkUser(User user);
 	
+	@PostMapping("/Login/ipLog") 
+	public LoginResponse ipLog(User user);
+	
+	
 	@PostMapping("/Login/changeLanguage") 
 	public HttpResponse changeUserLanguage(ChangeLanguage language);
 	  
