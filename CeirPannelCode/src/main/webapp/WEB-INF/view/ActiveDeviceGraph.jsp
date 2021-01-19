@@ -364,7 +364,7 @@ th {
                             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Equipment Types Devices</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">Equipment Type Graph</h6>
               <div> <a href="javascript:void(0);" id="expLineBar">Export</a> | 
                       <a id="lineBarImage" download="Type_Register_Device.jpg">Download</a></div>
                 </div>

@@ -286,7 +286,7 @@ $("#calender").css("display", "none");
 			$("label[for='updatesingleStolenimei2']").addClass('active');
 			$("label[for='updatesingleStolenimei3']").addClass('active');
 			$("label[for='updatesingleStolenimei4']").addClass('active');
-
+			$("label[for='sigleStolenserialNumber']").addClass('active');
 			$('#PassportNidLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.stolenIndividualUserDB.nidFileName+'","'+response.txnId+'")');
 			$('#firImageLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.firFileName+'","'+response.txnId+'")');
 			$('#uploadFirSingleName').val(response.firFileName);
