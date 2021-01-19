@@ -256,7 +256,7 @@ public class SystemConfigListServiceImpl {
 		StatefulBeanToCsvBuilder<SystemConfigListFileModel> builder = null;
 		StatefulBeanToCsv<SystemConfigListFileModel> csvWriter = null;
 		List<SystemConfigListFileModel> fileRecords = null;
-		MappingStrategy<SystemConfigListFileModel> mapStrategy = new CustomMappingStrategy<>();
+		CustomMappingStrategy<SystemConfigListFileModel> mapStrategy = new CustomMappingStrategy<>();
 
 		try {
 
@@ -274,9 +274,10 @@ public class SystemConfigListServiceImpl {
 //			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
 //			
 			builder = new StatefulBeanToCsvBuilder<>(writer);
+			
 			csvWriter = builder.withMappingStrategy(mapStrategy).withSeparator(',')
-					.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
-
+					.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+			
 			if (list.size() > 0) {
 				// List<SystemConfigListDb> systemConfigListDbs =
 				// configurationManagementServiceImpl.getSystemConfigListByTag("GRIEVANCE_CATEGORY");

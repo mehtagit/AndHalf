@@ -732,8 +732,8 @@ public class ConfigurationManagementServiceImpl {
 
 			builder = new StatefulBeanToCsvBuilder<>(writer);
 			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',')
-					.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
-
+					.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+			
 			if (!systemConfigurationDBList.isEmpty()) {
 				fileRecords = new ArrayList<>();
 				for (SystemConfigurationDb systemConfigurationDB : systemConfigurationDBList) {
