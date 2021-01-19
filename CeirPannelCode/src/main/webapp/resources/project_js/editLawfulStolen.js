@@ -114,7 +114,14 @@ function viewIndivisualStolen()
 			$('#singleStolennIDPassportNumber').val(response.stolenIndividualUserDB.nid);
 			$('#singleStolenemail').val(response.stolenIndividualUserDB.email);
 			$('#nationality').val(response.stolenIndividualUserDB.nationality);
+			
 			$('#addressType').val(response.stolenIndividualUserDB.addressType).change();
+			if($('#pageViewType').val()=="view"){
+				$(".star").css("display", "none");
+				 
+				$("#SingleForm").find("input,textarea,button,select").prop(
+						"disabled", true);
+			}
 			if(response.stolenIndividualUserDB.email=="" || response.stolenIndividualUserDB.email==null){
 				$('#singleStolenemail').val('NA');
 			}
@@ -176,7 +183,7 @@ function viewIndivisualStolen()
 			$('#singleStolendistrict').val(response.stolenIndividualUserDB.district).change();
 			$('#singleStolencommune').val(response.stolenIndividualUserDB.commune).change();
 			$('#singleStolenpin').val(response.stolenIndividualUserDB.postalCode);
-		
+			$('#sigleStolenserialNumber').val(response.stolenIndividualUserDB.deviceSerialNumber);
 			if(isNaN(response.stolenIndividualUserDB.deviceBrandName)){
 				$("label[for='OtherBrandNameLabel']").addClass('active');
 				$('#editsingleStolendeviceBrandName').val("930").change();
@@ -250,6 +257,9 @@ function viewIndivisualStolen()
 			if(response.stolenIndividualUserDB.remark=="" || response.stolenIndividualUserDB.remark==null){
 				$('#singleDeviceRemark').val("NA");	
 			}
+			if(response.stolenIndividualUserDB.deviceSerialNumber=="" || response.stolenIndividualUserDB.deviceSerialNumber==null){
+				$('#sigleStolenserialNumber').val("NA");	
+			}
 			$('#IndivisualStolenDate').val(response.dateOfStolen);
 			
 			$("#singleDeviceRejectRemark").val(response.rejectedRemark);
@@ -276,7 +286,7 @@ $("#calender").css("display", "none");
 			$("label[for='updatesingleStolenimei2']").addClass('active');
 			$("label[for='updatesingleStolenimei3']").addClass('active');
 			$("label[for='updatesingleStolenimei4']").addClass('active');
-
+			$("label[for='sigleStolenserialNumber']").addClass('active');
 			$('#PassportNidLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.stolenIndividualUserDB.nidFileName+'","'+response.txnId+'")');
 			$('#firImageLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.firFileName+'","'+response.txnId+'")');
 			$('#uploadFirSingleName').val(response.firFileName);
@@ -390,7 +400,7 @@ function updateIndivisualStolen()
 	var state=$('#state').val();
 	var blockingTimePeriod=$('#stolenDatePeriodedit').val();
 	var blockingType =$('.blocktypeRadio:checked').val();
-
+	var sigleStolenserialNumber=$('#sigleStolenserialNumber').val();
 
 	var singleStolendeviceBrandName=$('#editsingleStolendeviceBrandName').val();
 	
@@ -607,7 +617,8 @@ $('div#initialloader').delay(300).fadeOut('slow');
 			"village":singleStolenvillage,
 			"nidFileName":indivisualStolenfileName,
 			"addressType":addressType,
-			"nationality":nationality
+			"nationality":nationality,
+			"deviceSerialNumber":sigleStolenserialNumber
 
 	}
 	var request={
@@ -784,7 +795,7 @@ function viewPageType() {
 		
    		
    		$("#singleDeviceRejectRemarkDiv").css("display", "block");
-		$("#SingleForm").find("input,textarea,button").prop(
+		$("#SingleForm").find("input,textarea,button,select").prop(
 				"disabled", true);
 		//$("#SingleForm").find("select").attr("style", "pointer-events: none;");
 		

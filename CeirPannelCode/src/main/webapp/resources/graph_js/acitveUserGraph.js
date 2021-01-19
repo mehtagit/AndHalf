@@ -22,8 +22,8 @@ function activeDeviceGraph() {
 		if(reportnameId == 31){
 			graphRequest={
 					"columns": [
-						"Approved TAC",
-						"Rejected TAC"
+						"GSMA Approved TAC Count",
+						"GSMA Rejected TAC Count"
 						],
 						"reportnameId": reportnameId,
 						"lastDate": true,

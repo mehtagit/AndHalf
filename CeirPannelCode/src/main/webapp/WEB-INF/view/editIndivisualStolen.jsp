@@ -487,6 +487,7 @@ select {
 													</div>
 
 													<div>
+													<div class="row">
 														<div class="col s12 m6">
 															<%-- <input type="text" name="deviceBrandName" placeholder=""
 																id="singleStolendeviceBrandName"
@@ -541,6 +542,8 @@ select {
 																code="registration.devicebrandname" /> <span class=" star"> *</span>
 														</label>
 													</div>
+													</div>
+													<div class="row">
 														<div class="col s12 m6 ">
 															<label for="deviceType"><spring:message
 																	code="select.deviceType" /></label> <select
@@ -564,6 +567,20 @@ select {
 																</option>
 
 															</select>
+														</div>
+														
+														<div class="input-field col s12 m6"
+														style="margin-top: 22px;">
+														<input type="text" name="sigleStolenserialNumber"
+															id="sigleStolenserialNumber"
+															pattern="[a-zA-Z0-9]{0,25}"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+															maxlength="25"> <label
+															for="sigleStolenserialNumber"><spring:message
+																code="input.deviceSerialNumber" /></label>
+													</div>
+														
 														</div>
 														
 														

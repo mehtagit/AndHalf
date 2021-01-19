@@ -180,6 +180,50 @@
 			</form>
 		</div>
 	</div>
+	
+	
+	<div id="viewModel" class="modal">
+		<h6 class="modal-header"><spring:message code="modal.ViewRuleList" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<div class="row">
+			
+				<div class="input-field col s12 m6">
+						<input type="text" name="viewName" id="viewName"
+							placeholder="" 	oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+readonly="readonly" > <label for="totalPrice" class="center-align"><spring:message
+								code="table.name" /></label>
+					</div>
+
+
+
+
+					<div class="input-field col s12 m6">
+					<textarea id="viewDescription" class="materialize-textarea" Placeholder="" readonly="readonly"   maxlength="200" style="padding-top: 8px !important;"></textarea>
+					<label for="viewDescription" class=""><spring:message code="registration.description" /></label>
+
+					</div>
+
+					<div class="input-field col s12 m6">
+						<p style="margin-top: -15px; margin-bottom: -3px; font-size: 12px;"><spring:message code="table.state" /></p>
+						
+								<input type="text" name="viewState" id="viewState"
+							placeholder="" 	oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+					 readonly="readonly" >
+							
+							
+					</div>
+				</div>
+
+
+				<div class="row input_fields_wrap">
+				<div class="row input_fields_wrap">
+					<div class="col s12 m12 center" style="margin-top: 10px;">
+					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.close" /></button>
+				</div>
+
+	</div></div></div></div></div>
+	
 		
 		
 				<div id="updateFieldsSuccess" class="modal">

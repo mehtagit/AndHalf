@@ -157,8 +157,8 @@
                                                             </div>
                                         
                                                             <div class="col s12 m6">
-                                                                <label for="blockmultipleSimStatus"><spring:message code="registration.selectMultiplestLawfull" /></label>
-                                                                <select class="browser-default" id="blockmultipleSimStatus" onchange="setContactIMEINumber('blockmultipleSimStatus','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
+                                                                <label for="blockmultipleSimStatus"><spring:message code="registration.selectMultiplestLawfull" /> <span class="star">*</span></label>
+                                                                <select class="browser-default" required="required" id="blockmultipleSimStatus" onchange="setContactIMEINumber('blockmultipleSimStatus','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
                                                                  oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                                  oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
                                                                     <option value=""  selected><spring:message code="operator.multiplestatus" /></option>

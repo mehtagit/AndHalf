@@ -265,8 +265,8 @@ select {
 
 													<div class="col s6 m6 " style="margin-top: 4px;">
 														<label for="sigleRecoverydeviceIDType"><spring:message
-																code="select.deviceIDType" /> <!-- <span class="star">
-																*</span> --></label> <select id="sigleRecoverydeviceIDType"
+																code="select.deviceIDType" />  <span class="star">
+																*</span></label>  <select id="sigleRecoverydeviceIDType" required="required"
 															class="browser-default"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
@@ -299,8 +299,8 @@ select {
 
 													<div class="col s6 m6 ">
 														<label for="sigleRecoverydeviceSimStatus"> <spring:message
-																code="select.multiSimStatus" /></label> <select
-															id="sigleRecoverydeviceSimStatus" class="browser-default"
+																code="select.multiSimStatus" /><span class=" star"> *</span></label> <select
+															id="sigleRecoverydeviceSimStatus" class="browser-default" required="required"
 															onchange="setContactIMEINumber('sigleRecoverydeviceSimStatus','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
@@ -330,13 +330,13 @@ select {
 														</h6>
 													</div>
 													<div class="input-field col s12 m6">
-														<input type="text" name="sigleRecoveryimeiNumber1"
+														<input type="text" name="sigleRecoveryimeiNumber1" required="required"
 															pattern="[0-9]{15,16}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															maxlength="16" id="sigleRecoveryimeiNumber1" /> <label
 															for="sigleRecoveryimeiNumber1"><spring:message
-																code="registration.one" /> <span class="star"> </span></label>
+																code="registration.one" /><span class="star"> *</span></label>
 													</div>
 													</div>
 													<div id="IMEIndContact2" style="display: none">

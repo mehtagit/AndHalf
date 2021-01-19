@@ -305,7 +305,7 @@ data-roleType="${usertype}" >
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
-        <div> <a id="exp">Export</a> | 
+        <div> <a id="exp" href="javascript:void(0);" >Export</a> | 
                       <a id="pieImage" download="User_login_report.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
@@ -324,7 +324,7 @@ data-roleType="${usertype}" >
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">User Login Graph</h6>
-              <div> <a id="expLineBar">Export</a> | 
+              <div> <a id="expLineBar" href="javascript:void(0);">Export</a> | 
                       <a id="lineBarImage" download="Use_login_graph.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->

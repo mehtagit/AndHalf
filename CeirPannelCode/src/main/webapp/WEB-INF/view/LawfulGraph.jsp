@@ -307,7 +307,7 @@ display: none !important;
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary"> Lost/Stolen Device Trend</h6>
-              <div> <a id="expLostStolenGraph">Export</a> | 
+              <div> <a href="javascript:void(0);" id="expLostStolenGraph">Export</a> | 
                       <a id="lostStolenGraphImage" download="Lost/Stolen_Device.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
@@ -327,7 +327,7 @@ display: none !important;
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Most Stolen Brand</h6>
-              <div> <a id="expTop5StolenGraph">Export</a> | 
+              <div> <a href="javascript:void(0);" id="expTop5StolenGraph">Export</a> | 
                       <a id="Top5StolenGraphImage" download="Top5Stolen_Device.jpg">Download</a></div>
                 </div>
                

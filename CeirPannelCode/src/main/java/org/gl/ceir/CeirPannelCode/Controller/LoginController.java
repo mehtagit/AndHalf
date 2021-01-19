@@ -43,6 +43,13 @@ public class LoginController {
 	
 	
 	@ResponseBody
+	@RequestMapping(value = "/ipLogInfo",method = {RequestMethod.POST})
+	public LoginResponse ipLogInfo(@RequestBody User user,HttpSession session,HttpServletRequest request){
+			return loginService.ipLogInformation(user,session,request);
+	}
+	
+	
+	@ResponseBody
 	@RequestMapping(value = "/changeLanguage/{lang}",method = {RequestMethod.POST})
 	public HttpResponse changeLanguage(@PathVariable("lang")String lang,HttpSession session){
 		    

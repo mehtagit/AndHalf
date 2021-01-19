@@ -2882,7 +2882,8 @@ public class IconsState {
 		executePostConstruct();
 
 		String editAction= "getDetailBy('"+id+"','"+output+"')";
-
+		String viewAction="viewByID('"+id+"','"+output+"')"; 
+		
 		// state related Code 
 
 
@@ -2890,8 +2891,10 @@ public class IconsState {
 				+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
 
-		String action=edit;
+		String action=view.concat(edit);
 		return action;
 
 	}

@@ -327,7 +327,8 @@ function graph(response,id,chartType,chartTitle)
 	                   scaleLabel: {
 	                       display: true,
 	                       labelString: 'Date'
-	                     }
+	                     } 
+	                    
 	                }],
 	                yAxes: [{
 	                   gridLines: {
@@ -336,7 +337,10 @@ function graph(response,id,chartType,chartTitle)
 	                   scaleLabel: {
 	                       display: true,
 	                       labelString: 'IMEI Count'
-	                     }
+	                     },
+	                     ticks: {
+	                    	  beginAtZero: true,precision:0
+	                       }
 	                }]
 	             }           
 	             
@@ -644,7 +648,9 @@ function blockIMEIgraph(response,id,chartType,chartTitle,pieLabelName,GraphImage
     	                display: true,
     	                labelString: 'Count'
     	              },
-    	            
+    	              ticks: {
+    	                  precision: 0
+    	                },
     	            gridLines: { display: false },
     	            }],
     	          yAxes: [{ 

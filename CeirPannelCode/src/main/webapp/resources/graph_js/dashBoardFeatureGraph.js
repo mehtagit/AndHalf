@@ -227,8 +227,7 @@ function graph(response,id,chartType,chartTitle,pieLabelName,GraphImageId,GraphE
     	            
     	            gridLines: { display: false },
     	            ticks: {
-    	                autoSkip: true,
-    	                maxTicksLimit: 3
+    	                precision: 0
     	              }
     	            }],
     	          yAxes: [{ 
@@ -278,7 +277,7 @@ function setLabelByID(featureId,userTypeId){
 
 function UserTypeList(){
 	var userTypeList=[];
-	$.getJSON('./registrationUserType?type=1', function(data) {
+	$.getJSON('./registrationUserType', function(data) {
 		for (i = 0; i < data.length; i++) {
 			userTypeList.push(data[i].usertypeName);
 		}

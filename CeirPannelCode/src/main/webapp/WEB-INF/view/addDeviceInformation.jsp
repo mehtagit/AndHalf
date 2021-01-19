@@ -226,8 +226,8 @@ input[type='search'] {
 													</div>
 
 													<div class="col s12 m6">
-														<label for="multipleSimStatus1"><spring:message code="registration.selectMultiplestLawfull" /><span class="star">*</span>
-														</label> <select class="browser-default" required="required" onchange="setContactIMEINumber('multipleSimStatus1','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
+														<label for="multipleSimStatus1"><spring:message code="registration.selectMultiplestLawfull" /><span class="star"></span>
+														</label> <select class="browser-default"  required="required" onchange="setContactIMEINumber('multipleSimStatus1','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
 														oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 											        oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															id="multipleSimStatus1">

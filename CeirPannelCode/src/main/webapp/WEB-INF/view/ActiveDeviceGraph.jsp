@@ -348,7 +348,7 @@ th {
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary" id="">TAC Graph</h6>
-                 <div> <a id="exportDeviceReport">Export</a> | 
+                 <div> <a href="javascript:void(0);" id="exportDeviceReport">Export</a> | 
                       <a id="DeviceReport" download="TAC_Graph.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
@@ -364,8 +364,8 @@ th {
                             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Types of Registered Devices</h6>
-              <div> <a id="expLineBar">Export</a> | 
+                  <h6 class="m-0 font-weight-bold text-primary">Equipment Type Graph</h6>
+              <div> <a href="javascript:void(0);" id="expLineBar">Export</a> | 
                       <a id="lineBarImage" download="Type_Register_Device.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
@@ -394,7 +394,7 @@ th {
 <!-- Card Header - Dropdown -->
 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 <h6 class="m-0 font-weight-bold text-primary" id="">Top 5 Brands</h6>
- <div> <a id="exportBrandReport">Export</a> | 
+ <div> <a href="javascript:void(0);" id="exportBrandReport">Export</a> | 
                       <a id="Top5BrandName" download="Top5BrandName.jpg">Download</a></div>
 </div>
 <!-- Card Body -->
@@ -411,7 +411,7 @@ th {
 <!-- Card Header - Dropdown -->
 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 <h6 class="m-0 font-weight-bold text-primary" id="">Top 5 Models </h6>
-<div> <a id="exportModelReport">Export</a> | 
+<div> <a href="javascript:void(0);" id="exportModelReport">Export</a> | 
                       <a id="Top5ModelName" download="Top5ModelName.jpg">Download</a></div>
 </div>
 <!-- Card Body -->
