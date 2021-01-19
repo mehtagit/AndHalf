@@ -155,7 +155,7 @@ public class FieldDatatableController {
 
 		// input type date list
 		String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
-				Translator.toLocale("input.endDate"), "endDate", "" };
+				Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("table.displayName"),"displayName",""};
 		for (int i = 0; i < dateParam.length; i++) {
 			dateRelatedFields = new InputFields();
 			dateRelatedFields.setType(dateParam[i]);

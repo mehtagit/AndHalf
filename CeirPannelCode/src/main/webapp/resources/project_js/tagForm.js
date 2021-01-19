@@ -13,15 +13,17 @@
 
 	
 	
-	function hide() {
+	function hide(flag) {
 		var tagId = $('#tagId').val();
 		
 		if(tagId.length == 0){
-			//////console.log("please field input");
+			window.location.replace("./fieldManagement?via=other&action="+flag+"&tagId="+tagId);
+			
 		}else{
 			//sessionStorage.setItem("roleType",roleType);
 		sessionStorage.setItem("tagId", tagId);
-		window.location.replace("./fieldManagement?via=other&tagId="+tagId);
+		window.location.replace("./fieldManagement?via=other&action="+flag+"&tagId="+tagId);
+		
 		}
 	}
 	

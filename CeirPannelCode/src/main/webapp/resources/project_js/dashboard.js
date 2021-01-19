@@ -35,25 +35,16 @@ var intialController = sessionStorage.getItem("currentPageLocation") == null ? u
 $(document)
 		.ready(
 				function() {
-
-					// var DB_LANG_VALUE= sessionStorage.getItem("sessionLang")
-					// == null ? window.parent.$("body").attr("data-lang") :
-					// sessionStorage.getItem("sessionLang");
+					
 					$("#section")
 							.append(
 									" <iframe name='mainArea' class='embed-responsive-item' id='mainArea' frameBorder='0' src="
 											+ intialController
 											+ " width='100%' onLoad='self.scrollTo(0,5)'></iframe>");
-					// window.parent.$("body").attr("data-lang", DB_LANG_VALUE);
 					var url = new URL(window.location.href);
-					/* sessionStorage.getItem("sessionLang") */
-					// var langParameter = url.searchParams.get("lang")== (null
-					// || 'null') ? 'en' : url.searchParams.get("lang");
-					var langParameter = url.searchParams.get("lang") == 'km' ? 'km'
-							: 'en';
-
+					var langParameter = url.searchParams.get("lang") == 'km' ? 'km' : 'en';
+					saveIPLog();
 					window.parent.$('#langlist').val(langParameter);
-					// dataByTag("copyright_footer","copyrightText",2);
 					sessionStorage.removeItem("currentPageLocation");
 					$('div#initialloader').delay(300).fadeOut('slow');
 					isActive(featurID);
