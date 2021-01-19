@@ -19,10 +19,10 @@ function LawfulGraph() {
 			graphRequest={
 					"columns": [
 						  "Date",
-					      "Stolen Count",
-					      "Recoverd Count",
-					      "Blocked Count",
-					      "Pending Count"
+					      "Stolen IMEI Count",
+					      "Recovered IMEI Count",
+					      "Blocked IMEI Count",
+					      "Pending IMEI Count"
 						],
 						"reportnameId": reportnameId,
 						"lastDate": false,
@@ -138,28 +138,28 @@ function MostStolenGraph(response,id,chartType,chartTitle)
 		      data: {
 		        labels: date,
 		        datasets: [{
-		            label: "Stolen Count",
+		            label: "Stolen IMEI Count",
 		            borderColor:  '#006400',
 		            data: StolenCount,
 		            fill: false
 		            
 		        },
 		        {
-		            label: "Recoverd Count",
+		            label: "Recovered IMEI Count",
 		            borderColor: 'rgb(70, 191, 189)',
 		            data: RecoverdCount,
 		            fill: false
 		            
 		        },
 		        {
-		            label: "Blocked Count",
+		            label: "Blocked IMEI Count",
 		            borderColor: '#D32F2F',
 		            data: BlockedCount,
 		            fill: false
 		            
 		        },
 		        {
-		            label: "Pending Count",
+		            label: "Pending IMEI Count",
 		            borderColor:  '#FFA000',
 		            data: PendingCount,
 		            fill: false
