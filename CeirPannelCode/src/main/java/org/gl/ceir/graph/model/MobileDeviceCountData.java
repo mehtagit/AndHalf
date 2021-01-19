@@ -12,12 +12,12 @@ public class MobileDeviceCountData {
 	private String date;
 	
 	
-	@JsonProperty("Total Smartphone")
-	@SerializedName("Total Smartphone")
+	@JsonProperty("Total Smartphone IMEI Count")
+	@SerializedName("Total Smartphone IMEI Count")
 	private String totalSmartPhone;
 	
-	@JsonProperty("Total Feature phone")
-	@SerializedName("Total Feature phone")
+	@JsonProperty("Total Featurephone IMEI Count")
+	@SerializedName("Total Featurephone IMEI Count")
 	private String totalFeaturePhone;
 
 	public String getDate() {

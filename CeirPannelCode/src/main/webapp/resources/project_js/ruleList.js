@@ -316,16 +316,9 @@
 				});
 				}		
 					
+		
 			
-			
-			
-			
-			
-			
-			
-			
-			function viewByID(id,output){
-				
+			function viewByID(id,output){			
 				window.xid=id;
 				window.xoutput=output;
 				var token = $("meta[name='_csrf']").attr("content");

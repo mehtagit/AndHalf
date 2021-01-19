@@ -309,7 +309,7 @@ th {
                                <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                 <h6 class="m-0 font-weight-bold text-primary">Blocked IMEI Graph</h6>
+                 <h6 class="m-0 font-weight-bold text-primary">Operator Wise Blocked IMEI Graph</h6>
                  <div> <a href="javascript:void(0);" id="expblockedIMEI">Export</a> | 
                       <a id="blockedIMEIImg" download="Blocked_IMEI.jpg">Download</a></div>
                 </div>

@@ -10,16 +10,16 @@ public class LawfulDeviceCountData {
 	  @SerializedName("Date")
 	  private String date;
 	
-      @JsonProperty("Total Stolen IMEI")
-  	  @SerializedName("Total Stolen IMEI")
+      @JsonProperty("Total Stolen IMEI Count")
+  	  @SerializedName("Total Stolen IMEI Count")
       private String stolenIMEI;
       
-      @JsonProperty("Total Lost IMEI")
-      @SerializedName("Total Lost IMEI")
+      @JsonProperty("Total Lost IMEI Count")
+      @SerializedName("Total Lost IMEI Count")
       private String lostIMEI;
       
-      @JsonProperty("Total Recoverd IMEI")
-      @SerializedName("Total Recoverd IMEI")
+      @JsonProperty("Total Recoverd IMEI Count")
+      @SerializedName("Total Recoverd IMEI Count")
       private String recoveredIMEI;
 
 	public String getDate() {
