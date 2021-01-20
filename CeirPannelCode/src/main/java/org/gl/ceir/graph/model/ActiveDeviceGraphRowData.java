@@ -7,9 +7,9 @@ import com.google.gson.annotations.SerializedName;
 
 @Component
 public class ActiveDeviceGraphRowData {
-	@SerializedName("Approved TAC")
+	@SerializedName("GSMA Approved TAC Count")
 	private String approvedTAC;
-	@SerializedName("Rejected TAC")
+	@SerializedName("GSMA Rejected TAC Count")
 	private String rejectedTAC;
 	
 	
