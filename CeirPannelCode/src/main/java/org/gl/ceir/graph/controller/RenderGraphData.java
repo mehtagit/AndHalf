@@ -232,18 +232,24 @@ public class RenderGraphData {
 				stockContentReport = gson.fromJson(apiResponse, StockContentReport.class);
 				log.info(":::::: Stock model graphResponseModel:::::::" + brandModelGrapContent);
 				StockModelGrapContent paginationContentList = stockContentReport.getContent();
-				List<StockModelRowData> reverseList = paginationContentList.getRowData();
-				Collections.sort(reverseList, Comparator.comparing(StockModelRowData::getDate));
-				paginationContentList.setRowData(reverseList);
+				/*
+				 * List<StockModelRowData> reverseList = paginationContentList.getRowData();
+				 * Collections.sort(reverseList,
+				 * Comparator.comparing(StockModelRowData::getDate));
+				 * paginationContentList.setRowData(reverseList);
+				 */
 				log.info(":::::: Stock model paginationContentList:::::::" + paginationContentList);
 				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
 			} else if (featureFlag.equals("Consignment")) {
 				consignmentContent = gson.fromJson(apiResponse, ConsignmentContent.class);
 				log.info(":::::: Consignment model graphResponseModel:::::::" + brandModelGrapContent);
 				ConsignmentModelGrapContent paginationContentList = consignmentContent.getContent();
-				List<ConsignmentModelRowData> reverseList = paginationContentList.getRowData();
-				Collections.sort(reverseList, Comparator.comparing(ConsignmentModelRowData::getDate));
-				paginationContentList.setRowData(reverseList);
+				/*
+				 * List<ConsignmentModelRowData> reverseList =
+				 * paginationContentList.getRowData(); Collections.sort(reverseList,
+				 * Comparator.comparing(ConsignmentModelRowData::getDate));
+				 * paginationContentList.setRowData(reverseList);
+				 */
 				log.info(":::::: Consignment model paginationContentList:::::::" + paginationContentList);
 				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
 			}
@@ -252,18 +258,24 @@ public class RenderGraphData {
 				grievanceContent = gson.fromJson(apiResponse, GrievanceContent.class);
 				log.info(":::::: Grievance model graphResponseModel:::::::" + brandModelGrapContent);
 				GrievanceGrapContent paginationContentList = grievanceContent.getContent();
-				List<GrievanceModelRowData> reverseList = paginationContentList.getRowData();
-				Collections.sort(reverseList, Comparator.comparing(GrievanceModelRowData::getDate));
-				paginationContentList.setRowData(reverseList);
+				/*
+				 * List<GrievanceModelRowData> reverseList = paginationContentList.getRowData();
+				 * Collections.sort(reverseList,
+				 * Comparator.comparing(GrievanceModelRowData::getDate));
+				 * paginationContentList.setRowData(reverseList);
+				 */
 				log.info(":::::: Grievance model paginationContentList:::::::" + paginationContentList);
 				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
 			} else if (featureFlag.equals("UserType")) {
 				grievanceUserTypeContent = gson.fromJson(apiResponse, GrievanceUserType.class);
 				log.info(":::::: Grievance user model graphResponseModel:::::::" + grievanceUserTypeContent);
 				GrievanceUserTypeModelGrapContent paginationContentList = grievanceUserTypeContent.getContent();
-				List<GrievanceUserTpeModelRowData> reverseList = paginationContentList.getRowData();
-				Collections.sort(reverseList, Comparator.comparing(GrievanceUserTpeModelRowData::getDate));
-				paginationContentList.setRowData(reverseList);
+				/*
+				 * List<GrievanceUserTpeModelRowData> reverseList =
+				 * paginationContentList.getRowData(); Collections.sort(reverseList,
+				 * Comparator.comparing(GrievanceUserTpeModelRowData::getDate));
+				 * paginationContentList.setRowData(reverseList);
+				 */
 				log.info(":::::: Grievance user model paginationContentList:::::::" + paginationContentList);
 				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);
 			} else if (featureFlag.equals("BlocedkIMEI")) {
@@ -271,9 +283,12 @@ public class RenderGraphData {
 				log.info(":::::: blockIMEIContent user model graphResponseModel:::::::" + blockIMEIContent);
 				BlockIMEIGraph paginationContentList = blockIMEIContent.getContent();
 				
-				List<BlockIMEIRowData> reverseList = paginationContentList.getRowData();
-				Collections.sort(reverseList, Comparator.comparing(BlockIMEIRowData::getDate));
-				paginationContentList.setRowData(reverseList);			
+				/*
+				 * List<BlockIMEIRowData> reverseList = paginationContentList.getRowData();
+				 * Collections.sort(reverseList,
+				 * Comparator.comparing(BlockIMEIRowData::getDate));
+				 * paginationContentList.setRowData(reverseList);
+				 */		
 				
 				log.info(":::::: blockIMEIContent user model paginationContentList:::::::" + paginationContentList);
 				return new ResponseEntity<>(paginationContentList, HttpStatus.OK);

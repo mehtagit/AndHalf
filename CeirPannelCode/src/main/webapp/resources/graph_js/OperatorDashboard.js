@@ -24,7 +24,7 @@ function activeDeviceGraph() {
 					 "columns": [
 						    "Date",
 						    "Operator Name",
-						    "Total IMEI"
+						    "Total IMEI Count"
 						  ],
 						  "groupBy": "Operator Name",
 						  "reportnameId": 29,
@@ -45,7 +45,7 @@ function activeDeviceGraph() {
 					"columns": [
 						"Date",
 						"Operator Name",
-						"Total IMEI"
+						  "Total IMEI Count"
 						],
 						 "lastDate": true,
 						  "file" : 0, 
