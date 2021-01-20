@@ -311,7 +311,7 @@ $.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
 
 	}
 });
-$.getJSON('./getDropdownList/LAWFULL_SIM_STATUS', function(data) {
+$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
 		.appendTo('#multipleSimStatus1');
