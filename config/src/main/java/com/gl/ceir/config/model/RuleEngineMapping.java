@@ -18,6 +18,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.gl.ceir.config.model.constants.RulesNames;
 
 import io.swagger.annotations.ApiModel;
@@ -25,6 +27,10 @@ import io.swagger.annotations.ApiModel;
 @ApiModel
 @Entity
 @Audited
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id"
+)
 public class RuleEngineMapping implements Serializable {
 	/**
 	 * 
