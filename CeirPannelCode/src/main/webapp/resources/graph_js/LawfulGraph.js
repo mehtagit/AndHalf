@@ -115,10 +115,11 @@ function MostStolenGraph(response,id,chartType,chartTitle)
 		for(var i=0;i<response['rowData'].length;i++){
 			noOfUsers.push(response['rowData'][i]['Number of user logged']);
 		   	 date.push(response['rowData'][i]['Date']);
-		   	BlockedCount.push(response['rowData'][i]['Blocked Count']);
-			PendingCount.push(response['rowData'][i]['Pending Count']);
-			RecoverdCount.push(response['rowData'][i]['Recoverd Count']);
-			StolenCount.push(response['rowData'][i]['Stolen Count']);
+		   	BlockedCount.push(response['rowData'][i]['Blocked IMEI Count']);
+			PendingCount.push(response['rowData'][i]['Pending IMEI Count']);
+			RecoverdCount.push(response['rowData'][i]['Recovered IMEI Count']);
+			StolenCount.push(response['rowData'][i]['Stolen IMEI Count']);
+			
 		    }
 	    if( chartType == 'line'){
 	    	
