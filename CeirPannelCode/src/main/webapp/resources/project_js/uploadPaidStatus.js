@@ -959,7 +959,7 @@ function submitDeviceInfo(){
 			var IMEI4=$('#IMEID'+fieldId).val();
 			var deviceCountry=$('#country'+fieldId).val();
 			var multipleSimStatus1=$('#multipleSimStatus'+fieldId).val();
-
+			var singleDeviceRemark=$('#singleDeviceRemark').val();	
 
 		var deviceInfo=
 		{
@@ -977,6 +977,7 @@ function submitDeviceInfo(){
 				"price": parseFloat(Price1),
 				"taxPaidStatus": parseInt(taxStatus1),
 				"nid":nationalId,
+				"deviceRemark":singleDeviceRemark,
 				"origin":roleType
 
 		}

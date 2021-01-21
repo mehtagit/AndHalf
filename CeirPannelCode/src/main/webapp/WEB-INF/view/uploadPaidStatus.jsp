@@ -771,6 +771,14 @@ position: fixed;
 
 															</select>
 														</div>
+														<div class="input-field col s12 m12">
+															<textarea id="singleDeviceRemark"
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																maxlength="10000" class="materialize-textarea"></textarea>
+															<label for="textarea1"> <spring:message
+																	code="input.remarksLawfull" /></label>
+														</div>
 													</div>
 												</div>
 												<div class="row">
