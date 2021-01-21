@@ -992,7 +992,7 @@ function submitEndUserDeviceInfo(){
 		var taxStatus1=$('#taxStatus'+fieldId).val();
 		var Price1=$('#Price'+fieldId).val();
 		var Currency1=$('#Currency'+fieldId).val();
-
+		var singleDeviceRemark=$('#singleDeviceRemark').val();	
 
 
 
@@ -1012,6 +1012,7 @@ function submitEndUserDeviceInfo(){
 				"origin":"Self",
 				"currency": parseInt(Currency1),
 				"price": parseFloat(Price1),
+				"deviceRemark":singleDeviceRemark,
 				"taxPaidStatus": parseInt(taxStatus1)
 
 		}

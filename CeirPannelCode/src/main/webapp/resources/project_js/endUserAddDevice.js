@@ -90,7 +90,7 @@ function submitDeviceInfo(){
 				var deviceCountry=$('#country'+fieldId).val();
 				var multipleSimStatus1=$('#multipleSimStatus1'+fieldId).val();
 			////console.log("serialNumber1="+serialNumber1+" deviceIdType1="+deviceIdType1+" taxStatus1="+taxStatus1+" deviceStatus1="+deviceStatus1+" Price1="+Price1+" Currency1="+Currency1)
-			
+				var singleDeviceRemark=$('#singleDeviceRemark').val();	
 			var deviceInfo=
 			{
 				      "country": deviceCountry,
@@ -108,6 +108,7 @@ function submitDeviceInfo(){
 				      "taxPaidStatus": parseInt(taxStatus1),
 				      "nid":nationalID,
 				      "txnId":"",
+				  	"deviceRemark":singleDeviceRemark,
 				      "origin":"Self"
 			}
 			regularizeDeviceDbs.push(deviceInfo);  
