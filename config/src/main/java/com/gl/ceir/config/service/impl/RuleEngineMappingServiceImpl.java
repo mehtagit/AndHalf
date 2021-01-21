@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,14 +21,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.EmailSender.EmailUtil;
-import com.gl.ceir.config.audit.AuditTrailMethods;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.RuleEngine;
 import com.gl.ceir.config.model.RuleEngineMapping;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.SystemConfigurationDb;
@@ -103,13 +102,30 @@ public class RuleEngineMappingServiceImpl {
 
 	public GenricResponse save(RuleEngineMapping ruleEngineMapping){
 		try {
-
+			Optional<RuleEngineMapping> rule =Optional.ofNullable( ruleEngineMappingRepository.findByNameAndFeatureAndUserTypeAndRuleOrder(ruleEngineMapping.getName(),ruleEngineMapping.getFeature(),ruleEngineMapping.getUserType(),ruleEngineMapping.getRuleOrder()));
+			
+			if(ruleEngineMapping.getRuleOrder() == null) {
+			Optional<RuleEngineMapping> object =Optional.ofNullable( ruleEngineMappingRepository.findByNameAndFeatureAndUserType(ruleEngineMapping.getName(),ruleEngineMapping.getFeature(),ruleEngineMapping.getUserType()));
+			if(object.isPresent()) {
+				return new GenricResponse(409, "COMBINATION_NOT_ALLOWED","Combination of Rule name, UserType and feature already exist", "");
+			}
+			}
+			
+			else if(rule.isPresent()) {
+				return new GenricResponse(409, "ORDER_NOT_ALLOWED","The order value already exists for this combination of rule name, user type and feature name", "");
+				
+			}
+			
+			else{
 			ruleEngineMappingRepository.save(ruleEngineMapping);
 			return new GenricResponse(0);
+			}
+			
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
 		}
+		return null;
 	}
 
 	public GenricResponse deleteById(RuleEngineMapping ruleEngineMapping){

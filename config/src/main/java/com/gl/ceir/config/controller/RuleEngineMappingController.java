@@ -80,25 +80,28 @@ public class RuleEngineMappingController {
 	
 	@ApiOperation(value = "Save || rule-engine-mapping", response = MappingJacksonValue.class)
 	@PostMapping("/rule-engine-mapping")
-	public MappingJacksonValue save(@RequestBody RuleEngineMapping ruleEngineMapping) {
+	public GenricResponse save(@RequestBody RuleEngineMapping ruleEngineMapping) {
+
 
 		logger.info("Save rule engine mapping [" + ruleEngineMapping + "]");
 
 		GenricResponse genricResponse = ruleEngineMappingServiceImpl.save(ruleEngineMapping);
-		MappingJacksonValue mapping = new MappingJacksonValue(ruleEngineMapping);
+//		MappingJacksonValue mapping = new MappingJacksonValue(ruleEngineMapping);
 		
-		if(genricResponse.getErrorCode() == 0) {
+		if(genricResponse.getErrorCode() == 409) {
+			return genricResponse;
+		}
+		else if(genricResponse.getErrorCode() == 0) {
 			auditTrailRepository.save( new AuditTrail( ruleEngineMapping.getId(),
 					ruleEngineMapping.getUserName(), Long.valueOf(ruleEngineMapping.getUserTypeId()),
 			  "CEIRSystem", Long.valueOf(ruleEngineMapping.getFeatureId()),
 			  Features.RULE_FEATURE_MAPPING, SubFeatures.REGISTER, "","NA",
 			  ruleEngineMapping.getRoleType()));
+			
 		}
+		return genricResponse;
+		
 	
-
-		logger.info("Response to send= " + mapping);
-
-		return mapping;
 	}
 	
 	@ApiOperation(value = "Update By Id || rule-engine-mapping", response = MappingJacksonValue.class)
