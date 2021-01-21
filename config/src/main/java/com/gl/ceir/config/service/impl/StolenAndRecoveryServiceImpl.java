@@ -336,7 +336,7 @@ public class StolenAndRecoveryServiceImpl {
 			logger.info(stolenandRecoveryMgmtPage.getContent());
 			if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
 				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER, filterRequest.getRoleType(), filterRequest.getRequestType(),filterRequest.getFeatureId());
-			}else {
+			} else {
 				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
 			}
 			return stolenandRecoveryMgmtPage;
@@ -1216,7 +1216,6 @@ public class StolenAndRecoveryServiceImpl {
 				}
 
 				stolenandRecoveryMgmt.setCeirAdminId(consignmentUpdateRequest.getUserId());
-
 				if(!stolenAndRecoveryTransaction.updateStatusWithHistory(stolenandRecoveryMgmt)) {
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update Stolen and recovery entity.", consignmentUpdateRequest.getTxnId());
@@ -1225,6 +1224,7 @@ public class StolenAndRecoveryServiceImpl {
 
 					placeholderMap1.put("<First name>", userProfile.getFirstName());
 					placeholderMap1.put("<Txn id>", txnId);
+					placeholderMap1.put("<Reason>", consignmentUpdateRequest.getRemarks() );
 
 					emailUtil.saveNotification(mailTag, 
 							userProfile, 
@@ -1253,8 +1253,7 @@ public class StolenAndRecoveryServiceImpl {
 							userProfile_generic_Response_Notification = new UserProfile();
 						userProfile_generic_Response_Notification =
 								userProfileRepository.getByUserId(registerationUser.getId());
-						placeholderMap1.put("<First name>",userProfile_generic_Response_Notification.getFirstName());
-
+						placeholderMap1.put("<First name>", userProfile_generic_Response_Notification.getFirstName() );
 						emailUtil.saveNotification(mailTag,
 								userProfile_generic_Response_Notification,
 								consignmentUpdateRequest.getFeatureId(),

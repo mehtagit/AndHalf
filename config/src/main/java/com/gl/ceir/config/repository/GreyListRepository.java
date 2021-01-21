@@ -12,6 +12,10 @@ JpaSpecificationExecutor<GreylistDb>{
 	
 	@Query("SELECT r FROM GreylistDb r WHERE imei = :imei OR substr(imei,1,14) =:imei")
 	public GreylistDb findByImei(String imei);
+	
+	@Query("SELECT r FROM GreylistDb r WHERE (imei = :imei OR substr(imei,1,14) =:imei) and LOWER(deviceIdType) =:deviceIdType")
+	public GreylistDb findByImeiAndDeviceIdType(String imei, String deviceIdType);
+	
 	public void deleteByImei(String imei);
  
 }

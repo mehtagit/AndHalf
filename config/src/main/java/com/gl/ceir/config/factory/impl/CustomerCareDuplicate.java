@@ -41,6 +41,12 @@ public class CustomerCareDuplicate implements CustomerCareTarget{
 		setName(customerCareDeviceState);
 		return customerCareDeviceState;
 	}
+	
+	@Override
+	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState, String deviceIdType ) {
+		
+		return fetchDetailsByImei(imei, customerCareDeviceState);
+	}
 
 	@Override
 	public void setName(CustomerCareDeviceState customerCareDeviceState) {

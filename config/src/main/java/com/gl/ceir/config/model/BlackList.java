@@ -57,15 +57,16 @@ public class BlackList {
 	private String deviceNumber;
 	private String deviceType;
 	private String deviceAction;
-	private String	 deviceStatus;
+	private String deviceStatus;
 	private String DeviceLaunchDate;
 	private String multipleSimStatus;
-	private String  deviceId;
+//	private String  deviceId;
 	private String imeiEsnMeid;
 	private String modeType;
 	private String requestType;
 	private String userType;
 	private String complainType;
+	private String deviceIdType;
 	
 	@Type(type="date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -143,13 +144,13 @@ public class BlackList {
 		this.multipleSimStatus = multipleSimStatus;
 	}
 
-	public String getDeviceId() {
-		return deviceId;
-	}
-
-	public void setDeviceId(String deviceId) {
-		this.deviceId = deviceId;
-	}
+//	public String getDeviceId() {
+//		return deviceId;
+//	}
+//
+//	public void setDeviceId(String deviceId) {
+//		this.deviceId = deviceId;
+//	}
 
 	public String getImeiEsnMeid() {
 		return imeiEsnMeid;
@@ -158,8 +159,6 @@ public class BlackList {
 	public void setImeiEsnMeid(String imeiEsnMeid) {
 		this.imeiEsnMeid = imeiEsnMeid;
 	}
-
-	
 
 	public String getRequestedBy() {
 		return requestedBy;
@@ -177,16 +176,9 @@ public class BlackList {
 		this.approvedBy = approvedBy;
 	}
 
-	
-
-	
 	public BlackList() {
 		super();
 	}
-
-	
-
-	
 
 	public Long getId() {
 		return id;
@@ -195,8 +187,6 @@ public class BlackList {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	
 
 	public LocalDateTime getCreatedOn() {
 		return createdOn;
@@ -230,48 +220,6 @@ public class BlackList {
 		this.msisdn = msisdn;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("BlackList [imei=");
-		builder.append(imei);
-		builder.append(", msisdn=");
-		builder.append(msisdn);
-		builder.append(", id=");
-		builder.append(id);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", requestedBy=");
-		builder.append(requestedBy);
-		builder.append(", approvedBy=");
-		builder.append(approvedBy);
-		builder.append(", roleType=");
-		builder.append(roleType);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", txnId=");
-		builder.append(txnId);
-		builder.append(", deviceNumber=");
-		builder.append(deviceNumber);
-		builder.append(", deviceType=");
-		builder.append(deviceType);
-		builder.append(", deviceAction=");
-		builder.append(deviceAction);
-		builder.append(", deviceStatus=");
-		builder.append(deviceStatus);
-		builder.append(", DeviceLaunchDate=");
-		builder.append(DeviceLaunchDate);
-		builder.append(", multipleSimStatus=");
-		builder.append(multipleSimStatus);
-		builder.append(", deviceId=");
-		builder.append(deviceId);
-		builder.append(", imeiEsnMeid=");
-		builder.append(imeiEsnMeid);
-		builder.append("]");
-		return builder.toString();
-	}
 
 	public BlackList(@NotNull String imei, @NotNull Long msisdn, String roleType, String userId, String txnId,
 			String deviceNumber, String deviceType, String deviceAction, String deviceStatus, String deviceLaunchDate,
@@ -289,7 +237,6 @@ public class BlackList {
 		this.deviceStatus = deviceStatus;
 		DeviceLaunchDate = deviceLaunchDate;
 		this.multipleSimStatus = multipleSimStatus;
-		this.deviceId = deviceId;
 		this.imeiEsnMeid = imeiEsnMeid;
 		this.modeType=modeType;
 		this.requestType=requestType;
@@ -298,7 +245,13 @@ public class BlackList {
 		this.expiryDate=expiryDate;
 	}
 
-	
+	public String getDeviceIdType() {
+		return deviceIdType;
+	}
+
+	public void setDeviceIdType(String deviceIdType) {
+		this.deviceIdType = deviceIdType;
+	}
 
 	public String getModeType() {
 		return modeType;
@@ -344,7 +297,16 @@ public class BlackList {
 		this.expiryDate = expiryDate;
 	}
 
-	
-	
+	@Override
+	public String toString() {
+		return "BlackList [id=" + id + ", imei=" + imei + ", msisdn=" + msisdn + ", createdOn=" + createdOn
+				+ ", modifiedOn=" + modifiedOn + ", requestedBy=" + requestedBy + ", approvedBy=" + approvedBy
+				+ ", roleType=" + roleType + ", userId=" + userId + ", txnId=" + txnId + ", deviceNumber="
+				+ deviceNumber + ", deviceType=" + deviceType + ", deviceAction=" + deviceAction + ", deviceStatus="
+				+ deviceStatus + ", DeviceLaunchDate=" + DeviceLaunchDate + ", multipleSimStatus=" + multipleSimStatus
+				+ ", imeiEsnMeid=" + imeiEsnMeid + ", modeType=" + modeType
+				+ ", requestType=" + requestType + ", userType=" + userType + ", complainType=" + complainType
+				+ ", deviceIdType=" + deviceIdType + ", expiryDate=" + expiryDate + "]";
+	}
        	
 }

@@ -39,6 +39,26 @@ public class CustomerCareRetailer implements CustomerCareTarget{
 		setName(customerCareDeviceState);
 		return customerCareDeviceState;
 	}
+	
+	@Override
+	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState, String deviceIdType ) {
+		
+		DeviceRetailerDb deviceDb = deviceRetailerDbRepository.getByImeiEsnMeidAndDeviceIdType(imei, deviceIdType);
+		
+		if(Objects.nonNull(deviceDb)) {
+			customerCareDeviceState.setTxnId(deviceDb.getTxnId());
+			customerCareDeviceState.setDate(deviceDb.getCreatedOn().toString());
+			customerCareDeviceState.setStatus(Constants.available);
+			customerCareDeviceState.setFeatureId(commonFunction.getFeatureIdByTxnId(deviceDb.getTxnId()));
+		}else {
+			//customerCareDeviceState.setDate("");
+			customerCareDeviceState.setStatus(Constants.non_available);
+			//customerCareDeviceState.setFeatureId(commonFunction.getFeatureIdByTxnId(deviceDb.getTxnId()));
+		}
+		customerCareDeviceState.setImei(imei);
+		setName(customerCareDeviceState);
+		return customerCareDeviceState;
+	}
 
 	@Override
 	public void setName(CustomerCareDeviceState customerCareDeviceState) {

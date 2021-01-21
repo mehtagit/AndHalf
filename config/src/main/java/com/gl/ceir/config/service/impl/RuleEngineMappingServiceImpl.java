@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -105,16 +104,8 @@ public class RuleEngineMappingServiceImpl {
 	public GenricResponse save(RuleEngineMapping ruleEngineMapping){
 		try {
 
-			Optional<RuleEngineMapping> object =Optional.ofNullable( ruleEngineMappingRepository.findByNameAndFeatureAndUserType(ruleEngineMapping.getName(),ruleEngineMapping.getFeature(),ruleEngineMapping.getUserType()));
-			
-			if(object.isPresent()) {
-				return new GenricResponse(409, "COMBINATION_NOT_ALLOWED","Combination of Rule name, UserType and feature already exist", "");
-			}
-			else{
 			ruleEngineMappingRepository.save(ruleEngineMapping);
-			return new GenricResponse(200, "OK","Successfully saved into database", "");
-			}
-			
+			return new GenricResponse(0);
 		} catch (Exception e) {
 			logger.info(e.getMessage(), e);
 			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());

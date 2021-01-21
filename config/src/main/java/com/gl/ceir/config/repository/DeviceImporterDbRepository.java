@@ -13,5 +13,8 @@ JpaSpecificationExecutor<DeviceImporterDb> {
 
 	@Query("SELECT r FROM DeviceImporterDb r WHERE imeiEsnMeid =:imei OR substr(imeiEsnMeid,1,14) =:imei")
 	public DeviceImporterDb getByImeiEsnMeid(String imei);
+	
+	@Query("SELECT r FROM DeviceImporterDb r WHERE (imeiEsnMeid =:imei OR substr(imeiEsnMeid,1,14) =:imei) and LOWER(deviceIdType) =:deviceIdType")
+	public DeviceImporterDb getByImeiEsnMeidAndDeviceIdType(String imei, String deviceIdType);
 
 }

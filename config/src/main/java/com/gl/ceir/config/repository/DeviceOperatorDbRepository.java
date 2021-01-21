@@ -18,5 +18,9 @@ CustomerCareRepo<DeviceOperatorDb>{
 	
 	@Query("SELECT r FROM DeviceOperatorDb r WHERE (imeiEsnMeid =:imei OR substr(imeiEsnMeid,1,14) =:imei) and deviceStatus =:deviceStatus")
 	public DeviceOperatorDb getByImeiEsnMeidAndDeviceStatus(String imei, Integer deviceStatus);
+	
+	@Query("SELECT r FROM DeviceOperatorDb r WHERE (imeiEsnMeid =:imei OR substr(imeiEsnMeid,1,14) =:imei) and deviceStatus =:deviceStatus"
+			+ " and LOWER(deviceIdType) =:deviceIdType")
+	public DeviceOperatorDb getByImeiEsnMeidAndDeviceStatusAndDeviceIdType(String imei, Integer deviceStatus, String deviceIdType);
 
 }

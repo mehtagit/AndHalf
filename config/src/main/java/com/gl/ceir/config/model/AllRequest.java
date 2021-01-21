@@ -72,20 +72,7 @@ public class AllRequest{
 	}
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("AllRequest [username=");
-		builder.append(username);
-		builder.append(", userTypeId=");
-		builder.append(userTypeId);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", featureId=");
-		builder.append(featureId);
-		builder.append(", imei=");
-		builder.append(imei);
-		builder.append(", userType=");
-		builder.append(userType);
-		builder.append("]");
-		return builder.toString();
+		return "AllRequest [username=" + username + ", userTypeId=" + userTypeId + ", userId=" + userId + ", featureId="
+				+ featureId + ", imei=" + imei + ", nid=" + nid + ", userType=" + userType + "]";
 	}
 }

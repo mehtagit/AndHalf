@@ -40,6 +40,12 @@ public class CustomerCareGsmaBlacklist implements CustomerCareTarget{
 		setName(customerCareDeviceState);
 		return customerCareDeviceState;
 	}
+	
+	@Override
+	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState, String deviceIdType ) {
+		//Because table doesn't contain any deviceIdType column
+		return fetchDetailsByImei( imei, customerCareDeviceState );
+	}
 
 	@Override
 	public void setName(CustomerCareDeviceState customerCareDeviceState) {

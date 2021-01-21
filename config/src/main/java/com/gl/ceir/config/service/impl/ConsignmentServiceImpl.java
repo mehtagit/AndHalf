@@ -1196,6 +1196,7 @@ public class ConsignmentServiceImpl {
 
 				placeholderMap.put("<First name>", userProfile.getFirstName());
 				placeholderMap.put("<Txn id>", current_consignment_response.getTxnId());
+				placeholderMap.put("<Reason>", current_consignment_response.getRemarks());
 				emailUtil.saveNotification("Consignment_Reject_CEIRAuthority_Email_Message", 
 						userProfile, 
 						consignmentUpdateRequest.getFeatureId(),

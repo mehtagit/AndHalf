@@ -178,33 +178,67 @@ public class EnduserServiceImpl {
 			logger.info("AUDIT : Saved request in audit.");
 
 //			EndUserDB endUserDB = endUserDbRepository.getByNid(data.getNid());
-			EndUserDB endUserDB = endUserDbRepository.findByNidIgnoreCase(data.getNid());
-
-			// End user is not registered with CEIR system.
-			if(Objects.nonNull(endUserDB)) {
-//				endUserDB.setDocTypeInterp(interpSetter.setConfigInterp(Tags.DOC_TYPE, endUserDB.getDocType()));
-				if(Objects.nonNull(endUserDB.getDocType())) {
-					endUserDB.setDocTypeInterp(interpSetter.setTagId(Tags.DOC_TYPE, endUserDB.getDocType()));	
-				}
-				List<RegularizeDeviceDb> regulaizedList=new ArrayList<RegularizeDeviceDb>();
-				if(Objects.nonNull(endUserDB.getRegularizeDeviceDbs())) {
-					for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs()) {
-						regularizeData.setEndUserDB(new EndUserDB());
-						regulaizedList.add(regularizeData);
+			if( Objects.nonNull(data.getNid()) && !data.getNid().isEmpty() && !data.getNid().equalsIgnoreCase("null")) {
+				EndUserDB endUserDB = endUserDbRepository.findByNidIgnoreCase(data.getNid());
+	
+				// End user is not registered with CEIR system.
+				if(Objects.nonNull(endUserDB)) {
+	//				endUserDB.setDocTypeInterp(interpSetter.setConfigInterp(Tags.DOC_TYPE, endUserDB.getDocType()));
+					if(Objects.nonNull(endUserDB.getDocType())) {
+						endUserDB.setDocTypeInterp(interpSetter.setTagId(Tags.DOC_TYPE, endUserDB.getDocType()));	
 					}
+					List<RegularizeDeviceDb> regulaizedList=new ArrayList<RegularizeDeviceDb>();
+					if(Objects.nonNull(endUserDB.getRegularizeDeviceDbs())) {
+						for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs()) {
+							regularizeData.setEndUserDB(new EndUserDB());
+							regulaizedList.add(regularizeData);
+						}
+					}
+					endUserDB.setRegularizeDeviceDbs(regulaizedList);
+					logger.info("End User with nid [" + data.getNid() + "] does exist.");
+					if( Objects.nonNull(endUserDB.getVisaUpdateDb()) && endUserDB.getVisaUpdateDb().size()>0) {
+						int lastVisaUpdate = endUserDB.getVisaUpdateDb().size() -1;
+						if( Objects.nonNull(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaNumber()) )
+							endUserDB.getVisaDb().get(0).setVisaNumber(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaNumber());
+						if( Objects.nonNull(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaExpiryDate()) )
+							endUserDB.getVisaDb().get(0).setVisaExpiryDate(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaExpiryDate());
+					}
+					return new GenricResponse(1, "End User does exist.", data.getNid(), endUserDB);
+				}else {
+					logger.info("End User with nid [" + data.getNid() + "] does not exist.");
+					return new GenricResponse(0, "User does not exist.", "");
 				}
-				endUserDB.setRegularizeDeviceDbs(regulaizedList);
-				logger.info("End User with nid [" + data.getNid() + "] does exist.");
-				if( Objects.nonNull(endUserDB.getVisaUpdateDb()) && endUserDB.getVisaUpdateDb().size()>0) {
-					int lastVisaUpdate = endUserDB.getVisaUpdateDb().size() -1;
-					if( Objects.nonNull(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaNumber()) )
-						endUserDB.getVisaDb().get(0).setVisaNumber(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaNumber());
-					if( Objects.nonNull(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaExpiryDate()) )
-						endUserDB.getVisaDb().get(0).setVisaExpiryDate(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaExpiryDate());
+			}else if( data.getUserType().equalsIgnoreCase("Custom") || data.getUserType().equalsIgnoreCase("Immigration") ){
+				List<EndUserDB> endUsers = endUserDbRepository.findByOriginIgnoreCase( data.getUserType() );
+				if( endUsers.isEmpty() ) {
+					logger.info("No device registered by Custom yet.");
+					return new GenricResponse(0, "User does not exist.", "");
+				}else {
+					for( EndUserDB endUserDB : endUsers ) {
+						if(Objects.nonNull(endUserDB.getDocType())) {
+							endUserDB.setDocTypeInterp(interpSetter.setTagId(Tags.DOC_TYPE, endUserDB.getDocType()));	
+						}
+						List<RegularizeDeviceDb> regulaizedList=new ArrayList<RegularizeDeviceDb>();
+						if(Objects.nonNull(endUserDB.getRegularizeDeviceDbs())) {
+							for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs()) {
+								regularizeData.setEndUserDB(new EndUserDB());
+								regulaizedList.add(regularizeData);
+							}
+						}
+						endUserDB.setRegularizeDeviceDbs(regulaizedList);
+						logger.info("End User with nid [" + data.getNid() + "] does exist.");
+						if( Objects.nonNull(endUserDB.getVisaUpdateDb()) && endUserDB.getVisaUpdateDb().size()>0) {
+							int lastVisaUpdate = endUserDB.getVisaUpdateDb().size() -1;
+							if( Objects.nonNull(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaNumber()) )
+								endUserDB.getVisaDb().get(0).setVisaNumber(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaNumber());
+							if( Objects.nonNull(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaExpiryDate()) )
+								endUserDB.getVisaDb().get(0).setVisaExpiryDate(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaExpiryDate());
+						}
+					}
+					return new GenricResponse(2, "End Users does exist.", "", endUsers);
 				}
-				return new GenricResponse(1, "End User does exist.", data.getNid(), endUserDB);
 			}else {
-				logger.info("End User with nid [" + data.getNid() + "] does not exist.");
+				logger.info("Nid is null request.");
 				return new GenricResponse(0, "User does not exist.", "");
 			}
 		} catch (Exception e) {
@@ -842,14 +876,14 @@ public class EnduserServiceImpl {
 						String message = "Any other user have taken the same action on the visaUpdate [" + payloadTxnId + "]";
 						logger.info(message);
 						return new GenricResponse(10, "", message, payloadTxnId);
-					}
-					
+					}					
 					visaDb.setStatus(RegularizeDeviceStatus.REJECTED_BY_CEIR_ADMIN.getCode());
-					visaDb.setRemark(ceirActionRequest.getRemarks()); 
+					visaDb.setRemark(ceirActionRequest.getRemarks());
 					tag = "Update_Visa_Reject_CEIRAdmin";	
 					receiverUserType = "End User";
 					txnId = visaDb.getTxnId();
 					sufeature=SubFeatures.REJECT;
+					placeholders.put("<Reason>", ceirActionRequest.getRemarks() );
 				}else {
 					return new GenricResponse(2, "unknown operation", "");
 				}
