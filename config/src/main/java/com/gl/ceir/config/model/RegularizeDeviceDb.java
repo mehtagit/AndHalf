@@ -125,7 +125,7 @@ public class RegularizeDeviceDb implements Serializable {
     private String approvedBy;
     private String taxCollectedBy;
     
-    
+    private String deviceRemark;
     
 	public String getMultiSimStatusInterp() {
 		return multiSimStatusInterp;
@@ -402,77 +402,29 @@ public class RegularizeDeviceDb implements Serializable {
 		this.taxCollectedBy = taxCollectedBy;
 	}
 
+	public String getDeviceRemark() {
+		return deviceRemark;
+	}
+
+	public void setDeviceRemark(String deviceRemark) {
+		this.deviceRemark = deviceRemark;
+	}
+
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("RegularizeDeviceDb [id=");
-		builder.append(id);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", nid=");
-		builder.append(nid);
-		builder.append(", deviceStatus=");
-		builder.append(deviceStatus);
-		builder.append(", deviceStatusInterp=");
-		builder.append(deviceStatusInterp);
-		builder.append(", taxPaidStatus=");
-		builder.append(taxPaidStatus);
-		builder.append(", taxPaidStatusInterp=");
-		builder.append(taxPaidStatusInterp);
-		builder.append(", deviceType=");
-		builder.append(deviceType);
-		builder.append(", deviceTypeInterp=");
-		builder.append(deviceTypeInterp);
-		builder.append(", deviceIdType=");
-		builder.append(deviceIdType);
-		builder.append(", deviceIdTypeInterp=");
-		builder.append(deviceIdTypeInterp);
-		builder.append(", multiSimStatus=");
-		builder.append(multiSimStatus);
-		builder.append(", country=");
-		builder.append(country);
-		builder.append(", deviceSerialNumber=");
-		builder.append(deviceSerialNumber);
-		builder.append(", txnId=");
-		builder.append(txnId);
-		builder.append(", price=");
-		builder.append(price);
-		builder.append(", currency=");
-		builder.append(currency);
-		builder.append(", currencyInterp=");
-		builder.append(currencyInterp);
-		builder.append(", firstImei=");
-		builder.append(firstImei);
-		builder.append(", secondImei=");
-		builder.append(secondImei);
-		builder.append(", thirdImei=");
-		builder.append(thirdImei);
-		builder.append(", fourthImei=");
-		builder.append(fourthImei);
-		builder.append(", remark=");
-		builder.append(remark);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", stateInterp=");
-		builder.append(stateInterp);
-		builder.append(", origin=");
-		builder.append(origin);
-		builder.append(", nationality=");
-		builder.append(nationality);
-		builder.append(", creatorUserId=");
-		builder.append(creatorUserId);
-		builder.append(", multiSimStatusInterp=");
-		builder.append(multiSimStatusInterp);
-		builder.append(",taxCollectedBy=");
-		builder.append(taxCollectedBy);
-		builder.append(", approvedBy=");
-		builder.append(approvedBy);
-		//builder.append(", toString()=");
-		//builder.append(super.toString());
-		builder.append("]");
-		return builder.toString();
+		return "RegularizeDeviceDb [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", nid="
+				+ nid + ", deviceStatus=" + deviceStatus + ", deviceStatusInterp=" + deviceStatusInterp
+				+ ", taxPaidStatus=" + taxPaidStatus + ", taxPaidStatusInterp=" + taxPaidStatusInterp + ", deviceType="
+				+ deviceType + ", deviceTypeInterp=" + deviceTypeInterp + ", deviceIdType=" + deviceIdType
+				+ ", deviceIdTypeInterp=" + deviceIdTypeInterp + ", multiSimStatus=" + multiSimStatus + ", country="
+				+ country + ", deviceSerialNumber=" + deviceSerialNumber + ", txnId=" + txnId + ", price=" + price
+				+ ", currency=" + currency + ", currencyInterp=" + currencyInterp + ", firstImei=" + firstImei
+				+ ", secondImei=" + secondImei + ", thirdImei=" + thirdImei + ", fourthImei=" + fourthImei + ", remark="
+				+ remark + ", status=" + status + ", stateInterp=" + stateInterp + ", endUserDB=" + endUserDB
+				+ ", origin=" + origin + ", nationality=" + nationality + ", creatorUserId=" + creatorUserId
+				+ ", multiSimStatusInterp=" + multiSimStatusInterp + ", auditParameters=" + auditParameters
+				+ ", approvedBy=" + approvedBy + ", taxCollectedBy=" + taxCollectedBy + ", deviceRemark=" + deviceRemark
+				+ "]";
 	}
 	
 }
