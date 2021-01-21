@@ -87,7 +87,7 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 					var IMEI4=$('#IMEID'+fieldId).val();
 					var deviceCountry=$('#country'+fieldId).val();
 					var multipleSimStatus1=$('#multipleSimStatus'+fieldId).val();
-					
+					var singleDeviceRemark=$('#singleDeviceRemark').val();	
 				var deviceInfo=
 				{
 					      "country": deviceCountry,
@@ -105,6 +105,7 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 					      "taxPaidStatus": parseInt(taxStatus1),
 					      "nid":nationalID,
 					      "txnId":"",
+					      "deviceRemark":singleDeviceRemark,
 					      "origin":roleType
 				}
 				regularizeDeviceDbs.push(deviceInfo);  
@@ -258,7 +259,7 @@ function defaultDeviceForm(){
 			}
 		});
 		
-		$.getJSON('./getDropdownList/LAWFULL_SIM_STATUS', function(data) {
+		$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].value).text(data[i].interp)
 				.appendTo('#multipleSimStatus1');

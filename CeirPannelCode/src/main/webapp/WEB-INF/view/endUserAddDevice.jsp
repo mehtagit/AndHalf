@@ -346,6 +346,18 @@ code="lang.khmer" /></option>
 																	maxlength="16" id="field0"> <label for="IMEID1"><spring:message
 																		code="title.four" /></label>
 															</div></div>
+															<div class="col s12 m6">
+														<label for="deviceStatus1"><spring:message
+																code="select.deviceStatus" /></label>
+														<select class="browser-default"
+															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+															 id="deviceStatus1">
+															<option value=""  selected><spring:message
+																	code="select.selectDeviceStatus" /></option>
+
+														</select>
+													</div>
 														</div>
 													</div>
 												</div>

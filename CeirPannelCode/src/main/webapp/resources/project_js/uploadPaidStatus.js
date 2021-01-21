@@ -319,7 +319,7 @@ $(document).ready(function () {
 				}
 			});
 
-			$.getJSON('./getDropdownList/LAWFULL_SIM_STATUS', function(data) {
+			$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
 				var dropdownid=id-1;
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].value).text(data[i].interp)
@@ -959,7 +959,7 @@ function submitDeviceInfo(){
 			var IMEI4=$('#IMEID'+fieldId).val();
 			var deviceCountry=$('#country'+fieldId).val();
 			var multipleSimStatus1=$('#multipleSimStatus'+fieldId).val();
-
+			var singleDeviceRemark=$('#singleDeviceRemark').val();	
 
 		var deviceInfo=
 		{
@@ -977,6 +977,7 @@ function submitDeviceInfo(){
 				"price": parseFloat(Price1),
 				"taxPaidStatus": parseInt(taxStatus1),
 				"nid":nationalId,
+				"deviceRemark":singleDeviceRemark,
 				"origin":roleType
 
 		}
