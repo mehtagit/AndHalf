@@ -267,17 +267,7 @@ code="lang.khmer" /></option>
 														</select>
 													</div>
 
-													<div class="input-field col s12 m6"
-														style="margin-top: 28px;">
-														<input type="text" id="serialNumber1" name="serialNumber"
-															pattern="[A-Za-z0-9]{0,25}"
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
-															title="" maxlength="25"> <label
-															for="serialNumber1"> <spring:message
-																code="input.deviceSerialNumber" /><span class="star"></span>
-														</label>
-													</div>
+													
 
 
 												</div>
@@ -296,6 +286,25 @@ code="lang.khmer" /></option>
 
 														</select>
 													</div>
+													<div class="input-field col s12 m6"
+														style="margin-top: 10px;">
+														<input type="text" id="serialNumber1" name="serialNumber"
+															pattern="[A-Za-z0-9]{0,25}"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+															title="" maxlength="25"> <label
+															for="serialNumber1"> <spring:message
+																code="input.deviceSerialNumber" /><span class="star"></span>
+														</label>
+													</div>
+													<div class="input-field col s12 m12">
+															<textarea id="singleDeviceRemark"
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																maxlength="10000" class="materialize-textarea"></textarea>
+															<label for="textarea1"> <spring:message
+																	code="input.remarksLawfull" /></label>
+														</div>
 
 
 												</div>
@@ -346,18 +355,7 @@ code="lang.khmer" /></option>
 																	maxlength="16" id="field0"> <label for="IMEID1"><spring:message
 																		code="title.four" /></label>
 															</div></div>
-															<div class="col s12 m6">
-														<label for="deviceStatus1"><spring:message
-																code="select.deviceStatus" /></label>
-														<select class="browser-default"
-															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															 id="deviceStatus1">
-															<option value=""  selected><spring:message
-																	code="select.selectDeviceStatus" /></option>
-
-														</select>
-													</div>
+															
 														</div>
 													</div>
 												</div>
