@@ -439,7 +439,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 						@RequestParam(name = "file", defaultValue = "0" ,required = false) Integer file);
 				
 					@PostMapping("/rule-engine-mapping")
-					public NewRule save(@RequestBody NewRule newRule);
+					public GenricResponse save(@RequestBody NewRule newRule);
 					
 					@RequestMapping(value="/rule-engine-mapping" ,method=RequestMethod.PUT) 
 					public GenricResponse updateRuleFeatureMapping(@RequestBody NewRule newRule);

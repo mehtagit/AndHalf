@@ -199,10 +199,11 @@ public class RuleFeatureMappingDatatableController {
 
 	@RequestMapping(value = { "/save" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET,
 			org.springframework.web.bind.annotation.RequestMethod.POST })
-	public NewRule saveRecord(@RequestBody NewRule newRule) {
+	public GenricResponse saveRecord(@RequestBody NewRule newRule) {
 		log.info("request::::::" + newRule);
 		// RuleListContent ruleList = new RuleListContent();
-		NewRule response = feignCleintImplementation.save(newRule);
+		GenricResponse response =feignCleintImplementation.save(newRule);
+		
 		log.info(" response::::::" + response);
 		return response;
 
