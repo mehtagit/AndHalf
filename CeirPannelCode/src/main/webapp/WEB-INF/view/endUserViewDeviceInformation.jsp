@@ -665,6 +665,26 @@ input[type='search'] {
 														</c:otherwise>
 														</c:choose>
 													</div>
+													
+													<div class="input-field col s12 m12">
+																	<c:choose>
+															<c:when test = "${viewInformation.deviceRemark=='' || viewInformation.deviceRemark==null}">
+															<textarea id="singleDeviceRemark"  readonly="readonly"
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																 class="materialize-textarea">NA</textarea>
+																</c:when>
+																<c:otherwise>
+																<textarea id="singleDeviceRemark" readonly="readonly"  
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																maxlength="10000" class="materialize-textarea">${viewInformation.deviceRemark}</textarea>
+																</c:otherwise>
+																</c:choose>
+																
+															<label for="textarea1"> <spring:message
+																	code="input.remarksLawfull" /></label>
+														</div>
                                                      <%--  <c:choose>
 												<c:when test = "${viewInformation.endUserDB.nationality=='Cambodian'}">
 													<div class="input-field col s12 m6 l6">

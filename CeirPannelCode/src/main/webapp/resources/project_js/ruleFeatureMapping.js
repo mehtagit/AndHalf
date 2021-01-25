@@ -549,3 +549,52 @@ function exportRuleFeatureMapping(){
 	});
 	
 }
+
+
+
+
+
+function viewDetailBy(id){
+
+	window.xid=id;
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
+	$.ajax({
+		url : "./getBy/"+id,
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		type : 'GET',
+		async:false,
+		success : function(data) {
+			var result=JSON.stringify(data);
+			$("#viewModel").openModal({
+				dismissible:false
+			});
+			
+			setData_view(JSON.parse(result));
+		},
+		error : function() {
+			//alert("Failed");
+		}
+	});	
+}
+
+
+function setData_view(result){
+	$("label[class='center-align']").addClass('active');
+	//$("label").addClass('active');
+	$("#viewRule").val(result.name);
+	$("#viewFeature").val(result.feature)
+	$("#viewUser").val(result.userType);
+	$("#vieworder").val(result.ruleOrder);	
+	$("#viewGracePeriod").val(result.graceAction);
+	$("#viewPostGracePeriod").val(result.postGraceAction);
+	$("#viewMoveToGracePeriod").val(result.failedRuleActionGrace);
+	$("#viewMoveToPostGracePeriod").val(result.failedRuleActionPostGrace);
+	$("#viewOutput").val(result.output);
+	
+}
