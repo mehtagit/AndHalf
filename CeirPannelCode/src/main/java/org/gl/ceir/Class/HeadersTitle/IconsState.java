@@ -3260,7 +3260,7 @@ public class IconsState {
 		historyTitle=Translator.toLocale("titles.history");
 	}
 
-	/********************************** Icons for currency Management**********************************/ 
+	/********************************** Icons for Address Management**********************************/ 
 
 	public String addressManagementIcons(String id, String userStatus) { 
 		executePostConstruct();
@@ -3274,6 +3274,30 @@ public class IconsState {
 				+deleteIconTitle+"></i></a>"; 
 
 		String action=delete;
+		return action;
+
+	}
+	
+	/********************************** Icons for Schedule Management**********************************/ 
+
+	public String scheduleManagementIcons(String id, String userStatus) { 
+		executePostConstruct();
+
+		String editAction= "viewDetails("+id+",'Edit')";
+		String viewAction="viewDetails("+id+",'View')";
+		String deleteAction= "DeleteByID('"+id+"')";
+		
+		// state related Code 
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+				+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+				+deletionIcon+" aria-hidden=\"true\"  title="
+				+deleteIconTitle+"></i></a>"; 
+
+		String action=view.concat(edit).concat(delete);
 		return action;
 
 	}
