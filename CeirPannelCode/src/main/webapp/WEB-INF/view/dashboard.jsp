@@ -800,6 +800,24 @@ data-dismiss="modal">&times;</button> -->
 		</div>
 		
 	</div>
+               
+               
+               
+               <div id="500ErrorModal" class="modal" style="height: 150px !important;">
+		<h6 class="modal-header"><spring:message code="modal.errorContent" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<div class="row" id="msgDialog" style="text-align: center;color:red;"></div>
+
+
+				<div class="row input_fields_wrap">
+				<div class="row input_fields_wrap">
+					<div class="col s12 m12 center" style="margin-top: 10px;">
+					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.close" /></button>
+				</div>
+
+	</div></div></div></div></div>
+	
                             	<!-- 	password Modal -->
 	<!-- jQuery Library -->
 

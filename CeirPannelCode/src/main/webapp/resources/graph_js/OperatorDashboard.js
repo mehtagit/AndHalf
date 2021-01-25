@@ -643,7 +643,7 @@ function blockIMEIgraph(response,id,chartType,chartTitle,pieLabelName,GraphImage
     			},
     	        scales: {
     	          xAxes: [{ 
-    	          	stacked: false,
+    	          	stacked: true,
     	          	scaleLabel: {
     	                display: true,
     	                labelString: 'Count'

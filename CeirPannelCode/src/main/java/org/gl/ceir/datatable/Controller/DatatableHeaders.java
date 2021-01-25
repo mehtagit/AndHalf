@@ -502,6 +502,16 @@ public class DatatableHeaders {
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
 			}
+			
+			//Schedule Headers
+			else if("scheduleHeaders".equals(role)) {
+				
+				String[] headers = {"table.creationDate","table.lastupdatedate","sidebar.ReportCatagory","table.ReportName","input.email","table.action"};	
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+			}
 
 			//DEFAULT PORTION  
 			else {

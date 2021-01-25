@@ -2907,6 +2907,11 @@ public class IconsState {
 
 		String editAction= "getDetailBy('"+id+"')";
 		String deleteAction ="DeleteByID('"+id+"')";
+		String viewAction="viewDetailBy("+id+")";
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+
+		
 		// state related Code 
 
 
@@ -2917,7 +2922,7 @@ public class IconsState {
 				+deletionIcon+" aria-hidden=\"true\"  title="
 				+deleteIconTitle+"></i></a>";
 
-		String action=edit.concat(delete);
+		String action=view.concat(edit).concat(delete);
 		return action;
 
 	}
@@ -2990,7 +2995,7 @@ public class IconsState {
 			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
 			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
-					+rejectIconTitle+" ></i></a>";
+			+rejectIconTitle+" ></i></a>";
 		}
 		
 		else if((status!="6" || status !="7" || status !="9" || status !="10" || status==null || status.equals("")) && ("Approved".equals(userStatus))){
@@ -3260,7 +3265,7 @@ public class IconsState {
 		historyTitle=Translator.toLocale("titles.history");
 	}
 
-	/********************************** Icons for currency Management**********************************/ 
+	/********************************** Icons for Address Management**********************************/ 
 
 	public String addressManagementIcons(String id, String userStatus) { 
 		executePostConstruct();
@@ -3274,6 +3279,30 @@ public class IconsState {
 				+deleteIconTitle+"></i></a>"; 
 
 		String action=delete;
+		return action;
+
+	}
+	
+	/********************************** Icons for Schedule Management**********************************/ 
+
+	public String scheduleManagementIcons(String id, String userStatus) { 
+		executePostConstruct();
+
+		String editAction= "viewDetails("+id+",'Edit')";
+		String viewAction="viewDetails("+id+",'View')";
+		String deleteAction= "DeleteByID('"+id+"')";
+		
+		// state related Code 
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+				+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+				+deletionIcon+" aria-hidden=\"true\"  title="
+				+deleteIconTitle+"></i></a>"; 
+
+		String action=view.concat(edit).concat(delete);
 		return action;
 
 	}
