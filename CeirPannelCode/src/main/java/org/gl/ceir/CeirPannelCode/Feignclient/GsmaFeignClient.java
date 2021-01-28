@@ -4,10 +4,15 @@ import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GsmaDetail;
 import org.gl.ceir.CeirPannelCode.Model.InterRelatedRuleFeatureMapping;
+import org.gl.ceir.CeirPannelCode.Model.NewRule;
+import org.gl.ceir.graph.model.ScheduleRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,10 +67,19 @@ public interface GsmaFeignClient {
 		//---------------------------------schedule Report Datatable ---------------------------------
 		
 		
-		@RequestMapping(value="/ScheduleReport/getAll" ,method=RequestMethod.GET) 
+		@RequestMapping(value="/ScheduleReport/getAll" ,method=RequestMethod.POST) 
 		public Object viewAllScheduleReport(@RequestBody FilterRequest filterRequest,
 		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 		@RequestParam(value = "file", defaultValue = "0") Integer file);
 		
+		//---------------------------------Add Schedule Report Feign ---------------------------------
+
+		@RequestMapping(value= "/ScheduleReport", method=RequestMethod.POST) 
+		public ScheduleRequest AddScheduleFeign(@RequestBody ScheduleRequest scheduleRequest);
+		
+		//---------------------------------View Schedule Report Feign ---------------------------------
+		
+		@GetMapping("/ScheduleReport/{id}")
+		public ScheduleRequest getScheduleByID(@PathVariable("id") Integer id);
 }
