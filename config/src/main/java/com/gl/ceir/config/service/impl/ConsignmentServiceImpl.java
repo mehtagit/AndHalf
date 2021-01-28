@@ -929,7 +929,8 @@ public class ConsignmentServiceImpl {
 		}
 
 		if(Objects.nonNull(consignmentMgmt.getTxnId()) && !consignmentMgmt.getTxnId().isEmpty())
-			cmsb.with(new SearchCriteria("txnId", consignmentMgmt.getTxnId(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
+			cmsb.with(new SearchCriteria("txnId", consignmentMgmt.getTxnId(), SearchOperation.LIKE, Datatype.STRING));
+//			cmsb.with(new SearchCriteria("txnId", consignmentMgmt.getTxnId(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
 
 		if(Objects.nonNull(consignmentMgmt.getStartDate()) && !consignmentMgmt.getStartDate().isEmpty())
 			cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
@@ -940,6 +941,15 @@ public class ConsignmentServiceImpl {
 
 		if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()))
 			cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+		
+		if(Objects.nonNull(consignmentMgmt.getQuantity()) && !consignmentMgmt.getQuantity().isEmpty())
+			cmsb.with(new SearchCriteria("quantity", consignmentMgmt.getQuantity(), SearchOperation.LIKE, Datatype.STRING));
+		
+		if(Objects.nonNull(consignmentMgmt.getDeviceQuantity()) && !consignmentMgmt.getDeviceQuantity().isEmpty())
+			cmsb.with(new SearchCriteria("deviceQuantity", consignmentMgmt.getDeviceQuantity(), SearchOperation.LIKE, Datatype.STRING));
+		
+		if(Objects.nonNull(consignmentMgmt.getSupplierName()) && !consignmentMgmt.getSupplierName().isEmpty())
+			cmsb.with(new SearchCriteria("supplierName", consignmentMgmt.getSupplierName(), SearchOperation.LIKE, Datatype.STRING));
 
 //		if(Objects.nonNull(consignmentMgmt.getDisplayName()) && !consignmentMgmt.getDisplayName().isEmpty())
 //			cmsb.addSpecification(cmsb.joinWithMultiple(new SearchCriteria("displayName",consignmentMgmt.getDisplayName(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING)));
@@ -1693,6 +1703,15 @@ public class ConsignmentServiceImpl {
 			return Boolean.FALSE;
 		}
 		if(Objects.nonNull(filterRequest.getFilteredUserType()) && !filterRequest.getFilteredUserType().isEmpty()) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getQuantity()) && !filterRequest.getQuantity().isEmpty()) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getDeviceQuantity()) && !filterRequest.getDeviceQuantity().isEmpty()) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getSupplierName()) && !filterRequest.getSupplierName().isEmpty()) {
 			return Boolean.FALSE;
 		}
 		return Boolean.TRUE;
