@@ -64,6 +64,7 @@ import com.gl.ceir.config.model.constants.WebActionDbFeature;
 import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.model.file.ConsignmentFileModel;
+import com.gl.ceir.config.model.file.ConsignmentFileModelCEIR;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
 import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
@@ -787,8 +788,6 @@ public class ConsignmentServiceImpl {
 		String fileName = null;
 		Writer writer   = null;
 
-		ConsignmentFileModel cfm = null;
-
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		DateTimeFormatter dtf2  = DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS");
 
@@ -797,40 +796,64 @@ public class ConsignmentServiceImpl {
 		SystemConfigurationDb link = configurationManagementServiceImpl.findByTag(ConfigTags.file_download_link);
 		logger.info("CONFIG : file_consignment_download_link [" + link + "]");
 
-		StatefulBeanToCsvBuilder<ConsignmentFileModel> builder = null;
-		StatefulBeanToCsv<ConsignmentFileModel> csvWriter      = null;
-		List< ConsignmentFileModel> fileRecords                = null;
-		CustomMappingStrategy<ConsignmentFileModel> mappingStrategy = new CustomMappingStrategy<>();
-
 		try {
 			List<ConsignmentMgmt> consignmentMgmts = getAll(filterRequest, source);
 
 			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Consignment.csv";
 			writer = Files.newBufferedWriter(Paths.get(filepath.getValue() + fileName));
-			mappingStrategy.setType(ConsignmentFileModel.class);
 
-			builder = new StatefulBeanToCsvBuilder<>(writer);
-			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
-
-			if( !consignmentMgmts.isEmpty() ) {
-				fileRecords = new ArrayList<>();
-				for( ConsignmentMgmt consignmentMgmt : consignmentMgmts ) {
-					cfm = new ConsignmentFileModel(
-							consignmentMgmt.getCreatedOn().format(dtf),
-							consignmentMgmt.getModifiedOn().format(dtf),
-							consignmentMgmt.getTxnId(),
-							consignmentMgmt.getSupplierName(),
-							consignmentMgmt.getStateInterp(), 
-							consignmentMgmt.getTaxInterp(), 
-							consignmentMgmt.getQuantity(),
-							consignmentMgmt.getDeviceQuantity(),
-							consignmentMgmt.getFileName());
-					fileRecords.add(cfm);
+			if( filterRequest.getUserTypeId() != 8 ) {
+				List< ConsignmentFileModel> fileRecords = new ArrayList<>();
+				CustomMappingStrategy<ConsignmentFileModel> mappingStrategy = new CustomMappingStrategy<>();
+				mappingStrategy.setType(ConsignmentFileModel.class);
+				
+				StatefulBeanToCsvBuilder<ConsignmentFileModel> builder = new StatefulBeanToCsvBuilder<>(writer);
+				StatefulBeanToCsv<ConsignmentFileModel> csvWriter      = builder.withMappingStrategy(mappingStrategy).withSeparator(',')
+						.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+				if( !consignmentMgmts.isEmpty() ) {
+					for( ConsignmentMgmt consignmentMgmt : consignmentMgmts ) {
+						fileRecords.add( new ConsignmentFileModel(
+								consignmentMgmt.getCreatedOn().format(dtf),
+								consignmentMgmt.getModifiedOn().format(dtf),
+								consignmentMgmt.getTxnId(),
+								consignmentMgmt.getSupplierName(),
+								consignmentMgmt.getStateInterp(), 
+								consignmentMgmt.getTaxInterp(), 
+								consignmentMgmt.getQuantity(),
+								consignmentMgmt.getDeviceQuantity(),
+								consignmentMgmt.getFileName())
+						);
+					}
+					csvWriter.write(fileRecords);
+				}else {
+					csvWriter.write( new ConsignmentFileModel());
 				}
-
-				csvWriter.write(fileRecords);
 			}else {
-				csvWriter.write( new ConsignmentFileModel());
+				List< ConsignmentFileModelCEIR> fileRecords = new ArrayList<>();
+				CustomMappingStrategy<ConsignmentFileModelCEIR> mappingStrategy = new CustomMappingStrategy<>();
+
+				StatefulBeanToCsvBuilder<ConsignmentFileModelCEIR> builder = new StatefulBeanToCsvBuilder<>(writer);
+				StatefulBeanToCsv<ConsignmentFileModelCEIR> csvWriter      = builder.withMappingStrategy(mappingStrategy).withSeparator(',')
+						.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+				mappingStrategy.setType(ConsignmentFileModelCEIR.class);
+				if( !consignmentMgmts.isEmpty() ) {
+					for( ConsignmentMgmt consignmentMgmt : consignmentMgmts ) {
+						fileRecords.add( new ConsignmentFileModelCEIR(
+								consignmentMgmt.getCreatedOn().format(dtf),
+								consignmentMgmt.getModifiedOn().format(dtf),
+								consignmentMgmt.getTxnId(),
+								consignmentMgmt.getUser().getUserProfile().getDisplayName(),
+								consignmentMgmt.getStateInterp(), 
+								consignmentMgmt.getTaxInterp(), 
+								consignmentMgmt.getQuantity(),
+								consignmentMgmt.getDeviceQuantity(),
+								consignmentMgmt.getFileName())
+						);
+					}
+					csvWriter.write(fileRecords);
+				}else {
+					csvWriter.write( new ConsignmentFileModelCEIR());
+				}
 			}
 
 			User loggedUser = userRepository.getById(filterRequest.getUserId());
@@ -906,7 +929,8 @@ public class ConsignmentServiceImpl {
 		}
 
 		if(Objects.nonNull(consignmentMgmt.getTxnId()) && !consignmentMgmt.getTxnId().isEmpty())
-			cmsb.with(new SearchCriteria("txnId", consignmentMgmt.getTxnId(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
+			cmsb.with(new SearchCriteria("txnId", consignmentMgmt.getTxnId(), SearchOperation.LIKE, Datatype.STRING));
+//			cmsb.with(new SearchCriteria("txnId", consignmentMgmt.getTxnId(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
 
 		if(Objects.nonNull(consignmentMgmt.getStartDate()) && !consignmentMgmt.getStartDate().isEmpty())
 			cmsb.with(new SearchCriteria("createdOn",consignmentMgmt.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
@@ -917,6 +941,15 @@ public class ConsignmentServiceImpl {
 
 		if(Objects.nonNull(consignmentMgmt.getTaxPaidStatus()))
 			cmsb.with(new SearchCriteria("taxPaidStatus", consignmentMgmt.getTaxPaidStatus(), SearchOperation.EQUALITY, Datatype.STRING));
+		
+		if(Objects.nonNull(consignmentMgmt.getQuantity()) && !consignmentMgmt.getQuantity().isEmpty())
+			cmsb.with(new SearchCriteria("quantity", consignmentMgmt.getQuantity(), SearchOperation.LIKE, Datatype.STRING));
+		
+		if(Objects.nonNull(consignmentMgmt.getDeviceQuantity()) && !consignmentMgmt.getDeviceQuantity().isEmpty())
+			cmsb.with(new SearchCriteria("deviceQuantity", consignmentMgmt.getDeviceQuantity(), SearchOperation.LIKE, Datatype.STRING));
+		
+		if(Objects.nonNull(consignmentMgmt.getSupplierName()) && !consignmentMgmt.getSupplierName().isEmpty())
+			cmsb.with(new SearchCriteria("supplierName", consignmentMgmt.getSupplierName(), SearchOperation.LIKE, Datatype.STRING));
 
 //		if(Objects.nonNull(consignmentMgmt.getDisplayName()) && !consignmentMgmt.getDisplayName().isEmpty())
 //			cmsb.addSpecification(cmsb.joinWithMultiple(new SearchCriteria("displayName",consignmentMgmt.getDisplayName(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING)));
@@ -1670,6 +1703,15 @@ public class ConsignmentServiceImpl {
 			return Boolean.FALSE;
 		}
 		if(Objects.nonNull(filterRequest.getFilteredUserType()) && !filterRequest.getFilteredUserType().isEmpty()) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getQuantity()) && !filterRequest.getQuantity().isEmpty()) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getDeviceQuantity()) && !filterRequest.getDeviceQuantity().isEmpty()) {
+			return Boolean.FALSE;
+		}
+		if(Objects.nonNull(filterRequest.getSupplierName()) && !filterRequest.getSupplierName().isEmpty()) {
 			return Boolean.FALSE;
 		}
 		return Boolean.TRUE;

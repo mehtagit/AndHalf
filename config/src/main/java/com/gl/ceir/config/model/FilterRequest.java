@@ -51,7 +51,14 @@ public class FilterRequest {
 	
 	private String displayName;
 	
+	private String quantity;
+	
+	public String deviceQuantity;
+	
 	private String subject;
+	
+	private String supplierName;
+	
 	public String getFilteredUserType() {
 		return filteredUserType;
 	}
@@ -285,91 +292,6 @@ public class FilterRequest {
 		this.displayName = displayName;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("FilterRequest [id=");
-		builder.append(id);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", importerId=");
-		builder.append(importerId);
-		builder.append(", nid=");
-		builder.append(nid);
-		builder.append(", txnId=");
-		builder.append(txnId);
-		builder.append(", startDate=");
-		builder.append(startDate);
-		builder.append(", endDate=");
-		builder.append(endDate);
-		builder.append(", consignmentStatus=");
-		builder.append(consignmentStatus);
-		builder.append(", roleType=");
-		builder.append(roleType);
-		builder.append(", requestType=");
-		builder.append(requestType);
-		builder.append(", sourceType=");
-		builder.append(sourceType);
-		builder.append(", userType=");
-		builder.append(userType);
-		builder.append(", filteredUserType=");
-		builder.append(filteredUserType);
-		builder.append(", featureId=");
-		builder.append(featureId);
-		builder.append(", featureName=");
-		builder.append(featureName);
-		builder.append(", subFeatureName=");
-		builder.append(subFeatureName);
-		builder.append(", userName=");
-		builder.append(userName);
-		builder.append(", userTypeId=");
-		builder.append(userTypeId);
-		builder.append(", searchString=");
-		builder.append(searchString);
-		builder.append(", taxPaidStatus=");
-		builder.append(taxPaidStatus);
-		builder.append(", deviceIdType=");
-		builder.append(deviceIdType);
-		builder.append(", deviceType=");
-		builder.append(deviceType);
-		builder.append(", type=");
-		builder.append(type);
-		builder.append(", channel=");
-		builder.append(channel);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", operatorTypeId=");
-		builder.append(operatorTypeId);
-		builder.append(", origin=");
-		builder.append(origin);
-		builder.append(", tac=");
-		builder.append(tac);
-		builder.append(", tag=");
-		builder.append(tag);
-		builder.append(", childTag=");
-		builder.append(childTag);
-		builder.append(", parentValue=");
-		builder.append(parentValue);
-		builder.append(", imei=");
-		builder.append(imei);
-		builder.append(", contactNumber=");
-		builder.append(contactNumber);
-		builder.append(", filteredUserId=");
-		builder.append(filteredUserId);
-		builder.append(", state=");
-		builder.append(state);
-		builder.append(", ruleName=");
-		builder.append(ruleName);
-		builder.append(", remark=");
-		builder.append(remark);
-		builder.append(", displayName=");
-		builder.append(displayName);
-		builder.append(", subject=");
-		builder.append(subject);
-		builder.append("]");
-		return builder.toString();
-	}
-
 	public String getSubject() {
 		return subject;
 	}
@@ -377,7 +299,48 @@ public class FilterRequest {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
-	
+
+	public String getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+
+	public String getDeviceQuantity() {
+		return deviceQuantity;
+	}
+
+	public void setDeviceQuantity(String deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
+
+	public String getSupplierName() {
+		return supplierName;
+	}
+
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
+	}
+
+	@Override
+	public String toString() {
+		return "FilterRequest [id=" + id + ", userId=" + userId + ", importerId=" + importerId + ", nid=" + nid
+				+ ", txnId=" + txnId + ", startDate=" + startDate + ", endDate=" + endDate + ", consignmentStatus="
+				+ consignmentStatus + ", roleType=" + roleType + ", requestType=" + requestType + ", sourceType="
+				+ sourceType + ", userType=" + userType + ", filteredUserType=" + filteredUserType + ", featureId="
+				+ featureId + ", featureName=" + featureName + ", subFeatureName=" + subFeatureName + ", userName="
+				+ userName + ", userTypeId=" + userTypeId + ", searchString=" + searchString + ", taxPaidStatus="
+				+ taxPaidStatus + ", deviceIdType=" + deviceIdType + ", deviceType=" + deviceType + ", type=" + type
+				+ ", channel=" + channel + ", status=" + status + ", operatorTypeId=" + operatorTypeId + ", origin="
+				+ origin + ", tac=" + tac + ", tag=" + tag + ", childTag=" + childTag + ", parentValue=" + parentValue
+				+ ", imei=" + imei + ", contactNumber=" + contactNumber + ", filteredUserId=" + filteredUserId
+				+ ", state=" + state + ", ruleName=" + ruleName + ", remark=" + remark + ", displayName=" + displayName
+				+ ", quantity=" + quantity + ", deviceQuantity=" + deviceQuantity + ", subject=" + subject
+				+ ", supplierName=" + supplierName + "]";
+	}
+
 }
 
 
