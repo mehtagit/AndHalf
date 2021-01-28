@@ -265,7 +265,7 @@ public class UploadPaidStatus {
 			datatableResponseModel.setRecordsFiltered(null);
 			datatableResponseModel.setData(Collections.emptyList());
 			log.info(e.getMessage());
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

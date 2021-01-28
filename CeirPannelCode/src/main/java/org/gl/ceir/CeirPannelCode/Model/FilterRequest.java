@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class FilterRequest {
 	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp,alertId,remark,email,phoneNo,username,tac,userDisplayName,filterUserName,FilterUserType,raisedBy,filteredUserType,month,source;
-	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus,feature,period,year,dataId,usertypeId;
+	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus,feature,period,year,dataId,usertypeId,deviceQuantity;
 	private Double dollar,riel;
 	private int roleTypeId;
 	private String state,ruleName;
@@ -540,6 +540,12 @@ public class FilterRequest {
 	public void setCommuneID(int communeID) {
 		this.communeID = communeID;
 	}
+	public Integer getDeviceQuantity() {
+		return deviceQuantity;
+	}
+	public void setDeviceQuantity(Integer deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -693,6 +699,8 @@ public class FilterRequest {
 		builder.append(dataId);
 		builder.append(", usertypeId=");
 		builder.append(usertypeId);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
 		builder.append(", dollar=");
 		builder.append(dollar);
 		builder.append(", riel=");

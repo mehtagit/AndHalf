@@ -437,3 +437,7 @@ else if($('#'+multiplesimstatus).val()==""){
 }
 
 }
+
+function filterReset(formID){
+	$('#'+formID).trigger('reset');
+}

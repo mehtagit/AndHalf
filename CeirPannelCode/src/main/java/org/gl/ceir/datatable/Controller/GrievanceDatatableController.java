@@ -309,7 +309,7 @@ public class GrievanceDatatableController {
 			datatableResponseModel.setRecordsTotal(null);
 			datatableResponseModel.setRecordsFiltered(null);
 			datatableResponseModel.setData(Collections.emptyList());
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK);
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 
 	}
