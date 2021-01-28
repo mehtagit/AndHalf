@@ -504,7 +504,7 @@ public class Consignment {
 			@RequestParam(name="consignmentTxnId",required = false) String consignmentTxnId,@RequestParam(name="consignmentTaxPaidStatus") Integer consignmentTaxPaidStatus,HttpServletRequest request,
 			HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo,@RequestParam(name="filterConsignmentStatus") Integer filterConsignmentStatus,
 			@RequestParam(name="displayName",required = false) String displayName,@RequestParam(name="source",defaultValue = "menu",required = false) String source,
-			@RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity,@RequestParam(name="quantity",defaultValue = "menu",required = false) Integer imeiQuantity)
+			@RequestParam(name="deviceQuantity",required = false) String deviceQuantity,@RequestParam(name="quantity",required = false) String imeiQuantity,@RequestParam(name="supplierName",required = false) String supplierName)
 	{
 		log.info("consignmentStartDate=="+consignmentStartDate+ " consignmentEndDate ="+consignmentEndDate+" consignmentTxnId="+consignmentTxnId+"consignmentTaxPaidStatus="+consignmentTaxPaidStatus+" filterConsignmentStatus="+filterConsignmentStatus);
 		log.info("source--->" +source);
@@ -530,6 +530,7 @@ public class Consignment {
 		filterRequest.setDisplayName(displayName);
 		filterRequest.setDeviceQuantity(deviceQuantity);
 		filterRequest.setQuantity(imeiQuantity);
+		filterRequest.setSuplierName(supplierName);
 		log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 		Object	response= feignCleintImplementation.consignmentFilter(filterRequest, pageNo, pageSize, file,source);
 
