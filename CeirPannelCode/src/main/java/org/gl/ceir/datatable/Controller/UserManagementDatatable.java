@@ -59,11 +59,13 @@ public class UserManagementDatatable {
 		// Data set on this List
 		List<List<Object>> finalList=new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
+		
 		Gson gsonObject=new Gson();
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		filterrequest.setSearchString(request.getParameter("search[value]"));
+		
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 		try{
 			log.info("request send to the filter api ="+filterrequest);

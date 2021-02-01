@@ -233,6 +233,22 @@ div#error_Modal {
 								<%
 									}
 								%>
+								
+								<%
+									if (selfRegister == 0) {
+								%>
+								<li><a id="viewProfile" href="./userManagement?type=user_view"
+									target="mainArea"><i class="fa fa-eye dropdownColor"
+										style="float: left;position: inherit;"></i><span style="float: left"
+										class="dropdownColor"><spring:message
+												code="registration.viewProfile" /></span></a></li>
+					<li class="divider"></li>
+								
+
+								<%
+									}
+								%>
+								
 								<li><a href="javascript:void(0)"
 									onclick="changePasswordPopup()"><i
 										class="fa fa-key dropdownColor" style="float: left"></i><span

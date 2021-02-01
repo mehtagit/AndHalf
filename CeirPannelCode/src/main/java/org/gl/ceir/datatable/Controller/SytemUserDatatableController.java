@@ -70,6 +70,17 @@ public class SytemUserDatatableController {
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		filterrequest.setSearchString(request.getParameter("search[value]"));
+		
+		String column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+			"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Modified On":
+				"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "User ID":
+					"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Email":
+						"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Phone No.":
+							"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "User Type":"Modified On";
+		
+		filterrequest.setColumnName(column);
+		filterrequest.setOrder(request.getParameter("order[0][dir]"));
+		
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);		
 		try {
 			log.info("request send to the filter api ="+filterrequest);

@@ -12,6 +12,8 @@ public class FilterRequest {
 	public String province,district,commune,village,country;
 	public String publicIp;
 	private int districtID,communeID;
+	private String columnName;
+	private String order;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -736,8 +738,24 @@ public class FilterRequest {
 		builder.append(districtID);
 		builder.append(", communeID=");
 		builder.append(communeID);
+		builder.append(", columnName=");
+		builder.append(columnName);
+		builder.append(", order=");
+		builder.append(order);
 		builder.append("]");
 		return builder.toString();
+	}
+	public String getColumnName() {
+		return columnName;
+	}
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+	public String getOrder() {
+		return order;
+	}
+	public void setOrder(String order) {
+		this.order = order;
 	}
 	 
 	

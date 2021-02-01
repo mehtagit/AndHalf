@@ -79,7 +79,7 @@
 						destroy:true,
 						"serverSide": true,
 						orderCellsTop : true,
-						"ordering" : false,
+						"ordering" : true,
 						"bPaginate" : true,
 						"bFilter" : true,
 						"bInfo" : true,
