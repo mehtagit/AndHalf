@@ -121,7 +121,7 @@ public class ScheduleDatatableController {
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle(Translator.toLocale("sidebar.Schedule_Management"));
+		pageElement.setPageTitle(Translator.toLocale("sidebar.Schedule_Report"));
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();
@@ -130,7 +130,7 @@ public class ScheduleDatatableController {
 			log.info("USER STATUS:::::::::"+userStatus);
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
-			String[] names = { "HeaderButton","sidebar.Schedule_Management", "AddAddress()", "btnLink",
+			String[] names = { "HeaderButton",Translator.toLocale("button.addSchedule"), "AddShedule()", "btnLink",
 					"FilterButton", Translator.toLocale("button.filter"),"scheduleTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();

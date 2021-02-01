@@ -410,7 +410,9 @@ function table(url,dataUrl){
 			"userName":$("body").attr("data-username"),
 			"txnId": $('#transactionID').val() == null ? txn : $('#transactionID').val(),
 			"roleType":$("body").attr("data-roleType"),
-			"displayName" : $('#name').val()
+			"displayName" : $('#name').val(),
+			"quantity" : $('#deviceQuantityFilter').val(),
+			"deviceQuantity" : $('#IMEIQuantityFilter').val()
 }
 	if(lang=='km'){
 		var langFile='./resources/i18n/khmer_datatable.json';
@@ -458,6 +460,15 @@ function table(url,dataUrl){
 					data : function(d) {
 						d.filter = JSON.stringify(filterRequest); 
 
+					},
+					error: function (jqXHR, textStatus, errorThrown,data) {
+						
+						 window.parent.$('#msgDialog').text($.i18n('500ErrorMsg'));
+						 // messageWindow(jqXHR['responseJSON']['message']);
+						 window.parent.$('#500ErrorModal').openModal({
+						 dismissible:false
+						 });
+						
 					}
 				},
 				"columns": result
@@ -662,6 +673,7 @@ function pageButtons(url){
 						maxDate: new Date()
 					});
 				}else if(date[i].type === "text"){
+					
 					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
 
@@ -691,7 +703,7 @@ function pageButtons(url){
 
 				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
 				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
-
+				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='clearFilter'/></div>");
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					if(button[i].type === "HeaderButton"){
@@ -715,10 +727,12 @@ function pageButtons(url){
 				}		
 
 			}else{
+				var viewFilter="viewFilter";
+			
 				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
 				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
-
-
+				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
+				$('#clearFilter').attr("onclick", "filterReset('viewFilter')");	
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					if(button[i].type === "HeaderButton"){
@@ -1050,6 +1064,8 @@ function exportConsignmentData()
 	var filterConsignmentStatus=parseInt($('#filterConsignmentStatus').val());
 	var consignmentTaxPaidStatus=parseInt($('#taxPaidStatus').val());
 	var displayName = $('#name').val();
+	var deviceQuantity= $('#deviceQuantityFilter').val();
+	var IMEIQuantity= $('#IMEIQuantityFilter').val();
 	if(displayName==undefined || displayName=="undefined"){
 		displayName=null;
 	}
@@ -1080,7 +1096,7 @@ function exportConsignmentData()
 	}
 
 	////console.log("2------>"+"consignmentStartDate---" +consignmentStartDate+  "consignmentEndDate---" +consignmentEndDate +  "consignmentTxnId---" +consignmentTxnId+  "filterConsignmentStatus---" +filterConsignmentStatus+  "consignmentTaxPaidStatus---" +consignmentTaxPaidStatus);
-	if(consignmentStartDate != ''  || consignmentEndDate != ''  || consignmentTxnId != ''  || filterConsignmentStatus != ''  || consignmentTaxPaidStatus != ''  || displayName!=undefined  ){
+	if(consignmentStartDate != ''  || consignmentEndDate != ''  || consignmentTxnId != ''  || filterConsignmentStatus != ''  || consignmentTaxPaidStatus != ''  || displayName!=undefined || deviceQuantity!=undefined || IMEIQuantity!=undefined ){
 		source__val = 'filter';
 	}else{
 		source__val = $("body").attr("data-session-source");
@@ -1090,7 +1106,7 @@ function exportConsignmentData()
 	var info = table.page.info(); 
 	var pageNo=info.page;
 	var pageSize =info.length;
-	window.location.href="./exportConsignmnet?consignmentStartDate="+consignmentStartDate+"&consignmentEndDate="+consignmentEndDate+"&consignmentTxnId="+consignmentTxnId+"&filterConsignmentStatus="+filterConsignmentStatus+"&consignmentTaxPaidStatus="+consignmentTaxPaidStatus+"&source="+source__val+"&displayName="+displayName+"&pageSize="+pageSize+"&pageNo="+pageNo;
+	window.location.href="./exportConsignmnet?consignmentStartDate="+consignmentStartDate+"&consignmentEndDate="+consignmentEndDate+"&consignmentTxnId="+consignmentTxnId+"&filterConsignmentStatus="+filterConsignmentStatus+"&consignmentTaxPaidStatus="+consignmentTaxPaidStatus+"&source="+source__val+"&displayName="+displayName+"&pageSize="+pageSize+"&pageNo="+pageNo+"&deviceQuantity="+deviceQuantity+"&quantity="+IMEIQuantity;
 }
 
 

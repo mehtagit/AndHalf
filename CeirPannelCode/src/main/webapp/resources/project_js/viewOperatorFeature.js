@@ -97,6 +97,15 @@ function operatorDatatable(lang){
 					data : function(d) {
 						d.filter = JSON.stringify(filterRequest); 
 						//////console.log(JSON.stringify(filterRequest));
+					},
+					error: function (jqXHR, textStatus, errorThrown,data) {
+						
+						 window.parent.$('#msgDialog').text($.i18n('500ErrorMsg'));
+						 // messageWindow(jqXHR['responseJSON']['message']);
+						 window.parent.$('#500ErrorModal').openModal({
+						 dismissible:false
+						 });
+						
 					}
 
 				},

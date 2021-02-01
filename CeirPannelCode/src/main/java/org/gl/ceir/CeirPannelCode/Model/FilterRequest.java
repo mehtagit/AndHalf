@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class FilterRequest {
 	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp,alertId,remark,email,phoneNo,username,tac,userDisplayName,filterUserName,FilterUserType,raisedBy,filteredUserType,month,source;
-	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus,feature,period,year,dataId,usertypeId;
+	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,stockStatus,feature,period,year,dataId,usertypeId;
 	private Double dollar,riel;
 	private int roleTypeId;
-	private String state,ruleName;
+	private String state,ruleName,quantity,deviceQuantity,supplierName;
 	public String province,district,commune,village,country;
 	public String publicIp;
 	private int districtID,communeID;
@@ -420,12 +420,7 @@ public class FilterRequest {
 	public void setCurrency(Integer currency) {
 		this.currency = currency;
 	}
-	public Integer getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
+	 
 	public Integer getStockStatus() {
 		return stockStatus;
 	}
@@ -539,6 +534,24 @@ public class FilterRequest {
 	}
 	public void setCommuneID(int communeID) {
 		this.communeID = communeID;
+	}
+	public String getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+	public String getDeviceQuantity() {
+		return deviceQuantity;
+	}
+	public void setDeviceQuantity(String deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
+	public String getSupplierName() {
+		return supplierName;
+	}
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
 	}
 	@Override
 	public String toString() {
@@ -679,8 +692,6 @@ public class FilterRequest {
 		builder.append(port);
 		builder.append(", currency=");
 		builder.append(currency);
-		builder.append(", quantity=");
-		builder.append(quantity);
 		builder.append(", stockStatus=");
 		builder.append(stockStatus);
 		builder.append(", feature=");
@@ -703,6 +714,12 @@ public class FilterRequest {
 		builder.append(state);
 		builder.append(", ruleName=");
 		builder.append(ruleName);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
+		builder.append(", supplierName=");
+		builder.append(supplierName);
 		builder.append(", province=");
 		builder.append(province);
 		builder.append(", district=");
@@ -722,8 +739,7 @@ public class FilterRequest {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
+	 
 	
 	
 }

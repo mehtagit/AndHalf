@@ -518,13 +518,10 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 						data : function(d) {
 							
 							d.filter = JSON.stringify(jsonObj); 
-							
-							console.log(jsonObj);
-							// ////console.log(JSON.stringify(jsonObj));
 						},
 						error: function (jqXHR, textStatus, errorThrown,data) {
 							
-							 window.parent.$('#msgDialog').text(jqXHR['responseJSON']['message']);
+							 window.parent.$('#msgDialog').text($.i18n('500ErrorMsg'));
 							 // messageWindow(jqXHR['responseJSON']['message']);
 							 window.parent.$('#500ErrorModal').openModal({
 							 dismissible:false

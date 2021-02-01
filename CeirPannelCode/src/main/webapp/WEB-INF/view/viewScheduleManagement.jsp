@@ -143,238 +143,91 @@
 		<!--end container-->
 	</section>
 	
-	<div id="addAddressModal" class="modal">
-           <h6 class="modal-header"><spring:message code="sidebar.Address_Management" /></h6>
-           <div class="modal-content">
-            <div class="row">
-              
-                   <h5 class="center">
-						<label> <input name="group1" type="radio" value="0"
-							onclick="AddSystemAddress('province');"/>
-							<span class="checkboxFont"> <spring:message code="input.province" /></span></label>
-									
-						 <label> <input name="group2" type="radio" value="1"
-							onclick="AddSystemAddress('district')"/>
-							<span class="checkboxFont"> <spring:message code="input.district" /></span>
-						</label> 
-						
-						<label> <input name="group3" type="radio" value="2"
-							onclick="AddSystemAddress('commune')"/>
-							<span class="checkboxFont"> <spring:message code="input.commune" /></span>
-						</label> 
-						
-						<label> <input name="group4" type="radio" value="3"
-							onclick="AddSystemAddress('village')"/>
-							<span class="checkboxFont"> <spring:message code="input.village" /></span>
-						</label> 
-					</h5>
-							  
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <button class="btn modal-close" onclick = "resetButtons()"style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+	<div id="addSceduleModal" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
+        <h6 class="modal-header">Add Schedule Report</h6>
+        <div class="modal-content">
+          	<form action="" onsubmit="return saveShedule()" method="post" >
+                <div class="row" style="margin-top: 10px;">
+					
+					<!-- <div class="input-field col s12 m6" style="margin-top: 22px;">
+						<input type="text" name="month"
+						id='month' class='form-control datepick'
+						autocomplete='off'  required /> 
+						<label for="month" class="center-align">Month <span class="star">*</span>
+						</label> <span class="input-group-addon" style="color: #ff4081"><i
+												class="fa fa-calendar" aria-hidden="true"></i></span>
+					
+					</div> -->
+					
+					<div class="col s12 m4" style="width: 50%;">
+								<label for="addreportCatagory"><spring:message
+									code="sidebar.ReportCatagory" /> <span class="star">*</span></label> <select
+								class="browser-default" title="<spring:message code="" />"
+								oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+								required id="addreportCatagory">
+								<option value="" disabled selected><spring:message
+										code="select.reportCatagory" /></option>
+							</select>
+						</div>
+                        
+                        
+                    
+					
+					
+					<div class="col s12 m4" style="width: 50%;">
+							<label for="tableId"><spring:message
+									code="sidebar.Report" /> <span class="star">*</span></label> <select
+								class="browser-default" title="<spring:message code="" />"
+								oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+								required id="tableId">
+								<option value="" disabled selected><spring:message
+										code="select.report"/></option>
+							</select>
+						</div>
+                        
+                        
+                   
+					 
+					<div class="input-field col s12 m6 l6" style="margin-top: 22px;">
+									<input type="text" name="email" maxlength="280" id="email"
+										pattern="<spring:eval expression="@environment.getProperty('pattern.mail')" />"
+										oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');"
+										oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');"
+										required /> <label for="email"><spring:message
+											code="input.email" /> <span class="star">*</span> </label>
+					</div>
+					
+					<div class="col s12 m6">
+					<label for="addStatus" class="active">Status<span class="star">  *</span></label>
+                     	 <select class="browser-default" id="addStatus" required="required">
+                                <option value="" selected >Select Status</option>
+                                <option value="Enabled">Enable</option>
+                                <option value="Disabled">Disable</option>
+                          </select>
+                        
+                        
+                    </div>
+					
+					
+				
+
+					 <div class="col s12 m12 center" style="margin-top: 20px;">
+                        <button class="btn" type="submit">Submit</button>
+                        <a href="#" onclick="resetFields()" class="btn modal-close" id="Cancel" style="margin-left: 10px;">Cancel</a>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
-    
-    <div id="addProvinceModal" class="modal">
-               <form action="" onsubmit="return saveProvince()" method="POST"
-								enctype="multipart/form-data" >
-								  <div class="row" id="singleInput">
-								  <h6 class="modal-header "> Add Province</h6>
-                                <div class="col s12 m12 l12">
-                   	   
-                                   <div class="row"  style="margin-top: 10px">
-                                        	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
-											<label><spring:message code="table.country" /> <!-- <span
-										class="star">*</span> --></label> <select id="country"
-										class="browser-default" class="mySelect"
-										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required disabled></select>
-										</div> 
-                                       		
-                                       
-										
-									<div class="input-field col s12 m6" style="margin-top: 22px;">
-										<input type="text" name="province" id="addProvince"
-							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
-							maxlength="50" required/> <label for="addProvince"
-							class="center-align"><spring:message
-								code="input.province" /> <span class="star">*</span></label>
-								</div>		
-                          </div>
-                               <div class="row">
-                                            <div class="input-field col s12 center" style="padding: 20px 0;">
-                                                <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
-                                                 <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
-                                               	<button type="button" onclick = "resetButtons()" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
-                                            </div>
-									</div>	
-                                  </div>
-                         </div></form>
-        </div> 
+ 
         
-         <div id="addDistrictModal" class="modal">
-               <form action="" onsubmit="return saveDistrict()" method="POST"
-								enctype="multipart/form-data" >
-								  <div class="row" id="singleInput">
-								  <h6 class="modal-header ">Add District</h6>
-                                <div class="col s12 m12 l12">
-                   	   
-                                   <div class="row"  style="margin-top: 10px">
-                                        	<%-- <div class="col s12 m6 l6" style="margin-bottom: 5px;">
-											<label><spring:message code="table.country" /> <span
-										class="star">*</span></label> <select id="country1"
-										class="browser-default" class="mySelect"
-										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
-										</div>  --%>
-                                        	
-                                        	
-                                        	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
-											<label><spring:message code="input.province" /> <span
-										class="star">*</span></label> <select id="provinceForDistrict"
-										class="browser-default" class="mySelect"
-										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
-										</div> 
-                                       		
-                                       
-										
-									<div class="input-field col s12 m6" style="margin-top: 22px;">
-										<input type="text" name="district" id="addDistrict"
-							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
-							maxlength="50" required/> <label for="addDistrict"
-							class="center-align"><spring:message
-								code="input.district" /> <span class="star">*</span></label>
-								</div>		
-                          </div>
-                               <div class="row">
-                                            <div class="input-field col s12 center" style="padding: 20px 0;">
-                                                <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
-                                                 <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
-                                               	<button type="button" onclick = "resetButtons()" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
-                                            </div>
-									</div>	
-                                  </div>
-                         </div></form>
-        </div> 
-        
-          <div id="addCommuneModal" class="modal">
-               <form action="" onsubmit="return saveCommune()" method="POST"
-								enctype="multipart/form-data" >
-								  <div class="row" id="singleInput">
-								  <h6 class="modal-header "> Add Commune</h6>
-                                <div class="col s12 m12 l12">
-                   	   
-                                   <div class="row"  style="margin-top: 10px">
-                                   
-                                   	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
-											<label><spring:message code="input.province" /> <span
-										class="star">*</span></label> <select id="provinceForCommune"
-										class="browser-default" class="mySelect"
-										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
-										</div> 
-										
-                                   
-                                        	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
-											<label><spring:message code="input.district" /> <span
-										class="star">*</span></label> <select id="districtForCommune"
-										class="browser-default" class="mySelect"
-										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required>
-										<option value=""><spring:message code="select.district" /></option>
-										</select>
-										</div> 
-                                       		
-                                       
-										
-									<div class="input-field col s12 m6" style="margin-top: 22px;">
-										<input type="text" name="commune" id="addCommune"
-							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
-							maxlength="50" required/> <label for="addCommune"
-							class="center-align"><spring:message
-								code="input.commune" /> <span class="star">*</span></label>
-								</div>		
-                          </div>
-                               <div class="row">
-                                            <div class="input-field col s12 center" style="padding: 20px 0;">
-                                                <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
-                                                 <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
-                                               	<button type="button" onclick = "resetButtons()" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
-                                            </div>
-									</div>	
-                                  </div>
-                         </div></form>
-        </div> 
 		
-		<div id="addVillageModal" class="modal">
-               <form action="" onsubmit="return saveVillage()" method="POST"
-								enctype="multipart/form-data" >
-								  <div class="row" id="singleInput">
-								  <h6 class="modal-header "> Add Village</h6>
-                                <div class="col s12 m12 l12">
-                   	   					
-                                   <div class="row"  style="margin-top: 10px">
-                                   <div class="col s12 m6 l6" style="margin-bottom: 5px;">
-											<label><spring:message code="input.province" /> <span
-										class="star">*</span></label> <select id="provinceForVillage"
-										class="browser-default" class="mySelect"
-										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required></select>
-									</div> 
-                                   
-                                   			<div class="col s12 m6 l6" style="margin-bottom: 5px;">
-											<label><spring:message code="input.district" /> <span
-										class="star">*</span></label> <select id="districtForVillage"
-										class="browser-default" class="mySelect"
-										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required >
-										<option value=""><spring:message code="select.district" /></option></select>
-										</div> 
-                                   
-                                        	<div class="col s12 m6 l6" style="margin-bottom: 5px;">
-											<label><spring:message code="input.commune" /> <span
-										class="star">*</span></label> <select id="communeForVillage"
-										class="browser-default" class="mySelect"
-										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-										style="padding-left: 0;" required>
-										<option value=""><spring:message code="select.commune" /></option></select>
-										</div> 
-                                       		
-                                       
-										
-									<div class="input-field col s12 m6" style="margin-top: 22px;">
-										<input type="text" name="village" id="addVillage"
-							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
-							maxlength="50" required/> <label for="addVillage"
-							class="center-align"><spring:message
-								code="input.village" /> <span class="star">*</span></label>
-								</div>		
-                          </div>
-                               <div class="row">
-                                            <div class="input-field col s12 center" style="padding: 20px 0;">
-                                                <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
-                                                 <button class=" btn" type="submit"><spring:message code="button.submit" /></button>
-                                               	<button type="button" onclick = "resetButtons()" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
-                                            </div>
-									</div>	
-                                  </div>
-                         </div></form>
-        </div> 
+	
         
         <div id="confirmSaveModal" class="modal">
-         <h6 class="modal-header"><spring:message code="registration.changeUserStatus" /></h6>
+         <h6 class="modal-header">Add Schedule Report</h6>
           <div class="modal-content">
             <div class="row">
                 <form action="">
@@ -384,13 +237,152 @@
             </div>
             <div class="row">
                 <div class="input-field col s12 center">
-                    <a href="./addressManagement?FeatureId=53" class="btn modal-close" ><spring:message code="modal.ok" /></a>
+                    <a href="./scheduleManagement?FeatureId=54" class="btn modal-close" ><spring:message code="modal.ok" /></a>
                     <%-- <a onclick="closeConfirmantionModel()"
 						class="modal-close modal-trigger btn" type="submit"><spring:message code="modal.ok" /></a> --%>
                 </div>
             </div>
         </div>
     	</div>
+    	
+    	
+    	<div id="ViewModel" class="modal">
+			<h6 class="modal-header">
+				View Schedule Report
+			</h6>
+			<div class="modal-content">
+				
+						<div class="row myRow" style="margin-top: 10px;">
+								<div class="col s12 m4" style="width: 50%;">
+								<label for="viewreportCatagory"><spring:message
+									code="sidebar.ReportCatagory" /></label> <select
+								class="browser-default" title="<spring:message code="" />"
+								oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+								required disabled id="viewreportCatagory">
+								<option value="" disabled selected><spring:message
+										code="select.reportCatagory" /></option>
+							</select>
+						</div>
+                        
+                        
+                    
+					
+					
+					<div class="col s12 m4" style="width: 50%;">
+							<label for="viewtableId"><spring:message
+									code="sidebar.Report" /></label> <select
+								class="browser-default" title="<spring:message code="" />"
+								oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+								required disabled id="viewtableId">
+								<option value="" disabled selected><spring:message
+										code="select.report"/></option>
+							</select>
+						</div>
+                        
+                        
+                   
+					 
+					<div class="input-field col s12 m6 l6" style="margin-top: 22px;">
+									<input type="text" name="email" maxlength="280" id="viewemail" disabled
+										pattern="<spring:eval expression="@environment.getProperty('pattern.mail')" />"
+										oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');"
+										oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');"
+										required /> <label for="viewemail"><spring:message
+											code="input.email" /> </label>
+					</div>
+					
+					<div class="col s12 m6">
+					<label for="viewStatus" class="active">Status</label>
+                     	 <select class="browser-default" id="viewStatus" required="required" disabled>
+                                <option value="" selected >Select Status</option>
+                                <option value="Enabled">Enabled</option>
+                                <option value="Disabled" >Disabled</option>
+                          </select>
+                        
+                        
+                    </div>
+
+							</div>			
+
+
+					
+						
+
+		<div class="row">
+						<div class="input-field col s12 center">
+							<button class="modal-close btn" type="button"
+								style="margin-left: 10px;">
+								<spring:message code="modal.close" />
+							</button>
+
+
+						</div>
+
+					</div>
+				
+			</div>
+		</div>
+    	
+    	
+    <div id="editModel" class="modal">
+			<h6 class="modal-header">
+				<spring:message code="Edit User" />
+			</h6>
+			<div class="modal-content">
+				<form action="" onsubmit="return update()" method="POST"
+					enctype="multipart/form-data" id="register">
+				<div class="row myRow" style="margin-top: 10px;">
+									<div class="input-field col s12 m4">
+                                            <input type="text" id="editfirstName"  name="firstName" pattern="[a-zA-Z]{0,20}" required="required"
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" disabled
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"/>
+                                            <label for="editfirstName"><spring:message code="input.firstName" /></label>
+                                        </div>
+										
+										<input type="text" id="editId" hidden="hidden">
+                                       
+                                        <div class="input-field col s12 m4">
+                                            <input type="text" id="editmiddleName" name="middleName" pattern="[a-zA-Z]{0,20}" disabled
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" maxlength="20" />
+                                            <label for="editmiddleName"><spring:message code="input.middleName" /></label>
+                                        </div>
+						</div>			
+
+					
+					<div class="row myRow">
+				 					<div class="input-field col s12 m4">
+                                            <input type="text" id="editlastName" name="lastName" pattern="[a-zA-Z]{0,20}" disabled
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													 required   maxlength="20" />
+                                            <label for="editlastName"><spring:message code="input.lastName" /></label>
+                                        </div>
+                     </div>
+						
+						
+
+		<div class="row">
+						<div class="input-field col s12 center">
+
+							<button class="btn " type="submit" style="margin-left: 10px;">
+								<spring:message code="button.update" />
+							</button>
+							<button class="modal-close btn" type="button"
+								style="margin-left: 10px;">
+								<spring:message code="button.cancel" />
+							</button>
+
+
+						</div>
+
+					</div>
+				</form>
+			</div>
+		</div>	
+    	
 	<div id="DeleteAddressModal" class="modal">
 		<h6 class="modal-header"><spring:message code="modal.header.deleteAddress" /></h6>
 		<div class="modal-content">

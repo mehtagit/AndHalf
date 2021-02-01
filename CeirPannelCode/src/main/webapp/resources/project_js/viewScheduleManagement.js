@@ -223,30 +223,92 @@
 	
 	
 	
-		
-	
-	
-
-	
-	
-	
-	
-		function AddAddress(){
-			$('#addAddressModal').openModal({
+	function AddShedule(){
+			$('#addSceduleModal').openModal({
 		        dismissible:false
 		    });
-			
+			$.getJSON('./getDropdownList/REPORT_CATEGORY', function(data) {
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].value).text(data[i].interp)
+					.appendTo('#addreportCatagory');
+				}
+			});
 		}
-		
-		 function resetButtons(){
-			 $('input[name=group1]').attr('checked',false);
-			 $('input[name=group2]').attr('checked',false);
-			 $('input[name=group3]').attr('checked',false);
-			 $('input[name=group4]').attr('checked',false);
-		 }
 	
-	
+	$('#addreportCatagory').on(
+			'change',
+			function() {
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+					headers:
+					{ 'X-CSRF-TOKEN': token }
+				});
+				
+				var reportCategory = parseInt($('#addreportCatagory').val());
+				
+				$.ajax({
+					url: './getallreports?reportCategory='+reportCategory,
+					type: 'POST',
+					dataType : 'json',
+					contentType : 'application/json; charset=utf-8',
+					success: function (data, textStatus, jqXHR) {
+						var result= data;
+						$("#tableId").empty();
+						for (i = 0; i < result.length; i++){
+							//alert(result[i].reportTrends[0].typeFlag);
+							$('<option>').val(result[i].reportnameId).text(result[i].reportName).attr("trendValue",result[i].reportTrends[0].typeFlag).appendTo('#tableId');
+						//	$('<option>').val(data[i].tagId).text(data[i].interp).attr("docValue",data[i].value).appendTo('#doc_type');
+						}
 
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						//////console.log("error in ajax")
+					}
+				});
+			});
+	
+	function saveShedule(){
+		
+		var reportCatagory = $("#addreportCatagory").val() == 'null' ? null : $("#addreportCatagory").val() == 'null' ? null : $("#addreportCatagory option:selected").text();
+		var reportName = $("#tableId").val() == 'null' ? null : $("#tableId option:selected").text();
+		var emailId = $("#email").val();
+		var flag = $('#addStatus').val()== "" ? null : $("#addStatus option:selected").text();
+	 	
+		var Request={
+				"category" : reportCatagory,
+				"reportName": reportName,
+				"emailId" :  emailId,
+				"flag" : flag
+			}
+		console.log("Request-->"+JSON.stringify(Request));
+	 	var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
+		$.ajax({
+			url : './addSchedule',
+			data : JSON.stringify(Request),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			type : 'POST',
+			success : function(data) {
+				$("#confirmSaveModal").openModal({
+				 	   dismissible:false
+			    });
+				
+			$('#successMessage').text('Report Scheduled Successfully.');
+			},
+			error : function() {
+				//alert("Failed");
+			}
+		});
+	 return false
+}
+	
+		
 	function exportAddressData(){
 		var table = $('#ScheduleManagementLibraryTable').DataTable();
 		var info = table.page.info(); 
@@ -347,126 +409,61 @@
 	
 	
 	
-	function AddSystemAddress(entity){
-		if (entity == "province"){
-			$("#addProvinceModal").openModal({
-				dismissible:false
-			});
-			$('#addProvince').val("");
-			populateCountries("country", "state");
-			$("#country").val("Cambodia");
-		}else if(entity == "district"){
-			$("#addDistrictModal").openModal({
-				dismissible:false
-			});
-			$('#provinceForDistrict').val("");
-			$('#addDistrict').val("");
-			//populateCountries("country1", "state");
-			//$("#country1").val("Cambodia");
+	
+	
+	
+	 
+	 function resetFields(){
+		$("#addreportCatagory").val("");
+		$("#tableId").val("");
+		$("#email").val("");
+		$("#addStatus").val("");
+		
+	 }
+	 
+	 
+	 function viewDetails(id,action){
+			
+			
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
 			$.ajaxSetup({
 				headers:
 				{ 'X-CSRF-TOKEN': token }
 			});
-			$.getJSON('./getAllProvince', function(data) {
-				$('#provinceForDistrict').empty();
-				var html='<option value="">Select Province</option>';
-				$('#provinceForDistrict').append(html);	
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].province).text(data[i].province)
-					.appendTo('#provinceForDistrict');
-				}
-			});
-		}else if(entity == "commune"){
-			$("#addCommuneModal").openModal({
-				dismissible:false
-			});
-			$('#provinceForCommune').val("");
-			$('#districtForCommune').val("");
-			$('#addCommune').val("");
-			$.getJSON('./getAllProvince', function(data) {
-				$('#provinceForCommune').empty();
-				var html='<option value="">Select Province</option>';
-				$('#provinceForCommune').append(html);	
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].province).text(data[i].province)
-					.appendTo('#provinceForCommune');
-				}
-			});
-		}else if(entity == "village"){
-			$("#addVillageModal").openModal({
-				dismissible:false
-			});
-			$('#provinceForVillage').val("");
-			$('#districtForVillage').val("");
-			$('#communeForVillage').val("");
-			$('#addVillage').val("");
-			$.getJSON('./getAllProvince', function(data) {
-				$('#provinceForVillage').empty();
-				var html='<option value="">Select Province</option>';
-				$('#provinceForVillage').append(html);	
-				for (i = 0; i < data.length; i++) {
-					$('<option>').val(data[i].province).text(data[i].province)
-					.appendTo('#provinceForVillage');
-				}
-			});	
-		}
+			
+				$.ajax({
+					url : "./viewBy/"+id,
+					dataType : 'json',
+					contentType : 'application/json; charset=utf-8',
+					type : 'GET',
+					success: function (data, textStatus, jqXHR) {
+							var data = data
+							if(action == "View"){
+								$("#ViewModel").openModal({
+							        dismissible:false
+							    });
+								console.log("data---"+JSON.stringify(data));
+								viewPopupData(data);
+							}else{
+								$("#editModel").openModal({
+							        dismissible:false
+							    });
+								//editPopupData(result);
+							}
+							
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						////console.log("error in ajax")
+					}
+				});	
+			}
+	 
+	 function viewPopupData(data){
+		 	$("#viewreportCatagory").val(data.category);
+		 	$("#viewtableId").val(data.reportName);
+		 	$("#viewemail").val(data.emailId);
+		 	$("#viewStatus").val(data.flag);
+		 	$("label[for='viewemail']").addClass('active');
 	}
-	
-	
-	 function saveProvince(){
-		// var counrty = $('#country').val() =="" || $('#country').val() == undefined ? null : $("#country option:selected").text();
-		 //var province = $('#addProvince').val() =="" || $('#addProvince').val() == undefined ? null : $("#addProvince option:selected").text();
-		 	var Request={
-					"country" : $("#country").val(),
-					"province" : $("#addProvince").val(),
-					"username" : $("body").attr("data-selected-username"),
-					"userId" : parseInt(userId),
-				}
-			//console.log("Request-->"+JSON.stringify(Request));
-		 	var token = $("meta[name='_csrf']").attr("content");
-			var header = $("meta[name='_csrf_header']").attr("content");
-			$.ajaxSetup({
-				headers:
-				{ 'X-CSRF-TOKEN': token }
-			});
-			$.ajax({
-				url : './addProvince',
-				data : JSON.stringify(Request),
-				dataType : 'json',
-				contentType : 'application/json; charset=utf-8',
-				type : 'POST',
-				success : function(data) {
-					$("#confirmSaveModal").openModal({
-					 	   dismissible:false
-				    });
-					
-				$('#successMessage').text('Province Added Successfully.');
-				},
-				error : function() {
-					//alert("Failed");
-				}
-			});
-		 return false
-	}
-	 
-	 
-	 
-	/* function closeConfirmantionModel(){
-		 $("#addProvinceModal").closeModal({
-				dismissible:false
-			});
-		 $("#addDistrictModal").closeModal({
-				dismissible:false
-			});
-		 $("#addCommuneModal").closeModal({
-				dismissible:false
-			});
-		 $("#addVillageModal").closeModal({
-				dismissible:false
-			});
-		 
-	 }
-	 */
 	

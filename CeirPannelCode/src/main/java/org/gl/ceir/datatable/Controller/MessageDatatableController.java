@@ -107,7 +107,7 @@ public class MessageDatatableController {
 				datatableResponseModel.setRecordsFiltered(null);
 				datatableResponseModel.setData(Collections.emptyList());
 				log.error(e.getMessage(),e);
-				return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+				return new ResponseEntity<>(datatableResponseModel, HttpStatus.INTERNAL_SERVER_ERROR); 
 				
 				
 			}
