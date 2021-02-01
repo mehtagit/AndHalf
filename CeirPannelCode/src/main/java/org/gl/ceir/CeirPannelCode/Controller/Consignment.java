@@ -530,7 +530,7 @@ public class Consignment {
 		filterRequest.setDisplayName(displayName);
 		filterRequest.setDeviceQuantity(deviceQuantity);
 		filterRequest.setQuantity(imeiQuantity);
-		filterRequest.setSuplierName(supplierName);
+		filterRequest.setSupplierName(supplierName);
 		log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 		Object	response= feignCleintImplementation.consignmentFilter(filterRequest, pageNo, pageSize, file,source);
 

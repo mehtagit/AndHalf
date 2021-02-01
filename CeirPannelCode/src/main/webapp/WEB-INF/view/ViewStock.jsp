@@ -138,12 +138,13 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 
 								<a href="" class="boton right" id="btnLink"></a>
 							</div>
-
+                    <form action="${context}/viewConsignment" id="viewStockFilter"
+								method="post">
 							<div class="col s12 m12 l12" id="consignmentTableDIv"
 								style="padding-bottom: 5px; background-color: #e2edef52;">
 								<div id="filterBtnDiv"></div>
 							</div>
-
+                   </form>
 							<table id="stockTable" class="responsive-table striped display"></table>
 
 						</div>

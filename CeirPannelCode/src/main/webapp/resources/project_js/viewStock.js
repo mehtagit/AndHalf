@@ -468,8 +468,11 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				"consignmentStatus":parseInt($('#StockStatus').val()),
 				"displayName" : $('#name').val(),
 				"filteredUserType" : filereduserType,
-						"filterUserName":$('#name').val(),
-				"source":$("body").attr("data-Source")
+				"filterUserName":$('#name').val(),
+				"source":$("body").attr("data-Source"),
+				"quantity" : $('#IMEIQuantityFilter').val(),
+				"deviceQuantity" : $('#deviceQuantityFilter').val(),
+				"fileName":$('#fileNameFilter').val()
 		}
 		if(lang=='km'){
 			var langFile='./resources/i18n/khmer_datatable.json';
@@ -496,8 +499,8 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 					orderCellsTop : true,
 					"ordering": false,
 					"bPaginate" : true,
-					"bFilter" : true,
-					"bInfo" : true,
+					"bFilter" : false,
+					"bInfo" : false,
 					"bSearchable" : true,
 					scrollCollapse: true,
 					"oLanguage": {  
@@ -620,12 +623,12 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 					$("#btnLink").css({display: "none"});
 					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter' /></div>");
 					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportStockData()'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' style='margin-left: 18px;' id='clearStockFilter'>"+$.i18n('clearFilter')+"</button></div>");
+					$('#clearStockFilter').attr("onclick", "filterReset('viewStockFilter')");	
 					for(i=0; i<button.length; i++){
 						$('#'+button[i].id).text(button[i].buttonTitle);
 						$('#'+button[i].id).attr("href", button[i].buttonURL);
 					}
-					
-					
 					
 					$("#footerBtn").append("<div class='col s12 m2 l2'><button class='btn' id='markedstolen' style='margin-left:38%;margin-top: 8px;'></button><button class='btn' id='cancel' style='margin-left: 22px;margin-top: 8px;'></button></div>");
 					for(i=0; i<button.length; i++){
@@ -635,9 +638,10 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 				}else{
 
-					
 					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter' /></div>");
 					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportStockData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' style='margin-left: 18px;' id='clearStockFilter'>"+$.i18n('clearFilter')+"</button></div>");
+					$('#clearStockFilter').attr("onclick", "filterReset('viewStockFilter')");	
 					for(i=0; i<button.length; i++){
 						$('#'+button[i].id).text(button[i].buttonTitle);
 						/*
@@ -920,7 +924,9 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		
 		var stockStartDate=$('#startDate').val();
 		var stockEndDate=$('#endDate').val();
-		// var stockTxnId=$('#transactionID').val();
+		var quantity= $('#IMEIQuantityFilter').val();
+		var deviceQuantity= $('#deviceQuantityFilter').val();
+		var fileName=$('#fileNameFilter').val();
 		var stockTxnId="";
 		if($("body").attr("data-filterSource")=='noti'){
 			 stockTxnId= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;	
@@ -928,24 +934,17 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		else{
 			stockTxnId=$('#transactionID').val();
 		}
-		// alert($("body").attr("data-filterSource"));
+		
 		var StockStatus=parseInt($('#StockStatus').val());
 		var roleType = role;
 		var currentRoleType = $("body").attr("data-stolenselected-roleType");	
 		var userType = role;
 		var sourceParam=$("body").attr("data-Source");
-		// var userTypeId = $("body").attr("data-userTypeID");
-		var selectedRoleTypeId=$("body").attr("data-selectedRoleTypeId");
-		// alert("selectedRoleTypeId="+selectedRoleTypeId);
-		// var currentSelectedRoleType=selectedRoleTypeId == null ?
-		// selectedRoleTypeId : userTypeId;
 		
-		// //////console.log("userType--->"+userType+"-------------userTypeId------------>"+userTypeId);
-		// //////console.log("roleType=="+roleType+"
-		// currentRoleType="+currentRoleType+" role="+role);
+		var selectedRoleTypeId=$("body").attr("data-selectedRoleTypeId");
+		
 	var filteredUserType =  $('#userType').val() =='null' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
-	// var filterUserName=$('#name').val() == 'null' || 'undefined'
-	// ?null:$('#name').val();
+	
 		var filterUserName=$('#name').val();
 		if(filterUserName==undefined || filterUserName=="undefined"){
 			filterUserName="";
@@ -953,10 +952,10 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		if(isNaN(StockStatus))
 		{
 		StockStatus='';
-		// ////console.log(" StockStatus=="+StockStatus);
+		
 		}
 	
-		if(stockStartDate!="" ||stockEndDate!="" || stockTxnId!="" || StockStatus!="" || filteredUserType!=undefined || filterUserName!=undefined ){
+		if(stockStartDate!="" ||stockEndDate!="" || stockTxnId!="" || StockStatus!="" || filteredUserType!=undefined || filterUserName!=undefined || quantity!=undefined || deviceQuantity!=undefined || fileName!=undefined ){
 		  sourceParam="filter";
 	  }
 		var table = $('#stockTable').DataTable();
@@ -964,13 +963,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		var pageNo=info.page;
 		var pageSize =info.length;
 		
-		// console.log(selectedRoleTypeId);
-		// ////console.log("--------"+pageSize+"---------"+pageNo);
-		// ////console.log("stockStartDate ="+stockStartDate+"
-		// stockEndDate=="+stockEndDate+" stockTxnId="+stockTxnId+" StockStatus
-		// ="+StockStatus+" roleType="+$("body").attr("data-roleType")+"
-		// userType="+role);
-		window.location.href="./exportStock?stockStartDate="+stockStartDate+"&stockEndDate="+stockEndDate+"&stockTxnId="+stockTxnId+"&StockStatus="+StockStatus+"&userType="+userType+"&userTypeId="+selectedRoleTypeId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType+'&source='+sourceParam+'&filterUserName='+filterUserName+'&filteredUserType='+filteredUserType;
+		window.location.href="./exportStock?stockStartDate="+stockStartDate+"&stockEndDate="+stockEndDate+"&stockTxnId="+stockTxnId+"&StockStatus="+StockStatus+"&userType="+userType+"&userTypeId="+selectedRoleTypeId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&roleType="+roleType+'&source='+sourceParam+'&filterUserName='+filterUserName+'&filteredUserType='+filteredUserType+"&quantity="+quantity+"&deviceQuantity="+deviceQuantity+"&fileName="+fileName;
 	}
 	
 	function fileTypeValueChanges() {

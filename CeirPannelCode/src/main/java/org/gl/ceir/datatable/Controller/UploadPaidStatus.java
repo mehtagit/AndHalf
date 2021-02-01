@@ -369,7 +369,23 @@ public class UploadPaidStatus {
 				dateRelatedFields.setClassName(dateParam[i]);
 				inputTypeDateList.add(dateRelatedFields);
 				}
-			}else {
+			}
+			else if("CEIRAdmin".equals(userType)){
+				//input type date list
+				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.nidInput"),"nId","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("input.Nationality"),"filterNationality","","text",Translator.toLocale("table.origin"),"originFilter",""};
+				for(int i=0; i< dateParam.length; i++) {
+				dateRelatedFields= new InputFields();
+				dateRelatedFields.setType(dateParam[i]);
+				i++;
+				dateRelatedFields.setTitle(dateParam[i]);
+				i++;
+				dateRelatedFields.setId(dateParam[i]);
+				i++;
+				dateRelatedFields.setClassName(dateParam[i]);
+				inputTypeDateList.add(dateRelatedFields);
+				}	
+			}
+			else {
 			//input type date list
 			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.nidInput"),"nId","","text",Translator.toLocale("input.transactionID"),"transactionID",""};
 			for(int i=0; i< dateParam.length; i++) {
