@@ -1,218 +1,131 @@
 package com.gl.ceir.config.model;
 
+import java.util.Date;
+
 public class FilterRequest {
 
-	public Integer userId;
-	public String nid;
-	private String txnId;
-	public String startDate;
-	public String endDate;
-	private Integer consignmentStatus;
-	private String roleType;
-	private Integer requestType;
-	private Integer sourceType;
-	private String userType;
+    
+    
+    private String category;
+    private String reportName;
+    private String EmailId;
+    private String Action;
+    private String flag;
+    	private String userType;
+    	private String userName;
+        
+         private Date createdOn;
+         private Date modifiedOn;
+
 	private Integer featureId;
 	private Integer userTypeId;
 	private String searchString;
 
-	public Integer taxPaidStatus;
-	private Integer deviceIdType;
-	private Integer deviceType;
-	private Integer type;
-	private Integer channel;
+    public Date getCreatedOn() {
+        return createdOn;
+    }
 
-	private String tag;
-	private Integer status;
+    public void setCreatedOn(Date createdOn) {
+        this.createdOn = createdOn;
+    }
 
-	private Integer operatorTypeId;
-	private String origin;
+    public Date getModifiedOn() {
+        return modifiedOn;
+    }
 
-	public Integer getUserId() {
-		return userId;
-	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+    public void setModifiedOn(Date modifiedOn) {
+        this.modifiedOn = modifiedOn;
+    }
 
-	public String getNid() {
-		return nid;
-	}
-	public void setNid(String nid) {
-		this.nid = nid;
-	}
-	public String getTxnId() {
-		return txnId;
-	}
-	public void setTxnId(String txnId) {
-		this.txnId = txnId;
-	}
-	public String getStartDate() {
-		return startDate;
-	}
-	public void setStartDate(String startDate) {
-		this.startDate = startDate;
-	}
-	public String getEndDate() {
-		return endDate;
-	}
-	public void setEndDate(String endDate) {
-		this.endDate = endDate;
-	}
-	public Integer getTaxPaidStatus() {
-		return taxPaidStatus;
-	}
-	public void setTaxPaidStatus(Integer taxPaidStatus) {
-		this.taxPaidStatus = taxPaidStatus;
-	}
-	public Integer getSourceType() {
-		return sourceType;
-	}
-	public void setSourceType(Integer sourceType) {
-		this.sourceType = sourceType;
-	}
-	public String getRoleType() {
-		return roleType;
-	}
-	public void setRoleType(String roleType) {
-		this.roleType = roleType;
-	}
+        
+        
+    public String getCategory() {
+        return category;
+    }
 
-	public Integer getConsignmentStatus() {
-		return consignmentStatus;
-	}
-	public void setConsignmentStatus(Integer consignmentStatus) {
-		this.consignmentStatus = consignmentStatus;
-	}
-	public Integer getRequestType() {
-		return requestType;
-	}
-	public void setRequestType(Integer requestType) {
-		this.requestType = requestType;
-	}
-	public String getUserType() {
-		return userType;
-	}
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
-	public Integer getFeatureId() {
-		return featureId;
-	}
-	public void setFeatureId(Integer featureId) {
-		this.featureId = featureId;
-	}
-	public Integer getUserTypeId() {
-		return userTypeId;
-	}
-	public void setUserTypeId(Integer userTypeId) {
-		this.userTypeId = userTypeId;
-	}
-	public String getSearchString() {
-		return searchString;
-	}
-	public void setSearchString(String searchString) {
-		this.searchString = searchString;
-	}
-	public Integer getDeviceIdType() {
-		return deviceIdType;
-	}
-	public void setDeviceIdType(Integer deviceIdType) {
-		this.deviceIdType = deviceIdType;
-	}
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
-	public Integer getDeviceType() {
-		return deviceType;
-	}
-	public void setDeviceType(Integer deviceType) {
-		this.deviceType = deviceType;
-	}
-	public String getTag() {
-		return tag;
-	}
-	public void setTag(String tag) {
-		this.tag = tag;
-	}
-	public Integer getType() {
-		return type;
-	}
-	public void setType(Integer type) {
-		this.type = type;
-	}
-	public Integer getChannel() {
-		return channel;
-	}
-	public void setChannel(Integer channel) {
-		this.channel = channel;
-	}
-	public Integer getStatus() {
-		return status;
-	}
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
-	public Integer getOperatorTypeId() {
-		return operatorTypeId;
-	}
-	public void setOperatorTypeId(Integer operatorTypeId) {
-		this.operatorTypeId = operatorTypeId;
-	}
-	public String getOrigin() {
-		return origin;
-	}
-	public void setOrigin(String origin) {
-		this.origin = origin;
-	}
-	
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("FilterRequest [userId=");
-		builder.append(userId);
-		builder.append(", nid=");
-		builder.append(nid);
-		builder.append(", txnId=");
-		builder.append(txnId);
-		builder.append(", startDate=");
-		builder.append(startDate);
-		builder.append(", endDate=");
-		builder.append(endDate);
-		builder.append(", consignmentStatus=");
-		builder.append(consignmentStatus);
-		builder.append(", roleType=");
-		builder.append(roleType);
-		builder.append(", requestType=");
-		builder.append(requestType);
-		builder.append(", sourceType=");
-		builder.append(sourceType);
-		builder.append(", userType=");
-		builder.append(userType);
-		builder.append(", featureId=");
-		builder.append(featureId);
-		builder.append(", userTypeId=");
-		builder.append(userTypeId);
-		builder.append(", searchString=");
-		builder.append(searchString);
-		builder.append(", taxPaidStatus=");
-		builder.append(taxPaidStatus);
-		builder.append(", deviceIdType=");
-		builder.append(deviceIdType);
-		builder.append(", deviceType=");
-		builder.append(deviceType);
-		builder.append(", type=");
-		builder.append(type);
-		builder.append(", channel=");
-		builder.append(channel);
-		builder.append(", tag=");
-		builder.append(tag);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", operatorTypeId=");
-		builder.append(operatorTypeId);
-		builder.append("]");
-		return builder.toString();
-	}
+    public String getReportName() {
+        return reportName;
+    }
 
+    public void setReportName(String reportName) {
+        this.reportName = reportName;
+    }
+
+    public String getEmailId() {
+        return EmailId;
+    }
+
+    public void setEmailId(String EmailId) {
+        this.EmailId = EmailId;
+    }
+
+    public String getAction() {
+        return Action;
+    }
+
+    public void setAction(String Action) {
+        this.Action = Action;
+    }
+
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Integer getFeatureId() {
+        return featureId;
+    }
+
+    public void setFeatureId(Integer featureId) {
+        this.featureId = featureId;
+    }
+
+    public Integer getUserTypeId() {
+        return userTypeId;
+    }
+
+    public void setUserTypeId(Integer userTypeId) {
+        this.userTypeId = userTypeId;
+    }
+
+    public String getSearchString() {
+        return searchString;
+    }
+
+    public void setSearchString(String searchString) {
+        this.searchString = searchString;
+    }
+
+    @Override
+    public String toString() {
+        return "FilterRequest{" + "category=" + category + ", reportName=" + reportName + ", EmailId=" + EmailId + ", Action=" + Action + ", flag=" + flag + ", userType=" + userType + ", userName=" + userName + ", featureId=" + featureId + ", userTypeId=" + userTypeId + ", searchString=" + searchString + '}';
+    }
+        
+        
+        
+    
+    
 }
-
-

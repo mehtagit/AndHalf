@@ -1,5 +1,7 @@
 package com.gl.ceir.config.specificationsbuilder;
 
+import com.gl.ceir.config.model.ReportDb;
+import com.gl.ceir.config.model.ScheduleReportDb;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +16,7 @@ import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.util.DbFunctions;
+import javax.persistence.criteria.Join;
 
 public class SpecificationBuilder<T> {
 
@@ -131,4 +134,60 @@ public class SpecificationBuilder<T> {
 		};
 	}
 
+        public Specification<ScheduleReportDb> joinWithUserType(SearchCriteria searchCriteria){
+		logger.info("inside join with usertype and data is: "+searchCriteria);
+		return (root, query, cb) -> { 
+			Join<ScheduleReportDb, ReportDb> user = root.join("usertype".intern());
+			if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
+					&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+				return cb.greaterThan(user.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+			}
+			else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
+					&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+				return cb.lessThan(user.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+			}
+			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+					&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+				return cb.equal(user.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+			}
+			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+					&& Datatype.INT.equals(searchCriteria.getDatatype())) {
+				return cb.equal(user.get(searchCriteria.getKey()), (int)searchCriteria.getValue());
+			} 
+			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+					&& Datatype.INT.equals(searchCriteria.getDatatype())) {
+				return cb.equal(user.get(searchCriteria.getKey()),searchCriteria.getValue());
+			} 
+			else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+					&& Datatype.LONG.equals(searchCriteria.getDatatype())) {
+				return cb.equal(user.get(searchCriteria.getKey()), (Long)searchCriteria.getValue());
+			}
+			else if(SearchOperation.GREATER_THAN.equals(searchCriteria.getSearchOperation())
+					&& Datatype.DATE.equals(searchCriteria.getDatatype())){
+				Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, user.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
+				return cb.greaterThanOrEqualTo(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+			}
+			else if(SearchOperation.LESS_THAN.equals(searchCriteria.getSearchOperation())
+					&& Datatype.DATE.equals(searchCriteria.getDatatype())){
+				Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, user.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
+				return cb.lessThanOrEqualTo(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+			}
+			else if(SearchOperation.NEGATION.equals(searchCriteria.getSearchOperation())
+					&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+				return cb.notEqual(user.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+			}
+			else if(SearchOperation.NEGATION.equals(searchCriteria.getSearchOperation())
+					&& Datatype.INT.equals(searchCriteria.getDatatype())) {
+				return cb.notEqual(user.get(searchCriteria.getKey()), (Integer)searchCriteria.getValue());
+			}else if(SearchOperation.NEGATION.equals(searchCriteria.getSearchOperation())
+					&& Datatype.LONG.equals(searchCriteria.getDatatype())) {
+				return cb.notEqual(user.get(searchCriteria.getKey()), (Long)searchCriteria.getValue());
+			}else {
+				return null;
+			}
+
+		};
+	}
+        
+        
 }

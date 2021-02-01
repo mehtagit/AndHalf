@@ -10,9 +10,9 @@
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.gl.ceir</groupId>
-    <artifactId>config</artifactId>
-    <version>I3-1.0.15</version>
-    <name>config</name>
+    <artifactId>apiservice3</artifactId>
+    <!--<version>I3-1.0.15</version>-->
+    <name>apiservice3</name>
 	 
     <properties>
         <java.version>1.8</java.version>
@@ -114,6 +114,8 @@
     </dependencyManagement>
 
     <build>
+         <finalName>apiservice3</finalName>
+       
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
