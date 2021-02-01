@@ -3,6 +3,8 @@ import java.util.List;
 
 import org.gl.ceir.CeirPannelCode.Model.ActionModel;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
+import org.gl.ceir.CeirPannelCode.Model.AddressModel;
+import org.gl.ceir.CeirPannelCode.Model.AddressResponse;
 import org.gl.ceir.CeirPannelCode.Model.CCPolicyBreachRequest;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
@@ -437,7 +439,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 						@RequestParam(name = "file", defaultValue = "0" ,required = false) Integer file);
 				
 					@PostMapping("/rule-engine-mapping")
-					public NewRule save(@RequestBody NewRule newRule);
+					public GenricResponse save(@RequestBody NewRule newRule);
 					
 					@RequestMapping(value="/rule-engine-mapping" ,method=RequestMethod.PUT) 
 					public GenricResponse updateRuleFeatureMapping(@RequestBody NewRule newRule);
@@ -472,6 +474,8 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 					@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 					@RequestParam(value = "file", defaultValue = "0") Integer file,
 					@RequestParam(value = "source", defaultValue = "menu") String source);
+					
+
 							
 }					
 

@@ -7,9 +7,11 @@ import com.google.gson.annotations.SerializedName;
 @Component
 public class OperatorWiseGraphRowData {
 	
-	@JsonProperty("QB")
-	@SerializedName("QB")
-	private String qb;
+	/*
+	 * @JsonProperty("QB")
+	 * 
+	 * @SerializedName("QB") private String qb;
+	 */
 	
 	@JsonProperty("SEATEL")
 	@SerializedName("SEATEL")
@@ -31,13 +33,11 @@ public class OperatorWiseGraphRowData {
 	@SerializedName("Date")
 	private String date;
 
-	public String getQb() {	
-		return qb;
-	}
-
-	public void setQb(String qb) {
-		this.qb = qb;
-	}
+	/*
+	 * public String getQb() { return qb; }
+	 * 
+	 * public void setQb(String qb) { this.qb = qb; }
+	 */
 
 	public String getSeatel() {
 		return seatel;
@@ -82,9 +82,7 @@ public class OperatorWiseGraphRowData {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("OperatorWiseGraphRowData [qb=");
-		builder.append(qb);
-		builder.append(", seatel=");
+		builder.append("OperatorWiseGraphRowData [seatel=");
 		builder.append(seatel);
 		builder.append(", smart=");
 		builder.append(smart);
@@ -97,4 +95,6 @@ public class OperatorWiseGraphRowData {
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
 }

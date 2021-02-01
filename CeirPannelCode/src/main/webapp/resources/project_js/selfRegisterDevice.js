@@ -60,7 +60,8 @@ populateCountries(
 );
 
 
-
+$("#country").val("Cambodia").change();
+//$("#country").attr("style", "pointer-events: none;");
 
 function showCambodianUserForm()
 {
@@ -670,6 +671,15 @@ function table(url,dataUrl){
 					data : function(d) {
 						d.filter = JSON.stringify(request); 
 
+					},
+					error: function (jqXHR, textStatus, errorThrown,data) {
+						
+						 window.parent.$('#msgDialog').text($.i18n('500ErrorMsg'));
+						 // messageWindow(jqXHR['responseJSON']['message']);
+						 window.parent.$('#500ErrorModal').openModal({
+						 dismissible:false
+						 });
+						
 					}
 
 				},
@@ -991,7 +1001,7 @@ function submitEndUserDeviceInfo(){
 		var taxStatus1=$('#taxStatus'+fieldId).val();
 		var Price1=$('#Price'+fieldId).val();
 		var Currency1=$('#Currency'+fieldId).val();
-
+		var singleDeviceRemark=$('#singleDeviceRemark').val();	
 
 
 
@@ -1011,6 +1021,7 @@ function submitEndUserDeviceInfo(){
 				"origin":"Self",
 				"currency": parseInt(Currency1),
 				"price": parseFloat(Price1),
+				"deviceRemark":singleDeviceRemark,
 				"taxPaidStatus": parseInt(taxStatus1)
 
 		}

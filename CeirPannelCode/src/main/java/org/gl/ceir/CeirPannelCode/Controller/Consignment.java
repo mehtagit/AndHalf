@@ -503,7 +503,8 @@ public class Consignment {
 	public String exportToExcel(@RequestParam(name="consignmentStartDate",required = false) String consignmentStartDate,@RequestParam(name="consignmentEndDate",required = false) String consignmentEndDate,
 			@RequestParam(name="consignmentTxnId",required = false) String consignmentTxnId,@RequestParam(name="consignmentTaxPaidStatus") Integer consignmentTaxPaidStatus,HttpServletRequest request,
 			HttpSession session,@RequestParam(name="pageSize") Integer pageSize,@RequestParam(name="pageNo") Integer pageNo,@RequestParam(name="filterConsignmentStatus") Integer filterConsignmentStatus,
-			@RequestParam(name="displayName",required = false) String displayName,@RequestParam(name="source",defaultValue = "menu",required = false) String source)
+			@RequestParam(name="displayName",required = false) String displayName,@RequestParam(name="source",defaultValue = "menu",required = false) String source,
+			@RequestParam(name="deviceQuantity",required = false) String deviceQuantity,@RequestParam(name="quantity",required = false) String imeiQuantity,@RequestParam(name="supplierName",required = false) String supplierName)
 	{
 		log.info("consignmentStartDate=="+consignmentStartDate+ " consignmentEndDate ="+consignmentEndDate+" consignmentTxnId="+consignmentTxnId+"consignmentTaxPaidStatus="+consignmentTaxPaidStatus+" filterConsignmentStatus="+filterConsignmentStatus);
 		log.info("source--->" +source);
@@ -527,6 +528,9 @@ public class Consignment {
 		filterRequest.setUsername(userName);
 		filterRequest.setUserName(userName);
 		filterRequest.setDisplayName(displayName);
+		filterRequest.setDeviceQuantity(deviceQuantity);
+		filterRequest.setQuantity(imeiQuantity);
+		filterRequest.setSupplierName(supplierName);
 		log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 		Object	response= feignCleintImplementation.consignmentFilter(filterRequest, pageNo, pageSize, file,source);
 

@@ -1290,7 +1290,7 @@ S2.define('select2/selection/base',[
       '</span>'
     );
 
-    this._tabindex = 0;
+    this._tabindex = 1;
 
     if (this.$element.data('old-tabindex') != null) {
       this._tabindex = this.$element.data('old-tabindex');
@@ -1766,7 +1766,7 @@ S2.define('select2/selection/search',[
   Search.prototype.render = function (decorated) {
     var $search = $(
       '<li class="select2-search select2-search--inline">' +
-        '<input class="select2-search__field" type="search" tabindex="-1"' +
+        '<input class="select2-search__field" type="search" ' +
         ' autocomplete="off" autocorrect="off" autocapitalize="off"' +
         ' spellcheck="false" role="textbox" />' +
       '</li>'
@@ -1786,7 +1786,7 @@ S2.define('select2/selection/search',[
     decorated.call(this, container, $container);
 
     container.on('open', function () {
-      self.$search.attr('tabindex', 0);
+      self.$search.attr('tabindex', 1);
 
       self.$search.focus();
     });
@@ -3701,7 +3701,7 @@ S2.define('select2/dropdown/search',[
 
     var $search = $(
       '<span class="select2-search select2-search--dropdown">' +
-        '<input class="select2-search__field" type="search" tabindex="-1"' +
+        '<input class="select2-search__field" type="search" ' +
         ' autocomplete="off" autocorrect="off" autocapitalize="off"' +
         ' spellcheck="false" role="textbox" />' +
       '</span>'
@@ -3739,7 +3739,7 @@ S2.define('select2/dropdown/search',[
     });
 
     container.on('open', function () {
-      self.$search.attr('tabindex', 0);
+      self.$search.attr('tabindex', 1);
 
       self.$search.focus();
 
@@ -4811,7 +4811,7 @@ S2.define('select2/core',[
 
     // Set up the tabindex
 
-    var tabindex = $element.attr('tabindex') || 0;
+    var tabindex = $element.attr('tabindex') || 1;
     $element.data('old-tabindex', tabindex);
     $element.attr('tabindex', '-1');
 

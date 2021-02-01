@@ -164,6 +164,15 @@ function Datatable(url,DataUrl,sourceTypeFiler){
 					data : function(d) {
 						d.filter =JSON.stringify(filterRequest); 
 						//////console.log(JSON.stringify(filterRequest));
+					},
+					error: function (jqXHR, textStatus, errorThrown,data) {
+						
+						 window.parent.$('#msgDialog').text($.i18n('500ErrorMsg'));
+						 // messageWindow(jqXHR['responseJSON']['message']);
+						 window.parent.$('#500ErrorModal').openModal({
+						 dismissible:false
+						 });
+						
 					}
 				},
 				"columns": result,
@@ -273,6 +282,8 @@ function setAllDropdowns(){
 		}
 	});
 
+	
+	
 	//Source Type-----------dropdown
 	$.getJSON('./getSourceTypeDropdown/SOURCE_TYPE/'+featureId+'', function(data) {
 		for (i = 0; i < data.length; i++) {
@@ -470,6 +481,8 @@ function  showBulkRecovery(){
 
 	$('#singleRecoveryForm').trigger("reset");
 	$('#bulkRecoveryForm').trigger("reset");
+	$("#bulkRecoverycountry").val("Cambodia").change();
+	//$("#bulkRecoverycountry").attr("style", "pointer-events: none;");
 
 }
 
@@ -491,6 +504,13 @@ $.getJSON('./getDropdownList/DEVICE_ID_TYPE', function(data) {
 	}
 });
 
+$.getJSON('./getSourceTypeDropdown/DOC_TYPE/12', function(data) {
+
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].tagId).text(data[i].interp).attr("docValue",data[i].value).appendTo('#docTypetag1');
+
+	}
+});
 
 $.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
 
@@ -506,6 +526,14 @@ $.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].value).text(data[i].interp)
 		.appendTo('#sigleRecoverydeviceSimStatus,#singleStolenSimStatus');
+
+	}
+});
+$.getJSON('./getDropdownList/ADDRESS_TYPE', function(data) {
+
+	for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i].value).text(data[i].interp)
+		.appendTo('#addressType');
 
 	}
 });
@@ -614,13 +642,17 @@ function saveIndivisualStolenRequest(){
 	var singleStolendistrict=$('#singleStolendistrict').val();
 	var singleStolencommune=$('#singleStolencommune').val();
 	var singleStolenpin=$('#singleStolenpin').val();
+	var sigleStolenserialNumber=$('#sigleStolenserialNumber').val();
 	var country=$('#country').val();
 	var state=$('#state').val();
 	var blockingTimePeriod=$('#stolenDatePeriod').val();
 	var blockingType =$('.blocktypeRadio:checked').val();
 
 	var singleStolendeviceBrandName=$('#singleStolendeviceBrandName').val();
-
+	if($('#singleStolendeviceBrandName').val()==930){
+		singleStolendeviceBrandName= $('#OtherBrandName').val();
+		 
+	}
 	var singleStolenimei1=$('#singleStolenimei1').val();
 	var singleStolenimei2=$('#singleStolenimei2').val();
 	var singleStolenimei3=$('#singleStolenimei3').val();
@@ -674,9 +706,107 @@ function saveIndivisualStolenRequest(){
 	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
 	//////console.log("**** file name"+uploadedFileName)
 
-	var fileFileDetails=$('#uploadFirSingle').val();
-	fileFileDetails=fileFileDetails.replace(/^.*[\\\/]/, '');
+	var nationality=$('#nationality').val();
+	var addressType=$('#addressType').val();
+//	var fileFileDetails=$('#uploadFirSingle').val();
+//	fileFileDetails=fileFileDetails.replace(/^.*[\\\/]/, '');
 
+	var fieldId = 1;
+	var fileInfo = [];
+	var formData = new FormData();
+	var fileData = [];
+	var documentFileNameArray = [];
+	var x;
+	var filename = '';
+	var filediv;
+	var i = 0;
+	var formData = new FormData();
+	var docTypeTagIdValue = '';
+	var filename = '';
+	var filesameStatus = false;
+	var documenttype = false;
+	var docTypeTag = '';
+
+	/* $('.fileDiv').each( */
+			for(var j=1;j<id;j++){
+			
+				
+				if(typeof  $('#docTypetag' + fieldId).val()!== "undefined"){
+					var x = {
+					"docType" : $('#docTypetag' + fieldId).val(),
+					"fileName" : $('#docTypeFile' + fieldId).val()
+							.replace('C:\\fakepath\\', '')
+				}
+				formData.append('firFileName[]', $('#docTypeFile'
+						+ fieldId)[0].files[0]);
+
+				documentFileName = $('#docTypeFile' + fieldId)
+						.val().replace('C:\\fakepath\\', '')
+				docTypeTag = $('#docTypetag' + fieldId).val();
+
+				var fileIsSame = documentFileNameArray
+						.includes(documentFileName);
+
+				var documentTypeTag = documentFileNameArray
+						.includes(docTypeTag);
+
+				if (filesameStatus != true) {
+					filesameStatus = fileIsSame;
+				}
+
+				if (documenttype != true) {
+					documenttype = documentTypeTag;
+
+				}
+				documentFileNameArray.push(documentFileName);
+				documentFileNameArray.push(docTypeTag);
+
+				
+				
+				if(!x['docType']=='')
+					{
+					//console.log("if");
+					fileInfo.push(x);
+					}
+				else{
+					//console.log("else");
+					
+				}
+				
+				
+				}
+				fieldId++;
+				i++;
+				
+			}
+
+	if (filesameStatus == true) {
+
+		$('#fileFormateModal').openModal({
+			dismissible : false
+		});
+		$('#fileErrormessage').text('')
+		$('#fileErrormessage').text($.i18n('duplicateFileName'));
+		// $("#saveGrievancesubmitButton").prop('disabled', false);
+        $('div#initialloader').delay(300).fadeOut('slow');
+		return false;
+
+	}
+
+	if (documenttype == true) {
+
+		$('#fileFormateModal').openModal({
+			dismissible : false
+		});
+		$('#fileErrormessage').text('')
+		$('#fileErrormessage').text($.i18n('documentTypeName'));
+$('div#initialloader').delay(300).fadeOut('slow');
+//$("#saveGrievancesubmitButton").prop('disabled', false);
+		return false;
+
+	}
+	
+	
 	var stolenIndividualUserDB={
 			"alternateContactNumber": singleStolenphone1,
 			"commune": singleStolencommune,
@@ -721,23 +851,27 @@ function saveIndivisualStolenRequest(){
 			"remark": singleDeviceRemark,
 			"street": singleStolenstreetNumber,
 			"village":singleStolenvillage,
-			"nidFileName":uploadedFileName
+			"nidFileName":uploadedFileName,
+			"addressType":addressType,
+			"nationality":nationality,
+			"deviceSerialNumber":sigleStolenserialNumber,
 	}
 
 
 	var request={
 			"dateOfStolen":IndivisualStolenDate,
+			"attachedFiles" : fileInfo,
 			"blockingTimePeriod":blockingTimePeriod,
 			"blockingType":blockingType,
 			"requestType":0,
 			"sourceType":5,
 			"deviceQuantity":1,
-			"firFileName":fileFileDetails,
 			"complaintType": singleStolenComplaintType,
 			"operatorTypeId":singleStolenOperator,
 			"stolenIndividualUserDB":stolenIndividualUserDB
 	}
-	formData.append('firFileName', $('#uploadFirSingle')[0].files[0]);
+	//formData.append('firFileName', $('#uploadFirSingle')[0].files[0]);
+	formData.append('fileInfo[]', JSON.stringify(fileInfo));
 	formData.append('file', $('#singleStolenFile')[0].files[0]);
 	formData.append("request",JSON.stringify(request));
 	var token = $("meta[name='_csrf']").attr("content");
@@ -1168,6 +1302,7 @@ function confirmRejectInformation(){
 */
 
 function clearFileName() {
+
 	var fieldId=$('#FilefieldId').val();
 	
 	if(fieldId=='singleStolenFile')
@@ -1204,15 +1339,26 @@ headers:
 { 'X-CSRF-TOKEN': token }
 });
 
-$.getJSON('./productList', function(data) {
-	$('#select2-singleStolendeviceBrandName-container').empty();
+$.getJSON('./getDropdownList/TOP_BRAND', function(data) {
+	
+	/*var html='<option value="">Select Brand Name</option>';
+	$('#singleStolendeviceBrandName').append(html);*/	
+	//$('#select2-singleStolendeviceBrandName-container').empty();
 	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].id).text(data[i].brand_name)
+		$('<option>').val(data[i].id).text(data[i].interp)
 				.appendTo('#singleStolendeviceBrandName');
 	}
-	
+	$("#singleStolendeviceBrandName").eq(0).removeAttr("tabindex");
 });
-$('select#singleStolendeviceBrandName').select2();
+var dataFiltersorce= $("body").attr("data-filtersorce");
+var dataSource= $("body").attr("data-source");
+
+if(dataFiltersorce=="" || dataFiltersorce==null && dataSource==null || dataSource==""){
+	
+	$('select#singleStolendeviceBrandName').select2();	
+}
+
+
 
 
 $('#singleStolendeviceBrandName').on(
@@ -1223,6 +1369,8 @@ $('#singleStolendeviceBrandName').on(
 					function(data) {
 				        $('#select2-singleStolenmodalNumber-container').empty();
 						$("#singleStolenmodalNumber").empty();
+						var html='<option value="">Select Model Number</option>';
+						$('#singleStolenmodalNumber').append(html);
 						for (i = 0; i < data.length; i++) {
 							$('<option>').val(data[i].id).text(
 									data[i].modelName).appendTo(
@@ -1585,3 +1733,321 @@ $(document).on("keyup", "#singleStolenimei1", function(e) {
 
 	}
 });
+
+
+
+function enableSelectFile() {
+	 
+	if($('#docTypetag1').val() != ''){
+		$("#docTypeFile1").attr("disabled", false);
+		$("#docTypeFile1").attr("required", true);
+		$("#removestar").find(".star").remove();
+		$("#supportingdocumentFile").append('<span class="star">*</span>');
+	}else{
+		$("#docTypeFile1").attr("required", false);
+		$('#filetextField').val('');
+		$("#removestar").find(".star").remove();
+	}
+}
+
+function enableAddMore(id,removeFileDivId) {
+
+    var uploadedFileName = $("#"+id).val();
+	uploadedFileName = uploadedFileName.replace(/^.*[\\\/]/, '');
+	////alert("file extension=="+uploadedFileName)
+	var ext = uploadedFileName.split('.').pop();
+
+	var fileSize = ($("#"+id)[0].files[0].size);
+	/*fileSize = (Math.round((fileSize / 100000) * 100) / 100)
+		//alert("----"+fileSize);*/
+	fileSize = Math.floor(fileSize/1000);
+	$('#FilefieldId').val(id);
+	
+	var fileExtension =ext.toLowerCase();
+	
+	var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv","pdf","docx"];
+	var isInArray =extArray.includes(fileExtension);
+	
+	$('#removeFileInput').val(id);
+	$('#removeFileId').val(removeFileDivId);
+	////console.log("isInArray: "+isInArray)
+	if (uploadedFileName.length > 30) {
+		$('#fileFormateModal').openModal();
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageValidationName'));
+	} 
+	else if(isInArray ==false)
+	{
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
+		$(".add_field_button").attr("disabled", true);
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageMessageCSV'));
+
+	}
+	else if(ext=='csv')
+	{
+		
+		if(fileSize>='10000'){
+			$(".add_field_button").attr("disabled", true);
+			window.parent.$('#fileFormateModal').openModal({
+				dismissible:false
+			});
+			
+		}
+		
+	}
+	else if(fileSize>=5000){
+		$('#fileFormateModal').openModal({
+			dismissible:false
+		});
+		$('#fileErrormessage').text('');
+		$('#fileErrormessage').text($.i18n('imageSize'));	
+		$(".add_field_button").attr("disabled", true);
+	}
+	
+	$(".add_field_button").attr("disabled", false);
+	$(".add_field_button_edit").attr("disabled", false);
+}
+
+
+var token = $("meta[name='_csrf']").attr("content");
+var header = $("meta[name='_csrf_header']").attr("content");
+$.ajaxSetup({
+	headers:
+	{ 'X-CSRF-TOKEN': token }
+});
+		
+		$.getJSON('./addMoreFile/grievance_supporting_doc_count', function(data) {
+			//console.log(data);
+
+			localStorage.setItem("maxCount", data.value);
+
+		});
+
+		//var max_fields = 2; //maximum input boxes allowed
+		var max_fields = localStorage.getItem("maxCount");
+		if (max_fields==0 || max_fields==1){
+			 //console.log("1111");
+			 $(".add_field_button").prop('disabled', true);
+		 }
+		
+		var wrapper = $(".mainDiv"); //Fields wrapper
+		var add_button = $(".add_field_button"); //Add button ID
+		var x = 1; //initlal text box count
+		var id = 2;
+
+		$(".add_field_button")
+				.click(
+						function(e) { //on add input button click
+							e.preventDefault();
+							var placeholderValue = $
+									.i18n('selectFilePlaceHolder');
+							if (x < max_fields) { //max input box allowed
+								x++; //text box increment
+								$(wrapper)
+										.append(
+												'<div id="filediv'+id+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'
+														+ $
+																.i18n('documenttype')
+														+ '<span class="star">*</span> </label><select required id="docTypetag'
+														+ id
+														+ '" oninput="InvalidMsg(this,\'select\',\''
+														+ $
+																.i18n('selectDocumentType')
+														+ '\');"  oninvalid="InvalidMsg(this,\'select\',\''
+														+ $
+																.i18n('selectDocumentType')
+														+ '\');"  class="browser-default"> <option value="" disabled selected>'
+														+ $
+																.i18n('selectDocumentType')
+														+ ' </option></select><select id="docTypetagValue'+id+'" style="display:none" class="browser-default"> <option value="" disabled selected>'
+														+ $
+																.i18n('selectDocumentType')
+														+ ' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'
+														+ $
+																.i18n('selectfile')
+														+ '</span><input required onchange=enableAddMore("docTypeFile'+id+'","filediv'+id+'") id="docTypeFile'
+														+ id
+														+ '" type="file" oninput="InvalidMsg(this,\'fileType\',\''
+														+ $
+																.i18n('selectfile')
+														+ '\');"  oninvalid="InvalidMsg(this,\'fileType\',\''
+														+ $
+																.i18n('selectfile')
+														+ '\');" name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+placeholderValue+'" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" id="remove_field_icon'+id+'" class="remove_field btn right btn-info" onclick="remove_field('+id+')">-</div></div></div>'); //add input box
+							}
+							  
+								if(x==max_fields){
+ 									
+									 $(".add_field_button").prop('disabled', true);
+								}
+								$.getJSON('./getSourceTypeDropdown/DOC_TYPE/12', function(
+										data) { 	
+									
+									for (i = 0; i < data.length; i++) {
+										//////console.log(data[i].interp);
+										var optionId = id - 1;
+										 
+										$('<option>').val(data[i].tagId).text(
+												data[i].interp).appendTo(
+												'#docTypetag' + optionId);
+										$('<option>').val(data[i].value).text(
+												data[i].tagId).appendTo(
+												'#docTypetagValue' + optionId);
+										//////console.log('#docTypetag' + optionId);
+
+									}
+								});
+
+							id++;
+							
+
+						});
+		
+		/* $(wrapper).on("click", ".remove_field", function(e) { //user click on remove text
+			e.preventDefault();
+			var  Iid = id - 1;
+			alert(Iid);
+			$('#filediv' + Iid).remove();
+			$(this).parent('div').remove();
+			x--;
+			id--;
+
+		}) */
+		
+		function remove_field(fieldId ){
+			$('#filediv' + fieldId).remove();
+			$(this).parent('div').remove();
+			$(".add_field_button").prop('disabled', false);
+			$(".add_field_button_edit").attr("disabled", false);
+			x--;
+			}
+		
+		
+		var idedit = 2;
+		$(".add_field_button_edit")
+		.click(
+				function(e) { //on add input button click
+					e.preventDefault();
+					var placeholderValue = $
+							.i18n('selectFilePlaceHolder');
+					if (x < max_fields) { //max input box allowed
+						x++; //text box increment
+						$(wrapper)
+								.append(
+										'<div id="filediv'+idedit+'" class="fileDiv"><div class="row"><div class="file-field col s12 m6"><label for="Category">'
+												+ $
+														.i18n('documenttype')
+												+ '<span class="star">*</span> </label><select required id="docTypetag'
+												+ idedit
+												+ '" oninput="InvalidMsg(this,\'select\',\''
+												+ $
+														.i18n('selectDocumentType')
+												+ '\');"  oninvalid="InvalidMsg(this,\'select\',\''
+												+ $
+														.i18n('selectDocumentType')
+												+ '\');"  class="browser-default"> <option value="" disabled selected>'
+												+ $
+														.i18n('selectDocumentType')
+												+ ' </option></select><select id="docTypetagValue'+idedit+'" style="display:none" class="browser-default"> <option value="" disabled selected>'
+												+ $
+														.i18n('selectDocumentType')
+												+ ' </option></select></div><div class="file-field col s12 m6" style="margin-top: 23px;"><div class="btn"><span>'
+												+ $
+														.i18n('selectfile')
+												+ '</span><input required onchange=enableAddMore("docTypeFile'+idedit+'","filediv'+idedit+'") id="docTypeFile'
+												+ id
+												+ '" type="file" oninput="InvalidMsg(this,\'fileType\',\''
+												+ $
+														.i18n('selectfile')
+												+ '\');"  oninvalid="InvalidMsg(this,\'fileType\',\''
+												+ $
+														.i18n('selectfile')
+												+ '\');" name="files[]" id="filer_input" /></div><div class="file-path-wrapper"><input class="file-path validate" placeholder="'+placeholderValue+'" type="text"></div></div><div style="cursor:pointer;background-color:red;margin-right: 1.7%;" id="remove_field_icon'+idedit+'" class="remove_field btn right btn-info" onclick="remove_field('+idedit+')">-</div></div></div>'); //add input box
+					}
+					  
+						if(x==max_fields){
+								
+							 $(".add_field_button_edit").prop('disabled', true);
+						}
+						$.getJSON('./getSourceTypeDropdown/DOC_TYPE/12', function(
+								data) { 	
+							
+							for (i = 0; i < data.length; i++) {
+								//////console.log(data[i].interp);
+								var optionId = idedit;
+								 
+								$('<option>').val(data[i].tagId).text(
+										data[i].interp).appendTo(
+										'#docTypetag' + optionId);
+								$('<option>').val(data[i].value).text(
+										data[i].tagId).appendTo(
+										'#docTypetagValue' + optionId);
+								//////console.log('#docTypetag' + optionId);
+
+							}
+						});
+
+						idedit++;
+					
+
+				});
+
+		function clearFileName() {
+			
+			var fieldId=$('#FilefieldId').val();
+			//var existingFileName=$('#existingFileName').val();
+			////alert("existingFileName=="+existingFileName);
+			////alert(fieldId);
+		 
+			if(fieldId=='singleStolenFile')
+			{
+			$('#'+fieldId).val('');
+			$('#singleStolenFileName').val('');
+			}
+		else if(fieldId=='uploadFirSingle')
+			{
+			$('#'+fieldId).val('');
+			$('#uploadFirSingleName').val('');
+			}
+			
+		else if(fieldId=='deviceBulkStolenFile')
+		{
+		$('#'+fieldId).val('');
+		$('#deviceBulkStolenFileName').val('');
+		}
+			
+		else if(fieldId=='uploadFirBulk')
+		{
+		$('#'+fieldId).val('');
+		$('#uploadFirSingleBulkName').val('');
+		}
+		else if(fieldId=='bulkRecoveryFile')
+		{
+		$('#'+fieldId).val('');
+		$('#bulkRecoveryFileName').val('');
+		}
+			$('#fileFormateModal').closeModal();
+	/*		$('#fileFormateModal').closeModal();
+			var fieldInput=$('#removeFileInput').val();
+			$('#'+fieldInput).val('');
+			var inputPlaceHolder=$('#removeFileId').val();
+			 alert()
+			$('#'+fileName).val(''); */
+
+			}
+function changeSelectDropDownToText(singleStolendeviceBrandName){
+	if($('#'+singleStolendeviceBrandName).val()==930){
+		$("#OtherBrandNameDiv").css("display", "block");
+		 		$("#OtherBrandName").attr("required", true);
+	}
+	else{
+		$("#OtherBrandNameDiv").css("display", "none");
+		$("#OtherBrandName").attr("required", false);
+	}
+}	
+
+$("#country").val("Cambodia").change();
+/*$("#country").attr("style", "pointer-events: none;");*/

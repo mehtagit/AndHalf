@@ -10,20 +10,20 @@ public class MostStolenRowData {
 	@JsonProperty("Date")
 	private String date;
 	
-	@SerializedName("Stolen Count")
-	@JsonProperty("Stolen Count")
+	@SerializedName("Stolen IMEI Count")
+	@JsonProperty("Stolen IMEI Count")
 	private int stolenCount;
 
-	@SerializedName("Recoverd Count")
-	@JsonProperty("Recoverd Count")
+	@SerializedName("Recovered IMEI Count")
+	@JsonProperty("Recovered IMEI Count")
 	private int recoverdCount;
 	
-	@SerializedName("Blocked Count")
-	@JsonProperty("Blocked Count")
+	@SerializedName("Blocked IMEI Count")
+	@JsonProperty("Blocked IMEI Count")
 	private int blockedCount ;
 	
-	@SerializedName("Pending Count")
-	@JsonProperty("Pending Count")
+	@SerializedName("Pending IMEI Count")
+	@JsonProperty("Pending IMEI Count")
 	private int pendingCount ;
 
 	public String getDate() {

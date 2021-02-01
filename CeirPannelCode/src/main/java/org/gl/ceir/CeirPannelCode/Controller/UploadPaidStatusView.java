@@ -93,24 +93,28 @@ GrievanceFeignClient grievanceFeignClient;
 	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,@RequestParam(name="NID", required = false) String NID,HttpSession session
 			,@RequestParam(name="txnID",required = false) String txnID,@RequestParam(name="source",defaultValue ="menu" ,required = false) String source) {
 		ModelAndView modelAndView = new ModelAndView();
+		String userStatus = (String) session.getAttribute("userStatus");
+		log.info("The user Status is " +userStatus);
 		try {
 		if((session.getAttribute("usertype").equals("CEIRAdmin") || session.getAttribute("usertype").equals("DRT")) && !("other".equals(via))) {
 			session.setAttribute("filterSource", source);
+			session.setAttribute("userStatus", userStatus);
 			modelAndView.setViewName("uploadPaidStatus");
 			
 		}
 		else if("other".equals(via)) {
 			session.setAttribute("filterSource", source);
+			session.setAttribute("userStatus", userStatus);
 			modelAndView.setViewName("uploadPaidStatus");
-		
 		}
 		else if("dashboard".equals(source)) {
 			session.setAttribute("filterSource", source);
+			session.setAttribute("userStatus", userStatus);
 			modelAndView.setViewName("uploadPaidStatus");
-			}
-		else {
+		}
+		else{
 			modelAndView.setViewName("nidForm");
-		
+			session.setAttribute("userStatus", userStatus);
 		}}
 		catch (Exception e) {
 			// TODO: handle exception
@@ -272,6 +276,7 @@ GrievanceFeignClient grievanceFeignClient;
 			@RequestParam(name="pageSize") Integer pageSize,
 			@RequestParam(name="pageNo") Integer pageNo,
 			@RequestParam(name="status", required = false) Integer status,
+			@RequestParam(name="nationality",required = false) String nationality,
 			HttpServletRequest request,
 			HttpSession session)
 	{
@@ -301,6 +306,8 @@ GrievanceFeignClient grievanceFeignClient;
 		filterRequestuserpaidStatus.setUserTypeId(userTypeId);
 		filterRequestuserpaidStatus.setFeatureId(12);
 		filterRequestuserpaidStatus.setUserType(userType);
+		filterRequestuserpaidStatus.setNationality(nationality);
+		filterRequestuserpaidStatus.setOrigin(origin);
 		log.info(" request passed to the exportTo Excel Api =="+filterRequestuserpaidStatus+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 		Object response = userPaidStatusFeignClient.consignmentFilter(filterRequestuserpaidStatus, pageNo, pageSize, file,"filter");
 		Gson gson= new Gson(); 

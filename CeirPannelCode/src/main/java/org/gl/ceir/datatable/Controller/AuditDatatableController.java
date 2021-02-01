@@ -19,8 +19,6 @@ import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
 import org.gl.ceir.pagination.model.AuditContentModel;
 import org.gl.ceir.pagination.model.AuditPaginationModel;
-import org.gl.ceir.pagination.model.PolicyConfigContent;
-import org.gl.ceir.pagination.model.PolicyConfigPagination;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,7 +105,7 @@ public class AuditDatatableController {
 			datatableResponseModel.setRecordsFiltered(null);
 			datatableResponseModel.setData(Collections.emptyList());
 			log.error(e.getMessage(),e);
-			return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+			return new ResponseEntity<>(datatableResponseModel, HttpStatus.INTERNAL_SERVER_ERROR); 
 		}
 	}
 	
@@ -163,7 +161,7 @@ public class AuditDatatableController {
 		 
 			
 			//input type date list		
-			String[] dateParam= {"date","Start Date","startDate","","date","End Date","endDate","","text","Transaction ID","transactionID","","text","User Name","userName",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text","Transaction ID","transactionID","","text","User ID","userName",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

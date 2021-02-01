@@ -10,7 +10,10 @@
 		var rejectedMsg,consignmentApproved,errorMsg,havingTxnID,updateMsg,hasBeenUpdated;
 		var consignmentDeleted,deleteInProgress;
 		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
-
+		
+		var url = new URL(window.location.href);
+		url.searchParams.get("action")
+		
 
 		$.i18n().locale = lang;	
 		
@@ -50,6 +53,7 @@
 		
 		function filterFieldTable(lang){
 			window.tag_val= $('#filterTagId').val() == undefined ? TagId : $('#filterTagId').val();
+			var displayName = $('#displayName').val() == "" ? "" : $('#displayName').val();
 			var filterRequest={
 					"endDate":$('#endDate').val(),
 					"startDate":$('#startDate').val(),
@@ -62,7 +66,8 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"username" : $("body").attr("data-selected-username")
+					"username" : $("body").attr("data-selected-username"),
+					"displayName" : displayName
 			}				
 			if(lang=='km'){
 				var langFile="./resources/i18n/khmer_datatable.json";
@@ -92,7 +97,7 @@
 						"oLanguage": {
 							"sEmptyTable": "No records found in the system"
 					    },
-						initComplete: function() {
+					    initComplete: function() {
 					 		$('.dataTables_filter input')
 	       .off().on('keyup', function(event) {
 	    	   if (event.keyCode === 13) {
@@ -108,12 +113,27 @@
 							data : function(d) {
 								d.filter = JSON.stringify(filterRequest); 
 
+							},
+							error: function (jqXHR, textStatus, errorThrown,data) {
+								
+								 window.parent.$('#msgDialog').text($.i18n('500ErrorMsg'));
+								 // messageWindow(jqXHR['responseJSON']['message']);
+								 window.parent.$('#500ErrorModal').openModal({
+								 dismissible:false
+								 });
+								
 							}
 						},
-						"columns": result
+						
+						"columns": result,
+						
 					});
-
+					if(url.searchParams.get("action") == 'viewAll'){
+						$('#fieldManagementLibraryTable').DataTable().column(6).visible(false);
+					}
+					
 					$('div#initialloader').delay(300).fadeOut('slow');
+					
 
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
@@ -121,7 +141,6 @@
 				}
 			});
 			
-		
 		}
 
 		$('.datepicker').on('mousedown',function(event){
@@ -148,21 +167,12 @@
 					$("#pageHeader").append(elem);
 					var button=data.buttonList;
 					var date=data.inputTypeDateList;
-					/*for(i=0; i<date.length; i++){
-						if(date[i].type === "date"){
-							$("#FieldTableDiv").append("<div class='input-field col s6 m2'>"+
-			[[						"<div id='enddatepicker' class='input-group'>"+
-									"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
-									"<label for="+date[i].id+">"+date[i].title
-									+"</label>"+
-									"<span	class='input-group-addon' style='color: #ff4081'>"+
-									"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-
-						}else if(date[i].type === "text"){
+					for(i=0; i<date.length; i++){
+						 if(date[i].type === "text"){
 							$("#FieldTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 						}
 					} 
-				*/
+				
 					// dynamic dropdown portion
 					var dropdown=data.dropdownList;
 					for(i=0; i<dropdown.length; i++){
@@ -174,7 +184,7 @@
 									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 									"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-									"<option value=null selected>"+dropdown[i].title+
+									"<option value ='-1' disabled selected>"+dropdown[i].title+
 									"</option>"+
 									"</select>"+
 									"</div>"+
@@ -182,12 +192,12 @@
 					}
 
 						$("#FieldTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-						//$("#FieldTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#FieldTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportFieldData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 						}
-
+						
 					/*	for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							if(button[i].type === "HeaderButton"){
@@ -206,25 +216,14 @@
 			
 			
 			setDropdown();
+			
+			if(url.searchParams.get("action") == 'viewAll'){
+				$("#btnLink").css("display", "none");
+				
+			}
+			//$("#invoiceNumberDiv").css("display", "none");
 	}
 
-
-		
-		//**********************************************************Export Field file************************************************************************
-		function exportConsignmentData()
-		{
-			var consignmentStartDate=$('#startDate').val();
-			var consignmentEndDate=$('#endDate').val();
-			var consignmentTxnId=$('#transactionID').val();
-			var filterConsignmentStatus=parseInt($('#filterConsignmentStatus').val());
-			var consignmentTaxPaidStatus=parseInt($('#taxPaidStatus').val());
-			
-			var table = $('#fieldManagementLibraryTable').DataTable();
-			var info = table.page.info(); 
-			var pageNo=info.page;
-			var pageSize =info.length;
-			window.location.href="./exportConsignmnet?consignmentStartDate="+consignmentStartDate+"&consignmentEndDate="+consignmentEndDate+"&consignmentTxnId="+consignmentTxnId+"&filterConsignmentStatus="+filterConsignmentStatus+"&consignmentTaxPaidStatus="+consignmentTaxPaidStatus+"&pageSize="+pageSize+"&pageNo="+pageNo;
-		}
 
 		
 	function setDropdown(){
@@ -485,3 +484,66 @@
 		$("label[for='addInterp']").removeClass('active');
 		$("label[for='description']").removeClass('active');
 	}
+	
+	
+	
+	function exportFieldData(){
+		var table = $('#fieldManagementLibraryTable').DataTable();
+		var info = table.page.info(); 
+		var pageNo=info.page;
+		var pageSize =info.length;
+		
+		window.tag_val= $('#filterTagId').val() == undefined || $('#filterTagId').val() == '-1' ? TagId : $('#filterTagId').val();
+		var displayName = $('#displayName').val() == "" ? "" : $('#displayName').val();
+		
+	
+		
+		var filterRequest={
+				"endDate":$('#endDate').val(),
+				"startDate":$('#startDate').val(),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"tag": window.tag_val,
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"username" : $("body").attr("data-selected-username"),
+				"pageNo":parseInt(pageNo),
+				"pageSize":parseInt(pageSize),
+				"displayName" : displayName
+		}
+		
+		//console.log(JSON.stringify(filterRequest))
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
+		
+		$.ajax({
+			url: './exportFieldData',
+			type: 'POST',
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			data : JSON.stringify(filterRequest),
+			success: function (data, textStatus, jqXHR) {
+				  window.location.href = data.url;
+
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				
+			}
+		});
+	}
+	
+	
+	 
+	 /*$(document).on('change', '#filterTagId', function(){
+		if($('#filterTagId').val() != '-1'){
+			$("#submitFilter").prop('disabled', false);
+		}else{
+			$("#submitFilter").prop('disabled', true);
+		}
+	 });	*/

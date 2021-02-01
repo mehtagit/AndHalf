@@ -51,9 +51,11 @@ public class RegisteredDeviceRawList {
 	@SerializedName("Mobile Phone/Feature phone")
 	private String mobileFeaturePhone;
 	
-	@JsonProperty("NA")
-	@SerializedName("NA")
-	private String na;
+	/*
+	 * @JsonProperty("NA")
+	 * 
+	 * @SerializedName("NA") private String na;
+	 */
 	
 	@JsonProperty("Tablet")
 	@SerializedName("Tablet")
@@ -164,14 +166,11 @@ public class RegisteredDeviceRawList {
 		this.mobileFeaturePhone = mobileFeaturePhone;
 	}
 
-	public String getNa() {
-		return na;
-	}
-
-	public void setNa(String na) {
-		this.na = na;
-	}
-
+	/*
+	 * public String getNa() { return na; }
+	 * 
+	 * public void setNa(String na) { this.na = na; }
+	 */
 	public String getTablet() {
 		return tablet;
 	}
@@ -237,8 +236,9 @@ public class RegisteredDeviceRawList {
 		builder.append(smartphone);
 		builder.append(", mobileFeaturePhone=");
 		builder.append(mobileFeaturePhone);
-		builder.append(", na=");
-		builder.append(na);
+		/*
+		 * builder.append(", na="); builder.append(na);
+		 */
 		builder.append(", tablet=");
 		builder.append(tablet);
 		builder.append(", connectedComputer=");

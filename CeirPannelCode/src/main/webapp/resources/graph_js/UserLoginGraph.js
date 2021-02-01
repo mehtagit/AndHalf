@@ -19,9 +19,9 @@ function userloginGraph() {
 
 			"reportnameId": 18,
 			"file" : 0,
-			"pageSize" :15,
+			"pageSize" :1000,
 			"pageNo" :0,
-		     "typeFlag": 2
+		     "typeFlag": 2,"dayDataLimit":15
 	}
 		}
 		
@@ -74,9 +74,9 @@ $(document).ready(function(){
 
 			"reportnameId": 50,
 			"file" : 0,
-			"pageSize" :1,
+			"pageSize" :1000,
 			"pageNo" :0,
-			"typeFlag": 1
+			"typeFlag": 1,"dayDataLimit":15
 	}
 	
 	$.ajax({
@@ -109,9 +109,9 @@ var i=0;
 
 				"reportnameId": 18,
 				"file" : 0,
-				"pageSize" :1,
+				"pageSize" :1000,
 				"pageNo" :0,
-			     "typeFlag": 2
+			     "typeFlag": 2,"dayDataLimit":15
 		}
 		
 		var token = $("meta[name='_csrf']").attr("content");
@@ -158,11 +158,11 @@ function graph(response,id,chartType,chartTitle)
   var StolenCount=[];
   
 	for(var i=0;i<response['rowData'].length;i++){
-		noOfUsers.push(response['rowData'][i]['Number of user logged']);
+		noOfUsers.push(response['rowData'][i]['Total User Count']);
 	   	 date.push(response['rowData'][i]['Date']);
-	   	uniqueUsers.push(response['rowData'][i]['Unique user logged']);
-		pieData.push(parseInt(response['rowData'][i]['Number of user logged']));
-		pieData.push(parseInt(response['rowData'][i]['Unique user logged']));
+	   	uniqueUsers.push(response['rowData'][i]['Unique User Count']);
+		pieData.push(parseInt(response['rowData'][i]['Total User Count']));
+		pieData.push(parseInt(response['rowData'][i]['Unique User Count']));
 		
 		BlockedCount.push(response['rowData'][i]['Blocked Count']);
 		PendingCount.push(response['rowData'][i]['Pending Count']);

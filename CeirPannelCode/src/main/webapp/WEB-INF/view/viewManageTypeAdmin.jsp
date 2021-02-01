@@ -236,12 +236,27 @@ position: fixed;
 					</div>
 				</div>
 				
-				<div class="input-field col s12 m6 l6" style="width: 402px;margin-left: 1px;">
-						<input type="text" id="viewManufacturercountry" name="Country" style="padding-left: 8px;"
+				<div class="row">
+					<div class="input-field col s12 m6 l6">
+						<input type="text" id="viewManufacturercountry" name="Country" 
 							placeholder="" disabled=""> <label
 							for="viewManufacturercountry" class="active"><spring:message
 								code="input.Country" /></label>
 				</div>
+				
+				<div class="input-field col s12 m6 l6">
+					<textarea id="viewRemark" class="materialize-textarea"
+						style="height: 0px;" readonly="readonly" placeholder=""></textarea>
+					<label for="viewRemark" class=""><spring:message
+							code="input.remarks" /></label>
+
+					<!--   <input type="textarea" name="Remark" placeholder="Remark" id="remark" readonly="readonly" maxlength="15" />
+                                               <label for="TransactionId" class="center-align">Remark</label> -->
+				</div>
+			</div>
+				
+				
+				
 				<div class="modal-content">
 					<div id="live-chat">
 						<div class="chat">
@@ -342,7 +357,7 @@ position: fixed;
                                             </div> -->
                       	<div class="input-field col s12 m6 l6">
 							<input type="text" id="editfrequency" name="frequency"
-								placeholder="" pattern="[A-Za-z0-9 \s]{0,160}" maxlength="30"
+								placeholder="" pattern="[A-Za-z0-9 \s]{0,50}" maxlength="50"
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 								required> <label for="editfrequency"><spring:message
@@ -538,7 +553,7 @@ position: fixed;
 				</div>
 				<div class="row">
 						<div class="input-field col s12 m12">
-							<textarea id="rejectTrcRemark"  
+							<textarea id="rejectTrcRemark"  maxlength="250"
 								class="materialize-textarea" 
 							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" style="min-height: 8rem;" required></textarea>
@@ -614,7 +629,7 @@ position: fixed;
 					</div>
 					<div class="row">
 						<div class="input-field col s12 m12">
-							<textarea id="deleteTacRemark"  
+							<textarea id="deleteTacRemark"  maxlength="250"
 								class="materialize-textarea" 
 							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" style="min-height: 8rem;" required></textarea>

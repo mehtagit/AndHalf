@@ -117,6 +117,8 @@ function udapteNewPassword(){
 }
 
 function login(){
+	//$('div#initialloader').fadeIn('fast');
+	
 	var obj="";
 	$("#loginForm").each(function(key, val){
 		val = $(this);
@@ -144,17 +146,20 @@ function login(){
 		success : function(data) {
 			var resp=JSON.parse(data);
 			if(resp.statusCode=='200'){
+			//	$('div#initialloader').delay(300).fadeOut('slow');
+			sessionStorage.setItem("isSessionActive","Y");
 				window.location.href="./?lang="+resp.userLanguage;
+				
 			}
 			else if(resp.statusCode=='401'){
 				$("#userId").val(resp.userId);
 				$('#changePassword').openModal({
 			        dismissible:false
 			    });
-
+			//	$('div#initialloader').delay(300).fadeOut('slow');
 			}
 			else{
-				
+			//	$('div#initialloader').delay(300).fadeOut('slow');
 				$.i18n().locale = $('#langlist').val();
 				$.i18n().load( {
 					'en': './resources/i18n/en.json',
@@ -164,7 +169,7 @@ function login(){
 				});
 				
 			}
-
+	
 		},
 		error: function (xhr, ajaxOptions, thrownError) {
 

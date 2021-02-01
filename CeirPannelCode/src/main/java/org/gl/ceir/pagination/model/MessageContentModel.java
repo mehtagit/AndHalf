@@ -15,21 +15,9 @@ public class MessageContentModel {
 	private String description;
 	private Integer channel;
 	private String channelInterp;
+	private String subject,featureName;
+	private String featureId,userTypeId,userType,userName,username,roleType;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-	
-	
-	private long userId;
-
-	private String userName;
-
-	private long userTypeId;
-
-	private long featureId;
-
-	private String roleType;
-
-	private String userType;
-	
 	public Integer getId() {
 		return id;
 	}
@@ -78,6 +66,18 @@ public class MessageContentModel {
 	public void setChannelInterp(String channelInterp) {
 		this.channelInterp = channelInterp;
 	}
+	public String getSubject() {
+		return subject;
+	}
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+	public String getFeatureName() {
+		return featureName;
+	}
+	public void setFeatureName(String featureName) {
+		this.featureName = featureName;
+	}
 	public Map<String, Object> getAdditionalProperties() {
 		return additionalProperties;
 	}
@@ -103,28 +103,44 @@ public class MessageContentModel {
 		builder.append(channel);
 		builder.append(", channelInterp=");
 		builder.append(channelInterp);
-		builder.append(", additionalProperties=");
-		builder.append(additionalProperties);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", userName=");
-		builder.append(userName);
-		builder.append(", userTypeId=");
-		builder.append(userTypeId);
+		builder.append(", subject=");
+		builder.append(subject);
+		builder.append(", featureName=");
+		builder.append(featureName);
 		builder.append(", featureId=");
 		builder.append(featureId);
-		builder.append(", roleType=");
-		builder.append(roleType);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
 		builder.append(", userType=");
 		builder.append(userType);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", additionalProperties=");
+		builder.append(additionalProperties);
 		builder.append("]");
 		return builder.toString();
 	}
-	public long getUserId() {
-		return userId;
+	public String getFeatureId() {
+		return featureId;
 	}
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setFeatureId(String featureId) {
+		this.featureId = featureId;
+	}
+	public String getUserTypeId() {
+		return userTypeId;
+	}
+	public void setUserTypeId(String userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 	public String getUserName() {
 		return userName;
@@ -132,29 +148,17 @@ public class MessageContentModel {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public long getUserTypeId() {
-		return userTypeId;
+	public String getUsername() {
+		return username;
 	}
-	public void setUserTypeId(long userTypeId) {
-		this.userTypeId = userTypeId;
-	}
-	public long getFeatureId() {
-		return featureId;
-	}
-	public void setFeatureId(long featureId) {
-		this.featureId = featureId;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getRoleType() {
 		return roleType;
 	}
 	public void setRoleType(String roleType) {
 		this.roleType = roleType;
-	}
-	public String getUserType() {
-		return userType;
-	}
-	public void setUserType(String userType) {
-		this.userType = userType;
 	}
 	
 	

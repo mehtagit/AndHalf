@@ -10,17 +10,19 @@ public class LawfulDeviceCountData {
 	  @SerializedName("Date")
 	  private String date;
 	
-      @JsonProperty("Total Stolen IMEI")
-  	  @SerializedName("Total Stolen IMEI")
+      @JsonProperty("Total Stolen IMEI Count")
+  	  @SerializedName("Total Stolen IMEI Count")
       private String stolenIMEI;
       
-      @JsonProperty("Total Lost IMEI")
-      @SerializedName("Total Lost IMEI")
-      private String lostIMEI;
-      
-      @JsonProperty("Total Recoverd IMEI")
-      @SerializedName("Total Recoverd IMEI")
-      private String recoveredIMEI;
+	/*
+	 * @JsonProperty("Total Lost IMEI Count")
+	 * 
+	 * @SerializedName("Total Lost IMEI Count") private String lostIMEI;
+	 * 
+	 * @JsonProperty("Total Recoverd IMEI Count")
+	 * 
+	 * @SerializedName("Total Recoverd IMEI Count") private String recoveredIMEI;
+	 */
 
 	public String getDate() {
 		return date;
@@ -38,22 +40,6 @@ public class LawfulDeviceCountData {
 		this.stolenIMEI = stolenIMEI;
 	}
 
-	public String getLostIMEI() {
-		return lostIMEI;
-	}
-
-	public void setLostIMEI(String lostIMEI) {
-		this.lostIMEI = lostIMEI;
-	}
-
-	public String getRecoveredIMEI() {
-		return recoveredIMEI;
-	}
-
-	public void setRecoveredIMEI(String recoveredIMEI) {
-		this.recoveredIMEI = recoveredIMEI;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -61,13 +47,9 @@ public class LawfulDeviceCountData {
 		builder.append(date);
 		builder.append(", stolenIMEI=");
 		builder.append(stolenIMEI);
-		builder.append(", lostIMEI=");
-		builder.append(lostIMEI);
-		builder.append(", recoveredIMEI=");
-		builder.append(recoveredIMEI);
 		builder.append("]");
 		return builder.toString();
 	}
-      
+
       
 }

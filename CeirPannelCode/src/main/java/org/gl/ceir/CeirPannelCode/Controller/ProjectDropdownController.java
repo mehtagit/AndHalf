@@ -2,20 +2,18 @@ package org.gl.ceir.CeirPannelCode.Controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GsmaFeignClient;
+import org.gl.ceir.CeirPannelCode.Feignclient.UserLoginFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
+import org.gl.ceir.CeirPannelCode.Model.AddressModel;
+import org.gl.ceir.CeirPannelCode.Model.AddressResponse;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
-import org.gl.ceir.CeirPannelCode.Model.Tag;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceDropdown;
 import org.gl.ceir.CeirPannelCode.Model.InterRelatedRuleFeatureMapping;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
-import org.gl.ceir.pagination.model.MessageContentModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +22,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +35,9 @@ public class ProjectDropdownController {
 	
 	@Autowired
 	GsmaFeignClient gsmaFeignClient;
+	@Autowired
+	UserLoginFeignImpl userLoginFeignImpl;
+	
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	@ResponseBody
@@ -138,6 +137,60 @@ public class ProjectDropdownController {
 		
 	}
 
-
 	
-}
+	
+	@PostMapping("/getallDistrict") 
+	public @ResponseBody List<AddressResponse> getAllDistricts (@RequestBody AddressModel addressModel)  {
+		log.info("request send to the getAllDistrictDropdown api="+addressModel);
+		List<AddressResponse> response= userLoginFeignImpl.getAllTagsDistrictFeign(addressModel);
+		log.info("response from getAllDistrictDropdown api "+response);
+		return response;
+
+		}
+	
+	@PostMapping("/getallCommune")
+	public @ResponseBody List<AddressResponse> getAllCommune (@RequestBody AddressModel addressModel)  {
+		log.info("request send to the getAllCommuneDropdown api="+addressModel);
+		List<AddressResponse> response= userLoginFeignImpl.getAllCommuneFeign(addressModel);
+		log.info("response from getAllCommuneDropdown api "+response);
+		return response;
+
+		}
+	
+	@PostMapping("/getallVillage")
+	public @ResponseBody List<AddressResponse> getAllvillage(@RequestBody AddressModel addressModel)  {
+		log.info("request send to the getAllvillageDropdown api="+addressModel);
+		List<AddressResponse> response= userLoginFeignImpl.getAllVillageFeign(addressModel);
+		log.info("response from getAllvillageDropdown api "+response);
+		return response;
+
+		}
+	
+	@ResponseBody
+	@GetMapping("getAllProvince")
+	public List<AddressResponse> getAllProvince() {
+		List<AddressResponse> dropdown = userLoginFeignImpl.getAllProvinceFeign();
+		return dropdown;
+	}
+	
+	@ResponseBody
+	@GetMapping("getDistinctFeatureList")
+	public List<String> getDistinctFeatureList() {
+		List<String> dropdown = userLoginFeignImpl.getDistinctFeature();
+		return dropdown;
+	}
+	
+	@ResponseBody
+	@GetMapping("getDistinctUserTypeList")
+	public List<String> getDistinctUserTypeList() {
+		List<String> dropdown = userLoginFeignImpl.getDistinctUserType();
+		return dropdown;
+	}
+	
+	@ResponseBody
+	@GetMapping("getDistinctFeatureNameList")
+	public List<String> getDistinctFeatureNameList() {
+		List<String> dropdown = userLoginFeignImpl.getDistinctFeatureName();
+		return dropdown;
+	}
+}		

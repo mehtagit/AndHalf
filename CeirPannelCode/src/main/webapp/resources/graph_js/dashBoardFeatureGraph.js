@@ -21,9 +21,10 @@ function featureDashboardGraph() {
 			"reportnameId": reportnameId,
 			"groupBy": "Stock Status",
 			"file" : 0,
-			"pageSize" :20,
+			"pageSize" :1000,
 			"pageNo" :0,
-			"typeFlag": 2
+			"typeFlag": 2,
+			 "dayDataLimit":15
 	}
 	}
 		else if(reportnameId==44){
@@ -38,9 +39,9 @@ function featureDashboardGraph() {
 						"reportnameId": reportnameId,
 						"groupBy": "Consignment Status",
 						"file" : 0,
-						"pageSize" :20,
+						"pageSize" :1000,
 						"pageNo" :0,
-						"typeFlag": 2
+						"typeFlag": 2,"dayDataLimit":15
 				}			
 		}
 else if(reportnameId==16){
@@ -55,9 +56,9 @@ else if(reportnameId==16){
 						"reportnameId": reportnameId,
 						"groupBy": "Grievance Status",
 						"file" : 0,
-						"pageSize" :20,
+						"pageSize" :1000,
 						"pageNo" :0,
-						"typeFlag": 2
+						"typeFlag": 2,"dayDataLimit":15
 				}			
 		}
 		
@@ -73,9 +74,9 @@ else if(reportnameId==57){
 				"reportnameId": reportnameId,
 				"groupBy": "User Type",
 				"file" : 0,
-				"pageSize" :20,
+				"pageSize" :1000,
 				"pageNo" :0,
-				"typeFlag": 2
+				"typeFlag": 2,"dayDataLimit":15
 		}			
 }	
 
@@ -218,13 +219,16 @@ function graph(response,id,chartType,chartTitle,pieLabelName,GraphImageId,GraphE
     			},
     	        scales: {
     	          xAxes: [{ 
-    	          	stacked: false,
+    	          	stacked: true,
     	          	scaleLabel: {
     	                display: true,
     	                labelString: 'Count'
     	              },
     	            
     	            gridLines: { display: false },
+    	            ticks: {
+    	                precision: 0
+    	              }
     	            }],
     	          yAxes: [{ 
     	          	stacked: true,
@@ -273,7 +277,7 @@ function setLabelByID(featureId,userTypeId){
 
 function UserTypeList(){
 	var userTypeList=[];
-	$.getJSON('./registrationUserType?type=1', function(data) {
+	$.getJSON('./registrationUserType', function(data) {
 		for (i = 0; i < data.length; i++) {
 			userTypeList.push(data[i].usertypeName);
 		}

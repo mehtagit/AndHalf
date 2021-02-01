@@ -9,21 +9,21 @@ var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 if(roleType=="Immigration")
 	{
 	
-	$("#nationalityLabelId").css("display", "none");
-	$("#chooseUserOption").css("display", "none");
+	//$("#nationalityLabelId").css("display", "none");
+	//$("#chooseUserOption").css("display", "none");
 	$("#priceDiv").css("display", "none");
-	$("#nationalityDiv").css("display", "block");
-	$("#entryCountryDiv").css("display", "block");
+//	$("#nationalityDiv").css("display", "block");
+	//$("#entryCountryDiv").css("display", "block");
 	$("#askVisaDetails").css("display", "block");
 	$('#doc_type').val('0');
-	$("#taxStatusDiv").css("display", "none");
+	//$("#taxStatusDiv").css("display", "none");
 	$("#priceDiv").css("display", "none");
-	$('#nidLabelName').text('');
-	$('#nidLabelName').text($.i18n('Passport Number'));
- 	$('#uploadNidImage').text('');
- 	$('#uploadNidImage').text($.i18n('Upload Passport Image'));
- 	$("#nidLabelName").append('<span class="star">*</span>');
- 	$("#uploadNidImage").append('<span class="star">*</span>');
+	//$('#nidLabelName').text('');
+	//$('#nidLabelName').text($.i18n('Passport Number'));
+ 	//$('#uploadNidImage').text('');
+ 	//$('#uploadNidImage').text($.i18n('Upload Passport Image'));
+ 	//$("#nidLabelName").append('<span class="star">*</span>');
+ 	//$("#uploadNidImage").append('<span class="star">*</span>');
  	$("#taxStatus1").attr("required", false);
 	}
 
@@ -37,7 +37,7 @@ $.i18n().load( {
 });
 
 $( document ).ready(function() {
-	
+	var userStatus = $("body").attr("data-userStatus");
 	var In = $("body").attr("session-value");
 	 var loggedUserType=$("body").attr("data-roleType");
 	if((loggedUserType=='Custom' || loggedUserType=='Immigration') && $("body").attr("data-filterSource")!='dashboard' ){
@@ -71,24 +71,39 @@ $( document ).ready(function() {
 					$("#addbutton").css("display", "block");
 					$("#submitbtn").css("display", "none");
 					$("#btnLink").css({display: "block"});
+					sessionStorage.removeItem("ViewAll");
 				} 
-				else if (data.errorCode == 0 && In == null) {
-				
+				else if (data.errorCode == 2) {
+					pageRendering(lang);
+					filter(lang,null);
 					$("#user123").css("display", "none");
 					$("#user456").css("display", "block");
 					$("#addbutton").css("display", "block");
 					$("#submitbtn").css("display", "none");
+					$("#btnLink").css({display: "none"});
+					sessionStorage.setItem("ViewAll","ViewAll");
+				} 
+				else if (data.errorCode == 0 && In == null) { 
+						$("#user123").css("display", "none");
+						$("#user456").css("display", "block");
+						$("#addbutton").css("display", "block");
+						$("#submitbtn").css("display", "none");
+					
 				} 
 				else
-				{
-				
-					$("#user123").css("display", "block");
-					$("#user456").css("display", "none");
-					$("#addbutton").css("display", "none");
-					$("#submitbtn").css("display", "none");
-					$("#btnLink").css({display: "none"});
-					$('div#initialloader').delay(300).fadeOut('slow');
-				}
+					if(userStatus=="Disable" || userStatus=="Deactivate"){
+						$("#user123").css("display", "block");
+						$('div#initialloader').delay(300).fadeOut('slow');
+						$('#userDisabledModel').openModal({dismissible:false});
+					}
+					else{
+						$("#user123").css("display", "block");
+						$("#user456").css("display", "none");
+						$("#addbutton").css("display", "none");
+						$("#submitbtn").css("display", "none");
+						$("#btnLink").css({display: "none"});
+						$('div#initialloader').delay(300).fadeOut('slow');
+					}
 				$('#nationalID').val(In);
 				regularizedCount();
 			},
@@ -393,7 +408,8 @@ function table(url,dataUrl,filterSource){
 			"status":parseInt($('#recordStatus').val()),
 			"txnId":txn,
 			"consignmentStatus": null,
-			"nid": nationalId == null ? $('#nId').val() : nationalId
+			"nid": nationalId == null ? $('#nId').val() : nationalId,
+			"nationality":parseInt($('#filterNationality').val())		
 	}
 
 
@@ -420,8 +436,8 @@ function table(url,dataUrl,filterSource){
 				orderCellsTop : true,
 				"ordering" : false,
 				"bPaginate" : true,
-				"bFilter" : true,
-				"bInfo" : true,
+				"bFilter" : false,
+				"bInfo" : false,
 				"bSearchable" : true,
 				"oLanguage": {  
 					"sUrl": langFile  
@@ -442,6 +458,15 @@ function table(url,dataUrl,filterSource){
 					data : function(d) {
 						d.filter = JSON.stringify(request); 
 
+					},
+					error: function (jqXHR, textStatus, errorThrown,data) {
+						
+						 window.parent.$('#msgDialog').text($.i18n('500ErrorMsg'));
+						 // messageWindow(jqXHR['responseJSON']['message']);
+						 window.parent.$('#500ErrorModal').openModal({
+						 dismissible:false
+						 });
+						
 					}
 
 				},
@@ -527,7 +552,8 @@ function pageButtons(url){
 
 			$("#tableDiv").append("<div class='col s3 m2 l1'><button type='button' class='btn primary botton'  id='submitFilter' /></div></div></div>");
 			$("#tableDiv").append("<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportpaidStatus()' type='button' class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
-
+			$("#tableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' style='margin-left: 18px;' id='clearRegisterDeviceFilter'>"+$.i18n('clearFilter')+"</button></div>");
+			$('#clearRegisterDeviceFilter').attr("onclick", "filterReset('viewRegisterDeviceFilter')");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				if(button[i].type === "HeaderButton"){
@@ -767,6 +793,8 @@ function exportpaidStatus(){
     var nid = nationalId == null ? $('#nId').val() : nationalId
 	var table = $('#data-table-simple').DataTable();
     var status=$('#recordStatus').val();
+    var origin = $("body").attr("data-roleType");
+    var nationality =parseInt($('#filterNationality').val());
     if( $("body").attr("data-filterSource")=='noti'){
     	txnId= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;	
 	}
@@ -782,7 +810,7 @@ function exportpaidStatus(){
     		}
 
 
-	window.location.href="./exportPaidStatus?startDate="+startDate+"&endDate="+endDate+"&taxPaidStatus="+taxPaidStatus+"&nid="+nid+"&txnId="+txnId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&status="+status;
+	window.location.href="./exportPaidStatus?startDate="+startDate+"&endDate="+endDate+"&taxPaidStatus="+taxPaidStatus+"&nid="+nid+"&txnId="+txnId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&status="+status+"&origin="+origin+"&nationality="+nationality;
 }
 
 
@@ -944,7 +972,7 @@ function submitDeviceInfo(){
 			var IMEI4=$('#IMEID'+fieldId).val();
 			var deviceCountry=$('#country'+fieldId).val();
 			var multipleSimStatus1=$('#multipleSimStatus'+fieldId).val();
-
+			var singleDeviceRemark=$('#singleDeviceRemark').val();	
 
 		var deviceInfo=
 		{
@@ -962,6 +990,7 @@ function submitDeviceInfo(){
 				"price": parseFloat(Price1),
 				"taxPaidStatus": parseInt(taxStatus1),
 				"nid":nationalId,
+				"deviceRemark":singleDeviceRemark,
 				"origin":roleType
 
 		}
@@ -1133,7 +1162,7 @@ $(document).ready(function () {
 	headers:
 	{ 'X-CSRF-TOKEN': token }
 	});
-	$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
+	/*$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
 		var checkAllowedCount =localStorage.getItem("allowed");	
 		////alert("222222"+checkAllowedCount);
 		if(checkAllowedCount==0)
@@ -1147,12 +1176,23 @@ $(document).ready(function () {
 			}
 		else{
 		
-		$('#taxStatus1').prop('disabled', 'disabled');
-		$('<option  selected>').val("2").text("Regularized").appendTo('#taxStatus1');
+	//	$('#taxStatus1').prop('disabled', 'disabled');
+		//$('<option  selected>').val("2").text("Regularized").appendTo('#taxStatus1');
 		}
+	});*/
+
+
+	$.getJSON('./getDropdownList/CUSTOMS_TAX_STATUS', function(data) {
+	for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].value).text(data[i].interp)
+				.appendTo('#taxStatus1');
+              }
+	if(parseInt($("body").attr("data-userTypeID"))==18){
+ 		$('#taxStatus1').prop('disabled', 'disabled');
+ 		 
+ 		$('#taxStatus1').val("1");
+ 	}
 	});
-
-
 
 	$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
 		for (i = 0; i < data.length; i++) {
@@ -1180,7 +1220,7 @@ $(document).ready(function () {
 		}
 	});
 
-	$.getJSON('./getDropdownList/MULTI_SIM_STATUS', function(data) {
+	$.getJSON('./getDropdownList/LAWFULL_SIM_STATUS', function(data) {
 		for (i = 0; i < data.length; i++) {
 			$('<option>').val(data[i].value).text(data[i].interp)
 			.appendTo('#multipleSimStatus1');
@@ -1235,7 +1275,8 @@ function regularizedCount(nationType){
 		}
 	else if(nationType==undefined && roleType=='Immigration'){
 		//////console.log("else  condition for regulaised");
-		nationType=2;
+		nationType=1;
+		
 		var nid= nationalId == 'null' ? null : nationalId;
 	}
 	else if(nationType==2)
@@ -1250,9 +1291,10 @@ function regularizedCount(nationType){
 	}
 	
 	if(sessionStorage.getItem("nationality")!="Cambodian" && sessionStorage.getItem("nationality")!=null){
-
+		
 		nationType=2;
 	}
+	 
 	else if( sessionStorage.getItem("nationality")==null && nationType!=2 ){
 		
 		nationType=1;
@@ -1660,7 +1702,11 @@ $(document).on("keyup", "#Price1", function(e) {
 	}
  	
  	$("#priceDiv").css("display", "block");
- 	
+ 	if(parseInt($("body").attr("data-userTypeID"))==18){
+ 		$('#taxStatus1').prop('disabled', 'disabled');
+ 		$("#priceDiv").css("display", "none");
+ 		$('#taxStatus1').val("1");
+ 	}
  	var removeBulkDiv;
  	$('.deviceInformation').each(function(){
  		removeBulkDiv=id-1;
@@ -1935,7 +1981,8 @@ function deptImageValidation() {
 
 		}
 	}
-	
+	$("#country").val("Cambodia").change();
+//	$("#country").attr("style", "pointer-events: none;");
 	/*
 	 $('#doc_type').on('change', function() {
 		 var doctype = $('#doc_type').val();

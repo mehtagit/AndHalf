@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
-import org.gl.ceir.CeirPannelCode.Model.constants.UserStatus;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
 import org.gl.ceir.configuration.ConfigParameters;
@@ -21,8 +20,6 @@ import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
 import org.gl.ceir.pagination.model.PortContentModal;
 import org.gl.ceir.pagination.model.PortPaginationModal;
-import org.gl.ceir.pagination.model.RegistrationContentModel;
-import org.gl.ceir.pagination.model.RegistrationPaginationModel;
 import org.gl.ceir.pagination.model.RegistrationUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -113,7 +110,7 @@ public class PortDatatableController {
 		datatableResponseModel.setRecordsFiltered(null);
 		datatableResponseModel.setData(Collections.emptyList());
 		log.error(e.getMessage(),e);
-		return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+		return new ResponseEntity<>(datatableResponseModel, HttpStatus.INTERNAL_SERVER_ERROR); 
 		}
 	}
 	
@@ -129,7 +126,7 @@ public class PortDatatableController {
 		InputFields inputFields = new InputFields();
 		InputFields dateRelatedFields;
 		
-		pageElement.setPageTitle(Translator.toLocale("table.portManagement"));
+		pageElement.setPageTitle(Translator.toLocale("sidebar.Port_Management"));
 		
 		List<Button> buttonList = new ArrayList<>();
 		List<InputFields> dropdownList = new ArrayList<>();

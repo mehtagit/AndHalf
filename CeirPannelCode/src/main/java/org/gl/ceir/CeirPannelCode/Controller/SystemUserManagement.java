@@ -2,6 +2,9 @@ package org.gl.ceir.CeirPannelCode.Controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
+import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Service.ProfileService;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.gl.ceir.pagination.model.UserManagementContent;
@@ -9,17 +12,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+
 @Controller
 public class SystemUserManagement {
 	
 	@Autowired
 	ProfileService profileService;
+	
+	@Autowired
+	UserProfileFeignImpl userProfileFeignImpl;
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
@@ -43,4 +52,29 @@ public class SystemUserManagement {
 		return profileService.changeSystemUserStatusService(userManagementContent,session);
 
 	}
+	
+	
+	//------------------------------------ Export Field controller ------------------------------------
+
+		@PostMapping("exportUserTypeData")
+		@ResponseBody
+		public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session)
+		{
+			Gson gsonObject=new Gson();
+			Object response;
+			Integer file = 1;	
+			String userType=(String) session.getAttribute("usertype");
+			Integer usertypeId=(int) session.getAttribute("usertypeId");
+			filterRequest.setUserType(userType);
+			filterRequest.setUserTypeId(usertypeId);
+			log.info("filterRequest:::::::::"+filterRequest);
+			response= userProfileFeignImpl.viewUserTypeRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
+			FileExportResponse fileExportResponse;
+			Gson gson= new Gson(); 
+			String apiResponse = gson.toJson(response);
+			fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
+			log.info("response  from  Export User Management api="+fileExportResponse);
+
+			return fileExportResponse;
+		}	
 }

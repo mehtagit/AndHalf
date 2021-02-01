@@ -9,9 +9,9 @@ var roleType = $("body").attr("data-roleType");
 	 
 	 if(roleType=="Immigration")
 		 {
-		 $("#taxStatusDiv").css("display", "none");
+		// $("#taxStatusDiv").css("display", "none");
 		 $("#priceDiv").css("display", "none");
-			$("#taxStatus1").attr("required", false);
+			//$("#taxStatus1").attr("required", false);
 		 }
 var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	$.i18n().locale = lang_param;
@@ -87,7 +87,7 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 					var IMEI4=$('#IMEID'+fieldId).val();
 					var deviceCountry=$('#country'+fieldId).val();
 					var multipleSimStatus1=$('#multipleSimStatus'+fieldId).val();
-					
+					var singleDeviceRemark=$('#singleDeviceRemark').val();	
 				var deviceInfo=
 				{
 					      "country": deviceCountry,
@@ -105,6 +105,7 @@ var lang_param =window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 					      "taxPaidStatus": parseInt(taxStatus1),
 					      "nid":nationalID,
 					      "txnId":"",
+					      "deviceRemark":singleDeviceRemark,
 					      "origin":roleType
 				}
 				regularizeDeviceDbs.push(deviceInfo);  
@@ -216,6 +217,11 @@ function defaultDeviceForm(){
 					.appendTo('#taxStatus1');
 					//////console.log("...........");} 
 				    }
+					 if(parseInt($("body").attr("data-userTypeID"))==18){
+					 		$('#taxStatus1').prop('disabled', 'disabled');
+					 		//$("#priceDiv").css("display", "none");
+					 		$('#taxStatus1').val("1");
+					 	}
 				
 			}
 				 incrementedCurrent=current+1;

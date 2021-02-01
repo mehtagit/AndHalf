@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
+import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.slf4j.Logger;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.Gson;
 
 @Controller
 public class FieldController {
@@ -88,5 +91,29 @@ public class FieldController {
 		return response;
 
 	}
+	
 
+	//------------------------------------ Export Field controller ------------------------------------
+
+	@PostMapping("exportFieldData")
+	@ResponseBody
+	public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session)
+	{
+		Gson gsonObject=new Gson();
+		Object response;
+		Integer file = 1;	
+		String userType=(String) session.getAttribute("usertype");
+		Integer usertypeId=(int) session.getAttribute("usertypeId");
+		filterRequest.setUserType(userType);
+		filterRequest.setUserTypeId(usertypeId);
+		log.info("filterRequest:::::::::"+filterRequest);
+		response= feignCleintImplementation.fieldManagementFeign(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
+		FileExportResponse fileExportResponse;
+		Gson gson= new Gson(); 
+		String apiResponse = gson.toJson(response);
+		fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
+		log.info("response  from  Export Field api="+fileExportResponse);
+
+		return fileExportResponse;
+	}	
 }

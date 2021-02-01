@@ -23,7 +23,7 @@ public class StolenIndividualUserDB {
 	private Integer docTypeInterp;
 	private String email;
 	private String firstName;
-	private Integer id;
+	private Integer id,addressType;
 	private String imeiEsnMeid1,imeiEsnMeid2,imeiEsnMeid3,imeiEsnMeid4;
 	private String lastName;
 	private String locality;
@@ -38,7 +38,7 @@ public class StolenIndividualUserDB {
 	private String province;
 	private String remark;
 	private String street;
-	private String village,multiSimStatus,deviceSerialNumber,deviceStolenCountry,deviceStolenProvince,nidFileName;
+	private String village,multiSimStatus,deviceSerialNumber,deviceStolenCountry,deviceStolenProvince,nidFileName,nationality,addressTypeInterp;
 	public String getAlternateContactNumber() {
 		return alternateContactNumber;
 	}
@@ -345,6 +345,24 @@ public class StolenIndividualUserDB {
 	public void setOperator4(Integer operator4) {
 		this.operator4 = operator4;
 	}
+	public Integer getAddressType() {
+		return addressType;
+	}
+	public void setAddressType(Integer addressType) {
+		this.addressType = addressType;
+	}
+	public String getNationality() {
+		return nationality;
+	}
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+	public String getAddressTypeInterp() {
+		return addressTypeInterp;
+	}
+	public void setAddressTypeInterp(String addressTypeInterp) {
+		this.addressTypeInterp = addressTypeInterp;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -398,6 +416,8 @@ public class StolenIndividualUserDB {
 		builder.append(firstName);
 		builder.append(", id=");
 		builder.append(id);
+		builder.append(", addressType=");
+		builder.append(addressType);
 		builder.append(", imeiEsnMeid1=");
 		builder.append(imeiEsnMeid1);
 		builder.append(", imeiEsnMeid2=");
@@ -450,6 +470,10 @@ public class StolenIndividualUserDB {
 		builder.append(deviceStolenProvince);
 		builder.append(", nidFileName=");
 		builder.append(nidFileName);
+		builder.append(", nationality=");
+		builder.append(nationality);
+		builder.append(", addressTypeInterp=");
+		builder.append(addressTypeInterp);
 		builder.append("]");
 		return builder.toString();
 	}

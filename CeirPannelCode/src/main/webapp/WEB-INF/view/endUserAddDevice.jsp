@@ -244,8 +244,8 @@ code="lang.khmer" /></option>
 
 													<div class="col s12 m6">
 														<label for="multipleSimStatus1"><spring:message
-																code="select.multiSimStatus" /><span class="star"></span>
-														</label> <select class="browser-default"
+																code="registration.selectMultiplestLawfull" /><span class="star">*</span>
+														</label> <select class="browser-default" required="required" onchange="setContactIMEINumber('multipleSimStatus1','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															id="multipleSimStatus1">
@@ -267,17 +267,7 @@ code="lang.khmer" /></option>
 														</select>
 													</div>
 
-													<div class="input-field col s12 m6"
-														style="margin-top: 28px;">
-														<input type="text" id="serialNumber1" name="serialNumber"
-															pattern="[A-Za-z0-9]{0,16}"
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
-															title="" maxlength="16"> <label
-															for="serialNumber1"> <spring:message
-																code="input.deviceSerialNumber" /><span class="star"></span>
-														</label>
-													</div>
+													
 
 
 												</div>
@@ -296,6 +286,25 @@ code="lang.khmer" /></option>
 
 														</select>
 													</div>
+													<div class="input-field col s12 m6"
+														style="margin-top: 10px;">
+														<input type="text" id="serialNumber1" name="serialNumber"
+															pattern="[A-Za-z0-9]{0,25}"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+															title="" maxlength="25"> <label
+															for="serialNumber1"> <spring:message
+																code="input.deviceSerialNumber" /><span class="star"></span>
+														</label>
+													</div>
+													<div class="input-field col s12 m12">
+															<textarea id="singleDeviceRemark"
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																maxlength="10000" class="materialize-textarea"></textarea>
+															<label for="textarea1"> <spring:message
+																	code="input.remarksLawfull" /></label>
+														</div>
 
 
 												</div>
@@ -303,18 +312,21 @@ code="lang.khmer" /></option>
 											<div class="row">
 												<div class="col s12 m12">
 													<div class='col s12 m12 input_fields_wrap'>
-														<p>
+														
+														<div class='row'>
+															<div id="IMEIndContact1" style="display: none"><p>
 															<spring:message code="title.imeiMeidEsn" />
 														</p>
-														<div class='row'>
 															<div class="input-field col s12 m6">
 																<input type="text" id="IMEIA1" name="IMEI1"
 																	pattern="[0-9]{15,16}" required 
 																	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																	maxlength="16"> <label for="IMEIA1"><spring:message
-																		code="title.one" /><span class="star">*</span></label>
-															</div>
+																		code="title.one" /><span class="star">*</span></label><p id="errorMsgOnModal" class="deviceErrorTitle"
+																	style="margin-top: -66px; margin-left: 104px;"></p>
+															</div></div>
+																<div id="IMEIndContact2" style="display: none">
 															<div class="input-field col s12 m6">
 																<input type="text" id="IMEIB1" name="IMEI2" 
 																	pattern="[0-9]{15,16}"
@@ -322,8 +334,8 @@ code="lang.khmer" /></option>
 																	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																	maxlength="16"> <label for="IMEIB1"><spring:message
 																		code="title.two" /></label>
-															</div>
-
+															</div></div>
+	                                                  <div id="IMEIndContact3" style="display: none">
 															<div class="input-field col s12 m6">
 																<input type="text" id="IMEIC1" name="IMEIC3" 
 																	pattern="[0-9]{15,16}"
@@ -331,10 +343,9 @@ code="lang.khmer" /></option>
 																	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																	maxlength="16"> <label for="IMEIC1"><spring:message
 																		code="title.three" /></label>
-																<p id="errorMsgOnModal" class="deviceErrorTitle"
-																	style="margin-top: -154px; margin-left: 104px;"></p>
-															</div>
-
+																
+															</div></div>
+																<div id="IMEIndContact4" style="display: none">
 															<div class="input-field col s12 m6" id="field">
 																<input type="text" id="IMEID1" name="IMEID4[]"
 																	pattern="[0-9]{15,16}"
@@ -343,7 +354,8 @@ code="lang.khmer" /></option>
 																	title="Please enter minimum 15 and maximum 16 digit only"
 																	maxlength="16" id="field0"> <label for="IMEID1"><spring:message
 																		code="title.four" /></label>
-															</div>
+															</div></div>
+															
 														</div>
 													</div>
 												</div>

@@ -143,6 +143,15 @@ function Datatable(Url, dataUrl) {
 								d.filter = JSON.stringify(filterRequest);
 								// ////console.log(JSON.stringify(filterRequest));
 
+							},
+							error: function (jqXHR, textStatus, errorThrown,data) {
+								
+								 window.parent.$('#msgDialog').text($.i18n('500ErrorMsg'));
+								 // messageWindow(jqXHR['responseJSON']['message']);
+								 window.parent.$('#500ErrorModal').openModal({
+								 dismissible:false
+								 });
+								
 							}
 
 						},
@@ -381,6 +390,25 @@ function ImporterviewByID(id, actionType, projectPath, modalID) {
 	$('#' + modalID).openModal({
 		dismissible : false
 	});
+	if (actionType == 'view') {
+		// $("#viewImporterModal").openModal();
+		$("#viewtradmark").val("");
+		$("#viewmodelName").val("");
+		$("#viewModelnumber").val("");
+		$("#viewManufacturercountry").val("");
+		$('#viewrequestDate').val("");
+		$('#viewFrequency').val("");
+		$("#viewImportertac").val("");
+		$("#viewtxnId").val("");
+		$("#chatMsg").text("");
+	} else if (actionType == 'edit') {
+		$("#editImportertransactionid").val("");
+		$("#editTradmark").val("");
+		$("#productname").val("");
+		$("#editmanufacturercountry").val("");
+		$('#editfrequency').val("");
+		$('#editImportertac').val("");
+	}
 	window.projectPath = projectPath;
 	
 	var token = $("meta[name='_csrf']").attr("content");
@@ -429,6 +457,8 @@ function setImporterViewPopupData(data, projectPath) {
 	$('#viewFrequency').val(data.frequencyRange);
 	$("#viewImportertac").val(data.tac);
 	$("#viewtxnId").val(data.txnId);
+	//$("#viewRemark").val(data.remark);
+	data.remark=="" || data.remark==null ? $("#viewRemark").val('NA') : $('#viewRemark').val(data.remark);
 
 	var result = data;
 	var importerViewResponse = [];

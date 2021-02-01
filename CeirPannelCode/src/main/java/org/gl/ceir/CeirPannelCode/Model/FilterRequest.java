@@ -5,10 +5,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class FilterRequest {
 	public String startDate,endDate,createdOn,modifiedOn,roleType,userType,txnId,searchString,grievanceId,tag,remarks,deviceId,nid,childTag,field,interp,tagId,value,displayName,description,address,featureName,subFeatureName,userName,date,fileName,invoiceNumber,suplierName,supplierId,stateInterp,alertId,remark,email,phoneNo,username,tac,userDisplayName,filterUserName,FilterUserType,raisedBy,filteredUserType,month,source;
-	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,quantity,stockStatus,feature,period,year,dataId,usertypeId;
+	private Integer pageNo, pageSize,userId,taxPaidStatus,consignmentStatus,featureId,userTypeId,fileStatus,requestType,sourceType,grievanceStatus,userRoleTypeId,status,asType,serviceDump,fileType,action,operatorTypeId,channel,type,deviceIdType,parentValue,id,port,currency,stockStatus,feature,period,year,dataId,usertypeId;
 	private Double dollar,riel;
 	private int roleTypeId;
-	private String state,ruleName;
+	private String state,ruleName,quantity,deviceQuantity,supplierName;
+	public String province,district,commune,village,country;
+	public String publicIp;
+	private int districtID,communeID;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -417,12 +420,7 @@ public class FilterRequest {
 	public void setCurrency(Integer currency) {
 		this.currency = currency;
 	}
-	public Integer getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
-	}
+	 
 	public Integer getStockStatus() {
 		return stockStatus;
 	}
@@ -488,6 +486,72 @@ public class FilterRequest {
 	}
 	public void setRuleName(String ruleName) {
 		this.ruleName = ruleName;
+	}
+	public String getProvince() {
+		return province;
+	}
+	public void setProvince(String province) {
+		this.province = province;
+	}
+	public String getDistrict() {
+		return district;
+	}
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+	public String getCommune() {
+		return commune;
+	}
+	public void setCommune(String commune) {
+		this.commune = commune;
+	}
+	public String getVillage() {
+		return village;
+	}
+	public void setVillage(String village) {
+		this.village = village;
+	}
+	public String getCountry() {
+		return country;
+	}
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public int getDistrictID() {
+		return districtID;
+	}
+	public void setDistrictID(int districtID) {
+		this.districtID = districtID;
+	}
+	public int getCommuneID() {
+		return communeID;
+	}
+	public void setCommuneID(int communeID) {
+		this.communeID = communeID;
+	}
+	public String getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+	public String getDeviceQuantity() {
+		return deviceQuantity;
+	}
+	public void setDeviceQuantity(String deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
+	public String getSupplierName() {
+		return supplierName;
+	}
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
 	}
 	@Override
 	public String toString() {
@@ -628,8 +692,6 @@ public class FilterRequest {
 		builder.append(port);
 		builder.append(", currency=");
 		builder.append(currency);
-		builder.append(", quantity=");
-		builder.append(quantity);
 		builder.append(", stockStatus=");
 		builder.append(stockStatus);
 		builder.append(", feature=");
@@ -652,10 +714,32 @@ public class FilterRequest {
 		builder.append(state);
 		builder.append(", ruleName=");
 		builder.append(ruleName);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
+		builder.append(", supplierName=");
+		builder.append(supplierName);
+		builder.append(", province=");
+		builder.append(province);
+		builder.append(", district=");
+		builder.append(district);
+		builder.append(", commune=");
+		builder.append(commune);
+		builder.append(", village=");
+		builder.append(village);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", districtID=");
+		builder.append(districtID);
+		builder.append(", communeID=");
+		builder.append(communeID);
 		builder.append("]");
 		return builder.toString();
 	}
-	
+	 
 	
 	
 }

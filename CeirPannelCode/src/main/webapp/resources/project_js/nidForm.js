@@ -13,22 +13,23 @@
 	}); 
 
 
-		$('#langlist').val(data_lang_param);
+	$('#langlist').val(data_lang_param);
 	$('#btnLink').css({"display":"none"});	
 	var roleType = $("body").attr("data-roleType");
 	var userId = $("body").attr("data-userID");
 	var roleType = $("body").attr("data-roleType"); 
+	var userStatus = $("body").attr("data-userStatus");
 	var featureId =12;
    
    
   
 
 	function hide() {
-		var In = $('#Search').val();
-		sessionStorage.setItem("roleType",roleType);
-		sessionStorage.setItem("nationalId", In);
 		
-		if(roleType=='')
+			var In = $('#Search').val();
+			sessionStorage.setItem("roleType",roleType);
+			sessionStorage.setItem("nationalId", In);
+			if(roleType=='')
 	    	{
 	    	//alert("1");
 	
@@ -67,6 +68,7 @@
 		 }
 		 else if(roleType=='Immigration')
 			 {
+			// alert("3");
 			 if(In.length == 0){
 					//////console.log("please field input");
 				}else{
@@ -75,5 +77,10 @@
 				}
 			 }
 
-		
+	
+	}
+	
+	function viewAll(){
+		In=null;
+		window.location.replace("./uploadPaidStatus?via=other&NID="+In);
 	}

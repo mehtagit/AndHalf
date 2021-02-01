@@ -27,4 +27,10 @@ public class PropertyReader {
    
 	@Value("${serverId}")
 	public Integer serverId;
+	
+	@Value("${downloadFilePath}")
+	public String downloadFilePath;
+	
+	@Value("${propertiesFileLocation}")
+	public String propertiesFileLocation;
 }

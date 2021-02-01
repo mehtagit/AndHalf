@@ -74,14 +74,14 @@ public class IconsState {
 		
 		
 		// state related Code 
-		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+		String error="<a onclick="+errorURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+"></i></a>";
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\" ><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
 				+downloadIconTitle+" ></i></a>"; 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-		String edit="<a onclick="+editAction+"><i class="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\" ><i class="
 				+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
@@ -200,14 +200,14 @@ public class IconsState {
 		String deleteAction ="DeleteStockRecord('"+txnId+"')";
 		String historyAction ="historyRecord('"+txnId+"')";
 		// state related Code 
-		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+		String error="<a onclick="+errorURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\" ><i class="
 				+downloadIcon+" aria-hidden=\"true\"  title="
 				+downloadIconTitle+" ></i></a>"; 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-		String edit="<a onclick="+editAction+"><i class="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+editIcon+" aria-hidden=\"true\" title="
 				+editIconTitle+"></i></a>"; 
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
@@ -330,14 +330,14 @@ public class IconsState {
 		String deleteAction ="DeleteStockRecord('"+txnId+"')";
 		String historyAction ="historyRecord('"+txnId+"')";
 		// state related Code 
-		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+		String error="<a onclick="+errorURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\" ><i class="
 				+downloadIcon+" aria-hidden=\"true\"  title="
 				+downloadIconTitle+" ></i></a>"; 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-		String edit="<a onclick="+editAction+"><i class="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+editIcon+" aria-hidden=\"true\" title="
 				+editIconTitle+"></i></a>"; 
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
@@ -466,14 +466,14 @@ public class IconsState {
 		String deleteAction ="DeleteStockRecord('"+txnId+"')";
 		String historyAction ="historyRecord('"+txnId+"')";
 		// state related Code 
-		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+		String error="<a onclick="+errorURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+downloadIcon+" aria-hidden=\"true\"  title="
 				+downloadIconTitle+" ></i></a>"; 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-		String edit="<a onclick="+editAction+"><i class="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+editIcon+" aria-hidden=\"true\" title="
 				+editIconTitle+"></i></a>"; 
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
@@ -608,14 +608,14 @@ public class IconsState {
 		String deleteAction ="DeleteStockRecord('"+txnId+"')";
 
 		// state related Code 
-		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+		String error="<a onclick="+errorURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+downloadIcon+" aria-hidden=\"true\"  title="
 				+downloadIconTitle+" ></i></a>"; 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-		String edit="<a onclick="+editAction+"><i class="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+editIcon+" aria-hidden=\"true\" title="
 				+editIconTitle+"></i></a>"; 
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
@@ -744,12 +744,12 @@ public class IconsState {
 
 
 		// state related Code 
-		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+		String error="<a onclick="+errorURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
 				+downloadIconTitle+" ></i></a>"; 
-		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+deletionIcon+" aria-hidden=\"true\"  title="
 				+deleteIconTitle+"></i></a>"; 
@@ -821,18 +821,18 @@ public class IconsState {
 		String historyAction ="historyRecord('"+txnId+"')";
 
 		// state related Code 
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+downloadIcon+" aria-hidden=\"true\"  title="
 				+downloadIconTitle+" ></i></a>"; 
 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
-		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+		String approve = "<a onclick="+approveAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+approveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";   
 
 
-		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+		String reject = "<a onclick="+rejectAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
 
 		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
@@ -924,20 +924,20 @@ public class IconsState {
 
 		// state related Code 
 
-		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+		String error="<a onclick="+errorURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+"></i></a>";
 
-		String download="<a onclick="+downloadURL+" ><i class="+downloadIcon+" aria-hidden=\"true\" title="
+		String download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+downloadIcon+" aria-hidden=\"true\" title="
 				+downloadIconTitle+" ></i></a>"; 
 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
-		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+		String approve = "<a onclick="+approveAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+approveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";   
 
 
-		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+		String reject = "<a onclick="+rejectAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
 
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+deletionIcon+" aria-hidden=\"true\"  title="
@@ -1002,17 +1002,17 @@ public class IconsState {
 		String viewAction = "viewGrievanceHistory('"+grievanceId+"','"+projectPath+"')";
 
 		// state related Code 
-		String reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
+		String reply = "<a onclick="+replyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+replyIcon+" aria-hidden=\"true\" title="
 				+replyIconTitle+" ></i></a>";
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
 		log.info("status is--->" +status+"---userStatus---->"+userStatus);
 		//Disable reply
 		if(("0".equals(status) || "1".equals(status) || "2".equals(status)) && "Approved".equals(userStatus)) {
-			 reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
+			 reply = "<a onclick="+replyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+replyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
-			 view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			 view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 
 		}else if("3".equals(status) && "Approved".equals(userStatus)) {
@@ -1048,18 +1048,18 @@ public class IconsState {
 		String viewAction = "viewGrievanceHistory('"+grievanceId+"')";
 
 		// state related Code 
-		String reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
+		String reply = "<a onclick="+replyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+replyIcon+" aria-hidden=\"true\" title="
 				+replyIconTitle+" ></i></a>";
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
 
 		log.info("status is--->" +status+"---userStatus---->"+userStatus);
 		//Disable reply
 		if(("0".equals(status) || "1".equals(status) || "2".equals(status)) && "Approved".equals(userStatus)) {
-			 reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
+			 reply = "<a onclick="+replyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+replyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
-			 view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			 view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 
 		}else if("3".equals(status) && "Approved".equals(userStatus)) {
@@ -1091,17 +1091,17 @@ public class IconsState {
 		String viewAction = "viewGrievanceHistory('"+grievanceId+"')";
 
 		// state related Code 
-		String reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
+		String reply = "<a onclick="+replyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+replyIcon+" aria-hidden=\"true\" title="
 				+replyIconTitle+" ></i></a>";
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
 		log.info("status is--->" +status+"---userStatus---->"+userStatus);
 
 		if(("0".equals(status) || "1".equals(status) || "2".equals(status)) && "Approved".equals(userStatus)) {
-			 reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
+			 reply = "<a onclick="+replyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+replyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
-			 view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			 view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 
 		}
@@ -1151,22 +1151,22 @@ public class IconsState {
 		String historyAction ="historyRecord('"+txnId+"')";
 		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
 				+historyTitle+"></i></a>";
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
 				+downloadIconTitle+" ></i></a>"; 
 
-		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+		String error="<a onclick="+errorURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+"></i></a>";
 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";	
 
 
-		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+		String approve = "<a onclick="+approveAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+approveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>"; 
 
 
-		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+		String reject = "<a onclick="+rejectAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
 
 
@@ -1286,17 +1286,17 @@ public class IconsState {
 		// state related Code 
 
 
-		String view="<a onclick="+viewAction+" id='arlink'><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" id='arlink' class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
-		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 
-		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+		String approve = "<a onclick="+approveAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+approveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";   
 
 
-		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+		String reject = "<a onclick="+rejectAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
 		
 		String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
@@ -1394,14 +1394,14 @@ public class IconsState {
 		String viewAction="viewByID("+id+",'view','"+projectPath+"')";
 		String editAction= "viewByID("+id+",'edit')";
 		// state related Code 
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
 				+downloadIconTitle+" ></i></a>"; 
 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
-		String edit="<a onclick="+editAction+"><i class="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 
@@ -1442,14 +1442,14 @@ public class IconsState {
 		
 		log.info("taxStatus-->" +taxStatus+" statusInterp----->" +status);
 		
-		String taxPaid="<a onclick="+payTaxAction+"><i class="
+		String taxPaid="<a onclick="+payTaxAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+payTaxIcon+" aria-hidden=\"true\" title="
 				+payTaxIconTitle+"></i></a>";
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+		String error="<a onclick="+errorURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+"></i></a>";
-		String delete="<a onclick="+deleteAction+"><i class="
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+deletionIcon+" aria-hidden=\"true\" title="
 				+deleteIconTitle+"></i></a>";
 		
@@ -1554,13 +1554,13 @@ public class IconsState {
 		String rejectAction= "userRejectPopup('"+imei1+"','"+txnId+"')";
 		String deleteAction= "deleteByImei('"+imei1+"','"+txnId+"')";
 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+		String approve = "<a onclick="+approveAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+approveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";   
-		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+		String reject = "<a onclick="+rejectAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
-		String delete="<a onclick="+deleteAction+"><i class="
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+deletionIcon+" aria-hidden=\"true\" title="
 				+deleteIconTitle+"></i></a>";
 		
@@ -1633,7 +1633,7 @@ public class IconsState {
 		executePostConstruct();
 		String downloadURL = "./dowloadFiles/"+fileName.replace(" ", "%20")+"/";
 
-		String download="<a href="+downloadURL+" ><i class="
+		String download="<a href="+downloadURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
 				+downloadIconTitle+" ></i></a>"; 
 
@@ -1681,14 +1681,14 @@ public class IconsState {
 		}
 
 		// state related Code
-		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+		String error="<a onclick="+errorURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
 				+downloadIconTitle+" ></i></a>";
-		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\" title="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+editIcon+" aria-hidden=\"true\" title="
 				+editIconTitle+"></i></a>";
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+deletionIcon+" aria-hidden=\"true\" title="
 				+deleteIconTitle+"></i></a>";
@@ -1729,14 +1729,14 @@ public class IconsState {
 		}
 		
 		else if(status.equals("2") && "Approved".equals(userStatus)) {
-			 error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+			 error="<a onclick="+errorURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
-			 download="<a onclick="+downloadURL+" ><i class="
+			 download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
 					+downloadIcon+" aria-hidden=\"true\" title="
 					+downloadIconTitle+" ></i></a>"; 
-			 edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+			 edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+editIcon+" aria-hidden=\"true\"  title="
 					+editIconTitle+"></i></a>"; 
-			 view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			 view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 			 delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 					+deletionIcon+" aria-hidden=\"true\"  title="
@@ -1821,9 +1821,9 @@ public class IconsState {
 
 
 		// state related Code 
-		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
 		if("Disable".equals(userStatus)) {
@@ -1849,9 +1849,9 @@ public class IconsState {
 		String viewAction="viewDetails('"+tag+"')";
 		
 		// state related Code 
-		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 		
 		
@@ -1880,9 +1880,9 @@ public class IconsState {
 		String viewAction="viewDetails('"+tag+"')";
 
 		// state related Code 
-		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 		
 		if("0".equals(type)) {
@@ -1920,18 +1920,18 @@ public class IconsState {
 		String rejectAction= "openDisapproveTACPopUp('"+txnId+"','')";
 		String deleteAction = "DeleteTacRecord('"+txnId+"',"+id+")";
 
-		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+		String error="<a onclick="+errorURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+"></i></a>";
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
         String historyAction ="historyRecord('"+txnId+"')";
         String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
 				+historyTitle+"></i></a>";
 
-		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+		String approve = "<a onclick="+approveAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+approveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";   
-		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+		String reject = "<a onclick="+rejectAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+deletionIcon+" aria-hidden=\"true\"  title="
@@ -2021,20 +2021,20 @@ public class IconsState {
 		}
 
 		// state related Code
-		String view="<a onclick="+viewAction+"><i class="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+viewIcon+" aria-hidden=\"true\" title=" +viewIconTitle+" ></i></a>";
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
 				+downloadIconTitle+" ></i></a>";
-		String approve ="<a onclick="+approveAction+"><i class="
+		String approve ="<a onclick="+approveAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+approveIcon+" aria-hidden=\"true\" title=" +approveIconTitle+" ></i></a>";
-		String reject = "<a onclick="+rejectAction+"><i class="
+		String reject = "<a onclick="+rejectAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+rejectIcon+" aria-hidden=\"true\" title=" +rejectIconTitle+" ></i></a>";
 
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+deletionIcon+" aria-hidden=\"true\" title="
 				+deleteIconTitle+"></i></a>";
 
-		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+		String error="<a onclick="+errorURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
 
 		log.info("source->" +source+ "status-->" +status+" userStatus--->" +userStatus+"  operator-->"+operator);
@@ -2092,9 +2092,7 @@ public class IconsState {
 			  
 		 }
 		 
-		 if(!operator.equals("CEIR Admin")) {
-			 
-		 }
+		 
 		
 		 if ("Disable".equals(userStatus)) {
 			log.info("CURRENT USER CANN'T ACCESS BCOZ STATUS IS::::::" + userStatus);
@@ -2180,14 +2178,14 @@ public class IconsState {
 
 
 		// state related Code 
-		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+		String error="<a onclick="+errorURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
 				+downloadIconTitle+" ></i></a>"; 
-		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\" ><i class="+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+deletionIcon+" aria-hidden=\"true\"  title="
@@ -2218,14 +2216,14 @@ public class IconsState {
 					+deleteIconTitle+"></i></a>"; 
 		}
 		else if((status.equals("2")) && ("Approved".equals(userStatus))) {
-			 error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+			 error="<a onclick="+errorURL+"  class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 					+errorIconTitle+" ></i></a>";
-			 download="<a onclick="+downloadURL+" ><i class="
+			 download="<a onclick="+downloadURL+"  class=\"waves-effect waves-light modal-trigger\"><i class="
 					+downloadIcon+" aria-hidden=\"true\" title="
 					+downloadIconTitle+" ></i></a>"; 
-			 edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+			 edit="<a onclick="+editAction+"  class=\"waves-effect waves-light modal-trigger\"><i class="+editIcon+" aria-hidden=\"true\"  title="
 					+editIconTitle+"></i></a>"; 
-			 view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			 view="<a onclick="+viewAction+"  class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 			 delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 					+deletionIcon+" aria-hidden=\"true\"  title="
@@ -2289,7 +2287,7 @@ public class IconsState {
 		String viewAction="viewDetails('"+id+"')";
 
 		// state related Code 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
 
@@ -2304,9 +2302,9 @@ public class IconsState {
 		String editAction="";
 
 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-		String edit="<a onclick="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 
 
@@ -2320,17 +2318,17 @@ public class IconsState {
 		String viewAction = "endUserviewGrievanceHistory('"+grievanceId+"','"+projectPath+"','"+userId+"')";
 
 		// state related Code 
-		String reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
+		String reply = "<a onclick="+replyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+replyIcon+" aria-hidden=\"true\" title="
 				+replyIconTitle+" ></i></a>";
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
 		log.info("set StatusofGrievance....." +status);
 		
 		if("0".equals(status) || "1".equals(status) || "2".equals(status)) {
-			 reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
+			 reply = "<a onclick="+replyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+replyIcon+" aria-hidden=\"true\" title="
 					+replyIconTitle+" ></i></a>";
-			 view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			 view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 
 		}else if("3".equals(status)) {
@@ -2365,12 +2363,12 @@ public class IconsState {
 
 		String historyAction ="historyRecord('"+txnId+"')";
 
-		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+		String error="<a onclick="+errorURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+"></i></a>";
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"> <i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
-		String edit="<a onclick="+editAction+"><i class="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
@@ -2456,9 +2454,9 @@ public class IconsState {
 		String deleteAction= "deleteByImei('"+imei1+"','"+txnId+"')";
 		String errorURL = "fileDownload('','error','"+txnId+"','"+defaultTagName+"')";
 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-		String delete="<a onclick="+deleteAction+"><i class="
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+deletionIcon+" aria-hidden=\"true\" title="
 				+deleteIconTitle+"></i></a>";
 		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
@@ -2543,13 +2541,13 @@ public class IconsState {
 		String ListAction = "deviceActivation?passportNo="+passportNo+"";
 		String AddAction = "";
 		// state related Code 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-		String edit="<a href="+editAction+"><i class="+editIcon+" aria-hidden=\"true\"  title="
+		String edit="<a href="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
-		String List = "<a href="+ListAction+"><i class="+ListIcon+" aria-hidden=\"true\"  title="
+		String List = "<a href="+ListAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+ListIcon+" aria-hidden=\"true\"  title="
 				+ListIconTittle+"></i></a>"; 
-		String Add = "<a onclick="+AddAction+"><i class="+plusIcon+" aria-hidden=\"true\"  title="
+		String Add = "<a onclick="+AddAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+plusIcon+" aria-hidden=\"true\"  title="
 				+plusIconTittle+"></i></a>"; 
 
 		String action = view.concat(edit).concat(List).concat(Add);
@@ -2571,15 +2569,15 @@ public class IconsState {
 		String rejectAction= "openDisapproveTACPopUp('"+txnId+"','')";
 
 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
 				+downloadIconTitle+" ></i></a>";
-		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+		String approve = "<a onclick="+approveAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+approveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";   
-		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+		String reject = "<a onclick="+rejectAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
 
 
@@ -2605,15 +2603,15 @@ public class IconsState {
 		String rejectAction= "openDisapproveTACPopUp('"+txnId+"','')";
 
 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
 				+downloadIconTitle+" ></i></a>";
-		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+		String approve = "<a onclick="+approveAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+approveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";   
-		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+		String reject = "<a onclick="+rejectAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
 
 
@@ -2643,7 +2641,7 @@ public class IconsState {
 		// state related Code 
 
 
-		String edit="<a onclick="+editAction+"><i class="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
@@ -2665,7 +2663,7 @@ public class IconsState {
 		// state related Code 
 
 
-		String edit="<a onclick="+editAction+"><i class="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
@@ -2687,7 +2685,7 @@ public class IconsState {
 		// state related Code 
 
 
-		String edit="<a onclick="+editAction+"><i class="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 
@@ -2752,19 +2750,19 @@ public class IconsState {
 		
 
 		// state related Code 
-		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+		String error="<a onclick="+errorURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+" ></i></a>";
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+downloadIcon+" aria-hidden=\"true\" title="
 				+downloadIconTitle+" ></i></a>"; 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+deletionIcon+" aria-hidden=\"true\"  title="
 				+deleteIconTitle+"></i></a>"; 
-		String approve ="<a onclick="+approveAction+"><i class="
+		String approve ="<a onclick="+approveAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+approveIcon+" aria-hidden=\"true\" title=" +approveIconTitle+" ></i></a>";
-		String reject = "<a onclick="+rejectAction+"><i class="
+		String reject = "<a onclick="+rejectAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+rejectIcon+" aria-hidden=\"true\" title=" +rejectIconTitle+" ></i></a>";
 
 		log.info("source->" +source+ "status-->" +status);
@@ -2868,7 +2866,7 @@ public class IconsState {
 		// state related Code 
 
 
-		String edit="<a onclick="+editAction+"><i class="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 
@@ -2884,16 +2882,19 @@ public class IconsState {
 		executePostConstruct();
 
 		String editAction= "getDetailBy('"+id+"','"+output+"')";
-
+		String viewAction="viewByID('"+id+"','"+output+"')"; 
+		
 		// state related Code 
 
 
-		String edit="<a onclick="+editAction+"><i class="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
 
-		String action=edit;
+		String action=view.concat(edit);
 		return action;
 
 	}
@@ -2906,17 +2907,22 @@ public class IconsState {
 
 		String editAction= "getDetailBy('"+id+"')";
 		String deleteAction ="DeleteByID('"+id+"')";
+		String viewAction="viewDetailBy("+id+")";
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+
+		
 		// state related Code 
 
 
-		String edit="<a onclick="+editAction+"><i class="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+deletionIcon+" aria-hidden=\"true\"  title="
 				+deleteIconTitle+"></i></a>";
 
-		String action=edit.concat(delete);
+		String action=view.concat(edit).concat(delete);
 		return action;
 
 	}
@@ -2932,7 +2938,7 @@ public class IconsState {
 		// state related Code 
 
 
-		String edit="<a onclick="+editAction+"><i class="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
 
@@ -2960,18 +2966,18 @@ public class IconsState {
 
 
 		// state related Code 
-		String download="<a onclick="+downloadURL+" ><i class="
+		String download="<a onclick="+downloadURL+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+downloadIcon+" aria-hidden=\"true\"  title="
 				+downloadIconTitle+" ></i></a>"; 
 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
-		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+		String approve = "<a onclick="+approveAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+approveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";   
 
 
-		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+		String reject = "<a onclick="+rejectAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
 
 		if("6".equals(status) && "Approved".equals(userStatus) ) {
@@ -2989,7 +2995,7 @@ public class IconsState {
 			approve = "<a onclick="+approveAction+" class=\"eventNone\"><i class="+disableApproveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";
 			reject = "<a onclick="+rejectAction+" class=\"eventNone\"><i class="+disableRejectIcon+" aria-hidden=\"true\" title="
-					+rejectIconTitle+" ></i></a>";
+			+rejectIconTitle+" ></i></a>";
 		}
 		
 		else if((status!="6" || status !="7" || status !="9" || status !="10" || status==null || status.equals("")) && ("Approved".equals(userStatus))){
@@ -3041,12 +3047,12 @@ public class IconsState {
 		String deleteAction= "deleteByImei('"+imei1+"')";
 		String errorURL = "fileDownload('','error','"+txnId+"','"+defaultTagName+"')";
 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-		String delete="<a onclick="+deleteAction+"><i class="
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+deletionIcon+" aria-hidden=\"true\" title="
 				+deleteIconTitle+"></i></a>";
-		String error="<a onclick="+errorURL+"><i class="+errorIcon+" aria-hidden=\"true\" title="
+		String error="<a onclick="+errorURL+" class=\"waves-effect waves-light modal-trigger\"><i class="+errorIcon+" aria-hidden=\"true\" title="
 				+errorIconTitle+"></i></a>";
 		
 		
@@ -3105,9 +3111,9 @@ public class IconsState {
 		String viewAction = "viewGrievanceHistory('"+grievanceId+"')";
 
 		// state related Code 
-		String reply = "<a onclick="+replyAction+"><i class="+replyIcon+" aria-hidden=\"true\" title="
+		String reply = "<a onclick="+replyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+replyIcon+" aria-hidden=\"true\" title="
 				+replyIconTitle+" ></i></a>";
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 
 		
@@ -3151,12 +3157,12 @@ public class IconsState {
 		// state related Code 
 
 
-		String edit="<a onclick="+editAction+"><i class="
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+editIcon+" aria-hidden=\"true\"  title="
 				+editIconTitle+"></i></a>"; 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
-		String delete="<a onclick="+deleteAction+"><i class="
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+deletionIcon+" aria-hidden=\"true\" title="
 				+deleteIconTitle+"></i></a>";
 
@@ -3180,16 +3186,16 @@ public class IconsState {
 		 String history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
 					+historyTitle+"></i></a>";
 
-		String view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 				+viewIconTitle+" ></i></a>";
 		
 		/*
 		 * String download="<a onclick="+downloadURL+" ><i class="
 		 * +downloadIcon+" aria-hidden=\"true\" title=" +downloadIconTitle+" ></i></a>";
 		 */
-		String approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+		String approve = "<a onclick="+approveAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+approveIcon+" aria-hidden=\"true\" title="
 				+approveIconTitle+" ></i></a>";   
-		String reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
+		String reject = "<a onclick="+rejectAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 				+rejectIconTitle+" ></i></a>";
 
 		
@@ -3203,10 +3209,10 @@ public class IconsState {
 			 history="<a onclick="+historyAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+historyIcon+" aria-hidden=\"true\"  title="
 						+historyTitle+"></i></a>";
 
-			 view="<a onclick="+viewAction+"><i class="+viewIcon+" aria-hidden=\"true\" title="
+			 view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
 					+viewIconTitle+" ></i></a>";
 			
-			 approve = "<a onclick="+approveAction+"><i class="+approveIcon+" aria-hidden=\"true\" title="
+			 approve = "<a onclick="+approveAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+approveIcon+" aria-hidden=\"true\" title="
 					+approveIconTitle+" ></i></a>";   
 			 reject = "<a onclick="+rejectAction+"><i class="+rejectIcon+" aria-hidden=\"true\" title="
 					+rejectIconTitle+" ></i></a>";
@@ -3259,6 +3265,46 @@ public class IconsState {
 		historyTitle=Translator.toLocale("titles.history");
 	}
 
+	/********************************** Icons for Address Management**********************************/ 
 
+	public String addressManagementIcons(String id, String userStatus) { 
+		executePostConstruct();
+
+		String deleteAction= "DeleteByID('"+id+"')";
+
+		// state related Code 
+		
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+				+deletionIcon+" aria-hidden=\"true\"  title="
+				+deleteIconTitle+"></i></a>"; 
+
+		String action=delete;
+		return action;
+
+	}
+	
+	/********************************** Icons for Schedule Management**********************************/ 
+
+	public String scheduleManagementIcons(String id, String userStatus) { 
+		executePostConstruct();
+
+		String editAction= "viewDetails("+id+",'Edit')";
+		String viewAction="viewDetails("+id+",'View')";
+		String deleteAction= "DeleteByID('"+id+"')";
+		
+		// state related Code 
+		String view="<a onclick="+viewAction+" class=\"waves-effect waves-light modal-trigger\"><i class="+viewIcon+" aria-hidden=\"true\" title="
+				+viewIconTitle+" ></i></a>";
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+				+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
+		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+				+deletionIcon+" aria-hidden=\"true\"  title="
+				+deleteIconTitle+"></i></a>"; 
+
+		String action=view.concat(edit).concat(delete);
+		return action;
+
+	}
 
 }

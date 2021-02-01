@@ -17,7 +17,7 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 //**************************************************Message Detail table**********************************************
 
 function messageManagementDatatable(){
-	
+	var Feature=  $("#feature").val() == '' || $("#feature").val() == undefined ? null : $("#feature").val();
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
@@ -29,7 +29,8 @@ function messageManagementDatatable(){
 			"userType":$("body").attr("data-roleType"),
 			"userName" : $("body").attr("data-selected-username"),
 			"username" : $("body").attr("data-selected-username"),
-			"roleType":$("body").attr("data-roleType")
+			"roleType":$("body").attr("data-roleType"),
+			"featureName" : Feature
 	}
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -139,7 +140,7 @@ function pageRendering(){
 			
 			
 			$("#messageTableDiv").append("<div class='col s12 m2 l2'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
-			$("#messageTableDiv").append("<div class=' col s3 m2 l8'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>Export<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+			$("#messageTableDiv").append("<div class=' col s3 m1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>Export<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -152,6 +153,10 @@ function pageRendering(){
 		}
 
 	}); 
+	setAllDropdown();
+};
+
+function setAllDropdown(){
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -165,7 +170,13 @@ function pageRendering(){
 			.appendTo('#channel');
 		}
 	});
-};
+	
+	$.getJSON('./getDistinctFeatureNameList', function(data) {
+		for (i = 0; i < data.length; i++) {
+		$('<option>').val(data[i]).text(data[i]).appendTo('#feature');
+		}
+	});
+}
 
 
 $('.datepicker').on('mousedown',function(event){
@@ -214,13 +225,14 @@ function setViewPopupData(data){
 	data.value=="" || data.value==null ? $("#viewValue").val('NA') : $("#viewValue").val(data.value);
 	data.description=="" || data.description==null ? $("#description").val('NA') : $("#description").val(data.description);
 	data.channelInterp=="" || data.channelInterp==null ? $("#viewChannel").val('NA') : $('#viewChannel').val(data.channelInterp);
-	
+	data.featureName=="" || data.featureName==null ? $("#viewFeature").val('NA') : $('#viewFeature').val(data.featureName);
+	data.subject=="" || data.subject==null ? $("#viewSubject").val('NA') : $('#viewSubject').val(data.subject);
 	$("label[for='viewTag']").addClass('active');
 	$("label[for='viewValue']").addClass('active');
 	$("label[for='description']").addClass('active');
 	$("label[for='viewChannel']").addClass('active');
-	
-
+	$("label[for='viewFeature']").addClass('active');
+	$("label[for='viewSubject']").addClass('active');
 }
 
 function updateDetails(tag){
@@ -265,6 +277,9 @@ function setEditData(data){
 	$("#editValue").val(data.value);
 	$("#editdescription").val(data.description);
 	$("#editChannel").val(data.channelInterp);
+	data.featureName=="" || data.featureName==null ? $("#editFeature").val('NA') : $('#editFeature').val(data.featureName);
+	data.subject=="" || data.subject==null ? $("#editSubject").val('NA') : $('#editSubject').val(data.subject);
+	$("label[for='editSubject']").addClass('active');
 }
 
 
@@ -281,7 +296,8 @@ function updateMessage(){
 			 "userType":$("body").attr("data-roleType"),
 			 "userName" : $("body").attr("data-selected-username"),
 			"roleType":$("body").attr("data-roleType"),
-			"username" : $("body").attr("data-selected-username")
+			"username" : $("body").attr("data-selected-username"),
+			"subject" : $("#editSubject").val()
 	}
 	 var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
@@ -321,7 +337,7 @@ function exportData(){
 	var info = table.page.info(); 
 	var pageNo=info.page;
 	var pageSize =info.length;
-
+	var Feature=  $("#feature").val() == '' || $("#feature").val() == undefined ? null : $("#feature").val();
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
@@ -332,6 +348,7 @@ function exportData(){
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
 			"userName" : $("body").attr("data-selected-username"),
+			"featureName" : Feature,
 			"pageNo":parseInt(pageNo),
 			"pageSize":parseInt(pageSize)
 			

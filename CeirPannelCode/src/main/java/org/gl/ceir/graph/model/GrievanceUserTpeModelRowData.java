@@ -55,7 +55,10 @@ public class GrievanceUserTpeModelRowData {
 	@JsonProperty("Date")
 	private String date;
 
-
+	@SerializedName("End User")
+	@JsonProperty("End User")
+	private int endUser;
+	
 	public int getDrt() {
 		return drt;
 	}
@@ -166,6 +169,16 @@ public class GrievanceUserTpeModelRowData {
 	}
 
 
+	public int getEndUser() {
+		return endUser;
+	}
+
+
+	public void setEndUser(int endUser) {
+		this.endUser = endUser;
+	}
+
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -191,9 +204,12 @@ public class GrievanceUserTpeModelRowData {
 		builder.append(trc);
 		builder.append(", date=");
 		builder.append(date);
+		builder.append(", endUser=");
+		builder.append(endUser);
 		builder.append("]");
 		return builder.toString();
 	}
+
 
 
 	

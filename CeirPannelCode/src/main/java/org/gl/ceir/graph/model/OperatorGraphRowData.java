@@ -7,8 +7,8 @@ import com.google.gson.annotations.SerializedName;
 
 @Component
 public class OperatorGraphRowData {
-	@JsonProperty("Total IMEI")
-	@SerializedName("Total IMEI")
+	@JsonProperty("Total IMEI Count")
+	@SerializedName("Total IMEI Count")
 	private String totalImei;
 	
 	@JsonProperty("Operator Name")

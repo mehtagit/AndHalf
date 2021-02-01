@@ -1,5 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Model;
 
+import java.util.List;
+
 public class LawfulStolenRecovey {
 	
 	private Integer blockCategory;
@@ -25,6 +27,7 @@ public class LawfulStolenRecovey {
 	private String stateInterp,dateOfStolen,dateOfRecovery,firFileName,complaintType,fileLink;
 	private StolenIndividualUserDB stolenIndividualUserDB;
 	private StolenOrganizationUserDB stolenOrganizationUserDB;
+	private List<AttachedFile> attachedFiles;
 	private String txnId;
 	private Integer userId;
 	
@@ -299,6 +302,17 @@ public class LawfulStolenRecovey {
 		this.deviceQuantity = deviceQuantity;
 	}
 
+	
+	 
+
+	public List<AttachedFile> getAttachedFiles() {
+		return attachedFiles;
+	}
+
+	public void setAttachedFiles(List<AttachedFile> attachedFiles) {
+		this.attachedFiles = attachedFiles;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -364,6 +378,8 @@ public class LawfulStolenRecovey {
 		builder.append(stolenIndividualUserDB);
 		builder.append(", stolenOrganizationUserDB=");
 		builder.append(stolenOrganizationUserDB);
+		builder.append(", attachedFiles=");
+		builder.append(attachedFiles);
 		builder.append(", txnId=");
 		builder.append(txnId);
 		builder.append(", userId=");
@@ -372,6 +388,6 @@ public class LawfulStolenRecovey {
 		return builder.toString();
 	}
 
-	
+	 
 
 }

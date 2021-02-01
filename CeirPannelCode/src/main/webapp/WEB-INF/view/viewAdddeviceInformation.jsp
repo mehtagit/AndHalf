@@ -589,11 +589,11 @@ data-txnid-value="${not empty param.transactionID ? param.transactionID : 'null'
 														<label for="multipleSimStatus1"><spring:message code="select.multiSimStatus" /><span class="star"></span>
 														</label>
 														<c:choose>
-												<c:when test = "${viewInformation.multiSimStatusInterp=='' || viewInformation.multiSimStatusInterp==null}">
+												<c:when test = "${viewInformation.multiSimStatus=='' || viewInformation.multiSimStatus==null}">
 														 <input type="text" value="NA" readonly="readonly">
 												</c:when>
 												<c:otherwise>
-												<input type="text" value="${viewInformation.multiSimStatusInterp}" readonly="readonly">
+												<input type="text" value="${viewInformation.multiSimStatus}" readonly="readonly">
 												</c:otherwise>
 												</c:choose>
 													</div>
@@ -685,6 +685,26 @@ data-txnid-value="${not empty param.transactionID ? param.transactionID : 'null'
 													
 													</c:otherwise>
 													</c:choose>
+													
+													<div class="input-field col s12 m12">
+																	<c:choose>
+															<c:when test = "${viewInformation.deviceRemark=='' || viewInformation.deviceRemark==null}">
+															<textarea id="singleDeviceRemark"  readonly="readonly"
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																 class="materialize-textarea">NA</textarea>
+																</c:when>
+																<c:otherwise>
+																<textarea id="singleDeviceRemark" readonly="readonly"  
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+																maxlength="10000" class="materialize-textarea">${viewInformation.deviceRemark}</textarea>
+																</c:otherwise>
+																</c:choose>
+																
+															<label for="textarea1"> <spring:message
+																	code="input.remarksLawfull" /></label>
+														</div>
 												</div>
 											</div>
 											<div class="row">
@@ -1208,6 +1228,9 @@ $('#redirectToPage').click(function(){
 var userType= $("body").attr("data-roleType");
 var txnID= $("body").attr("data-txnid-value");
 var source= $("body").attr("data-source-value");
+var viewall=sessionStorage.getItem("ViewAll");
+
+sessionStorage.removeItem("ViewAll");
 if (source=='menu'){
 	txnID='';
 }
@@ -1222,7 +1245,15 @@ else if(source=='filter'){
 	   window.location.replace("${context}/uploadPaidStatus?txnID="+txnID+"&source="+source);
 	   }
    else{
-	window.location.replace("${context}/uploadPaidStatus?via=other&NID="+nationalID+"&txnID="+txnID+"&source="+source);  
+	 if(viewall=="ViewAll")  {
+		 
+		 window.location.replace("${context}/uploadPaidStatus?via=other&txnID="+txnID+"&source="+source);
+		 }
+	 
+	 else{
+		 window.location.replace("${context}/uploadPaidStatus?via=other&NID="+nationalID+"&txnID="+txnID+"&source="+source);	 
+	 }
+	  
        }
 	});
 	

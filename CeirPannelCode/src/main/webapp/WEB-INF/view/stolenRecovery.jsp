@@ -1126,8 +1126,8 @@ position: fixed;
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6" style="margin-top: 21px;">
-                                                                <input type="text" id="viewsingleblockserialNumber" name="serialNumber" placeholder="" pattern="[0-9]{1,15}" required="required"
-                                                                    title="Please enter your device serial number first" disabled="disabled" maxlength="15">
+                                                                <input type="text" id="viewsingleblockserialNumber" name="serialNumber" placeholder="" pattern="[0-9]{1,25}" required="required"
+                                                                    title="Please enter your device serial number first" disabled="disabled" maxlength="25">
                                                                 <label for="viewsingleblockserialNumber"><spring:message code="input.deviceSerialNumber" /></label>
                                                             </div>
                                                             </div>
@@ -1231,8 +1231,8 @@ enctype="multipart/form-data">
 <div class="row">
 <div class="col s12 m6">
 <label for="editblockmultipleSimStatus">
-<spring:message code="select.multiSimStatus" /> <span class="star"></span></label>
-<select class="browser-default" id="editblockmultipleSimStatus" >
+<spring:message code="registration.selectMultiplestLawfull" /> <span class="star">*</span></label>
+<select class="browser-default" id="editblockmultipleSimStatus" required="required" onchange="setContactIMEINumber('editblockmultipleSimStatus','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')" >
 <option value=""  selected>
 <spring:message code="select.multiSimStatus" />
 </option>
@@ -1242,10 +1242,10 @@ enctype="multipart/form-data">
 
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockserialNumber" name="serialNumber" placeholder=""
-pattern="[A-Za-z0-9]{1,15}" 
+pattern="[A-Za-z0-9]{1,25}" 
 oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
-title="Please enter your device serial number first" maxlength="15">
+title="Please enter your device serial number first" maxlength="25">
 <label for="editsingleblockserialNumber">
 <spring:message code="input.deviceSerialNumber" /> <span class="star"></span></label>
 </div>
@@ -1273,19 +1273,19 @@ required="required"></textarea>
 <div class="row" id="editBlockTimePeriod">
 <div class="col s12 m6">
 <spring:message code="operator.blocking" /> <label style="margin-right: 2%;"> <input
-type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio" 
+type="radio" name="editbulkBlockdeviceradio" class="blocktypeRadio"  onchange="setDateMandatoryOrOptional('Immediate','stolenDatePeriodedit')"
 value="Immediate"
-onchange="document.getElementById('calender').style.display = 'none';"
+onclick="document.getElementById('calender').style.display = 'none';"
 name="stolenBlockPeriod">
 <spring:message code="operator.immediate" />
-</label> <label style="margin-right: 2%;"> <input type="radio"
+</label> <label style="margin-right: 2%;"> <input type="radio" onchange="setDateMandatoryOrOptional('Default','stolenDatePeriodedit')"
 name="editbulkBlockdeviceradio" class="blocktypeRadio" value="Default"
-onchange="document.getElementById('calender').style.display = 'none';"
+onclick="document.getElementById('calender').style.display = 'none';"
 name="stolenBlockPeriod">
 <spring:message code="operator.default" />
-</label> <label> <input type="radio" name="editbulkBlockdeviceradio" required="required"
+</label> <label> <input type="radio" name="editbulkBlockdeviceradio"  onchange="setDateMandatoryOrOptional('tilldate','stolenDatePeriodedit')"
 value="tilldate" class="blocktypeRadio"
-onchange="document.getElementById('calender').style.display = 'block';"
+onclick="document.getElementById('calender').style.display = 'block';"
 name="stolenBlockPeriod">
 <spring:message code="operator.later" /></label>
 
@@ -1329,6 +1329,7 @@ onclick="_Services._selectstartDate()"></i></span>
 </div>
 <div class="row">
 <div class="row input_fields_wrap">
+<div id="IMEIndContact1" style="display: none">
 <div class="col s12 m12">
 <p style="margin-bottom: 0;">
 <spring:message code="title.imeiMeidEsn" />
@@ -1341,9 +1342,9 @@ pattern="[0-9]{15,16}" required="required"
 	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 title="" maxlength="16">
 <label for="editsingleblockIMEI1">
-<spring:message code="title.one" /> <span class="star">*</span></label>
-</div>
-
+<spring:message code="title.one" /> <span class="star">*</span></label><p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top:-75px;margin-left:115px;"></p>
+</div></div>
+<div id="IMEIndContact2" style="display: none">
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI2" name="IMEI2" placeholder=""
 pattern="[0-9]{15,16}" 
@@ -1352,7 +1353,8 @@ pattern="[0-9]{15,16}"
 maxlength="16">
 <label for="editsingleblockIMEI2">
 <spring:message code="title.two" /></label>
-</div>
+</div></div>
+<div id="IMEIndContact3" style="display: none">
 
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI3" name="IMEI3" placeholder=""
@@ -1362,9 +1364,9 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />
 maxlength="16">
 <label for="editsingleblockIMEI3">
 <spring:message code="title.three" /></label>
-   <p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top:-146px;margin-left:115px;"></p>
-</div>
-
+   
+</div></div>
+<div id="IMEIndContact4" style="display: none">
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI4" name="IMEI4[]" placeholder=""
 pattern="[0-9]{15,16}"  
@@ -1376,7 +1378,7 @@ maxlength="16">
 <input type="text" id="editsingleblockTxnid" style="display: none">
 <input type="text" id="editsingleblocRequestType" style="display: none">
 
-</div>
+</div></div>
 </div>
 </div>
 <span>
@@ -1478,17 +1480,17 @@ title="" maxlength="16" value="1500" disabled>
 													<spring:message code="operator.blocking" />
 												</p>
 												<label style="margin-right: 2%;"> <input
-													type="radio" class="editbulkblocktypeRadio"  value="Immediate"
+													type="radio" class="editbulkblocktypeRadio"  value="Immediate" onchange="setDateMandatoryOrOptional('Immediate','editstolenBulkDatePeriod')"
 													onclick="document.getElementById('bulkeditcalender').style.display = 'none';"
 													name="editbulkblocktypeName" checked> <spring:message
 														code="operator.immediate" />
 												</label> <label style="margin-right: 2%;"> <input
-													type="radio" class="editbulkblocktypeRadio" value="Default" id="editbulkblocktypeRadioId"
+													type="radio" class="editbulkblocktypeRadio" value="Default" id="editbulkblocktypeRadioId" onchange="setDateMandatoryOrOptional('Default','editstolenBulkDatePeriod')"
 													onclick="document.getElementById('bulkeditcalender').style.display = 'none';"
 													name="editbulkblocktypeName"> <spring:message
 														code="operator.default" />
 												</label> <label> <input type="radio" required="required"
-													value="tilldate" class="editbulkblocktypeRadio"
+													value="tilldate" class="editbulkblocktypeRadio" onchange="setDateMandatoryOrOptional('tilldate','editstolenBulkDatePeriod')"
 													onclick="document.getElementById('bulkeditcalender').style.display = 'block';"
 													name="editbulkblocktypeName"> <spring:message
 														code="operator.later" />

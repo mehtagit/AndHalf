@@ -209,7 +209,7 @@ public class DatatableHeaders {
 			
 			//adminSystemMessage Headers 
 			else if("adminSystemMessage".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.Description","table.Value","table.Channel","table.action"};		
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.feature","table.subject","table.Description","table.Value","table.Channel","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -435,7 +435,7 @@ public class DatatableHeaders {
 			//IP Log Management
 			
 			else if("ipLogManagementHeaders".equals(role)) {
-				String[] headers = {"table.creationDate","table.UserName","table.publicIp","table.userAgent"};
+				String[] headers = {"table.creationDate","table.UserName","table.publicIp","table.browser","table.userAgent"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -487,6 +487,26 @@ public class DatatableHeaders {
 			else if("adminVisaHeaders".equals(role)) {
 				
 				String[] headers = {"table.creationDate","table.lastupdatedate","table.transactionID","table.PassportNumber","table.visaType","input.VisaNumber","table.fileName","table.visaExpiry", "table.status","table.action"};	
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+			}
+			
+			//Address Mgmt Headers
+			else if("systemAddressHeaders".equals(role)) {
+				
+				String[] headers = {"Created On","Province","District","Commune","Village"};	
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);	
+			}
+			
+			//Schedule Headers
+			else if("scheduleHeaders".equals(role)) {
+				
+				String[] headers = {"table.creationDate","table.lastupdatedate","sidebar.ReportCatagory","table.ReportName","input.email","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

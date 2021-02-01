@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Service
 @FeignClient(url = "${apiUrl1}",value = "featureUrls" )
 public interface FeatureFeignImpl { 
-
 	@PostMapping("/featureList/{userid}")
 	public List<Feature> featureList(@PathVariable("userid") Integer userid);
 	
+	/*
+	 * @PostMapping("/featureList") public List<Feature> featureList(@RequestParam
+	 * Integer userid,UserHeader user);
+	 */
 }

@@ -358,3 +358,86 @@ function luhnCheck(IMEILUHN,IMEIType){
 	
 	return x;
 	  }
+
+
+
+function setDateMandatoryOrOptional(defaultValue,calenderId){
+if(defaultValue=="tilldate"){
+	 $("#"+calenderId).attr('required', '');
+	
+}
+else{
+	$("#"+calenderId).removeAttr('required');
+}
+	
+}
+
+
+function setMandatoryandOptional(village,locality,district,commune,province){
+	var addressType=$('#addressType').val();
+	if(addressType==2)
+		{
+		$(".starAddress").css("display", "none");
+		$(".starAddressDistrict").css("display", "none");
+		$(".stateLabel").css("display", "none");
+		$("#singleStolenCommuneLabelID,#singleStolenDistrictLabelID,#provianceLabel").find(".star").remove();
+	//	$("#"+district+","+"#"+commune).css("display", "none");
+		$("#"+village+","+"#"+locality+","+"#"+district+","+"#"+commune).attr("required", false);
+		$("#"+village+","+"#"+locality+","+"#"+district+","+"#"+commune+","+"#"+province).attr("required", false);
+		$("#"+village+","+"#"+locality+","+"#"+district+","+"#"+commune+","+"#"+province).empty();
+		$("#"+village+","+"#"+district+","+"#"+commune+","+"#"+province).prop('disabled', true);
+		}
+	else{
+		$("#singleStolenCommuneLabelID,#singleStolenDistrictLabelID,#provianceLabel").append('<span class="star">*</span>');
+		//$(".starAddressDistrict").css("display", "block");
+		//$(".starAddress").css("display", "block");
+		$("#"+district+","+"#"+commune).attr("required", true);
+		$("#"+district+","+"#"+commune+","+"#"+province).attr("required", true);
+		$("#"+village+","+"#"+district+","+"#"+commune+","+"#"+province).prop('disabled', false);
+	}
+}
+
+
+function setContactIMEINumber(multiplesimstatus,IMEIContact1,IMEIContact2,IMEIContact3,IMEIContact4){
+	
+	
+if($('#'+multiplesimstatus).val()==1){
+	$("#"+IMEIContact1).css("display", "block");
+	$("#"+IMEIContact2).css("display", "none");
+	$("#"+IMEIContact3).css("display", "none");
+	$("#"+IMEIContact4).css("display", "none");
+}
+else if($('#'+multiplesimstatus).val()==2){
+
+	$("#"+IMEIContact1).css("display", "block");
+	$("#"+IMEIContact2).css("display", "block");
+	$("#"+IMEIContact3).css("display", "none");
+	$("#"+IMEIContact4).css("display", "none");
+	
+}
+else if($('#'+multiplesimstatus).val()==3){
+
+	$("#"+IMEIContact1).css("display", "block");
+	$("#"+IMEIContact2).css("display", "block");
+	$("#"+IMEIContact3).css("display", "block");
+	$("#"+IMEIContact4).css("display", "none");
+	
+}
+else if($('#'+multiplesimstatus).val()==4){
+		$("#"+IMEIContact1).css("display", "block");
+		$("#"+IMEIContact2).css("display", "block");
+		$("#"+IMEIContact3).css("display", "block");
+		$("#"+IMEIContact4).css("display", "block");
+}
+else if($('#'+multiplesimstatus).val()==""){
+	$("#"+IMEIContact1).css("display", "none");
+	$("#"+IMEIContact2).css("display", "none");
+	$("#"+IMEIContact3).css("display", "none");
+	$("#"+IMEIContact4).css("display", "none");
+}
+
+}
+
+function filterReset(formID){
+	$('#'+formID).trigger('reset');
+}

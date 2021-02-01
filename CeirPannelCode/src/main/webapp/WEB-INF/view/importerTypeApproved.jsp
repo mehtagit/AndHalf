@@ -161,10 +161,10 @@
 
 								<div class="row myRow">
 									<div class="input-field col s12 m6 l6">
-										<input type="text" id="frequencyrange"
+										<input type="text" id="frequencyrange" pattern="[A-Za-z0-9 ]{1,50}"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-											maxlength="30" required> <label for="frequencyrange"><spring:message
+											maxlength="50" required> <label for="frequencyrange"><spring:message
 												code="registration.frequencyrange" /> <span class="star">*</span></label>
 									</div>
 									<div class="input-field col s12 m6 l6">

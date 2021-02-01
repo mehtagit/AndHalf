@@ -157,8 +157,8 @@
                                                             </div>
                                         
                                                             <div class="col s12 m6">
-                                                                <label for="blockmultipleSimStatus"><spring:message code="operator.multiplesim" /></label>
-                                                                <select class="browser-default" id="blockmultipleSimStatus"
+                                                                <label for="blockmultipleSimStatus"><spring:message code="registration.selectMultiplestLawfull" /> <span class="star">*</span></label>
+                                                                <select class="browser-default" required="required" id="blockmultipleSimStatus" onchange="setContactIMEINumber('blockmultipleSimStatus','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
                                                                  oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                                  oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
                                                                     <option value=""  selected><spring:message code="operator.multiplestatus" /></option>
@@ -166,11 +166,11 @@
                                                                 </select>
                                                             </div>
                                         
-                                                            <div class="input-field col s12 m6" style="margin-top: 21px;">
-                                                                <input type="text" id="singleblockserialNumber" name="serialNumber" pattern="[A-Za-z0-9]{1,15}" 
+                                                            <div class="input-field col s12 m6" style="margin-top: 23px;">
+                                                                <input type="text" id="singleblockserialNumber" name="serialNumber" pattern="[A-Za-z0-9]{1,25}" 
                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.numberfirst" />');" 
-                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.numberfirst" />');"
-                                                                     maxlength="15">
+                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
+                                                                     maxlength="25">
                                                                         <label for="singleblockserialNumber"><spring:message code="operator.deviceserial" /></label>
                                                             </div>
                                         
@@ -200,14 +200,14 @@
                                                         <div class="col s12 m6">
 <p style="margin-top: 3px; margin-bottom: 5px"><spring:message code="operator.blocking" /></p>
 <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio" 
-value="Immediate"
+value="Immediate" onchange="setDateMandatoryOrOptional('Immediate','stolenDatePeriod')"
 onclick="document.getElementById('calender').style.display = 'none';"
 name="stolenBlockPeriod" checked><spring:message code="operator.immediate" />
 </label> <label style="margin-right: 2%;"> <input type="radio" class="blocktypeRadio"
-value="Default" title="" id="defaultPeriodId"
-onclick="document.getElementById('calender').style.display = 'none';"
+value="Default" title="" id="defaultPeriodId" onchange="setDateMandatoryOrOptional('Default','stolenDatePeriod')"
+onclick="document.getElementById('calender').style.display = 'none';" 
 name="stolenBlockPeriod"><spring:message code="operator.default" />
-</label> <label> <input type="radio" required="required" value="tilldate" class="blocktypeRadio"
+</label> <label> <input type="radio" required="required" value="tilldate" onchange="setDateMandatoryOrOptional('tilldate','stolenDatePeriod')" class="blocktypeRadio"
 onclick="document.getElementById('calender').style.display = 'block';"
 name="stolenBlockPeriod"><spring:message code="operator.later" />
 </label>
@@ -240,6 +240,8 @@ onclick="_Services._selectstartDate()"></i></span>
 </div>
 </div>
                                                         
+                                                            
+                                                            <div id="IMEIndContact1" style="display: none">
                                                             <div class="col s12 m12">
                                                                 <p style="margin-bottom: 0;"><spring:message code="title.imeiMeidEsn" /></p>
                                                             </div>
@@ -249,24 +251,26 @@ onclick="_Services._selectstartDate()"></i></span>
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                     required   maxlength="16">
                                                                 <label for="singleblockIMEI1"><spring:message code="title.one" /> <span class="star">*</span></label>
-                                                            </div>
-                                        
+                                                                         <p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top:-72px;margin-left:115px;"></p>
+                                                            </div></div>
+                                        					<div id="IMEIndContact2" style="display: none"><p>	
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="singleblockIMEI2" name="IMEI2" pattern="[0-9]{15,16}" 
                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                     maxlength="16">
                                                                 <label for="singleblockIMEI2"><spring:message code="title.two" /></label>
-                                                            </div>  
-                                                            
+                                                            </div></div>  
+                                                            <div id="IMEIndContact3" style="display: none"><p>
                                                             <div class="input-field col s12 m6">
                                                                 <input type="text" id="singleblockIMEI3" name="IMEI3" pattern="[0-9]{15,16}" 
                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
                                                                     oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                   maxlength="16">
                                                                 <label for="singleblockIMEI3"><spring:message code="title.three" /></label>
-                                                           <p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top:-146px;margin-left:115px;"></p>
-                                                            </div>
+                                                  
+                                                            </div></div>
+                                                            <div id="IMEIndContact4" style="display: none"><p>
             
                                                             <div class="input-field col s12 m6">
                                                                <input type="text" id="singleblockIMEI4" name="IMEI4[]" pattern="[0-9]{15,16}"
@@ -274,7 +278,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                                     oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
                                                                   maxlength="16">
                                                                 <label for="singleblockIMEI4"><spring:message code="title.four" /></label>
-                                                            </div>
+                                                            </div></div>
                                                         </div>
                                                         <span><spring:message code="input.requiredfields" /> <span class="star">*</span></span>
                                                     </div>
@@ -309,7 +313,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                       required   maxlength="7" >
                                                         <label for="blockbulkquantity"><spring:message code="input.quantity" /> <span class="star">*</span></label>
                                                     </div>
-                                                    <div class="input-field col s12 m6" style="margin-top: 22px;">
+                                                    <div class="input-field col s12 m6" style="margin-top: 28px;">
                                                         <input type="text" id="blockbulkDeviceQuantity" name="blockbulkDeviceQuantity" pattern="[0-9]{1,7}" 
                                                         oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
                                                         oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
@@ -317,7 +321,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         <label for="blockbulkDeviceQuantity"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>
                                                     </div>
                                                     
-                                                    <div class="file-field input-field col s12 m6" style="margin-top: -7px;">
+                                                    <div class="file-field input-field col s12 m6" style="margin-top: -75px;">
                                                         <p style="color: #000;"><spring:message code="operator.upload" /> <span class="star">*</span></p>
                                                         <div class="btn">
                                                             <span><spring:message code="operator.file" /></span>
@@ -331,7 +335,7 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         </div>
                                                     </div>
 
-<div class="input-field col s12 m6" style="margin-top: 0px;">
+<div class="input-field col s12 m6" style="margin-top: 18px;">
                                                                 <textarea id="blockbulkRemark"  class="materialize-textarea" 
                                                                 oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" 
                                                                 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
@@ -343,17 +347,18 @@ onclick="_Services._selectstartDate()"></i></span>
 													<spring:message code="operator.blocking" />
 												</p>
 												<label style="margin-right: 2%;"> <input
-													type="radio" class="bulkblocktypeRadio"  value="Immediate"
+													type="radio" class="bulkblocktypeRadio"  value="Immediate" onchange="setDateMandatoryOrOptional('Immediate','stolenBulkDatePeriod')"
 													onclick="document.getElementById('stolenCalender').style.display = 'none';"
 													name="stolenBulkBlockPeriod" checked> <spring:message
 														code="operator.immediate" />
 												</label> <label style="margin-right: 2%;"> <input
 													type="radio" class="bulkblocktypeRadio" value="Default" id="bulkblocktypeRadioId"
+													onchange="setDateMandatoryOrOptional('Default','stolenBulkDatePeriod')"
 													onclick="document.getElementById('stolenCalender').style.display = 'none';"
 													name="stolenBulkBlockPeriod"> <spring:message
 														code="operator.default" />
 												</label> <label> <input type="radio" required="required"
-													value="tilldate" class="bulkblocktypeRadio"
+													value="tilldate" class="bulkblocktypeRadio" onchange="setDateMandatoryOrOptional('tilldate','stolenBulkDatePeriod')"
 													onclick="document.getElementById('stolenCalender').style.display = 'block';"
 													name="stolenBulkBlockPeriod"> <spring:message
 														code="operator.later" />

@@ -2,6 +2,7 @@ package org.gl.ceir.CeirPannelCode.Controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.DashboardFeignClient;
@@ -37,7 +38,8 @@ public class Dashboard {
 	ModelAndView mv = new ModelAndView();
 
 	@GetMapping("*")
-	public ModelAndView openUserRegisterPage(HttpSession session) {
+	public ModelAndView openUserRegisterPage(HttpSession session,HttpServletRequest request) {
+		//return loginService.dashBoard(session,request);
 		return loginService.dashBoard(session);
 	}
 

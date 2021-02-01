@@ -255,7 +255,7 @@
 
                                                             <div class="input-field col s12 m6">
                                                                 <textarea id="sigleRecovery" class="materialize-textarea"></textarea>
-                                                                <label for="sigleRecovery"><spring:message code="input.remarks" /> </label>
+                                                                <label for="sigleRecovery"><spring:message code="input.remarksLawfull" /> </label>
                                                             </div>
                                                             </div>
                                                         </div>
@@ -303,7 +303,7 @@
                                                           oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
                                                           maxlength="10000"
                                                            class="materialize-textarea" placeholder=""></textarea>
-                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarks" /></label>
+                                                        <label for="bulkRecoveryRemark"><spring:message code="input.remarksLawfull" /></label>
                                                     </div>
                                                     
                                                     <div class="input-field col s12 m6" style="display: none;" id="bulkRecoveryRemarkRejectDiv">
@@ -392,59 +392,8 @@ onclick="_Services._selectstartDate()"></i></span>
                                                              maxlength="200" required="required">
                                                         <label for="bulkRecoveryaddress"><spring:message code="input.address" /> <span class="star">*</span></label>
                                                     </div>
-                    
-                                                    <div class="input-field col s12 m6 l6">
-                                                        <input type="text" name="bulkRecoverystreetNumber" class="form-control boxBorder boxHeight" placeholder=""
-                                                            id="bulkRecoverystreetNumber" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
-                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-                                                             maxlength="30" required="required">
-                                                        <label for="bulkRecoverystreetNumber"><spring:message code="input.streetNumber" /> <span class="star">*</span></label>
-                                                    </div>
-
-                                                    <div class="input-field col s12 m6 l6">
-                                                        <input type="text" name="bulkRecoveryvillage" id="bulkRecoveryvillage" placeholder="" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
-                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-                                                             maxlength="30">
-                                                        <label for="bulkRecoveryvillage"><spring:message code="input.village" /> <span class="star"></span></label>
-                                                    </div>
-                    
-                                                    <div class="input-field col s12 m6 l6">
-                                                        <input type="text" name="bulkRecoverylocality" class="form-control boxBorder boxHeight" placeholder=""
-                                                            id="bulkRecoverylocality" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
-                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-                                                             maxlength="30">
-                                                        <label for="bulkRecoverylocality"> <spring:message code="input.locality" /><span class="star"></span></label>
-                                                    </div>
-                        
-                                                    <div class="input-field col s12 m6 l6">
-                                                        <input type="text" name="bulkRecoverydistrict" id="bulkRecoverydistrict" placeholder="" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
-                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-                                                             maxlength="30" required="required">
-                                                        <label for="bulkRecoverydistrict"><spring:message code="input.district" /> <span class="star">*</span></label>
-                                                    </div>
-                        
-                                                    <div class="input-field col s12 m6 l6">
-                                                        <input type="text" name="bulkRecoverycommune" id="bulkRecoverycommune" placeholder="" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
-                                                         oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-                                                             maxlength="30" required="required">
-                                                        <label for="bulkRecoverycommune"> <spring:message code="input.commune" /><span class="star">*</span></label>
-                                                    </div>
-                        
-                                                    <div class="input-field col s12 m6 l6">
-                                                        <input type="text" name="bulkRecoverypin"  placeholder="" class="form-control boxBorder boxHeight"
-                                                            id="bulkRecoverypin" pattern="[0-9]{6,6}" title="" 
-                                                            oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');" 
-                                                             oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-                                                        maxlength="6" required="required">
-                                                        <label for="bulkRecoverypin"> <spring:message code="input.postalCode" /><span class="star">*</span></label>
-                                                    </div>
-                    
-                                                    <div class="col s12 m6 l6">
+                    								
+                    								<div class="col s12 m6 l6">
                                                         <label><spring:message code="table.country" /> <span class="star">*</span></label>
                                                         <select id="bulkRecoverycountry" class="browser-default" class="mySelect"
                                                         oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
@@ -454,12 +403,88 @@ onclick="_Services._selectstartDate()"></i></span>
                     
                                                     <div class="col s12 m6 l6">
                                                         <label> <spring:message code="input.province" /><span class="star">*</span></label>
-                                                        <select id="bulkRecoverystate" 
+                                                        <select id="bulkRecoverystate"  onchange="getDistrict(this,'bulkRecoverydistrict','bulkRecoverycommune');"
                                                         oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" 
                                                         oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
                                                         class="browser-default" class="mySelect" style="padding-left: 0;"
                                                             required></select>
                                                     </div>
+                                                    
+                                                    <div class="col s12 m6 l6">
+                                                        <%-- <input type="text" name="bulkRecoverydistrict" id="bulkRecoverydistrict" placeholder="" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
+                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                             maxlength="30" required="required"> --%>
+                                                        <label for="bulkRecoverydistrict"><spring:message code="input.district" /> <span class="star">*</span></label>
+                                                        <select
+										id="bulkRecoverydistrict" class="browser-default" class="mySelect"
+										onchange="getCommune(this,'bulkRecoverycommune','bulkRecoveryvillage');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required>
+										<option value=""><spring:message code="select.district" /></option></select>
+                                                    </div>
+                        
+                                                    <div class="col s12 m6 l6">
+                                                       <%--  <input type="text" name="bulkRecoverycommune" id="bulkRecoverycommune" placeholder="" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
+                                                         oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                             maxlength="30" required="required"> --%>
+                                                        <label for="bulkRecoverycommune"> <spring:message code="input.commune" /><span class="star">*</span></label>
+                                                        <select
+										id="bulkRecoverycommune" class="browser-default" class="mySelect"
+										onchange="getVillage(this,'bulkRecoveryvillage');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required>
+										<option value=""><spring:message code="select.commune" /></option></select>
+                                                    </div>
+                                                    
+                                                    <div class="col s12 m6 l6">
+                                                        <%-- <input type="text" name="bulkRecoveryvillage" id="bulkRecoveryvillage" placeholder="" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
+                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                             maxlength="30"> --%>
+                                                        <label for="bulkRecoveryvillage"><spring:message code="input.village" /> <span class="star"></span></label>
+                                                        <select
+										id=bulkRecoveryvillage class="browser-default" class="mySelect"
+										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" >
+										<option value=""><spring:message code="select.village" /></option>
+										</select>
+                                                    </div>
+                    								
+                                                    <div class="input-field col s12 m6 l6">
+                                                        <input type="text" name="bulkRecoverystreetNumber" class="form-control boxBorder boxHeight" placeholder=""
+                                                            id="bulkRecoverystreetNumber" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
+                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                             maxlength="30" required="required">
+                                                        <label for="bulkRecoverystreetNumber"><spring:message code="input.streetNumber" /> <span class="star">*</span></label>
+                                                    </div>
+
+                                                    
+                    
+                                                    <div class="input-field col s12 m6 l6" style="margin-left:1px;">
+                                                        <input type="text" name="bulkRecoverylocality" class="form-control boxBorder boxHeight" placeholder=""
+                                                            id="bulkRecoverylocality" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
+                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+                                                             maxlength="30">
+                                                        <label for="bulkRecoverylocality"> <spring:message code="input.locality" /><span class="star"></span></label>
+                                                    </div>
+                        
+                                                    
+                        
+                                                    <div class="input-field col s12 m6 l6" style="margin-right: -1px;">
+                                                        <input type="text" name="bulkRecoverypin"  placeholder="" class="form-control boxBorder boxHeight"
+                                                            id="bulkRecoverypin" pattern="[0-9]{6,6}" title="" 
+                                                            oninput="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');" 
+                                                             oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
+                                                        maxlength="6" required="required">
+                                                        <label for="bulkRecoverypin"> <spring:message code="input.postalCode" /><span class="star">*</span></label>
+                                                    </div>
+                    
+                                                    
                                                     
                                                      <div class="input-field col s12 m6"> 
 											<input type="text" name="deviceRecoveryDevice" placeholder=""
@@ -593,7 +618,8 @@ onclick="_Services._selectstartDate()"></i></span>
 	
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
-
+<script type="text/javascript"
+		src="${context}/resources/project_js/CommanLocality.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 		<script type="text/javascript"
 		src="${context}/resources/project_js/editCompanyRecovery.js?version=<%= (int) (Math.random() * 10) %>"></script>
@@ -630,7 +656,7 @@ onclick="_Services._selectstartDate()"></i></span>
             	$('#headingType').text('');
             	$('#headingType').text(recoveryCompany);
             	  $("#bulkRecoveryDiv").find("input,select,textarea,button").prop("disabled",true);
-            	  
+            	  $("#bulkRecoveryDiv").find("select").attr("style", "pointer-events: none;");
             	  $("#editCompanyRecoveryButton").css("display", "none");
           		$(".star").css("display", "none");
           		 $("#bulkRecoveryRemarkRejectDiv").css("display", "block");
@@ -641,6 +667,7 @@ onclick="_Services._selectstartDate()"></i></span>
             	$('#headingType').text('');
             	$('#headingType').text(editrecoveryCompany);
             	  $("#bulkRecoveryDiv").find("input,select,textarea,button").prop("disabled",false);
+            	  $("#singleRecoveryDiv").find("select").attr("style", "pointer-events: none;");
             }
           
       }

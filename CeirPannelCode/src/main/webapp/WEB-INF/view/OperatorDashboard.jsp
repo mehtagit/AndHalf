@@ -293,7 +293,7 @@ th {
 			
 						<div class="col s12 m12 l12">
 							<div class="row card-panel">
-									<a id="wholePageImage">Download</a>
+									<a id="wholePageImage" href="javascript:void(0);" onclick="graphImageDownload('Operator_dashboard')">Download</a>
 								<div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display:block !important">
                             <h6 class="fixPage-modal-header ">
                             <spring:message code="sidebar.Operator_Dashboard" />
@@ -306,15 +306,27 @@ th {
                            <div style="display:flex; margin-left: 12px;">
                             
                                <div class="col-xl-8 col-lg-7">
-              <div class="card shadow mb-4">
+                               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                 <h6 class="m-0 font-weight-bold text-primary">Operator Wise Blocked IMEI Graph</h6>
+                 <div> <a href="javascript:void(0);" id="expblockedIMEI">Export</a> | 
+                      <a id="blockedIMEIImg" download="Blocked_IMEI.jpg">Download</a></div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                   <canvas class="chart-area" id="blockIMEIGraph" style = "width: 550px; height: 400px; margin: 0 auto">
+                  </canvas>
+    </div></div>
+<!--               <div class="card shadow mb-4">
+                Card Header - Dropdown
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Operator Wise IMEIs</h6>
                 <div>
 															<a id="expOperatorWiseIMEI">Export</a> | <a id="operatorWiseImage">Download</a>
 														</div>
                 </div>
-                <!-- Card Body -->
+                Card Body
                 <div class="card-body" style = "height: 456px;">
                  
                       	      <table class="responsive-table striped datatable" id="activeDeviceTable">
@@ -348,7 +360,7 @@ th {
                             </table>
                  
                 </div>
-              </div>
+              </div> -->
             </div>
             
             
@@ -369,8 +381,8 @@ th {
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Operator Wise Trend</h6>
-                 <div> <a id="exp">Export</a> | 
-                      <a id="lineImage" download="Pie.jpg">Download</a></div>
+                 <div> <a href="javascript:void(0);" id="exp">Export</a> | 
+                      <a id="lineImage" download="Operator_Wise_Trend.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -385,7 +397,7 @@ th {
               </div> </div>
               
                                        <div style="display:flex; margin-left: 12px;">
-                                          <div class="col-xl-8 col-lg-7">
+<%--                                           <div class="col-xl-8 col-lg-7">
     <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -400,14 +412,14 @@ th {
                 </div>
               </div>
     
-    </div>
+    </div> --%>
     
                <div class="col-xl-8 col-lg-7">
     <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Operator's Active Pair</h6>
-                 <div> <a id="expOperatorActivePair">Export</a> | 
+                 <div> <a href="javascript:void(0);" id="expOperatorActivePair">Export</a> | 
                       <a id="OperatorActiveImage" download="Operator's_Active_Pair.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
@@ -461,39 +473,7 @@ th {
                       
              </div>      --%>
              
-              <div style="display:flex; margin-left: 12px;">
-                          <%--   <div class="col-xl-8 col-lg-7">
-              <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Grievance Status Wise Graph</h6>
-                   <div> <a id="expGrievanceStatus">Export</a> | 
-                      <a id="grievanceBarImg" download="state_Wise_Grievance.jpg">Download</a></div>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                   <canvas class="chart-area" id="grievanceStatusWise" style = "width: 550px; height: 400px; margin: 0 auto">
-                  </canvas>
-                </div>
-              </div>
-            </div> --%>
-             
-             
-             
-             
-             <div class="col-xl-8 col-lg-7">
-              <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                 <h6 class="m-0 font-weight-bold text-primary">Blocked IMEI Graph</h6>
-                 <div> <a id="expblockedIMEI">Export</a> | 
-                      <a id="blockedIMEIImg" download="Blocked_IMEI.jpg">Download</a></div>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                   <canvas class="chart-area" id="blockIMEIGraph" style = "width: 550px; height: 400px; margin: 0 auto">
-                  </canvas>
-    </div></div></div></div>
+            
              
                        
               </div> 

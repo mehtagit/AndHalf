@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream; 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -39,6 +40,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.blueconic.browscap.BrowsCapField;
+import com.blueconic.browscap.Capabilities;
+import com.blueconic.browscap.ParseException;
+import com.blueconic.browscap.UserAgentParser;
+import com.blueconic.browscap.UserAgentService;
 import com.google.gson.Gson;
 @Service 
 public class RegistrationService {
@@ -54,7 +60,8 @@ public class RegistrationService {
 	GenerateRandomDigits randomDigits;
 	@Autowired
 	FeignCleintImplementation feignCleintImplementation;
-
+	 UserAgentService userAgentService = new UserAgentService();
+	 UserAgentParser parser;
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	public String registrationView(String usertype,Model model,HttpSession session) {
@@ -500,6 +507,26 @@ public class RegistrationService {
 	}
 
 	public UserHeader getUserHeaders(HttpServletRequest request) {
+		
+	
+		try {
+			parser = userAgentService.loadParser();
+			/*
+			 * Arrays.asList(BrowsCapField.BROWSER, BrowsCapField.BROWSER_TYPE,
+			 * BrowsCapField.BROWSER_MAJOR_VERSION, BrowsCapField.DEVICE_TYPE,
+			 * BrowsCapField.PLATFORM, BrowsCapField.PLATFORM_VERSION,
+			 * BrowsCapField.RENDERING_ENGINE_VERSION, BrowsCapField.RENDERING_ENGINE_NAME,
+			 * BrowsCapField.PLATFORM_MAKER, BrowsCapField.RENDERING_ENGINE_MAKER)
+			 */
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
 		String userIp = request.getHeader("HTTP_CLIENT_IP");
 		if(userIp == null) {
 			userIp = request.getHeader("X-FORWARDED-FOR");
@@ -508,14 +535,18 @@ public class RegistrationService {
 			}
 		}
 		log.info("client Ip:  "+userIp);
+		final String userAgentHeader = request.getHeader("User-Agent");
+		final Capabilities capabilities = parser.parse(userAgentHeader);
+		// the default fields have getters
 		String userAgent = request.getHeader("User-Agent");
+		String browser = capabilities.getBrowser();
 		if(userAgent!=null) {
 			log.info("user agent: "+userAgent);
 		}
 		else {
 			log.info("user-agent not available");
 		}
-		UserHeader headers=new UserHeader(userAgent,userIp);
+		UserHeader headers=new UserHeader(userAgent,userIp,browser+"/"+capabilities.getPlatform());
 		return headers;
 	}
 }

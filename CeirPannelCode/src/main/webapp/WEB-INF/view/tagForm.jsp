@@ -202,11 +202,14 @@ section {
 						</div>
 						<div class="input-field col s7 m4">
                                 <select class="browser-default" id="tagId" required="">
-                                <option value="" selected="">Select field</option>
+                                <option value="-1" selected>Select field</option>
                                  </select>
                          </div>
 						<div class="input-field col s12 m2 l2">
-							<button type="button" class="btn"  id="submit" onclick="hide();"><spring:message code="button.submit" /></button>
+							<button type="button" class="btn"  id="submit" onclick="hide('filter');"><spring:message code="button.submit" /></button>
+						</div>
+						<div class="input-field col s12 m2 l1">
+							<button type="button" class="btn" id="submit2" onclick="hide('viewAll');"><span>View All</span></button>
 						</div>
 					</div>
 				</div>

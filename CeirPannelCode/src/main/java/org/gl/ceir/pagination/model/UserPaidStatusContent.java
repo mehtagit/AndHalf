@@ -40,7 +40,7 @@ public class UserPaidStatusContent {
 	private List<UplodPaidStatusModel> regularizeDeviceDbs;
 	private List<VisaDb> visaDb;
 	private EndUserVisaInfo endUserDB;
-	private String origin,nationality;
+	private String origin,nationality,deviceRemark;
 	public Integer getId() {
 		return id;
 	}
@@ -239,6 +239,12 @@ public class UserPaidStatusContent {
 	public void setMultiSimStatusInterp(String multiSimStatusInterp) {
 		this.multiSimStatusInterp = multiSimStatusInterp;
 	}
+	public String getDeviceRemark() {
+		return deviceRemark;
+	}
+	public void setDeviceRemark(String deviceRemark) {
+		this.deviceRemark = deviceRemark;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -308,12 +314,11 @@ public class UserPaidStatusContent {
 		builder.append(origin);
 		builder.append(", nationality=");
 		builder.append(nationality);
+		builder.append(", deviceRemark=");
+		builder.append(deviceRemark);
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
-
 	
 	
 	

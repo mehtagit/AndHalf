@@ -23,58 +23,54 @@ public class ActiveDeviceCountData {
 	@SerializedName("Total Paired IMEI")
 	private String totalPairedIMEI;
 	
-	@JsonProperty("Approved TAC")
-	@SerializedName("Approved TAC")
+	@JsonProperty("GSMA Approved TAC Count")
+	@SerializedName("GSMA Approved TAC Count")
 	private String approvedTAC;
 	
-	@JsonProperty("Rejected TAC")
-	@SerializedName("Rejected TAC")
+	@JsonProperty("GSMA Rejected TAC Count")
+	@SerializedName("GSMA Rejected TAC Count")
 	private String rejectedTAC;
-
-	
-	
-	
 	
 	@JsonProperty("Total GSMA BlackList Count")
 	@SerializedName("Total GSMA BlackList Count")
 	private String totalGSMABlackList;
 	
-	@JsonProperty("Total Importer Device Count")
+	@JsonProperty("Total Importer IMEI Count")
 	@SerializedName("Total Importer Device Count")
 	private String totalImporterDevice;
 	
-	@JsonProperty("Total Distributor Device Count")
+	@JsonProperty("Total Distributor IMEI Count")
 	@SerializedName("Total Distributor Device Count")
 	private String totalDistributorDevice;
 	
-	@JsonProperty("Total Retailer Device Count")
+	@JsonProperty("Total Retailer IMEI Count")
 	@SerializedName("Total Retailer Device Count")
 	private String totalRetailerDevice;
 	
-	@JsonProperty("Total Manufacturer Device Count")
+	@JsonProperty("Total Manufacturer IMEI Count")
 	@SerializedName("Total Manufacturer Device Count")
 	private String totalManufacturerDevice;
 	
-	@JsonProperty("Total End User Device Count")
+	@JsonProperty("Total End User IMEI Count")
 	@SerializedName("Total End User Device Count")
 	private String totalEndUserDevice;
 
-	@JsonProperty("Total Stolen Device Count")
+	@JsonProperty("Total Stolen IMEI Count")
   	@SerializedName("Total Stolen Device Count")
   	private String totalStolenDeviceCount;
   	
-  	@JsonProperty("Total Blocked Device Count")
+  	@JsonProperty("Total Blocked IMEI Count")
   	@SerializedName("Total Blocked Device Count")
   	private String totalBlockedDeviceCount;
   	
   	
      
-  	@JsonProperty("Total Model Count")
-  	@SerializedName("Total Model Count")
+  	@JsonProperty("Total Device Model Count")
+  	@SerializedName("Total Device Model Count")
   	private String totalModelCount;
   	
-  	@JsonProperty("Total Brand Count")
-  	@SerializedName("Total Brand Count")
+  	@JsonProperty("Total Device Brand Count")
+  	@SerializedName("Total Device Brand Count")
   	private String totalBrandCount;
 
 	public String getDate() {

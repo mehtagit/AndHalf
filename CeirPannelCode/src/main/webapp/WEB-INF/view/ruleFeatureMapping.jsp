@@ -160,8 +160,8 @@ if (currentTime < dfd) {
 								onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');getFeature(this);"
 								oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 								style="padding-left: 0;" required>
-															<option value="null" selected="">Rule Name</option>
-								</select>
+								<option value="null" selected="">Rule Name</option>
+							</select>
 						</div>
 
 
@@ -176,7 +176,7 @@ if (currentTime < dfd) {
 								oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 								style="padding-left: 0;" required>
 								<option value="null" selected="">Feature Name</option>
-								</select>
+							</select>
 						</div>
 					</div>
 
@@ -377,6 +377,123 @@ if (currentTime < dfd) {
 		</div>
 	</div>
 
+
+
+	<div id="viewModel" class="modal">
+
+		<div class="header-fixed header-fixed-style">
+			<h6 class="modal-header">
+				<spring:message code="modal.ViewRuleFeatureMapping" />
+			</h6>
+		</div>
+
+		<div class="scrollDivHeight"></div>
+
+		<div class="modal-content modal-content-style">
+			<div class="row myRow">
+
+
+				<div class="input-field col s12 m6">
+					<input type="text" name="viewRule" id="viewRule" /> <label
+						for="viewRule" class="center-align"><spring:message
+							code="table.ruleName" /></label>
+				</div>
+
+
+				<div class="input-field col s12 m6">
+					<input type="text" name="viewFeature" id="viewFeature" /> <label
+						for="viewFeature" class="center-align"><spring:message
+							code="table.featureName" /> </label>
+				</div>
+
+			</div>
+
+			<div class="row myRow">
+
+
+				<div class="input-field col s12 m6">
+					<input type="text" name="viewUser" id="viewUser" /> <label
+						for="viewUser" class="center-align"><spring:message
+							code="table.userType" /> </label>
+				</div>
+
+
+
+				<div class="input-field col s12 m6">
+					<input type="text" name="vieworder" id="vieworder" /> <label
+						for="vieworder" class="center-align"><spring:message
+							code="table.order" /> </label>
+				</div>
+
+			</div>
+
+
+
+			<div class="row myRow">
+
+				<div class="input-field col s12 m6">
+					<input type="text" name="viewGracePeriod" id="viewGracePeriod" />
+					<label for="viewGracePeriod" class="center-align"><spring:message
+							code="table.gracePeriod" /> </label>
+				</div>
+
+
+				<div class="input-field col s12 m6">
+					<input type="text" name="viewPostGracePeriod"
+						id="viewPostGracePeriod" /> <label for="viewPostGracePeriod"
+						class="center-align"><spring:message
+							code="table.postGracePeriod" /> </label>
+				</div>
+
+			</div>
+
+
+
+			<div class="row myRow">
+				<div class="input-field col s12 m6">
+					<input type="text" name="viewMoveToGracePeriod"
+						id="viewMoveToGracePeriod" /> <label for="viewMoveToGracePeriod"
+						class="center-align"><spring:message
+							code="table.moveToGracePeriod" /> </label>
+				</div>
+
+				<div class="input-field col s12 m6">
+					<input type="text" name="viewMoveToPostGracePeriod"
+						id="viewMoveToPostGracePeriod" /> <label
+						for="viewMoveToPostGracePeriod" class="center-align"><spring:message
+							code="table.moveToPostGracePeriod" /> </label>
+				</div>
+
+			</div>
+
+
+
+			<div class="row myRow">
+
+				<div class="input-field col s12 m6">
+					<input type="text" name="viewOutput" id="viewOutput" /> <label
+						for="viewOutput" class="center-align"><spring:message
+							code="table.expectedOutput" /> </label>
+				</div>
+
+			</div>
+
+
+
+
+			<div class="row">
+				<div class="input-field col s12 center">
+
+					<button class="btn modal-close" style="margin-left: 10px;">
+						<spring:message code="modal.close" />
+					</button>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
 	<!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
@@ -441,47 +558,53 @@ if (currentTime < dfd) {
 	<script type="text/javascript"
 		src="${context}/resources/project_js/ruleFeatureMapping.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript">
-		$(document).ready(
-				function() {
-					if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";}
-					var timeoutTime =
+		$(document)
+				.ready(
+						function() {
+							if ($("body").attr("data-roleType") == '') {
+								window.top.location.href = "./login?isExpired=yes";
+							}
+							var timeoutTime =
 	<%=session.getLastAccessedTime()%>
 		;
-					var timeout =
+							var timeout =
 	<%=session.getMaxInactiveInterval()%>
 		;
-					timeoutTime += timeout;
-					var currentTime;
-					$("body").click(
-							function(e) {
-								$
-										.ajaxSetup({
-											headers : {
-												'X-CSRF-TOKEN' : $(
-														"meta[name='_csrf']")
-														.attr("content")
-											}
-										});
-								$
-										.ajax({
-											url : './serverTime',
-											type : 'GET',
-											async : false,
-											success : function(data,
-													textStatus, jqXHR) {
-												currentTime = data;
-											},
-											error : function(jqXHR, textStatus,
-													errorThrown) {
-											}
-										});
-								if (currentTime > timeoutTime) {
-									window.top.location.href = "./login?isExpired=yes";
-								} else {
-									timeoutTime = currentTime + timeout;
-								}
-							});
-				});
+							timeoutTime += timeout;
+							var currentTime;
+							$("body")
+									.click(
+											function(e) {
+												$
+														.ajaxSetup({
+															headers : {
+																'X-CSRF-TOKEN' : $(
+																		"meta[name='_csrf']")
+																		.attr(
+																				"content")
+															}
+														});
+												$.ajax({
+													url : './serverTime',
+													type : 'GET',
+													async : false,
+													success : function(data,
+															textStatus, jqXHR) {
+														currentTime = data;
+													},
+													error : function(jqXHR,
+															textStatus,
+															errorThrown) {
+													}
+												});
+												if (currentTime > timeoutTime) {
+													window.top.location.href = "./login?isExpired=yes";
+												} else {
+													timeoutTime = currentTime
+															+ timeout;
+												}
+											});
+						});
 	</script>
 </body>
 </html>

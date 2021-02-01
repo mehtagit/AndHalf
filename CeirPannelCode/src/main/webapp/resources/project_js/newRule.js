@@ -33,12 +33,15 @@
 
 		}
 		
-$.getJSON('./registrationUserType', function(data) {
+
+$.getJSON('./getDistinctUserTypeList', function(data) {
 	for (i = 0; i < data.length; i++) {
-		$('<option>').val(data[i].usertypeName).text(data[i].usertypeName)
+		$('<option>').val(data[i]).text(data[i])
 		.appendTo('#User');
 	}
 });
+
+
 $.getJSON('./ruleName', function(data) {
 	for (i = 0; i < data.length; i++) {
 		$('<option>').val(data[i].name).text(data[i].name)
@@ -120,12 +123,18 @@ function save(){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success: function (data, textStatus, jqXHR) {
+			if(data.errorCode == 0){
+			//if(data.errorCode == null){
 			$("#consignmentSubbmitButton").prop('disabled', true);
 			$("#successModal").openModal({
 				dismissible:false
 			});
 
-
+			}
+			if(data.errorCode == 409){
+				messageWindow(data.message);
+				
+			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
 

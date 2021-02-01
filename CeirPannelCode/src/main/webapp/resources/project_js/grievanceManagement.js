@@ -174,6 +174,15 @@ var featureId = 6;
 								data : function(d) {
 									d.filter = JSON.stringify(filterRequest); 
 									//////console.log(JSON.stringify(filterRequest));
+								},
+								error: function (jqXHR, textStatus, errorThrown,data) {
+									
+									 window.parent.$('#msgDialog').text($.i18n('500ErrorMsg'));
+									 // messageWindow(jqXHR['responseJSON']['message']);
+									 window.parent.$('#500ErrorModal').openModal({
+									 dismissible:false
+									 });
+									
 								}
 
 							},
@@ -949,7 +958,7 @@ var featureId = 6;
 					////alert(uploadedFileName+"----------"+ext+"----"+fileSize)
 					var fileExtension =ext.toLowerCase();
 					////console.log("file type: "+fileExtension);
-					var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv"];
+					var extArray = ["png","jpg","jpeg","gif","bmp","gif","csv","pdf","docx"];
 					var isInArray =extArray.includes(fileExtension);
 					
 					$('#removeFileInput').val(id);

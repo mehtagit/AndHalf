@@ -288,7 +288,7 @@ display: none !important;
 					<div class="row">
 						<div class="col s12 m12 l12">
 							<div class="row card-panel">
-							<a id="wholePageImage">Download</a>
+							<a id="wholePageImage" href="javascript:void(0);" onclick="graphImageDownload('Lawful_dashboard')">Download</a>
 								<div class="row card-panel responsive-page" id="endUserRaiseGrievance" style="display:block !important">
                             <h6 class="fixPage-modal-header ">
                             <spring:message code="sidebar.Lawful_Dashboard" />
@@ -307,7 +307,7 @@ display: none !important;
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary"> Lost/Stolen Device Trend</h6>
-              <div> <a id="expLostStolenGraph">Export</a> | 
+              <div> <a href="javascript:void(0);" id="expLostStolenGraph">Export</a> | 
                       <a id="lostStolenGraphImage" download="Lost/Stolen_Device.jpg">Download</a></div>
                 </div>
                 <!-- Card Body -->
@@ -327,7 +327,7 @@ display: none !important;
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Most Stolen Brand</h6>
-              <div> <a id="expTop5StolenGraph">Export</a> | 
+              <div> <a href="javascript:void(0);" id="expTop5StolenGraph">Export</a> | 
                       <a id="Top5StolenGraphImage" download="Top5Stolen_Device.jpg">Download</a></div>
                 </div>
                

@@ -19,17 +19,18 @@ function LawfulGraph() {
 			graphRequest={
 					"columns": [
 						  "Date",
-					      "Stolen Count",
-					      "Recoverd Count",
-					      "Blocked Count",
-					      "Pending Count"
+					      "Stolen IMEI Count",
+					      "Recovered IMEI Count",
+					      "Blocked IMEI Count",
+					      "Pending IMEI Count"
 						],
 						"reportnameId": reportnameId,
 						"lastDate": false,
 						"file" : 0,
-						"pageSize" :40,
+						"pageSize" :1000,
 						"pageNo" :0,
-						"typeFlag": 2
+						"typeFlag": 2,
+						 "dayDataLimit":15
 			}
 			
 			urlHit='./brandModel/data/'+featureFlag;
@@ -45,9 +46,9 @@ function LawfulGraph() {
 							"reportnameId": reportnameId,
 							"lastDate": true,
 							"file" : 0,
-							"pageSize" :40,
+							"pageSize" :1000,
 							"pageNo" :0,
-							"typeFlag": 2
+							"typeFlag": 2, "dayDataLimit":15
 				}
 				chartID='Top5Stolen';
 				type='pie';
@@ -114,10 +115,11 @@ function MostStolenGraph(response,id,chartType,chartTitle)
 		for(var i=0;i<response['rowData'].length;i++){
 			noOfUsers.push(response['rowData'][i]['Number of user logged']);
 		   	 date.push(response['rowData'][i]['Date']);
-			BlockedCount.push(response['rowData'][i]['Blocked Count']);
-			PendingCount.push(response['rowData'][i]['Pending Count']);
-			RecoverdCount.push(response['rowData'][i]['Recoverd Count']);
-			StolenCount.push(response['rowData'][i]['Stolen Count']);
+		   	BlockedCount.push(response['rowData'][i]['Blocked IMEI Count']);
+			PendingCount.push(response['rowData'][i]['Pending IMEI Count']);
+			RecoverdCount.push(response['rowData'][i]['Recovered IMEI Count']);
+			StolenCount.push(response['rowData'][i]['Stolen IMEI Count']);
+			
 		    }
 	    if( chartType == 'line'){
 	    	
@@ -137,28 +139,28 @@ function MostStolenGraph(response,id,chartType,chartTitle)
 		      data: {
 		        labels: date,
 		        datasets: [{
-		            label: "Stolen Count",
+		            label: "Stolen IMEI Count",
 		            borderColor:  '#006400',
 		            data: StolenCount,
 		            fill: false
 		            
 		        },
 		        {
-		            label: "Recoverd Count",
+		            label: "Recovered IMEI Count",
 		            borderColor: 'rgb(70, 191, 189)',
 		            data: RecoverdCount,
 		            fill: false
 		            
 		        },
 		        {
-		            label: "Blocked Count",
+		            label: "Blocked IMEI Count",
 		            borderColor: '#D32F2F',
 		            data: BlockedCount,
 		            fill: false
 		            
 		        },
 		        {
-		            label: "Pending Count",
+		            label: "Pending IMEI Count",
 		            borderColor:  '#FFA000',
 		            data: PendingCount,
 		            fill: false
@@ -198,7 +200,11 @@ function MostStolenGraph(response,id,chartType,chartTitle)
 		                   scaleLabel: {
 		                       display: true,
 		                       labelString: 'Date'
-		                     }
+		                     },
+		                     ticks: {
+		                    	 autoSkip: true,
+		                    	 maxTicksLimit: 24
+		                    	 }
 		                }],
 		                yAxes: [{
 		                   gridLines: {
@@ -207,7 +213,11 @@ function MostStolenGraph(response,id,chartType,chartTitle)
 		                   scaleLabel: {
 		                       display: true,
 		                       labelString: 'Device Count'
-		                     }
+		                     },
+		                     ticks: {
+		                    	 beginAtZero: true, 
+		                    	 stepSize:1 // this worked as expected 
+		                    	 }
 		                }]
 		             }           
 		             

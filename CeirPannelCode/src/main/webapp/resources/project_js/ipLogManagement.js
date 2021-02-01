@@ -57,8 +57,8 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"username" : $("body").attr("data-selected-username")
-					
+					"username" : $("#userName").val() == "" || $("#userName").val() == undefined ? "" : $("#userName").val(),
+					"publicIp" : $('#publicIp').val()
 			}				
 			if(lang=='km'){
 				var langFile="./resources/i18n/khmer_datatable.json";
@@ -105,6 +105,15 @@
 							data : function(d) {
 								d.filter = JSON.stringify(filterRequest); 
 
+							},
+							error: function (jqXHR, textStatus, errorThrown,data) {
+								
+								 window.parent.$('#msgDialog').text($.i18n('500ErrorMsg'));
+								 // messageWindow(jqXHR['responseJSON']['message']);
+								 window.parent.$('#500ErrorModal').openModal({
+								 dismissible:false
+								 });
+								
 							}
 						},
 						"columns": result,
@@ -188,7 +197,7 @@
 					}*/
 
 						$("#ipLogTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-						$("#ipLogTableDiv").append("<div class=' col s3 m2 l7'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportIPLogData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#ipLogTableDiv").append("<div class=' col s3 m2'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportIPLogData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -226,7 +235,8 @@
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"userId" : parseInt($("body").attr("data-userID")),
-					"username" : $("body").attr("data-selected-username")
+					"username" : $("#userName").val() == "" || $("#userName").val() == undefined ? "" : $("#userName").val(),
+					"publicIp" : $('#publicIp').val()
 					
 					
 			}

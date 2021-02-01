@@ -227,7 +227,8 @@ select {
 																code="registration.devicebrandname" /> <span
 															class="star"></span></label> <select
 															id="sigleRecoverydeviceBrandName" class="browser-default"
-															onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+															onchange="changeSelectDropDownToText('sigleRecoverydeviceBrandName')"
+															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
 															<option value=""  selected><spring:message
 																	code="registration.selectproduct" />
@@ -239,7 +240,7 @@ select {
                                                                  maxlength="30">
                                                                 <label for="sigleRecoverydeviceBrandName"><spring:message code="registration.devicebrandname" /></label> --%>
 													</div>
-													<div class="col s12 m6">
+													<%-- <div class="col s12 m6">
 
 														<label for="singleRecoverymodalNumber"><spring:message
 																code="registration.modelnumber" /> <span
@@ -252,7 +253,7 @@ select {
 																<spring:message code="registration.selectmodelnumber" /></option>
 
 														</select>
-													</div>
+													</div> --%>
 													<%-- 
                                                             <div class="input-field col s12 m6" style="margin-top: 22px;">
                                                                 <input type="text" name="sigleRecoveryimeiNumber" id="sigleRecoveryimeiNumber" 
@@ -262,17 +263,27 @@ select {
                                                                 <label for="sigleRecoveryimeiNumber"> <spring:message code="registration.imei/meid/esnnumber" /><span class="star"> *</span></label>
                                                             </div> --%>
 
-													<div class="col s6 m6 ">
+													<div class="col s6 m6 " style="margin-top: 4px;">
 														<label for="sigleRecoverydeviceIDType"><spring:message
-																code="select.deviceIDType" /> <span class="star">
-																*</span></label> <select id="sigleRecoverydeviceIDType"
+																code="select.deviceIDType" />  <span class="star">
+																*</span></label>  <select id="sigleRecoverydeviceIDType" required="required"
 															class="browser-default"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															required>
+															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
 															<option value=""  selected><spring:message
 																	code="select.deviceIDType" /></option>
 														</select>
+													</div>
+													
+													<div class="input-field  col s12 m12" id="OtherBrandNameDiv" style="display: none">
+														<input type="text" name="brandName" id="OtherBrandName"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,50}"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+															 maxlength="50"> <label
+															for="singleStolencommune"> <spring:message
+																code="registration.devicebrandname" /> <span class=" star"> *</span>
+														</label>
 													</div>
 
 													<div class="col s6 m6 ">
@@ -288,8 +299,9 @@ select {
 
 													<div class="col s6 m6 ">
 														<label for="sigleRecoverydeviceSimStatus"> <spring:message
-																code="select.multiSimStatus" /></label> <select
-															id="sigleRecoverydeviceSimStatus" class="browser-default"
+																code="select.multiSimStatus" /><span class=" star"> *</span></label> <select
+															id="sigleRecoverydeviceSimStatus" class="browser-default" required="required"
+															onchange="setContactIMEINumber('sigleRecoverydeviceSimStatus','IMEIndContact1','IMEIndContact2','IMEIndContact3','IMEIndContact4')"
 															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');">
 															<option value=""  selected><spring:message
@@ -301,31 +313,33 @@ select {
 														style="margin-top: 22px;">
 														<input type="text" name="sigleRecoveryserialNumber"
 															id="sigleRecoveryserialNumber"
-															pattern="[a-zA-Z0-9]{0,15}"
+															pattern="[a-zA-Z0-9]{0,25}"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
-															maxlength="15"> <label
+															maxlength="25"> <label
 															for="sigleRecoveryserialNumber"><spring:message
 																code="input.deviceSerialNumber" /></label>
 													</div>
 
+													
+										           	<div id="IMEIndContact1" style="display: none">	
 													<div class="col s12 m12"
 														style="margin-top: 10px; font-weight: bold;">
 														<h6>
 															<spring:message code="registration.imei/meid/esnnumber" />
 														</h6>
 													</div>
-
 													<div class="input-field col s12 m6">
-														<input type="text" name="sigleRecoveryimeiNumber1"
+														<input type="text" name="sigleRecoveryimeiNumber1" required="required"
 															pattern="[0-9]{15,16}" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 															maxlength="16" id="sigleRecoveryimeiNumber1" /> <label
 															for="sigleRecoveryimeiNumber1"><spring:message
-																code="registration.one" /> <span class="star"> </span></label>
+																code="registration.one" /><span class="star"> *</span></label>
 													</div>
-
+													</div>
+													<div id="IMEIndContact2" style="display: none">
 													<div class="input-field col s12 m6">
 														<input type="text" name="imeiNumberTwo"
 															pattern="[0-9]{15,16}" 
@@ -335,7 +349,8 @@ select {
 															for="sigleRecoveryimeiNumber2"><spring:message
 																code="registration.two" /></label>
 													</div>
-
+													</div>
+													<div id="IMEIndContact3" style="display: none">						
 													<div class="input-field col s12 m6">
 														<input type="text" name="imeiNumberThree"
 															pattern="[0-9]{15,16}" 
@@ -346,7 +361,8 @@ select {
 																code="registration.three" /></label>
 														<p id="errorMsgOnModal" class="deviceErrorTitle"></p>
 													</div>
-
+													</div>
+													<div id="IMEIndContact4" style="display: none">	
 													<div class="input-field col s12 m6">
 														<input type="text" name="imeiNumberFour"
 															pattern="[0-9]{15,16}" 
@@ -355,7 +371,7 @@ select {
 															maxlength="16" id="sigleRecoveryimeiNumber4"> <label
 															for="sigleRecoveryimeiNumber4"><spring:message
 																code="registration.four" /></label>
-													</div>
+													</div></div>
 
 													<div class="col s12 m12" style="margin-top: 30px;">
 														<h5>
@@ -377,7 +393,79 @@ select {
 															for="sigleRecoveryaddress"> <spring:message
 																code="input.address" /><span class="star"> *</span></label>
 													</div>
+													<div class="col s12 m6 l6">
+														<label><spring:message code="table.country" /> <span
+															class="star">*</span></label> <select id="country1" disabled="disabled"
+															class="browser-default" class="mySelect"
+															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+															required style="padding-left: 0; color: rgb(53, 52, 52);"></select>
+													</div>
 
+													<div class="col s12 m6 l6">
+														<label> <spring:message code="input.province" /><span
+															class="star"> *</span></label> <select id="state1" 
+															class="browser-default" class="mySelect" 
+															style="padding-left: 0;" onchange="getDistrict(this,'sigleRecoverydistrict','sigleRecoverycommune');"
+															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+															required></select>
+													</div>
+													<div class="col s12 m6 l6">
+														<%-- <input type="text" name="sigleRecoverydistrict"
+															id="sigleRecoverydistrict"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+															required /> --%>
+															
+															 <label for="sigleRecoverydistrict"><spring:message
+																code="input.district" /> <span class="star"> *</span></label>
+																
+																 <select
+										id="sigleRecoverydistrict" class="browser-default" class="mySelect"
+										onchange="getCommune(this,'sigleRecoverycommune','sigleRecoveryvillage');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required>
+										<option value=""><spring:message code="select.district" /></option>
+										</select>
+													</div>
+
+													<div class="col s12 m6 l6">
+														<%-- <input type="text" name="sigleRecoverycommune"
+															id="sigleRecoverycommune" maxlength="30"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+															required /> --%> <label for="sigleRecoverycommune"> <spring:message
+																code="input.commune" /><span class="star"> *</span></label>
+																<select
+										id="sigleRecoverycommune" class="browser-default" class="mySelect"
+										onchange="getVillage(this,'sigleRecoveryvillage');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required>
+										<option value=""><spring:message code="select.commune" /></option>
+										</select>
+													</div>
+													
+													<div class=" col s12 m6 l6">
+														<%-- <input type="text" name="sigleRecoveryvillage"
+															id="sigleRecoveryvillage" maxlength="30"
+															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+															 /> --%> 
+															<label for="sigleRecoveryvillage"> <spring:message
+																code="input.village" /></label> <select
+										id="sigleRecoveryvillage" class="browser-default" class="mySelect"
+										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" >
+										<option value=""><spring:message code="select.village" /></option>
+										</select>
+															 
+													</div>
+													
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="sigleRecoverystreetNumber"
 															class="form-control boxBorder boxHeight"
@@ -391,17 +479,9 @@ select {
 														</label>
 													</div>
 
-													<div class="input-field col s12 m6 l6">
-														<input type="text" name="sigleRecoveryvillage"
-															id="sigleRecoveryvillage" maxlength="30"
-															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-															 /> <label for="sigleRecoveryvillage"> <spring:message
-																code="input.village" /></label>
-													</div>
+													
 
-													<div class="input-field col s12 m6 l6">
+													<div class="input-field col s12 m12">
 														<input type="text" name="sigleRecoverylocality"
 															class="form-control boxBorder boxHeight"
 															id="sigleRecoverylocality" maxlength="30"
@@ -412,54 +492,19 @@ select {
 																code="input.locality" /> </label>
 													</div>
 
-													<div class="input-field col s12 m6 l6">
-														<input type="text" name="sigleRecoverydistrict"
-															id="sigleRecoverydistrict"
-															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-															required /> <label for="sigleRecoverydistrict"><spring:message
-																code="input.district" /> <span class="star"> *</span></label>
-													</div>
-
-													<div class="input-field col s12 m6 l6">
-														<input type="text" name="sigleRecoverycommune"
-															id="sigleRecoverycommune" maxlength="30"
-															pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-															required /> <label for="sigleRecoverycommune"> <spring:message
-																code="input.commune" /><span class="star"> *</span></label>
-													</div>
+													
 
 													<div class="input-field col s12 m6 l6">
 														<input type="text" name="sigleRecoverypin"
 															class="form-control boxBorder boxHeight"
 															id="sigleRecoverypin" maxlength="6" pattern="[0-9]{6,6}"
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
 															required /> <label for="sigleRecoverypin"> <spring:message
 																code="input.postalCode" /><span class="star"> *</span></label>
 													</div>
 
-													<div class="col s12 m6 l6">
-														<label><spring:message code="table.country" /> <span
-															class="star">*</span></label> <select id="country1"
-															class="browser-default" class="mySelect"
-															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															required style="padding-left: 0;"></select>
-													</div>
-
-													<div class="col s12 m6 l6">
-														<label> <spring:message code="input.province" /><span
-															class="star"> *</span></label> <select id="state1"
-															class="browser-default" class="mySelect"
-															style="padding-left: 0;"
-															oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-															required></select>
-													</div>
+													
 
 													<%--  <div class="col s6 m6 ">
                                                                 <label for="sigleRecoverydeviceStatus"><spring:message code="select.deviceStatus" /> <span class="star"> *</span></label>
@@ -537,7 +582,7 @@ onclick="_Services._selectstartDate()"></i></span>
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
 															maxlength="10000" class="materialize-textarea"></textarea>
 														<label for="sigleRecovery"><spring:message
-																code="input.remarks" /> </label>
+																code="input.remarksLawfull" /> </label>
 													</div>
 												</div>
 											</div>
@@ -551,7 +596,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												<button class="btn" type="submit" id="singleDeviceRecovery">
 													<spring:message code="button.submit" />
 												</button>
-												<a href="./stolenRecovery" class="btn"
+												<a href="./stolenRecovery?FeatureId=5" class="btn"
 													style="margin-left: 10px;"><spring:message
 														code="modal.cancel" /></a>
 											</div>
@@ -625,7 +670,7 @@ onclick="_Services._selectstartDate()"></i></span>
 												maxlength="10000" class="materialize-textarea"
 												style="height: auto; max-height: 300px;"></textarea>
 											<label for="bulkRecoveryRemark"><spring:message
-													code="input.remarks" /></label>
+													code="input.remarksLawfull" /></label>
 										</div>
 
 										<%--    <div class="col s12 m6">
@@ -696,7 +741,81 @@ onclick="_Services._selectstartDate()"></i></span>
 												for="bulkRecoveryaddress"><spring:message
 													code="input.address" /> <span class="star"> *</span></label>
 										</div>
+										
+											<div class="col s12 m6 l6">
+											<label> <spring:message code="table.country" /><span
+												class="star"> *</span></label> <select id="bulkRecoverycountry" disabled="disabled"
+												class="browser-default" class="mySelect"
+												oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												required style="padding-left: 0; color: rgb(53, 52, 52);"></select>
+										</div>
 
+										<div class="col s12 m6 l6">
+											<label><spring:message code="input.province" /> <span
+												class="star"> *</span></label> <select id="bulkRecoverystate" onchange="getDistrict(this,'bulkRecoverydistrict','bulkRecoverycommune');"
+												class="browser-default" class="mySelect"
+												style="padding-left: 0;"
+												oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+												required></select>
+										</div>
+
+											<div class="col s12 m6 l6">
+											<%-- <input type="text" name="bulkRecoverydistrict"
+												id="bulkRecoverydistrict"
+												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+												required maxlength="30"> --%> <label
+												for="bulkRecoverydistrict"> <spring:message
+													code="input.district" /><span class="star"> *</span></label>
+													<select
+										id="bulkRecoverydistrict" class="browser-default" class="mySelect"
+										onchange="getCommune(this,'bulkRecoverycommune','bulkRecoveryvillage');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required>
+										<option value=""><spring:message code="select.district" /></option>
+										</select>
+										</div>
+
+										<div class="col s12 m6 l6">
+											<%-- <input type="text" name="bulkRecoverycommune"
+												id="bulkRecoverycommune"
+												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+												required maxlength="30"> --%> <label
+												for="bulkRecoverycommune"><spring:message
+													code="input.commune" /><span class="star"> *</span></label>
+													<select
+										id="bulkRecoverycommune" class="browser-default" class="mySelect"
+										onchange="getVillage(this,'bulkRecoveryvillage');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" required>
+										<option value=""><spring:message code="select.commune" /></option>
+										</select>
+										</div>
+										
+										<div class="col s12 m6 l6">
+											<%-- <input type="text" name="bulkRecoveryvillage"
+												id="bulkRecoveryvillage"
+												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+												 maxlength="30"> --%> <label
+												for="bulkRecoveryvillage"><spring:message
+													code="input.village" /></label>
+													
+													<select
+										id=bulkRecoveryvillage class="browser-default" class="mySelect"
+										onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
+										style="padding-left: 0;" >
+										<option value=""><spring:message code="select.village" /></option>
+										</select>
+										</div>
+															
 										<div class="input-field col s12 m6 l6">
 											<input type="text" name="bulkRecoverystreetNumber"
 												class="form-control boxBorder boxHeight"
@@ -709,18 +828,9 @@ onclick="_Services._selectstartDate()"></i></span>
 													code="input.streetNumber" /> <span class="star"> *</span></label>
 										</div>
 
-										<div class="input-field col s12 m6 l6">
-											<input type="text" name="bulkRecoveryvillage"
-												id="bulkRecoveryvillage"
-												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
-												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-												 maxlength="30"> <label
-												for="bulkRecoveryvillage"><spring:message
-													code="input.village" /></label>
-										</div>
+										
 
-										<div class="input-field col s12 m6 l6">
+										<div class="input-field col s12 m12">
 											<input type="text" name="bulkRecoverylocality"
 												class="form-control boxBorder boxHeight"
 												id="bulkRecoverylocality" maxlength="50"
@@ -732,58 +842,21 @@ onclick="_Services._selectstartDate()"></i></span>
 													code="input.locality" /></label>
 										</div>
 
-										<div class="input-field col s12 m6 l6">
-											<input type="text" name="bulkRecoverydistrict"
-												id="bulkRecoverydistrict"
-												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
-												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-												required maxlength="30"> <label
-												for="bulkRecoverydistrict"> <spring:message
-													code="input.district" /><span class="star"> *</span></label>
-										</div>
-
-										<div class="input-field col s12 m6 l6">
-											<input type="text" name="bulkRecoverycommune"
-												id="bulkRecoverycommune"
-												pattern="[a-zA-Z0-9\s,'*$-]{0,30}"
-												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-												required maxlength="30"> <label
-												for="bulkRecoverycommune"><spring:message
-													code="input.commune" /><span class="star"> *</span></label>
-										</div>
+										
 
 										<div class="input-field col s12 m6 l6">
 											<input type="text" name="bulkRecoverypin"
 												class="form-control boxBorder boxHeight"
 												id="bulkRecoverypin" pattern="[0-9]{6,6}"
-												oninput="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
-												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.postalcode" />');"
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
 												required maxlength="6"> <label for="bulkRecoverypin">
 												<spring:message code="input.postalCode" /><span
 												class="star"> *</span>
 											</label>
 										</div>
 
-										<div class="col s12 m6 l6">
-											<label> <spring:message code="table.country" /><span
-												class="star"> *</span></label> <select id="bulkRecoverycountry"
-												class="browser-default" class="mySelect"
-												oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-												required style="padding-left: 0;"></select>
-										</div>
-
-										<div class="col s12 m6 l6">
-											<label><spring:message code="input.province" /> <span
-												class="star"> *</span></label> <select id="bulkRecoverystate"
-												class="browser-default" class="mySelect"
-												style="padding-left: 0;"
-												oninput="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-												oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
-												required></select>
-										</div>
+									
 
 										<div class="input-field col s12 m6">
 											<input type="text" name="deviceRecoveryDevice"
@@ -896,7 +969,8 @@ onclick="_Services._selectstartDate()"></i></span>
 
 	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
+	<script type="text/javascript"
+		src="${context}/resources/project_js/CommanLocality.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/lawfulStolenRecovery.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
@@ -960,12 +1034,13 @@ onclick="_Services._selectstartDate()"></i></span>
         { 'X-CSRF-TOKEN': token }
         });
         
-        $.getJSON('./productList', function(data) {
-        	$('#select2-sigleRecoverydeviceBrandName-container').empty();
+        $.getJSON('./getDropdownList/TOP_BRAND', function(data) {
+        
         	for (i = 0; i < data.length; i++) {
-        		$('<option>').val(data[i].id).text(data[i].brand_name)
+        		$('<option>').val(data[i].id).text(data[i].interp)
         				.appendTo('#sigleRecoverydeviceBrandName');
         	}
+        	$("#sigleRecoverydeviceBrandName").eq(0).removeAttr("tabindex");
         });
         $('select#sigleRecoverydeviceBrandName').select2();
 
@@ -994,8 +1069,9 @@ onclick="_Services._selectstartDate()"></i></span>
         			 $('select#singleRecoverymodalNumber').select2();
         		});
 
-
-
+    	$("#country1").val("Cambodia").change();
+		//$("#country1").attr("style", "pointer-events: none;");
+	
 </script>
 
 
