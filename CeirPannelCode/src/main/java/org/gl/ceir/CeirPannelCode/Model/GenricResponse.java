@@ -7,7 +7,7 @@ public class GenricResponse {
 	private String  message;
 	private String response,statusCode,user;
 	private Object data ;
-	private String tag;
+	private String tag,status;
 	public String getErrorCode() {
 		return errorCode;
 	}
@@ -56,12 +56,36 @@ public class GenricResponse {
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	@Override
 	public String toString() {
-		return "GenricResponse [errorCode=" + errorCode + ", txnId=" + txnId + ", message=" + message + ", response="
-				+ response + ", statusCode=" + statusCode + ", user=" + user + ", data=" + data + ", tag=" + tag + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("GenricResponse [errorCode=");
+		builder.append(errorCode);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", message=");
+		builder.append(message);
+		builder.append(", response=");
+		builder.append(response);
+		builder.append(", statusCode=");
+		builder.append(statusCode);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append(", data=");
+		builder.append(data);
+		builder.append(", tag=");
+		builder.append(tag);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append("]");
+		return builder.toString();
 	}
-
 	
 	
 	}

@@ -145,7 +145,7 @@ public class GrievanceDatatableController {
 						String userStatus = (String) session.getAttribute("userStatus");
 						String action = iconState.adminGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,
 						StatusofGrievance, userStatus, userId);
-						Object[] finalData = { createdOn, modifiedOn, txnId, userName, userTypeName, grievanceId, raisedBy, grievanceStatus, action };
+						Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, userName, userTypeName,  raisedBy, grievanceStatus, action };
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -371,7 +371,7 @@ public class GrievanceDatatableController {
 		
 		if("CEIRAdmin".equals(userType) || userType.equals("Customer Care")) {
 			// Dropdown items
-			String[] selectParam = {"select", Translator.toLocale("table.userType"), "userType", "","select", Translator.toLocale("button.grievStatus"), "recentStatus", "" };
+			String[] selectParam = {"select", Translator.toLocale("table.userType"), "userType", "","select", Translator.toLocale("table.raisedBy"), "raisedBy","","select", Translator.toLocale("button.grievStatus"), "recentStatus", "" };
 			for (int i = 0; i < selectParam.length; i++) {
 				inputFields = new InputFields();
 				inputFields.setType(selectParam[i]);
@@ -386,7 +386,7 @@ public class GrievanceDatatableController {
 			pageElement.setDropdownList(dropdownList);
 
 			// input type date list
-			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "", "text",
+			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","date", Translator.toLocale("table.lastupdatedate"), "dateModified", "", "text",
 					Translator.toLocale("input.transactionID"), "transactionID", "", "text",Translator.toLocale("table.grievanceID"), "grievanceID", "","text",Translator.toLocale("table.UserName"), "userName", "" };
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();

@@ -11,9 +11,11 @@ import org.gl.ceir.CeirPannelCode.Model.NewRule;
 import org.gl.ceir.graph.model.ScheduleRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -64,7 +66,7 @@ public interface GsmaFeignClient {
 				@RequestParam(name = "ruleName", required = false) String ruleName);
 
 		
-		//---------------------------------schedule Report Datatable ---------------------------------
+		//--------------------------------- schedule Report Datatable ---------------------------------
 		
 		
 		@RequestMapping(value="/ScheduleReport/getAll" ,method=RequestMethod.POST) 
@@ -73,13 +75,25 @@ public interface GsmaFeignClient {
 		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 		@RequestParam(value = "file", defaultValue = "0") Integer file);
 		
-		//---------------------------------Add Schedule Report Feign ---------------------------------
+		//--------------------------------- Add Schedule Report Feign ---------------------------------
 
-		@RequestMapping(value= "/ScheduleReport", method=RequestMethod.POST) 
+		@RequestMapping(value= "/ScheduleReport/", method=RequestMethod.POST) 
 		public ScheduleRequest AddScheduleFeign(@RequestBody ScheduleRequest scheduleRequest);
 		
-		//---------------------------------View Schedule Report Feign ---------------------------------
+		//--------------------------------- View Schedule Report Feign ---------------------------------
 		
 		@GetMapping("/ScheduleReport/{id}")
 		public ScheduleRequest getScheduleByID(@PathVariable("id") Integer id);
+		
+		
+		//--------------------------------- Update Schedule Report Feign ---------------------------------
+		
+		@PutMapping("/ScheduleReport/")
+		public ScheduleRequest updateScheduleByID(@RequestBody ScheduleRequest scheduleRequest);
+		
+		//--------------------------------- Delete Schedule Report Feign ---------------------------------
+		
+		@DeleteMapping(value="/ScheduleReport/{id}") 
+		public @ResponseBody GenricResponse deleteScheduleFeign(@PathVariable("id") Integer id);
+
 }
