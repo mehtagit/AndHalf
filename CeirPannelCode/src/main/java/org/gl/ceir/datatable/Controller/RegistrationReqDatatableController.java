@@ -132,7 +132,7 @@ public class RegistrationReqDatatableController {
 		datatableResponseModel.setRecordsFiltered(null);
 		datatableResponseModel.setData(Collections.emptyList());
 		log.error(e.getMessage(),e);
-		return new ResponseEntity<>(datatableResponseModel, HttpStatus.OK); 
+		return new ResponseEntity<>(datatableResponseModel, HttpStatus.INTERNAL_SERVER_ERROR); 
 		}
 	}
 	
@@ -172,22 +172,19 @@ public class RegistrationReqDatatableController {
 			pageElement.setButtonList(buttonList);
 			
 			//Dropdown items			
-			String[] selectParam= {"select",Translator.toLocale("table.AsType"),"asType","","select",Translator.toLocale("select.userType"),"role","","select",Translator.toLocale("table.status"),"recentStatus",""};
-			for(int i=0; i< selectParam.length; i++) {
-				inputFields= new InputFields();
-				inputFields.setType(selectParam[i]);
-				i++;
-				inputFields.setTitle(selectParam[i]);
-				i++;
-				inputFields.setId(selectParam[i]);
-				i++;
-				inputFields.setClassName(selectParam[i]);
-				dropdownList.add(inputFields);
-			}
-			pageElement.setDropdownList(dropdownList);
-			
+			/*
+			 * String[] selectParam=
+			 * {"select",Translator.toLocale("table.AsType"),"asType","","select",Translator
+			 * .toLocale("select.userType"),"role","","select",Translator.toLocale(
+			 * "table.status"),"recentStatus",""}; for(int i=0; i< selectParam.length; i++)
+			 * { inputFields= new InputFields(); inputFields.setType(selectParam[i]); i++;
+			 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
+			 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
+			 * } pageElement.setDropdownList(dropdownList);
+			 */
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("table.email"),"emailID","","text",Translator.toLocale("table.phone"),"phone","","text",Translator.toLocale("table.UserName"),"userName",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("table.UserName"),"userName","","text",Translator.toLocale("table.email"),"emailID","","text",Translator.toLocale("table.phone"),"phone","",
+					"select",Translator.toLocale("table.AsType"),"asType","","select",Translator.toLocale("select.userType"),"role","","select",Translator.toLocale("table.status"),"recentStatus",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

@@ -46,9 +46,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		public void handle(HttpServletRequest request,
 		HttpServletResponse response, AccessDeniedException accessDeniedException)
 		throws IOException, ServletException {
-		if (accessDeniedException instanceof MissingCsrfTokenException
-		|| accessDeniedException instanceof InvalidCsrfTokenException) {
-
+		/*if (accessDeniedException instanceof MissingCsrfTokenException
+		|| accessDeniedException instanceof InvalidCsrfTokenException) {*/
+			if ( (accessDeniedException instanceof MissingCsrfTokenException
+					|| accessDeniedException instanceof InvalidCsrfTokenException) && !request.getSession().getId().isEmpty()) {
 		response.sendRedirect(request.getContextPath()+"/login");
 		}
 

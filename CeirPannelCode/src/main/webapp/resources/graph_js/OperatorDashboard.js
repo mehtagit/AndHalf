@@ -205,7 +205,7 @@ function graph(response,id,chartType,chartTitle)
 					labels: pieOperatorActiveLabelName,
 					datasets: [ {
 						backgroundColor: [
-							 '#008B8B','#F20515','#4682B4','#8B4513'],
+							'#FFC0CB','#006400','#FFA000','#FF0000'],
 							data: pieOperatorActive
 					}]
 				},
@@ -267,28 +267,28 @@ function graph(response,id,chartType,chartTitle)
 	        },*/
 	        {
 	            label: "Seatel",
-	            borderColor: 'rgb(70, 191, 189)',
+	            borderColor: '#FFC0CB',
 	            data: seatel,
 	            fill: false
 	            
 	        },
 	        {
 	            label: "Smart",
-	            borderColor:  '#512DA8',
+	            borderColor:  '#006400',
 	            data: smart,
 	            fill: false
 	            
 	        },
 	        {
 	            label: "Cellcard",
-	            borderColor: '#D32F2F',
+	            borderColor: '#FFA000',
 	            data: cellcard,
 	            fill: false
 	            
 	        },
 	        {
 	            label: "Metfone",
-	            borderColor:  '#FFA000',
+	            borderColor:  '#FF0000',
 	            data: metfone,
 	            fill: false
 	            
@@ -563,7 +563,7 @@ function blockIMEIgraph(response,id,chartType,chartTitle,pieLabelName,GraphImage
 	var date = [];
 	//console.log("resonse=="+pieLabelName);
 	//var pieLabelName=['New','Approved By CEIR Admin','Pending Approval From CEIR Admin','Rejected by CEIR Admin','Rejected By System','Withdrawn By User','Withdrawn By CEIR Admin'];
-	var backgroundColors=['#512DA8','#008B8B','#F20515','#4682B4','#8B4513','#006400','#7C0378','#696969','#800080','#9400D3','#FFFF00','#7E57C2'];
+	var backgroundColors=['#006400','#FF0000','#FFC0CB','#FFA000','#8B4513','#006400','#7C0378','#696969','#800080','#9400D3','#FFFF00','#7E57C2'];
 	var backgroundHoverColors=['#512DA8','#008B8B','#F20515','#4682B4','#8B4513','#006400','#7C0378','#696969','#800080','#9400D3','#FFFF00','#7E57C2'];
 	var rowData = [];
 	var allData = new Map();
@@ -643,7 +643,7 @@ function blockIMEIgraph(response,id,chartType,chartTitle,pieLabelName,GraphImage
     			},
     	        scales: {
     	          xAxes: [{ 
-    	          	stacked: false,
+    	          	stacked: true,
     	          	scaleLabel: {
     	                display: true,
     	                labelString: 'Count'

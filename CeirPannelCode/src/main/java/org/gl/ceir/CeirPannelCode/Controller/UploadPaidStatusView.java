@@ -276,6 +276,7 @@ GrievanceFeignClient grievanceFeignClient;
 			@RequestParam(name="pageSize") Integer pageSize,
 			@RequestParam(name="pageNo") Integer pageNo,
 			@RequestParam(name="status", required = false) Integer status,
+			@RequestParam(name="nationality",required = false) String nationality,
 			HttpServletRequest request,
 			HttpSession session)
 	{
@@ -305,6 +306,8 @@ GrievanceFeignClient grievanceFeignClient;
 		filterRequestuserpaidStatus.setUserTypeId(userTypeId);
 		filterRequestuserpaidStatus.setFeatureId(12);
 		filterRequestuserpaidStatus.setUserType(userType);
+		filterRequestuserpaidStatus.setNationality(nationality);
+		filterRequestuserpaidStatus.setOrigin(origin);
 		log.info(" request passed to the exportTo Excel Api =="+filterRequestuserpaidStatus+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 		Object response = userPaidStatusFeignClient.consignmentFilter(filterRequestuserpaidStatus, pageNo, pageSize, file,"filter");
 		Gson gson= new Gson(); 

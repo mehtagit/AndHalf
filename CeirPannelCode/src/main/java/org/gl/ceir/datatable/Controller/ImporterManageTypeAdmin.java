@@ -181,9 +181,6 @@ public class ImporterManageTypeAdmin {
 						 
 
 						String createdOn = trcContentModelList.getCreatedOn();
-						
-						String modifiedOn = trcContentModelList.getModifiedOn();
-						
 						String trademark = trcContentModelList.getTrademark();
 						String manufacturerCountry = trcContentModelList.getManufacturerCountry();
 						String tac = trcContentModelList.getTac();
@@ -198,7 +195,7 @@ public class ImporterManageTypeAdmin {
 							
 						log.info("approveState->"+approveState+" id-->"+trcContentModelList.getId()+" txnId-->"+txnId+" adminApproveStatus-->"+adminApproveStatus+" userStatus-->"+userStatus+" fileName1-->" +fileName1);
 						String action = iconState.trcAdminManageIcons(approveState, trcContentModelList.getId(),txnId,userStatus,fileName1);
-						Object[] data = { createdOn,modifiedOn, txnId, userTypeName,userDisplayName,productName,modelNumber, manufacturerCountry, tac, status, action };
+						Object[] data = { createdOn, txnId, userTypeName,userDisplayName,productName,modelNumber, manufacturerCountry, tac, status, action };
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);
@@ -270,20 +267,6 @@ public class ImporterManageTypeAdmin {
 						dropdownList.add(inputFields);
 					}
 					pageElement.setDropdownList(dropdownList);
-					
-					//input type date list		
-					String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","date", Translator.toLocale("table.lastupdatedate"), "dateModified", "","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.TAC"),"tac",""};
-					for(int i=0; i< dateParam.length; i++) {
-						dateRelatedFields= new InputFields();
-						dateRelatedFields.setType(dateParam[i]);
-						i++;
-						dateRelatedFields.setTitle(dateParam[i]);
-						i++;
-						dateRelatedFields.setId(dateParam[i]);
-						i++;
-						dateRelatedFields.setClassName(dateParam[i]);
-						inputTypeDateList.add(dateRelatedFields);
-					}
 				}else {
 					//Dropdown items
 					String[] selectParam= {"select",Translator.toLocale("table.status"),"Status",""};
@@ -299,24 +282,22 @@ public class ImporterManageTypeAdmin {
 						dropdownList.add(inputFields);
 					}
 					pageElement.setDropdownList(dropdownList);
-					
-					//input type date list		
-					String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.TAC"),"tac",""};
-					for(int i=0; i< dateParam.length; i++) {
-						dateRelatedFields= new InputFields();
-						dateRelatedFields.setType(dateParam[i]);
-						i++;
-						dateRelatedFields.setTitle(dateParam[i]);
-						i++;
-						dateRelatedFields.setId(dateParam[i]);
-						i++;
-						dateRelatedFields.setClassName(dateParam[i]);
-						inputTypeDateList.add(dateRelatedFields);
-					}
 				}
 				
 					
-				
+				//input type date list		
+				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.TAC"),"tac",""};
+				for(int i=0; i< dateParam.length; i++) {
+					dateRelatedFields= new InputFields();
+					dateRelatedFields.setType(dateParam[i]);
+					i++;
+					dateRelatedFields.setTitle(dateParam[i]);
+					i++;
+					dateRelatedFields.setId(dateParam[i]);
+					i++;
+					dateRelatedFields.setClassName(dateParam[i]);
+					inputTypeDateList.add(dateRelatedFields);
+				}
 	
 			
 			

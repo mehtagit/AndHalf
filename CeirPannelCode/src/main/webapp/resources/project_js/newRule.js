@@ -123,8 +123,8 @@ function save(){
 		contentType : 'application/json; charset=utf-8',
 		type : 'POST',
 		success: function (data, textStatus, jqXHR) {
-		//	if(data.errorCode == 200){
-			if(data.errorCode == null){
+			if(data.errorCode == 0){
+			//if(data.errorCode == null){
 			$("#consignmentSubbmitButton").prop('disabled', true);
 			$("#successModal").openModal({
 				dismissible:false

@@ -856,7 +856,7 @@ position: fixed;
 								<div id="profile-page" class="section">
 								
 									<div class="container" id="user456" style="display: none;">
-										<form action="${context}/uploadPaidStatus">
+										<form action="${context}/uploadPaidStatus" id="viewRegisterDeviceFilter">
 										<div class="col s12 m12 l12" id="tableDiv"
 											style="padding-bottom: 5px; background-color: #e2edef52;">
 										</div>

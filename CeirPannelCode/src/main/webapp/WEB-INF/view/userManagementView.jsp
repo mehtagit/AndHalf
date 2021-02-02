@@ -31,7 +31,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en" dir="ltr">
 <head><title>CEIR Portal</title>
-<!--<title>Port Management</title>-->
+<!--<title>User Management</title>-->
 <meta http-equiv='cache-control' content='no-cache'>
 <meta http-equiv='expires' content='-1'>
 <meta http-equiv='pragma' content='no-cache'>
@@ -51,8 +51,7 @@
 
 <script type="text/javascript"
 	src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
-<!--   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>  
- -->
+
 <!-- Favicons-->
 <link rel="icon" href="${context}/resources/images/DMC-Logo.png" sizes="32x32">
 <!-- CORE CSS-->
@@ -79,7 +78,7 @@
 <link
 	href="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.css"
 	type="text/css" rel="stylesheet" media="screen,projection">
-
+<%--  <link href="${context}/resources/js/plugins/chartist-js/chartist.min.css" type="text/css" rel="stylesheet" media="screen,projection"> --%>
 <link rel="stylesheet"
 	href="${context}/resources/project_css/viewConsignment.css">
 <link rel="stylesheet"
@@ -87,14 +86,17 @@
 
 <link rel="stylesheet"
 	href="${context}/resources/custom_js/jquery-ui.css">
-<script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
+
 
 <script src="${context}/resources/custom_js/jquery.blockUI.js"></script>
 
+<!------------------------------------------- Dragable Model---------------------------------->
 
+<script
+	src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 	
 </head>
-<body data-id="23"
+<body data-id="41"
 	data-roleType="${usertype}" data-userTypeID="${usertypeId}"
 	data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
@@ -110,191 +112,119 @@
 	<!-- START CONTENT -->
 	<section id="content">
 		<div id="initialloader"></div>
+<div class="card-panel">
+<div class="row">
+	<h5>
+								<spring:message code="registration.viewProfile" />
+							</h5>
+							<hr>
+		<div class="row" style="margin-top: 10px;">
+	
+						<div class="input-field col s12 m4">
+                                            <input type="text" id="viewfirstName"  name="firstName" pattern="[a-zA-Z]{0,20}" readOnly
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"  >
+                                            <label for="viewfirstName"><spring:message code="input.firstName" /> </label>
+                                        </div>
 
-		<!--start container-->
-		<div class="container">
-			<div class="section">
-				<div class="row">
-					<div class="col s12 m12 l12">
-						<div class="row card-panel">
-							<div class="container-fluid pageHeader" id="pageHeader">
+                                        <div class="input-field col s12 m4">
+                                            <input type="text" id="viewmiddleName" name="middleName" pattern="[a-zA-Z]{0,20}" readOnly 
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" maxlength="20" />
+                                            <label for="viewmiddleName"><spring:message code="input.middleName" /></label>
+                                        </div>
+										
+										<div class="input-field col s12 m4">
+                                            <input type="text" id="viewlastName" name="lastName" pattern="[a-zA-Z]{0,20}"   readOnly
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													 required   maxlength="20" />
+                                            <label for="viewlastName"><spring:message code="input.lastName" /> </label>
+                                        </div>
+						</div>
+						
+						<div class="row myRow">
+								 <div class="input-field col s12 m6">
+                                            <input type="text" id="viewcontactNumber" name="contactNumber" pattern="[0-9]{10,12}" readOnly
+ 													oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
+												  required   maxlength="10" />
+                                            <label for="viewcontactNumber"><spring:message code="input.contact" /></label>
+                                        </div>
 
-								<a class="boton right" id="btnLink"></a>
-							</div>
-							<form action="${context}/fieldManagement"
-								method="post">
-								<div class="col s12 m12 l12" id="PortTableDiv"
-									style="padding-bottom: 5px; background-color: #e2edef52;">
-									<div id="filterBtnDiv"></div>
-								</div>
-							</form>
-							<table id="portManagementLibraryTable"
-								class="responsive-table striped display"></table>
+                                        <div class="input-field col s12 m6">
+                                            <input type="email" id="viewemailID" name="emailID" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" readOnly 
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
+												required maxlength="30" />
+                                            <label for="viewemailID"><spring:message code="input.EmailID" /></label>
+                                        </div>
 
+							</div>			
+
+					<div class="row myRow">
+							
+							<div class="input-field col s12 m6" style="margin-top: 23px;">
+                                            <input type="text" id="viewuserName" name="userName" readOnly
+                                               pattern="[a-zA-Z]{0,20}" required maxlength="18" />
+                                            <label for="viewuserName"><spring:message code="registration.username"/></label>
+                              </div>
+							
+						  <div class="input-field col s12 m6" style="margin-top: 23px;">
+                                            <input type="text" id="viewuserType" name="userType" readOnly
+                                               pattern="[a-zA-Z]{0,20}" required maxlength="18" />
+                                            <label for="viewuserType"><spring:message code="table.userType"/></label>
+                            </div>
+                                        
+                                   
+						</div>
+						
+						<div class="row myRow">
+						
+						     <div class="input-field col s12 m6">
+                                            <textarea id="viewuserRemark" 
+										  oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" readOnly
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
+													
+											disabled required   maxlength="200" class="materialize-textarea" style= "min-height: 8rem;"></textarea>
+                                            <label for="viewuserRemark">Remarks</label>
+                                        </div>
+						
 						</div>
 
-					</div>
-				</div>
-				<div id="footerBtn"></div>
-			</div>
-		</div>
-		
-	
+		<div class="row">
+						<div class="input-field col s12 center">
+							
+
+<a target="_parent" href="./?lang=en" class="btn" style="margin-left: 10px;"><spring:message code="modal.cancel" /></a>
+
+
+						</div></div>
+	</div>
+	</div>
 		<!--end container-->
 	</section>
 	
- 	<div id="addPort" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header"><spring:message code="button.addport" /></h6>
-        <div class="modal-content">
-          	<form action="" onsubmit="return submitPort()" method="post" >
-                <div class="row" style="margin-top: 10px;">
-					
-					<div class="col s12 m6">
-					<label for="port" class="active">Port Type <span class="star">*</span></label>
-                     	 <select class="browser-default" id="port" required="required" >
-                                <option value=""  selected >Select Port Type</option>
-                          </select>
-                        
-                         <input type="text" id="id" hidden>
-                    </div>
-					
-					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="portAddress" name="value"  title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required">
-                        <label for="portAddress" class="">Port Address <span class="star"> *</span></label>
-                    </div>
-
-					 <div class="col s12 m12 center" style="margin-top: 20px;">
-                        <button class="btn" type="submit">Submit</button>
-                        <a href="#" class="btn modal-close" id="Cancel" onclick='resetFields()'  style="margin-left: 10px;">Cancel</a>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-		
-		
-		<div id="editPortAddressModal" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header">Edit Port Address</h6>
-        <div class="modal-content">
-          	<form action="" onsubmit="return updatedPort()">
-                <div class="row" style="margin-top: 10px;">
-					
-				<div class="col s12 m6">
-					<label for="editport" class="active">Port Type <span class="star">*</span></label>
-                     	 <select class="browser-default" id="editport" >
-                                <option value=""  selected="" disabled>Select Port Type</option>
-                          </select>
-                        
-                         <input type="text" id="editId" hidden>
-                    </div>
-					
-					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editportAddress" name="value"  title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required">
-                        <label for="editportAddress" class="">Port Address <span class="star"> *</span></label>
-                    </div>
-
-					<div class="col s12 m12 center" style="margin-top: 20px;">
-                        <button class="btn" type="submit">Update</button>
-                        <a href="#" class="btn modal-close" id="Cancel" style="margin-left: 10px;">Cancel</a>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-		
-	<div id="confirmField" class="modal">
-		<h6 class="modal-header"><spring:message code="button.addport" /></h6>
-		<div class="modal-content">
-			<div class="row">
-				<h6 id="sucessMessage">Port Record Added Successfully</h6>
-			</div>
-			 <div class="row">
-				<div class="input-field col s12 center">
-                   <a href="" class="modal-close btn" class="btn">ok</a>
-                </div>
-			</div> 
-		</div>
-	</div>
-	
-	
-		
-	   <!-- --------------------------------------------------------------Delete Field Modal Start --------------------------------------------------------------->
-
-
-	<div id="DeleteFieldModal" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.header.deletePort" /></h6>
-		<div class="modal-content">
-		<div class="row">
-				<h6><spring:message code="modal.message.Port.delete" /></h6>
-			</div> 
-			<input type="text" id="deletePortId" hidden>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<a onclick="confirmantiondelete()"
-						class="modal-close modal-trigger btn" type="submit"><spring:message code="modal.yes" /></a>
-					<button class="modal-close btn" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
-				</div>
-			</div>
-		</div>
-	</div>	
-	
-	<div id="closeDeleteModal" class="modal">
-			<h6 class="modal-header"><spring:message code="modal.header.deletePort" /></h6>
-			<div class="modal-content">
-		
-			
-			<div class="row">
-
-				<h6 id="tacModalText"><spring:message code="modal.message.portDeleted" /> </h6>
-			</div>
-			<div class="row">
-				<div class="input-field col s12 center">
-					<a href="" class="modal-close btn"
-						style="margin-left: 10px;"><spring:message code="modal.close" /></a>
-				</div>
-			</div>
-		</div>
-	</div>
-		
-		
-		
-	<div id="updateFieldsSuccess" class="modal">
-     <h6 class="modal-header" style="margin:0px;"><spring:message code="button.update" /></h6>
-        <div class="modal-content">
-            
-            <div class="row">
-                <h6 id="updateFieldMessage"><spring:message code="input.requestupdated" /></h6>
-            </div>
-            <div class="row">
-                <div class="input-field col s12 center">
-                    <a href="" class="modal-close btn"><spring:message code="modal.ok" /></a>
-                </div>
-            </div>
-        </div>
-    </div>	
+ 
 <!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
 	
-	<script type="text/javascript"
-		src="${context}/resources/js/plugins/data-tables/js/jquery.dataTables.min.js"></script>
-
 
 
 	<!--plugins.js - Some Specific JS codes for Plugin Settings-->
-	<script
-		src="${context}/resources/custom_js/bootstrap.min.js"></script>
+	<script src="${context}/resources/custom_js/bootstrap.min.js"></script>
 
-	
+
 	<!--custom-script.js - Add your own theme custom JS-->
 	<script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+	
 
 	
 	<!--scrollbar-->
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-	<!-- chartist -->
-	<%-- <script type="text/javascript" src="${context}/resources/js/plugins/chartist-js/chartist.min.js"></script> --%>
+	
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
 		<!-- i18n library -->
@@ -327,7 +257,7 @@
 
 	<script type="text/javascript"
 		src="${context}/resources/i18n_library/min.js"></script>
-		<script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js?version=<%= (int) (Math.random() * 10) %>"></script>
@@ -335,12 +265,15 @@
 		src="${context}/resources/project_js/dragableModal.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random() * 10) %>"></script>
+
 	<script type="text/javascript"
-		src="${context}/resources/project_js/viewPortManagement.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/project_js/userManagementView.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js?version=<%= (int) (Math.random() * 10) %>" async></script>
 			<script type="text/javascript"
 		src="" async></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/ValidationFileOutsidePortal.js?version=<%= (int) (Math.random() * 10) %>"></script>	
 <script type="text/javascript">$( document ).ready(function() {if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>
 <%

@@ -408,7 +408,8 @@ function table(url,dataUrl,filterSource){
 			"status":parseInt($('#recordStatus').val()),
 			"txnId":txn,
 			"consignmentStatus": null,
-			"nid": nationalId == null ? $('#nId').val() : nationalId
+			"nid": nationalId == null ? $('#nId').val() : nationalId,
+			"nationality":$('#filterNationality').val()	
 	}
 
 
@@ -435,7 +436,7 @@ function table(url,dataUrl,filterSource){
 				orderCellsTop : true,
 				"ordering" : false,
 				"bPaginate" : true,
-				"bFilter" : true,
+				"bFilter" : false,
 				"bInfo" : true,
 				"bSearchable" : true,
 				"oLanguage": {  
@@ -457,6 +458,15 @@ function table(url,dataUrl,filterSource){
 					data : function(d) {
 						d.filter = JSON.stringify(request); 
 
+					},
+					error: function (jqXHR, textStatus, errorThrown,data) {
+						
+						 window.parent.$('#msgDialog').text($.i18n('500ErrorMsg'));
+						 // messageWindow(jqXHR['responseJSON']['message']);
+						 window.parent.$('#500ErrorModal').openModal({
+						 dismissible:false
+						 });
+						
 					}
 
 				},
@@ -542,7 +552,8 @@ function pageButtons(url){
 
 			$("#tableDiv").append("<div class='col s3 m2 l1'><button type='button' class='btn primary botton'  id='submitFilter' /></div></div></div>");
 			$("#tableDiv").append("<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportpaidStatus()' type='button' class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
-
+			$("#tableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' style='margin-left: 18px;' id='clearRegisterDeviceFilter'>"+$.i18n('clearFilter')+"</button></div>");
+			$('#clearRegisterDeviceFilter').attr("onclick", "filterReset('viewRegisterDeviceFilter')");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				if(button[i].type === "HeaderButton"){
@@ -782,6 +793,8 @@ function exportpaidStatus(){
     var nid = nationalId == null ? $('#nId').val() : nationalId
 	var table = $('#data-table-simple').DataTable();
     var status=$('#recordStatus').val();
+    var origin = $("body").attr("data-roleType");
+    var nationality =$('#filterNationality').val();
     if( $("body").attr("data-filterSource")=='noti'){
     	txnId= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;	
 	}
@@ -797,7 +810,7 @@ function exportpaidStatus(){
     		}
 
 
-	window.location.href="./exportPaidStatus?startDate="+startDate+"&endDate="+endDate+"&taxPaidStatus="+taxPaidStatus+"&nid="+nid+"&txnId="+txnId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&status="+status;
+	window.location.href="./exportPaidStatus?startDate="+startDate+"&endDate="+endDate+"&taxPaidStatus="+taxPaidStatus+"&nid="+nid+"&txnId="+txnId+"&pageSize="+pageSize+"&pageNo="+pageNo+"&status="+status+"&origin="+origin+"&nationality="+nationality;
 }
 
 

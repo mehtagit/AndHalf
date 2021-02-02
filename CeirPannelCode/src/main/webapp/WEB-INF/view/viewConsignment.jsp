@@ -144,7 +144,7 @@ width: inherit;
 
 								<a href="" class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/viewConsignment"
+							<form action="${context}/viewConsignment" id="viewFilter"
 								method="post">
 								<div class="col s12 m12 l12" id="consignmentTableDIv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">

@@ -457,7 +457,10 @@ public class Stock {
 			@RequestParam(name="roleType") String roleType,
 			@RequestParam(name="source")String source,
 			@RequestParam(name="filteredUserType")String filteredUserType,
-			@RequestParam(name="filterUserName")String filterUserName)
+			@RequestParam(name="filterUserName")String filterUserName,
+			@RequestParam(name="fileName")String fileName,
+			@RequestParam(name="deviceQuantity")String deviceQuantity,
+			@RequestParam(name="quantity")String quantity)
 	{
 		log.info("stockStartDate=="+stockStartDate+ " stockEndDate ="+stockEndDate+" stockTxnId="+stockTxnId+"StockStatus="+stockTxnId+"userType="+userType+"userTypeId="+userTypeId);
 		int userId= (int) session.getAttribute("userid"); 
@@ -479,6 +482,9 @@ public class Stock {
 		filterRequest.setFilteredUserType(filteredUserType);
 		filterRequest.setFilterUserName(filterUserName);
 		filterRequest.setDisplayName(filterUserName);
+		filterRequest.setFileName(fileName);
+		filterRequest.setDeviceQuantity(deviceQuantity);
+		filterRequest.setQuantity(quantity);
 		log.info("source=="+source);;
 
 		log.info(" request passed to the stock exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);

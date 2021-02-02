@@ -233,6 +233,22 @@ div#error_Modal {
 								<%
 									}
 								%>
+								
+								<%
+									if (selfRegister == 0) {
+								%>
+								<li><a id="viewProfile" href="./userManagement?type=user_view"
+									target="mainArea"><i class="fa fa-eye dropdownColor"
+										style="float: left;position: inherit;"></i><span style="float: left"
+										class="dropdownColor"><spring:message
+												code="registration.viewProfile" /></span></a></li>
+					<li class="divider"></li>
+								
+
+								<%
+									}
+								%>
+								
 								<li><a href="javascript:void(0)"
 									onclick="changePasswordPopup()"><i
 										class="fa fa-key dropdownColor" style="float: left"></i><span
@@ -800,6 +816,24 @@ data-dismiss="modal">&times;</button> -->
 		</div>
 		
 	</div>
+               
+               
+               
+               <div id="500ErrorModal" class="modal" style="height: 150px !important;">
+		<h6 class="modal-header"><spring:message code="modal.errorContent" /></h6>
+		<div class="modal-content">
+			<div class="row">
+				<div class="row" id="msgDialog" style="text-align: center;color:red;"></div>
+
+
+				<div class="row input_fields_wrap">
+				<div class="row input_fields_wrap">
+					<div class="col s12 m12 center" style="margin-top: 10px;">
+					<button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.close" /></button>
+				</div>
+
+	</div></div></div></div></div>
+	
                             	<!-- 	password Modal -->
 	<!-- jQuery Library -->
 
