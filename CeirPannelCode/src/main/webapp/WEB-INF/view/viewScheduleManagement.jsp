@@ -123,7 +123,7 @@
 							</div>
 							<form action="${context}/scheduleManagement"
 								method="post">
-								<div class="col s12 m12 l12" id="ScheduleTableDiv"
+								<div class="col s12 m12 l12" id="PortTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv"></div>
 								</div>
@@ -203,8 +203,7 @@
 					<label for="addStatus" class="active">Status<span class="star">  *</span></label>
                      	 <select class="browser-default" id="addStatus" required="required">
                                 <option value="" selected >Select Status</option>
-                                <option value="Enabled">Enable</option>
-                                <option value="Disabled">Disable</option>
+                                
                           </select>
                         
                         
@@ -297,8 +296,8 @@
 					<label for="viewStatus" class="active">Status</label>
                      	 <select class="browser-default" id="viewStatus" required="required" disabled>
                                 <option value="" selected >Select Status</option>
-                                <option value="Enabled">Enabled</option>
-                                <option value="Disabled" >Disabled</option>
+                                <option value="Enable">Enabled</option>
+                                <option value="Disable" >Disabled</option>
                           </select>
                         
                         
@@ -328,66 +327,109 @@
     	
     <div id="editModel" class="modal">
 			<h6 class="modal-header">
-				<spring:message code="Edit User" />
+				Edit Schedule
 			</h6>
 			<div class="modal-content">
 				<form action="" onsubmit="return update()" method="POST"
 					enctype="multipart/form-data" id="register">
-				<div class="row myRow" style="margin-top: 10px;">
-									<div class="input-field col s12 m4">
-                                            <input type="text" id="editfirstName"  name="firstName" pattern="[a-zA-Z]{0,20}" required="required"
-											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" disabled
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"/>
-                                            <label for="editfirstName"><spring:message code="input.firstName" /></label>
-                                        </div>
-										
-										<input type="text" id="editId" hidden="hidden">
-                                       
-                                        <div class="input-field col s12 m4">
-                                            <input type="text" id="editmiddleName" name="middleName" pattern="[a-zA-Z]{0,20}" disabled
-											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" maxlength="20" />
-                                            <label for="editmiddleName"><spring:message code="input.middleName" /></label>
-                                        </div>
-						</div>			
-
+			 <div class="row" style="margin-top: 10px;">
 					
-					<div class="row myRow">
-				 					<div class="input-field col s12 m4">
-                                            <input type="text" id="editlastName" name="lastName" pattern="[a-zA-Z]{0,20}" disabled
-											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-													 required   maxlength="20" />
-                                            <label for="editlastName"><spring:message code="input.lastName" /></label>
-                                        </div>
-                     </div>
-						
-						
-
-		<div class="row">
-						<div class="input-field col s12 center">
-
-							<button class="btn " type="submit" style="margin-left: 10px;">
+					<!-- <div class="input-field col s12 m6" style="margin-top: 22px;">
+						<input type="text" name="month"
+						id='month' class='form-control datepick'
+						autocomplete='off'  required /> 
+						<label for="month" class="center-align">Month <span class="star">*</span>
+						</label> <span class="input-group-addon" style="color: #ff4081"><i
+												class="fa fa-calendar" aria-hidden="true"></i></span>
+					
+					</div> -->
+					
+					<div class="col s12 m4" style="width: 50%;">
+								<label for="editreportCatagory"><spring:message
+									code="sidebar.ReportCatagory" /> <span class="star">*</span></label> <select
+								class="browser-default" title="<spring:message code="" />"
+								oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+								required disabled id="editreportCatagory">
+								<option value="" disabled selected><spring:message
+										code="select.reportCatagory" /></option>
+							</select>
+						</div>
+                        
+                        
+                    
+					
+					
+					<div class="col s12 m4" style="width: 50%;">
+							<label for="edittableId"><spring:message
+									code="sidebar.Report" /> <span class="star">*</span></label> <select
+								class="browser-default" title="<spring:message code="" />"
+								oninput="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.selectFieldMsg" />');"
+								required disabled id="edittableId">
+								<option value="" disabled selected><spring:message
+										code="select.report"/></option>
+							</select>
+						</div>
+                        
+                        
+                   
+					 
+					<div class="input-field col s12 m6 l6" style="margin-top: 22px;">
+									<input type="text" name="email" maxlength="280" id="editemail"
+										pattern="<spring:eval expression="@environment.getProperty('pattern.mail')" />"
+										oninput="InvalidMsg(this,'email','<spring:message code="validation.email" />');"
+										oninvalid="InvalidMsg(this,'email','<spring:message code="validation.email" />');"
+										required /> <label for="editemail"><spring:message
+											code="input.email" /> <span class="star">*</span> </label>
+					</div>
+					
+					<div><input type="text" id="editid" hidden="hidden"></div>
+					
+					<div class="col s12 m6">
+					<label for="editStatus" class="active">Status<span class="star">  *</span></label>
+                     	 <select class="browser-default" id="editStatus" required="required">
+                                <option value="" selected >Select Status</option>
+                                
+                          </select>
+                        
+                        
+                    </div>
+					
+					<div class="input-field col s12 center">
+					<button class="btn " type="submit" style="margin-left: 10px;">
 								<spring:message code="button.update" />
 							</button>
 							<button class="modal-close btn" type="button"
 								style="margin-left: 10px;">
 								<spring:message code="button.cancel" />
-							</button>
-
-
-						</div>
-
+					</button>
 					</div>
+                </div>			
 				</form>
 			</div>
 		</div>	
     	
-	<div id="DeleteAddressModal" class="modal">
-		<h6 class="modal-header"><spring:message code="modal.header.deleteAddress" /></h6>
+    <div id="updateFieldsSuccess" class="modal">
+     <h6 class="modal-header" style="margin:0px;">Edit Schedule </h6>
+        <div class="modal-content">
+            
+            <div class="row">
+                <h6 id="updateFieldMessage"></h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="" class="modal-close btn"><spring:message code="modal.ok" /></a>
+                </div>
+            </div>
+        </div>
+    </div>	
+    	
+	<div id="DeleteModal" class="modal">
+		<h6 class="modal-header">Delete Schedule</h6>
 		<div class="modal-content">
 		<div class="row">
-				<h6><spring:message code="modal.message.Address.delete" /></h6>
+				<h6>Are you sure you want to delete the Report Scheduled.</h6>
 			</div> 
 			<input type="text" id="deleteFieldId" hidden>
 			<div class="row">
@@ -401,13 +443,13 @@
 	</div>	
 	
 	<div id="closeDeleteModal" class="modal">
-			<h6 class="modal-header"><spring:message code="modal.header.deleteAddress" /></h6>
+			<h6 class="modal-header">Delete Schedule</h6>
 			<div class="modal-content">
 		
 			
 			<div class="row">
 
-				<h6 id="tacModalText"><spring:message code="modal.message.AddressDeleted" /> </h6>
+				<h6 id="tacModalText">Report Schedule Deleted Successfully. </h6>
 			</div>
 			<div class="row">
 				<div class="input-field col s12 center">
@@ -486,9 +528,11 @@
 
 	<script type="text/javascript"
 		src="${context}/resources/project_js/viewScheduleManagement.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/_dateFunction.js?version=<%= (int) (Math.random() * 10) %>" async></script>	
 <%-- 	<script type="text/javascript"
 		src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script> --%>
-			<script type="text/javascript"
+	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	
 			<script type="text/javascript"

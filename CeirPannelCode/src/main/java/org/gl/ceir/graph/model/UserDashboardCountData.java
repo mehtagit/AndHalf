@@ -96,7 +96,17 @@ public class UserDashboardCountData {
 	@SerializedName("Total Anonymous User Count")
 	private String totalAnonymousUserCount;
 
+	
+	
+	@JsonProperty("Total System User Count ")
+	@SerializedName("Total System User Count ")
+	private String totalsystemUserCount;
 
+	
+	
+	@JsonProperty("Total Reporting User Count ")
+	@SerializedName("Total Reporting User Count")
+	private String totalReportingUserCount;
 	public String getDate() {
 		return date;
 	}
@@ -267,6 +277,26 @@ public class UserDashboardCountData {
 	}
 
 
+	public String getTotalsystemUserCount() {
+		return totalsystemUserCount;
+	}
+
+
+	public void setTotalsystemUserCount(String totalsystemUserCount) {
+		this.totalsystemUserCount = totalsystemUserCount;
+	}
+
+
+	public String getTotalReportingUserCount() {
+		return totalReportingUserCount;
+	}
+
+
+	public void setTotalReportingUserCount(String totalReportingUserCount) {
+		this.totalReportingUserCount = totalReportingUserCount;
+	}
+
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -304,8 +334,14 @@ public class UserDashboardCountData {
 		builder.append(totalImmigrationUserCount);
 		builder.append(", totalAnonymousUserCount=");
 		builder.append(totalAnonymousUserCount);
+		builder.append(", totalsystemUserCount=");
+		builder.append(totalsystemUserCount);
+		builder.append(", totalReportingUserCount=");
+		builder.append(totalReportingUserCount);
 		builder.append("]");
 		return builder.toString();
 	}
+
+ 
 
 }

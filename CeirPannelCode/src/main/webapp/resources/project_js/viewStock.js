@@ -500,7 +500,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 					"ordering": false,
 					"bPaginate" : true,
 					"bFilter" : false,
-					"bInfo" : false,
+					"bInfo" : true,
 					"bSearchable" : true,
 					scrollCollapse: true,
 					"oLanguage": {  
