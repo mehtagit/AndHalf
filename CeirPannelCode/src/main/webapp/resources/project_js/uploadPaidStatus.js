@@ -409,7 +409,7 @@ function table(url,dataUrl,filterSource){
 			"txnId":txn,
 			"consignmentStatus": null,
 			"nid": nationalId == null ? $('#nId').val() : nationalId,
-			"nationality":parseInt($('#filterNationality').val())		
+			"nationality":$('#filterNationality').val()	
 	}
 
 
@@ -437,7 +437,7 @@ function table(url,dataUrl,filterSource){
 				"ordering" : false,
 				"bPaginate" : true,
 				"bFilter" : false,
-				"bInfo" : false,
+				"bInfo" : true,
 				"bSearchable" : true,
 				"oLanguage": {  
 					"sUrl": langFile  
@@ -794,7 +794,7 @@ function exportpaidStatus(){
 	var table = $('#data-table-simple').DataTable();
     var status=$('#recordStatus').val();
     var origin = $("body").attr("data-roleType");
-    var nationality =parseInt($('#filterNationality').val());
+    var nationality =$('#filterNationality').val();
     if( $("body").attr("data-filterSource")=='noti'){
     	txnId= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;	
 	}

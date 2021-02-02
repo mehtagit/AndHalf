@@ -440,7 +440,7 @@ function table(url,dataUrl){
 				"ordering" : false,
 				"bPaginate" : true,
 				"bFilter" : false,
-				"bInfo" : false,
+				"bInfo" : true,
 				"bSearchable" : true,
 				"oLanguage": {  
 					"sUrl": langFile  

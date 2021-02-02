@@ -12,6 +12,7 @@ public class FilterRequest {
 	public String province,district,commune,village,country;
 	public String publicIp;
 	private int districtID,communeID;
+	public String category,reportName,flag,emailId;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -553,6 +554,30 @@ public class FilterRequest {
 	public void setSupplierName(String supplierName) {
 		this.supplierName = supplierName;
 	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public String getReportName() {
+		return reportName;
+	}
+	public void setReportName(String reportName) {
+		this.reportName = reportName;
+	}
+	public String getFlag() {
+		return flag;
+	}
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
+	public String getEmailId() {
+		return emailId;
+	}
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -736,10 +761,17 @@ public class FilterRequest {
 		builder.append(districtID);
 		builder.append(", communeID=");
 		builder.append(communeID);
+		builder.append(", category=");
+		builder.append(category);
+		builder.append(", reportName=");
+		builder.append(reportName);
+		builder.append(", flag=");
+		builder.append(flag);
+		builder.append(", emailId=");
+		builder.append(emailId);
 		builder.append("]");
 		return builder.toString();
 	}
-	 
 	
 	
 }
