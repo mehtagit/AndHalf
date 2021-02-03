@@ -110,7 +110,7 @@ function submitDeviceInfo(){
 				      "nid":nationalID,
 				      "txnId":"",
 				  	"deviceRemark":singleDeviceRemark,
-				      "origin":"Self"
+				      "origin":"End User"
 			}
 			regularizeDeviceDbs.push(deviceInfo);  
 			fieldId++;
