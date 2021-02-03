@@ -309,7 +309,7 @@ public class DatatableHeaders {
 			//AdminImprtertrcManageType Headers 
 			
 			else if("AdminImportertrcManageType".equals(role)) {
-				String[] headers = {"table.creationDate","table.transactionID","table.userType","table.displayName","table.ProductName","table.ModelNumber","table.country","table.TAC","table.status","table.action"};		
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.transactionID","table.displayName","table.TAC","table.ProductName","table.ModelNumber","table.country","table.userType","table.status","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -455,7 +455,7 @@ public class DatatableHeaders {
 			//Grievance Admin Headers
 			else if("adminGrievanceHeaders".equals(role)) {
 				
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.transactionID","table.UserName","table.userType","table.grievanceID","table.raisedBy","table.status","table.action"};	
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.transactionID","table.grievanceID","table.UserName","table.userType","table.raisedBy","table.status","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
