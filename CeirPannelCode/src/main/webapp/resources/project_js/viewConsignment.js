@@ -677,10 +677,27 @@ function pageButtons(url){
 					
 					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
+				else if(date[i].type === "select"){
+
+					var dropdownDiv=
+						$("#consignmentTableDIv").append("<div class='col s6 m2 selectDropdwn'>"+
+								
+								"<div class='select-wrapper select2  initialized'>"+
+								"<span class='caret'>"+"</span>"+
+								"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+
+								"<select id="+date[i].id+" class='select2 initialized'>"+
+								"<option>"+date[i].title+
+								"</option>"+
+								"</select>"+
+								"</div>"+
+						"</div>");
+				
+				}
 
 			} 
 
-			// dynamic dropdown portion
+		/*	// dynamic dropdown portion
 			var dropdown=data.dropdownList;
 			for(i=0; i<dropdown.length; i++){
 				var dropdownDiv=
@@ -696,16 +713,17 @@ function pageButtons(url){
 							"</select>"+
 							"</div>"+
 					"</div>");
-			}
+			}*/
 
 
 			if(sourceType=="viaStolen"){
 				$("#btnLink").css({display: "none"});
 
 				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' style='margin-left: 18px;' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
-				$('#clearFilter').attr("onclick", "filterReset('viewFilter')");	
+				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+			
+				$('#clearFilter').attr("onclick", "filterResetConsignment('viewFilter')");	
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					if(button[i].type === "HeaderButton"){
@@ -732,9 +750,10 @@ function pageButtons(url){
 				var viewFilter="viewFilter";
 			
 				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' style='margin-left: 18px;' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
-				$('#clearFilter').attr("onclick", "filterReset('viewFilter')");	
+				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				
+				$('#clearFilter').attr("onclick", "filterResetConsignment('viewFilter')");	
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					if(button[i].type === "HeaderButton"){
@@ -1072,6 +1091,10 @@ function exportConsignmentData()
 	if(displayName==undefined || displayName=="undefined"){
 		displayName=null;
 	}
+	if(supplierName==undefined || supplierName=="undefined"){
+		supplierName="";
+	}
+	
 	//var source__val = consignmentStartDate != ''|| consignmentEndDate != ''|| consignmentTxnId != ''|| filterConsignmentStatus != 'NaN'|| consignmentTaxPaidStatus != 'NaN'|| consignmentName != undefined ? 'filter' : $("body").attr("data-session-source");
 
 	var source__val;
@@ -1430,4 +1453,11 @@ function historyRecord(txnID){
 
 
 
+}
+
+
+function filterResetConsignment(formID){
+	$('#'+formID).trigger('reset');
+	$("label").removeClass('active');
+	filterConsignment(lang,null);
 }

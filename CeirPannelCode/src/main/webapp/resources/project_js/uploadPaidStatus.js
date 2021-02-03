@@ -384,7 +384,10 @@ var nationalId =$("body").attr("session-value") =='null' ? null : $("body").attr
 function table(url,dataUrl,filterSource){
 	var txnIdValue = $("body").attr("session-valueTxnID");
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
-	
+	var origin=$("body").attr("data-roleType");
+	if($("body").attr("data-roleType")=='CEIRAdmin'){
+		origin=$('#originFilter').val();
+	}
 	if (filterSource=="filter")
 	{
 		if($("body").attr("data-filterSource")=='noti'){
@@ -397,7 +400,7 @@ function table(url,dataUrl,filterSource){
 	}
 	
 	var request={
-			"origin":$("body").attr("data-roleType"),
+			"origin":origin,
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
 			"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
@@ -794,6 +797,13 @@ function exportpaidStatus(){
 	var table = $('#data-table-simple').DataTable();
     var status=$('#recordStatus').val();
     var origin = $("body").attr("data-roleType");
+    if($("body").attr("data-roleType")=='CEIRAdmin'){
+		origin=$('#originFilter').val();
+	}
+    else{
+    	origin=null;
+    }
+  
     var nationality =$('#filterNationality').val();
     if( $("body").attr("data-filterSource")=='noti'){
     	txnId= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;	

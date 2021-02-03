@@ -293,7 +293,7 @@ function populateCountries(countryElementId, stateElementId){
 
 	if( stateElementId ){
 		countryElement.onchange = function(){
-			//populateStates( countryElementId, stateElementId );
+			populateStates( countryElementId, stateElementId );
 		};
 	}
 }

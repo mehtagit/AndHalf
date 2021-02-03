@@ -30,7 +30,7 @@ function fileDownload(fileName,fileType,txnId,doc_TypeTag)
 		success : function(data) {
 			if(data.url=='Not Found')
 			{
-
+   
 				$('#fileFormateModal').openModal({
 					dismissible:false
 				});
