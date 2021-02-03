@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TRCRequest {
-	private String endDate,searchString,startDate,tac,txnId,userType,filterUserType;
+	private String endDate,searchString,startDate,tac,txnId,userType,filterUserType,userDisplayName,productName,modelNumber,modifiedOn;
 	private Integer status,adminStatus,featureId,userTypeId,file;
 	private long userId;
 	public String getEndDate() {
@@ -48,6 +48,30 @@ public class TRCRequest {
 	}
 	public void setFilterUserType(String filterUserType) {
 		this.filterUserType = filterUserType;
+	}
+	public String getUserDisplayName() {
+		return userDisplayName;
+	}
+	public void setUserDisplayName(String userDisplayName) {
+		this.userDisplayName = userDisplayName;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public String getModelNumber() {
+		return modelNumber;
+	}
+	public void setModelNumber(String modelNumber) {
+		this.modelNumber = modelNumber;
+	}
+	public String getModifiedOn() {
+		return modifiedOn;
+	}
+	public void setModifiedOn(String modifiedOn) {
+		this.modifiedOn = modifiedOn;
 	}
 	public Integer getStatus() {
 		return status;
@@ -102,6 +126,14 @@ public class TRCRequest {
 		builder.append(userType);
 		builder.append(", filterUserType=");
 		builder.append(filterUserType);
+		builder.append(", userDisplayName=");
+		builder.append(userDisplayName);
+		builder.append(", productName=");
+		builder.append(productName);
+		builder.append(", modelNumber=");
+		builder.append(modelNumber);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
 		builder.append(", status=");
 		builder.append(status);
 		builder.append(", adminStatus=");
@@ -117,6 +149,7 @@ public class TRCRequest {
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 }
 

@@ -393,6 +393,7 @@ input[type="checkbox"] {
 
 
 <body data-roleType="${usertype}">
+	<div id="initialloader"></div>
 	<!-- Modal End -->
 	<!-- START CONTENT -->
 	<section id="content" id="mainPage">
@@ -1177,7 +1178,7 @@ input[type="checkbox"] {
 	<script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/project_js/provinceDropdown.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
@@ -1208,9 +1209,13 @@ input[type="checkbox"] {
 		$(document)
 				.ready(
 						function() {
+							populateCountries("country", "state");
+							
+							setDropdown();
+						
 							questionDataByCategory();
 							//	 $("select[required]").css({position: "absolute", display: "inline", height: 0, padding: 0, width: 0});
-							populateCountries("country", "state");
+							
 							editProfile();
 							if ($("body").attr("data-roleType") == '') {
 								window.top.location.href = "./login?isExpired=yes";

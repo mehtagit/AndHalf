@@ -143,15 +143,6 @@ function Datatable(Url, dataUrl) {
 								d.filter = JSON.stringify(filterRequest);
 								// ////console.log(JSON.stringify(filterRequest));
 
-							},
-							error: function (jqXHR, textStatus, errorThrown,data) {
-								
-								 window.parent.$('#msgDialog').text($.i18n('500ErrorMsg'));
-								 // messageWindow(jqXHR['responseJSON']['message']);
-								 window.parent.$('#500ErrorModal').openModal({
-								 dismissible:false
-								 });
-								
 							}
 
 						},
@@ -247,26 +238,27 @@ function pageRendering() {
 					// dynamic drop down portion
 					var dropdown = data.dropdownList;
 					for (i = 0; i < dropdown.length; i++) {
-						var dropdownDiv = $("#typeAprroveTableDiv")
-								.append(
-										"<div class='col s6 m2 selectDropdwn'>"
-												+
+						
+							var dropdownDiv = $("#typeAprroveTableDiv")
+							.append(
+									"<div class='col s6 m2 selectDropdwn'>"
+											+
 
-												"<div class='select-wrapper select2  initialized'>"
-												+ "<span class='caret'>"
-												+ "</span>"
-												+ "<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"
-												+
+											"<div class='select-wrapper select2  initialized'>"
+											+ "<span class='caret'>"
+											+ "</span>"
+											+ "<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"
+											+
 
-												"<select id="
-												+ dropdown[i].id
-												+ " class='select2 initialized'>"
-												+ "<option value='-1' >"
-												+ dropdown[i].title
-												+ "</option>" + "</select>"
-												+ "</div>" + "</div>");
-
+											"<select onchange='getModelName()' id="
+											+ dropdown[i].id
+											+ " class='select2 initialized'>"
+											+ "<option value='-1' >"
+											+ dropdown[i].title
+											+ "</option>" + "</select>"
+											+ "</div>" + "</div>");
 					}
+					
 
 					$("#typeAprroveTableDiv")
 							.append(
@@ -316,6 +308,14 @@ function pageRendering() {
 											'#userType');
 								}
 							});
+					
+					$.getJSON('./productList', function(data) {
+						for (i = 0; i < data.length; i++) {
+							$('<option>').val(data[i].id).text(data[i].brand_name)
+									.appendTo('#filterdbrandname');
+						}
+						//$('select#filterdbrandname').select2();
+					});
 
 				}
 				
@@ -323,6 +323,27 @@ function pageRendering() {
 			});
 
 }
+
+
+function getModelName(){
+	var brand_id = $('#filterdbrandname').val();
+	$.getJSON('./productModelList?brand_id=' + brand_id,
+			function(data) {
+	
+		//$('#select2-modelNumber-container').empty();
+				$('#filteredModel').empty();
+				var html='<option value="">Select Model Number</option>';
+				$('#filteredModel').append(html);	
+				for (i = 0; i < data.length; i++){
+					var html='<option value="'+data[i].id+'">'+data[i].modelName+'</option>';
+					$('#filteredModel').append(html);	
+				}
+				
+				$("#filteredModel,#Status,#userType").prop('onchange', null); //for disabling onchange function in dropdown
+				
+			});
+}
+
 
 if (userType == "CEIRAdmin") {
 	$("#btnLink").css({
@@ -390,25 +411,6 @@ function ImporterviewByID(id, actionType, projectPath, modalID) {
 	$('#' + modalID).openModal({
 		dismissible : false
 	});
-	if (actionType == 'view') {
-		// $("#viewImporterModal").openModal();
-		$("#viewtradmark").val("");
-		$("#viewmodelName").val("");
-		$("#viewModelnumber").val("");
-		$("#viewManufacturercountry").val("");
-		$('#viewrequestDate').val("");
-		$('#viewFrequency').val("");
-		$("#viewImportertac").val("");
-		$("#viewtxnId").val("");
-		$("#chatMsg").text("");
-	} else if (actionType == 'edit') {
-		$("#editImportertransactionid").val("");
-		$("#editTradmark").val("");
-		$("#productname").val("");
-		$("#editmanufacturercountry").val("");
-		$('#editfrequency').val("");
-		$('#editImportertac').val("");
-	}
 	window.projectPath = projectPath;
 	
 	var token = $("meta[name='_csrf']").attr("content");
@@ -457,8 +459,6 @@ function setImporterViewPopupData(data, projectPath) {
 	$('#viewFrequency').val(data.frequencyRange);
 	$("#viewImportertac").val(data.tac);
 	$("#viewtxnId").val(data.txnId);
-	//$("#viewRemark").val(data.remark);
-	data.remark=="" || data.remark==null ? $("#viewRemark").val('NA') : $('#viewRemark').val(data.remark);
 
 	var result = data;
 	var importerViewResponse = [];
