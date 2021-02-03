@@ -15,8 +15,8 @@ public interface FileRepo extends JpaRepository<CDRFileRecords, Long>{
 	public List<CDRFileRecords> findByOperatorAndStatusSIG1AndStatusSIG2(String operator,String statusSig1,String statusSig2);
 //	public List<CDRFileRecords> findByOperatorAndStatusSIG1OrStatusSIG2(String operator,String statusSig1,String statusSig2);
 	
-	public List<CDRFileRecords> findByOperatorAndStatusSIG1AndCdrRecdServer(String operator,String statusSig1,String cdrRecdServer);
-	public List<CDRFileRecords> findByOperatorAndStatusSIG2AndCdrRecdServer(String operator,String statusSig1,String cdrRecdServer);
+	public List<CDRFileRecords> findByOperatorAndSourceAndStatusSIG1AndCdrRecdServer(String operator,String source,String statusSig1,String cdrRecdServer);
+	public List<CDRFileRecords> findByOperatorAndSourceAndStatusSIG2AndCdrRecdServer(String operator,String source,String statusSig1,String cdrRecdServer);
 	
 	@Transactional
 	@Modifying
