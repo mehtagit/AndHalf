@@ -12,6 +12,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.gl.ceir.config.model.ConsignmentMgmt;
+import com.gl.ceir.config.model.EndUserDB;
+import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserProfile;
@@ -213,6 +215,15 @@ public class GenericSpecificationBuilder<T> {
 		Join<ConsignmentMgmt, User> join_User = root.join("user".intern());
 		Join<User, UserProfile> join_UserProfile = join_User.join("userProfile".intern());
 		return cb.equal(join_UserProfile.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+		};
+		}
+	
+
+	public Specification<RegularizeDeviceDb> joinWithEnduserDB(SearchCriteria searchCriteria){
+		return (root, query, cb) -> {
+		Join<RegularizeDeviceDb, EndUserDB> join_EndUserDB = root.join("endUserDB".intern());
+	
+		return cb.equal(join_EndUserDB.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
 		};
 		}
 }

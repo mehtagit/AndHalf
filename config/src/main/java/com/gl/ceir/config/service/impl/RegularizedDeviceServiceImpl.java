@@ -1116,7 +1116,7 @@ public class RegularizedDeviceServiceImpl {
 				}
 				else if(filterRequest.getUserTypeId()==17)		
 				{
-					specificationBuilder.with(new SearchCriteria("origin", "Self" , SearchOperation.EQUALITY, Datatype.STRING));
+					specificationBuilder.with(new SearchCriteria("origin", "End User" , SearchOperation.EQUALITY, Datatype.STRING));
 				}
 				else if(filterRequest.getUserTypeId()==7)		
 				{
@@ -1143,8 +1143,19 @@ public class RegularizedDeviceServiceImpl {
 		if(Objects.nonNull(filterRequest.getStatus())) {
 			specificationBuilder.with(new SearchCriteria("status", filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INT));
 		}
-
-
+		//changes for imei /MEID  quantity done by sharad
+		
+		
+		  if(Objects.nonNull(filterRequest.getOrigin()) &&
+		  !filterRequest.getOrigin().isEmpty()) specificationBuilder.with(new
+		  SearchCriteria("origin", filterRequest.getOrigin(), SearchOperation.LIKE,
+		  Datatype.STRING));
+		 
+				
+		if(Objects.nonNull(filterRequest.getNationality()) && !filterRequest.getNationality().isEmpty()) {
+				//s	specificationBuilder.with(new SearchCriteria("nationality", filterRequest.getNationality(), SearchOperation.LIKE, Datatype.STRING));
+		specificationBuilder.addSpecification(specificationBuilder.joinWithEnduserDB(new SearchCriteria("nationality", filterRequest.getNationality(),SearchOperation.LIKE, Datatype.STRING)));		
+		}
 		else {
 			if(Objects.nonNull(filterRequest.getUserTypeId())) {
 

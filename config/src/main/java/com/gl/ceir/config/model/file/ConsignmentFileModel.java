@@ -10,7 +10,7 @@ public class ConsignmentFileModel {
 	@CsvBindByName(column = "Modified On")
 	@CsvBindByPosition(position = 1)
 	private String modifiedOn;
-	@CsvBindByName(column = "Txn Id")
+	@CsvBindByName(column = "Transaction ID")
 	@CsvBindByPosition(position = 2)
 	private String txnId;
 	@CsvBindByName(column = "Supplier Name")

@@ -435,7 +435,18 @@ public class StockServiceImpl {
 			if( Objects.nonNull(userProfile))
 				specificationBuilder.with(new SearchCriteria("portAddress", userProfile.getPortAddress(), SearchOperation.EQUALITY, Datatype.INT));
 		}
+		//changes for imei /MEID  quantity done by sharad
+		
+		if(Objects.nonNull(filterRequest.getQuantity()) && !filterRequest.getQuantity().isEmpty())
+			specificationBuilder.with(new SearchCriteria("quantity", filterRequest.getQuantity(), SearchOperation.LIKE, Datatype.STRING));
+		
+		if(Objects.nonNull(filterRequest.getDeviceQuantity()) && !filterRequest.getDeviceQuantity().isEmpty())
+			specificationBuilder.with(new SearchCriteria("deviceQuantity", filterRequest.getDeviceQuantity(), SearchOperation.LIKE, Datatype.STRING));
+		
+		if(Objects.nonNull(filterRequest.getFileName()) && !filterRequest.getFileName().isEmpty())
+			specificationBuilder.with(new SearchCriteria("fileName", filterRequest.getFileName(), SearchOperation.LIKE, Datatype.STRING));
 
+		
 		if(Objects.nonNull(filterRequest.getFilteredUserType()) && !filterRequest.getFilteredUserType().isEmpty() 
 				&& !filterRequest.getFilteredUserType().equalsIgnoreCase("null")) {
 			logger.info("Inside getFilteredUserType block and user type is ["+filterRequest.getFilteredUserType()+"]");

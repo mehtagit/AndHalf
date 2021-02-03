@@ -839,8 +839,8 @@ public class ConsignmentServiceImpl {
 				if( !consignmentMgmts.isEmpty() ) {
 					for( ConsignmentMgmt consignmentMgmt : consignmentMgmts ) {
 						fileRecords.add( new ConsignmentFileModelCEIR(
-								consignmentMgmt.getCreatedOn().format(dtf),
 								consignmentMgmt.getModifiedOn().format(dtf),
+								consignmentMgmt.getCreatedOn().format(dtf),
 								consignmentMgmt.getTxnId(),
 								consignmentMgmt.getUser().getUserProfile().getDisplayName(),
 								consignmentMgmt.getStateInterp(), 
