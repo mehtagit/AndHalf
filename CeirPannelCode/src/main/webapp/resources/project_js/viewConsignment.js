@@ -721,7 +721,7 @@ function pageButtons(url){
 
 				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
 				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' style='margin-left: 18px;' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
-				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				$("#consignmentTableDIv").append("<div class=' col s3 m2 l2'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			
 				$('#clearFilter').attr("onclick", "filterResetConsignment('viewFilter')");	
 				for(i=0; i<button.length; i++){
@@ -751,7 +751,7 @@ function pageButtons(url){
 			
 				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
 				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' style='margin-left: 18px;' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
-				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				$("#consignmentTableDIv").append("<div class=' col s3 m2 l2'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 				
 				$('#clearFilter').attr("onclick", "filterResetConsignment('viewFilter')");	
 				for(i=0; i<button.length; i++){
