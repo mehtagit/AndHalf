@@ -24,13 +24,22 @@ JpaSpecificationExecutor<RegularizeDeviceDb	>, CustomerCareRepo<RegularizeDevice
 	
 	public Long countByNidAndDeviceStatus(String nid,int status);
 	public Long countByNidAndTaxPaidStatus(String nid,int status);
+	
+	public Long countByNidIgnoreCaseAndTaxPaidStatus(String nid,int status);
 
 	public RegularizeDeviceDb getByTxnId(String txnid);
 
-	@Query("SELECT r FROM RegularizeDeviceDb r WHERE firstImei = :imei OR secondImei = :imei OR thirdImei = :imei OR fourthImei = :imei") 
+	@Query("SELECT r FROM RegularizeDeviceDb r WHERE firstImei = :imei OR substr(firstImei,1,14) =:imei OR secondImei = :imei OR substr(secondImei,1,14) =:imei "
+			+ "OR thirdImei = :imei OR substr(thirdImei,1,14) =:imei OR fourthImei = :imei  OR substr(fourthImei,1,14) =:imei")
 	public RegularizeDeviceDb getByImei(String imei);
+	
+	@Query("SELECT r FROM RegularizeDeviceDb r WHERE (firstImei = :imei OR substr(firstImei,1,14) =:imei OR secondImei = :imei OR substr(secondImei,1,14) =:imei "
+			+ "OR thirdImei = :imei OR substr(thirdImei,1,14) =:imei OR fourthImei = :imei  OR substr(fourthImei,1,14) =:imei) and deviceIdType =:deviceIdType")
+	public RegularizeDeviceDb getByImeiAndDeviceIdType(String imei, Integer deviceIdType);
 
-	@Query("SELECT count(r) FROM RegularizeDeviceDb r WHERE firstImei = :imei OR secondImei = :imei OR thirdImei = :imei OR fourthImei = :imei") 
+//	@Query("SELECT count(r) FROM RegularizeDeviceDb r WHERE firstImei = :imei OR secondImei = :imei OR thirdImei = :imei OR fourthImei = :imei")
+	@Query("SELECT count(r) FROM RegularizeDeviceDb r WHERE firstImei = :imei OR substr(firstImei,1,14) =:imei OR secondImei = :imei OR substr(secondImei,1,14) =:imei " + 
+			"OR thirdImei = :imei OR substr(thirdImei,1,14) =:imei OR fourthImei = :imei  OR substr(fourthImei,1,14) =:imei")
 	long countByImei(String imei);
 
 	

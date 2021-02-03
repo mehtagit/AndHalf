@@ -51,6 +51,34 @@ public class CustomerCareStolen implements CustomerCareTarget{
 		setName(customerCareDeviceState);
 		return customerCareDeviceState;
 	}
+	
+	@Override
+	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState, String deviceIdType ) {
+
+		DeviceOperatorDb deviceOperatorDb = deviceOperatorDbRepository.getByImeiEsnMeidAndDeviceStatusAndDeviceIdType(imei, 12, deviceIdType);
+
+		if(Objects.nonNull(deviceOperatorDb)) {
+			customerCareDeviceState.setTxnId(deviceOperatorDb.getTxnId());
+			customerCareDeviceState.setDate(deviceOperatorDb.getCreatedOn().toString());
+			customerCareDeviceState.setStatus(Constants.available);
+			customerCareDeviceState.setFeatureId(5);
+		}else {
+			DeviceLawfulDb deviceLawfulDb = deviceLawfulDbRepository.getByImeiEsnMeidAndDeviceStatusAndDeviceIdType(imei, 10, deviceIdType);
+			if(Objects.nonNull(deviceLawfulDb)) {
+				customerCareDeviceState.setTxnId(deviceLawfulDb.getTxnId());
+				customerCareDeviceState.setDate(deviceLawfulDb.getCreatedOn().toString());
+				customerCareDeviceState.setStatus(Constants.available);
+				customerCareDeviceState.setFeatureId(commonFunction.getFeatureIdByTxnId(deviceLawfulDb.getTxnId()));
+			}else {
+				customerCareDeviceState.setDate("");
+				customerCareDeviceState.setStatus(Constants.non_available);
+				customerCareDeviceState.setFeatureId(0);
+			}
+		}
+		customerCareDeviceState.setImei(imei);
+		setName(customerCareDeviceState);
+		return customerCareDeviceState;
+	}
 
 	@Override
 	public void setName(CustomerCareDeviceState customerCareDeviceState) {

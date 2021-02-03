@@ -324,18 +324,19 @@ public class StolenAndRecoveryServiceImpl {
 
 				// Operator type id for stolen request of registered by Ceir Admin.
 				if(Objects.nonNull(stolenandRecoveryMgmt.getOperatorTypeId())) {
-					if(stolenandRecoveryMgmt.getOperatorTypeId() == -1) 
-						stolenandRecoveryMgmt.setOperatorTypeIdInterp("CEIR Admin");
+					if(stolenandRecoveryMgmt.getOperatorTypeId() == -1)
+						stolenandRecoveryMgmt.setOperatorTypeIdInterp("NA");
+//						stolenandRecoveryMgmt.setOperatorTypeIdInterp("CEIR Admin");
 				}else {
-					stolenandRecoveryMgmt.setOperatorTypeIdInterp("");
+					stolenandRecoveryMgmt.setOperatorTypeIdInterp("NA");
 					logger.info("WARN : OperatorTypeId is null for [" + stolenandRecoveryMgmt + "]");
 				}
 			}
 
 			logger.info(stolenandRecoveryMgmtPage.getContent());
-			if(Objects.nonNull(filterRequest.getTxnId())) {
+			if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
 				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER, filterRequest.getRoleType(), filterRequest.getRequestType(),filterRequest.getFeatureId());
-			}else {
+			} else {
 				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
 			}
 			return stolenandRecoveryMgmtPage;
@@ -414,7 +415,7 @@ public class StolenAndRecoveryServiceImpl {
 			srsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
 
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
-			srsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+			srsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getSourceType())) {
 			srsb.with(new SearchCriteria("sourceType", filterRequest.getSourceType(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -502,15 +503,21 @@ public class StolenAndRecoveryServiceImpl {
 
 			}
 		}else if(!"Lawful Agency".equalsIgnoreCase(filterRequest.getUserType()) 
-				&& !"Operator".equalsIgnoreCase(filterRequest.getUserType())) {
+				&& !"Operator".equalsIgnoreCase(filterRequest.getUserType()) && !"Operation".equalsIgnoreCase(filterRequest.getUserType())) {
 			if(Objects.nonNull(filterRequest.getUserId())) {
 				logger.info("Inside !Lawful Agency block.");
 				srsb.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
 			}
 		}
 
+		if( "Operation".equalsIgnoreCase(filterRequest.getUserType()) ){
+			srsb.with(new SearchCriteria("roleType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+		}
+		
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			srsb.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			srsb.orSearch(new SearchCriteria("qty", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			srsb.orSearch(new SearchCriteria("deviceQuantity", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
 
 		return srsb;
@@ -836,7 +843,8 @@ public class StolenAndRecoveryServiceImpl {
 					}
 
 					if(stolenandRecoveryMgmtInfo.getFileStatus()==0 
-							|| stolenandRecoveryMgmtInfo.getFileStatus()==3 
+							|| stolenandRecoveryMgmtInfo.getFileStatus()==2 
+//							|| stolenandRecoveryMgmtInfo.getFileStatus()==3
 							|| stolenandRecoveryMgmtInfo.getFileStatus()==4) {
 						//set file status =7
 						stolenandRecoveryMgmtInfo.setFileStatus(7);//withdrawn by user 
@@ -991,7 +999,7 @@ public class StolenAndRecoveryServiceImpl {
 				stolenandRecoveryMgmtInfo.setQty(stolenandRecoveryMgmt.getQty());
 				stolenandRecoveryMgmtInfo.setFileStatus(StolenStatus.INIT.getCode());
 				stolenandRecoveryMgmtInfo.setDeviceQuantity(stolenandRecoveryMgmt.getDeviceQuantity());
-
+				stolenandRecoveryMgmtInfo.setRejectedRemark(null);
 				// Update StolenIndividualUserDB
 				if(Objects.nonNull(stolenandRecoveryMgmt.getStolenIndividualUserDB())) {
 					StolenIndividualUserDB stolenIndividualUserDB = updateStolenIndividualUserDB(
@@ -1208,7 +1216,6 @@ public class StolenAndRecoveryServiceImpl {
 				}
 
 				stolenandRecoveryMgmt.setCeirAdminId(consignmentUpdateRequest.getUserId());
-
 				if(!stolenAndRecoveryTransaction.updateStatusWithHistory(stolenandRecoveryMgmt)) {
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update Stolen and recovery entity.", consignmentUpdateRequest.getTxnId());
@@ -1217,6 +1224,7 @@ public class StolenAndRecoveryServiceImpl {
 
 					placeholderMap1.put("<First name>", userProfile.getFirstName());
 					placeholderMap1.put("<Txn id>", txnId);
+					placeholderMap1.put("<Reason>", consignmentUpdateRequest.getRemarks() );
 
 					emailUtil.saveNotification(mailTag, 
 							userProfile, 
@@ -1245,8 +1253,7 @@ public class StolenAndRecoveryServiceImpl {
 							userProfile_generic_Response_Notification = new UserProfile();
 						userProfile_generic_Response_Notification =
 								userProfileRepository.getByUserId(registerationUser.getId());
-						placeholderMap1.put("<First name>",userProfile_generic_Response_Notification.getFirstName());
-
+						placeholderMap1.put("<First name>", userProfile_generic_Response_Notification.getFirstName() );
 						emailUtil.saveNotification(mailTag,
 								userProfile_generic_Response_Notification,
 								consignmentUpdateRequest.getFeatureId(),
@@ -1530,7 +1537,7 @@ public class StolenAndRecoveryServiceImpl {
 		return stakeholderfeatureServiceImpl.getFeatureNameById(id);
 	}
 
-	private int countImeiForIndividual(Long imei1, Long imei2, Long imei3, Long imei4) {
+	private int countImeiForIndividual(String imei1, String imei2, String imei3, String imei4) {
 		int count = 0;
 		if(Objects.nonNull(imei1))
 			count++;
@@ -1621,15 +1628,15 @@ public class StolenAndRecoveryServiceImpl {
 
 	public boolean nothingInFilter(FilterRequest filterRequest) {
 		// Clean
-		if(filterRequest.getStartDate().isEmpty()) {
+		if(filterRequest.getStartDate().isEmpty() || filterRequest.getStartDate().equals("")) {
 			filterRequest.setStartDate(null);
 		}
 
-		if(filterRequest.getEndDate().isEmpty()) {
+		if(filterRequest.getEndDate().isEmpty() || filterRequest.getEndDate().equals("")) {
 			filterRequest.setEndDate(null);
 		}
 
-		if(filterRequest.getTxnId().isEmpty()) {
+		if(filterRequest.getTxnId().isEmpty() || filterRequest.getTxnId().equals("")) {
 			filterRequest.setTxnId(null);
 		}
 
@@ -1655,6 +1662,14 @@ public class StolenAndRecoveryServiceImpl {
 		}
 
 		if(Objects.nonNull(filterRequest.getConsignmentStatus()) ) {
+			return Boolean.FALSE;
+		}
+		
+		if(Objects.nonNull(filterRequest.getRequestType()) ) {
+			return Boolean.FALSE;
+		}
+		
+		if(Objects.nonNull(filterRequest.getSourceType()) ) {
 			return Boolean.FALSE;
 		}
 

@@ -1,6 +1,7 @@
 package com.gl.ceir.config.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -23,12 +24,13 @@ public class DeviceUsageDb  implements Serializable{
 	@Id
 	private String imei;
 	
-	private Long msisdn;
+	private String msisdn;
 
 	@JsonIgnore
 	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
-	private Date createdOn;
+//	private Date createdOn;
+	private LocalDateTime createdOn;
 	
 	private String mobileOperator;
 	
@@ -41,7 +43,8 @@ public class DeviceUsageDb  implements Serializable{
 	
 	@JsonIgnore
 	@UpdateTimestamp
-	private Date modifiedOn;    
+//	private Date modifiedOn;
+	private LocalDateTime modifiedOn;
 	
 	private Integer recordType; 
 	
@@ -54,7 +57,8 @@ public class DeviceUsageDb  implements Serializable{
 	@Column(length = 50)
 	private String updateFilename; 
 	
-	private Date failedRuleDate; 
+//	private Date failedRuleDate;
+	private String failedRuleDate;
 	
 	@Column(length = 10)
 	private String tac;
@@ -67,11 +71,11 @@ public class DeviceUsageDb  implements Serializable{
 		this.imei = imei;
 	}
 
-	public Date getCreatedOn() {
+	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
 
-	public void setCreatedOn(Date createdOn) {
+	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
 
@@ -123,19 +127,19 @@ public class DeviceUsageDb  implements Serializable{
 		this.imsi = imsi;
 	}
 
-	public Long getMsisdn() {
+	public String getMsisdn() {
 		return msisdn;
 	}
 
-	public void setMsisdn(Long msisdn) {
+	public void setMsisdn(String msisdn) {
 		this.msisdn = msisdn;
 	}
 
-	public Date getModifiedOn() {
+	public LocalDateTime getModifiedOn() {
 		return modifiedOn;
 	}
 
-	public void setModifiedOn(Date modifiedOn) {
+	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
 
@@ -171,11 +175,11 @@ public class DeviceUsageDb  implements Serializable{
 		this.updateFilename = updateFilename;
 	}
 
-	public Date getFailedRuleDate() {
+	public String getFailedRuleDate() {
 		return failedRuleDate;
 	}
 
-	public void setFailedRuleDate(Date failedRuleDate) {
+	public void setFailedRuleDate(String failedRuleDate) {
 		this.failedRuleDate = failedRuleDate;
 	}
 

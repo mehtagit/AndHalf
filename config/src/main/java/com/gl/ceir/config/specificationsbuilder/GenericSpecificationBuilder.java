@@ -12,6 +12,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.data.jpa.domain.Specification;
 
 import com.gl.ceir.config.model.ConsignmentMgmt;
+import com.gl.ceir.config.model.EndUserDB;
+import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserProfile;
@@ -129,7 +131,22 @@ public class GenericSpecificationBuilder<T> {
 					}
 					else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
-						return cb.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+						if( searchCriteria.getKey().contains("-")) {
+							//logger.info("Search Criteria join key:["+searchCriteria.getKey()+"]");
+							String[] key = (searchCriteria.getKey()).split("-");
+							if( key.length == 2)
+								return cb.equal(root.join(key[0]).get(key[1]).as( String.class ),
+										searchCriteria.getValue().toString());
+							else
+								return cb.equal(root.join(key[0]).join(key[1]).get(key[2]).as( String.class ),
+										searchCriteria.getValue().toString());
+						}else {
+							return cb.equal(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+						}
+					}
+					else if(SearchOperation.EQUALITY_CASE_INSENSITIVE.equals(searchCriteria.getSearchOperation())
+							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
+						return cb.equal(cb.lower(root.get(searchCriteria.getKey())), searchCriteria.getValue().toString().toLowerCase());
 					}
 					else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
 							&& Datatype.INT.equals(searchCriteria.getDatatype())) {
@@ -164,8 +181,12 @@ public class GenericSpecificationBuilder<T> {
 						if( searchCriteria.getKey().contains("-")) {
 							//logger.info("Search Criteria join key:["+searchCriteria.getKey()+"]");
 							String[] key = (searchCriteria.getKey()).split("-");
-							return cb.like(cb.lower(root.join(key[0]).get(key[1]).as( String.class )),
-									"%"+((String)searchCriteria.getValue()).toLowerCase()+"%");
+							if( key.length == 2)
+								return cb.like(cb.lower(root.join(key[0]).get(key[1]).as( String.class )),
+										"%"+((String)searchCriteria.getValue()).toLowerCase()+"%");
+							else
+								return cb.like(cb.lower(root.join(key[0]).join(key[1]).get(key[2]).as( String.class )),
+										"%"+((String)searchCriteria.getValue()).toLowerCase()+"%");
 						}else {
 							return cb.like(cb.lower(root.get(searchCriteria.getKey()).as( String.class )), "%"+((String)searchCriteria.getValue()).toLowerCase()+"%");
 						}
@@ -194,6 +215,15 @@ public class GenericSpecificationBuilder<T> {
 		Join<ConsignmentMgmt, User> join_User = root.join("user".intern());
 		Join<User, UserProfile> join_UserProfile = join_User.join("userProfile".intern());
 		return cb.equal(join_UserProfile.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
+		};
+		}
+	
+
+	public Specification<RegularizeDeviceDb> joinWithEnduserDB(SearchCriteria searchCriteria){
+		return (root, query, cb) -> {
+		Join<RegularizeDeviceDb, EndUserDB> join_EndUserDB = root.join("endUserDB".intern());
+	
+		return cb.equal(join_EndUserDB.get(searchCriteria.getKey()), searchCriteria.getValue().toString());
 		};
 		}
 }

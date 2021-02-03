@@ -15,4 +15,8 @@ JpaSpecificationExecutor<RuleEngineMapping> {
 	public RuleEngineMapping getByName(String name);
 
 	public void deleteById(long id);
+	public RuleEngineMapping findByNameAndFeatureAndUserType(String name,String feature,String userType);
+	
+	public RuleEngineMapping findByNameAndFeatureAndUserTypeAndRuleOrder(String name,String feature,String userType,Integer ruleOrder);
+	
 }

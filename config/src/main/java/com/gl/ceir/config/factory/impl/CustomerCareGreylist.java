@@ -36,6 +36,26 @@ public class CustomerCareGreylist implements CustomerCareTarget{
 		setName(customerCareDeviceState);
 		return customerCareDeviceState;
 	}
+	
+	@Override
+	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState, String deviceIdType) {
+		
+		GreylistDb greylistDb = greyListRepository.findByImeiAndDeviceIdType(imei, deviceIdType);
+		
+		if(Objects.nonNull(greylistDb)) {
+			customerCareDeviceState.setTxnId("");
+			customerCareDeviceState.setDate(greylistDb.getCreatedOn().toString());
+			customerCareDeviceState.setStatus(Constants.available);
+			customerCareDeviceState.setFeatureId(9);
+		}else {
+			customerCareDeviceState.setDate("");
+			customerCareDeviceState.setStatus(Constants.non_available);
+			customerCareDeviceState.setFeatureId(9);
+		}
+		customerCareDeviceState.setImei(imei);
+		setName(customerCareDeviceState);
+		return customerCareDeviceState;
+	}
 
 	@Override
 	public void setName(CustomerCareDeviceState customerCareDeviceState) {

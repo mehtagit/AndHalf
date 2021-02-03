@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gl.ceir.config.model.constants.RulesNames;
@@ -24,6 +25,7 @@ import io.swagger.annotations.ApiModel;
 
 @ApiModel
 @Entity
+@Audited
 public class RuleEngine implements Serializable {
 	/**
 	 * 

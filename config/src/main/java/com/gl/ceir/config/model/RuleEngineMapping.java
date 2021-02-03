@@ -15,6 +15,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.gl.ceir.config.model.constants.RulesNames;
@@ -23,6 +24,7 @@ import io.swagger.annotations.ApiModel;
 
 @ApiModel
 @Entity
+@Audited
 public class RuleEngineMapping implements Serializable {
 	/**
 	 * 
@@ -33,21 +35,21 @@ public class RuleEngineMapping implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-/*	@CreationTimestamp
+	@CreationTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	@Column(updatable = false)
 	private LocalDateTime createdOn;
 
 	@UpdateTimestamp
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
-	private LocalDateTime modifiedOn;*/
-	
-	@CreationTimestamp
-	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
-	private LocalDateTime createdOn;
-
-	@UpdateTimestamp
 	private LocalDateTime modifiedOn;
+	
+//	@CreationTimestamp
+//	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
+//	private LocalDateTime createdOn;
+//
+//	@UpdateTimestamp
+//	private LocalDateTime modifiedOn;
 
 	@NotNull
 	@Column(length = 20)

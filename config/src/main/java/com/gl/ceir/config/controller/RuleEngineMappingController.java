@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.gl.ceir.config.model.AuditTrail;
+import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.RuleEngine;
@@ -45,13 +46,20 @@ public class RuleEngineMappingController {
 			@RequestParam(value = "file", defaultValue = "0") Integer file) {
 
 		MappingJacksonValue mapping = null;
-	
+	if(file==0) {
 		logger.info("Request to view filtered rule engine mapping = " + filterRequest);
-		Page<RuleEngineMapping> ruleEngineMapping =  ruleEngineMappingServiceImpl.filterRuleEngineMapping(filterRequest, pageNo, pageSize);
+		Page<RuleEngineMapping> ruleEngineMapping =  ruleEngineMappingServiceImpl.filterRuleEngineMapping(filterRequest, pageNo, pageSize,"view");
 		mapping = new MappingJacksonValue(ruleEngineMapping);
 
 		logger.info("Response of view Request = " + mapping);
+	}
+		else {
+			FileDetails fileDetails = ruleEngineMappingServiceImpl.getFile(filterRequest);
+			mapping = new MappingJacksonValue(fileDetails);
 
+			
+		}
+		
 		return mapping;
 	}
 
@@ -72,25 +80,28 @@ public class RuleEngineMappingController {
 	
 	@ApiOperation(value = "Save || rule-engine-mapping", response = MappingJacksonValue.class)
 	@PostMapping("/rule-engine-mapping")
-	public MappingJacksonValue save(@RequestBody RuleEngineMapping ruleEngineMapping) {
+	public GenricResponse save(@RequestBody RuleEngineMapping ruleEngineMapping) {
+
 
 		logger.info("Save rule engine mapping [" + ruleEngineMapping + "]");
 
 		GenricResponse genricResponse = ruleEngineMappingServiceImpl.save(ruleEngineMapping);
-		MappingJacksonValue mapping = new MappingJacksonValue(ruleEngineMapping);
+//		MappingJacksonValue mapping = new MappingJacksonValue(ruleEngineMapping);
 		
-		if(genricResponse.getErrorCode() == 0) {
+		if(genricResponse.getErrorCode() == 409) {
+			return genricResponse;
+		}
+		else if(genricResponse.getErrorCode() == 0) {
 			auditTrailRepository.save( new AuditTrail( ruleEngineMapping.getId(),
 					ruleEngineMapping.getUserName(), Long.valueOf(ruleEngineMapping.getUserTypeId()),
 			  "CEIRSystem", Long.valueOf(ruleEngineMapping.getFeatureId()),
 			  Features.RULE_FEATURE_MAPPING, SubFeatures.REGISTER, "","NA",
 			  ruleEngineMapping.getRoleType()));
+			
 		}
+		return genricResponse;
+		
 	
-
-		logger.info("Response to send= " + mapping);
-
-		return mapping;
 	}
 	
 	@ApiOperation(value = "Update By Id || rule-engine-mapping", response = MappingJacksonValue.class)

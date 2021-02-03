@@ -83,10 +83,10 @@ public class StolenIndividualUserDB implements Serializable {
 	@Column(length = 50)
 	private String deviceBrandName;
 
-	private Long imeiEsnMeid1;
-	private Long imeiEsnMeid2;
-	private Long imeiEsnMeid3;
-	private Long imeiEsnMeid4;
+	private String imeiEsnMeid1;
+	private String imeiEsnMeid2;
+	private String imeiEsnMeid3;
+	private String imeiEsnMeid4;
 	private Integer deviceIdType;
 	private Integer deviceType;
 	@Column(length = 50)
@@ -121,7 +121,7 @@ public class StolenIndividualUserDB implements Serializable {
 	@NotNull
 	@Column(length = 50)
 	private String deviceStolenCommune;
-	@NotNull
+//	@NotNull
 	@Column(length = 50)
 	private String deviceStolenVillage;
 	@NotNull
@@ -140,8 +140,32 @@ public class StolenIndividualUserDB implements Serializable {
 	@JsonIgnore
 	StolenandRecoveryMgmt stolenandRecoveryMgmt;
 
+	@Column(length = 50)
+	private String nationality;
 	
+	private Integer addressType;
 	
+	@Transient
+	private String addressTypeInterp;
+	
+	public Integer getAddressType() {
+		return addressType;
+	}
+	public void setAddressType(Integer addressType) {
+		this.addressType = addressType;
+	}
+	public String getAddressTypeInterp() {
+		return addressTypeInterp;
+	}
+	public void setAddressTypeInterp(String addressTypeInterp) {
+		this.addressTypeInterp = addressTypeInterp;
+	}
+	public String getNationality() {
+		return nationality;
+	}
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
 	public String getContactNumber2() {
 		return contactNumber2;
 	}
@@ -433,28 +457,28 @@ public class StolenIndividualUserDB implements Serializable {
 	public void setStolenandRecoveryMgmt(StolenandRecoveryMgmt stolenandRecoveryMgmt) {
 		this.stolenandRecoveryMgmt = stolenandRecoveryMgmt;
 	}
-	public Long getImeiEsnMeid1() {
+	public String getImeiEsnMeid1() {
 		return imeiEsnMeid1;
 	}
-	public void setImeiEsnMeid1(Long imeiEsnMeid1) {
+	public void setImeiEsnMeid1(String imeiEsnMeid1) {
 		this.imeiEsnMeid1 = imeiEsnMeid1;
 	}
-	public Long getImeiEsnMeid2() {
+	public String getImeiEsnMeid2() {
 		return imeiEsnMeid2;
 	}
-	public void setImeiEsnMeid2(Long imeiEsnMeid2) {
+	public void setImeiEsnMeid2(String imeiEsnMeid2) {
 		this.imeiEsnMeid2 = imeiEsnMeid2;
 	}
-	public Long getImeiEsnMeid3() {
+	public String getImeiEsnMeid3() {
 		return imeiEsnMeid3;
 	}
-	public void setImeiEsnMeid3(Long imeiEsnMeid3) {
+	public void setImeiEsnMeid3(String imeiEsnMeid3) {
 		this.imeiEsnMeid3 = imeiEsnMeid3;
 	}
-	public Long getImeiEsnMeid4() {
+	public String getImeiEsnMeid4() {
 		return imeiEsnMeid4;
 	}
-	public void setImeiEsnMeid4(Long imeiEsnMeid4) {
+	public void setImeiEsnMeid4(String imeiEsnMeid4) {
 		this.imeiEsnMeid4 = imeiEsnMeid4;
 	}
 	

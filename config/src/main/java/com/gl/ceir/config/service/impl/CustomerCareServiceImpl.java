@@ -34,11 +34,11 @@ import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.TypeApprovedDb;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.repository.BlackListRepository;
+import com.gl.ceir.config.repository.BlacklistImeiDbRepository;
 import com.gl.ceir.config.repository.DeviceDuplicateDbRepository;
 import com.gl.ceir.config.repository.DeviceNullDbRepository;
 import com.gl.ceir.config.repository.DeviceUsageDbRepository;
 import com.gl.ceir.config.repository.GreyListRepository;
-import com.gl.ceir.config.repository.GsmaBlacklistRepository;
 import com.gl.ceir.config.repository.PolicyBreachNotificationRepository;
 import com.gl.ceir.config.repository.TypeApproveRepository;
 import com.gl.ceir.config.repository.VipListRepository;
@@ -99,17 +99,18 @@ public class CustomerCareServiceImpl {
 		String imei = customerCareRequest.getImei();
 
 		try {
-			if(Objects.nonNull(imei) 
-					&& "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())) {
-				return fetchDetailsOfImei(imei, 0L, listType);
+//			if(Objects.nonNull(imei) 
+//					&& "IMEI".equalsIgnoreCase(customerCareRequest.getDeviceIdType())) {
+			if(Objects.nonNull(imei)) {
+				return fetchDetailsOfImei(imei, "0", customerCareRequest.getDeviceIdType(), listType);
 
-			}else if(Objects.nonNull(customerCareRequest.getMsisdn())){
+			}else if(Objects.nonNull(customerCareRequest.getMsisdn()) || !customerCareRequest.getMsisdn().equals("") ){
 				DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImei(imei);
 
 				if(Objects.isNull(deviceUsageDb)) {
 					return new GenricResponse(2, GenericMessageTags.NO_DATA.getTag(), GenericMessageTags.NO_DATA.getMessage(), null);
 				}else {
-					return fetchDetailsOfImei(deviceUsageDb.getImei(), 0L, listType);
+					return fetchDetailsOfImei(deviceUsageDb.getImei(), "0", customerCareRequest.getDeviceIdType(), listType);
 				}
 			}else {
 				return new GenricResponse(1, GenericMessageTags.INVALID_REQUEST.getMessage(), "", null);
@@ -122,12 +123,12 @@ public class CustomerCareServiceImpl {
 	}
 
 	public GenricResponse getAllV2(CustomerCareRequest customerCareRequest, String listType) {
-		Long msisdn = null;
+		String msisdn = null;
 		String imei = customerCareRequest.getImei();
 		String deviceIdType = customerCareRequest.getDeviceIdType();
 
 		try {
-			msisdn = Long.parseLong(customerCareRequest.getMsisdn());
+			msisdn = customerCareRequest.getMsisdn();
 		}catch (NumberFormatException e) {
 			logger.error("Msisdn is not cast into the long.[" + customerCareRequest.getMsisdn() + "]. So, msisdn=null");
 			msisdn = null;
@@ -207,11 +208,15 @@ public class CustomerCareServiceImpl {
 				}
 				else if(repository instanceof DeviceDuplicateDbRepository) {
 					DeviceDuplicateDbRepository deviceDuplicateDbRepository = (DeviceDuplicateDbRepository)repository;
-					objectBytxnId = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImei(customerCareDeviceState.getImei());
+					objectBytxnId = deviceDuplicateDbRepository.findByImei(customerCareDeviceState.getImei());
 				}
-				else if(repository instanceof GsmaBlacklistRepository) {
-					GsmaBlacklistRepository gsmaBlacklistRepository = (GsmaBlacklistRepository)repository;
-					objectBytxnId = gsmaBlacklistRepository.getByDeviceid(customerCareDeviceState.getImei());
+//				else if(repository instanceof GsmaBlacklistRepository) {
+//					GsmaBlacklistRepository gsmaBlacklistRepository = (GsmaBlacklistRepository)repository;
+//					objectBytxnId = gsmaBlacklistRepository.getByDeviceid(customerCareDeviceState.getImei());
+//				}
+				else if(repository instanceof BlacklistImeiDbRepository) {
+					BlacklistImeiDbRepository blacklistImeiDbRepository = (BlacklistImeiDbRepository)repository;
+					objectBytxnId = blacklistImeiDbRepository.getByDeviceidAndBlacklistStatus(customerCareDeviceState.getImei(),"Yes");
 				}
 				else if(repository instanceof TypeApproveRepository) { 
 					TypeApproveRepository typeApproveRepository = (TypeApproveRepository)repository; 
@@ -265,7 +270,7 @@ public class CustomerCareServiceImpl {
 		}
 	}
 
-	private GenricResponse fetchDetailsOfImei(String imei, Long msisdn, String listType) {
+	private GenricResponse fetchDetailsOfImei(String imei, String msisdn, String listType) {
 		List<String> list = null;
 		List<CustomerCareDeviceState> customerCareDeviceStates = new LinkedList<>();
 
@@ -286,7 +291,42 @@ public class CustomerCareServiceImpl {
 				CustomerCareDeviceState customerCareDeviceState = new CustomerCareDeviceState();
 				customerCareDeviceState.setMsisdn(msisdn);
 				
-				customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(imei, customerCareDeviceState));
+//				customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(imei, customerCareDeviceState));
+				customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(imei, customerCareDeviceState, listType.toLowerCase()));
+				logger.info("Added object of Db [" + o + "] in customerCareDeviceStates");
+				
+			}catch (Exception e) {
+				logger.error("Db [" + o + "] have some issue in fetching data for imei [" + imei + "]", e);
+			}
+		});
+
+		return new GenricResponse(0, GenericMessageTags.SUCCESS.getMessage(), "", customerCareDeviceStates);
+
+	}
+	
+	private GenricResponse fetchDetailsOfImei(String imei, String msisdn, String deviceIdType, String listType) {
+		List<String> list = null;
+		List<CustomerCareDeviceState> customerCareDeviceStates = new LinkedList<>();
+
+		if("device".equals(listType)) {
+			list = customerCareFactory.deviceList;
+		}else {
+			list = customerCareFactory.stateList;
+		}
+
+		list.stream().forEach( o -> {
+			CustomerCareTarget customerCareTarget = customerCareFactory.getObject(o);
+			if(Objects.isNull(customerCareTarget)) {
+				logger.info("Corresponding object of Db [" + o + "] is not defined in the factory ");
+				return;
+			}
+
+			try {
+				CustomerCareDeviceState customerCareDeviceState = new CustomerCareDeviceState();
+				customerCareDeviceState.setMsisdn(msisdn);
+				
+//				customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(imei, customerCareDeviceState));
+				customerCareDeviceStates.add(customerCareTarget.fetchDetailsByImei(imei, customerCareDeviceState, deviceIdType.toLowerCase()));
 				logger.info("Added object of Db [" + o + "] in customerCareDeviceStates");
 				
 			}catch (Exception e) {
@@ -298,7 +338,7 @@ public class CustomerCareServiceImpl {
 
 	}
 
-	private GenricResponse imeiAndMsisdnValidation(String imei, Long msisdn, String listType) {
+	private GenricResponse imeiAndMsisdnValidation(String imei, String msisdn, String listType) {
 		logger.info("IMEI and MSISDN both are available in the request. imei [" + imei + "] msisdn [" + msisdn + "]");
 
 		DeviceUsageDb deviceUsageDb = deviceUsageDbRepository.getByImeiAndMsisdn(imei, msisdn);
@@ -307,7 +347,7 @@ public class CustomerCareServiceImpl {
 		if(Objects.isNull(deviceUsageDb)) {
 			logger.info("IMEI and MSISDN not found in device_usage_db. So, Check in device_duplicate DB. imei [" + imei + "] msisdn [" + msisdn + "]");
 
-			DeviceDuplicateDb deviceDuplicateDb = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImeiAndImeiMsisdnIdentityMsisdn(imei, msisdn);
+			DeviceDuplicateDb deviceDuplicateDb = deviceDuplicateDbRepository.findByImeiAndMsisdn(imei, msisdn);
 			logger.debug(deviceDuplicateDb);
 
 			if(Objects.isNull(deviceDuplicateDb)) {
@@ -327,7 +367,7 @@ public class CustomerCareServiceImpl {
 	private GenricResponse imeiValidation(String imei, String listType) {
 		logger.info("Only IMEI is available in the request. imei [" + imei + "]");
 
-		List<DeviceDuplicateDb> deviceDuplicateDbs = deviceDuplicateDbRepository.findByImeiMsisdnIdentityImei(imei);
+		List<DeviceDuplicateDb> deviceDuplicateDbs = deviceDuplicateDbRepository.findByImei(imei);
 		logger.debug(deviceDuplicateDbs);
 
 		if(deviceDuplicateDbs.isEmpty()) {
@@ -337,7 +377,7 @@ public class CustomerCareServiceImpl {
 			logger.debug(deviceUsageDb);
 
 			if(Objects.nonNull(deviceUsageDb)) {
-				Long msisdn = deviceUsageDb.getMsisdn();
+				String msisdn = deviceUsageDb.getMsisdn();
 				logger.info("Found a valid msisdn[" + msisdn + "] in device_usage_db for imei[" + imei + "]");
 
 				return fetchDetailsOfImei(imei, msisdn, listType);
@@ -347,7 +387,7 @@ public class CustomerCareServiceImpl {
 						GenericMessageTags.INVALID_IMEI.getMessage(), "");
 			}
 		}else if(deviceDuplicateDbs.size() == 1) {
-			Long msisdn = deviceDuplicateDbs.get(0).getImeiMsisdnIdentity().getMsisdn();
+			String msisdn = deviceDuplicateDbs.get(0).getMsisdn();
 			logger.info("Found a valid msisdn[" + msisdn + "] in device_duplicate_db for imei[" + imei + "]");
 
 			return fetchDetailsOfImei(imei, msisdn, listType);
@@ -358,10 +398,10 @@ public class CustomerCareServiceImpl {
 
 	}
 
-	private GenricResponse msisdnValidation(Long msisdn, String listType) {
+	private GenricResponse msisdnValidation(String msisdn, String listType) {
 		logger.info("Only MSISDN is available in the request. msisdn [" + msisdn + "]");
 
-		List<DeviceDuplicateDb> deviceDuplicateDbs = deviceDuplicateDbRepository.findByImeiMsisdnIdentityMsisdn(msisdn);
+		List<DeviceDuplicateDb> deviceDuplicateDbs = deviceDuplicateDbRepository.findByMsisdn(msisdn);
 		logger.debug(deviceDuplicateDbs);
 
 		if(deviceDuplicateDbs.isEmpty()) {
@@ -389,7 +429,7 @@ public class CustomerCareServiceImpl {
 				}
 			}
 		}else if(deviceDuplicateDbs.size() == 1) {
-			return fetchDetailsOfImei(deviceDuplicateDbs.get(0).getImeiMsisdnIdentity().getImei(), msisdn, listType);
+			return fetchDetailsOfImei(deviceDuplicateDbs.get(0).getImei(), msisdn, listType);
 		}else {
 			return new GenricResponse(3, "", "", deviceDuplicateDbs);
 		}

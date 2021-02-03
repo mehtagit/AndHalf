@@ -51,6 +51,16 @@ public class FilterRequest {
 	
 	private String displayName;
 	
+	private String quantity;
+	
+	public String deviceQuantity;
+	
+	private String subject;
+	
+	private String supplierName;
+	private String fileName,nationality;
+	
+	
 	public String getFilteredUserType() {
 		return filteredUserType;
 	}
@@ -284,6 +294,56 @@ public class FilterRequest {
 		this.displayName = displayName;
 	}
 
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+
+	public String getDeviceQuantity() {
+		return deviceQuantity;
+	}
+
+	public void setDeviceQuantity(String deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
+
+	public String getSupplierName() {
+		return supplierName;
+	}
+
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
+	}
+
+	
+	
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -363,10 +423,23 @@ public class FilterRequest {
 		builder.append(remark);
 		builder.append(", displayName=");
 		builder.append(displayName);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
+		builder.append(", subject=");
+		builder.append(subject);
+		builder.append(", supplierName=");
+		builder.append(supplierName);
+		builder.append(", fileName=");
+		builder.append(fileName);
+		builder.append(", nationality=");
+		builder.append(nationality);
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
+	 
 }
 
 

@@ -119,7 +119,9 @@ public class HistoryServiceImpl {
 
 	public Page<Notification> ViewAllNotificationHistory(Integer pageNo, Integer pageSize, FilterRequest filterRequest){
 		try {
-			int defaultPagesize = 10;
+			SystemConfigurationDb systemConfigurationDb=systemConfigurationDbRepository.getByTag("TABLE_PAGE_LENGTH");
+			logger.info("systemConfigurationDb.getValue()::: "+systemConfigurationDb.getValue());
+			int defaultPagesize = Integer.parseInt(systemConfigurationDb.getValue());
 			pageSize = 100;
 			pageNo = 0;
 			List<Notification> content = new ArrayList<>();

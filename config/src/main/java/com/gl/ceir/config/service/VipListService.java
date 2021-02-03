@@ -4,7 +4,7 @@ import com.gl.ceir.config.model.ImeiMsisdnIdentity;
 import com.gl.ceir.config.model.VipList;
 
 public interface VipListService extends RestServices<VipList> {
-	public VipList getByMsisdn(Long msisdn);
+	public VipList getByMsisdn(String msisdn);
 
 	public VipList getByImei(String imei);
 

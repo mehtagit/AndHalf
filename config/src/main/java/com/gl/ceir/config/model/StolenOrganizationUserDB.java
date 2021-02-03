@@ -87,7 +87,7 @@ public class StolenOrganizationUserDB implements Serializable {
 	@Column(length = 50)
 	private String incidentCommune;
 	
-	@NotNull
+//	@NotNull
 	@Column(length = 50)
 	private String incidentVillage;
 	

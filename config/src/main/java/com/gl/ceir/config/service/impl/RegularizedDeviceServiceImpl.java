@@ -31,6 +31,7 @@ import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.EmailSender.MailSubject;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.feign.UserFeignClient;
 import com.gl.ceir.config.model.AllRequest;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.CeirActionRequest;
@@ -64,6 +65,7 @@ import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.TaxStatus;
+import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.model.file.RegularizeDeviceFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
@@ -74,6 +76,8 @@ import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.UserRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
+import com.gl.ceir.config.request.model.Generic_Response_Notification;
+import com.gl.ceir.config.request.model.RegisterationUser;
 import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.transaction.RegularizeDeviceTransaction;
 import com.gl.ceir.config.util.CommonFunction;
@@ -144,7 +148,12 @@ public class RegularizedDeviceServiceImpl {
 	UserRepository userRepository;
 	@Autowired
 	CommonFunction commonFunction;
-
+	@Autowired
+	UserFeignClient userFeignClient;
+	@Autowired
+	EnduserServiceImpl enduserServiceImpl;
+	
+	
 	@Autowired
 	DashboardUsersFeatureStateMapRepository dashboardUsersFeatureStateMapRepository; 
 
@@ -197,9 +206,9 @@ public class RegularizedDeviceServiceImpl {
 			logger.info("dialect : " + propertiesReader.dialect);
 
 			Page<RegularizeDeviceDb> page = regularizedDeviceDbRepository.findAll(buildSpecification(filterRequest,stateList, source).build(), pageable);
-
+			logger.info(page.getContent().toString());
 			for(RegularizeDeviceDb regularizeDeviceDb : page.getContent()) {
-
+//				logger.info(regularizeDeviceDb.toString());
 				for(StateMgmtDb stateMgmtDb : stateList) {
 					if(regularizeDeviceDb.getStatus() == stateMgmtDb.getState()) {
 						regularizeDeviceDb.setStateInterp(stateMgmtDb.getInterp()); 
@@ -208,14 +217,12 @@ public class RegularizedDeviceServiceImpl {
 				}
 
 				if(Objects.nonNull(regularizeDeviceDb.getEndUserDB())) {
+					logger.info(regularizeDeviceDb.getEndUserDB().toString());
 					regularizeDeviceDb.setNationality(regularizeDeviceDb.getEndUserDB().getNationality());
-					EndUserDB endUser=regularizeDeviceDb.getEndUserDB();
-					endUser.setRegularizeDeviceDbs(new ArrayList<>(1));
-					//logger.info("nationality= "+regularizeDeviceDb.getEndUserDB().getNationality());
-					regularizeDeviceDb.setEndUserDB(endUser);
+//					EndUserDB endUser=regularizeDeviceDb.getEndUserDB();
+					regularizeDeviceDb.getEndUserDB().setRegularizeDeviceDbs(new ArrayList<>(1));
+//					logger.info(regularizeDeviceDb.getEndUserDB().toString());
 				}
-
-
 				setInterp(regularizeDeviceDb);
 			}
 
@@ -225,10 +232,9 @@ public class RegularizedDeviceServiceImpl {
 			int userId=0;
 			if(Objects.nonNull(filterRequest.getUserType()))
 			{
-
 				if("End User".equalsIgnoreCase(filterRequest.getUserType())){
 					logger.info("usertype is end user so setting username is empty");
-					username="";
+					username="NA";
 				}	
 				else {
 
@@ -402,6 +408,12 @@ public class RegularizedDeviceServiceImpl {
 			if(endUserDB.getAuditParameters().getUserTypeId()!=17) {
 				username=endUserDB.getAuditParameters().getUsername();
 				userId=endUserDB.getAuditParameters().getUserId();
+				endUserDB.setCreatorUserId(endUserDB.getAuditParameters().getUserId());
+				for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs())
+				{
+					if(Objects.isNull(regularizeData.getCreatorUserId()) || regularizeData.getCreatorUserId()==0)
+						regularizeData.setCreatorUserId(endUserDB.getCreatorUserId());
+				}
 			}
 			String transactionId="";
 			for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs())
@@ -578,7 +590,7 @@ public class RegularizedDeviceServiceImpl {
 			auditTrailRepository.save(auditTrail);
 			logger.info("AUDIT : update in audit_trail. " + auditTrail);
 			RegularizeDeviceDb userCustomDbDetails = regularizedDeviceDbRepository.getByFirstImei(regularizeDeviceDb.getFirstImei());
-			UserProfile ceirAdminProfile = userStaticServiceImpl.getCeirAdmin().getUserProfile();
+//			UserProfile ceirAdminProfile = userStaticServiceImpl.getCeirAdmin().getUserProfile();
 
 			if(Objects.nonNull(userCustomDbDetails)) {
 				userCustomDbDetails.setTaxPaidStatus(regularizeDeviceDb.getTaxPaidStatus());
@@ -714,9 +726,10 @@ public class RegularizedDeviceServiceImpl {
 			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(data.getImei());
 
 			if(Objects.nonNull(regularizeDeviceDb)) {
-				regularizeDeviceDb.setStatus(RegularizeDeviceStatus.WITHDRAWN_BY_CEIR_ADMIN.getCode());
-				regularizeDeviceDb.setApprovedBy(username);
-				regularizedDeviceDbRepository.save(regularizeDeviceDb);
+//				regularizeDeviceDb.setStatus(RegularizeDeviceStatus.WITHDRAWN_BY_CEIR_ADMIN.getCode());
+//				regularizeDeviceDb.setApprovedBy(username);
+//				regularizedDeviceDbRepository.save(regularizeDeviceDb);
+				regularizedDeviceDbRepository.deleteById(regularizeDeviceDb.getId());
 				return new GenricResponse(0, "Device have been deleted sucessfully.", regularizeDeviceDb.getFirstImei());
 			}else {
 				return new GenricResponse(4, "This IMEI does not exist.", "");	
@@ -775,10 +788,12 @@ public class RegularizedDeviceServiceImpl {
 					}
 
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.APPROVED.getCode());
+					regularizeDeviceDb.setRemark(null);
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
 					receiverUserType = "End User";
 					subFeature = SubFeatures.Approve;
 					txnId = regularizeDeviceDb.getTxnId();
+					enduserServiceImpl.updateImeiInVipList(regularizeDeviceDb.getEndUserDB(), username);
 				}else if(ceirActionRequest.getAction() == 1){
 					// Check if someone else taken the same action on consignment.
 					RegularizeDeviceDb regularizeDeviceDbTemp = regularizedDeviceDbRepository.getByTxnId(ceirActionRequest.getTxnId());
@@ -789,10 +804,12 @@ public class RegularizedDeviceServiceImpl {
 					}
 
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.REJECTED_BY_CEIR_ADMIN.getCode());
+					regularizeDeviceDb.setRemark(ceirActionRequest.getRemarks());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_DISAPPROVAL";	
 					receiverUserType = "End User";
 					txnId = regularizeDeviceDb.getTxnId();
 					subFeature = SubFeatures.REJECT;
+					placeholders.put("<Reason>", regularizeDeviceDb.getRemark() );
 				}else {
 					return new GenricResponse(2, "unknown operation", "");
 				}
@@ -825,6 +842,7 @@ public class RegularizedDeviceServiceImpl {
 				{
 					WebActionDb webAction=new WebActionDb(Features.REGISTER_DEVICE,subFeature, 0, 
 							regularizeDeviceDb.getTxnId());
+					webAction.setSubFeature(WebActionDbSubFeature.REJECT.getName());
 					webActionDbRepository.save(webAction);
 					if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
 						emailUtil.saveNotification(rawMails);	
@@ -920,10 +938,10 @@ public class RegularizedDeviceServiceImpl {
 					regularizeDeviceDb = regularizeList.get(0);
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
 					txnId = regularizeDeviceDb.getTxnId();
-					List<User> user= new ArrayList<User>();
-					user = userStaticServiceImpl.getUserbyUsertypeId(8);
-					UserProfile ceirUserProfile = new UserProfile();
-					ceirUserProfile.setUser(userStaticServiceImpl.getCeirAdmin());
+//					List<User> user= new ArrayList<User>();
+//					user = userStaticServiceImpl.getUserbyUsertypeId(8);
+//					UserProfile ceirUserProfile = new UserProfile();
+//					ceirUserProfile.setUser(userStaticServiceImpl.getCeirAdmin());
 
 					subFeature = SubFeatures.SYSTEM_ACCEPT;
 					if(Objects.nonNull(endUserDB.getEmail()) 
@@ -942,10 +960,23 @@ public class RegularizedDeviceServiceImpl {
 								"End User"));
 					}
 
-					for(User userData : user) {
+					Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
+
+					logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
+
+					List<RegisterationUser> registerationUserList = generic_Response_Notification.getData();
+					
+					
+					for(RegisterationUser registerationUser :registerationUserList) {
+						UserProfile userProfile_generic_Response_Notification = new UserProfile();
+						userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
+						placeholders= new HashMap<String, String>();
+						placeholders.put("<Txn id>", regularizeDeviceDb.getTxnId());
+						placeholders.put("<First name>", userProfile_generic_Response_Notification.getFirstName());
+//					for(User userData : user) {
 
 						rawMails.add(new RawMail("Reg_Device_Process_success_mail_To_CEIRAdmin", 
-								userData.getId(), 
+								registerationUser.getId(), 
 								12, 
 								Features.REGISTER_DEVICE, 
 								SubFeatures.SYSTEM_ACCEPT, 
@@ -961,7 +992,7 @@ public class RegularizedDeviceServiceImpl {
 
 					if(Objects.nonNull(regularizeOutput)){
 						if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
-							if(regularizeDeviceDb.getStatus()==RegularizeDeviceStatus.PROCESSING.getCode()) {
+							if(regularizeDeviceDb.getStatus()==RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode()) {
 								emailUtil.saveNotification(rawMails);				
 							}
 						}
@@ -1006,10 +1037,13 @@ public class RegularizedDeviceServiceImpl {
 					tag = ConfigTags.max_foreigner_end_user_device_count;
 				}
 
-				PolicyConfigurationDb policyConfigurationDb = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(tag);
+//				PolicyConfigurationDb policyConfigurationDb = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(tag);
+				
+				SystemConfigurationDb policyConfigurationDb = systemConfigurationDbRepository.getByTag(tag);
 
-				return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()), regularizedDeviceDbRepository.countByNidAndTaxPaidStatus(nid,2)));	
-
+//				return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()), regularizedDeviceDbRepository.countByNidAndTaxPaidStatus(nid,2)));
+				return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()),
+						regularizedDeviceDbRepository.countByNidIgnoreCaseAndTaxPaidStatus(nid,2)));
 			}else {
 				return new GenricResponse(1,"Please enter correct type","");	
 
@@ -1073,23 +1107,26 @@ public class RegularizedDeviceServiceImpl {
 		GenericSpecificationBuilder<RegularizeDeviceDb> specificationBuilder = new GenericSpecificationBuilder<RegularizeDeviceDb>(propertiesReader.dialect);
 
 		if(Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty())
-			specificationBuilder.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.EQUALITY, Datatype.STRING));
+			specificationBuilder.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
+		else {
+			if(Objects.nonNull(filterRequest.getUserTypeId())) {
+				if(filterRequest.getUserTypeId()==18)		
+				{
+					specificationBuilder.with(new SearchCriteria("origin","Immigration" , SearchOperation.EQUALITY, Datatype.STRING));
+				}
+				else if(filterRequest.getUserTypeId()==17)		
+				{
+					specificationBuilder.with(new SearchCriteria("origin", "End User" , SearchOperation.EQUALITY, Datatype.STRING));
+				}
+				else if(filterRequest.getUserTypeId()==7)		
+				{
+					specificationBuilder.with(new SearchCriteria("origin", "Custom" , SearchOperation.EQUALITY, Datatype.STRING));
+				}
+			}
+		}
 
 		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
 			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
-
-		if(Objects.nonNull(filterRequest.getUserTypeId())) {
-			if(filterRequest.getUserTypeId()==18)		
-			{
-				specificationBuilder.with(new SearchCriteria("origin","Immigration" , SearchOperation.EQUALITY, Datatype.STRING));
-			}
-			else if(filterRequest.getUserTypeId()==17)		
-			{
-				specificationBuilder.with(new SearchCriteria("origin", "Self" , SearchOperation.EQUALITY, Datatype.STRING));
-			}
-			else {
-			}
-		}
 
 		if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
 			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
@@ -1106,12 +1143,23 @@ public class RegularizedDeviceServiceImpl {
 		if(Objects.nonNull(filterRequest.getStatus())) {
 			specificationBuilder.with(new SearchCriteria("status", filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INT));
 		}
-
-
+		//changes for imei /MEID  quantity done by sharad
+		
+		
+		  if(Objects.nonNull(filterRequest.getOrigin()) &&
+		  !filterRequest.getOrigin().isEmpty()) specificationBuilder.with(new
+		  SearchCriteria("origin", filterRequest.getOrigin(), SearchOperation.LIKE,
+		  Datatype.STRING));
+		 
+				
+		if(Objects.nonNull(filterRequest.getNationality()) && !filterRequest.getNationality().isEmpty()) {
+				//s	specificationBuilder.with(new SearchCriteria("nationality", filterRequest.getNationality(), SearchOperation.LIKE, Datatype.STRING));
+		specificationBuilder.addSpecification(specificationBuilder.joinWithEnduserDB(new SearchCriteria("nationality", filterRequest.getNationality(),SearchOperation.LIKE, Datatype.STRING)));		
+		}
 		else {
 			if(Objects.nonNull(filterRequest.getUserTypeId())) {
 
-				if(filterRequest.getUserTypeId()==8)		
+				if( filterRequest.getUserTypeId()==8 || filterRequest.getUserTypeId()==7 || filterRequest.getUserTypeId()==18  )		
 				{
 					//			specificationBuilder.with(new SearchCriteria("status",RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode(), SearchOperation.EQUALITY, Datatype.INT));
 
@@ -1123,11 +1171,11 @@ public class RegularizedDeviceServiceImpl {
 						List<Integer> deviceStatus = new LinkedList<>();
 
 						if(Objects.nonNull(dashboardUsersFeatureStateMap)) {
-							if("dashboard".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source)) {
+							if("dashboard".equalsIgnoreCase(source) ) {
 								for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
 									deviceStatus.add(dashboardUsersFeatureStateMap2.getState());
 								}
-							}else if("filter".equalsIgnoreCase(source)) {
+							}else if("filter".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source) ) {
 								if(nothingInFilter(filterRequest)) {
 									for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
 										deviceStatus.add(dashboardUsersFeatureStateMap2.getState());
@@ -1159,7 +1207,7 @@ public class RegularizedDeviceServiceImpl {
 		}
 
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
-			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
 		}
 
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
@@ -1193,24 +1241,30 @@ public class RegularizedDeviceServiceImpl {
 	}
 
 	public boolean nothingInFilter(FilterRequest filterRequest) {
-		if(Objects.nonNull(filterRequest.getStartDate()) || !filterRequest.getStartDate().isEmpty()) {
+		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty()) {
 			return Boolean.FALSE;
 		}
-		if(Objects.nonNull(filterRequest.getEndDate()) || !filterRequest.getEndDate().isEmpty()) {
-			return Boolean.FALSE;
-		}
-
-		if(Objects.nonNull(filterRequest.getTxnId()) || !filterRequest.getTxnId().isEmpty()) {
+		if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty()) {
 			return Boolean.FALSE;
 		}
 
-		if(Objects.nonNull(filterRequest.getDisplayName()) || !filterRequest.getDisplayName().isEmpty()) {
+		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
 			return Boolean.FALSE;
 		}
-		if(Objects.nonNull(filterRequest.getConsignmentStatus()) ) {
+
+		if( Objects.nonNull(filterRequest.getDeviceIdType()) ) {
 			return Boolean.FALSE;
 		}
-		if(Objects.nonNull(filterRequest.getUserType()) || !filterRequest.getEndDate().isEmpty()) {
+		if( Objects.nonNull(filterRequest.getDeviceType()) ) {
+			return Boolean.FALSE;
+		}
+		if( Objects.nonNull(filterRequest.getTaxPaidStatus()) ) {
+			return Boolean.FALSE;
+		}
+		if( Objects.nonNull(filterRequest.getStatus()) ) {
+			return Boolean.FALSE;
+		}
+		if( Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty()) {
 			return Boolean.FALSE;
 		}
 		return Boolean.TRUE;

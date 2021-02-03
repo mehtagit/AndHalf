@@ -193,6 +193,7 @@ public class StockServiceImpl {
 				stockMgmt.setUserId(user.getId());
 				stockMgmt.setUser(user);
 				stockMgmt.setRoleType(secondaryRoleType);
+				stockMgmt.setPortAddress( userRepository.getById(stockMgmt.getAssignerId()).getUserProfile().getPortAddress() );
 				isStockAssignRequest = Boolean.TRUE;
 
 				addInAuditTrail(stockMgmt.getAssignerId(), stockMgmt.getTxnId(), SubFeatures.ASSIGN, "Custom");
@@ -373,6 +374,7 @@ public class StockServiceImpl {
 		try {
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
 			logger.info("statusList " + statusList);
+			logger.info("Request to export filtered Stocks = " + filterRequest);
 			List<StockMgmt> stockMgmts = stockManagementRepository.findAll(buildSpecification(filterRequest, statusList, source).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			logger.info(statusList);
@@ -411,7 +413,7 @@ public class StockServiceImpl {
 				) {
 
 			if(Objects.nonNull(filterRequest.getUserId()) )
-				specificationBuilder.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.STRING));
+				specificationBuilder.with(new SearchCriteria("userId", filterRequest.getUserId(), SearchOperation.EQUALITY, Datatype.INT));
 
 			if(Objects.nonNull(filterRequest.getRoleType()))
 				specificationBuilder.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -424,16 +426,36 @@ public class StockServiceImpl {
 			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
 
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
-			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getUserType()) && "Custom".equalsIgnoreCase(filterRequest.getUserType())) {
-			logger.info("Inside custom block.");
-			specificationBuilder.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+//			logger.info("Inside custom block.");
+//			specificationBuilder.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+			UserProfile userProfile = userRepository.getById(filterRequest.getUserId()).getUserProfile();
+			if( Objects.nonNull(userProfile))
+				specificationBuilder.with(new SearchCriteria("portAddress", userProfile.getPortAddress(), SearchOperation.EQUALITY, Datatype.INT));
 		}
+		//changes for imei /MEID  quantity done by sharad
+		
+		if(Objects.nonNull(filterRequest.getQuantity()) && !filterRequest.getQuantity().isEmpty())
+			specificationBuilder.with(new SearchCriteria("quantity", filterRequest.getQuantity(), SearchOperation.LIKE, Datatype.STRING));
+		
+		if(Objects.nonNull(filterRequest.getDeviceQuantity()) && !filterRequest.getDeviceQuantity().isEmpty())
+			specificationBuilder.with(new SearchCriteria("deviceQuantity", filterRequest.getDeviceQuantity(), SearchOperation.LIKE, Datatype.STRING));
+		
+		if(Objects.nonNull(filterRequest.getFileName()) && !filterRequest.getFileName().isEmpty())
+			specificationBuilder.with(new SearchCriteria("fileName", filterRequest.getFileName(), SearchOperation.LIKE, Datatype.STRING));
 
-		if(Objects.nonNull(filterRequest.getFilteredUserType()) && !filterRequest.getFilteredUserType().isEmpty()) {
-			logger.info("Inside getFilteredUserType block.");
+		
+		if(Objects.nonNull(filterRequest.getFilteredUserType()) && !filterRequest.getFilteredUserType().isEmpty() 
+				&& !filterRequest.getFilteredUserType().equalsIgnoreCase("null")) {
+			logger.info("Inside getFilteredUserType block and user type is ["+filterRequest.getFilteredUserType()+"]");
 			specificationBuilder.with(new SearchCriteria("userType", filterRequest.getFilteredUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+		}
+		
+		if(Objects.nonNull(filterRequest.getDisplayName()) && !filterRequest.getDisplayName().isEmpty()) {
+			specificationBuilder.with(new SearchCriteria("user-userProfile-displayName", filterRequest.getDisplayName().trim().replace("  ", " ")
+					, SearchOperation.LIKE, Datatype.STRING));
 		}
 
 		if(Objects.nonNull(filterRequest.getConsignmentStatus())) {
@@ -441,7 +463,8 @@ public class StockServiceImpl {
 		}else {
 			if(Objects.nonNull(filterRequest.getFeatureId()) && Objects.nonNull(filterRequest.getUserTypeId())) {
 
-				List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMap = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(filterRequest.getUserTypeId(), filterRequest.getFeatureId());
+				List<DashboardUsersFeatureStateMap> dashboardUsersFeatureStateMap = dashboardUsersFeatureStateMapRepository.findByUserTypeIdAndFeatureId(filterRequest.getUserTypeId(),
+						filterRequest.getFeatureId());
 				logger.debug(dashboardUsersFeatureStateMap);
 
 				List<Integer> stockStatus = new LinkedList<>();
@@ -482,6 +505,12 @@ public class StockServiceImpl {
 
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			specificationBuilder.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			specificationBuilder.orSearch(new SearchCriteria("fileName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			specificationBuilder.orSearch(new SearchCriteria("supplierId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			specificationBuilder.orSearch(new SearchCriteria("suplierName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			specificationBuilder.orSearch(new SearchCriteria("invoiceNumber", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			specificationBuilder.orSearch(new SearchCriteria("quantity", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			specificationBuilder.orSearch(new SearchCriteria("deviceQuantity", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 		}
 
 		return specificationBuilder;
@@ -496,8 +525,10 @@ public class StockServiceImpl {
 				throw new IllegalArgumentException();
 			}
 
-			StockMgmt stockMgmt2 = stockManagementRepository.getByTxnId(filterRequest.getTxnId()); 
-
+			StockMgmt stockMgmt2 = stockManagementRepository.getByTxnId(filterRequest.getTxnId());
+			if( Objects.isNull(stockMgmt2) ) {
+				throw new IllegalArgumentException();
+			}
 			if("End User".equalsIgnoreCase(filterRequest.getUserType())) {
 				StatesInterpretationDb statesInterpretationDb = statesInterpretaionRepository.findByFeatureIdAndState(4, stockMgmt2.getStockStatus());
 				stockMgmt2.setStateInterp(statesInterpretationDb.getInterp());
@@ -624,7 +655,7 @@ public class StockServiceImpl {
 				if(stockTransaction.executeDeleteStock(txnRecord, webActionDb)) {
 					logger.info("Deletion of Stock is in Progress." + deleteObj.getTxnId());
 					if(isUserCeirAdmin) {
-
+						userMailTag = "STOCK_DELETE_BY_CEIR_ADMIN";
 						Generic_Response_Notification generic_Response_Notification = userFeignClient.ceirInfoByUserTypeId(8);
 
 						logger.info("generic_Response_Notification::::::::"+generic_Response_Notification);
@@ -763,6 +794,7 @@ public class StockServiceImpl {
 				stockMgmt.setSupplierId(distributerManagement.getSupplierId());
 				stockMgmt.setTotalPrice(distributerManagement.getTotalPrice());
 				stockMgmt.setDeviceQuantity(distributerManagement.getDeviceQuantity());
+				stockMgmt.setRemarks(null);
 				if(Objects.nonNull(distributerManagement.getFileName()) && !distributerManagement.getFileName().isEmpty()) {
 					stockMgmt.setStockStatus(StockStatus.NEW.getCode());
 					stockMgmt.setFileName(distributerManagement.getFileName());
@@ -818,7 +850,7 @@ public class StockServiceImpl {
 			logger.info("CONFIG : file_consignment_download_link [" + link + "]");
 
 			String filePath = filepath.getValue();
-
+			logger.info("Request to export filtered Stocks = " + filterRequest);
 			return exportFileFactory
 					.getObject(filterRequest.getUserType().toUpperCase(), 4)
 					.export(filterRequest, source, dtf, dtf2, filePath, link);
@@ -851,7 +883,8 @@ public class StockServiceImpl {
 			User customUser = null;
 			Map<String, String> placeholderMap = new HashMap<String, String>();
 			Integer currentStatus = null;
-			String adminMailTag = null;
+			String adminMailTag   = null;
+			WebActionDb webActionDb = null;
 			adminMailTag = "STOCK_PROCESS_SUCCESS_TO_CEIR_MAIL";
 			String txnId = consignmentUpdateRequest.getTxnId();
 			logger.info("enter in accept reject method..");
@@ -922,14 +955,20 @@ public class StockServiceImpl {
 					stockMgmt.setStockStatus(StockStatus.REJECTED_BY_CEIR_ADMIN.getCode());
 					stockMgmt.setRemarks(consignmentUpdateRequest.getRemarks());
 					stockMgmt.setCeirAdminId(consignmentUpdateRequest.getUserId());
+					webActionDb = new WebActionDb();
+					webActionDb.setFeature(WebActionDbFeature.STOCK.getName());
+					webActionDb.setState(WebActionDbState.INIT.getCode());
+					webActionDb.setTxnId(stockMgmt.getTxnId());
+					webActionDb.setSubFeature(WebActionDbSubFeature.REJECT.getName());
 				}
 
 				// Update Stock and its history.
-				if(!stockTransaction.updateStatusWithHistory(stockMgmt)){
+				if(!stockTransaction.updateStatusWithHistory(stockMgmt, webActionDb)){
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
 				}else {
 					addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()), consignmentUpdateRequest.getTxnId(), action, consignmentUpdateRequest.getRoleType());
+					placeholderMap.put("<Reason>", consignmentUpdateRequest.getRemarks() );
 					if( customUser != null ) {
 						placeholderMap.put("<First name>", customUser.getUserProfile().getFirstName() );
 						emailUtil.saveNotification(mailTag, 
@@ -945,7 +984,10 @@ public class StockServiceImpl {
 								"Users");
 						logger.info("Notfication have been saved for custom user.");
 					}
-					placeholderMap.put("<First name>", user.getUserProfile().getFirstName() );
+					if( Objects.nonNull(user.getUserProfile().getFirstName()))
+						placeholderMap.put("<First name>", user.getUserProfile().getFirstName() );
+					else
+						placeholderMap.put("<First name>", "User" );
 					emailUtil.saveNotification(mailTag, 
 							user.getUserProfile(), 
 							consignmentUpdateRequest.getFeatureId(),
@@ -958,7 +1000,7 @@ public class StockServiceImpl {
 							stockMgmt.getUserType(),
 							"Users");
 					logger.info("Notfication have been saved for user.");
-					if(consignmentUpdateRequest.getAction() == 0) {
+					if((consignmentUpdateRequest.getAction() == 0) || ( customUser != null )) {
 						Generic_Response_Notification generic_Response_Notification =
 								userFeignClient.ceirInfoByUserTypeId(8);
 
@@ -972,7 +1014,7 @@ public class StockServiceImpl {
 							UserProfile userProfile_generic_Response_Notification = new UserProfile();
 							userProfile_generic_Response_Notification = userProfileRepository.getByUserId(registerationUser.getId());
 							placeholderMap.put("<First name>", userProfile_generic_Response_Notification.getFirstName() );
-							emailUtil.saveNotification(adminMailTag,
+							emailUtil.saveNotification(mailTag,
 									userProfile_generic_Response_Notification,
 									consignmentUpdateRequest.getFeatureId(), Features.STOCK, action,
 									consignmentUpdateRequest.getTxnId(), txnId, placeholderMap,
@@ -1044,7 +1086,7 @@ public class StockServiceImpl {
 				}
 
 				// Update Stock and its history.
-				if(!stockTransaction.updateStatusWithHistory(stockMgmt)){
+				if(!stockTransaction.updateStatusWithHistory(stockMgmt, webActionDb )){
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
 				}else {
@@ -1065,7 +1107,10 @@ public class StockServiceImpl {
 									"Users");
 							logger.info("Notfication have been saved for custom user.");
 						}
-						placeholderMap.put("<First name>", user.getUserProfile().getFirstName() );
+						if( Objects.nonNull(user.getUserProfile().getFirstName()))
+							placeholderMap.put("<First name>", user.getUserProfile().getFirstName() );
+						else
+							placeholderMap.put("<First name>", "User" );
 						emailUtil.saveNotification(mailTag, 
 								user.getUserProfile(), 
 								consignmentUpdateRequest.getFeatureId(),

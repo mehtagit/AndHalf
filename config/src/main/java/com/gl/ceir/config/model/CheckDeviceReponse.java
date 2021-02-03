@@ -9,8 +9,8 @@ public class CheckDeviceReponse {
 	private String status;
 	private String equipmentType;
 	private String operatingSystem;
-	private long imei;
-	private long msidn;
+	private String imei;
+	private String msidn;
 	private String identifierType;
 	
 	public String getTacNumber() {
@@ -51,16 +51,16 @@ public class CheckDeviceReponse {
 	public void setOperatingSystem(String operatingSystem) {
 		this.operatingSystem = operatingSystem;
 	}
-	public long getImei() {
+	public String getImei() {
 		return imei;
 	}
-	public void setImei(long imei) {
+	public void setImei(String imei) {
 		this.imei = imei;
 	}
-	public long getMsidn() {
+	public String getMsidn() {
 		return msidn;
 	}
-	public void setMsidn(long msidn) {
+	public void setMsidn(String msidn) {
 		this.msidn = msidn;
 	}
 	public String getIdentifierType() {
