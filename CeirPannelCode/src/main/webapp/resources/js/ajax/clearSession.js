@@ -1,2 +1,0 @@
-
-sessionStorage.clear();

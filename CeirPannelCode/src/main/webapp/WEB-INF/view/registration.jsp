@@ -1051,7 +1051,7 @@ input[type="checkbox"] {
 		src="${context}/resources/project_js/backbutton.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
 	<script type="text/javascript"
-		src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/project_js/provinceDropdown.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript">
@@ -1107,8 +1107,8 @@ input[type="checkbox"] {
 		populateCountries("country", "state");
 
 		$("#country").val("Cambodia");
-
-		populateStates("country", "state");
+		setDropdown();
+		//populateStates("country", "state");
 
 		function myFunction() {
 			var x = document.getElementById("type").value;
@@ -1183,6 +1183,7 @@ input[type="checkbox"] {
 			}
 		}
 
+		
 		
 	</script>
 

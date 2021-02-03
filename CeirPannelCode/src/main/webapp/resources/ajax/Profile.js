@@ -247,7 +247,7 @@ function questionDataByCategory() {
 }
 
 function editProfile() {
-
+	
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -275,8 +275,8 @@ function editProfile() {
 					$("#registrationForm #street").val(resp.street);
 
 					$("#registrationForm #country").val(resp.country);
-
-					populateStates("country", "state");
+				
+					//populateStates("country", "state");
 					$("#registrationForm #state").val(resp.province);
 					$('#registrationForm #state').val(resp.province).trigger(
 							"change");
@@ -356,6 +356,7 @@ function editProfile() {
 					}
 					questionDataByCategory2();
 
+					$('div#initialloader').delay(300).fadeOut('slow');
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 				}
@@ -364,7 +365,6 @@ function editProfile() {
 }
 
 function editOtherProfile() {
-
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
@@ -435,7 +435,8 @@ function editOtherProfile() {
 					// #authorityEmail").val(resp.authorityEmail);
 
 					// nidFilename
-					populateStates("country", "state");
+					//populateStates("country", "state");
+					
 					$("#registrationForm #state").val(resp.province);
 					
 					$('#registrationForm #state').val(resp.province).trigger(
@@ -449,7 +450,7 @@ function editOtherProfile() {
 						$('#registrationForm #commune').val(resp.commune).trigger("change");
 					
 						$("#registrationForm #village").val(resp.village);
-				
+						
 					var arr = [];
 					var vatStatus = resp.vatStatus;
 					arr = resp.roles;
@@ -480,6 +481,7 @@ function editOtherProfile() {
 					}
 					questionDataByCategory2();
 
+					$('div#initialloader').delay(300).fadeOut('slow');
 				},
 				error : function(xhr, ajaxOptions, thrownError) {
 				}
