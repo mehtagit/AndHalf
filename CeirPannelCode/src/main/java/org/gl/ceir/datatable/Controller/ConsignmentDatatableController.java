@@ -80,7 +80,23 @@ public class ConsignmentDatatableController {
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		
+
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
+		
+		String column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+			"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Transaction ID":
+				"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Name":
+					"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Status":
+						"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Tax Paid Status":
+							"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "IMEI/MEID Quantity":
+								"6".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Device Quantity"
+								:"Created On";
+		
+		filterrequest.setColumnName(column);
+		filterrequest.setSort(request.getParameter("order[0][dir]"));
+		
+		
+		
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		
 		log.info("session flag value==####@@@@@@@@@@@@@="+sessionFlag);

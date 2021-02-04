@@ -370,20 +370,20 @@ function filterConsignment(lang,source)
 	}
 
 	if(cierRoletype=="Importer" && sourceType !="viaStolen" ){
-		table('./headers?lang='+lang+'&type=consignment','./consignmentData?sessionFlag='+sessionFlag+'&source='+source__val);
+		table(true,'./headers?lang='+lang+'&type=consignment','./consignmentData?sessionFlag='+sessionFlag+'&source='+source__val);
 	}
 
 	else if((cierRoletype=="Custom" || cierRoletype=="DRT") && sourceType !="viaStolen"){
-		table('./headers?lang='+lang+'&type=customConsignment','./consignmentData?sessionFlag='+sessionFlag+'&source='+source__val);
+		table(true,'./headers?lang='+lang+'&type=customConsignment','./consignmentData?sessionFlag='+sessionFlag+'&source='+source__val);
 	}
 
 	else if(cierRoletype=="CEIRAdmin"  && sourceType !="viaStolen"){
-		table('./headers?lang='+lang+'&type=adminConsignment','./consignmentData?sessionFlag='+sessionFlag+'&source='+source__val);
+		table(true,'./headers?lang='+lang+'&type=adminConsignment','./consignmentData?sessionFlag='+sessionFlag+'&source='+source__val);
 	}  
 
 	else if(cierRoletype=="Importer" && sourceType ==="viaStolen" ){
 
-		table('./headers?lang='+lang+'&type=stolenconsignment','./consignmentData?sourceType=viaStolen&sessionFlag='+sessionFlag+'&source='+source__val);
+		table(true,'./headers?lang='+lang+'&type=stolenconsignment','./consignmentData?sourceType=viaStolen&sessionFlag='+sessionFlag+'&source='+source__val);
 	}
 
 
@@ -395,7 +395,9 @@ function filterConsignment(lang,source)
 
 //**************************************************filter table**********************************************
 
-function table(url,dataUrl){
+function table(isSort,url,dataUrl){
+	
+	
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 
 	var filterRequest={
@@ -437,7 +439,7 @@ function table(url,dataUrl){
 				destroy:true,
 				"serverSide": true,
 				orderCellsTop : true,
-				"ordering" : false,
+				"ordering" : isSort,
 				"bPaginate" : true,
 				"bFilter" : false,
 				"bInfo" : true,
@@ -445,6 +447,9 @@ function table(url,dataUrl){
 				"oLanguage": {  
 					"sUrl": langFile  
 				},
+				columnDefs: [
+					   { orderable: false, targets: -1 }
+					],
 				initComplete: function() {
 			 		$('.dataTables_filter input')
    .off().on('keyup', function(event) {
