@@ -364,7 +364,7 @@ position: fixed;
 										onchange="getCommune(this,'commune','village');InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 										style="padding-left: 0;" required>
-										<option value=""><spring:message code="select.commune" /></option>
+										<option value=""><spring:message code="select.district" /></option>
 										</select>
 												 
 										</div>
@@ -1196,6 +1196,9 @@ position: fixed;
 
 	<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		
+		<script type="text/javascript"
+		src="${context}/resources/project_js/provinceDropdown.js?version=<%= (int) (Math.random() * 10) %>" async></script> 
 
 	<%-- 	<script type="text/javascript"
 		src="${context}/resources/js/intlTelInput.js"></script> --%>

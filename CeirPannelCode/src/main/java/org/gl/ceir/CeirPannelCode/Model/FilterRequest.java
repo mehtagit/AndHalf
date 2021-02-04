@@ -422,6 +422,7 @@ public class FilterRequest {
 	public void setCurrency(Integer currency) {
 		this.currency = currency;
 	}
+	 
 	public Integer getStockStatus() {
 		return stockStatus;
 	}
@@ -488,24 +489,6 @@ public class FilterRequest {
 	public void setRuleName(String ruleName) {
 		this.ruleName = ruleName;
 	}
-	public String getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(String quantity) {
-		this.quantity = quantity;
-	}
-	public String getDeviceQuantity() {
-		return deviceQuantity;
-	}
-	public void setDeviceQuantity(String deviceQuantity) {
-		this.deviceQuantity = deviceQuantity;
-	}
-	public String getSupplierName() {
-		return supplierName;
-	}
-	public void setSupplierName(String supplierName) {
-		this.supplierName = supplierName;
-	}
 	public String getProvince() {
 		return province;
 	}
@@ -554,6 +537,24 @@ public class FilterRequest {
 	public void setCommuneID(int communeID) {
 		this.communeID = communeID;
 	}
+	public String getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+	public String getDeviceQuantity() {
+		return deviceQuantity;
+	}
+	public void setDeviceQuantity(String deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
+	public String getSupplierName() {
+		return supplierName;
+	}
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
+	}
 	public String getCategory() {
 		return category;
 	}
@@ -578,6 +579,8 @@ public class FilterRequest {
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
+	
+	
 	public String getColumnName() {
 		return columnName;
 	}
@@ -788,5 +791,7 @@ public class FilterRequest {
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
 	
 }

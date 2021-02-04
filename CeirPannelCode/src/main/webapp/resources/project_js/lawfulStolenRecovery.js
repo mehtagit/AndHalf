@@ -31,6 +31,7 @@ $(document).ready(function(){
 	$('div#initialloader').fadeIn('fast');
 	filterStolen(lang,null);
 	pageRendering();
+
 });
 
 $('.datepicker').on('mousedown',function(event){

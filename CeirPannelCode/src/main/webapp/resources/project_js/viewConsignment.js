@@ -448,6 +448,7 @@ function table(isSort,url,dataUrl){
 					"sUrl": langFile  
 				},/*
 				"aaSorting": [[ 0, "desc" ]],*/
+				"aaSorting": [],
 				columnDefs: [
 					   { orderable: false, targets: -1 }
 					],

@@ -1163,7 +1163,7 @@ populateCountries
 
 
 populateCountries(
-		"country",	"state");
+		"country",	"");
 
 $(document).ready(function () {
 	var token = $("meta[name='_csrf']").attr("content");
@@ -1248,7 +1248,7 @@ $(document).ready(function () {
 
 
 
-
+	setDropdown('state');
 
 
 	$(document).ready(function(){
