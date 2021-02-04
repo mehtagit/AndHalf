@@ -115,6 +115,11 @@ public class ScheduleReportControllerImpl implements ScheduleReportService {
         }
     }
 
+    
+    
+    
+    
+    
     GenericSpecificationBuilder<ScheduleReportDb> buildSpecification(FilterRequest filterRequest) {
         GenericSpecificationBuilder<ScheduleReportDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
         if (Objects.nonNull(filterRequest.getCategory())) {
