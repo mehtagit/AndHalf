@@ -60,6 +60,8 @@ public class FilterRequest {
 	private String supplierName;
 	private String fileName,nationality;
 	
+	private String columnName;
+	private String sort;
 	
 	public String getFilteredUserType() {
 		return filteredUserType;
@@ -435,8 +437,28 @@ public class FilterRequest {
 		builder.append(fileName);
 		builder.append(", nationality=");
 		builder.append(nationality);
+		builder.append(", columnName=");
+		builder.append(columnName);
+		builder.append(", sort=");
+		builder.append(sort);
 		builder.append("]");
 		return builder.toString();
+	}
+
+	public String getColumnName() {
+		return columnName;
+	}
+
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
 	}
 
 	 
