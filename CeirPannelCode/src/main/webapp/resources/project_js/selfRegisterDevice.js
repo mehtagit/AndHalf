@@ -46,13 +46,11 @@ $('#datepicker,#datepicker1').datepicker({
 
 
 populateCountries(
-		"country",
-		"state"
+		"country"
 );
-populateStates(
-		"country",
-		"state"
-);
+/*populateStates(
+		"country"
+);*/
 
 populateCountries(
 		"country1"
@@ -456,7 +454,7 @@ $(document).ready(function () {
 
 	});
 
-	
+	setDropdown('state');
 });
 
 

@@ -1685,7 +1685,8 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 	
 		<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
+    <script type="text/javascript"
+		src="${context}/resources/project_js/provinceDropdown.js?version=<%= (int) (Math.random() * 10) %>" async></script> 
 	<script type="text/javascript"
 		src="" async></script>
 		<script type="text/javascript"
@@ -1700,15 +1701,15 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 			maxDate:"0"
 		});
 
-		populateCountries("singleDevicecountry", "singleDevicestate");
+		populateCountries("singleDevicecountry");
 		populateStates("singleDevicecountry", "singleDevicestate");
 
 		
 
-		populateCountries("country2", "state2");
+		populateCountries("country2");
 		populateStates("country2", "state2");
 
-		populateCountries("country3", "state3");
+		populateCountries("country3");
 		populateStates("country3", "state3");
 
 		//populateCountries("nationality", "");
@@ -1819,9 +1820,12 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 		$("#country2").val("Cambodia").change();
 		//$("#country2").attr("style", "pointer-events: none;");
 		
-		populateCountries("country", "state");
+		populateCountries("country");
 		populateStates("country", "state");
-		
+		setDropdown('state');
+		setDropdown('state2');
+		setDropdown('state3');
+		setDropdown('singleDevicestate');
 		
 	
 	</script>

@@ -80,7 +80,23 @@ public class ConsignmentDatatableController {
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		
+
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
+		
+		String column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+			"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Transaction ID":
+				"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Name":
+					"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Status":
+						"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Tax Paid Status":
+							"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "IMEI/MEID Quantity":
+								"6".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Device Quantity"
+								:"Created On";
+		
+		filterrequest.setColumnName(column);
+		filterrequest.setSort(request.getParameter("order[0][dir]"));
+		
+		
+		
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		
 		log.info("session flag value==####@@@@@@@@@@@@@="+sessionFlag);
@@ -317,7 +333,7 @@ public class ConsignmentDatatableController {
 	}
 	else if("CEIRAdmin".equals(userType)){
 		//input type date list	
-		String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.importerCompanyName"),"name","select",Translator.toLocale("select.consignmentStatus"),"filterConsignmentStatus","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus","","","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter",""};
+		String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.importerCompanyName"),"name","","select",Translator.toLocale("select.consignmentStatus"),"filterConsignmentStatus","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter",""};
 		for(int i=0; i< dateParam.length; i++) {
 		dateRelatedFields= new InputFields();
 		dateRelatedFields.setType(dateParam[i]);

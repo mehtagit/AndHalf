@@ -13,6 +13,7 @@ public class FilterRequest {
 	public String publicIp;
 	private int districtID,communeID;
 	public String category,reportName,flag,emailId;
+	public String columnName,sort;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -578,6 +579,20 @@ public class FilterRequest {
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
+	
+	
+	public String getColumnName() {
+		return columnName;
+	}
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -769,9 +784,14 @@ public class FilterRequest {
 		builder.append(flag);
 		builder.append(", emailId=");
 		builder.append(emailId);
+		builder.append(", columnName=");
+		builder.append(columnName);
+		builder.append(", sort=");
+		builder.append(sort);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 	
 }

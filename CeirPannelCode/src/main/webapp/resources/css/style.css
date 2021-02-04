@@ -3096,6 +3096,7 @@ div#iconLable {
 
 
 .btn {
+	width: max-content;
 	background-color: #ff4081 !important;
 }
 

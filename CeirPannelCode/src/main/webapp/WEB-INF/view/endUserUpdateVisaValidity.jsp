@@ -485,12 +485,12 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 
 										<div class="file-field col s12 m6" style="margin-top: -8px;">
 											<h6>
-												<spring:message code="input.UploadVisa" />
+												<spring:message code="input.UploadVisa" /> <span class="star">*</span>
 												
 											</h6>
 											<div class="btn">
 												<span><spring:message code="input.selectfile" /></span> <input
-													type="file" accept="image/*"
+													type="file" accept="image/*" required="required"
 													oninput="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');" oninvalid="InvalidMsg(this,'fileType','<spring:message code="validation.file" />');"
 													   id="endUseruploadnationalID" onchange="visaImageValidation('endUseruploadnationalID')"
 														placeholder="<spring:message code="validation.visaPlaceholder" />">
