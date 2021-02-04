@@ -446,7 +446,8 @@ function table(isSort,url,dataUrl){
 				"bSearchable" : true,
 				"oLanguage": {  
 					"sUrl": langFile  
-				},
+				},/*
+				"aaSorting": [[ 0, "desc" ]],*/
 				columnDefs: [
 					   { orderable: false, targets: -1 }
 					],
