@@ -532,7 +532,7 @@ public class CEIRParserMain {
           ResultSet rs1 = null;
           Statement stmt = null;
           try {
-               query = "select a.id as rule_id,a.name as rule_name,b.output as output,b.grace_action, b.post_grace_action, b.failed_rule_action_grace, b.failed_rule_action_post_grace from rule_engine a, rule_engine_mapping b where  a.name=b.name  and a.state='FULL' and b.feature='CDR' and   b." + period + "_action !='NA'         order by b.rule_order asc";
+               query = "select a.id as rule_id,a.name as rule_name,b.output as output,b.grace_action, b.post_grace_action, b.failed_rule_action_grace, b.failed_rule_action_post_grace from rule_engine a, rule_engine_mapping b where  a.name=b.name  and a.state='Enabled' and b.feature='CDR' and   b." + period + "_action !='NA'         order by b.rule_order asc";
                logger.debug("Query is " + query);
                stmt = conn.createStatement();
                rs1 = stmt.executeQuery(query);
@@ -622,7 +622,7 @@ public class CEIRParserMain {
           String query = null;
           DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
           Statement stmt = null;
-          query = "update cdr_file_details_db set  MODIFIED_ON = current_timestamp ,     total_inserts_in_usage_db='" + usageInsert + "' , total_updates_in_usage_db='" + usageUpdate + "'  ,  total_insert_in_dup_db='" + duplicateInsert + "' , total_updates_in_dup_db='" + duplicateUpdate + "' "
+          query = "update cdr_file_details_db set  MODIFIED_ON =   "+ Util.defaultDateNow(true) + " ,     total_inserts_in_usage_db='" + usageInsert + "' , total_updates_in_usage_db='" + usageUpdate + "'  ,  total_insert_in_dup_db='" + duplicateInsert + "' , total_updates_in_dup_db='" + duplicateUpdate + "' "
                   + " ,total_insert_in_null_db='" + nullInsert + "' ,total_update_in_null_db='" + nullUpdate + "'    , P2StartTime=      TO_DATE('" + df.format(P2StartTime) + "','YYYY-MM-DD HH24:MI:SS') , P2EndTime=          TO_DATE('" + df.format(P2EndTime) + "','YYYY-MM-DD HH24:MI:SS')          where operator='" + operator + "'   and file_name = '" + fileName + "' ";
           logger.info(" qury is " + query);
 

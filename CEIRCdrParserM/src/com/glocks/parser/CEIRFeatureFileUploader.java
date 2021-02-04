@@ -278,8 +278,9 @@ public class CEIRFeatureFileUploader {
           insertInGreyListByTxnId(conn, txnId, TableName);
           HashMap<String, String> stolnRcvryDetails = new HashMap<String, String>();
           CEIRFeatureFileParser cEIRFeatureFileParser = new CEIRFeatureFileParser();
-          stolnRcvryDetails = cEIRFeatureFileParser.getStolenRecvryDetails(conn, txnId);   //IMEI_ESN_MEID
-          String query = "update " + TableName + " set DEVICE_STATUS  = 'Approved' , modified_on = current_timestamp "
+          stolnRcvryDetails = cEIRFeatureFileParser.getStolenRecvryDetails(conn, txnId);   //IMEI_ESN_MEID   
+//          String dfnc =;   // "+ Util.defaultDateNow(true) +"
+          String query = "update " + TableName + " set DEVICE_STATUS  = 'Approved' , modified_on =    "+ Util.defaultDateNow(true) + " "
                   + " where actual_imei  in   "
                   + "(select       IMEIESNMEID   from  " + stolnRcvryDetails.get("reason") + "_raw  where  TXN_ID =  '" + txnId + "'   ) "
                   + "   ";
@@ -399,10 +400,10 @@ public class CEIRFeatureFileUploader {
           CEIRFeatureFileParser cEIRFeatureFileParser = new CEIRFeatureFileParser();
           stolnRcvryDetails = cEIRFeatureFileParser.getStolenRecvryDetails(conn, txnId);   //IMEI_ESN_MEID
 //                    String query = "select imei_esn_meid , user_id  from  " + tableName + "  where txn_id = '" + txnId + "'   ";
-          String query = " select    actual_imei, imei_esn_meid , user_id , DEVICE_ID_TYPE from   " + tableName + "  where SN_OF_DEVICE in (   select SN_OF_DEVICE from   " + tableName + " where actual_imei in "
+          String query = " select    actual_imei, imei_esn_meid , user_id , DEVICE_ID_TYPE , DEVICE_TYPE  from   " + tableName + "  where SN_OF_DEVICE in (   select SN_OF_DEVICE from   " + tableName + " where actual_imei in "
                   + "(select IMEIESNMEID  from  " + stolnRcvryDetails.get("reason") + "_raw  where  TXN_ID =  '" + txnId + "'   ) "
                   + "  and  SN_OF_DEVICE is not null and SN_OF_DEVICE != 'null' )      "
-                  + "  UNION      select actual_imei,  imei_esn_meid   , user_id , DEVICE_ID_TYPE from    " + tableName + "  "
+                  + "  UNION      select actual_imei,  imei_esn_meid   , user_id , DEVICE_ID_TYPE , DEVICE_TYPE from    " + tableName + "  "
                   + " where actual_imei  in  ( select IMEIESNMEID from  " + stolnRcvryDetails.get("reason") + "_raw where  TXN_ID =  '" + txnId + "'   )    and   SN_OF_DEVICE =  'null'   ";
           logger.info(" ...[" + query + "]");
           String device_greylist_db_qry = null;
@@ -417,13 +418,13 @@ public class CEIRFeatureFileUploader {
                while (rs.next()) {
 //                    {
 //                         if (stolnRcvryDetails.get("operation").equals("0")) {
-                    device_greylist_db_qry = "insert into   greylist_db (EXPIRY_DATE,created_on ,modified_on , imei, user_id , txn_id , mode_type  , request_type, user_type  , complain_type , operator_id , operator_name ,actual_imei , DEVICE_ID )   "
+                    device_greylist_db_qry = "insert into   greylist_db (EXPIRY_DATE,created_on ,modified_on , imei, user_id , txn_id , mode_type  , request_type, user_type  , complain_type , operator_id , operator_name ,actual_imei , DEVICE_ID_type  , DEVICE_TYPE  )   "
                             + "values(  " + expdate + "    ,  " + dateFunction + ",    " + dateFunction + "," + "'" + rs.getString("imei_esn_meid") 
                             + "'," + " ( select username from users where users.id=  "
                             + rs.getString("user_id") + "  )  ,  " + " '" + txnId + "', " + "'"
                             + stolnRcvryDetails.get("source") + "'," + "'" + stolnRcvryDetails.get("reason")
                             + "'," + "   ( select USERTYPE_NAME from usertype  where ID = (select  usertype_id from users where id =  " + rs.getString("user_id") + "  ) )     ," + "'"
-                            + stolnRcvryDetails.get("complaint_type") + "' , (select OPERATOR_TYPE_ID  from user_profile where USERID =   " + rs.getString("user_id") + "  )  , (select OPERATOR_TYPE_NAME  from user_profile where USERID =   " + rs.getString("user_id") + "  )   , '"+ rs.getString("actual_imei")+"' , '"+ rs.getString("device_id_type")+"'          )";
+                            + stolnRcvryDetails.get("complaint_type") + "' , (select OPERATOR_TYPE_ID  from user_profile where USERID =   " + rs.getString("user_id") + "  )  , (select OPERATOR_TYPE_NAME  from user_profile where USERID =   " + rs.getString("user_id") + "  )   , '"+ rs.getString("actual_imei")+"' , '"+ rs.getString("device_id_type")+"'  , '"+ rs.getString("device_type")+"'        )";
 //                         }
                     device_greylist_History_db_qry = "insert into   greylist_db_history ( EXPIRY_DATE,modified_on ,  created_on , imei, user_id , txn_id , mode_type  , request_type, user_type  , complain_type ,operation  ,   operator_id , operator_name ,actual_imei    )   "
                             + "values(   " + expdate + " ,  " + dateFunction + ",       " + dateFunction + "," + "'" + rs.getString("imei_esn_meid") 

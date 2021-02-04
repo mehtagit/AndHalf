@@ -13,7 +13,6 @@ public class Util {
 
      public static String defaultDate(boolean isOracle) {
           if (isOracle) {
-//               return "sysdate";
                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                String val = sdf.format(new Date());
                String date = "TO_DATE('" + val + "','YYYY-MM-DD HH24:MI:SS')";

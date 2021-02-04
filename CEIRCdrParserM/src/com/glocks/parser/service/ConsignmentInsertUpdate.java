@@ -476,6 +476,7 @@ public class ConsignmentInsertUpdate {
                     }
 
                     logger.info(".. my_query is ::" + my_query);
+                    
 //                    logger.info("insertFromImporterManufactor.. device_greylist_db_qry is ::" + device_greylist_db_qry);
 //                    logger.info("insertFromImporterManufactor.. device_greylist_History_db_qry is ::" + device_greylist_History_db_qry);
                }
@@ -500,7 +501,7 @@ public class ConsignmentInsertUpdate {
                Statement stmt = conn.createStatement();
 
                String qry = " insert into  device_details_report_db ( created_on, modified_on, txn_id ,feature , sub_feature , total_insert_count  ,tableName , startTime , endTime     ) "
-                       + "  values (current_timestamp ,current_timestamp , '" + txn_id + "', '" + operator + "', '" + sub_feature + "', '" + totalCount + "', '" + tableName + "',     TO_DATE('" + startTime + "','YYYY-MM-DD HH24:MI:SS') ,  TO_DATE('" + EndTime + "','YYYY-MM-DD HH24:MI:SS')           ) ";
+                       + "  values ( "+ Util.defaultDateNow(true) + " , "+ Util.defaultDateNow(true) + " , '" + txn_id + "', '" + operator + "', '" + sub_feature + "', '" + totalCount + "', '" + tableName + "',     TO_DATE('" + startTime + "','YYYY-MM-DD HH24:MI:SS') ,  TO_DATE('" + EndTime + "','YYYY-MM-DD HH24:MI:SS')           ) ";
                logger.info("" + qry);
 
                stmt.executeUpdate(qry);
@@ -542,7 +543,7 @@ public class ConsignmentInsertUpdate {
                Statement stmt = conn.createStatement();
 
                String qry = " insert into  stolen_process_db ( created_on, modified_on, txn_id,      tableName , imei_esn_meid , serailNo    ) "
-                       + "  values (current_timestamp ,current_timestamp , '" + txn_id + "', '" + outputDb + "', '" + imei + "', '" + serailNo + "'        ) ";
+                       + "  values ( "+ Util.defaultDateNow(true) + " , "+ Util.defaultDateNow(true) + " , '" + txn_id + "', '" + outputDb + "', '" + imei + "', '" + serailNo + "'        ) ";
                logger.info("" + qry);
                stmt.executeUpdate(qry);
                conn.commit();

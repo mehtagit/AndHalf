@@ -576,11 +576,12 @@ public class CEIRFeatureFileFunctions {
      }
 
      private void insertinEndUserDvcDb(Connection conn, String ValImei, ResultSet rs) {
+            String dfnc = Util.defaultDateNow(true);   // "+dfnc+"
           Statement stmt = null;
           try {
                stmt = conn.createStatement();
                String qury = "insert into end_user_device_db ( imei_esn_meid , actual_imei, created_on , modified_on, CURRENCY,	DEVICE_ID_TYPE,	DEVICE_SERIAL_NUMBER,	DEVICE_STATUS,	DEVICE_TYPE ,	TAX_PAID_STATUS,	TXN_ID	,USER_ID	,CREATOR_USER_ID	,ORIGIN   ) values"
-                       + "( '" + rs.getString("" + ValImei + "").substring(0, 14) + "', '" + rs.getString("" + ValImei + "") + "',current_timestamp,current_timestamp, '" + rs.getString("CURRENCY") + "', '" + rs.getString("DEVICE_ID_TYPE") + "', '" + rs.getString("DEVICE_SERIAL_NUMBER") + "', '" + rs.getString("DEVICE_STATUS") + "', "
+                       + "( '" + rs.getString("" + ValImei + "").substring(0, 14) + "', '" + rs.getString("" + ValImei + "") + "',  "+dfnc+" ,"+dfnc+", '" + rs.getString("CURRENCY") + "', '" + rs.getString("DEVICE_ID_TYPE") + "', '" + rs.getString("DEVICE_SERIAL_NUMBER") + "', '" + rs.getString("DEVICE_STATUS") + "', "
                        + " '" + rs.getString("DEVICE_TYPE") + "','" + rs.getString("TAX_PAID_STATUS") + "', '" + rs.getString("TXN_ID") + "', '" + rs.getString("USER_ID") + "', '" + rs.getString("CREATOR_USER_ID") + "',  '" + rs.getString("ORIGIN") + "'   ) ";
 
                logger.info(" insertinEndUserDvcDb Query  " + qury);

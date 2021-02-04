@@ -59,20 +59,29 @@ public class RuleFilter {
             if (device_info.get("output").equalsIgnoreCase(output)) {
                 rule_detail.put("rule_name", null);
             } else {
-                String[] my_action_arr = {device_info.get("rule_name"),
-                    "2",
-                    "CDR",
-                    device_info.get("IMEI"),
-                    "0",
-                    device_info.get("file_name"),
-                    "0",
-                    device_info.get("record_time"),
-                    device_info.get("operator"),
-                    "error",
-                    device_info.get("operator_tag"),
-                    device_info.get("period"),
-                    device_info.get("MSISDN"),
-                    device_info.get("action")
+                String[] my_action_arr = {device_info.get("rule_name"),  //0
+                    "2",   //1
+                    "CDR", //2
+                    device_info.get("IMEI"),  //3
+                    "0",  //4
+                    device_info.get("file_name"), //5
+                    "0",   //6
+                    device_info.get("record_time"), //7
+                    device_info.get("operator"),   //8
+                    "error",  //9
+                    device_info.get("operator_tag"),  //10
+                    device_info.get("period"),   //11
+                    device_info.get("MSISDN"),  //12
+                    device_info.get("action"),    //13
+                    device_info.get("IMSI")  ,  //14
+                    device_info.get("record_type") ,   //15
+                    device_info.get("system_type"),    //16
+                    device_info.get("source") ,   //17
+                    device_info.get("raw_cdr_file_name") ,   //18
+                    device_info.get("imei_arrival_time") ,   //19
+                    device_info.get("operator")  ,  //20
+                    device_info.get("file_name")    //21
+                        
                 };
                 try {
                     action_output = RuleEngineApplication.startRuleEngine(my_action_arr, conn, bw);
@@ -140,11 +149,10 @@ public class RuleFilter {
                 device_info.get("rule_name"), //0
                 "1", //1
                 device_info.get("feature"), //2   (consign,stock,CDr etc
-
                 (((device_info.get("rule_name").equals("IMEI_LUHN_CHECK") || device_info.get("rule_name").equals("IMEI_LENGTH"))) ? device_info.get("IMEIESNMEID") : device_info.get("IMEIESNMEID").substring(0, 14)), //3
-                "0", //4//
+                  device_info.get("SNofDevice")  , //4//
                 device_info.get("file_name"), //5     foreignSim Only
-                "0", //6//
+                 device_info.get("DeviceType"), //6//
                 device_info.get("record_time"), //7//
                 device_info.get("operator"), //8    foreignSim Only
                 device_info.get("DeviceIdType"), //9     imei/esn/meid imeiLength  / luhn
@@ -152,8 +160,9 @@ public class RuleFilter {
                 device_info.get("period"), //11
                 "", //12
                 device_info.get("action"), //13
-                device_info.get("txn_id"), //1 4
+                device_info.get("txn_id"), //14
                 fileArray //15
+                    
             };
             logger.debug(" Rule Execution Start" + Arrays.toString(my_arr));
             output = RuleEngineApplication.startRuleEngine(my_arr, conn, bw);
@@ -180,7 +189,7 @@ public class RuleFilter {
                     "2",
                     device_info.get("feature"),
                     device_info.get("IMEIESNMEID"),
-                    "0",
+                      device_info.get("SNofDevice") ,
                     device_info.get("file_name"),
                     "0",
                     "",
