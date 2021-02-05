@@ -46,13 +46,11 @@ $('#datepicker,#datepicker1').datepicker({
 
 
 populateCountries(
-		"country",
-		"state"
+		"country"
 );
-populateStates(
-		"country",
-		"state"
-);
+/*populateStates(
+		"country"
+);*/
 
 populateCountries(
 		"country1"
@@ -456,7 +454,7 @@ $(document).ready(function () {
 
 	});
 
-	
+	setDropdownProviance('state');
 });
 
 
@@ -610,7 +608,7 @@ function table(url,dataUrl){
 	var txnIdValue = $("body").attr("session-valueTxnID");
 	var txn= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;
 	var request={
-			"origin":"self",
+			"origin":"End User",
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
 			"taxPaidStatus":parseInt($('#taxPaidStatus').val()),
@@ -1018,7 +1016,7 @@ function submitEndUserDeviceInfo(){
 				"fourthImei": IMEI4,
 				"multiSimStatus": deviceStatus1,
 				"nid":nationalID,
-				"origin":"Self",
+				"origin":"End User",
 				"currency": parseInt(Currency1),
 				"price": parseFloat(Price1),
 				"deviceRemark":singleDeviceRemark,

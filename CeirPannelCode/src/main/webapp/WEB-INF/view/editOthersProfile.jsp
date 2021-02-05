@@ -300,14 +300,7 @@ var contextpath = "${context}";
 
 	<script type="text/javascript"
 		src="${context}/resources/js/plugins/jquery-1.11.2.min.js"></script>
-	<!-- ajax js -->
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Profile.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	<script type="text/javascript"
-		src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
+	
 	<!-- Compiled and minified JavaScript -->
 
 
@@ -333,6 +326,7 @@ var contextpath = "${context}";
     %>
 	<!-- START CONTENT -->
 	<section id="content" id="mainPage">
+	<div id="initialloader"></div>
 		<!--start container-->
 		<div class="container">
 			<div class="section">
@@ -1185,9 +1179,17 @@ var contextpath = "${context}";
 	<script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/enterKey.js"></script>
+		src="${context}/resources/project_js/provinceDropdown.js"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		<!-- ajax js -->
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Profile.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	<script type="text/javascript"
+		src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		
 	<script> 
     var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 	window.parent.$('#langlist').on('change', function() {
@@ -1197,10 +1199,12 @@ var contextpath = "${context}";
 	}); 
 	
         $(document).ready(function () {
+        	 populateCountries("country", "state");
+             setDropdown();
+        
         	questionDataByCategory();
         //	 $("select[required]").css({position: "absolute", display: "inline", height: 0, padding: 0, width: 0});
-       populateCountries("country", "state");
-     
+      
        editOtherProfile();
    	
        if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";}
@@ -1234,17 +1238,7 @@ var contextpath = "${context}";
     </script>
 
 
-	<script>
-        populateCountries(
-            "country",
-            "state"
-        );
-       
-        populateStates(
-            "country",
-            "state"
-        );
-    </script>
+
 </body>
 </html>
 <%

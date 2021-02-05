@@ -372,7 +372,7 @@ public class UploadPaidStatus {
 			}
 			else if("CEIRAdmin".equals(userType)){
 				//input type date list
-				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.nidInput"),"nId","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("input.Nationality"),"filterNationality","","text",Translator.toLocale("table.origin"),"originFilter",""};
+				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.nidInput"),"nId","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("input.Nationality"),"filterNationality","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus","","text",Translator.toLocale("table.origin"),"originFilter","","select",Translator.toLocale("input.Status"),"recordStatus",""};
 				for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

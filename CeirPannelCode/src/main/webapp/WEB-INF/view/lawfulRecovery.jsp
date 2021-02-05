@@ -971,6 +971,8 @@ onclick="_Services._selectstartDate()"></i></span>
 		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CommanLocality.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/provinceDropdown.js?version=<%= (int) (Math.random() * 10) %>" async></script> 
 	<script type="text/javascript"
 		src="${context}/resources/project_js/lawfulStolenRecovery.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
@@ -993,8 +995,7 @@ onclick="_Services._selectstartDate()"></i></span>
 		});
 		
     populateCountries(
-        "country1",
-        "state1"
+        "country1"
     );
     populateStates(
         "country1",
@@ -1002,8 +1003,7 @@ onclick="_Services._selectstartDate()"></i></span>
     );
     
     populateCountries(
-            "bulkRecoverycountry",
-            "bulkRecoverystate"
+            "bulkRecoverycountry"
         );
         populateStates(
             "bulkRecoverycountry",
@@ -1071,6 +1071,8 @@ onclick="_Services._selectstartDate()"></i></span>
 
     	$("#country1").val("Cambodia").change();
 		//$("#country1").attr("style", "pointer-events: none;");
+		setDropdownProviance('state1');
+		setDropdownProviance('bulkRecoverystate');
 	
 </script>
 

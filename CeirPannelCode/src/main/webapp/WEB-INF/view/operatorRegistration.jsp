@@ -845,7 +845,7 @@ var contextpath = "${context}";
 		src="${context}/resources/project_js/backbutton.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	
 			<script type="text/javascript"
-		src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/project_js/provinceDropdown.js?version=<%= (int) (Math.random() * 10) %>"></script>
     
 <script type="text/javascript"
 		src="${context}/resources/project_js/ValidationFileOutsidePortal.js?version=<%= (int) (Math.random() * 10) %>"></script>
@@ -907,9 +907,8 @@ var contextpath = "${context}";
            populateCountries( "country",    "state");
            
            $("#country").val("Cambodia");
-           
-           populateStates( "country",
-                   "state" );
+           setDropdown();
+        //   populateStates( "country","state" );
 
           
         });   

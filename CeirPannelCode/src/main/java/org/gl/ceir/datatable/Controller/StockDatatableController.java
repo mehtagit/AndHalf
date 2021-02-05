@@ -308,7 +308,7 @@ public class StockDatatableController {
 
 						
 				//input type date list	
-				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.importerCompanyName"),"name","","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","","text",Translator.toLocale("table.fileName"),"fileNameFilter",""};
+				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.importerCompanyName"),"name","","select",Translator.toLocale("table.userType"),"userType","",Translator.toLocale("table.fileName"),"fileNameFilter","","select",Translator.toLocale("select.stockStatus"),"StockStatus","","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","","text"};
 				for(int i=0; i< dateParam.length; i++) {
 					dateRelatedFields= new InputFields();
 					dateRelatedFields.setType(dateParam[i]);

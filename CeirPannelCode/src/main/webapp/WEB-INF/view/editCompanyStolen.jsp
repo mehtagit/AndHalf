@@ -1075,7 +1075,8 @@
 	<script type="text/javascript"
 		src="${context}/resources/js/intlTelInput.js">
 		</script>
-
+<script type="text/javascript"
+		src="${context}/resources/project_js/provinceDropdown.js?version=<%= (int) (Math.random() * 10) %>" async></script> 
 	<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
@@ -1161,8 +1162,7 @@ else{
 	        );
 	        
 	        populateCountries(
-		            "country2",
-		            "state2"
+		            "country2"
 		        );
 		        populateStates(
 		            "country2",
@@ -1170,8 +1170,7 @@ else{
 		        );
 		        
 		        populateCountries(
-			            "country3",
-			            "state3"
+			            "country3"
 			        );
 			        populateStates(
 			            "country3",
@@ -1189,8 +1188,8 @@ else{
             utilsScript: "${context}/resources/js/utils.js",
         });
         
-        
-            
+        setDropdownProviance('state2');
+        setDropdownProviance('state3');   
           
          
         $('.datepick').datepicker({

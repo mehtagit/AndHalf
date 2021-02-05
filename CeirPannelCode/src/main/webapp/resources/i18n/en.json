@@ -247,6 +247,6 @@
 	"SOFT_DELETE_MESSAGE":"This user is not available in the system ",
 	"user_exceed_limit":"User creation limit for the usertype exceeded !!",
 	"500ErrorMsg":"The system is currently not available. Kindly try after some time.",
-	"clearFilter":"Clear"
+	"clearFilter":"Clear all filters"
 	
 	}

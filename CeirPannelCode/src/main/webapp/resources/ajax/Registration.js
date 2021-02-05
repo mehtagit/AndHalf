@@ -849,10 +849,6 @@ function openAnModal() {
 
 
 
-
-
-
-
 function getDistrict(current) {
 	var request = {
 		"province" : current.value
@@ -969,3 +965,4 @@ function getVillage(current) {
 				}
 			});
 }
+

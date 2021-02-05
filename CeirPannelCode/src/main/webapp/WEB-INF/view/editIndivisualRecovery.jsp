@@ -692,7 +692,8 @@ onclick="_Services._selectstartDate()"></i></span>
 		src="${context}/resources/project_js/lawfulStolenRecovery.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		<script type="text/javascript"
 		src="${context}/resources/project_js/editIndivisualRecovery.js?version=<%= (int) (Math.random() * 10) %>"></script>
-		
+		<script type="text/javascript"
+		src="${context}/resources/project_js/provinceDropdown.js?version=<%= (int) (Math.random() * 10) %>" async></script>  
 		<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
@@ -744,9 +745,7 @@ onclick="_Services._selectstartDate()"></i></span>
         	});
 		
     populateCountries(
-        "country1",
-        "state1"
-    );
+        "country1");
     populateStates(
         "country1",
         "state1"
@@ -761,7 +760,7 @@ onclick="_Services._selectstartDate()"></i></span>
             "bulkRecoverystate"
         );
        
-    	
+        setDropdownProviance('state1');
       
 </script>
 		
