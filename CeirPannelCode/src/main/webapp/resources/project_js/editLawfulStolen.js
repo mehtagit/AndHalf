@@ -11,12 +11,13 @@
 		
 		});*/
 
-populateCountries("singleDevicecountry", "singleDevicestate");
+    populateCountries("singleDevicecountry");
 	populateStates("singleDevicecountry", "singleDevicestate");
 
-	populateCountries("country", "state");
+	populateCountries("country");
 	populateStates("country", "state");
-	
+	setDropdownProviance('state');
+	setDropdownProviance('singleDevicestate');
 	$("#singleDevicecountry").attr("style", "pointer-events: none;");
 	
 setTimeout(function(){
@@ -39,7 +40,7 @@ setTimeout(function(){
 }, 1000);
 
 
-
+ 
 $(document).ready(function() {
 	// executes when HTML-Document is loaded and DOM is ready
 	var token = $("meta[name='_csrf']").attr("content");

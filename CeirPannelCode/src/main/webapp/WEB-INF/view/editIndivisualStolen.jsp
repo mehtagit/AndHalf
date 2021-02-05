@@ -1418,7 +1418,8 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 
 	<script type="text/javascript"
 		src="" async></script>
-		
+		<script type="text/javascript"
+		src="${context}/resources/project_js/provinceDropdown.js?version=<%= (int) (Math.random() * 10) %>" async></script>  
 		<script type="text/javascript" src="${context}/resources/js/intlTelInput.js"></script>
 		<script type="text/javascript" src="${context}/resources/js/utils.js"></script>
 			<script type="text/javascript"

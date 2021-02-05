@@ -618,6 +618,8 @@ onclick="_Services._selectstartDate()"></i></span>
 	
 	<script type="text/javascript"
 		src="${context}/resources/js/countries.js"></script>
+		<script type="text/javascript"
+		src="${context}/resources/project_js/provinceDropdown.js?version=<%= (int) (Math.random() * 10) %>" async></script>      
 <script type="text/javascript"
 		src="${context}/resources/project_js/CommanLocality.js?version=<%= (int) (Math.random() * 10) %>"></script>
 
@@ -692,8 +694,7 @@ onclick="_Services._selectstartDate()"></i></span>
     );
     
     populateCountries(
-            "bulkRecoverycountry",
-            "bulkRecoverystate"
+            "bulkRecoverycountry"
         );
         populateStates(
             "bulkRecoverycountry",
@@ -703,7 +704,7 @@ onclick="_Services._selectstartDate()"></i></span>
         $('#Stolenstartdatepicker').datepicker({
         	dateFormat: "yy-mm-dd"
         	});
-
+    	setDropdownProviance('bulkRecoverystate');
         $("label[for='devicequantity']").addClass('active');
 </script>
 		
