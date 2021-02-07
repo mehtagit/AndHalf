@@ -221,7 +221,8 @@ public class BasicApplication {
                     if (product.getGsmaApprovedTac().equals("Yes")) {
                          snt.databaseMapper(message, conn);
                     } else {
-                         snt.invalidGsmaDb(product.getDeviceId(), conn);
+//                         snt.invalidGsmaDb(product.getDeviceId(), conn); 
+                         snt.invalidGsmaDb(imei_tac, conn);
                     }
                } catch (Exception e) {
                     logger.info("getGsmaApprovedTac ERror : " + e);

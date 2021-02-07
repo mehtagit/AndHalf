@@ -128,7 +128,10 @@ class GsmaDbDao {
                } catch (SQLException ex) {
                     java.util.logging.Logger.getLogger(GsmaDbDao.class.getName()).log(Level.SEVERE, null, ex);
                }
+               String qury = "insert into gsma_invalid_tac_db (created_on , tac  ,modified_on  ) values ( current_timestamp , '" + deviceId + "',   current_timestamp  )    " ;
+              logger.info( "[ "+qury + "]");
                stmt.executeQuery("insert into gsma_invalid_tac_db (created_on , tac  ,modified_on  ) values ( current_timestamp , '" + deviceId + "',   current_timestamp  )    ");
+       
           } catch (Exception e) {
                logger.error("Error + " + e);
           } finally {
