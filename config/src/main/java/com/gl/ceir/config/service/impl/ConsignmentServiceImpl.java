@@ -314,8 +314,14 @@ public class ConsignmentServiceImpl {
 													: "IMEI/MEID Quantity".equalsIgnoreCase(consignmentMgmt.getColumnName())
 															? "quantity"
 															:"Device Quantity".equalsIgnoreCase(consignmentMgmt.getColumnName())
-															? "deviceQuantity" : "createdOn";
-			Sort.Direction direction = SortDirection.getSortDirection(consignmentMgmt.getSort());
+															? "deviceQuantity" : "modifiedOn";
+			Sort.Direction direction;
+			if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+				direction=Sort.Direction.DESC;
+			}
+			else {
+				direction= SortDirection.getSortDirection(consignmentMgmt.getSort());
+			}
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
 			logger.info("column Name :: " + consignmentMgmt.getColumnName()+"---consignmentMgmt.getSort() : "+consignmentMgmt.getSort());
 			Page<ConsignmentMgmt> page = consignmentRepository
