@@ -8,7 +8,7 @@ public class ConsignmentFileModelCEIR {
 	@CsvBindByName(column = "Modified On")
 	@CsvBindByPosition(position = 0)
 	private String modifiedOn;
-	@CsvBindByName(column = "Create On")
+	@CsvBindByName(column = "Created On")
 	@CsvBindByPosition(position = 1)
 	private String createdOn;
 	@CsvBindByName(column = "Transaction ID")
@@ -20,10 +20,10 @@ public class ConsignmentFileModelCEIR {
 	@CsvBindByName(column = "Status")
 	@CsvBindByPosition(position = 4)
 	private String consignmentStatus;
-	@CsvBindByName(column = "Tax Status")
+	@CsvBindByName(column = "Tax Paid Status")
 	@CsvBindByPosition(position = 5)
 	private String taxPaidStatus;
-	@CsvBindByName(column = "IMEI Quantity")
+	@CsvBindByName(column = "IMEI/MEID Quantity")
 	@CsvBindByPosition(position = 6)
 	private Integer quantity;	
 	@CsvBindByName(column = "Device Quantity")
@@ -37,10 +37,10 @@ public class ConsignmentFileModelCEIR {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ConsignmentFileModelCEIR(String createdOn, String modifiedOn,String txnId, String supplierName,String consignmentStatus,  
+	public ConsignmentFileModelCEIR(String modifiedOn,String createdOn,String txnId, String supplierName,String consignmentStatus,  
 			String taxPaidStatus,  Integer quantity,Integer deviceQuantity,String fileName) {
-		this.createdOn = createdOn;
 		this.modifiedOn = modifiedOn;
+		this.createdOn = createdOn;
 		this.txnId = txnId;
 		this.supplierName = supplierName;
 		this.consignmentStatus = consignmentStatus;

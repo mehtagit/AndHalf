@@ -424,7 +424,15 @@ public class StolenAndRecoveryServiceImpl {
 		if(Objects.nonNull(filterRequest.getOperatorTypeId())) {
 			srsb.with(new SearchCriteria("operatorTypeId", filterRequest.getOperatorTypeId(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
-
+		if(Objects.nonNull(filterRequest.getQuantity()) && !filterRequest.getQuantity().isEmpty())
+			srsb.with(new SearchCriteria("qty", filterRequest.getQuantity(), SearchOperation.LIKE, Datatype.STRING));
+		
+		if(Objects.nonNull(filterRequest.getDeviceQuantity()) && !filterRequest.getDeviceQuantity().isEmpty())
+			srsb.with(new SearchCriteria("deviceQuantity", filterRequest.getDeviceQuantity(), SearchOperation.LIKE, Datatype.STRING));
+		
+		if(Objects.nonNull(filterRequest.getBlockingTypeFilter()) && !filterRequest.getBlockingTypeFilter().isEmpty())
+			srsb.with(new SearchCriteria("blockingType", filterRequest.getBlockingTypeFilter(), SearchOperation.LIKE, Datatype.STRING));
+		
 		if(Objects.nonNull(filterRequest.getRequestType())) {
 			srsb.with(new SearchCriteria("requestType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
 		}else {
@@ -595,7 +603,8 @@ public class StolenAndRecoveryServiceImpl {
 					srfm.setStolenStatus(stolenandRecoveryMgmt.getStateInterp());
 					srfm.setFileName( stolenandRecoveryMgmt.getFileName());
 					srfm.setDeviceQuantity(stolenandRecoveryMgmt.getDeviceQuantity());
-
+					srfm.setQuantity(stolenandRecoveryMgmt.getQty());
+					srfm.setBlockingType(stolenandRecoveryMgmt.getBlockingType());
 					logger.debug(srfm);
 					fileRecords.add(srfm);
 				}
@@ -661,11 +670,11 @@ public class StolenAndRecoveryServiceImpl {
 					srfm.setMode(stolenandRecoveryMgmt.getSourceTypeInterp());
 					logger.info("Status : "+stolenandRecoveryMgmt.getStateInterp());
 					srfm.setStolenStatus(stolenandRecoveryMgmt.getStateInterp());
-
+					srfm.setQuantity(stolenandRecoveryMgmt.getQty());
 					if(Objects.isNull(stolenandRecoveryMgmt.getOperatorTypeId())) {
 						srfm.setSource("");
 					}else if(stolenandRecoveryMgmt.getOperatorTypeId() == -1) {
-						srfm.setSource("Ceir Admin");
+						srfm.setSource("Operation");
 					}else {
 						srfm.setSource(stolenandRecoveryMgmt.getOperatorTypeIdInterp());
 					}

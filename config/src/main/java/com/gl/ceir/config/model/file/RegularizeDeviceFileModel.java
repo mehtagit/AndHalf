@@ -43,19 +43,19 @@ public class RegularizeDeviceFileModel {
 	 * @CsvBindByPosition(position = 11) private String country;
 	 */
 	@CsvBindByName(column = "Tax Paid Status")
-	@CsvBindByPosition(position = 6)
+	@CsvBindByPosition(position = 4)
 	private String TaxPaidStatus;
 	
-	@CsvBindByName(column = "CreatedOn")
-	@CsvBindByPosition(position = 0)
+	@CsvBindByName(column = "Date")
+	@CsvBindByPosition(position = 1)
 	private String createdOn;
 	
 	@CsvBindByName(column = "ModifiedOn")
-	@CsvBindByPosition(position = 1)
+	@CsvBindByPosition(position = 0)
 	private String modifiedOn;
 	
-	@CsvBindByName(column = "Txn id")
-	@CsvBindByPosition(position = 2)
+	@CsvBindByName(column = "Transaction ID")
+	@CsvBindByPosition(position = 3)
 	private String txnId;
 	
 	@CsvBindByName(column = "First IMEI")
@@ -75,15 +75,15 @@ public class RegularizeDeviceFileModel {
 	private String fourthImei;
 	
 	@CsvBindByName(column = "Status")
-	@CsvBindByPosition(position = 5)
+	@CsvBindByPosition(position = 6)
 	private String status;
 	
 	@CsvBindByName(column = "Origin")
-	@CsvBindByPosition(position = 4)
+	@CsvBindByPosition(position = 5)
 	private String origin;
 	
-	@CsvBindByName(column = "NID")
-	@CsvBindByPosition(position = 3)
+	@CsvBindByName(column = "NID/Passport No.")
+	@CsvBindByPosition(position = 2)
 	private String nid;
 	
 	

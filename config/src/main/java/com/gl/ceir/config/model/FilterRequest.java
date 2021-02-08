@@ -59,6 +59,8 @@ public class FilterRequest {
 	
 	private String supplierName;
 	private String fileName,nationality;
+	private String columnName;
+	private String sort,blockingTypeFilter;
 	
 	
 	public String getFilteredUserType() {
@@ -322,6 +324,22 @@ public class FilterRequest {
 		return supplierName;
 	}
 
+	public String getColumnName() {
+		return columnName;
+	}
+
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+
 	public void setSupplierName(String supplierName) {
 		this.supplierName = supplierName;
 	}
@@ -342,6 +360,14 @@ public class FilterRequest {
 
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
+	}
+
+	public String getBlockingTypeFilter() {
+		return blockingTypeFilter;
+	}
+
+	public void setBlockingTypeFilter(String blockingTypeFilter) {
+		this.blockingTypeFilter = blockingTypeFilter;
 	}
 
 	@Override
@@ -435,6 +461,12 @@ public class FilterRequest {
 		builder.append(fileName);
 		builder.append(", nationality=");
 		builder.append(nationality);
+		builder.append(", columnName=");
+		builder.append(columnName);
+		builder.append(", sort=");
+		builder.append(sort);
+		builder.append(", blockingTypeFilter=");
+		builder.append(blockingTypeFilter);
 		builder.append("]");
 		return builder.toString();
 	}

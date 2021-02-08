@@ -59,6 +59,7 @@ public class StolenandRecoveryMgmt implements Serializable {
 	private String requestTypeInterp;
 
 	private String roleType;
+	@Column(name = "blockingType")
 	private String blockingType;
 	private String blockingTimePeriod;
 	private Integer sourceType;
@@ -66,6 +67,7 @@ public class StolenandRecoveryMgmt implements Serializable {
 	@Column(name = "quantity")
 	private Integer qty;
 
+	
 	private String remark;
 	
 	private String rejectedRemark;
@@ -113,7 +115,7 @@ public class StolenandRecoveryMgmt implements Serializable {
 	private String deleteFlagInterp;
 	
 	private Long ceirAdminId;
-	
+	@Column(name = "deviceQuantity")
 	private Integer deviceQuantity;
 
 	@OneToMany(

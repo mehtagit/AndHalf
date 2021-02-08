@@ -5,41 +5,51 @@ import com.opencsv.bean.CsvBindByPosition;
 
 public class BlockUnblockFileModel {
 	
-	@CsvBindByName(column = "Created On")
-	@CsvBindByPosition(position = 0)
-	private String createdOn;
-
+	
 	@CsvBindByName(column = "Modified On")
-	@CsvBindByPosition(position = 1)
+	@CsvBindByPosition(position = 0)
 	private String modifiedOn;
 	
-	@CsvBindByName(column = "Txn Id")
+	@CsvBindByName(column = "Created On")
+	@CsvBindByPosition(position = 1)
+	private String createdOn;
+
+	
+	
+	@CsvBindByName(column = "Transaction ID")
 	@CsvBindByPosition(position = 2)
 	private String txnId;
 	
-	@CsvBindByName(column = "Request Type")
+	@CsvBindByName(column = "Operator")
 	@CsvBindByPosition(position = 3)
+	private String source;
+	
+	
+	@CsvBindByName(column = "Request Type")
+	@CsvBindByPosition(position = 4)
 	private String requestType;
 	
 	@CsvBindByName(column = "Mode")
-	@CsvBindByPosition(position = 4)
+	@CsvBindByPosition(position = 5)
 	private String mode;
 	
 	@CsvBindByName(column = "Status")
-	@CsvBindByPosition(position = 5)
+	@CsvBindByPosition(position = 6)
 	private String stolenStatus;
 	
-	@CsvBindByName(column = "Source")
-	@CsvBindByPosition(position = 6)
-	private String source;
-	
-	@CsvBindByName(column = "Filename")
+	@CsvBindByName(column = "IMEI/MEID Quantity")
 	@CsvBindByPosition(position = 7)
-	private String fileName;
+	private Integer quantity;
 	
 	@CsvBindByName(column = "Device Quantity")
 	@CsvBindByPosition(position = 8)
 	private Integer deviceQuantity;
+	
+	@CsvBindByName(column = "Filename")
+	@CsvBindByPosition(position = 9)
+	private String fileName;
+	
+
 	
 	public Integer getDeviceQuantity() {
 		return deviceQuantity;
@@ -113,25 +123,41 @@ public class BlockUnblockFileModel {
 		this.mode = mode;
 	}
 
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("StolenAndRecoveryFileModel [createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
+		builder.append("BlockUnblockFileModel [modifiedOn=");
 		builder.append(modifiedOn);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
 		builder.append(", txnId=");
 		builder.append(txnId);
+		builder.append(", source=");
+		builder.append(source);
 		builder.append(", requestType=");
 		builder.append(requestType);
 		builder.append(", mode=");
 		builder.append(mode);
 		builder.append(", stolenStatus=");
 		builder.append(stolenStatus);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
 		builder.append(", fileName=");
 		builder.append(fileName);
 		builder.append("]");
 		return builder.toString();
 	}
 
+	
+	
 }

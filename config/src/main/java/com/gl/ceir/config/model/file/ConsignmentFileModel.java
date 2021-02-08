@@ -4,12 +4,13 @@ import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
 
 public class ConsignmentFileModel {
-	@CsvBindByName(column = "Create On")
-	@CsvBindByPosition(position = 0)
-	private String createdOn;
+	
 	@CsvBindByName(column = "Modified On")
-	@CsvBindByPosition(position = 1)
+	@CsvBindByPosition(position = 0)
 	private String modifiedOn;
+	@CsvBindByName(column = "Created On")
+	@CsvBindByPosition(position = 1)
+	private String createdOn;
 	@CsvBindByName(column = "Transaction ID")
 	@CsvBindByPosition(position = 2)
 	private String txnId;
@@ -19,10 +20,10 @@ public class ConsignmentFileModel {
 	@CsvBindByName(column = "Status")
 	@CsvBindByPosition(position = 4)
 	private String consignmentStatus;
-	@CsvBindByName(column = "Tax Status")
+	@CsvBindByName(column = "Tax Paid Status")
 	@CsvBindByPosition(position = 5)
 	private String taxPaidStatus;
-	@CsvBindByName(column = "IMEI Quantity")
+	@CsvBindByName(column = "IMEI/MEID Quantity")
 	@CsvBindByPosition(position = 6)
 	private Integer quantity;	
 	@CsvBindByName(column = "Device Quantity")
@@ -36,10 +37,10 @@ public class ConsignmentFileModel {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ConsignmentFileModel(String createdOn, String modifiedOn,String txnId, String supplierName,String consignmentStatus,  
+	public ConsignmentFileModel(String modifiedOn,String createdOn,String txnId, String supplierName,String consignmentStatus,  
 			String taxPaidStatus,  Integer quantity,Integer deviceQuantity,String fileName) {
-		this.createdOn = createdOn;
 		this.modifiedOn = modifiedOn;
+		this.createdOn = createdOn;
 		this.txnId = txnId;
 		this.supplierName = supplierName;
 		this.consignmentStatus = consignmentStatus;
