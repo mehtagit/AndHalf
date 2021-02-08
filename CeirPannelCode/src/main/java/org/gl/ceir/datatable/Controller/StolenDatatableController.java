@@ -351,58 +351,104 @@ public class StolenDatatableController {
 			}
 			pageElement.setButtonList(buttonList);
 			
-			//input type date list	
-			String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","" };
-			for (int i = 0; i < dateParam.length; i++) {
-				dateRelatedFields = new InputFields();
-				dateRelatedFields.setType(dateParam[i]);
-				i++;
-				dateRelatedFields.setTitle(dateParam[i]);
-				i++;
-				dateRelatedFields.setId(dateParam[i]);
-				i++;
-				dateRelatedFields.setClassName(dateParam[i]);
-				inputTypeDateList.add(dateRelatedFields);
-			}
+			/*
+			 * //input type date list String[] dateParam = {
+			 * "date",Translator.toLocale("input.startDate"), "startDate", "", "date",
+			 * Translator.toLocale("input.endDate"), "endDate",
+			 * "","text",Translator.toLocale("input.transactionID"),"transactionID","" };
+			 * for (int i = 0; i < dateParam.length; i++) { dateRelatedFields = new
+			 * InputFields(); dateRelatedFields.setType(dateParam[i]); i++;
+			 * dateRelatedFields.setTitle(dateParam[i]); i++;
+			 * dateRelatedFields.setId(dateParam[i]); i++;
+			 * dateRelatedFields.setClassName(dateParam[i]);
+			 * inputTypeDateList.add(dateRelatedFields); }
+			 */
 			
 		//This is for Operator Dropdown for CEIRadmin
 			if(("CEIRAdmin".equals(userType)) && !"5".equals(featureId)){
-				String[] selectParam = { "select", Translator.toLocale("operator.Operator"), "operator", "","select",Translator.toLocale("table.requestType"), "requestType", "", "select",
-						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status","" };	
-
-			for (int i = 0; i < selectParam.length; i++) {
-					inputFields = new InputFields();
-					inputFields.setType(selectParam[i]);
+				
+				  String[] selectParam = { "select", Translator.toLocale("operator.Operator"),
+				  "operator", "","select",Translator.toLocale("table.requestType"),
+				  "requestType", "", "select", Translator.toLocale("input.mode"),
+				  "sourceStatus", "","select", Translator.toLocale("table.status"), "status",""
+				  };
+				  
+				  for (int i = 0; i < selectParam.length; i++) { inputFields = new
+				  InputFields(); inputFields.setType(selectParam[i]); i++;
+				  inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
+				  i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
+				  } pageElement.setDropdownList(dropdownList);
+				 
+				//input type date list	
+				String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","", "select", Translator.toLocale("operator.Operator"),
+						  "operator", "","select",Translator.toLocale("table.requestType"),
+						  "requestType", "", "select", Translator.toLocale("input.mode"),
+						  "sourceStatus", "","select", Translator.toLocale("table.status"), "status","","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","" };
+				for (int i = 0; i < dateParam.length; i++) {
+					dateRelatedFields = new InputFields();
+					dateRelatedFields.setType(dateParam[i]);
 					i++;
-					inputFields.setTitle(selectParam[i]);
+					dateRelatedFields.setTitle(dateParam[i]);
 					i++;
-					inputFields.setId(selectParam[i]);
+					dateRelatedFields.setId(dateParam[i]);
 					i++;
-					inputFields.setClassName(selectParam[i]);
-					dropdownList.add(inputFields);
+					dateRelatedFields.setClassName(dateParam[i]);
+					inputTypeDateList.add(dateRelatedFields);
 				}
-				pageElement.setDropdownList(dropdownList);
 				
 			}else if(("5".equals(featureId)) && "CEIRAdmin".equals(userType)) {
-				String[] selectParam = {"select",Translator.toLocale("table.requestType"), "requestType", "", "select",
-						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status","" };	
-
-				for (int i = 0; i < selectParam.length; i++) {
-					inputFields = new InputFields();
-					inputFields.setType(selectParam[i]);
+				
+				//input type date list	
+				String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.BlockType"),"blockingTypeFilter","",
+						"select",Translator.toLocale("table.requestType"), "requestType", "", "select",
+						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status","","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","" };
+				for (int i = 0; i < dateParam.length; i++) {
+					dateRelatedFields = new InputFields();
+					dateRelatedFields.setType(dateParam[i]);
 					i++;
-					inputFields.setTitle(selectParam[i]);
+					dateRelatedFields.setTitle(dateParam[i]);
 					i++;
-					inputFields.setId(selectParam[i]);
+					dateRelatedFields.setId(dateParam[i]);
 					i++;
-					inputFields.setClassName(selectParam[i]);
-					dropdownList.add(inputFields);
+					dateRelatedFields.setClassName(dateParam[i]);
+					inputTypeDateList.add(dateRelatedFields);
 				}
-				pageElement.setDropdownList(dropdownList);
+				
+				
+				//This is for Operator Dropdown
+				
+				/*
+				 * String[] selectParam = {"select",Translator.toLocale("table.requestType"),
+				 * "requestType", "", "select", Translator.toLocale("input.mode"),
+				 * "sourceStatus", "","select", Translator.toLocale("table.status"), "status",""
+				 * };
+				 * 
+				 * for (int i = 0; i < selectParam.length; i++) { inputFields = new
+				 * InputFields(); inputFields.setType(selectParam[i]); i++;
+				 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
+				 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
+				 * }
+				 * 
+				 * pageElement.setDropdownList(dropdownList);
+				 */
 				
 				
 			}
 			else {
+				//input type date list	
+				String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","" };
+				for (int i = 0; i < dateParam.length; i++) {
+					dateRelatedFields = new InputFields();
+					dateRelatedFields.setType(dateParam[i]);
+					i++;
+					dateRelatedFields.setTitle(dateParam[i]);
+					i++;
+					dateRelatedFields.setId(dateParam[i]);
+					i++;
+					dateRelatedFields.setClassName(dateParam[i]);
+					inputTypeDateList.add(dateRelatedFields);
+				}
+				//This is for Operator Dropdown
 				String[] selectParam = { "select", Translator.toLocale("table.requestType"), "requestType", "", "select",
 						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status",""};	
 				for (int i = 0; i < selectParam.length; i++) {

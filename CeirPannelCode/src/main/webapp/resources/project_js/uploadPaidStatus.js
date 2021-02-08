@@ -541,7 +541,7 @@ function pageButtons(url){
 								"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 								"<select id="+date[i].id+" class='select2 initialized'>"+
-								"<option>"+date[i].title+
+								"<option value=''>"+date[i].title+
 								"</option>"+
 								"</select>"+
 								"</div>"+
@@ -572,7 +572,7 @@ function pageButtons(url){
 
 			$("#tableDiv").append("<div class='col s3 m2 l1'><button type='button' class='btn primary botton'  id='submitFilter' /></div></div></div>");
 			$("#tableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' style='margin-left: 18px;' id='clearRegisterDeviceFilter'>"+$.i18n('clearFilter')+"</button></div>");
-			$("#tableDiv").append("<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportpaidStatus()' type='button' class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+			$("#tableDiv").append("<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportpaidStatus()' style='margin-right: -105px;' type='button' class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 		
 			$('#clearRegisterDeviceFilter').attr("onclick", "filterResetregisterDevice('viewRegisterDeviceFilter')");
 			for(i=0; i<button.length; i++){
@@ -815,6 +815,7 @@ function exportpaidStatus(){
 	var table = $('#data-table-simple').DataTable();
     var status=$('#recordStatus').val();
     var origin = $("body").attr("data-roleType");
+ 
     if($("body").attr("data-roleType")=='CEIRAdmin'){
 		origin=$('#originFilter').val();
 	}

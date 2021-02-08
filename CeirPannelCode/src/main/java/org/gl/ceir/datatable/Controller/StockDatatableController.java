@@ -293,22 +293,19 @@ public class StockDatatableController {
 			
 			if("CEIRAdmin".equals(userType)) {
 				//Dropdown items	
-				String[] selectParam= {"select",Translator.toLocale("select.stockStatus"),"StockStatus","","select",Translator.toLocale("table.userType"),"userType",""};
-				for(int i=0; i< selectParam.length; i++) {
-					inputFields= new InputFields();
-					inputFields.setType(selectParam[i]);
-					i++;
-					inputFields.setTitle(selectParam[i]);
-					i++;
-					inputFields.setId(selectParam[i]);
-					i++;
-					inputFields.setClassName(selectParam[i]);
-					dropdownList.add(inputFields);
-				}
-
+			/*
+			 * String[] selectParam=
+			 * {"select",Translator.toLocale("select.stockStatus"),"StockStatus","","select"
+			 * ,Translator.toLocale("table.userType"),"userType",""}; for(int i=0; i<
+			 * selectParam.length; i++) { inputFields= new InputFields();
+			 * inputFields.setType(selectParam[i]); i++;
+			 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
+			 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
+			 * }
+			 */
 						
 				//input type date list	
-				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.importerCompanyName"),"name","","select",Translator.toLocale("table.userType"),"userType","",Translator.toLocale("table.fileName"),"fileNameFilter","","select",Translator.toLocale("select.stockStatus"),"StockStatus","","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","","text"};
+				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.importerCompanyName"),"name","","select",Translator.toLocale("registration.roletype"),"userType","","text",Translator.toLocale("table.fileName"),"fileNameFilter","","select",Translator.toLocale("select.stockStatus"),"StockStatus","","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter",""};
 				for(int i=0; i< dateParam.length; i++) {
 					dateRelatedFields= new InputFields();
 					dateRelatedFields.setType(dateParam[i]);

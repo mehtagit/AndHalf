@@ -609,7 +609,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 									"<select id="+date[i].id+" class='select2 initialized'>"+
-									"<option>"+date[i].title+
+									"<option value=''>"+date[i].title+
 									"</option>"+
 									"</select>"+
 									"</div>"+
@@ -619,7 +619,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 					 
 				}
 	// dynamic dropdown portion
-				var dropdown=data.dropdownList;
+			/*	var dropdown=data.dropdownList;
 				for(i=0; i<dropdown.length; i++){
 					var dropdownDiv=
 						$("#consignmentTableDIv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
@@ -634,7 +634,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 								"</select>"+
 								"</div>"+
 						"</div>");
-				}
+				}*/
 							
 				if(sourceType=="viaStock"){
 					$("#btnLink").css({display: "none"});
