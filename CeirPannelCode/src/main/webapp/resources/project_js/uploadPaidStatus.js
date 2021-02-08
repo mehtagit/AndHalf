@@ -531,9 +531,26 @@ function pageButtons(url){
 					$("#tableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" id="+date[i].id+" /><label for="+date[i].id+" id="+date[i].id+">"+date[i].title+"</label></div>");
 				}
 				
+				else if(date[i].type === "select"){
+
+					var dropdownDiv=
+						$("#tableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
+								
+								"<div class='select-wrapper select2  initialized'>"+
+								"<span class='caret'>"+"</span>"+
+								"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+
+								"<select id="+date[i].id+" class='select2 initialized'>"+
+								"<option value=''>"+date[i].title+
+								"</option>"+
+								"</select>"+
+								"</div>"+
+						"</div>");
+				
+				}
 			} 
 
-			// dynamic dropdown portion
+		/*	// dynamic dropdown portion
 			var dropdown=data.dropdownList;
 			for(i=0; i<dropdown.length; i++){
 				var dropdownDiv=
@@ -549,14 +566,15 @@ function pageButtons(url){
 							"</select>"+
 							"</div>"+
 					"</div>");
-			}
+			}*/
 
 
 
 			$("#tableDiv").append("<div class='col s3 m2 l1'><button type='button' class='btn primary botton'  id='submitFilter' /></div></div></div>");
-			$("#tableDiv").append("<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportpaidStatus()' type='button' class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			$("#tableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' style='margin-left: 18px;' id='clearRegisterDeviceFilter'>"+$.i18n('clearFilter')+"</button></div>");
-			$('#clearRegisterDeviceFilter').attr("onclick", "filterReset('viewRegisterDeviceFilter')");
+			$("#tableDiv").append("<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportpaidStatus()' style='margin-right: -105px;' type='button' class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+		
+			$('#clearRegisterDeviceFilter').attr("onclick", "filterResetregisterDevice('viewRegisterDeviceFilter')");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				if(button[i].type === "HeaderButton"){
@@ -797,6 +815,7 @@ function exportpaidStatus(){
 	var table = $('#data-table-simple').DataTable();
     var status=$('#recordStatus').val();
     var origin = $("body").attr("data-roleType");
+ 
     if($("body").attr("data-roleType")=='CEIRAdmin'){
 		origin=$('#originFilter').val();
 	}
@@ -1248,7 +1267,7 @@ $(document).ready(function () {
 
 
 
-	setDropdown('state');
+	setDropdownProviance('state');
 
 
 	$(document).ready(function(){
@@ -2003,3 +2022,11 @@ function deptImageValidation() {
 			 $('#uploadNidImage').text($.i18n('meesageForOtherDoc'));
 		 }
 	 });*/
+	
+	
+
+	function filterResetregisterDevice(formID){
+		$('#'+formID).trigger('reset');
+		$("label").removeClass('active');
+		filter(lang,null);
+	}

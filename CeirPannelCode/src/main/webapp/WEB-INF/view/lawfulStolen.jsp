@@ -1822,10 +1822,10 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 		
 		populateCountries("country");
 		populateStates("country", "state");
-		setDropdown('state');
-		setDropdown('state2');
-		setDropdown('state3');
-		setDropdown('singleDevicestate');
+		setDropdownProviance('state');
+		setDropdownProviance('state2');
+		setDropdownProviance('state3');
+		setDropdownProviance('singleDevicestate');
 		
 	
 	</script>

@@ -384,7 +384,9 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 			"userTypeId": parseInt($("body").attr("data-usertypeid")),
 			"userType":userType,
 			"operatorTypeId" : parseInt(operatorTypeId),
-			"userName" : $("body").attr("data-selected-username")
+			"userName" : $("body").attr("data-selected-username"),
+			"quantity" : $('#IMEIQuantityFilter').val(),
+			"deviceQuantity" : $('#deviceQuantityFilter').val()
 	}
 
 
@@ -411,10 +413,10 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 				bAutoWidth: false,
 				destroy:true,
 				"serverSide": true,
-				orderCellsTop : true,
+				orderCellsTop : true, 
 				"ordering": false,
 				"bPaginate" : true,
-				"bFilter" : true,
+				"bFilter" : false,
 				"bInfo" : true,
 				"bSearchable" : true,
 				scrollCollapse: true,
@@ -509,6 +511,23 @@ function pageElements(url){
 				}else if(date[i].type === "text"){
 					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
+				else if(date[i].type === "select"){
+
+					var dropdownDiv=
+						$("#consignmentTableDIv").append("<div class='col s6 m2 selectDropdwn'>"+
+								
+								"<div class='select-wrapper select2  initialized'>"+
+								"<span class='caret'>"+"</span>"+
+								"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+
+								"<select id="+date[i].id+" class='select2 initialized'>"+
+								"<option value=''>"+date[i].title+
+								"</option>"+
+								"</select>"+
+								"</div>"+
+						"</div>");
+				
+				}
 				 
 			} 
 
@@ -532,7 +551,9 @@ function pageElements(url){
 			if(sourceType=="viaExistingRecovery"){
 				$("#btnLink").css({display: "none"});
 				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportStolenRecoveryData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' style='margin-left: 18px;' id='clearStockFilter'>"+$.i18n('clearFilter')+"</button></div>");
+				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' style='margin-right: -105px;' type='button' class='export-to-excel right' onclick='exportStolenRecoveryData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				$('#clearStockFilter').attr("onclick", "filterResetBlockUnblock('stolenRecoveryFormDiv')");
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					if(button[i].type === "HeaderButton"){
@@ -558,8 +579,9 @@ function pageElements(url){
 			}else{
 				
 				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportStolenRecoveryData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
-
+				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' style='margin-left: 18px;' id='clearStockFilter'>"+$.i18n('clearFilter')+"</button></div>");
+				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' style='margin-right: -105px;' type='button' class='export-to-excel right' onclick='exportStolenRecoveryData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				$('#clearStockFilter').attr("onclick", "filterResetBlockUnblock('stolenRecoveryFormDiv')");                   	
 				for(i=0; i<button.length; i++){
 					$('#'+button[i].id).text(button[i].buttonTitle);
 					if(button[i].type === "HeaderButton" && userType != "Operator" ){
@@ -1155,7 +1177,8 @@ function exportStolenRecoveryData()
 			"userTypeId": parseInt($("body").attr("data-usertypeid")),
 			"userType":$("body").attr("data-roletype"),
 			"userId" : $("body").attr("data-userid"),
-		
+			"quantity" : $('#IMEIQuantityFilter').val(),
+			"deviceQuantity" : $('#deviceQuantityFilter').val()
 			
 			
 	}
@@ -1532,3 +1555,9 @@ function isLengthValid(val){
 	$('#data-table-history2').DataTable().state.clear();
 	//$('#data-table-history2').DataTable().clear().draw();
 }*/
+
+function filterResetBlockUnblock(formID){
+	$('#'+formID).trigger('reset');
+	$("label").removeClass('active');
+	filter(lang);
+}

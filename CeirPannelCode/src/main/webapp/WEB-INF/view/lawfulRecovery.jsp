@@ -1071,8 +1071,8 @@ onclick="_Services._selectstartDate()"></i></span>
 
     	$("#country1").val("Cambodia").change();
 		//$("#country1").attr("style", "pointer-events: none;");
-		setDropdown('state1');
-		setDropdown('bulkRecoverystate');
+		setDropdownProviance('state1');
+		setDropdownProviance('bulkRecoverystate');
 	
 </script>
 

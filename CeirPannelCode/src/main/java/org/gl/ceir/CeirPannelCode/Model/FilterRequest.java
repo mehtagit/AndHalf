@@ -13,7 +13,7 @@ public class FilterRequest {
 	public String publicIp;
 	private int districtID,communeID;
 	public String category,reportName,flag,emailId;
-	public String columnName,sort;
+	public String columnName,sort,blockingTypeFilter;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -593,6 +593,12 @@ public class FilterRequest {
 	public void setSort(String sort) {
 		this.sort = sort;
 	}
+	public String getBlockingTypeFilter() {
+		return blockingTypeFilter;
+	}
+	public void setBlockingTypeFilter(String blockingTypeFilter) {
+		this.blockingTypeFilter = blockingTypeFilter;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -788,9 +794,12 @@ public class FilterRequest {
 		builder.append(columnName);
 		builder.append(", sort=");
 		builder.append(sort);
+		builder.append(", blockingTypeFilter=");
+		builder.append(blockingTypeFilter);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 	
 	
