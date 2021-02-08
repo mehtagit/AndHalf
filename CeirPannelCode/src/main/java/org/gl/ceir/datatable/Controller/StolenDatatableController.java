@@ -367,17 +367,19 @@ public class StolenDatatableController {
 		//This is for Operator Dropdown for CEIRadmin
 			if(("CEIRAdmin".equals(userType)) && !"5".equals(featureId)){
 				
-				  String[] selectParam = { "select", Translator.toLocale("operator.Operator"),
-				  "operator", "","select",Translator.toLocale("table.requestType"),
-				  "requestType", "", "select", Translator.toLocale("input.mode"),
-				  "sourceStatus", "","select", Translator.toLocale("table.status"), "status",""
-				  };
-				  
-				  for (int i = 0; i < selectParam.length; i++) { inputFields = new
-				  InputFields(); inputFields.setType(selectParam[i]); i++;
-				  inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
-				  i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
-				  } pageElement.setDropdownList(dropdownList);
+				/*
+				 * String[] selectParam = { "select", Translator.toLocale("operator.Operator"),
+				 * "operator", "","select",Translator.toLocale("table.requestType"),
+				 * "requestType", "", "select", Translator.toLocale("input.mode"),
+				 * "sourceStatus", "","select", Translator.toLocale("table.status"), "status",""
+				 * };
+				 * 
+				 * for (int i = 0; i < selectParam.length; i++) { inputFields = new
+				 * InputFields(); inputFields.setType(selectParam[i]); i++;
+				 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
+				 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
+				 * } pageElement.setDropdownList(dropdownList);
+				 */
 				 
 				//input type date list	
 				String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","", "select", Translator.toLocale("operator.Operator"),

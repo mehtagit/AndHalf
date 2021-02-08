@@ -1127,5 +1127,5 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	function filterResetStock(formID){
 		$('#'+formID).trigger('reset');
 		$("label").removeClass('active');
-		filter(lang);
+		filter(lang,null);
 	}

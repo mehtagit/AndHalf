@@ -87,7 +87,12 @@
 						"featureId":parseInt(featureId),
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
 						"userType":$("body").attr("data-roleType"),
-						"featureId":parseInt(featureId)
+						"featureId":parseInt(featureId),
+						"nid":$('#passportNumberFilter').val(),
+						"visaType":$('#visaTypeFilter').val(),
+						"visaNumber":$('#visaNumberFilter').val(),
+						"visaExpiryDate":$('#expiryDateFilter').val(),
+						"fileName":$('#fileNameFilter').val()
 						//"status" : parseInt($('#status').val())
 				}
 				
@@ -115,7 +120,7 @@
 							orderCellsTop : true,
 							"ordering" : false,
 							"bPaginate" : true,
-							"bFilter" : true,
+							"bFilter" : false,
 							"bInfo" : true,
 							"bSearchable" : true,
 							"oLanguage": {  
@@ -202,10 +207,27 @@
 								$("#pendingTacTableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 
 							}
+							else if(date[i].type === "select"){
+
+								var dropdownDiv=
+									$("#pendingTacTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
+											
+											"<div class='select-wrapper select2  initialized'>"+
+											"<span class='caret'>"+"</span>"+
+											"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+
+											"<select id="+date[i].id+" class='select2 initialized'>"+
+											"<option value=''>"+date[i].title+
+											"</option>"+
+											"</select>"+
+											"</div>"+
+									"</div>");
+							
+							}
 						} 
 
 						// dynamic dropdown portion
-						var dropdown=data.dropdownList;
+					/*	var dropdown=data.dropdownList;
 						for(i=0; i<dropdown.length; i++){
 							var dropdownDiv=
 								$("#pendingTacTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
@@ -220,11 +242,12 @@
 										"</select>"+
 										"</div>"+
 								"</div>");
-						}
+						}*/
 
 						$("#pendingTacTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'></div>");
+						$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' style='margin-left: 18px;' id='clearVisaFilter'>"+$.i18n('clearFilter')+"</button></div>");
 						$("#pendingTacTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
-
+						$('#clearVisaFilter').attr("onclick", "visafilterReset('visaViewTable')");	
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							if(button[i].type === "HeaderButton"){
@@ -341,7 +364,12 @@
 						"userType":$("body").attr("data-roleType"),
 						"featureId":parseInt(featureId),
 						"pageNo":parseInt(pageNo),
-						"pageSize":parseInt(pageSize)
+						"pageSize":parseInt(pageSize),
+						"nid":$('#passportNumberFilter').val(),
+						"visaType":$('#visaTypeFilter').val(),
+						"visaNumber":$('#visaNumberFilter').val(),
+						"visaExpiryDate":$('#expiryDateFilter').val(),
+						"fileName":$('#fileNameFilter').val()
 				}
 				//////console.log(JSON.stringify(filterRequest))
 				var token = $("meta[name='_csrf']").attr("content");
@@ -551,3 +579,10 @@
 				event.preventDefault();
 			});
 		}
+
+			function visafilterReset(formID){
+				$('#'+formID).trigger('reset');
+				$("label").removeClass('active');
+				$('div#initialloader').fadeIn('fast');
+				DataTable(lang,null);
+			}

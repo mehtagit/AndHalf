@@ -2081,5 +2081,5 @@ $("#country").val("Cambodia").change();
 function filterResetLawfull(formID){
 	$('#'+formID).trigger('reset');
 	$("label").removeClass('active');
-	filter(lang);
+	filterStolen(lang,null);
 }

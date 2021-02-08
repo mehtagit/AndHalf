@@ -14,6 +14,7 @@ public class FilterRequest {
 	private int districtID,communeID;
 	public String category,reportName,flag,emailId;
 	public String columnName,sort,blockingTypeFilter;
+	public String visaType,visaNumber,visaExpiryDate;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -599,6 +600,24 @@ public class FilterRequest {
 	public void setBlockingTypeFilter(String blockingTypeFilter) {
 		this.blockingTypeFilter = blockingTypeFilter;
 	}
+	public String getVisaType() {
+		return visaType;
+	}
+	public void setVisaType(String visaType) {
+		this.visaType = visaType;
+	}
+	public String getVisaNumber() {
+		return visaNumber;
+	}
+	public void setVisaNumber(String visaNumber) {
+		this.visaNumber = visaNumber;
+	}
+	public String getVisaExpiryDate() {
+		return visaExpiryDate;
+	}
+	public void setVisaExpiryDate(String visaExpiryDate) {
+		this.visaExpiryDate = visaExpiryDate;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -796,10 +815,15 @@ public class FilterRequest {
 		builder.append(sort);
 		builder.append(", blockingTypeFilter=");
 		builder.append(blockingTypeFilter);
+		builder.append(", visaType=");
+		builder.append(visaType);
+		builder.append(", visaNumber=");
+		builder.append(visaNumber);
+		builder.append(", visaExpiryDate=");
+		builder.append(visaExpiryDate);
 		builder.append("]");
 		return builder.toString();
 	}
-	
 	
 	
 	
