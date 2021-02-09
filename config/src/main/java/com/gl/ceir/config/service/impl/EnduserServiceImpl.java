@@ -1140,6 +1140,22 @@ public class EnduserServiceImpl {
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
 			uPSB.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
+		if(Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty()) {
+			uPSB.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		if(Objects.nonNull(filterRequest.getVisaNumber()) && !filterRequest.getVisaNumber().isEmpty()) {
+			uPSB.with(new SearchCriteria("visaNumber", filterRequest.getVisaNumber(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		if(Objects.nonNull(filterRequest.getFileName()) && !filterRequest.getFileName().isEmpty()) {
+			uPSB.with(new SearchCriteria("visaFileName", filterRequest.getFileName(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		if(Objects.nonNull(filterRequest.getVisaExpiryDate()) && !filterRequest.getVisaExpiryDate().isEmpty()) {
+			uPSB.with(new SearchCriteria("visaExpiryDate", filterRequest.getVisaExpiryDate(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		if(Objects.nonNull(filterRequest.getVisaType()) && !filterRequest.getVisaType().isEmpty()) {
+			uPSB.with(new SearchCriteria("visaType", filterRequest.getVisaType(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		
 
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			uPSB.orSearch(new SearchCriteria("nid", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
@@ -1274,10 +1290,12 @@ public class EnduserServiceImpl {
 					uVFm = new UpdateVisaFileModel();
 					uVFm.setRequestedOn(utility.converedtlocalTime(visa.getCreatedOn()));
 					uVFm.setModifiedOn(utility.converedtlocalTime(visa.getModifiedOn()));
-					uVFm.setVisaExpiryDate(DateUtil.dateToString(visa.getVisaExpiryDate()));
+					uVFm.setVisaExpiryDate((DateUtil.dateToString(visa.getVisaExpiryDate())));
 					uVFm.setVisaNumber(visa.getVisaNumber());
 					uVFm.setVisaType(visa.getVisaTypeInterp());
 					uVFm.setStatus(visa.getStateInterp());
+					uVFm.setTxnId(visa.getTxnId());
+					uVFm.setFileName(visa.getVisaFileName());
 					//System.out.println(uVFm.toString());
 					fileRecords.add(uVFm);
 				}
