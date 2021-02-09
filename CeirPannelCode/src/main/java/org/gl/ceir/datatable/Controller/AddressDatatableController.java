@@ -88,8 +88,8 @@ public class AddressDatatableController {
 				   String commune= dataInsideList.getCommune();
 				   String village = dataInsideList.getVillage();
 				   String userStatus = (String) session.getAttribute("userStatus");	  
-				   //String action=iconState.addressManagementIcons(id,userStatus);
-				   Object[] finalData={createdOn,province,district,commune,village}; 
+				   String action=iconState.addressManagementIcons(id,userStatus);
+				   Object[] finalData={createdOn,province,district,commune,village,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
