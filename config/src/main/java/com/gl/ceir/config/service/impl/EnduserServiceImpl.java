@@ -62,6 +62,7 @@ import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.TaxStatus;
+import com.gl.ceir.config.model.file.ConsignmentFileModelCEIR;
 import com.gl.ceir.config.model.file.UpdateVisaFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
@@ -78,11 +79,13 @@ import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.transaction.EndUserTransaction;
 import com.gl.ceir.config.util.CommonFunction;
+import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.DateUtil;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
+import com.opencsv.bean.MappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
@@ -1140,6 +1143,22 @@ public class EnduserServiceImpl {
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
 			uPSB.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
+		if(Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty()) {
+			uPSB.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		if(Objects.nonNull(filterRequest.getVisaNumber()) && !filterRequest.getVisaNumber().isEmpty()) {
+			uPSB.with(new SearchCriteria("visaNumber", filterRequest.getVisaNumber(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		if(Objects.nonNull(filterRequest.getFileName()) && !filterRequest.getFileName().isEmpty()) {
+			uPSB.with(new SearchCriteria("visaFileName", filterRequest.getFileName(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		if(Objects.nonNull(filterRequest.getVisaExpiryDate()) && !filterRequest.getVisaExpiryDate().isEmpty()) {
+			uPSB.with(new SearchCriteria("visaExpiryDate", filterRequest.getVisaExpiryDate(), SearchOperation.EQUALITY, Datatype.DATE));
+		}
+		if(Objects.nonNull(filterRequest.getVisaType()) && !filterRequest.getVisaType().isEmpty()) {
+			uPSB.with(new SearchCriteria("visaType", filterRequest.getVisaType(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		
 
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			uPSB.orSearch(new SearchCriteria("nid", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
@@ -1234,8 +1253,10 @@ public class EnduserServiceImpl {
 		StatefulBeanToCsvBuilder<UpdateVisaFileModel> builder = null;
 		StatefulBeanToCsv<UpdateVisaFileModel> csvWriter      = null;
 		List<UpdateVisaFileModel> fileRecords       = null;
-		HeaderColumnNameTranslateMappingStrategy<UpdateVisaFileModel> mapStrategy = null;
+		//HeaderColumnNameTranslateMappingStrategy<UpdateVisaFileModel> mapStrategy = null;
+		MappingStrategy<UpdateVisaFileModel> mapStrategy = new CustomMappingStrategy<>();	
 		try {
+			//mapStrategy.setType(UpdateVisaFileModel.class);
 			List<VisaUpdateDb> visaData = this.getAllVisaUpdate(filterRequest);
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 8L,
 					filterRequest.getUserType(), 43,Features.UPDATE_VISA, SubFeatures.EXPORT, "","NA",filterRequest.getUserType()));
@@ -1266,7 +1287,10 @@ public class EnduserServiceImpl {
 			logger.info(" file path plus filke name: "+Paths.get(filePath+fileName));
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			builder = new StatefulBeanToCsvBuilder<UpdateVisaFileModel>(writer);
-			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+		//csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+			csvWriter = builder.withMappingStrategy(mapStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+			mapStrategy.setType(UpdateVisaFileModel.class);
+			
 			if( visaData.size() > 0 ) {
 				//List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag("GRIEVANCE_CATEGORY");
 				fileRecords = new ArrayList<UpdateVisaFileModel>(); 
@@ -1274,10 +1298,12 @@ public class EnduserServiceImpl {
 					uVFm = new UpdateVisaFileModel();
 					uVFm.setRequestedOn(utility.converedtlocalTime(visa.getCreatedOn()));
 					uVFm.setModifiedOn(utility.converedtlocalTime(visa.getModifiedOn()));
-					uVFm.setVisaExpiryDate(DateUtil.dateToString(visa.getVisaExpiryDate()));
+					uVFm.setVisaExpiryDate((DateUtil.dateToString(visa.getVisaExpiryDate())));
 					uVFm.setVisaNumber(visa.getVisaNumber());
 					uVFm.setVisaType(visa.getVisaTypeInterp());
 					uVFm.setStatus(visa.getStateInterp());
+					uVFm.setTxnId(visa.getTxnId());
+					uVFm.setFileName(visa.getVisaFileName());
 					//System.out.println(uVFm.toString());
 					fileRecords.add(uVFm);
 				}

@@ -59,9 +59,10 @@ public class FilterRequest {
 	
 	private String supplierName;
 	private String fileName,nationality;
-	
 	private String columnName;
-	private String sort;
+	private String sort,blockingTypeFilter;
+	
+	public String visaType,visaNumber,visaExpiryDate;
 	
 	public String getFilteredUserType() {
 		return filteredUserType;
@@ -324,6 +325,22 @@ public class FilterRequest {
 		return supplierName;
 	}
 
+	public String getColumnName() {
+		return columnName;
+	}
+
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+
 	public void setSupplierName(String supplierName) {
 		this.supplierName = supplierName;
 	}
@@ -344,6 +361,14 @@ public class FilterRequest {
 
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
+	}
+
+	public String getBlockingTypeFilter() {
+		return blockingTypeFilter;
+	}
+
+	public void setBlockingTypeFilter(String blockingTypeFilter) {
+		this.blockingTypeFilter = blockingTypeFilter;
 	}
 
 	@Override
@@ -441,24 +466,40 @@ public class FilterRequest {
 		builder.append(columnName);
 		builder.append(", sort=");
 		builder.append(sort);
+		builder.append(", blockingTypeFilter=");
+		builder.append(blockingTypeFilter);
+		builder.append(", visaType=");
+		builder.append(visaType);
+		builder.append(", visaNumber=");
+		builder.append(visaNumber);
+		builder.append(", visaExpiryDate=");
+		builder.append(visaExpiryDate);
 		builder.append("]");
 		return builder.toString();
 	}
 
-	public String getColumnName() {
-		return columnName;
+	public String getVisaType() {
+		return visaType;
 	}
 
-	public void setColumnName(String columnName) {
-		this.columnName = columnName;
+	public void setVisaType(String visaType) {
+		this.visaType = visaType;
 	}
 
-	public String getSort() {
-		return sort;
+	public String getVisaNumber() {
+		return visaNumber;
 	}
 
-	public void setSort(String sort) {
-		this.sort = sort;
+	public void setVisaNumber(String visaNumber) {
+		this.visaNumber = visaNumber;
+	}
+
+	public String getVisaExpiryDate() {
+		return visaExpiryDate;
+	}
+
+	public void setVisaExpiryDate(String visaExpiryDate) {
+		this.visaExpiryDate = visaExpiryDate;
 	}
 
 	 

@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.configuration.SortDirection;
 import com.gl.ceir.config.exceptions.RequestInvalidException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.factory.ExportFileFactory;
@@ -312,8 +313,26 @@ public class StockServiceImpl {
 			String source){
 
 		List<StateMgmtDb> statusList = null;
-		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+		String orderColumn = "0".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
+				: "1".equalsIgnoreCase(filterRequest.getColumnName()) ? "txnId"
+					:"2".equalsIgnoreCase(filterRequest.getColumnName()) ? "user.userProfile.displayName"
+						: "3".equalsIgnoreCase(filterRequest.getColumnName()) ? "roleType"
+								: "4".equalsIgnoreCase(filterRequest.getColumnName()) ? "fileName"
+										: "5".equalsIgnoreCase(filterRequest.getColumnName())
+												? "stockStatus"
+												:"6".equalsIgnoreCase(filterRequest.getColumnName()) ? "quantity" 
+												: "7".equalsIgnoreCase(filterRequest.getColumnName()) ? "deviceQuantity":"modifiedOn";
 		
+		
+		Sort.Direction direction;
+		if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+			direction=Sort.Direction.DESC;
+		}
+		else {
+			direction= SortDirection.getSortDirection(filterRequest.getSort());
+		}
+		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
+	
 		try {
 		//	stockValidator.validateFilter(filterRequest);
 

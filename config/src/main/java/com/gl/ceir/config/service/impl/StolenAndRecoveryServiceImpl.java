@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.configuration.SortDirection;
 import com.gl.ceir.config.exceptions.RequestInvalidException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.feign.UserFeignClient;
@@ -301,7 +302,36 @@ public class StolenAndRecoveryServiceImpl {
 	public Page<StolenandRecoveryMgmt> getAllInfo(FilterRequest filterRequest, Integer pageNo, Integer pageSize,String source){
 		List<StateMgmtDb> stateInterpList = null;
 		List<StateMgmtDb> statusList = null;
-		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+		if(filterRequest.getFeatureId() == 5) {
+			
+		}
+		String orderColumn = "0".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
+				: "1".equalsIgnoreCase(filterRequest.getColumnName()) ? "txnId"
+						: "3".equalsIgnoreCase(filterRequest.getColumnName()) ? "requestType"
+								: "4".equalsIgnoreCase(filterRequest.getColumnName()) ? "sourceType"
+										: "5".equalsIgnoreCase(filterRequest.getColumnName())
+												? "fileStatus"
+												:"6".equalsIgnoreCase(filterRequest.getColumnName()) ? "qty" 
+												: "7".equalsIgnoreCase(filterRequest.getColumnName()) ? "deviceQuantity":"modifiedOn";
+		if(filterRequest.getFeatureId() == 7 && "2".equalsIgnoreCase(filterRequest.getColumnName())) {
+			orderColumn = "operatorTypeId";
+		}
+		else if(filterRequest.getFeatureId() == 5 && "2".equalsIgnoreCase(filterRequest.getColumnName())) {
+			orderColumn = "blockingType";
+		}
+		
+		Sort.Direction direction;
+		if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+			direction=Sort.Direction.DESC;
+		}
+		else {
+			direction= SortDirection.getSortDirection(filterRequest.getSort());
+		}
+		
+		logger.info(direction+"  column --- > "+ orderColumn);
+		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
+	
+	//	Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 		
 		try {
 			stolenValidator.validateFilter(filterRequest);
@@ -424,7 +454,15 @@ public class StolenAndRecoveryServiceImpl {
 		if(Objects.nonNull(filterRequest.getOperatorTypeId())) {
 			srsb.with(new SearchCriteria("operatorTypeId", filterRequest.getOperatorTypeId(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
-
+		if(Objects.nonNull(filterRequest.getQuantity()) && !filterRequest.getQuantity().isEmpty())
+			srsb.with(new SearchCriteria("qty", filterRequest.getQuantity(), SearchOperation.LIKE, Datatype.STRING));
+		
+		if(Objects.nonNull(filterRequest.getDeviceQuantity()) && !filterRequest.getDeviceQuantity().isEmpty())
+			srsb.with(new SearchCriteria("deviceQuantity", filterRequest.getDeviceQuantity(), SearchOperation.LIKE, Datatype.STRING));
+		
+		if(Objects.nonNull(filterRequest.getBlockingTypeFilter()) && !filterRequest.getBlockingTypeFilter().isEmpty())
+			srsb.with(new SearchCriteria("blockingType", filterRequest.getBlockingTypeFilter(), SearchOperation.LIKE, Datatype.STRING));
+		
 		if(Objects.nonNull(filterRequest.getRequestType())) {
 			srsb.with(new SearchCriteria("requestType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
 		}else {
@@ -595,7 +633,8 @@ public class StolenAndRecoveryServiceImpl {
 					srfm.setStolenStatus(stolenandRecoveryMgmt.getStateInterp());
 					srfm.setFileName( stolenandRecoveryMgmt.getFileName());
 					srfm.setDeviceQuantity(stolenandRecoveryMgmt.getDeviceQuantity());
-
+					srfm.setQuantity(stolenandRecoveryMgmt.getQty());
+					srfm.setBlockingType(stolenandRecoveryMgmt.getBlockingType());
 					logger.debug(srfm);
 					fileRecords.add(srfm);
 				}
@@ -661,11 +700,11 @@ public class StolenAndRecoveryServiceImpl {
 					srfm.setMode(stolenandRecoveryMgmt.getSourceTypeInterp());
 					logger.info("Status : "+stolenandRecoveryMgmt.getStateInterp());
 					srfm.setStolenStatus(stolenandRecoveryMgmt.getStateInterp());
-
+					srfm.setQuantity(stolenandRecoveryMgmt.getQty());
 					if(Objects.isNull(stolenandRecoveryMgmt.getOperatorTypeId())) {
 						srfm.setSource("");
 					}else if(stolenandRecoveryMgmt.getOperatorTypeId() == -1) {
-						srfm.setSource("Ceir Admin");
+						srfm.setSource("Operation");
 					}else {
 						srfm.setSource(stolenandRecoveryMgmt.getOperatorTypeIdInterp());
 					}
