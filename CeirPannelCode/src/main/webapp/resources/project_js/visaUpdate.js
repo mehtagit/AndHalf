@@ -36,10 +36,18 @@
 				$.getJSON('./getDropdownList/'+featureId+'/'+$("body").attr("data-userTypeID"), function(data) {
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].state).text(data[i].interp)
-						.appendTo('#statusvisa'); 
+						.appendTo('#status'); 
 					
 					}
 			
+				});
+				$.getJSON('./getDropdownList/VISA_TYPE', function(data) {
+					for (i = 0; i < data.length; i++) {
+						
+						$('<option>').val(data[i].value).text(data[i].interp)
+						.appendTo('#visaTypeFilter');
+
+					}
 				});
 			});
 
@@ -55,6 +63,10 @@
 			function DataTable(lang,source){
 				var source__val;
 					//////console.log("1=="+source);
+				var status =$('#status').val();
+				if(status=="" || status==null){
+					status=-1;
+				}
 				if(source == 'filter' ) {
 					source__val= source;
 				}
@@ -81,7 +93,7 @@
 						"endDate":$('#endDate').val(),
 						"startDate":$('#startDate').val(),
 						"txnId":txn,
-						"status":$('#statusvisa').val(),
+						"status":status,
 						"startDate":$('#startDate').val(),
 						"userId": parseInt($("body").attr("data-userID")),
 						"featureId":parseInt(featureId),
@@ -245,8 +257,8 @@
 						}*/
 
 						$("#pendingTacTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'></div>");
-						$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' style='margin-left: 18px;' id='clearVisaFilter'>"+$.i18n('clearFilter')+"</button></div>");
-						$("#pendingTacTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#pendingTacTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' style='margin-left: 18px;' id='clearVisaFilter'>"+$.i18n('clearFilter')+"</button></div>");
+						$("#pendingTacTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' style='margin-right: -105px;' type='button' class='export-to-excel right'  onclick='exportData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						$('#clearVisaFilter').attr("onclick", "visafilterReset('visaViewTable')");	
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
@@ -357,7 +369,7 @@
 						"endDate":$('#endDate').val(),
 						"startDate":$('#startDate').val(),
 						"txnId":txn,
-						"status":$('#statusvisa').val(),
+						"status":$('#status').val(),
 						"userId": parseInt($("body").attr("data-userID")),
 						"featureId":parseInt(featureId),
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
@@ -586,3 +598,5 @@
 				$('div#initialloader').fadeIn('fast');
 				DataTable(lang,null);
 			}
+			
+		
