@@ -73,6 +73,16 @@ public class StolenDatatableController {
 		log.info("filter request=="+filterrequest);
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
+		
+		if(request.getParameter("order[0][column]") == null && request.getParameter("order[0][dir]") == null) {
+			filterrequest.setColumnName("modifiedOn");
+			filterrequest.setSort("desc");
+			}
+		else {
+		filterrequest.setColumnName(request.getParameter("order[0][column]"));
+		filterrequest.setSort(request.getParameter("order[0][dir]"));
+		}
+		
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		// TODO Convert header to an ENUM.
 		// list provided via Back-end process
@@ -385,7 +395,7 @@ public class StolenDatatableController {
 				String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","", "select", Translator.toLocale("operator.Operator"),
 						  "operator", "","select",Translator.toLocale("table.requestType"),
 						  "requestType", "", "select", Translator.toLocale("input.mode"),
-						  "sourceStatus", "","select", Translator.toLocale("table.status"), "status","","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","" };
+						  "sourceStatus", "","select", Translator.toLocale("table.status"), "status","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter",""};
 				for (int i = 0; i < dateParam.length; i++) {
 					dateRelatedFields = new InputFields();
 					dateRelatedFields.setType(dateParam[i]);

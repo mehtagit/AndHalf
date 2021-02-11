@@ -144,7 +144,7 @@ function Datatable(url,DataUrl,sourceTypeFiler){
 				destroy:true,
 				"serverSide": true,
 				orderCellsTop : true,
-				"ordering": false,
+				"ordering": true,
 				"bPaginate" : true,
 				"bFilter" : false,
 				"bInfo" : true,
@@ -153,6 +153,7 @@ function Datatable(url,DataUrl,sourceTypeFiler){
 					"sUrl": langFile  
 				},
 				scrollCollapse: true,
+				"aaSorting": [],
 				initComplete: function() {
 			 		$('.dataTables_filter input')
    .off().on('keyup', function(event) {
@@ -182,7 +183,8 @@ function Datatable(url,DataUrl,sourceTypeFiler){
 				"columns": result,
 				fixedColumns: true,
 				columnDefs: [
-					{ width: 245, targets: result.length - 1 }
+					{ width: 245, targets: result.length - 1 },
+					 { orderable: false, targets: -1 }
 					]
 			});
 			$('div#initialloader').delay(300).fadeOut('slow');
@@ -2081,5 +2083,5 @@ $("#country").val("Cambodia").change();
 function filterResetLawfull(formID){
 	$('#'+formID).trigger('reset');
 	$("label").removeClass('active');
-	filter(lang);
+	filterStolen(lang,null);
 }

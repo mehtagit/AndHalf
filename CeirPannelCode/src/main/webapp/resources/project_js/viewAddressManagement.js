@@ -526,6 +526,8 @@
 	}
 	
 	
+	
+	
 	 function saveProvince(){
 		// var counrty = $('#country').val() =="" || $('#country').val() == undefined ? null : $("#country option:selected").text();
 		 //var province = $('#addProvince').val() =="" || $('#addProvince').val() == undefined ? null : $("#addProvince option:selected").text();
@@ -799,4 +801,267 @@
 		 
 	 }
 	 */
+	 var localityID;
 	
+	 function viewDetails(id){
+		 $("#editAddressModal").openModal({
+				dismissible:false
+			});
+		$("#localityId").val(id);
+		localityID = id;
+		
+		//alert("localityId1--->"+JSON.stringify($("#localityId").val(id))); 
+	 }
+	
+	 /*--------------------------------- view Address -----------------------------------*/
+	 
+	 function EditSystemAddress(entity){
+		// alert("localityId2--->"+JSON.stringify($("#localityId").val())); 
+		 		var request ={
+		 				"userId":parseInt(userId), 
+						"featureId":parseInt(featureId),
+						"userTypeId": parseInt($("body").attr("data-userTypeID")),
+						"userType":$("body").attr("data-roleType"),
+						"username" : $("body").attr("data-selected-username"),
+						"localityId" : $("#localityId").val()
+		 		}
+				var token = $("meta[name='_csrf']").attr("content");
+				var header = $("meta[name='_csrf_header']").attr("content");
+				$.ajaxSetup({
+					headers:
+					{ 'X-CSRF-TOKEN': token }
+				});
+				$.ajax({
+						url: './viewAddress',
+						type: 'POST',
+						data : JSON.stringify(request),
+						dataType : 'json',
+						contentType : 'application/json; charset=utf-8',
+						success: function (data, textStatus, jqXHR) {
+							if (entity == "province"){
+								$("#editProvinceModal").openModal({
+									dismissible:false
+								});
+								$("#editCountry").val(data.country);
+								$('#editProvince,#oldProvince').val(data.province);
+								$("label[class='center-align']").addClass('active');
+							}else if(entity == "district"){
+								$("#editDistrictModal").openModal({
+									dismissible:false
+								});
+								$('#editProvinceforDistrict').val(data.province);
+								$('#editDistrict,#oldDistrict').val(data.district);
+							}else if(entity == "commune"){
+								$("#editCommuneModal").openModal({
+									dismissible:false
+								});
+								$('#editProvinceForCommune').val(data.province);
+								$('#editDistrictForCommune,#oldDistrict').val(data.district);
+								$('#editCommune,#oldcommune').val(data.commune);
+							}else if(entity == "village"){
+								$("#editVillageModal").openModal({
+									dismissible:false
+								});
+								$('#editProvinceForVillage').val(data.province);
+								$('#editDistrictForVillage').val(data.district);
+								$('#editCommuneForVillage').val(data.commune);
+								$('#editVillage,#oldVillage').val(data.village);
+								
+								
+							}
+						},
+						error: function (jqXHR, textStatus, errorThrown) {
+							////console.log("error in ajax")
+						}
+					});	
+	}
+	
+	 /*---------------------------------- Update Province-------------------------------------*/
+		
+		
+		function updateProvince(){
+			//alert("localityID--->" +localityID)
+			var request ={ 
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username"),
+					"id" : parseInt(localityID),
+					"country" : $("#editCountry").val(),
+					"province" : $("#oldProvince").val(),
+					"updatingProvinceName" : $("#editProvince").val(),
+			}
+
+			//////console.log("request--->" +JSON.stringify(request))
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
+			$.ajax({
+				url: './updateProvince', 
+				type: 'PUT',
+				data : JSON.stringify(request),
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				success: function (data, textStatus, jqXHR) {
+
+					////console.log("Updated data---->" +data)
+					$("#editProvinceModal").closeModal();	
+					$("#updateFieldsSuccess").openModal({
+						dismissible:false
+					});
+					$('#updateFieldMessage').text('');
+					$('#updateFieldMessage').text('Province Updated Successfully.');
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					////console.log("error in ajax")
+				}
+			});	
+			
+			return false
+		}
+		
+		
+		/*---------------------------------- Update District-------------------------------------*/
+		
+		
+		function updateDistrict(){
+			//alert("localityID--->" +localityID)
+			var request ={ 
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username"),
+					"id" : localityID,
+					"province" : $("#editProvinceforDistrict").val(),
+					"currentDistrictName": $("#editDistrict").val(),
+					"district": $("#oldDistrict").val(),
+				}
+
+			//////console.log("request--->" +JSON.stringify(request))
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
+			$.ajax({
+				url: './updateDistrict', 
+				type: 'PUT',
+				data : JSON.stringify(request),
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				success: function (data, textStatus, jqXHR) {
+
+					////console.log("Updated data---->" +data)
+					$("#editDistrictModal").closeModal();	
+					$("#updateFieldsSuccess").openModal({
+						dismissible:false
+					});
+					$('#updateFieldMessage').text('');
+					$('#updateFieldMessage').text('District Updated Successfully.');
+
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					////console.log("error in ajax")
+				}
+			});	
+			
+			return false
+		}
+		 
+		/*---------------------------------- Update Commune-------------------------------------*/
+		
+		
+		function updateCommune(){
+			//alert("localityID--->" +localityID)
+			var request ={ 
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username"),
+					"id" : localityID,
+					"commune": $("#oldcommune").val(),
+					"currentCommuneName": $("#editCommune").val(),
+					"districtName": $("#editDistrictForCommune").val(),
+					"province" : $("#editProvinceForCommune").val(),
+				}
+
+			//////console.log("request--->" +JSON.stringify(request))
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
+			$.ajax({
+				url: './updateCommune', 
+				type: 'PUT',
+				data : JSON.stringify(request),
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				success: function (data, textStatus, jqXHR) {
+
+					////console.log("Updated data---->" +data)
+					$("#editCommuneModal").closeModal();	
+					$("#updateFieldsSuccess").openModal({
+						dismissible:false
+					});
+					$('#updateFieldMessage').text('');
+					$('#updateFieldMessage').text('Commune Updated Successfully.');
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					////console.log("error in ajax")
+				}
+			});	
+			
+			return false
+		}
+		
+		
+		/*---------------------------------- Update Village-------------------------------------*/
+		
+		
+		function updateVillage(){
+			//alert("localityID--->" +localityID)
+			var request ={ 
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username"),
+					"id" : localityID,
+					"currentVillage": $("#editVillage").val(),
+					"commune": $('#editCommuneForVillage').val(),
+					"districtName":  $("#editDistrictForVillage").val(),
+					"village" : $("#oldVillage").val()
+					
+				}
+
+			//////console.log("request--->" +JSON.stringify(request))
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers:
+				{ 'X-CSRF-TOKEN': token }
+			});
+			$.ajax({
+				url: './updateVillage', 
+				type: 'PUT',
+				data : JSON.stringify(request),
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				success: function (data, textStatus, jqXHR) {
+
+					////console.log("Updated data---->" +data)
+					$("#editVillageModal").closeModal();	
+					$("#updateFieldsSuccess").openModal({
+						dismissible:false
+					});
+					$('#updateFieldMessage').text('');
+					$('#updateFieldMessage').text('Village Updated Successfully.');
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					////console.log("error in ajax")
+				}
+			});	
+			
+			return false
+		}		

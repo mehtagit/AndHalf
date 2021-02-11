@@ -14,6 +14,7 @@ import org.gl.ceir.CeirPannelCode.Model.UserStatus;
 import org.gl.ceir.CeirPannelCode.Response.LoginResponse;
 import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
+import org.gl.ceir.pagination.model.AddressContentModel;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -104,7 +105,10 @@ public interface UserLoginFeignImpl {
 		public GenricResponse AddVillageManagementFeign(@RequestBody FilterRequest filterRequest);
 		
 		
+		//***************************************************View Province Feign********************************
 		
+		@RequestMapping(value="/viewAllLocality" ,method=RequestMethod.POST) 
+		public @ResponseBody AddressContentModel viewProvinceFeign(@RequestBody FilterRequest filterRequest);
 		
 		
 		@GetMapping("/getDistinctFeature")
@@ -119,7 +123,25 @@ public interface UserLoginFeignImpl {
 		public @ResponseBody List<String> getDistinctFeatureName();
 		
 		
+		//***************************************************Update province Feign********************************
+
+		@RequestMapping(value= "/updateProvince" , method=RequestMethod.PUT) 
+		public GenricResponse updateprovinceFeign(@RequestBody AddressContentModel addressContentModel);
 		
+		//***************************************************Update District Feign********************************
+
+		@RequestMapping(value= "/updateDistrict" , method=RequestMethod.PUT) 
+		public GenricResponse updateDistrictFeign(@RequestBody AddressContentModel addressContentModel);
+		
+		//***************************************************Update Commune Feign********************************
+
+		@RequestMapping(value= "/updateCommune" , method=RequestMethod.PUT) 
+		public GenricResponse updateCommuneFeign(@RequestBody AddressContentModel addressContentModel);
+		
+		//***************************************************Update Village Feign********************************
+
+		@RequestMapping(value= "/updateVillage" , method=RequestMethod.PUT) 
+		public GenricResponse updateVillageFeign(@RequestBody AddressContentModel addressContentModel);
 		
 }
 

@@ -3269,16 +3269,20 @@ public class IconsState {
 
 	public String addressManagementIcons(String id, String userStatus) { 
 		executePostConstruct();
-
+		String editAction= "viewDetails("+id+")";
 		String deleteAction= "DeleteByID('"+id+"')";
 
 		// state related Code 
+		
+		String edit="<a onclick="+editAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
+				+editIcon+" aria-hidden=\"true\"  title="
+				+editIconTitle+"></i></a>"; 
 		
 		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
 				+deletionIcon+" aria-hidden=\"true\"  title="
 				+deleteIconTitle+"></i></a>"; 
 
-		String action=delete;
+		String action=edit.concat(delete);
 		return action;
 
 	}
@@ -3308,3 +3312,4 @@ public class IconsState {
 	}
 
 }
+

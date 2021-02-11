@@ -374,7 +374,7 @@
         </div> 
         
         <div id="confirmSaveModal" class="modal">
-         <h6 class="modal-header"><spring:message code="registration.changeUserStatus" /></h6>
+         <h6 class="modal-header"><spring:message code="sidebar.Address_Management" /></h6>
           <div class="modal-content">
             <div class="row">
                 <form action="">
@@ -426,7 +426,247 @@
 		</div>
 	</div>
 	
+		<div id="editAddressModal" class="modal">
+           <h6 class="modal-header">Update Address</h6>
+           <div class="modal-content">
+            <div class="row">
+              
+                   <h5 class="center">
+						<label> <input name="group1" type="radio" value="0"
+							onclick="EditSystemAddress('province');"/>
+							<span class="checkboxFont"> <spring:message code="input.province" /></span></label>
+						
+						<input type="text" name="localityId" id="localityId" hidden="hidden">
+									
+						 <label> <input name="group2" type="radio" value="1"
+							onclick="EditSystemAddress('district')"/>
+							<span class="checkboxFont"> <spring:message code="input.district" /></span>
+						</label> 
+						
+						<label> <input name="group3" type="radio" value="2"
+							onclick="EditSystemAddress('commune')"/>
+							<span class="checkboxFont"> <spring:message code="input.commune" /></span>
+						</label> 
+						
+						<label> <input name="group4" type="radio" value="3"
+							onclick="EditSystemAddress('village')"/>
+							<span class="checkboxFont"> <spring:message code="input.village" /></span>
+						</label> 
+					</h5>
+							  
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <button class="btn modal-close" onclick = "resetButtons()"style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
+                </div>
+            </div>
+        </div>
+    </div>
 	
+	<div id="editProvinceModal" class="modal">
+               <form action="" onsubmit="return updateProvince()" method="POST"
+								enctype="multipart/form-data" >
+								  <div class="row" id="singleInput">
+								  <h6 class="modal-header "> Update Province</h6>
+                                <div class="col s12 m12 l12">
+                   	   
+                                <div class="row"  style="margin-top: 10px">
+
+
+						<div class="input-field col s12 m6" style="margin-top: 10px">
+							<label for="editCountry" class="center-align"><spring:message
+							code="table.country" /> <span class="star">*</span></label>
+							<input type="text" name="editCountry" id="editCountry"
+								oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+								maxlength="50" required disabled/> 
+						</div>
+
+						<input type="text" name=oldProvince id="oldProvince" hidden="hidden">
+						
+						<div class="input-field col s12 m6" style="margin-top: 10px;">
+							<label for="editProvince"
+							class="center-align"><spring:message
+							code="input.province" /> <span class="star">*</span></label>
+							<input type="text" name="editProvince" id="editProvince"
+							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+							maxlength="50" required/> 
+						</div>		
+                      </div>
+                               <div class="row">
+                                            <div class="input-field col s12 center" style="padding: 20px 0;">
+                                                <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
+                                                 <button class=" btn" type="submit"><spring:message code="button.update" /></button>
+                                               	<button type="button" onclick = "resetButtons()" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
+                                            </div>
+									</div>	
+                                  </div>
+                         </div></form>
+        </div> 
+	
+	<div id="editDistrictModal" class="modal">
+               <form action="" onsubmit="return updateDistrict()" method="POST"
+								enctype="multipart/form-data" >
+						<div class="row" id="singleInput">
+								  <h6 class="modal-header ">Update District</h6>
+                                <div class="col s12 m12 l12">
+                   	   
+                                <div class="row"  style="margin-top: 10px">
+                                        <div class="input-field col s12 m6" style="margin-top: 10px">
+                                        <label for="editProvinceforDistrict"
+										class="center-align"><spring:message
+										code="input.province" /> <span class="star">*</span></label>
+										<input type="text" name="editProvinceforDistrict" id="editProvinceforDistrict"
+										placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+										maxlength="50" required disabled /> 
+								</div> 
+                                       
+                                 <input type="text" name=oldDistrict id="oldDistrict" hidden="hidden">
+                                       		
+                                 <div class="input-field col s12 m6" style="margin-top: 10px;">
+                                 		<label for="editDistrict"
+										class="center-align"><spring:message
+										code="input.district" /> <span class="star">*</span></label>
+										<input type="text" name="editDistrict" id="editDistrict"
+										placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+										maxlength="50" required/> 
+								</div>		
+                        	  </div>
+                               <div class="row">
+                                            <div class="input-field col s12 center" style="padding: 20px 0;">
+                                                <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
+                                                 <button class=" btn" type="submit"><spring:message code="button.update" /></button>
+                                               	<button type="button" onclick = "resetButtons()" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
+                                            </div>
+									</div>	
+                                  </div>
+                         </div></form>
+        </div> 
+        
+      <div id="editCommuneModal" class="modal">
+               <form action="" onsubmit="return updateCommune()" method="POST"
+								enctype="multipart/form-data" >
+								  <div class="row" id="singleInput">
+								  <h6 class="modal-header "> Update Commune</h6>
+                                <div class="col s12 m12 l12">
+                   	   
+                                   <div class="row"  style="margin-top: 10px">
+                                   <div class="col s12 m6 l6" style="margin-bottom: 5px;">
+                                   	<label for="editProvinceForCommune"
+											class="center-align"><spring:message
+											code="input.province" /> <span class="star">*</span></label>
+											<input type="text" name="commune" id="editProvinceForCommune"
+											placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+											maxlength="50" required disabled/> 
+									</div> 
+									
+									<input type="text" name=oldcommune id="oldcommune" hidden="hidden">
+									
+										
+									<div class="col s12 m6 l6" style="margin-bottom: 5px;">
+											<label for="editDistrictForCommune"
+											class="center-align"><spring:message
+											code="input.district" /> <span class="star">*</span></label>
+											<input type="text" name="editDistrictForCommune" id="editDistrictForCommune"
+											placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+											maxlength="50" required disabled/> 
+									</div> 
+                                       		
+                                     <div class="input-field col s12 m6" style="margin-top: 22px;">
+                                      		<label for="editCommune"
+											class="center-align"><spring:message
+											code="input.commune" /> <span class="star">*</span></label>	
+											<input type="text" name="editCommune" id="editCommune"
+											placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+											maxlength="50" required/> 
+									</div>		
+                          </div>
+                               <div class="row">
+                                            <div class="input-field col s12 center" style="padding: 20px 0;">
+                                                <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
+                                                 <button class=" btn" type="submit"><spring:message code="button.update" /></button>
+                                               	<button type="button" onclick = "resetButtons()" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
+                                            </div>
+									</div>	
+                                  </div>
+                         </div></form>
+        </div>   
+        
+       <div id="editVillageModal" class="modal">
+               <form action="" onsubmit="return updateVillage()" method="POST"
+								enctype="multipart/form-data" >
+								  <div class="row" id="singleInput">
+								  <h6 class="modal-header "> Update Village</h6>
+                                <div class="col s12 m12 l12">
+                   	   					
+                                   <div class="row"  style="margin-top: 10px">
+                                   <div class="col s12 m6 l6" style="margin-bottom: 5px;">
+                                   		<label for="editProvinceForVillage"
+										class="center-align"><spring:message
+										code="input.province" /> <span class="star">*</span></label>
+										<input type="text" name="editProvinceForVillage" id="editProvinceForVillage"
+										placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+										maxlength="50" required disabled/> 
+									</div> 
+                                  
+                                   
+                                   <input type="text" name=oldVillage id="oldVillage" hidden="hidden">
+                                   
+                                   
+                                   
+                                   <div class="col s12 m6 l6" style="margin-bottom: 5px;">
+                                   		<label for="editDistrictForVillage"
+										class="center-align"><spring:message
+										code="input.district" /> <span class="star">*</span></label>
+										<input type="text" name="editDistrictForVillage" id="editDistrictForVillage"
+										placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+										maxlength="50" required disabled/> 
+									</div> 
+                                   
+                                   <div class="col s12 m6 l6" style="margin-bottom: 5px;">
+                                   		 <label for="editCommuneForVillage"
+										class="center-align"><spring:message
+										code="input.commune" /> <span class="star">*</span></label>
+										<input type="text" name="editCommuneForVillage" id="editCommuneForVillage"
+										placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+										maxlength="50" required disabled/>
+										
+								  </div> 
+                                       		
+                                  <div class="input-field col s12 m6" style="margin-top: 18px;">
+                                  		<label for="editVillage"
+										class="center-align"><spring:message
+										code="input.village" /> <span class="star">*</span></label>
+										<input type="text" name="editVillage" id="editVillage"
+										placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+										maxlength="50" required/> 
+								</div>		
+                          </div>
+                               <div class="row">
+                                            <div class="input-field col s12 center" style="padding: 20px 0;">
+                                                <!-- <a href="#submitIMEI" class="btn modal-trigger">Submit</a>  -->
+                                                 <button class=" btn" type="submit"><spring:message code="button.update" /></button>
+                                               	<button type="button" onclick = "resetButtons()" class="btn modal-close" style="margin-left: 10px;" title=" "><spring:message code="button.cancel" /></button>
+                                            </div>
+									</div>	
+                                  </div>
+                         </div></form>
+        </div>  
+        
+        <div id="updateFieldsSuccess" class="modal">
+     <h6 class="modal-header" style="margin:0px;">Update Address</h6>
+        <div class="modal-content">
+            
+            <div class="row">
+                <h6 id="updateFieldMessage"> </h6>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 center">
+                    <a href="" class="modal-close btn"><spring:message code="modal.ok" /></a>
+                </div>
+            </div>
+        </div>
+    </div>
 <!--materialize js-->
 	<script type="text/javascript"
 		src="${context}/resources/js/materialize.js"></script>
