@@ -53,7 +53,8 @@ public class VisaUpdateDb {
 	
 	private String entryDateInCountry;
 	
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date visaExpiryDate;
 	
 	@Transient
