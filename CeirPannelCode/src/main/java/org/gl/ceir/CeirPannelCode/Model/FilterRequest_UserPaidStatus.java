@@ -4,7 +4,8 @@ public class FilterRequest_UserPaidStatus {
 	
 	private Integer id, deviceIdType,deviceType,taxPaidStatus,consignmentStatus,action,featureId,roleTypeUserId,userId,userTypeId,status;
 	private String createdOn,startDate,endDate,modifiedOn,nid,remarks,userType,txnId,origin,searchString,username,nationality;
-	  private String imei1;
+	public String columnName,sort; 
+	private String imei1;
 	public Integer getDeviceIdType() {
 		return deviceIdType;
 	}
@@ -199,10 +200,26 @@ public class FilterRequest_UserPaidStatus {
 		builder.append(username);
 		builder.append(", nationality=");
 		builder.append(nationality);
+		builder.append(", columnName=");
+		builder.append(columnName);
+		builder.append(", sort=");
+		builder.append(sort);
 		builder.append(", imei1=");
 		builder.append(imei1);
 		builder.append("]");
 		return builder.toString();
+	}
+	public String getColumnName() {
+		return columnName;
+	}
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
 	}
 	
 	

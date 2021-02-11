@@ -445,8 +445,9 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	
 			txn='';
 			}
+		var filereduserType =  $('#userType').val() =='null' || $('#userType').val()==undefined ? null : $("#userType").val();
 		
-		var filereduserType =  $('#userType').val() =='null' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
+		//var filereduserType =  $('#userType').val() =='null' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
 				var filterUserName=$('#name').val() == 'null' || 'undefined' ?null:$('#name').val();
 				/*
 				 * var filterRedirect=$("body").attr("data-filterSource"); var
@@ -497,7 +498,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 					destroy:true,
 					"serverSide": true,
 					orderCellsTop : true,
-					"ordering": false,
+					"ordering": true,
 					"bPaginate" : true,
 					"bFilter" : false,
 					"bInfo" : true,
@@ -506,6 +507,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 					"oLanguage": {  
 						"sUrl": langFile  
 					},	
+					"aaSorting": [],
 					initComplete: function() {
 				 		$('.dataTables_filter input')
        .off().on('keyup', function(event) {
@@ -535,7 +537,8 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 					"columns": result,
 					fixedColumns: true,
 					columnDefs: [
-						{ width: 240, targets: result.length - 1}
+						{ width: 240, targets: result.length - 1},
+						 { orderable: false, targets: -1 }
 					]
 			
 				});
@@ -609,7 +612,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 									"<select id="+date[i].id+" class='select2 initialized'>"+
-									"<option>"+date[i].title+
+									"<option value=''>"+date[i].title+
 									"</option>"+
 									"</select>"+
 									"</div>"+
@@ -619,7 +622,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 					 
 				}
 	// dynamic dropdown portion
-				var dropdown=data.dropdownList;
+			/*	var dropdown=data.dropdownList;
 				for(i=0; i<dropdown.length; i++){
 					var dropdownDiv=
 						$("#consignmentTableDIv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
@@ -634,7 +637,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 								"</select>"+
 								"</div>"+
 						"</div>");
-				}
+				}*/
 							
 				if(sourceType=="viaStock"){
 					$("#btnLink").css({display: "none"});
@@ -1127,5 +1130,5 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	function filterResetStock(formID){
 		$('#'+formID).trigger('reset');
 		$("label").removeClass('active');
-		filter(lang);
+		filter(lang,null);
 	}

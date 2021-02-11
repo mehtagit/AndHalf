@@ -13,7 +13,8 @@ public class FilterRequest {
 	public String publicIp;
 	private int districtID,communeID;
 	public String category,reportName,flag,emailId;
-	public String columnName,sort;
+	public String columnName,sort,blockingTypeFilter;
+	public String visaType,visaNumber,visaExpiryDate;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -422,6 +423,7 @@ public class FilterRequest {
 	public void setCurrency(Integer currency) {
 		this.currency = currency;
 	}
+	 
 	public Integer getStockStatus() {
 		return stockStatus;
 	}
@@ -488,24 +490,6 @@ public class FilterRequest {
 	public void setRuleName(String ruleName) {
 		this.ruleName = ruleName;
 	}
-	public String getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(String quantity) {
-		this.quantity = quantity;
-	}
-	public String getDeviceQuantity() {
-		return deviceQuantity;
-	}
-	public void setDeviceQuantity(String deviceQuantity) {
-		this.deviceQuantity = deviceQuantity;
-	}
-	public String getSupplierName() {
-		return supplierName;
-	}
-	public void setSupplierName(String supplierName) {
-		this.supplierName = supplierName;
-	}
 	public String getProvince() {
 		return province;
 	}
@@ -536,12 +520,6 @@ public class FilterRequest {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	public String getLocalityId() {
-		return localityId;
-	}
-	public void setLocalityId(String localityId) {
-		this.localityId = localityId;
-	}
 	public String getPublicIp() {
 		return publicIp;
 	}
@@ -559,6 +537,24 @@ public class FilterRequest {
 	}
 	public void setCommuneID(int communeID) {
 		this.communeID = communeID;
+	}
+	public String getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+	public String getDeviceQuantity() {
+		return deviceQuantity;
+	}
+	public void setDeviceQuantity(String deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
+	public String getSupplierName() {
+		return supplierName;
+	}
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
 	}
 	public String getCategory() {
 		return category;
@@ -584,6 +580,8 @@ public class FilterRequest {
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
+	
+	
 	public String getColumnName() {
 		return columnName;
 	}
@@ -595,6 +593,12 @@ public class FilterRequest {
 	}
 	public void setSort(String sort) {
 		this.sort = sort;
+	}
+	public String getBlockingTypeFilter() {
+		return blockingTypeFilter;
+	}
+	public void setBlockingTypeFilter(String blockingTypeFilter) {
+		this.blockingTypeFilter = blockingTypeFilter;
 	}
 	@Override
 	public String toString() {
@@ -793,8 +797,43 @@ public class FilterRequest {
 		builder.append(columnName);
 		builder.append(", sort=");
 		builder.append(sort);
+		builder.append(", blockingTypeFilter=");
+		builder.append(blockingTypeFilter);
+		builder.append(", visaType=");
+		builder.append(visaType);
+		builder.append(", visaNumber=");
+		builder.append(visaNumber);
+		builder.append(", visaExpiryDate=");
+		builder.append(visaExpiryDate);
 		builder.append("]");
 		return builder.toString();
 	}
-		
+	public String getVisaType() {
+		return visaType;
+	}
+	public void setVisaType(String visaType) {
+		this.visaType = visaType;
+	}
+	public String getVisaNumber() {
+		return visaNumber;
+	}
+	public void setVisaNumber(String visaNumber) {
+		this.visaNumber = visaNumber;
+	}
+	public String getVisaExpiryDate() {
+		return visaExpiryDate;
+	}
+	public void setVisaExpiryDate(String visaExpiryDate) {
+		this.visaExpiryDate = visaExpiryDate;
+	}
+	public String getLocalityId() {
+		return localityId;
+	}
+	public void setLocalityId(String localityId) {
+		this.localityId = localityId;
+	}
+	
+	
+	
+	
 }

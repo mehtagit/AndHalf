@@ -163,23 +163,20 @@ public class VisaUpdateDatableController {
 		
 		
 			//Dropdown items 
-			  String[] selectParam={"select",Translator.toLocale("input.Status"),"status","",}; 
-			  for(int i=0; i<selectParam.length; i++) { 
-					inputFields= new InputFields();
-			  inputFields.setType(selectParam[i]); 
-			  i++;
-			  inputFields.setTitle(selectParam[i]);
-			  i++; 
-			  inputFields.setId(selectParam[i]);
-			  i++; 
-			  inputFields.setClassName(selectParam[i]);
-			  dropdownList.add(inputFields);
-			  } 
+		/*
+		 * String[]
+		 * selectParam={"select",Translator.toLocale("input.Status"),"status","",};
+		 * for(int i=0; i<selectParam.length; i++) { inputFields= new InputFields();
+		 * inputFields.setType(selectParam[i]); i++;
+		 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
+		 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
+		 * }
+		 */
 			pageElement.setDropdownList(dropdownList);
 		 
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("table.transactionID"),"visaTxnId",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("table.transactionID"),"visaTxnId","","text",Translator.toLocale("input.passportNo"),"passportNumberFilter","","select",Translator.toLocale("input.VisaType"),"visaTypeFilter","","text",Translator.toLocale("input.VisaNumber"),"visaNumberFilter","","text",Translator.toLocale("table.fileName"),"fileNameFilter","","date",Translator.toLocale("table.VisaExpiryDate"),"expiryDateFilter","","select",Translator.toLocale("input.Status"),"status",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
