@@ -4,9 +4,13 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TRCRequest {
-	private String endDate,searchString,startDate,tac,txnId,userType,filterUserType,userDisplayName,productName,modelNumber,modifiedOn;
+	private String endDate,searchString,startDate,tac,txnId,userType,filterUserType,userDisplayName,modifiedOn;
 	private Integer status,adminStatus,featureId,userTypeId,file;
+	private String displayName,Country;
 	private long userId;
+	private Long productName,modelNumber;
+	public String columnName,sort;
+	public String order,orderColumnName;
 	public String getEndDate() {
 		return endDate;
 	}
@@ -55,18 +59,6 @@ public class TRCRequest {
 	public void setUserDisplayName(String userDisplayName) {
 		this.userDisplayName = userDisplayName;
 	}
-	public String getProductName() {
-		return productName;
-	}
-	public void setProductName(String productName) {
-		this.productName = productName;
-	}
-	public String getModelNumber() {
-		return modelNumber;
-	}
-	public void setModelNumber(String modelNumber) {
-		this.modelNumber = modelNumber;
-	}
 	public String getModifiedOn() {
 		return modifiedOn;
 	}
@@ -103,11 +95,59 @@ public class TRCRequest {
 	public void setFile(Integer file) {
 		this.file = file;
 	}
+	public String getDisplayName() {
+		return displayName;
+	}
+	public void setDisplayName(String displayName) {
+		this.displayName = displayName;
+	}
+	public String getCountry() {
+		return Country;
+	}
+	public void setCountry(String country) {
+		Country = country;
+	}
 	public long getUserId() {
 		return userId;
 	}
 	public void setUserId(long userId) {
 		this.userId = userId;
+	}
+	public Long getProductName() {
+		return productName;
+	}
+	public void setProductName(Long productName) {
+		this.productName = productName;
+	}
+	public Long getModelNumber() {
+		return modelNumber;
+	}
+	public void setModelNumber(Long modelNumber) {
+		this.modelNumber = modelNumber;
+	}
+	public String getColumnName() {
+		return columnName;
+	}
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+	public String getOrder() {
+		return order;
+	}
+	public void setOrder(String order) {
+		this.order = order;
+	}
+	public String getOrderColumnName() {
+		return orderColumnName;
+	}
+	public void setOrderColumnName(String orderColumnName) {
+		this.orderColumnName = orderColumnName;
 	}
 	@Override
 	public String toString() {
@@ -128,10 +168,6 @@ public class TRCRequest {
 		builder.append(filterUserType);
 		builder.append(", userDisplayName=");
 		builder.append(userDisplayName);
-		builder.append(", productName=");
-		builder.append(productName);
-		builder.append(", modelNumber=");
-		builder.append(modelNumber);
 		builder.append(", modifiedOn=");
 		builder.append(modifiedOn);
 		builder.append(", status=");
@@ -144,8 +180,24 @@ public class TRCRequest {
 		builder.append(userTypeId);
 		builder.append(", file=");
 		builder.append(file);
+		builder.append(", displayName=");
+		builder.append(displayName);
+		builder.append(", Country=");
+		builder.append(Country);
 		builder.append(", userId=");
 		builder.append(userId);
+		builder.append(", productName=");
+		builder.append(productName);
+		builder.append(", modelNumber=");
+		builder.append(modelNumber);
+		builder.append(", columnName=");
+		builder.append(columnName);
+		builder.append(", sort=");
+		builder.append(sort);
+		builder.append(", order=");
+		builder.append(order);
+		builder.append(", orderColumnName=");
+		builder.append(orderColumnName);
 		builder.append("]");
 		return builder.toString();
 	}

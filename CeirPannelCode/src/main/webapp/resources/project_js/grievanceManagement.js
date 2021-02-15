@@ -75,6 +75,7 @@ var featureId = 6;
 				
 			}else{
 				window.raisedBy = null;
+				
 				userId = parseInt($("body").attr("data-userID"));
 				
 			}
@@ -109,6 +110,7 @@ var featureId = 6;
 				var FilterUserType = $('#userType').val()=='-1' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
 				userId = $("body").attr("data-roleType")=="Customer Care" ? null : parseInt($("body").attr("data-userID"));
 				
+				var raisedBy = window.raisedBy == null || window.raisedBy == undefined ? $('#raisedby').val() : $('#raisedby').val();
 				
 				var filterRequest={
 						"grievanceStatus":grievanceStatus,
@@ -124,8 +126,7 @@ var featureId = 6;
 						"filterUserName" : $('#userName').val(),
 						"FilterUserType" : FilterUserType,
 						"userId": userId,
-						"raisedBy" : window.raisedBy
-								 
+						"raisedBy" : raisedBy,
 				}
 				//console.log(JSON.stringify(filterRequest));
 				if(lang=='km'){
@@ -150,7 +151,7 @@ var featureId = 6;
 							destroy:true,
 							"serverSide": true,
 							orderCellsTop : true,
-							"ordering" : false,
+							"ordering" : true,
 							"bPaginate" : true,
 							"bFilter" : true,
 							"bInfo" : true,
@@ -158,6 +159,10 @@ var featureId = 6;
 							"oLanguage": {  
 									"sUrl": langFile  
 								},
+								"aaSorting": [],
+								columnDefs: [
+									   { orderable: false, targets: -1 }
+									],
 								initComplete: function() {
 							 		$('.dataTables_filter input')
 			       .off().on('keyup', function(event) {
@@ -260,9 +265,11 @@ var featureId = 6;
 										"</div>"+
 								"</div>");
 						}
-
+						var viewFilter="viewFilter";
 						$("#greivanceTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'></div>");
+						$("#greivanceTableDiv").append("<div class=' col s3 m2 l2'><button type='button' style='margin-left: 18px;' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
 						$("#greivanceTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$('#clearFilter').attr("onclick", "Resetfilter('viewFilter')");
 
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
@@ -1053,7 +1060,7 @@ var featureId = 6;
 				var info = table.page.info(); 
 				var pageNo=info.page;
 				var pageSize =info.length;
-				
+				var raisedBy = window.raisedBy == null || window.raisedBy == undefined ? $('#raisedby').val() : $('#raisedby').val();
 				var filterRequest={
 						"grievanceStatus":grievanceStatus,
 						"endDate":grievanceEndDate,
@@ -1068,7 +1075,7 @@ var featureId = 6;
 						"filterUserName" : $('#userName').val(),
 						"FilterUserType" : FilterUserType,
 						"userId": userId,
-						"raisedBy" : window.raisedBy,
+						"raisedBy" : raisedBy,
 						"source" : source__val,
 						"pageNo":parseInt(pageNo),
 						"pageSize":parseInt(pageSize)
@@ -1099,6 +1106,10 @@ var featureId = 6;
 			
 			}
 				
-
+			 function Resetfilter(formID){
+					$('#'+formID).trigger('reset');
+					$("label").removeClass('active');
+					grievanceDataTable(lang,null);
+				}
 				
 		

@@ -144,8 +144,8 @@ position: fixed;
 
 								<a href="" class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/manageTypeDevices" method="post">
-								<div class="col s12 m12 l12" id="typeAprroveTableDiv"
+							<form action="${context}/manageTypeDevices" id="viewFilter" method="post">
+								<div class="col s12 m12 l12" id="typeAprroveTableDiv" 
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
 										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
@@ -757,8 +757,9 @@ position: fixed;
 			src="${context}/resources/js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 	
 		
-		<script type="text/javascript"
-			src="${context}/resources/js/countries.js""></script>
+		<%-- <script type="text/javascript"
+			src="${context}/resources/js/country.js"></script> --%>
+			<script type="text/javascript" src="${context}/resources/js/country.js"></script>
 			<!-- i18n library -->
 	<script type="text/javascript"
 		src="${context}/resources/project_js/CLDRPluralRuleParser.js"></script>

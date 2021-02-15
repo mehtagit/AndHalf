@@ -137,7 +137,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right
 
 								<a href="" class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/Grievance/grievanceManagement"
+							<form action="${context}/Grievance/grievanceManagement" id="viewFilter"
 								method="post">
 								<div class="col s12 m12 l12" id="greivanceTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
