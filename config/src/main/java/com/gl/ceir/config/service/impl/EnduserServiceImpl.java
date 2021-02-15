@@ -1158,7 +1158,9 @@ public class EnduserServiceImpl {
 		if(Objects.nonNull(filterRequest.getVisaType()) && !filterRequest.getVisaType().isEmpty()) {
 			uPSB.with(new SearchCriteria("visaType", filterRequest.getVisaType(), SearchOperation.LIKE, Datatype.STRING));
 		}
-		
+		if(Objects.nonNull(filterRequest.getVisaExpiryDate()) && filterRequest.getVisaExpiryDate()!="") {
+			uPSB.with(new SearchCriteria("visaExpiryDate",filterRequest.getVisaExpiryDate(), SearchOperation.EQUALITY, Datatype.DATE));
+		}
 
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			uPSB.orSearch(new SearchCriteria("nid", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
@@ -1170,7 +1172,7 @@ public class EnduserServiceImpl {
 			uPSB.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 
 		}
-
+		logger.info("********************-----------((((((((((((((((*****************************************8 " +uPSB);
 		return uPSB;
 	}
 

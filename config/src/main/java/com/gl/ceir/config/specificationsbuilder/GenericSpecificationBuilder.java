@@ -166,6 +166,11 @@ public class GenericSpecificationBuilder<T> {
 						Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
 						return cb.lessThanOrEqualTo(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
 					}
+					else if(SearchOperation.EQUALITY.equals(searchCriteria.getSearchOperation())
+							&& Datatype.DATE.equals(searchCriteria.getDatatype())){
+						Expression<String> dateStringExpr = cb.function(DbFunctions.getDate(dialect), String.class, root.get(searchCriteria.getKey()), cb.literal(DbFunctions.getDateFormat(dialect)));
+						return cb.equal(cb.lower(dateStringExpr), searchCriteria.getValue().toString());
+					}
 					else if(SearchOperation.NEGATION.equals(searchCriteria.getSearchOperation())
 							&& Datatype.STRING.equals(searchCriteria.getDatatype())) {
 						return cb.notEqual(root.get(searchCriteria.getKey()), searchCriteria.getValue().toString());

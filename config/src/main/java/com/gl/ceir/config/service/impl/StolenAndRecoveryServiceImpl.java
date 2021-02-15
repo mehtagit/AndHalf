@@ -328,7 +328,6 @@ public class StolenAndRecoveryServiceImpl {
 			direction= SortDirection.getSortDirection(filterRequest.getSort());
 		}
 		
-		logger.info(direction+"  column --- > "+ orderColumn);
 		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
 	
 	//	Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
