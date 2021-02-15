@@ -416,7 +416,7 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 				destroy:true,
 				"serverSide": true,
 				orderCellsTop : true, 
-				"ordering": false,
+				"ordering": true,
 				"bPaginate" : true,
 				"bFilter" : false,
 				"bInfo" : true,
@@ -425,6 +425,7 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 				"oLanguage": {  
 							"sUrl": langFile  
 						},
+						"aaSorting": [],
 						initComplete: function() {
 					 		$('.dataTables_filter input')
 	       .off().on('keyup', function(event) {
@@ -454,7 +455,8 @@ function Datatable(url,dataUrl,sourceTypeFiler){
 				"columns": result,
 				fixedColumns: true,
 				columnDefs: [
-		            { width: 246, targets: result.length - 1 }
+		            { width: 246, targets: result.length - 1 },
+		            { orderable: false, targets: -1 }
 		        ]
 			});
 			$('div#initialloader').delay(300).fadeOut('slow');

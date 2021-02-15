@@ -9,7 +9,7 @@ public class FilterRequest {
 	private Double dollar,riel;
 	private int roleTypeId;
 	private String state,ruleName,quantity,deviceQuantity,supplierName;
-	public String province,district,commune,village,country;
+	public String province,district,commune,village,country,localityId;
 	public String publicIp;
 	private int districtID,communeID;
 	public String category,reportName,flag,emailId;
@@ -600,24 +600,6 @@ public class FilterRequest {
 	public void setBlockingTypeFilter(String blockingTypeFilter) {
 		this.blockingTypeFilter = blockingTypeFilter;
 	}
-	public String getVisaType() {
-		return visaType;
-	}
-	public void setVisaType(String visaType) {
-		this.visaType = visaType;
-	}
-	public String getVisaNumber() {
-		return visaNumber;
-	}
-	public void setVisaNumber(String visaNumber) {
-		this.visaNumber = visaNumber;
-	}
-	public String getVisaExpiryDate() {
-		return visaExpiryDate;
-	}
-	public void setVisaExpiryDate(String visaExpiryDate) {
-		this.visaExpiryDate = visaExpiryDate;
-	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -795,6 +777,8 @@ public class FilterRequest {
 		builder.append(village);
 		builder.append(", country=");
 		builder.append(country);
+		builder.append(", localityId=");
+		builder.append(localityId);
 		builder.append(", publicIp=");
 		builder.append(publicIp);
 		builder.append(", districtID=");
@@ -824,6 +808,31 @@ public class FilterRequest {
 		builder.append("]");
 		return builder.toString();
 	}
+	public String getVisaType() {
+		return visaType;
+	}
+	public void setVisaType(String visaType) {
+		this.visaType = visaType;
+	}
+	public String getVisaNumber() {
+		return visaNumber;
+	}
+	public void setVisaNumber(String visaNumber) {
+		this.visaNumber = visaNumber;
+	}
+	public String getVisaExpiryDate() {
+		return visaExpiryDate;
+	}
+	public void setVisaExpiryDate(String visaExpiryDate) {
+		this.visaExpiryDate = visaExpiryDate;
+	}
+	public String getLocalityId() {
+		return localityId;
+	}
+	public void setLocalityId(String localityId) {
+		this.localityId = localityId;
+	}
+	
 	
 	
 	

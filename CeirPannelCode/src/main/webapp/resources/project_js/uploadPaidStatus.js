@@ -437,7 +437,7 @@ function table(url,dataUrl,filterSource){
 				destroy:true,
 				"serverSide": true,
 				orderCellsTop : true,
-				"ordering" : false,
+				"ordering" : true,
 				"bPaginate" : true,
 				"bFilter" : false,
 				"bInfo" : true,
@@ -445,6 +445,10 @@ function table(url,dataUrl,filterSource){
 				"oLanguage": {  
 					"sUrl": langFile  
 				},
+				"aaSorting": [],
+				columnDefs: [
+					   { orderable: false, targets: -1 }
+					],
 				initComplete: function() {
 			 		$('.dataTables_filter input')
    .off().on('keyup', function(event) {
