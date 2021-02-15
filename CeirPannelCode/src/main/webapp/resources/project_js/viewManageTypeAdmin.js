@@ -52,7 +52,9 @@ function Datatable(Url, dataUrl) {
 			|| $('#userType').val() == undefined ? null : $(
 			"#userType option:selected").text();
 	if (userType == "CEIRAdmin") {
-		
+	
+	var modelNumber = $('#filteredModel').val() == '' || $('#filteredModel').val() == undefined ? -1 : $('#filteredModel').val();
+	var productName = $('#filterdbrandname').val() == undefined || $('#filterdbrandname').val() == -1 ? null : $('#filterdbrandname').val();
 		var filterRequest = {
 			"endDate" : $('#endDate').val(),
 			"startDate" : $('#startDate').val(),
@@ -63,7 +65,12 @@ function Datatable(Url, dataUrl) {
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 			"userType" : $("body").attr("data-roleType"),
 			"status" : parseInt($('#Status').val()),
-			"filterUserType" : FilterUserType
+			"filterUserType" : FilterUserType,
+			
+			"displayName" : $('#filterDisaplay').val(),
+			"productName" : parseInt(productName),
+			"modelNumber" : parseInt(modelNumber),
+			"Country" : $('#country').val(),
 		}
 	}else if(userType == "TRC"){
 		
@@ -118,7 +125,7 @@ function Datatable(Url, dataUrl) {
 						destroy : true,
 						"serverSide" : true,
 						orderCellsTop : true,
-						"ordering" : false,
+						"ordering" : true,
 						"bPaginate" : true,
 						"bFilter" : true,
 						"bInfo" : true,
@@ -126,6 +133,7 @@ function Datatable(Url, dataUrl) {
 						"oLanguage" : {
 							"sUrl" : langFile
 						},
+						"aaSorting": [],
 						initComplete: function() {
 					 		$('.dataTables_filter input')
 	       .off().on('keyup', function(event) {
@@ -155,8 +163,8 @@ function Datatable(Url, dataUrl) {
 						}, {
 							width : 121,
 							targets : 0
-						}
-
+						},
+						{ orderable: false, targets: -1 }
 						]
 
 					});
@@ -259,15 +267,16 @@ function pageRendering() {
 											+ "</div>" + "</div>");
 					}
 					
-
-					$("#typeAprroveTableDiv")
-							.append(
+					var viewFilter="viewFilter";
+					$("#typeAprroveTableDiv").append(
 									"<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+					$("#typeAprroveTableDiv").append("<div class=' col s3 m2 l2'><button type='button' style='margin-left: 18px;' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
 					$("#typeAprroveTableDiv")
 							.append(
 									"<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportTacData()' type='button' class='export-to-excel right'>"
 											+ $.i18n('Export')
 											+ " <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+					$('#clearFilter').attr("onclick", "Resetfilter('viewFilter')");
 					for (i = 0; i < button.length; i++) {
 						$('#' + button[i].id).text(button[i].buttonTitle);
 						if (button[i].type === "HeaderButton") {
@@ -307,6 +316,7 @@ function pageRendering() {
 											data[i].usertypeName).appendTo(
 											'#userType');
 								}
+populateCountries("country", "state");
 							});
 					
 					$.getJSON('./productList', function(data) {
@@ -630,6 +640,7 @@ function setUploadedFiles(data) {
 }
 
 populateCountries("editmanufacturercountry");
+
 
 function updateImporterTypeDevice() {
 	$('div#initialloader').fadeIn('fast');
@@ -1269,4 +1280,11 @@ function historyRecord(txnID) {
 		event.preventDefault();
 	});
 
+}
+
+function Resetfilter(formID){
+	$('#'+formID).trigger('reset');
+	$("label").removeClass('active');
+	//registrationDatatable(lang,null);
+	typeApprovedDataTable(lang)
 }
