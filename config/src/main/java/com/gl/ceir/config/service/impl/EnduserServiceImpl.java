@@ -1152,11 +1152,19 @@ public class EnduserServiceImpl {
 		if(Objects.nonNull(filterRequest.getFileName()) && !filterRequest.getFileName().isEmpty()) {
 			uPSB.with(new SearchCriteria("visaFileName", filterRequest.getFileName(), SearchOperation.LIKE, Datatype.STRING));
 		}
-		if(Objects.nonNull(filterRequest.getVisaExpiryDate()) && !filterRequest.getVisaExpiryDate().isEmpty()) {
-			uPSB.with(new SearchCriteria("visaExpiryDate", filterRequest.getVisaExpiryDate(), SearchOperation.EQUALITY, Datatype.DATE));
-		}
+		/*
+		 * if(Objects.nonNull(filterRequest.getVisaExpiryDate()) &&
+		 * !filterRequest.getVisaExpiryDate().isEmpty()) { uPSB.with(new
+		 * SearchCriteria("visaExpiryDate", filterRequest.getVisaExpiryDate(),
+		 * SearchOperation.LIKE, Datatype.DATE)); }
+		 */
+		
+		if(Objects.nonNull(filterRequest.getVisaExpiryDate()) && filterRequest.getVisaExpiryDate()!="")
+			logger.info("*************************************************************8 " +filterRequest.getVisaExpiryDate());
+			uPSB.with(new SearchCriteria("visaExpiryDate",filterRequest.getVisaExpiryDate(), SearchOperation.LIKE, Datatype.DATE));
+		
 		if(Objects.nonNull(filterRequest.getVisaType()) && !filterRequest.getVisaType().isEmpty()) {
-			uPSB.with(new SearchCriteria("visaType", filterRequest.getVisaType(), SearchOperation.LIKE, Datatype.STRING));
+			uPSB.with(new SearchCriteria("visaType", filterRequest.getVisaType(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
 		
 
@@ -1170,7 +1178,7 @@ public class EnduserServiceImpl {
 			uPSB.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 
 		}
-
+		logger.info("********************-----------((((((((((((((((*****************************************8 " +uPSB);
 		return uPSB;
 	}
 
