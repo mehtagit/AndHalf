@@ -35,7 +35,7 @@ public class DatatableHeaders {
 			}
 
 
-
+		
 
 			//STOLEN DATATABLE HEADERS
 			else if("stolen".equals(role)) {
@@ -249,8 +249,9 @@ public class DatatableHeaders {
 			
 //BlockUnblockCEIRAdmin Headers 
 			
+
 			else if("BlockUnblockCEIRAdmin".equals(role)) {
-				String[] headers = {"table.date","table.transactionID","table.Operator","table.requestType","table.Mode","table.status","input.quantity","input.devicequantity","table.action"};		
+				String[] headers = {"table.creationDate","table.transactionID","table.Operator","table.requestType","table.Mode","table.status","input.quantity","input.devicequantity","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -261,7 +262,7 @@ public class DatatableHeaders {
 //lawfulStolenHeaders Headers 
 			
 			else if("lawfulStolenHeaders".equals(role)) {
-				String[] headers = {"table.requestdate","table.transactionID","table.BlockType","table.requestType","table.Mode","table.status","input.quantity","input.devicequantity","table.action"};		
+				String[] headers = {"table.creationDate","table.transactionID","table.BlockType","table.requestType","table.Mode","table.status","input.quantity","input.devicequantity","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
