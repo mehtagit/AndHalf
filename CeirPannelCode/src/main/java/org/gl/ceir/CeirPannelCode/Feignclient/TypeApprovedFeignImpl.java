@@ -25,8 +25,8 @@ public interface TypeApprovedFeignImpl {
 	public Object manageTypeFeign(@RequestBody TRCRequest filterRequest,
 	@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 	@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-	@RequestParam(value = "file", defaultValue = "0") Integer file,
-	@RequestParam(name="source",defaultValue = "menu",required = false) String source) ;
+	@RequestParam(name="source",defaultValue = "menu",required = false) String source,
+	@RequestParam(value = "file", defaultValue = "0") Integer file);
 	
 	
 	@RequestMapping(value="/TypeApproved/add" ,method=RequestMethod.POST) 

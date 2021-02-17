@@ -78,7 +78,7 @@ public class ImporterManageTypeAdmin {
 		TRCRequest filterrequest = gsonObject.fromJson(filter, TRCRequest.class);
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		
-		filterrequest.setOrderColumnName(request.getParameter("order[0][column]") == null ? "modifiedOn" : request.getParameter("order[0][column]"));
+		filterrequest.setOrderColumnName(request.getParameter("order[0][column]") == null ? "Modified On" : request.getParameter("order[0][column]"));
 		filterrequest.setOrder(request.getParameter("order[0][dir]") == null ? "desc" : request.getParameter("order[0][dir]"));
 		
 		log.info("--pageSize-" + pageSize + "----pageNo" + pageNo + "----file" + file + "-filterrequest-------"

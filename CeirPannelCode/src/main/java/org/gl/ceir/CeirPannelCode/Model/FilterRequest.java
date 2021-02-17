@@ -15,6 +15,20 @@ public class FilterRequest {
 	public String category,reportName,flag,emailId;
 	public String columnName,sort,blockingTypeFilter;
 	public String visaType,visaNumber,visaExpiryDate;
+	public String order,orderColumnName;
+	
+	public String getOrder() {
+		return order;
+	}
+	public void setOrder(String order) {
+		this.order = order;
+	}
+	public String getOrderColumnName() {
+		return orderColumnName;
+	}
+	public void setOrderColumnName(String orderColumnName) {
+		this.orderColumnName = orderColumnName;
+	}
 	public String getStartDate() {
 		return startDate;
 	}
@@ -805,6 +819,10 @@ public class FilterRequest {
 		builder.append(visaNumber);
 		builder.append(", visaExpiryDate=");
 		builder.append(visaExpiryDate);
+		builder.append(", order=");
+		builder.append(order);
+		builder.append(", orderColumnName=");
+		builder.append(orderColumnName);
 		builder.append("]");
 		return builder.toString();
 	}

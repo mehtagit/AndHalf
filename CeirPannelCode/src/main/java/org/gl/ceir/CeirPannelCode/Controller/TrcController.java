@@ -18,6 +18,7 @@ import org.gl.ceir.CeirPannelCode.Feignclient.TypeApprovedFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.FileCopyToOtherServer;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
 import org.gl.ceir.CeirPannelCode.Model.TRCRegisteration;
@@ -303,49 +304,74 @@ public class TrcController {
 
 
 	//***************************************** Export Grievance controller *********************************
-	@RequestMapping(value="/exportTac",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-	public String exportToExcel(@RequestParam(name="tacStartDate",required = false) String tacStartDate,
-			@RequestParam(name="tacStatus",required = false) Integer tacStatus,
-			@RequestParam(name="txnId") String txnId,
-			HttpSession session,@RequestParam(name="pageSize") Integer pageSize,
-			@RequestParam(name="pageNo") Integer pageNo,
-			@RequestParam(name="tacNumber") String tacNumber,
-			@RequestParam(name="tacEndDate",required = false) String tacEndDate,
-			@RequestParam(name="featureId",required = false) Integer featureId,
-			@RequestParam(name="userType",required = false) String userType,
-			@RequestParam(name="userTypeId",required = false) Integer userTypeId,
-			@RequestParam(name="userId",required = false) Integer userId,
-			@RequestParam(name="source",defaultValue = "menu",required = false) String source
-			)
-	{
-		log.info("tacStartDate=="+tacStartDate+ " tacStatus ="+tacStatus+" tacNumber="+tacNumber+"tacEndDate="+tacEndDate);
-		//int userId= (int) session.getAttribute("userid"); 
-		log.info("source--->" +source);
-		int file=1;
-		FileExportResponse fileExportResponse;
-		TRCRequest trcRequest = new TRCRequest();
-		trcRequest.setStartDate(tacStartDate);
-		trcRequest.setEndDate(tacEndDate);
-		trcRequest.setTac(tacNumber);
-		trcRequest.setStatus(tacStatus);
-		//trcRequest.setUserId(userId);
-		trcRequest.setTxnId(txnId);
-		trcRequest.setFeatureId(featureId);
-		trcRequest.setUserType(userType);
-		trcRequest.setUserTypeId(userTypeId);
-		trcRequest.setUserId(userId);
-		trcRequest.setFile(file);
-		log.info(" request passed to the exportTo trcRequest Excel Api =="+trcRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo+" userId==" +userId);
-		Object	response= typeApprovedFeignImpl.manageTypeFeign(trcRequest, pageNo, pageSize, file,source);
-
-		Gson gson= new Gson(); 
-		String apiResponse = gson.toJson(response);
-		fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
-		log.info("response  from   export trc  api ="+fileExportResponse);
-
-		return "redirect:"+fileExportResponse.getUrl();
-	}
+	/*
+	 * @RequestMapping(value="/exportTac",method
+	 * ={org.springframework.web.bind.annotation.RequestMethod.GET}) public String
+	 * exportToExcel(@RequestParam(name="tacStartDate",required = false) String
+	 * tacStartDate,
+	 * 
+	 * @RequestParam(name="tacStatus",required = false) Integer tacStatus,
+	 * 
+	 * @RequestParam(name="txnId") String txnId, HttpSession
+	 * session,@RequestParam(name="pageSize") Integer pageSize,
+	 * 
+	 * @RequestParam(name="pageNo") Integer pageNo,
+	 * 
+	 * @RequestParam(name="tacNumber") String tacNumber,
+	 * 
+	 * @RequestParam(name="tacEndDate",required = false) String tacEndDate,
+	 * 
+	 * @RequestParam(name="featureId",required = false) Integer featureId,
+	 * 
+	 * @RequestParam(name="userType",required = false) String userType,
+	 * 
+	 * @RequestParam(name="userTypeId",required = false) Integer userTypeId,
+	 * 
+	 * @RequestParam(name="userId",required = false) Integer userId,
+	 * 
+	 * @RequestParam(name="source",defaultValue = "menu",required = false) String
+	 * source ) { log.info("tacStartDate=="+tacStartDate+
+	 * " tacStatus ="+tacStatus+" tacNumber="+tacNumber+"tacEndDate="+tacEndDate);
+	 * //int userId= (int) session.getAttribute("userid"); log.info("source--->"
+	 * +source); int file=1; FileExportResponse fileExportResponse; TRCRequest
+	 * trcRequest = new TRCRequest(); trcRequest.setStartDate(tacStartDate);
+	 * trcRequest.setEndDate(tacEndDate); trcRequest.setTac(tacNumber);
+	 * trcRequest.setStatus(tacStatus); //trcRequest.setUserId(userId);
+	 * trcRequest.setTxnId(txnId); trcRequest.setFeatureId(featureId);
+	 * trcRequest.setUserType(userType); trcRequest.setUserTypeId(userTypeId);
+	 * trcRequest.setUserId(userId); trcRequest.setFile(file);
+	 * log.info(" request passed to the exportTo trcRequest Excel Api =="
+	 * +trcRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo+" userId=="
+	 * +userId); Object response= typeApprovedFeignImpl.manageTypeFeign(trcRequest,
+	 * pageNo, pageSize, file,source);
+	 * 
+	 * Gson gson= new Gson(); String apiResponse = gson.toJson(response);
+	 * fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
+	 * log.info("response  from   export trc  api ="+fileExportResponse);
+	 * 
+	 * return "redirect:"+fileExportResponse.getUrl(); }
+	 */
 	
+	
+	//------------------------------------- Export Address controller -------------------------------------
+	
+			@PostMapping("exportTac")
+			@ResponseBody
+			public FileExportResponse exportToExcel(@RequestBody TRCRequest trcRequest,HttpSession session)
+			{
+				Gson gsonObject=new Gson();
+				Object response;
+				Integer file = 1;	
+				log.info("filterRequest:::::::::"+trcRequest);
+				response= typeApprovedFeignImpl.manageTypeFeign(trcRequest, trcRequest.getPageNo(), trcRequest.getPageSize(),trcRequest.getSource(),file);
+				FileExportResponse fileExportResponse;
+				Gson gson= new Gson(); 
+				String apiResponse = gson.toJson(response);
+				fileExportResponse = gson.fromJson(apiResponse, FileExportResponse.class);
+				log.info("response  from  TRC Export  api="+fileExportResponse);
+
+				return fileExportResponse;
+			}
 	
 	//******************************************* TAC approved/Disapproved controller
 	
