@@ -35,7 +35,7 @@ public class DatatableHeaders {
 			}
 
 
-
+		
 
 			//STOLEN DATATABLE HEADERS
 			else if("stolen".equals(role)) {
@@ -141,7 +141,7 @@ public class DatatableHeaders {
 
 			//AdminRegistration Headers
 			else if("adminRegistration".equals(role)) {
-				String[] headers = {"table.RequestedOn","table.lastupdatedate","table.UserName","table.email","table.phone","table.AsType","table.userType","table.status","table.action"};	
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.UserName","table.email","table.phone","table.AsType","table.userType","table.status","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -249,8 +249,9 @@ public class DatatableHeaders {
 			
 //BlockUnblockCEIRAdmin Headers 
 			
+
 			else if("BlockUnblockCEIRAdmin".equals(role)) {
-				String[] headers = {"table.date","table.transactionID","table.Operator","table.requestType","table.Mode","table.status","input.quantity","input.devicequantity","table.action"};		
+				String[] headers = {"table.creationDate","table.transactionID","table.Operator","table.requestType","table.Mode","table.status","input.quantity","input.devicequantity","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -261,7 +262,7 @@ public class DatatableHeaders {
 //lawfulStolenHeaders Headers 
 			
 			else if("lawfulStolenHeaders".equals(role)) {
-				String[] headers = {"table.requestdate","table.transactionID","table.BlockType","table.requestType","table.Mode","table.status","input.quantity","input.devicequantity","table.action"};		
+				String[] headers = {"table.creationDate","table.transactionID","table.BlockType","table.requestType","table.Mode","table.status","input.quantity","input.devicequantity","table.action"};		
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -497,7 +498,7 @@ public class DatatableHeaders {
 			//Address Mgmt Headers
 			else if("systemAddressHeaders".equals(role)) {
 				
-				String[] headers = {"Created On","Province","District","Commune","Village","table.action"};	
+				String[] headers = {"Created On","table.lastupdatedate","Province","District","Commune","Village","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

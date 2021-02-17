@@ -1053,6 +1053,8 @@ function setAllDropdowns(){
 				$('<option>').val(data[i].value).text(data[i].interp)
 				.appendTo('#operator');
 			}
+			$('<option>').val("-1").text("Operation")
+			.appendTo('#operator');
 		});
 	
 	//Request Type status-----------dropdown

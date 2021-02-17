@@ -64,7 +64,8 @@ public class ImporterManageTypeAdmin {
 		String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
 		log.info("userType in TRC----" + userType);
-
+		
+		
 		List<List<Object>> finalList = new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
 
@@ -76,6 +77,10 @@ public class ImporterManageTypeAdmin {
 		Gson gson = new Gson();
 		TRCRequest filterrequest = gsonObject.fromJson(filter, TRCRequest.class);
 		filterrequest.setSearchString(request.getParameter("search[value]"));
+		
+		filterrequest.setOrderColumnName(request.getParameter("order[0][column]") == null ? "Modified On" : request.getParameter("order[0][column]"));
+		filterrequest.setOrder(request.getParameter("order[0][dir]") == null ? "desc" : request.getParameter("order[0][dir]"));
+		
 		log.info("--pageSize-" + pageSize + "----pageNo" + pageNo + "----file" + file + "-filterrequest-------"
 				+ filterrequest);
 
@@ -257,7 +262,7 @@ public class ImporterManageTypeAdmin {
 				
 				if("CEIRAdmin".equals(userType)){
 					//Dropdown items
-					String[] selectParam= {"select",Translator.toLocale("table.ProductName"),"filterdbrandname","","select",Translator.toLocale("table.ModelNumber"),"filteredModel","","select",Translator.toLocale("table.userType"),"userType","","select",Translator.toLocale("table.status"),"Status",""};
+					String[] selectParam= {"select",Translator.toLocale("table.ProductName"),"filterdbrandname","","select",Translator.toLocale("table.ModelNumber"),"filteredModel","","select",Translator.toLocale("table.country"),"country","","select",Translator.toLocale("table.userType"),"userType","","select",Translator.toLocale("table.status"),"Status",""};
 					for(int i=0; i< selectParam.length; i++) {
 						inputFields= new InputFields();
 						inputFields.setType(selectParam[i]);

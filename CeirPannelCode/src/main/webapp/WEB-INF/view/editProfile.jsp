@@ -1217,7 +1217,7 @@ input[type="checkbox"] {
 							//	 $("select[required]").css({position: "absolute", display: "inline", height: 0, padding: 0, width: 0});
 							
 							editProfile();
-							if ($("body").attr("data-roleType") == '') {
+							if ($("body").attr("data-roleType") == '' || ($("body").attr("data-roleType") != window.parent.$("body").attr("data-roleType"))) {
 								window.top.location.href = "./login?isExpired=yes";
 							}
 							var timeoutTime =

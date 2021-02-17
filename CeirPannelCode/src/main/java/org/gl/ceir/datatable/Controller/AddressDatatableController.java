@@ -83,13 +83,14 @@ public class AddressDatatableController {
 				{
 				   String id= String.valueOf(dataInsideList.getId());	
 				   String createdOn = dataInsideList.getCreatedOn();
+				   String modifiedOn = dataInsideList.getModifiedOn();
 				   String province = dataInsideList.getProvince();	
 				   String district = (String) dataInsideList.getDistrict();
 				   String commune= dataInsideList.getCommune();
 				   String village = dataInsideList.getVillage();
 				   String userStatus = (String) session.getAttribute("userStatus");	  
 				   String action=iconState.addressManagementIcons(id,userStatus);
-				   Object[] finalData={createdOn,province,district,commune,village,action}; 
+				   Object[] finalData={createdOn,modifiedOn,province,district,commune,village,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
@@ -163,7 +164,7 @@ public class AddressDatatableController {
 		 
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

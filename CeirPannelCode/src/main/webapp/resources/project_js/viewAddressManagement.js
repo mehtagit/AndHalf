@@ -45,7 +45,7 @@
 			
 			var filterRequest={
 					"startDate": $('#startDate').val(),
-					"endDate":  $('#startDate').val(),
+					"endDate":  $('#endDate').val(),
 					"province" : $("#proviance").val(),
 					"district" : filterDistrict,
 					"commune" :  filterCommune,
@@ -368,6 +368,7 @@
 		var filterVillage = $('#village').val() == ""|| $('#village').val() == undefined ? null : $("#village option:selected").text();
 		var filterRequest={
 				"startDate": $('#startDate').val(),
+				"endDate":  $('#endDate').val(),
 				"province" : $("#proviance").val(),
 				"district" : filterDistrict,
 				"commune" :  filterCommune,

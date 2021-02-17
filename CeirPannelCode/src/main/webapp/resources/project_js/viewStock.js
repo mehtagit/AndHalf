@@ -599,7 +599,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				        });
 					} 
 					else if(date[i].type === "text"){
-						$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+						$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 
 					}
 					else if(date[i].type === "select"){

@@ -7,6 +7,7 @@ public class AddressContentModel {
 
 	private Integer id;
 	private String createdOn;
+	private String modifiedOn;
 	private String country;
 	private String province;
 	private String district;
@@ -21,6 +22,12 @@ public class AddressContentModel {
 	private String currentVillage;
 	public String getCurrentVillage() {
 		return currentVillage;
+	}
+	public String getModifiedOn() {
+		return modifiedOn;
+	}
+	public void setModifiedOn(String modifiedOn) {
+		this.modifiedOn = modifiedOn;
 	}
 	public void setCurrentVillage(String currentVillage) {
 		this.currentVillage = currentVillage;
@@ -110,6 +117,8 @@ public class AddressContentModel {
 		builder.append(id);
 		builder.append(", createdOn=");
 		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
 		builder.append(", country=");
 		builder.append(country);
 		builder.append(", province=");
@@ -132,6 +141,8 @@ public class AddressContentModel {
 		builder.append(districtName);
 		builder.append(", communeID=");
 		builder.append(communeID);
+		builder.append(", currentVillage=");
+		builder.append(currentVillage);
 		builder.append("]");
 		return builder.toString();
 	}
