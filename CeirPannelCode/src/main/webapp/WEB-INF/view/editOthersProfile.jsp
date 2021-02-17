@@ -1207,7 +1207,7 @@ var contextpath = "${context}";
       
        editOtherProfile();
    	
-       if($("body").attr("data-roleType") == ''){window.top.location.href = "./login?isExpired=yes";}
+       if($("body").attr("data-roleType") == '' || ($("body").attr("data-roleType") != window.parent.$("body").attr("data-roleType"))){window.top.location.href = "./login?isExpired=yes";}
        var timeoutTime = <%=session.getLastAccessedTime()%>;
        var timeout = <%=session.getMaxInactiveInterval()%>;
        timeoutTime += timeout;

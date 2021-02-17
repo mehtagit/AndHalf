@@ -16,19 +16,6 @@ public class FilterRequest {
 	public String columnName,sort,blockingTypeFilter;
 	public String visaType,visaNumber,visaExpiryDate;
 	public String order,orderColumnName;
-	
-	public String getOrder() {
-		return order;
-	}
-	public void setOrder(String order) {
-		this.order = order;
-	}
-	public String getOrderColumnName() {
-		return orderColumnName;
-	}
-	public void setOrderColumnName(String orderColumnName) {
-		this.orderColumnName = orderColumnName;
-	}
 	public String getStartDate() {
 		return startDate;
 	}
@@ -614,6 +601,42 @@ public class FilterRequest {
 	public void setBlockingTypeFilter(String blockingTypeFilter) {
 		this.blockingTypeFilter = blockingTypeFilter;
 	}
+	public String getLocalityId() {
+		return localityId;
+	}
+	public void setLocalityId(String localityId) {
+		this.localityId = localityId;
+	}
+	public String getVisaType() {
+		return visaType;
+	}
+	public void setVisaType(String visaType) {
+		this.visaType = visaType;
+	}
+	public String getVisaNumber() {
+		return visaNumber;
+	}
+	public void setVisaNumber(String visaNumber) {
+		this.visaNumber = visaNumber;
+	}
+	public String getVisaExpiryDate() {
+		return visaExpiryDate;
+	}
+	public void setVisaExpiryDate(String visaExpiryDate) {
+		this.visaExpiryDate = visaExpiryDate;
+	}
+	public String getOrder() {
+		return order;
+	}
+	public void setOrder(String order) {
+		this.order = order;
+	}
+	public String getOrderColumnName() {
+		return orderColumnName;
+	}
+	public void setOrderColumnName(String orderColumnName) {
+		this.orderColumnName = orderColumnName;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -826,32 +849,5 @@ public class FilterRequest {
 		builder.append("]");
 		return builder.toString();
 	}
-	public String getVisaType() {
-		return visaType;
-	}
-	public void setVisaType(String visaType) {
-		this.visaType = visaType;
-	}
-	public String getVisaNumber() {
-		return visaNumber;
-	}
-	public void setVisaNumber(String visaNumber) {
-		this.visaNumber = visaNumber;
-	}
-	public String getVisaExpiryDate() {
-		return visaExpiryDate;
-	}
-	public void setVisaExpiryDate(String visaExpiryDate) {
-		this.visaExpiryDate = visaExpiryDate;
-	}
-	public String getLocalityId() {
-		return localityId;
-	}
-	public void setLocalityId(String localityId) {
-		this.localityId = localityId;
-	}
-	
-	
-	
 	
 }

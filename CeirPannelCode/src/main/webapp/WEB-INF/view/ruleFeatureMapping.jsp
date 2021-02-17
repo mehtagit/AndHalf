@@ -561,7 +561,7 @@ if (currentTime < dfd) {
 		$(document)
 				.ready(
 						function() {
-							if ($("body").attr("data-roleType") == '') {
+							if ($("body").attr("data-roleType") == '' || ($("body").attr("data-roleType") != window.parent.$("body").attr("data-roleType"))) {
 								window.top.location.href = "./login?isExpired=yes";
 							}
 							var timeoutTime =
