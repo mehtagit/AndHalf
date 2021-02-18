@@ -445,8 +445,10 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 	
 			txn='';
 			}
-		var filereduserType =  $('#userType').val() =='null' || $('#userType').val()==undefined ? null : $("#userType").val();
-		
+		var filereduserType =  $('#userType').val() =='null' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
+		if(filereduserType=="Role type"){
+			filereduserType=null;
+		}
 		//var filereduserType =  $('#userType').val() =='null' || $('#userType').val()==undefined ? null : $("#userType option:selected").text();
 				var filterUserName=$('#name').val() == 'null' || 'undefined' ?null:$('#name').val();
 				/*
@@ -602,7 +604,8 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 						$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 
 					}
-					else if(date[i].type === "select"){
+					if(userType=$("body").attr("data-roleType")=="CEIRAdmin"){
+					 if(date[i].type === "select"){
 
 						var dropdownDiv=
 							$("#consignmentTableDIv").append("<div class='col s6 m2 selectDropdwn'>"+
@@ -619,26 +622,30 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 							"</div>");
 					
 					}
+					}
+					else{
+						// dynamic dropdown portion
+							var dropdown=data.dropdownList;
+							for(i=0; i<dropdown.length; i++){
+								var dropdownDiv=
+									$("#consignmentTableDIv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
+											
+											"<div class='select-wrapper select2  initialized'>"+
+											"<span class='caret'>"+"</span>"+
+											"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+
+											"<select id="+dropdown[i].id+" class='select-wrapper select2  initialized'>"+
+											"<option value='null'>"+dropdown[i].title+
+											"</option>"+
+											"</select>"+
+											"</div>"+
+									"</div>");
+							}
+								
+					}
 					 
 				}
-	// dynamic dropdown portion
-			/*	var dropdown=data.dropdownList;
-				for(i=0; i<dropdown.length; i++){
-					var dropdownDiv=
-						$("#consignmentTableDIv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
-								
-								"<div class='select-wrapper select2  initialized'>"+
-								"<span class='caret'>"+"</span>"+
-								"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
-
-								"<select id="+dropdown[i].id+" class='select-wrapper select2  initialized'>"+
-								"<option value='null'>"+dropdown[i].title+
-								"</option>"+
-								"</select>"+
-								"</div>"+
-						"</div>");
-				}*/
-							
+			
 				if(sourceType=="viaStock"){
 					$("#btnLink").css({display: "none"});
 					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter' /></div>");

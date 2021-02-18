@@ -682,9 +682,27 @@ function pageButtons(url){
 					});
 				}else if(date[i].type === "text"){
 					
-					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
 				else if(date[i].type === "select"){
+
+						var dropdownDiv=
+							$("#consignmentTableDIv").append("<div class='col s6 m2 selectDropdwn'>"+
+									
+									"<div class='select-wrapper select2  initialized'>"+
+									"<span class='caret'>"+"</span>"+
+									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+
+									"<select id="+date[i].id+" class='select2 initialized'>"+
+									"<option>"+date[i].title+
+									"</option>"+
+									"</select>"+
+									"</div>"+
+							"</div>");
+					
+					}
+/*				if(userType=$("body").attr("data-roleType")=="CEIRAdmin"){	
+				 if(date[i].type === "select"){
 
 					var dropdownDiv=
 						$("#consignmentTableDIv").append("<div class='col s6 m2 selectDropdwn'>"+
@@ -701,26 +719,30 @@ function pageButtons(url){
 						"</div>");
 				
 				}
+			}
+				else{
+						// dynamic dropdown portion
+					var dropdown=data.dropdownList;
+					for(i=0; i<dropdown.length; i++){
+						var dropdownDiv=
+							$("#consignmentTableDIv").append("<div class='col s6 m2 selectDropdwn'>"+
 
+									"<div class='select-wrapper select2  initialized'>"+
+									"<span class='caret'>"+"</span>"+
+									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+
+									"<select id="+dropdown[i].id+" class='select2 initialized'>"+
+									"<option>"+dropdown[i].title+
+									"</option>"+
+									"</select>"+
+									"</div>"+
+							"</div>");
+					}
+				}*/
+				
 			} 
 
-		/*	// dynamic dropdown portion
-			var dropdown=data.dropdownList;
-			for(i=0; i<dropdown.length; i++){
-				var dropdownDiv=
-					$("#consignmentTableDIv").append("<div class='col s6 m2 selectDropdwn'>"+
 
-							"<div class='select-wrapper select2  initialized'>"+
-							"<span class='caret'>"+"</span>"+
-							"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
-
-							"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-							"<option>"+dropdown[i].title+
-							"</option>"+
-							"</select>"+
-							"</div>"+
-					"</div>");
-			}*/
 
 
 			if(sourceType=="viaStolen"){
