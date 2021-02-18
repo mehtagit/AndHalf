@@ -294,8 +294,7 @@ public class ConsignmentServiceImpl {
 
 	public Page<ConsignmentMgmt> getFilterPaginationConsignments(FilterRequest consignmentMgmt, Integer pageNo,
 			Integer pageSize, String source) {
-		// Pageable pageable = PageRequest.of(pageNo, pageSize, new
-		// Sort(Sort.Direction.DESC, "modifiedOn")) ;
+		//Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn")) ;
 		try {
 			consigmentValidator.validateFilter(consignmentMgmt);
 
@@ -312,22 +311,19 @@ public class ConsignmentServiceImpl {
 									: "Status".equalsIgnoreCase(consignmentMgmt.getColumnName()) ? "consignmentStatus"
 											: "Tax Paid Status".equalsIgnoreCase(consignmentMgmt.getColumnName())
 													? "taxPaidStatus"
-													: "IMEI/MEID Quantity"
-															.equalsIgnoreCase(consignmentMgmt.getColumnName())
-																	? "quantity"
-																	: "Device Quantity".equalsIgnoreCase(
-																			consignmentMgmt.getColumnName())
-																					? "deviceQuantity"
-																					: "modifiedOn";
+													: "IMEI/MEID Quantity".equalsIgnoreCase(consignmentMgmt.getColumnName())
+															? "quantity"
+															:"Device Quantity".equalsIgnoreCase(consignmentMgmt.getColumnName())
+															? "deviceQuantity" : "modifiedOn";
 			Sort.Direction direction;
-			if ("modifiedOn".equalsIgnoreCase(orderColumn)) {
-				direction = Sort.Direction.DESC;
-			} else {
-				direction = SortDirection.getSortDirection(consignmentMgmt.getSort());
+			if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+				direction=Sort.Direction.DESC;
+			}
+			else {
+				direction= SortDirection.getSortDirection(consignmentMgmt.getSort());
 			}
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
-			logger.info("column Name :: " + consignmentMgmt.getColumnName() + "---consignmentMgmt.getSort() : "
-					+ consignmentMgmt.getSort());
+			logger.info("column Name :: " + consignmentMgmt.getColumnName()+"---consignmentMgmt.getSort() : "+consignmentMgmt.getSort());
 			Page<ConsignmentMgmt> page = consignmentRepository
 					.findAll(buildSpecification(consignmentMgmt, statusList, source).build(), pageable);
 
@@ -357,10 +353,9 @@ public class ConsignmentServiceImpl {
 			bodyPlaceHolderMap.put("<feature>", featureName);
 			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.VIEW_ALL);
 			alertServiceImpl.raiseAnAlert(Alerts.ALERT_013, consignmentMgmt.getUserId(), bodyPlaceHolderMap);
-
+			
 // 3/feb/2021 code 
-			return new PageImpl<ConsignmentMgmt>(new ArrayList<ConsignmentMgmt>(1),
-					PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn")), 0);
+			return new PageImpl<ConsignmentMgmt>(new ArrayList<ConsignmentMgmt>(1), PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn")), 0);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 
@@ -870,8 +865,7 @@ public class ConsignmentServiceImpl {
 				mappingStrategy.setType(ConsignmentFileModelCEIR.class);
 				if (!consignmentMgmts.isEmpty()) {
 					for (ConsignmentMgmt consignmentMgmt : consignmentMgmts) {
-						fileRecords.add(new ConsignmentFileModelCEIR(
-								consignmentMgmt.getModifiedOn().format(dtf),
+						fileRecords.add(new ConsignmentFileModelCEIR(consignmentMgmt.getModifiedOn().format(dtf),
 								consignmentMgmt.getCreatedOn().format(dtf), consignmentMgmt.getTxnId(),
 								consignmentMgmt.getUser().getUserProfile().getDisplayName(),
 								consignmentMgmt.getStateInterp(), consignmentMgmt.getTaxInterp(),
@@ -1008,9 +1002,9 @@ public class ConsignmentServiceImpl {
 					SearchOperation.EQUALITY, Datatype.STRING));
 		} else if (!(Objects.nonNull(consignmentMgmt.getTxnId()) && !consignmentMgmt.getTxnId().isEmpty())
 				&& !Objects.nonNull(consignmentMgmt.getTaxPaidStatus())
-				&& !(Objects.nonNull(consignmentMgmt.getDisplayName()) && !consignmentMgmt.getDisplayName().isEmpty()
+				&& (( !(Objects.nonNull(consignmentMgmt.getDisplayName()) && !consignmentMgmt.getDisplayName().isEmpty()
 						&& !consignmentMgmt.getDisplayName().equalsIgnoreCase("null")
-						&& !consignmentMgmt.getDisplayName().equalsIgnoreCase("undefined"))) {
+						&& !consignmentMgmt.getDisplayName().equalsIgnoreCase("undefined"))|| ( consignmentMgmt.getUserType().equalsIgnoreCase("custom") )) )) {
 			if (Objects.nonNull(consignmentMgmt.getFeatureId()) && Objects.nonNull(consignmentMgmt.getUserTypeId())) {
 				logger.info("User type id:[" + consignmentMgmt.getFeatureId() + "] and userTypeId:["
 						+ consignmentMgmt.getUserTypeId() + "]");
@@ -1026,7 +1020,16 @@ public class ConsignmentServiceImpl {
 							consignmentStatus.add(dashboardUsersFeatureStateMap2.getState());
 						}
 					} else if ("filter".equalsIgnoreCase(source)) {
-						boolean isFilterEmpty = nothingInFilter(consignmentMgmt);
+						boolean isFilterEmpty =false;
+						if (Objects.nonNull(consignmentMgmt.getUserType())
+								&& consignmentMgmt.getUserType().equalsIgnoreCase("custom") && !Objects.nonNull(consignmentMgmt.getStatus()))
+							{
+							isFilterEmpty=true;
+							
+							}
+						else {
+							isFilterEmpty=nothingInFilter(consignmentMgmt);
+						}
 						logger.info("Nothing in filter : " + isFilterEmpty);
 
 						if (isFilterEmpty) {

@@ -16,7 +16,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.mapping.Array;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,11 +24,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
-import com.gl.ceir.config.EmailSender.MailSubject;
 import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.configuration.SortDirection;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.feign.UserFeignClient;
 import com.gl.ceir.config.model.AllRequest;
@@ -41,27 +39,23 @@ import com.gl.ceir.config.model.EndUserDB;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.RawMail;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.RegularizeDeviceView;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
-import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.VisaDb;
 import com.gl.ceir.config.model.WebActionDb;
-import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.model.constants.ReferTable;
 import com.gl.ceir.config.model.constants.RegularizeDeviceStatus;
 import com.gl.ceir.config.model.constants.SearchOperation;
-import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.TaxStatus;
@@ -195,9 +189,25 @@ public class RegularizedDeviceServiceImpl {
 		SystemConfigurationDb gracePeriodForRegisterDevice = systemConfigurationDbRepository.getByTag(ConfigTags.grace_period_for_rgister_device);
 
 		try {
-
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-
+			String orderColumn = "Date".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
+					: "NID/Passport No.".equalsIgnoreCase(filterRequest.getColumnName()) ? "nid"
+						:"Transaction ID".equalsIgnoreCase(filterRequest.getColumnName()) ? "txnId"
+							: "Nationality".equalsIgnoreCase(filterRequest.getColumnName()) ? "endUserDB.nationality"
+									: "Tax Paid Status".equalsIgnoreCase(filterRequest.getColumnName()) ? "taxPaidStatus"
+											: "Origin".equalsIgnoreCase(filterRequest.getColumnName())
+													? "origin"
+													:"Status".equalsIgnoreCase(filterRequest.getColumnName())
+															? "status" : "modifiedOn";
+			Sort.Direction direction;
+			if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+				direction=Sort.Direction.DESC;
+			}
+			else {
+				direction= SortDirection.getSortDirection(filterRequest.getSort());
+			}
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
+		
+			
 			if(filterRequest.getTaxPaidStatus() != TaxStatus.BLOCKED.getCode()) {
 				// TODO
 			}

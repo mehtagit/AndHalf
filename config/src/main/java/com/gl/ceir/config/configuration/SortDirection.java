@@ -12,6 +12,6 @@ public class SortDirection {
 	      return Sort.Direction.DESC;
 	    }
 
-	    return Sort.Direction.ASC;
+	    return Sort.Direction.DESC;
 	  }
 }

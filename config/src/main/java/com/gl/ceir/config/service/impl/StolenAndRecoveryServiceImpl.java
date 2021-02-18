@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.configuration.SortDirection;
 import com.gl.ceir.config.exceptions.RequestInvalidException;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.feign.UserFeignClient;
@@ -301,7 +302,35 @@ public class StolenAndRecoveryServiceImpl {
 	public Page<StolenandRecoveryMgmt> getAllInfo(FilterRequest filterRequest, Integer pageNo, Integer pageSize,String source){
 		List<StateMgmtDb> stateInterpList = null;
 		List<StateMgmtDb> statusList = null;
-		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+		if(filterRequest.getFeatureId() == 5) {
+			
+		}
+		String orderColumn = "0".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
+				: "1".equalsIgnoreCase(filterRequest.getColumnName()) ? "txnId"
+						: "3".equalsIgnoreCase(filterRequest.getColumnName()) ? "requestType"
+								: "4".equalsIgnoreCase(filterRequest.getColumnName()) ? "sourceType"
+										: "5".equalsIgnoreCase(filterRequest.getColumnName())
+												? "fileStatus"
+												:"6".equalsIgnoreCase(filterRequest.getColumnName()) ? "qty" 
+												: "7".equalsIgnoreCase(filterRequest.getColumnName()) ? "deviceQuantity":"modifiedOn";
+		if(filterRequest.getFeatureId() == 7 && "2".equalsIgnoreCase(filterRequest.getColumnName())) {
+			orderColumn = "operatorTypeId";
+		}
+		else if(filterRequest.getFeatureId() == 5 && "2".equalsIgnoreCase(filterRequest.getColumnName())) {
+			orderColumn = "blockingType";
+		}
+		
+		Sort.Direction direction;
+		if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+			direction=Sort.Direction.DESC;
+		}
+		else {
+			direction= SortDirection.getSortDirection(filterRequest.getSort());
+		}
+		
+		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
+	
+	//	Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 		
 		try {
 			stolenValidator.validateFilter(filterRequest);
@@ -325,10 +354,10 @@ public class StolenAndRecoveryServiceImpl {
 				// Operator type id for stolen request of registered by Ceir Admin.
 				if(Objects.nonNull(stolenandRecoveryMgmt.getOperatorTypeId())) {
 					if(stolenandRecoveryMgmt.getOperatorTypeId() == -1)
-						stolenandRecoveryMgmt.setOperatorTypeIdInterp("NA");
+						stolenandRecoveryMgmt.setOperatorTypeIdInterp("Operation");
 //						stolenandRecoveryMgmt.setOperatorTypeIdInterp("CEIR Admin");
 				}else {
-					stolenandRecoveryMgmt.setOperatorTypeIdInterp("NA");
+					stolenandRecoveryMgmt.setOperatorTypeIdInterp("Operation");
 					logger.info("WARN : OperatorTypeId is null for [" + stolenandRecoveryMgmt + "]");
 				}
 			}

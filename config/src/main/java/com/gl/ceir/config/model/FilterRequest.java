@@ -61,6 +61,7 @@ public class FilterRequest {
 	private String fileName,nationality;
 	private String columnName;
 	private String sort,blockingTypeFilter;
+	
 	public String visaType,visaNumber,visaExpiryDate;
 	
 	public String getFilteredUserType() {
@@ -370,30 +371,6 @@ public class FilterRequest {
 		this.blockingTypeFilter = blockingTypeFilter;
 	}
 
-	public String getVisaType() {
-		return visaType;
-	}
-
-	public void setVisaType(String visaType) {
-		this.visaType = visaType;
-	}
-
-	public String getVisaNumber() {
-		return visaNumber;
-	}
-
-	public void setVisaNumber(String visaNumber) {
-		this.visaNumber = visaNumber;
-	}
-
-	public String getVisaExpiryDate() {
-		return visaExpiryDate;
-	}
-
-	public void setVisaExpiryDate(String visaExpiryDate) {
-		this.visaExpiryDate = visaExpiryDate;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -501,7 +478,30 @@ public class FilterRequest {
 		return builder.toString();
 	}
 
-	
+	public String getVisaType() {
+		return visaType;
+	}
+
+	public void setVisaType(String visaType) {
+		this.visaType = visaType;
+	}
+
+	public String getVisaNumber() {
+		return visaNumber;
+	}
+
+	public void setVisaNumber(String visaNumber) {
+		this.visaNumber = visaNumber;
+	}
+
+	public String getVisaExpiryDate() {
+		return visaExpiryDate;
+	}
+
+	public void setVisaExpiryDate(String visaExpiryDate) {
+		this.visaExpiryDate = visaExpiryDate;
+	}
+
 	 
 }
 
