@@ -325,12 +325,12 @@ public class StockDatatableController {
 			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
 					Translator.toLocale("input.endDate"), "endDate", "", "text",
 					Translator.toLocale("input.transactionID"), "transactionID", "18", "text",
-					Translator.toLocale("table.importerCompanyName"), "name", "", "select",
+					Translator.toLocale("table.importerCompanyName"), "name", "30", "select",
 					Translator.toLocale("registration.roletype"), "userType", "", "text",
 					Translator.toLocale("table.fileName"), "fileNameFilter", "30", "select",
 					Translator.toLocale("select.stockStatus"), "StockStatus", "", "text",
-					Translator.toLocale("input.quantity"), "IMEIQuantityFilter", "7" ,"text",
-					Translator.toLocale("input.devicequantity"), "deviceQuantityFilter", "7"};
+					Translator.toLocale("input.quantity"), "IMEIQuantityFilter", "10" ,"text",
+					Translator.toLocale("input.devicequantity"), "deviceQuantityFilter", "10"};
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -359,11 +359,11 @@ public class StockDatatableController {
 			// input type date list
 			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
 					Translator.toLocale("input.endDate"), "endDate", "", "text",
-					Translator.toLocale("input.transactionID"), "transactionID", "", "text",
-					Translator.toLocale("table.fileName"), "fileNameFilter", "", "select",
+					Translator.toLocale("input.transactionID"), "transactionID", "18", "text",
+					Translator.toLocale("table.fileName"), "fileNameFilter", "30", "select",
 					Translator.toLocale("select.stockStatus"), "StockStatus", "", "text",
-					Translator.toLocale("input.quantity"), "IMEIQuantityFilter", "" ,"text",
-					Translator.toLocale("input.devicequantity"), "deviceQuantityFilter", ""};
+					Translator.toLocale("input.quantity"), "IMEIQuantityFilter", "10" ,"text",
+					Translator.toLocale("input.devicequantity"), "deviceQuantityFilter", "10"};
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -394,7 +394,7 @@ public class StockDatatableController {
 			// input type date list
 			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
 					Translator.toLocale("input.endDate"), "endDate", "", "text",
-					Translator.toLocale("input.transactionID"), "transactionID", "" };
+					Translator.toLocale("input.transactionID"), "transactionID", "18" };
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

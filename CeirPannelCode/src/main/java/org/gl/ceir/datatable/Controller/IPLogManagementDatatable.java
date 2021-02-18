@@ -87,7 +87,7 @@ public class IPLogManagementDatatable {
 				   String userAgent = dataInsideList.getUserAgent();
 				   //String userStatus = (String) session.getAttribute("userStatus");	  
 				   //String action = iconState.alertManagementIcons(id);
-				   Object[] finalData={createdOn,username,publicIp,browser,userAgent}; 
+				   Object[] finalData={createdOn,username,publicIp,browser}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	

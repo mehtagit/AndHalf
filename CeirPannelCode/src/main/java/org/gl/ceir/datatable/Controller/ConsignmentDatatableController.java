@@ -323,7 +323,7 @@ public class ConsignmentDatatableController {
 		pageElement.setDropdownList(dropdownList);
 
 		//input type date list	
-		String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","","text",Translator.toLocale("table.supplierName"),"supplierNameFilter",""};
+		String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","18","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","10","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","10","text",Translator.toLocale("table.supplierName"),"supplierNameFilter","30"};
 		for(int i=0; i< dateParam.length; i++) {
 		dateRelatedFields= new InputFields();
 		dateRelatedFields.setType(dateParam[i]);
@@ -339,7 +339,7 @@ public class ConsignmentDatatableController {
 	}
 	else if("CEIRAdmin".equals(userType)){
 		//input type date list	
-		String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.importerCompanyName"),"name","","select",Translator.toLocale("select.consignmentStatus"),"filterConsignmentStatus","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter",""};
+		String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","18","text",Translator.toLocale("table.importerCompanyName"),"name","30","select",Translator.toLocale("select.consignmentStatus"),"filterConsignmentStatus","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","10","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","10"};
 		for(int i=0; i< dateParam.length; i++) {
 		dateRelatedFields= new InputFields();
 		dateRelatedFields.setType(dateParam[i]);
@@ -371,7 +371,7 @@ public class ConsignmentDatatableController {
 
 	
 		//input type date list	
-				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.importerCompanyName"),"name","","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter",""};
+				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","18","text",Translator.toLocale("table.importerCompanyName"),"name","30","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","10","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","10"};
 				for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

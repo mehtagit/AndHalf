@@ -502,7 +502,7 @@ function pageButtons(url){
 						 maxDate: new Date()
 			        }); 
 				}else if(date[i].type === "text"){
-					$("#tableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" id="+date[i].id+" /><label for="+date[i].id+" id="+date[i].id+">"+date[i].title+"</label></div>");
+					$("#tableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" maxlength="+date[i].className+" id="+date[i].id+" /><label for="+date[i].id+" id="+date[i].id+">"+date[i].title+"</label></div>");
 				}
 				
 			} 

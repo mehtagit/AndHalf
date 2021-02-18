@@ -67,8 +67,8 @@ public class GrievanceDatatableController {
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		
-		filterrequest.setColumnName(request.getParameter("order[0][column]") == null ? "Modified On" : request.getParameter("order[0][column]"));
-		filterrequest.setSort(request.getParameter("order[0][dir]") == null ? "desc" : request.getParameter("order[0][dir]"));
+		filterrequest.setOrderColumnName(request.getParameter("order[0][column]") == null ? "Modified On" : request.getParameter("order[0][column]"));
+		filterrequest.setOrder(request.getParameter("order[0][dir]") == null ? "desc" : request.getParameter("order[0][dir]"));
 		
 		Integer file = 0;
 		Object response;
