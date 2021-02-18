@@ -109,9 +109,12 @@ public class UserMgmtService {
 					Datatype.INT));
 
 		uPSB.with(new SearchCriteria("currentStatus", 3, SearchOperation.EQUALITY, Datatype.INT));
-		uPSB.addSpecification(
-				uPSB.joinWithUserType(new SearchCriteria("selfRegister", 0, SearchOperation.EQUALITY, Datatype.INT)));
+		uPSB.addSpecification(uPSB.joinWithUserType(new SearchCriteria("selfRegister", 0, SearchOperation.EQUALITY, Datatype.INT)));
 
+		
+		//uPSB.addSpecification(uPSB.joinWithUserProfile());
+		
+		 
 		if (Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()) {
 			log.info("filterRequest.getSearchString()::::::::" + filterRequest.getSearchString());
 			uPSB.orSearch(new SearchCriteria("userProfile-email", filterRequest.getSearchString(), SearchOperation.LIKE,
@@ -145,17 +148,28 @@ public class UserMgmtService {
 		}
 	}
 
-	public Page<User> viewAllRecord(UserMgmtFilter details, Integer pageNo, Integer pageSize,String operation) {
+	public Page<User> viewAllRecord(UserMgmtFilter details, Integer pageNo, Integer pageSize, String operation) {
 		try {
 			log.info("filter data:  " + details);
 			// RequestHeaders header=new
 			// RequestHeaders(details.getUserAgent(),details.getPublicIp(),details.getUsername());
 			// headerService.saveRequestHeader(header);
-			String operationType= "view".equalsIgnoreCase(operation) ? SubFeatures.VIEW_ALL : SubFeatures.EXPORT;
-			
+			String operationType = "view".equalsIgnoreCase(operation) ? SubFeatures.VIEW_ALL : SubFeatures.EXPORT;
+
 			userService.saveUserTrail(details.getUserId(), details.getUsername(), details.getUserType(),
 					details.getUserTypeId(), Features.User_Management, operationType, details.getFeatureId());
-
+			/*
+			 * log.info("column Name :: " + details.getColumnName()); String orderColumn =
+			 * "Created On".equalsIgnoreCase(details.getColumnName()) ? "createdOn" :
+			 * "Modified On".equalsIgnoreCase(details.getColumnName()) ? "modifiedOn" :
+			 * "User ID".equalsIgnoreCase(details.getColumnName()) ? "username" :
+			 * "Email".equalsIgnoreCase(details.getColumnName()) ? "userProfile.email" :
+			 * "Phone No.".equalsIgnoreCase(details.getColumnName()) ? "userProfile.phoneNo"
+			 * : "User Type".equalsIgnoreCase(details.getColumnName()) ?
+			 * "usertype.usertypeName" : "modifiedOn"; Sort.Direction direction =
+			 * getSortDirection(details.getOrder()); Pageable pageable =
+			 * PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
+			 */
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 			Page<User> page = userRepo.findAll(buildSpecification(details).build(), pageable);
 			return page;
@@ -168,6 +182,16 @@ public class UserMgmtService {
 		}
 	}
 
+	 private Sort.Direction getSortDirection(String direction) {
+		    if (direction.equals("asc")) {
+		      return Sort.Direction.ASC;
+		    } else if (direction.equals("desc")) {
+		      return Sort.Direction.DESC;
+		    }
+
+		    return Sort.Direction.ASC;
+		  }
+	 
 	@Transactional
 	public GenricResponse saveUser(UserDetails details) {
 		Usertype userType = new Usertype(details.getUsertypeId());
@@ -379,7 +403,7 @@ public class UserMgmtService {
 	public GenricResponse deleteById(AllRequest details) {
 		try {
 			log.info("data: " + details);
-			User user=userRepo.findByUsername(details.getUsername());
+			User user = userRepo.findByUsername(details.getUsername());
 			// RequestHeaders header=new
 			// RequestHeaders(details.getUserAgent(),details.getPublicIp(),details.getUsername());
 			// headerService.saveRequestHeader(header);
@@ -387,7 +411,7 @@ public class UserMgmtService {
 					details.getUserTypeId(), Features.User_Management, SubFeatures.DELETE, details.getFeatureId());
 
 			userRepo.setStatusForUser(21, user.getCurrentStatus(), details.getDataId());
-			//userRepo.deleteById(details.getDataId());
+			// userRepo.deleteById(details.getDataId());
 			GenricResponse response = new GenricResponse(200, "User Successfuly delete", "");
 			return response;
 		} catch (Exception e) {
@@ -502,7 +526,7 @@ public class UserMgmtService {
 		try {
 
 			mapStrategy.setType(UserMgmtFileModel.class);
-			List<User> list = viewAllRecord(filter, pageNo, pageSize,"Export").getContent();
+			List<User> list = viewAllRecord(filter, pageNo, pageSize, "Export").getContent();
 
 			if (list.size() > 0) {
 				fileName = LocalDateTime.now().format(dtf).replace(" ", "_") + "_UserManagement.csv";

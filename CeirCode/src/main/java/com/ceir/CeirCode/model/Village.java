@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,6 +34,32 @@ public class Village {
 	@Column(name = "COMMUNE_ID")
 	private Long communeID;
 	private String village;
+	
+	@Transient
+	private String commune;
+	@Transient
+	private String districtName;
+	@Transient
+	private String currentVillage;
+	public String getCurrentVillage() {
+		return currentVillage;
+	}
+	public void setCurrentVillage(String currentVillage) {
+		this.currentVillage = currentVillage;
+	}
+	public String getDistrictName() {
+		return districtName;
+	}
+	public void setDistrictName(String districtName) {
+		this.districtName = districtName;
+	}
+	
+	public String getCommune() {
+		return commune;
+	}
+	public void setCommune(String commune) {
+		this.commune = commune;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -44,6 +71,12 @@ public class Village {
 		builder.append(communeID);
 		builder.append(", village=");
 		builder.append(village);
+		builder.append(", commune=");
+		builder.append(commune);
+		builder.append(", districtName=");
+		builder.append(districtName);
+		builder.append(", currentVillage=");
+		builder.append(currentVillage);
 		builder.append("]");
 		return builder.toString();
 	}
