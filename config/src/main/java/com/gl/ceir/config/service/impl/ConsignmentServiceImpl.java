@@ -1020,16 +1020,7 @@ public class ConsignmentServiceImpl {
 							consignmentStatus.add(dashboardUsersFeatureStateMap2.getState());
 						}
 					} else if ("filter".equalsIgnoreCase(source)) {
-						boolean isFilterEmpty =false;
-						if (Objects.nonNull(consignmentMgmt.getUserType())
-								&& consignmentMgmt.getUserType().equalsIgnoreCase("custom") && !Objects.nonNull(consignmentMgmt.getStatus()))
-							{
-							isFilterEmpty=true;
-							
-							}
-						else {
-							isFilterEmpty=nothingInFilter(consignmentMgmt);
-						}
+						boolean isFilterEmpty = nothingInFilter(consignmentMgmt);
 						logger.info("Nothing in filter : " + isFilterEmpty);
 
 						if (isFilterEmpty) {
