@@ -62,6 +62,7 @@ import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.TaxStatus;
+import com.gl.ceir.config.model.file.ConsignmentFileModelCEIR;
 import com.gl.ceir.config.model.file.UpdateVisaFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.DashboardUsersFeatureStateMapRepository;
@@ -70,6 +71,7 @@ import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
 import com.gl.ceir.config.repository.UpdateVisaRepository;
 import com.gl.ceir.config.repository.UserProfileRepository;
 import com.gl.ceir.config.repository.VipListRepository;
+import com.gl.ceir.config.repository.VisaDbRepository;
 import com.gl.ceir.config.repository.WebActionDbRepository;
 import com.gl.ceir.config.request.model.Generic_Response_Notification;
 import com.gl.ceir.config.request.model.RegisterationUser;
@@ -77,11 +79,13 @@ import com.gl.ceir.config.specificationsbuilder.GenericSpecificationBuilder;
 import com.gl.ceir.config.specificationsbuilder.SpecificationBuilder;
 import com.gl.ceir.config.transaction.EndUserTransaction;
 import com.gl.ceir.config.util.CommonFunction;
+import com.gl.ceir.config.util.CustomMappingStrategy;
 import com.gl.ceir.config.util.DateUtil;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.HeaderColumnNameTranslateMappingStrategy;
+import com.opencsv.bean.MappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 
@@ -158,11 +162,16 @@ public class EnduserServiceImpl {
 	@Autowired
 	UserProfileRepository userProfileRepository;
 	
+	@Autowired
+	VisaDbRepository visaDbRepository;
+	
 	public GenricResponse endUserByNid(AllRequest data) {
 		try {
 			logger.info("data given: "+data);
 			String username="";
 			long userId=0;
+			if( Objects.nonNull(data.getUsername()))
+				username=data.getUsername();
 			if(data.getUserTypeId()!=17) {
 				username=data.getUsername();
 				userId=data.getUserId();
@@ -172,21 +181,67 @@ public class EnduserServiceImpl {
 			logger.info("AUDIT : Saved request in audit.");
 
 //			EndUserDB endUserDB = endUserDbRepository.getByNid(data.getNid());
-			EndUserDB endUserDB = endUserDbRepository.findByNidIgnoreCase(data.getNid());
-
-			// End user is not registered with CEIR system.
-			if(Objects.nonNull(endUserDB)) {
-				List<RegularizeDeviceDb> regulaizedList=new ArrayList<RegularizeDeviceDb>();
-				if(Objects.nonNull(endUserDB.getRegularizeDeviceDbs()))
-					for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs()) {
-						regularizeData.setEndUserDB(new EndUserDB());
-						regulaizedList.add(regularizeData);
+			if( Objects.nonNull(data.getNid()) && !data.getNid().isEmpty() && !data.getNid().equalsIgnoreCase("null")) {
+				EndUserDB endUserDB = endUserDbRepository.findByNidIgnoreCase(data.getNid());
+	
+				// End user is not registered with CEIR system.
+				if(Objects.nonNull(endUserDB)) {
+	//				endUserDB.setDocTypeInterp(interpSetter.setConfigInterp(Tags.DOC_TYPE, endUserDB.getDocType()));
+					if(Objects.nonNull(endUserDB.getDocType())) {
+						endUserDB.setDocTypeInterp(interpSetter.setTagId(Tags.DOC_TYPE, endUserDB.getDocType()));	
 					}
-				endUserDB.setRegularizeDeviceDbs(regulaizedList);
-				logger.info("End User with nid [" + data.getNid() + "] does exist.");
-				return new GenricResponse(1, "End User does exist.", data.getNid(), endUserDB);
+					List<RegularizeDeviceDb> regulaizedList=new ArrayList<RegularizeDeviceDb>();
+					if(Objects.nonNull(endUserDB.getRegularizeDeviceDbs())) {
+						for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs()) {
+							regularizeData.setEndUserDB(new EndUserDB());
+							regulaizedList.add(regularizeData);
+						}
+					}
+					endUserDB.setRegularizeDeviceDbs(regulaizedList);
+					logger.info("End User with nid [" + data.getNid() + "] does exist.");
+					if( Objects.nonNull(endUserDB.getVisaUpdateDb()) && endUserDB.getVisaUpdateDb().size()>0) {
+						int lastVisaUpdate = endUserDB.getVisaUpdateDb().size() -1;
+						if( Objects.nonNull(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaNumber()) )
+							endUserDB.getVisaDb().get(0).setVisaNumber(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaNumber());
+						if( Objects.nonNull(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaExpiryDate()) )
+							endUserDB.getVisaDb().get(0).setVisaExpiryDate(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaExpiryDate());
+					}
+					return new GenricResponse(1, "End User does exist.", data.getNid(), endUserDB);
+				}else {
+					logger.info("End User with nid [" + data.getNid() + "] does not exist.");
+					return new GenricResponse(0, "User does not exist.", "");
+				}
+			}else if( data.getUserType().equalsIgnoreCase("Custom") || data.getUserType().equalsIgnoreCase("Immigration") ){
+				List<EndUserDB> endUsers = endUserDbRepository.findByOriginIgnoreCase( data.getUserType() );
+				if( endUsers.isEmpty() ) {
+					logger.info("No device registered by Custom yet.");
+					return new GenricResponse(0, "User does not exist.", "");
+				}else {
+					for( EndUserDB endUserDB : endUsers ) {
+						if(Objects.nonNull(endUserDB.getDocType())) {
+							endUserDB.setDocTypeInterp(interpSetter.setTagId(Tags.DOC_TYPE, endUserDB.getDocType()));	
+						}
+						List<RegularizeDeviceDb> regulaizedList=new ArrayList<RegularizeDeviceDb>();
+						if(Objects.nonNull(endUserDB.getRegularizeDeviceDbs())) {
+							for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs()) {
+								regularizeData.setEndUserDB(new EndUserDB());
+								regulaizedList.add(regularizeData);
+							}
+						}
+						endUserDB.setRegularizeDeviceDbs(regulaizedList);
+						logger.info("End User with nid [" + data.getNid() + "] does exist.");
+						if( Objects.nonNull(endUserDB.getVisaUpdateDb()) && endUserDB.getVisaUpdateDb().size()>0) {
+							int lastVisaUpdate = endUserDB.getVisaUpdateDb().size() -1;
+							if( Objects.nonNull(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaNumber()) )
+								endUserDB.getVisaDb().get(0).setVisaNumber(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaNumber());
+							if( Objects.nonNull(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaExpiryDate()) )
+								endUserDB.getVisaDb().get(0).setVisaExpiryDate(endUserDB.getVisaUpdateDb().get(lastVisaUpdate).getVisaExpiryDate());
+						}
+					}
+					return new GenricResponse(2, "End Users does exist.", "", endUsers);
+				}
 			}else {
-				logger.info("End User with nid [" + data.getNid() + "] does not exist.");
+				logger.info("Nid is null request.");
 				return new GenricResponse(0, "User does not exist.", "");
 			}
 		} catch (Exception e) {
@@ -205,6 +260,11 @@ public class EnduserServiceImpl {
 				username=endUserDB.getAuditParameters().getUsername();
 				userId=endUserDB.getAuditParameters().getUserId();
 				endUserDB.setCreatorUserId(endUserDB.getAuditParameters().getUserId());
+				for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs())
+				{
+					if(Objects.isNull(regularizeData.getCreatorUserId()) || regularizeData.getCreatorUserId()==0)
+						regularizeData.setCreatorUserId(endUserDB.getCreatorUserId());
+				}
 			}
 			auditTrailRepository.save(new AuditTrail(userId, username, endUserDB.getAuditParameters().getUserTypeId(),
 					endUserDB.getAuditParameters().getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.REGISTER, "", endUserDB.getTxnId(),endUserDB.getAuditParameters().getUserType()));
@@ -468,12 +528,19 @@ public class EnduserServiceImpl {
 				}else {
 					//					 Update expiry date of latest Visa
 					//					VisaDb visaDb = visaDbs.get(visaDbs.size() - 1);
-					//					visaDb.setVisaExpiryDate(latestVisa.getVisaExpiryDate());	
-
-					VisaDb OldVisa=visaDbs.get(0); 	
-					VisaUpdateDb visaUpdateDb=new VisaUpdateDb(OldVisa.getVisaType(), OldVisa.getVisaNumber(),
+					//					visaDb.setVisaExpiryDate(latestVisa.getVisaExpiryDate());
+					
+					VisaDb OldVisa=visaDbs.get(0);
+					OldVisa.setVisaNumber(latestVisa.getVisaNumber());
+					OldVisa.setVisaFileName(latestVisa.getVisaFileName());
+					OldVisa.setVisaExpiryDate(latestVisa.getVisaExpiryDate());
+//					VisaUpdateDb visaUpdateDb=new VisaUpdateDb(OldVisa.getVisaType(), OldVisa.getVisaNumber(),
+//							latestVisa.getVisaFileName(), OldVisa.getEntryDateInCountry(), latestVisa.getVisaExpiryDate(),
+//							0,endUserDB1,endUserDB.getTxnId(),endUserDB.getNid()); 
+					VisaUpdateDb visaUpdateDb=new VisaUpdateDb(OldVisa.getVisaType(), latestVisa.getVisaNumber(),
 							latestVisa.getVisaFileName(), OldVisa.getEntryDateInCountry(), latestVisa.getVisaExpiryDate(),
-							0,endUserDB1,endUserDB.getTxnId(),endUserDB.getNid()); 
+							0,endUserDB1,endUserDB.getTxnId(),endUserDB.getNid());
+					visaDbRepository.save(OldVisa);
 					String mailTag = "Update_Visa_Request";
 					List<RawMail> rawMails = new ArrayList<>();
 					Map<String, String> placeholderMap = new HashMap<String, String>();
@@ -646,9 +713,9 @@ public class EnduserServiceImpl {
 					mailTag = "END_USER_APPROVED_BY_CEIR_ADMIN"; 
 					receiverUserType = "End User";
 					endUserDB.setStatus(EndUserStatus.APPROVED.getCode());
-
+					endUserDB.setRejectedRemark(null);
 					// if user is VIP, add imei's of user in vip_list table.
-					updateImeiInVipList(endUserDB);
+					updateImeiInVipList(endUserDB,"NA");
 
 				}else {
 					action = SubFeatures.REJECT;
@@ -686,30 +753,36 @@ public class EnduserServiceImpl {
 		}
 	}
 
-	private void updateImeiInVipList(EndUserDB endUserDB) {
+	public void updateImeiInVipList(EndUserDB endUserDB, String approvedBy ) {
 		if("Y".equals(endUserDB.getIsVip())) {
 			if(endUserDB.getRegularizeDeviceDbs().isEmpty()) {
 				logger.info("End User is VIP but no device is registered for him/her with NID/Passport. ["+endUserDB.getNid()+"]");
 			}else {
 				RegularizeDeviceDb regularizeDeviceDb = endUserDB.getRegularizeDeviceDbs().get(0);
 
+				logger.info("Update IMEI in VIP list for device:["+regularizeDeviceDb.toString()+"]");
 				List<VipList> vipsImeiList = new ArrayList<>(4);
 				if(Objects.nonNull(regularizeDeviceDb.getFirstImei())) 
-					vipsImeiList.add(new VipList(regularizeDeviceDb.getFirstImei(), Long.parseLong(endUserDB.getPhoneNo())));
+					vipsImeiList.add(new VipList(regularizeDeviceDb.getFirstImei(), endUserDB.getPhoneNo(), endUserDB.getNid(),
+							approvedBy, endUserDB.getTxnId()));
 
 				if(Objects.nonNull(regularizeDeviceDb.getSecondImei()))
-					vipsImeiList.add(new VipList(regularizeDeviceDb.getSecondImei(), Long.parseLong(endUserDB.getPhoneNo())));
+					vipsImeiList.add(new VipList(regularizeDeviceDb.getSecondImei(), endUserDB.getPhoneNo(), endUserDB.getNid(),
+							approvedBy, endUserDB.getTxnId()));
 
 				if(Objects.nonNull(regularizeDeviceDb.getThirdImei()))
-					vipsImeiList.add(new VipList(regularizeDeviceDb.getThirdImei(), Long.parseLong(endUserDB.getPhoneNo())));
+					vipsImeiList.add(new VipList(regularizeDeviceDb.getThirdImei(), endUserDB.getPhoneNo(), endUserDB.getNid(),
+							approvedBy, endUserDB.getTxnId()));
 
 				if(Objects.nonNull(regularizeDeviceDb.getFourthImei()))
-					vipsImeiList.add(new VipList(regularizeDeviceDb.getFourthImei(), Long.parseLong(endUserDB.getPhoneNo())));
-
+					vipsImeiList.add(new VipList(regularizeDeviceDb.getFourthImei(), endUserDB.getPhoneNo(), endUserDB.getNid(),
+							approvedBy, endUserDB.getTxnId()));
+				logger.info("Going to save VIP list.");
 				vipListRepository.saveAll(vipsImeiList);
 			}
 		}else {
 			// user is not VIP, so nothing to do with table vip_list table.
+			logger.info("User is not VIP, so nothing to do with table vip_list table.");
 		}
 	}
 
@@ -806,14 +879,14 @@ public class EnduserServiceImpl {
 						String message = "Any other user have taken the same action on the visaUpdate [" + payloadTxnId + "]";
 						logger.info(message);
 						return new GenricResponse(10, "", message, payloadTxnId);
-					}
-					
+					}					
 					visaDb.setStatus(RegularizeDeviceStatus.REJECTED_BY_CEIR_ADMIN.getCode());
-					visaDb.setRemark(ceirActionRequest.getRemarks()); 
+					visaDb.setRemark(ceirActionRequest.getRemarks());
 					tag = "Update_Visa_Reject_CEIRAdmin";	
 					receiverUserType = "End User";
 					txnId = visaDb.getTxnId();
 					sufeature=SubFeatures.REJECT;
+					placeholders.put("<Reason>", ceirActionRequest.getRemarks() );
 				}else {
 					return new GenricResponse(2, "unknown operation", "");
 				}
@@ -1070,8 +1143,31 @@ public class EnduserServiceImpl {
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
 			uPSB.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
+		if(Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty()) {
+			uPSB.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		if(Objects.nonNull(filterRequest.getVisaNumber()) && !filterRequest.getVisaNumber().isEmpty()) {
+			uPSB.with(new SearchCriteria("visaNumber", filterRequest.getVisaNumber(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		if(Objects.nonNull(filterRequest.getFileName()) && !filterRequest.getFileName().isEmpty()) {
+			uPSB.with(new SearchCriteria("visaFileName", filterRequest.getFileName(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		if(Objects.nonNull(filterRequest.getVisaExpiryDate()) && !filterRequest.getVisaExpiryDate().isEmpty()) {
+			uPSB.with(new SearchCriteria("visaExpiryDate", filterRequest.getVisaExpiryDate(), SearchOperation.EQUALITY, Datatype.DATE));
+		}
+		if(Objects.nonNull(filterRequest.getVisaType()) && !filterRequest.getVisaType().isEmpty()) {
+			uPSB.with(new SearchCriteria("visaType", filterRequest.getVisaType(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		/*
+		 * if(Objects.nonNull(filterRequest.getVisaExpiryDate()) &&
+		 * filterRequest.getVisaExpiryDate()!="") { uPSB.with(new
+		 * SearchCriteria("visaExpiryDate",filterRequest.getVisaExpiryDate(),
+		 * SearchOperation.EQUALITY, Datatype.DATE)); }
+		 */
 
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
+			uPSB.orSearch(new SearchCriteria("nid", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
+			uPSB.orSearch(new SearchCriteria("visaFileName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			uPSB.orSearch(new SearchCriteria("visaNumber", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			uPSB.orSearch(new SearchCriteria("visaExpiryDate", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			uPSB.orSearch(new SearchCriteria("createdOn", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
@@ -1079,7 +1175,7 @@ public class EnduserServiceImpl {
 			uPSB.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 
 		}
-
+		logger.info("********************-----------((((((((((((((((*****************************************8 " +uPSB);
 		return uPSB;
 	}
 
@@ -1113,6 +1209,8 @@ public class EnduserServiceImpl {
 				if(Objects.nonNull(visa.getEndUserDBData())) {
 					visa.setUserId(visa.getEndUserDBData().getId());
 				}
+				if( Objects.isNull(visa.getVisaNumber()))
+					visa.setVisaNumber("NA");
 			}
 			return page;
 
@@ -1150,8 +1248,8 @@ public class EnduserServiceImpl {
 		String fileName = null;
 		Writer writer   = null;
 		UpdateVisaFileModel uVFm = null;
-		SystemConfigurationDb userProfileDowlonadDir=configurationManagementServiceImpl.findByTag("VisaUpdate_Download_Dir");
-		SystemConfigurationDb userProfileDowlonadLink=configurationManagementServiceImpl.findByTag("VisaUpdate_Download_link");
+		SystemConfigurationDb userProfileDowlonadDir=configurationManagementServiceImpl.findByTag("file.download-dir");
+		SystemConfigurationDb userProfileDowlonadLink=configurationManagementServiceImpl.findByTag("file.download-link");
 		DateTimeFormatter dtf  = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 
@@ -1160,8 +1258,10 @@ public class EnduserServiceImpl {
 		StatefulBeanToCsvBuilder<UpdateVisaFileModel> builder = null;
 		StatefulBeanToCsv<UpdateVisaFileModel> csvWriter      = null;
 		List<UpdateVisaFileModel> fileRecords       = null;
-		HeaderColumnNameTranslateMappingStrategy<UpdateVisaFileModel> mapStrategy = null;
+		//HeaderColumnNameTranslateMappingStrategy<UpdateVisaFileModel> mapStrategy = null;
+		MappingStrategy<UpdateVisaFileModel> mapStrategy = new CustomMappingStrategy<>();	
 		try {
+			//mapStrategy.setType(UpdateVisaFileModel.class);
 			List<VisaUpdateDb> visaData = this.getAllVisaUpdate(filterRequest);
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 8L,
 					filterRequest.getUserType(), 43,Features.UPDATE_VISA, SubFeatures.EXPORT, "","NA",filterRequest.getUserType()));
@@ -1192,7 +1292,10 @@ public class EnduserServiceImpl {
 			logger.info(" file path plus filke name: "+Paths.get(filePath+fileName));
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 			builder = new StatefulBeanToCsvBuilder<UpdateVisaFileModel>(writer);
-			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+		//csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+			csvWriter = builder.withMappingStrategy(mapStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+			mapStrategy.setType(UpdateVisaFileModel.class);
+			
 			if( visaData.size() > 0 ) {
 				//List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag("GRIEVANCE_CATEGORY");
 				fileRecords = new ArrayList<UpdateVisaFileModel>(); 
@@ -1200,10 +1303,12 @@ public class EnduserServiceImpl {
 					uVFm = new UpdateVisaFileModel();
 					uVFm.setRequestedOn(utility.converedtlocalTime(visa.getCreatedOn()));
 					uVFm.setModifiedOn(utility.converedtlocalTime(visa.getModifiedOn()));
-					uVFm.setVisaExpiryDate(DateUtil.dateToString(visa.getVisaExpiryDate()));
+					uVFm.setVisaExpiryDate((DateUtil.dateToString(visa.getVisaExpiryDate())));
 					uVFm.setVisaNumber(visa.getVisaNumber());
 					uVFm.setVisaType(visa.getVisaTypeInterp());
 					uVFm.setStatus(visa.getStateInterp());
+					uVFm.setTxnId(visa.getTxnId());
+					uVFm.setFileName(visa.getVisaFileName());
 					//System.out.println(uVFm.toString());
 					fileRecords.add(uVFm);
 				}

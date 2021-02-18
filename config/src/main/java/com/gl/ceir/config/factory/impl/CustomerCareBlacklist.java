@@ -37,6 +37,27 @@ public class CustomerCareBlacklist implements CustomerCareTarget{
 		setName(customerCareDeviceState);
 		return customerCareDeviceState;
 	}
+	
+	@Override
+	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState, String deviceIdType ) {
+		
+		BlackList blackList = blackListRepository.findByImeiAndDeviceIdType(imei, deviceIdType);
+		
+		if(Objects.nonNull(blackList)) {
+			customerCareDeviceState.setTxnId("");
+			customerCareDeviceState.setDate(blackList.getCreatedOn().toString());
+			customerCareDeviceState.setStatus(Constants.available);
+			customerCareDeviceState.setFeatureId(10);
+		}else {
+			customerCareDeviceState.setDate("");
+			customerCareDeviceState.setStatus(Constants.non_available);
+			customerCareDeviceState.setFeatureId(10);
+		}
+		
+		customerCareDeviceState.setImei(imei);
+		setName(customerCareDeviceState);
+		return customerCareDeviceState;
+	}
 
 	@Override
 	public void setName(CustomerCareDeviceState customerCareDeviceState) {

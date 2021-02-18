@@ -3,7 +3,7 @@ package com.gl.ceir.config.model.file;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
 
-public class ConsignmentFileModel {
+public class ConsignmentFileModelCEIR {
 	
 	@CsvBindByName(column = "Modified On")
 	@CsvBindByPosition(position = 0)
@@ -14,7 +14,7 @@ public class ConsignmentFileModel {
 	@CsvBindByName(column = "Transaction ID")
 	@CsvBindByPosition(position = 2)
 	private String txnId;
-	@CsvBindByName(column = "Supplier Name")
+	@CsvBindByName(column = "Name")
 	@CsvBindByPosition(position = 3)
 	private String supplierName;
 	@CsvBindByName(column = "Status")
@@ -33,11 +33,11 @@ public class ConsignmentFileModel {
 	@CsvBindByPosition(position = 8)
 	private String fileName;
 	
-	public ConsignmentFileModel() {
+	public ConsignmentFileModelCEIR() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ConsignmentFileModel(String modifiedOn,String createdOn,String txnId, String supplierName,String consignmentStatus,  
+	public ConsignmentFileModelCEIR(String modifiedOn,String createdOn,String txnId, String supplierName,String consignmentStatus,  
 			String taxPaidStatus,  Integer quantity,Integer deviceQuantity,String fileName) {
 		this.modifiedOn = modifiedOn;
 		this.createdOn = createdOn;

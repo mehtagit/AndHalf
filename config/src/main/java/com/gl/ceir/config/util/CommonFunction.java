@@ -23,17 +23,33 @@ public class CommonFunction {
 
 	public Boolean checkAllImeiOfRegularizedDevice(RegularizeDeviceDb regularizeDeviceDb) {
 		try {
-			if(Objects.nonNull(regularizeDeviceDb.getFirstImei()) && Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getFirstImei()))) {
-				return Boolean.FALSE;
+			if(Objects.nonNull(regularizeDeviceDb.getFirstImei())) {
+				if( regularizeDeviceDb.getFirstImei().length() == 14 && Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getFirstImei()))) {
+					return Boolean.FALSE;
+				}else if( Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getFirstImei().substring(0, 14)))) {
+					return Boolean.FALSE;
+				}
 			}
-			if(Objects.nonNull(regularizeDeviceDb.getSecondImei()) && Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getSecondImei()))) {
-				return Boolean.FALSE;
+			if(Objects.nonNull(regularizeDeviceDb.getSecondImei()) ) {
+				if( regularizeDeviceDb.getSecondImei().length() == 14 && Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getSecondImei()))) {
+					return Boolean.FALSE;
+				}else if( Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getSecondImei().substring(0, 14)))) {
+					return Boolean.FALSE;
+				}
 			}
-			if(Objects.nonNull(regularizeDeviceDb.getThirdImei()) && Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getThirdImei()))) {
-				return Boolean.FALSE;
+			if(Objects.nonNull(regularizeDeviceDb.getThirdImei())) {
+				if( regularizeDeviceDb.getThirdImei().length() == 14 && Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getThirdImei()))) {
+					return Boolean.FALSE;
+				}else if( Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getThirdImei().substring(0, 14)))) {
+					return Boolean.FALSE;
+				}
 			}
-			if(Objects.nonNull(regularizeDeviceDb.getFourthImei()) && Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getFourthImei()))) {
-				return Boolean.FALSE;
+			if(Objects.nonNull(regularizeDeviceDb.getFourthImei()) ) {
+				if( regularizeDeviceDb.getFourthImei().length() == 14 && Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getFourthImei()))) {
+					return Boolean.FALSE;
+				}else if( Objects.isNull(regularizedDeviceDbRepository.getByImei(regularizeDeviceDb.getFourthImei().substring(0, 14)))) {
+					return Boolean.FALSE;
+				}
 			}
 			return Boolean.TRUE;
 		}catch (Exception e) {
@@ -47,7 +63,12 @@ public class CommonFunction {
 	//	HashSet<String> set = new HashSet<>();
 		for(RegularizeDeviceDb device : regularizeDeviceDbs) {
 			if(device.getFirstImei()!=null && !device.getFirstImei().isEmpty()) {
-				long count=regularizedDeviceDbRepository.countByImei(device.getFirstImei());
+				long count = 0;
+				if( device.getFirstImei().length() == 14 )
+					count=regularizedDeviceDbRepository.countByImei(device.getFirstImei());
+				else
+					count=regularizedDeviceDbRepository.countByImei(device.getFirstImei().substring(0, 14));
+				
 				if(count>0) {
 					return Boolean.TRUE;
 				}
@@ -59,13 +80,21 @@ public class CommonFunction {
 //				if(!set.add(device.getSecondImei())) {
 //					return Boolean.TRUE;
 //				}
-				long count=regularizedDeviceDbRepository.countByImei(device.getSecondImei());
+				long count = 0;
+				if( device.getSecondImei().length() == 14 )
+					count=regularizedDeviceDbRepository.countByImei(device.getSecondImei());
+				else
+					count=regularizedDeviceDbRepository.countByImei(device.getSecondImei().substring(0, 14));
 				if(count>0) {
 					return Boolean.TRUE;
 				}
 			}
 			if(device.getThirdImei()!=null && !device.getThirdImei().isEmpty()) {
-				long count=regularizedDeviceDbRepository.countByImei(device.getThirdImei());
+				long count = 0;
+				if( device.getThirdImei().length() == 14 )
+					count=regularizedDeviceDbRepository.countByImei(device.getThirdImei());
+				else
+					count=regularizedDeviceDbRepository.countByImei(device.getThirdImei().substring(0, 14));
 				if(count>0) {
 					return Boolean.TRUE;
 				}
@@ -77,8 +106,11 @@ public class CommonFunction {
 //				if(!set.add(device.getFourthImei())) {
 //					return Boolean.TRUE;
 //				}
-				
-				long count=regularizedDeviceDbRepository.countByImei(device.getFourthImei());
+				long count = 0;
+				if( device.getFourthImei().length() == 14 )
+					count=regularizedDeviceDbRepository.countByImei(device.getFourthImei());
+				else
+					count=regularizedDeviceDbRepository.countByImei(device.getFourthImei().substring(0, 14));
 				if(count>0) {
 					return Boolean.TRUE;
 				}

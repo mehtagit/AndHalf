@@ -47,6 +47,28 @@ public class CustomerCareManufacturer implements CustomerCareTarget{
 	}
 
 	@Override
+	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState, String deviceIdType) {
+		
+		DeviceManufacturerDb deviceDb = deviceManufacturerDbRepository.findByImeiEsnMeidAndDeviceIdType(imei, deviceIdType);
+		
+		if(Objects.nonNull(deviceDb)) {
+			customerCareDeviceState.setTxnId(deviceDb.getTxnId());
+			customerCareDeviceState.setDate(deviceDb.getCreatedOn().toString());
+			customerCareDeviceState.setStatus(Constants.available);
+			customerCareDeviceState.setFeatureId(0);
+			customerCareDeviceState.setFeatureId(commonFunction.getFeatureIdByTxnId(deviceDb.getTxnId()));
+		}else {
+			//customerCareDeviceState.setDate("");
+			customerCareDeviceState.setStatus(Constants.non_available);
+			//customerCareDeviceState.setFeatureId(commonFunction.getFeatureIdByTxnId(deviceDb.getTxnId()));
+		}
+		customerCareDeviceState.setImei(imei);
+		setName(customerCareDeviceState);
+//		logger.info("CustomerCareDeviceState:"+customerCareDeviceState.toString());
+		return customerCareDeviceState;
+	}
+	
+	@Override
 	public void setName(CustomerCareDeviceState customerCareDeviceState) {
 		customerCareDeviceState.setName("Manufacturer");
 	}

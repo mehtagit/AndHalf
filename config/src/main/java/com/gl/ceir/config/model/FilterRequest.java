@@ -51,6 +51,19 @@ public class FilterRequest {
 	
 	private String displayName;
 	
+	private String quantity;
+	
+	public String deviceQuantity;
+	
+	private String subject;
+	
+	private String supplierName;
+	private String fileName,nationality;
+	private String columnName;
+	private String sort,blockingTypeFilter;
+	
+	public String visaType,visaNumber,visaExpiryDate;
+	
 	public String getFilteredUserType() {
 		return filteredUserType;
 	}
@@ -284,6 +297,80 @@ public class FilterRequest {
 		this.displayName = displayName;
 	}
 
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+
+	public String getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+
+	public String getDeviceQuantity() {
+		return deviceQuantity;
+	}
+
+	public void setDeviceQuantity(String deviceQuantity) {
+		this.deviceQuantity = deviceQuantity;
+	}
+
+	public String getSupplierName() {
+		return supplierName;
+	}
+
+	public String getColumnName() {
+		return columnName;
+	}
+
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+
+	public String getSort() {
+		return sort;
+	}
+
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
+	}
+
+	
+	
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getNationality() {
+		return nationality;
+	}
+
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
+	public String getBlockingTypeFilter() {
+		return blockingTypeFilter;
+	}
+
+	public void setBlockingTypeFilter(String blockingTypeFilter) {
+		this.blockingTypeFilter = blockingTypeFilter;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -363,10 +450,59 @@ public class FilterRequest {
 		builder.append(remark);
 		builder.append(", displayName=");
 		builder.append(displayName);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
+		builder.append(", subject=");
+		builder.append(subject);
+		builder.append(", supplierName=");
+		builder.append(supplierName);
+		builder.append(", fileName=");
+		builder.append(fileName);
+		builder.append(", nationality=");
+		builder.append(nationality);
+		builder.append(", columnName=");
+		builder.append(columnName);
+		builder.append(", sort=");
+		builder.append(sort);
+		builder.append(", blockingTypeFilter=");
+		builder.append(blockingTypeFilter);
+		builder.append(", visaType=");
+		builder.append(visaType);
+		builder.append(", visaNumber=");
+		builder.append(visaNumber);
+		builder.append(", visaExpiryDate=");
+		builder.append(visaExpiryDate);
 		builder.append("]");
 		return builder.toString();
 	}
-	
+
+	public String getVisaType() {
+		return visaType;
+	}
+
+	public void setVisaType(String visaType) {
+		this.visaType = visaType;
+	}
+
+	public String getVisaNumber() {
+		return visaNumber;
+	}
+
+	public void setVisaNumber(String visaNumber) {
+		this.visaNumber = visaNumber;
+	}
+
+	public String getVisaExpiryDate() {
+		return visaExpiryDate;
+	}
+
+	public void setVisaExpiryDate(String visaExpiryDate) {
+		this.visaExpiryDate = visaExpiryDate;
+	}
+
+	 
 }
 
 

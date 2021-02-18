@@ -65,8 +65,10 @@ public class FileServiceImpl {
 	public FileDetails getManuals(int userTypeId) {
 
 		String fileName = null;
-		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.manuals_link);
-		switch (userTypeId) {
+		SystemConfigurationDb systemConfigurationDb1  = configurationManagementServiceImpl.findByTag(ConfigTags.manuals_file_name+"_"+userTypeId);
+		
+		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.manuals_link+"_"+userTypeId);
+		/*switch (userTypeId) {
 		case 1:
 			fileName = "";
 			break;
@@ -86,7 +88,7 @@ public class FileServiceImpl {
 			fileName = "";
 			break;
 		case 9:
-			fileName = "";
+			fileName = "CEIR_User Manual (Operator)_v1.0.pdf";
 			break;
 		case 10:
 			fileName = "CEIR_User Manual TRC_v1.0.pdf";
@@ -98,7 +100,7 @@ public class FileServiceImpl {
 			fileName = "";
 			break;
 		case 14:
-			fileName = "";
+			fileName = "CEIR_User Manual (Lawful Agency)_v1.0.pdf";
 			break;
 		case 17:
 			fileName = "CEIRv1.0_User Manual (Importer)_v1.0.pdf";
@@ -114,11 +116,13 @@ public class FileServiceImpl {
 			break;
 		default:
 			break;
-		}
+		}*/
 
-
-		return new FileDetails("", "", systemConfigurationDb.getValue().replace("$LOCAL_IP",
-				propertiesReader.localIp) + fileName);
+//		fileName = ;
+//		return new FileDetails("", "", systemConfigurationDb.getValue().replace("$LOCAL_IP",
+//				propertiesReader.localIp) + fileName);
+		return new FileDetails(systemConfigurationDb1.getValue(), "", systemConfigurationDb.getValue().replace("$LOCAL_IP",
+				propertiesReader.localIp));
 	}
 
 	public FileDetails downloadUploadedFile(String fileName, String txnId, String fileType, String tag) {

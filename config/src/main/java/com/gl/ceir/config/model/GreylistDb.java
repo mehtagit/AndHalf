@@ -12,7 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -47,8 +49,11 @@ public class GreylistDb implements Serializable {
 	private String deviceStatus;
 	private String DeviceLaunchDate;
 	private String multipleSimStatus;
-	private String  deviceId;
+//	private String  deviceId;
 	private String imeiEsnMeid;
+	
+	@Type(type="date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date expiryDate;
 	
 	@Column(name = "mode2")
@@ -61,6 +66,14 @@ public class GreylistDb implements Serializable {
 	private String complainTypeInterp;
 	private String modeType;
 	
+	private String deviceIdType;
+	
+	public String getDeviceIdType() {
+		return deviceIdType;
+	}
+	public void setDeviceIdType(String deviceIdType) {
+		this.deviceIdType = deviceIdType;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -121,12 +134,12 @@ public class GreylistDb implements Serializable {
 	public void setMultipleSimStatus(String multipleSimStatus) {
 		this.multipleSimStatus = multipleSimStatus;
 	}
-	public String getDeviceId() {
-		return deviceId;
-	}
-	public void setDeviceId(String deviceId) {
-		this.deviceId = deviceId;
-	}
+//	public String getDeviceId() {
+//		return deviceId;
+//	}
+//	public void setDeviceId(String deviceId) {
+//		this.deviceId = deviceId;
+//	}
 	public String getImeiEsnMeid() {
 		return imeiEsnMeid;
 	}
@@ -230,8 +243,6 @@ public class GreylistDb implements Serializable {
 		builder.append(DeviceLaunchDate);
 		builder.append(", multipleSimStatus=");
 		builder.append(multipleSimStatus);
-		builder.append(", deviceId=");
-		builder.append(deviceId);
 		builder.append(", imeiEsnMeid=");
 		builder.append(imeiEsnMeid);
 		builder.append(", expiryDate=");

@@ -23,4 +23,5 @@ public interface Features {
 	String POLICY_MANAGEMENT = "Policy Management";
 	String MESSAGE_MANAGEMENT = "Message Management";
 	String RULE_LIST = "Rule List";
+	String FIELD_MANGEMENT="Field Management";
 }

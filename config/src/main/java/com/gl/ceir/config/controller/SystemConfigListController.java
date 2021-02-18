@@ -12,10 +12,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
 import com.gl.ceir.config.model.SystemConfigListDb;
+import com.gl.ceir.config.model.constants.Features;
+import com.gl.ceir.config.model.constants.SubFeatures;
+import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.service.impl.SystemConfigListServiceImpl;
 
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +32,8 @@ public class SystemConfigListController {
 	@Autowired
 	SystemConfigListServiceImpl systemConfigListServiceImpl;
 
+	@Autowired
+	AuditTrailRepository auditTrailRepository;
 	@ApiOperation(value = "Save || system-config-list", response = SystemConfigListDb.class)
 	@PostMapping("/save/system-config-list")
 	public MappingJacksonValue save(@RequestBody SystemConfigListDb systemConfigListDb) {
@@ -75,6 +81,8 @@ public class SystemConfigListController {
 			logger.info("Request to export filtered audit trail = " + filterRequest);
 			FileDetails fileDetails = systemConfigListServiceImpl.getFilteredAuditTrailInFile(filterRequest);
 			mapping = new MappingJacksonValue(fileDetails);
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 0L, "System", 0L, 
+					Features.FIELD_MANGEMENT, SubFeatures.EXPORT, "","NA","System"));
 		}
 
 		logger.info("Response of view Request = " + mapping);

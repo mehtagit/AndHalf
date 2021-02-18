@@ -1,7 +1,7 @@
 package com.gl.ceir.config.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,27 +14,26 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Audited
 public class SystemConfigListDb implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@CreationTimestamp
-	//@JsonIgnore
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
-	private Date createdOn;
+	@Column(updatable = false)
+	private LocalDateTime createdOn;
 
 	@UpdateTimestamp
-	//@JsonIgnore
 	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
-	private Date modifiedOn;
+	private LocalDateTime modifiedOn;
+
 	
 	private String tag;
 	
@@ -64,18 +63,7 @@ public class SystemConfigListDb implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Date getCreatedOn() {
-		return createdOn;
-	}
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
-	public Date getModifiedOn() {
-		return modifiedOn;
-	}
-	public void setModifiedOn(Date modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
+	
 	public String getTag() {
 		return tag;
 	}
@@ -121,7 +109,27 @@ public class SystemConfigListDb implements Serializable {
 	public void setDisplayName(String displayName) {
 		this.displayName = displayName;
 	}
-	
+
+	public LocalDateTime getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(LocalDateTime createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public LocalDateTime getModifiedOn() {
+		return modifiedOn;
+	}
+
+	public void setModifiedOn(LocalDateTime modifiedOn) {
+		this.modifiedOn = modifiedOn;
+	}
+
+	public static void setSerialversionuid(long serialversionuid) {
+		serialVersionUID = serialversionuid;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -141,8 +149,13 @@ public class SystemConfigListDb implements Serializable {
 		builder.append(listOrder);
 		builder.append(", tagId=");
 		builder.append(tagId);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", displayName=");
+		builder.append(displayName);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 }

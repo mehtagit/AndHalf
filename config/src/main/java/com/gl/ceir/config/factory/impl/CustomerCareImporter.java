@@ -24,7 +24,26 @@ public class CustomerCareImporter implements CustomerCareTarget{
 	@Override
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState) {
 		
-		DeviceImporterDb deviceDb = deviceImporterDbRepository.getByImeiEsnMeid(imei);
+		DeviceImporterDb deviceDb = deviceImporterDbRepository.getByImeiEsnMeid( imei );
+		
+		if(Objects.nonNull(deviceDb)) {
+			customerCareDeviceState.setTxnId(deviceDb.getTxnId());
+			customerCareDeviceState.setDate(deviceDb.getCreatedOn().toString());
+			customerCareDeviceState.setStatus(Constants.available);
+			customerCareDeviceState.setFeatureId(commonFunction.getFeatureIdByTxnId(deviceDb.getTxnId()));
+		}else {
+			customerCareDeviceState.setStatus(Constants.non_available);
+		}
+		
+		customerCareDeviceState.setImei(imei);
+		setName(customerCareDeviceState);
+		return customerCareDeviceState;
+	}
+	
+	@Override
+	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState, String deviceIdType ) {
+		
+		DeviceImporterDb deviceDb = deviceImporterDbRepository.getByImeiEsnMeidAndDeviceIdType( imei, deviceIdType);
 		
 		if(Objects.nonNull(deviceDb)) {
 			customerCareDeviceState.setTxnId(deviceDb.getTxnId());

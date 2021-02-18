@@ -1,6 +1,5 @@
 package com.gl.ceir.config.model;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,18 +15,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.NotAudited;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Audited
@@ -101,7 +96,8 @@ public class EndUserDB   {
 	private String nationality;
 	
 	@Column(length = 1)
-	private String onVisa="N";
+	@ColumnDefault("N")
+	private String onVisa;
 	
 	@NotAudited
 	@OneToMany(mappedBy = "endUserDB", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -113,7 +109,8 @@ public class EndUserDB   {
 	private List<VisaUpdateDb> visaUpdateDb;
 	
 	@Column(length = 1)
-	private String isVip="N";
+	@ColumnDefault("N")
+	private String isVip;
 	
 	@NotAudited
 	@OneToOne(mappedBy = "endUserDB", cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true)

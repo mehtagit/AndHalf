@@ -68,6 +68,7 @@ public class ExportFileStockCeirAdmin implements ExportFile{
 			builder = new StatefulBeanToCsvBuilder<>(writer);
 			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
 
+			logger.info("Request to export filtered Stocks = " + filterRequest);
 			List<StockMgmt> stockMgmts = stockServiceImpl.getAll(filterRequest, source);
 
 			if(stockMgmts.isEmpty()) {

@@ -2,6 +2,8 @@ package com.gl.ceir.config.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -56,6 +59,7 @@ public class StolenandRecoveryMgmt implements Serializable {
 	private String requestTypeInterp;
 
 	private String roleType;
+	@Column(name = "blockingType")
 	private String blockingType;
 	private String blockingTimePeriod;
 	private Integer sourceType;
@@ -63,6 +67,7 @@ public class StolenandRecoveryMgmt implements Serializable {
 	@Column(name = "quantity")
 	private Integer qty;
 
+	
 	private String remark;
 	
 	private String rejectedRemark;
@@ -110,9 +115,24 @@ public class StolenandRecoveryMgmt implements Serializable {
 	private String deleteFlagInterp;
 	
 	private Long ceirAdminId;
-	
+	@Column(name = "deviceQuantity")
 	private Integer deviceQuantity;
 
+	@OneToMany(
+        cascade = CascadeType.ALL,
+        orphanRemoval = true
+    )
+	private List<StolenAttachedFileInfo> attachedFiles = new ArrayList<>();
+	
+	public List<StolenAttachedFileInfo> getAttachedFiles() {
+		return attachedFiles;
+	}
+
+	public void setAttachedFiles(List<StolenAttachedFileInfo> attachedFiles) {
+		this.attachedFiles = attachedFiles;
+	}
+
+	
 	public Long getCeirAdminId() {
 		return ceirAdminId;
 	}

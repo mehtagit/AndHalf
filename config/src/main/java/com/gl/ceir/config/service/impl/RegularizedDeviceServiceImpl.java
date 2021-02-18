@@ -16,7 +16,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.mapping.Array;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,11 +24,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
-import com.gl.ceir.config.EmailSender.MailSubject;
 import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.configuration.SortDirection;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.feign.UserFeignClient;
 import com.gl.ceir.config.model.AllRequest;
@@ -41,30 +39,27 @@ import com.gl.ceir.config.model.EndUserDB;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
-import com.gl.ceir.config.model.PolicyConfigurationDb;
 import com.gl.ceir.config.model.RawMail;
 import com.gl.ceir.config.model.RegularizeDeviceDb;
 import com.gl.ceir.config.model.RegularizeDeviceView;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.StateMgmtDb;
-import com.gl.ceir.config.model.StockMgmt;
 import com.gl.ceir.config.model.SystemConfigListDb;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.User;
 import com.gl.ceir.config.model.UserProfile;
 import com.gl.ceir.config.model.VisaDb;
 import com.gl.ceir.config.model.WebActionDb;
-import com.gl.ceir.config.model.constants.ConsignmentStatus;
 import com.gl.ceir.config.model.constants.Datatype;
 import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.model.constants.ReferTable;
 import com.gl.ceir.config.model.constants.RegularizeDeviceStatus;
 import com.gl.ceir.config.model.constants.SearchOperation;
-import com.gl.ceir.config.model.constants.StockStatus;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.constants.Tags;
 import com.gl.ceir.config.model.constants.TaxStatus;
+import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.model.file.RegularizeDeviceFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
@@ -149,7 +144,10 @@ public class RegularizedDeviceServiceImpl {
 	CommonFunction commonFunction;
 	@Autowired
 	UserFeignClient userFeignClient;
-
+	@Autowired
+	EnduserServiceImpl enduserServiceImpl;
+	
+	
 	@Autowired
 	DashboardUsersFeatureStateMapRepository dashboardUsersFeatureStateMapRepository; 
 
@@ -191,9 +189,25 @@ public class RegularizedDeviceServiceImpl {
 		SystemConfigurationDb gracePeriodForRegisterDevice = systemConfigurationDbRepository.getByTag(ConfigTags.grace_period_for_rgister_device);
 
 		try {
-
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-
+			String orderColumn = "Date".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
+					: "NID/Passport No.".equalsIgnoreCase(filterRequest.getColumnName()) ? "nid"
+						:"Transaction ID".equalsIgnoreCase(filterRequest.getColumnName()) ? "txnId"
+							: "Nationality".equalsIgnoreCase(filterRequest.getColumnName()) ? "endUserDB.nationality"
+									: "Tax Paid Status".equalsIgnoreCase(filterRequest.getColumnName()) ? "taxPaidStatus"
+											: "Origin".equalsIgnoreCase(filterRequest.getColumnName())
+													? "origin"
+													:"Status".equalsIgnoreCase(filterRequest.getColumnName())
+															? "status" : "modifiedOn";
+			Sort.Direction direction;
+			if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+				direction=Sort.Direction.DESC;
+			}
+			else {
+				direction= SortDirection.getSortDirection(filterRequest.getSort());
+			}
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
+		
+			
 			if(filterRequest.getTaxPaidStatus() != TaxStatus.BLOCKED.getCode()) {
 				// TODO
 			}
@@ -228,10 +242,9 @@ public class RegularizedDeviceServiceImpl {
 			int userId=0;
 			if(Objects.nonNull(filterRequest.getUserType()))
 			{
-
 				if("End User".equalsIgnoreCase(filterRequest.getUserType())){
 					logger.info("usertype is end user so setting username is empty");
-					username="";
+					username="NA";
 				}	
 				else {
 
@@ -405,6 +418,12 @@ public class RegularizedDeviceServiceImpl {
 			if(endUserDB.getAuditParameters().getUserTypeId()!=17) {
 				username=endUserDB.getAuditParameters().getUsername();
 				userId=endUserDB.getAuditParameters().getUserId();
+				endUserDB.setCreatorUserId(endUserDB.getAuditParameters().getUserId());
+				for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs())
+				{
+					if(Objects.isNull(regularizeData.getCreatorUserId()) || regularizeData.getCreatorUserId()==0)
+						regularizeData.setCreatorUserId(endUserDB.getCreatorUserId());
+				}
 			}
 			String transactionId="";
 			for(RegularizeDeviceDb regularizeData:endUserDB.getRegularizeDeviceDbs())
@@ -779,10 +798,12 @@ public class RegularizedDeviceServiceImpl {
 					}
 
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.APPROVED.getCode());
+					regularizeDeviceDb.setRemark(null);
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_APPROVAL";
 					receiverUserType = "End User";
 					subFeature = SubFeatures.Approve;
 					txnId = regularizeDeviceDb.getTxnId();
+					enduserServiceImpl.updateImeiInVipList(regularizeDeviceDb.getEndUserDB(), username);
 				}else if(ceirActionRequest.getAction() == 1){
 					// Check if someone else taken the same action on consignment.
 					RegularizeDeviceDb regularizeDeviceDbTemp = regularizedDeviceDbRepository.getByTxnId(ceirActionRequest.getTxnId());
@@ -793,10 +814,12 @@ public class RegularizedDeviceServiceImpl {
 					}
 
 					regularizeDeviceDb.setStatus(RegularizeDeviceStatus.REJECTED_BY_CEIR_ADMIN.getCode());
+					regularizeDeviceDb.setRemark(ceirActionRequest.getRemarks());
 					tag = "MAIL_TO_USER_ON_CEIR_DEVICE_DISAPPROVAL";	
 					receiverUserType = "End User";
 					txnId = regularizeDeviceDb.getTxnId();
 					subFeature = SubFeatures.REJECT;
+					placeholders.put("<Reason>", regularizeDeviceDb.getRemark() );
 				}else {
 					return new GenricResponse(2, "unknown operation", "");
 				}
@@ -829,6 +852,7 @@ public class RegularizedDeviceServiceImpl {
 				{
 					WebActionDb webAction=new WebActionDb(Features.REGISTER_DEVICE,subFeature, 0, 
 							regularizeDeviceDb.getTxnId());
+					webAction.setSubFeature(WebActionDbSubFeature.REJECT.getName());
 					webActionDbRepository.save(webAction);
 					if(Objects.nonNull(rawMails) && !rawMails.isEmpty()) {
 						emailUtil.saveNotification(rawMails);	
@@ -1023,7 +1047,9 @@ public class RegularizedDeviceServiceImpl {
 					tag = ConfigTags.max_foreigner_end_user_device_count;
 				}
 
-				PolicyConfigurationDb policyConfigurationDb = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(tag);
+//				PolicyConfigurationDb policyConfigurationDb = configurationManagementServiceImpl.getPolicyConfigDetailsByTag(tag);
+				
+				SystemConfigurationDb policyConfigurationDb = systemConfigurationDbRepository.getByTag(tag);
 
 //				return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()), regularizedDeviceDbRepository.countByNidAndTaxPaidStatus(nid,2)));
 				return new GenricResponse(0, "", "", new Count(Long.parseLong(policyConfigurationDb.getValue()),
@@ -1092,22 +1118,25 @@ public class RegularizedDeviceServiceImpl {
 
 		if(Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty())
 			specificationBuilder.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
+		else {
+			if(Objects.nonNull(filterRequest.getUserTypeId())) {
+				if(filterRequest.getUserTypeId()==18)		
+				{
+					specificationBuilder.with(new SearchCriteria("origin","Immigration" , SearchOperation.EQUALITY, Datatype.STRING));
+				}
+				else if(filterRequest.getUserTypeId()==17)		
+				{
+					specificationBuilder.with(new SearchCriteria("origin", "End User" , SearchOperation.EQUALITY, Datatype.STRING));
+				}
+				else if(filterRequest.getUserTypeId()==7)		
+				{
+					specificationBuilder.with(new SearchCriteria("origin", "Custom" , SearchOperation.EQUALITY, Datatype.STRING));
+				}
+			}
+		}
 
 		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
 			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
-
-		if(Objects.nonNull(filterRequest.getUserTypeId())) {
-			if(filterRequest.getUserTypeId()==18)		
-			{
-				specificationBuilder.with(new SearchCriteria("origin","Immigration" , SearchOperation.EQUALITY, Datatype.STRING));
-			}
-			else if(filterRequest.getUserTypeId()==17)		
-			{
-				specificationBuilder.with(new SearchCriteria("origin", "Self" , SearchOperation.EQUALITY, Datatype.STRING));
-			}
-			else {
-			}
-		}
 
 		if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
 			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
@@ -1124,12 +1153,23 @@ public class RegularizedDeviceServiceImpl {
 		if(Objects.nonNull(filterRequest.getStatus())) {
 			specificationBuilder.with(new SearchCriteria("status", filterRequest.getStatus(), SearchOperation.EQUALITY, Datatype.INT));
 		}
-
-
+		//changes for imei /MEID  quantity done by sharad
+		
+		
+		  if(Objects.nonNull(filterRequest.getOrigin()) &&
+		  !filterRequest.getOrigin().isEmpty()) specificationBuilder.with(new
+		  SearchCriteria("origin", filterRequest.getOrigin(), SearchOperation.LIKE,
+		  Datatype.STRING));
+		 
+				
+		if(Objects.nonNull(filterRequest.getNationality()) && !filterRequest.getNationality().isEmpty()) {
+				//s	specificationBuilder.with(new SearchCriteria("nationality", filterRequest.getNationality(), SearchOperation.LIKE, Datatype.STRING));
+		specificationBuilder.addSpecification(specificationBuilder.joinWithEnduserDB(new SearchCriteria("nationality", filterRequest.getNationality(),SearchOperation.LIKE, Datatype.STRING)));		
+		}
 		else {
 			if(Objects.nonNull(filterRequest.getUserTypeId())) {
 
-				if(filterRequest.getUserTypeId()==8)		
+				if( filterRequest.getUserTypeId()==8 || filterRequest.getUserTypeId()==7 || filterRequest.getUserTypeId()==18  )		
 				{
 					//			specificationBuilder.with(new SearchCriteria("status",RegularizeDeviceStatus.PENDING_APPROVAL_FROM_CEIR_ADMIN.getCode(), SearchOperation.EQUALITY, Datatype.INT));
 
@@ -1141,11 +1181,11 @@ public class RegularizedDeviceServiceImpl {
 						List<Integer> deviceStatus = new LinkedList<>();
 
 						if(Objects.nonNull(dashboardUsersFeatureStateMap)) {
-							if("dashboard".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source)) {
+							if("dashboard".equalsIgnoreCase(source) ) {
 								for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
 									deviceStatus.add(dashboardUsersFeatureStateMap2.getState());
 								}
-							}else if("filter".equalsIgnoreCase(source)) {
+							}else if("filter".equalsIgnoreCase(source) || "menu".equalsIgnoreCase(source) ) {
 								if(nothingInFilter(filterRequest)) {
 									for(DashboardUsersFeatureStateMap dashboardUsersFeatureStateMap2 : dashboardUsersFeatureStateMap ) {
 										deviceStatus.add(dashboardUsersFeatureStateMap2.getState());
@@ -1211,24 +1251,30 @@ public class RegularizedDeviceServiceImpl {
 	}
 
 	public boolean nothingInFilter(FilterRequest filterRequest) {
-		if(Objects.nonNull(filterRequest.getStartDate()) || !filterRequest.getStartDate().isEmpty()) {
+		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty()) {
 			return Boolean.FALSE;
 		}
-		if(Objects.nonNull(filterRequest.getEndDate()) || !filterRequest.getEndDate().isEmpty()) {
-			return Boolean.FALSE;
-		}
-
-		if(Objects.nonNull(filterRequest.getTxnId()) || !filterRequest.getTxnId().isEmpty()) {
+		if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty()) {
 			return Boolean.FALSE;
 		}
 
-		if(Objects.nonNull(filterRequest.getDisplayName()) || !filterRequest.getDisplayName().isEmpty()) {
+		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
 			return Boolean.FALSE;
 		}
-		if(Objects.nonNull(filterRequest.getConsignmentStatus()) ) {
+
+		if( Objects.nonNull(filterRequest.getDeviceIdType()) ) {
 			return Boolean.FALSE;
 		}
-		if(Objects.nonNull(filterRequest.getUserType()) || !filterRequest.getEndDate().isEmpty()) {
+		if( Objects.nonNull(filterRequest.getDeviceType()) ) {
+			return Boolean.FALSE;
+		}
+		if( Objects.nonNull(filterRequest.getTaxPaidStatus()) ) {
+			return Boolean.FALSE;
+		}
+		if( Objects.nonNull(filterRequest.getStatus()) ) {
+			return Boolean.FALSE;
+		}
+		if( Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty()) {
 			return Boolean.FALSE;
 		}
 		return Boolean.TRUE;

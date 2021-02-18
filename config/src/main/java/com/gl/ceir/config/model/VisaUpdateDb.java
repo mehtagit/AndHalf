@@ -48,12 +48,13 @@ public class VisaUpdateDb {
 	private String visaNumber;
 	
 	@Column(length = 50)
-	@NotNull
+//	@NotNull
 	private String visaFileName;
 	
 	private String entryDateInCountry;
 	
-	@JsonFormat(pattern="yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern="yyyy-MM-dd HH:mm")
 	private Date visaExpiryDate;
 	
 	@Transient
@@ -101,7 +102,7 @@ public class VisaUpdateDb {
 		this.userId = userId;
 	}
 
-	public VisaUpdateDb(@NotNull Integer visaType, String visaNumber, @NotNull String visaFileName,
+	public VisaUpdateDb(@NotNull Integer visaType, String visaNumber, String visaFileName,
 			String entryDateInCountry, Date visaExpiryDate, Integer status,EndUserDB userId,String txnId,String nid) {
 		super();
 		this.visaType = visaType;

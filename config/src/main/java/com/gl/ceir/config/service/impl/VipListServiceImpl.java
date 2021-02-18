@@ -74,7 +74,7 @@ public class VipListServiceImpl implements VipListService {
 	}
 
 	@Override
-	public VipList getByMsisdn(Long msisdn) {
+	public VipList getByMsisdn(String msisdn) {
 
 		try {
 			return vipListRepository.findByImeiMsisdnIdentityMsisdn(msisdn);

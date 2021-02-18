@@ -43,8 +43,15 @@ public class VipList implements Serializable {
 	
 	public VipList() {}
 	
-	public VipList(String imei, Long msisdn) {
+	public VipList(String imei, String msisdn) {
 		this.imeiMsisdnIdentity = new ImeiMsisdnIdentity(imei, msisdn);
+	}
+	
+	public VipList(String imei, String msisdn, String requestedBy, String approvedBy, String txnId) {
+		this.imeiMsisdnIdentity = new ImeiMsisdnIdentity(imei, msisdn);
+		this.requestedBy = requestedBy;
+		this.approvedBy = approvedBy;
+		this.txnId = txnId;
 	}
 
 	public LocalDateTime getCreatedOn() {

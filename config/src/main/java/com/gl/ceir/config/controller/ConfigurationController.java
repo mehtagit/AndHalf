@@ -106,7 +106,7 @@ public class ConfigurationController {
 
 
 		GenricResponse GenricResponse =	configurationManagementServiceImpl.updateSystemInfo(systemConfigurationDb);
-		if(GenricResponse.getErrorCode()==0) {
+		if(GenricResponse.getErrorCode()==200) {
 			auditTrailRepository.save(new AuditTrail(systemConfigurationDb.getUserId(), systemConfigurationDb.getUserName(), 
 					Long.valueOf(systemConfigurationDb.getUserTypeId()), systemConfigurationDb.getUserType(), Long.valueOf(systemConfigurationDb.getFeatureId()),
 					Features.SYSTEM_MANAGEMENT, SubFeatures.UPDATE, "", "NA",systemConfigurationDb.getRoleType()));
