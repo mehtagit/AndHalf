@@ -393,7 +393,7 @@ public class DatatableHeaders {
 //Rule List
 			
 			else if("ruleList".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.state","table.name","table.Description","table.action"};
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.status","table.name","table.Description","table.action"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -437,7 +437,8 @@ public class DatatableHeaders {
 			//IP Log Management
 			
 			else if("ipLogManagementHeaders".equals(role)) {
-				String[] headers = {"table.creationDate","table.UserName","table.publicIp","table.browser","table.userAgent"};
+				//String[] headers = {"table.creationDate","table.UserName","table.publicIp","table.browser","table.userAgent"};
+				String[] headers = {"table.creationDate","table.UserName","table.publicIp","table.browser"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
@@ -456,7 +457,7 @@ public class DatatableHeaders {
 			
 			//Grievance Admin Headers
 			else if("adminGrievanceHeaders".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.transactionID","table.grievanceID","table.UserName","table.userType","table.raisedBy","table.status","table.action"};
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.transactionID","table.grievanceID","table.UserName","table.raisedBy","table.userType","table.status","table.action"};
 				//String[] headers = {"table.creationDate","table.lastupdatedate","table.transactionID","table.grievanceID","table.UserName","table.userType","table.raisedBy","table.status","table.action"};	
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));

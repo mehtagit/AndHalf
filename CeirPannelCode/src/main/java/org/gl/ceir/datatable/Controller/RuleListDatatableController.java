@@ -161,7 +161,7 @@ public class RuleListDatatableController {
 			
 		
 		  //Dropdown items 
-			String[] selectParam= {"select",Translator.toLocale("table.state"),"State",""};
+			String[] selectParam= {"select",Translator.toLocale("table.status"),"State",""};
 		  for(int i=0; i<selectParam.length; i++) { 
 				inputFields= new InputFields();
 		  inputFields.setType(selectParam[i]); 
@@ -175,22 +175,9 @@ public class RuleListDatatableController {
 		  } 
 		pageElement.setDropdownList(dropdownList);
 		 
-			
-		/*
-		 * //input type date list String[] dateParam=
-		 * {"date",Translator.toLocale("input.startDate"),"startDate","","date",
-		 * Translator.toLocale("input.endDate"),"endDate",""}; for(int i=0; i<
-		 * dateParam.length; i++) { dateRelatedFields= new InputFields();
-		 * dateRelatedFields.setType(dateParam[i]); i++;
-		 * dateRelatedFields.setTitle(dateParam[i]); i++;
-		 * dateRelatedFields.setId(dateParam[i]); i++;
-		 * dateRelatedFields.setClassName(dateParam[i]);
-		 * inputTypeDateList.add(dateRelatedFields); }
-		 */
-			
-			pageElement.setInputTypeDateList(inputTypeDateList);
-			pageElement.setUserStatus(userStatus);
-			return new ResponseEntity<>(pageElement, HttpStatus.OK); 
+		pageElement.setInputTypeDateList(inputTypeDateList);
+		pageElement.setUserStatus(userStatus);
+		return new ResponseEntity<>(pageElement, HttpStatus.OK); 
 		
 		
 	}
