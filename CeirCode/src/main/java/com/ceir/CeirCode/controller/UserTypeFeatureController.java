@@ -2,10 +2,14 @@ package com.ceir.CeirCode.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,8 +21,10 @@ import com.ceir.CeirCode.model.SystemConfigListDb;
 import com.ceir.CeirCode.model.UserToStakehoderfeatureMapping;
 import com.ceir.CeirCode.model.Usertype;
 import com.ceir.CeirCode.othermodel.ChangePeriod;
-import com.ceir.CeirCode.othermodel.ChangeUsertypeStatus;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
+import com.ceir.CeirCode.repo.UserToStakehoderfeatureMappingRepo;
+import com.ceir.CeirCode.repo.UsertypeRepo;
+import com.ceir.CeirCode.response.GenricResponse;
 import com.ceir.CeirCode.service.UserTypeFeatureService;
 import com.ceir.CeirCode.util.HttpResponse;
 
@@ -26,13 +32,18 @@ import io.swagger.annotations.ApiOperation;
 
 @RestController
 public class UserTypeFeatureController {
-
+	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
 	UserTypeFeatureService userTypeFeatureService;
 	
 	@Autowired
 	SystemConfigDbListRepository systemConfigRepo;
-
+	
+	@Autowired
+	UserToStakehoderfeatureMappingRepo userToStakehoderfeatureMappingRepo;
+	
+	@Autowired
+	UsertypeRepo usertypeRepo;
 	
 	@ApiOperation(value = "user type feature  data.", response = UserToStakehoderfeatureMapping.class)
 	@PostMapping("/userTypeFeatureData") 
@@ -70,5 +81,30 @@ public class UserTypeFeatureController {
 	@PostMapping("/updatePeriod")
 	public ResponseEntity<?> updateUserTypeFeaturePeriod(@RequestBody ChangePeriod period){
 		return userTypeFeatureService.changePeriod(period);  
-	}   
+	}  
+	
+	@ApiOperation(value = "features according to users", response = GenricResponse.class)
+	@GetMapping("/userToFeatureDropdown/{featureId}/{usertypeId}")
+	public List<UserToStakehoderfeatureMapping> userToFeatureDropdown(@PathVariable("featureId")long featureId,@PathVariable("usertypeId")long usertypeId){
+		
+		UserToStakehoderfeatureMapping obj = new UserToStakehoderfeatureMapping();
+		List<UserToStakehoderfeatureMapping> list = userToStakehoderfeatureMappingRepo.findByStakeholderFeature_IdAndUserTypeFeature_IdNot(featureId,usertypeId);
+		log.info("stakeholderList = "+list);
+		List<Usertype> userTypelist = usertypeRepo.findAll();
+		//log.info("userTypelist = "+userTypelist);
+		
+		for(UserToStakehoderfeatureMapping userToStakehoderfeatureMapping : list) {
+			
+		for(Usertype usertype : userTypelist) {
+			log.info(usertype.getId()+">>>>>>>>>>>>>>"+userToStakehoderfeatureMapping.getUserTypeFeature().getId());
+			if(usertype.getId() == userToStakehoderfeatureMapping.getUserTypeFeature().getId()) {
+				obj.setUsertypeInterp(usertype.getUsertypeName());
+			}
+			list.add(obj);
+		}
+		}
+		log.info("final List>>>>>>>"+list);
+		return list;
+		
+	} 
 }

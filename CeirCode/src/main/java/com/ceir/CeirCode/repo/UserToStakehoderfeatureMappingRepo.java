@@ -11,4 +11,5 @@ public interface UserToStakehoderfeatureMappingRepo extends JpaRepository<UserTo
 	public UserToStakehoderfeatureMapping findById(long id);
 	public List<UserToStakehoderfeatureMapping> findByUserTypeFeature_IdAndPeriodOrPeriodAndUserTypeFeature_IdOrderByCreatedOnAsc(long id,Integer period1,Integer period2,long id2);
     public UserToStakehoderfeatureMapping findByUserTypeFeature_IdAndStakeholderFeature_Id(long usertypeId,long featureId);
+    public List<UserToStakehoderfeatureMapping> findByStakeholderFeature_IdAndUserTypeFeature_IdNot(long featureId,long usertypeId);
 }    
