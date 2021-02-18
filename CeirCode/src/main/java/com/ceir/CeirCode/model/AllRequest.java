@@ -22,7 +22,8 @@ public class AllRequest{
 	
 	@Transient
 	private int action;
-	
+//	@Transient	private String columnName;
+	// @Transient	private String order;
 //	@Transient
 //	private String userAgent;
 //	
@@ -86,7 +87,6 @@ public int getAction() {
 	public void setDataId(long dataId) {
 		this.dataId = dataId;
 	}
-	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -107,5 +107,7 @@ public int getAction() {
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
 	
 }

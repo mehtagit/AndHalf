@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -69,7 +70,8 @@ public class District {
 
 	private String province;
 	private String district;
-
+	@Transient
+	private String currentDistrictName;
 	/*
 	 * @OneToMany(mappedBy = "district") private List<Commune> commune;
 	 * 
@@ -77,6 +79,14 @@ public class District {
 	 * 
 	 * public void setCommune(List<Commune> commune) { this.commune = commune; }
 	 */
+
+	public String getCurrentDistrictName() {
+		return currentDistrictName;
+	}
+
+	public void setCurrentDistrictName(String currentDistrictName) {
+		this.currentDistrictName = currentDistrictName;
+	}
 
 	@Override
 	public String toString() {
@@ -89,9 +99,8 @@ public class District {
 		builder.append(province);
 		builder.append(", district=");
 		builder.append(district);
-		/*
-		 * builder.append(", commune="); builder.append(commune);
-		 */
+		builder.append(", currentDistrictName=");
+		builder.append(currentDistrictName);
 		builder.append("]");
 		return builder.toString();
 	}

@@ -124,13 +124,19 @@ public class LoginService
 			user.setPassword(userLogin.getPassword());
 			user.setCurrentStatus(UserStatus.APPROVED.getCode());
 			Integer status2=UserStatus.DISABLE.getCode();
+			Integer status_delete=UserStatus.DELETE.getCode();
+			
 			User UserData=userRepo.findByUsername(user.getUsername());
 			if(UserData!= null) 
 			{ 
-				RequestHeaders header=new RequestHeaders(userLogin.getUserAgent(),userLogin.getPublicIp(),UserData.getUsername(),userLogin.getBrowser());
-			
-				headerService.saveRequestHeader(header);
-				userService.saveUserTrail(UserData, "User Management","Login",41);
+				/*
+				 * RequestHeaders header=new
+				 * RequestHeaders(userLogin.getUserAgent(),userLogin.getPublicIp(),UserData.
+				 * getUsername(),userLogin.getBrowser());
+				 * 
+				 * headerService.saveRequestHeader(header); userService.saveUserTrail(UserData,
+				 * "User Management","Login",41);
+				 */
 				if(UserData.getPassword().equals(user.getPassword()))
 				{
 					if(UserData.getCurrentStatus()==user.getCurrentStatus() || UserData.getCurrentStatus()==status2)
@@ -213,12 +219,18 @@ public class LoginService
 						return new ResponseEntity<>(response,HttpStatus.OK);
 					}
 					}
+					else if(UserData.getCurrentStatus()==status_delete) {
+						HttpResponse response=new HttpResponse(RegistrationTags.SOFT_DELETE_MESSAGE.getMessage(),422,RegistrationTags.SOFT_DELETE_MESSAGE.getTag());
+						return new ResponseEntity<>(response,HttpStatus.OK);
+					}
 					else 
 					{
 						HttpResponse response=new HttpResponse(RegistrationTags.LOGIN_UNAUTHORIZED.getMessage(),204,RegistrationTags.LOGIN_UNAUTHORIZED.getTag());
 						return new ResponseEntity<>(response,HttpStatus.OK);
 					}
 				}
+				
+					
 				else 
 				{
 					HttpResponse response=new HttpResponse(RegistrationTags.LOGIN_WRONG_DETAILS.getMessage(),403,RegistrationTags.LOGIN_WRONG_DETAILS.getTag());

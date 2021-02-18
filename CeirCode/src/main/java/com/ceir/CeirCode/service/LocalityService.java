@@ -54,7 +54,7 @@ public class LocalityService {
 	public Page<Locality>  viewAll(AddressObject filterRequest, Integer pageNo, Integer pageSize){
 		try { 
 			log.info("filter data:  "+filterRequest);
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "createdOn"));
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
             Page<Locality> page=localityRepo.findAll(buildSpecification(filterRequest).build(),pageable);
 			return page;
 

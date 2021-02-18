@@ -65,7 +65,6 @@ import io.swagger.annotations.ApiOperation;
 		
 		return mapping;
 	}
-
 	@ApiOperation(value = "change usertype status", response = HttpResponse.class)
 	@PostMapping("/updateUserTypeStatus")
 	public ResponseEntity<?> updateUserTypeStatus(@RequestBody ChangeUsertypeStatus userTypeStatus){

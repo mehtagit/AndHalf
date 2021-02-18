@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -36,7 +37,12 @@ public class Commune {
 	@Column(name = "DISTRICT_ID")
 	private Long districtID;
 	private String commune;
-
+	@Transient
+	private String currentCommuneName;
+	@Transient
+	private String districtName;
+	@Transient
+	private String province;
 	/*
 	 * @ManyToOne private District district;
 	 */
@@ -54,6 +60,30 @@ public class Commune {
 	 * 
 	 * public void setDistrict(District district) { this.district = district; }
 	 */
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getDistrictName() {
+		return districtName;
+	}
+
+	public void setDistrictName(String districtName) {
+		this.districtName = districtName;
+	}
+
+	public String getCurrentCommuneName() {
+		return currentCommuneName;
+	}
+
+	public void setCurrentCommuneName(String currentCommuneName) {
+		this.currentCommuneName = currentCommuneName;
+	}
 
 	public long getId() {
 		return id;
@@ -102,12 +132,12 @@ public class Commune {
 		builder.append(districtID);
 		builder.append(", commune=");
 		builder.append(commune);
-		/*
-		 * builder.append(", district="); builder.append(district);
-		 */
-		/*
-		 * builder.append(", village="); builder.append(village);
-		 */
+		builder.append(", currentCommuneName=");
+		builder.append(currentCommuneName);
+		builder.append(", districtName=");
+		builder.append(districtName);
+		builder.append(", province=");
+		builder.append(province);
 		builder.append("]");
 		return builder.toString();
 	}

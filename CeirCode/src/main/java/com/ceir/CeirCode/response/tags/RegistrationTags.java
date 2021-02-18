@@ -34,7 +34,8 @@ public enum RegistrationTags {
    Exception("exception","Exception occured"),
    exist("exist","already exist in DB"),
 	delete_successfully("deleted","Successfully deleted"),
-	user_exceed_limit("user_exceed_limit","User creation limit for the usertype is now exceeded");
+	user_exceed_limit("user_exceed_limit","User creation limit for the usertype is now exceeded"),
+	SOFT_DELETE_MESSAGE("SOFT_DELETE_MESSAGE","Account Does not exist");
 	private String tag;
 	private String message;
 	

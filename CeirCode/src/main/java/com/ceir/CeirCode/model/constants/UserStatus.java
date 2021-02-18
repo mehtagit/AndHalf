@@ -7,6 +7,7 @@ public enum UserStatus {
 	REJECTED(4, "Rejected"), 
 	DISABLE(5, "Disable"), 
 	DEACTIVATE(6, "Deactivate"),
+	DELETE(21, "Delete"),
 	NL(null,null);
 	private Integer code;
 	private String description;

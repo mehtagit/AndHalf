@@ -516,5 +516,10 @@ public class GenericSpecificationBuilder<T> {
 			};
 		}
 	
-	
+		/*
+		 * public Specification<User> joinWithUserProfile(){ return (root, query, cb) ->
+		 * { Join<User,UserProfile> addresses = root.join("userProfile".intern());
+		 * return null; }; }
+		 */
+
 }

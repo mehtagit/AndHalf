@@ -197,10 +197,18 @@ public class UserTypeFeatureService {
 		
 		try {
 			mapStrategy.setType(UserFeatureFile.class);
-			
+			List<SystemConfigListDb> periodList=systemConfigRepo.getByTag("Period");
 			List<UserToStakehoderfeatureMapping> list = viewAllUserTypeFeatures(filter, pageNo, pageSize).getContent();
-			
-			
+			for(UserToStakehoderfeatureMapping feature:list) {
+			feature.setUsertypeInterp(feature.getUserTypeFeature().getUsertypeName());
+			feature.setFeatureInterp(feature.getStakeholderFeature().getName());
+			for(SystemConfigListDb data:periodList) {
+			Integer value=data.getValue();
+			if(feature.getPeriod()==value) {
+			feature.setPeriodInterp(data.getInterp());
+			}
+			}
+			}
 		
 
 			if( list.size()> 0 ) {

@@ -7,7 +7,14 @@ private Long communeID;
 private String district;
 private String commune;
 private String village;
+public long localityId;
 
+public long getLocalityId() {
+	return localityId;
+}
+public void setLocalityId(long localityId) {
+	this.localityId = localityId;
+}
 public String  startDate;
 public String   endDate;
 private String searchString;
@@ -58,18 +65,20 @@ public String toString() {
 	builder.append(districtID);
 	builder.append(", communeID=");
 	builder.append(communeID);
-	builder.append(", startDate=");
-	builder.append(startDate);
-	builder.append(", endDate=");
-	builder.append(endDate);
-	builder.append(", searchString=");
-	builder.append(searchString);
 	builder.append(", district=");
 	builder.append(district);
 	builder.append(", commune=");
 	builder.append(commune);
 	builder.append(", village=");
 	builder.append(village);
+	builder.append(", localityId=");
+	builder.append(localityId);
+	builder.append(", startDate=");
+	builder.append(startDate);
+	builder.append(", endDate=");
+	builder.append(endDate);
+	builder.append(", searchString=");
+	builder.append(searchString);
 	builder.append("]");
 	return builder.toString();
 }

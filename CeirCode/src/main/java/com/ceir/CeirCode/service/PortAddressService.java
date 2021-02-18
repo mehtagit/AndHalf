@@ -273,7 +273,7 @@ public class PortAddressService {
 		StatefulBeanToCsvBuilder<CustomPortFile> builder = null;
 		StatefulBeanToCsv<CustomPortFile> csvWriter      = null;
 		List<CustomPortFile> fileRecords       = null;
-		MappingStrategy<CustomPortFile> mapStrategy = new CustomMappingStrategy<>();
+		CustomMappingStrategy<CustomPortFile> mapStrategy = new CustomMappingStrategy<>();
 		
 		
 		try {
@@ -301,8 +301,8 @@ public class PortAddressService {
 //			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
 //			
 			builder = new StatefulBeanToCsvBuilder<>(writer);
-			csvWriter = builder.withMappingStrategy(mapStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
-
+			csvWriter = builder.withMappingStrategy(mapStrategy).withSeparator(',')
+					.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
 			if( list.size() > 0 ) {
 				//List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag("GRIEVANCE_CATEGORY");
 				fileRecords = new ArrayList<CustomPortFile>(); 

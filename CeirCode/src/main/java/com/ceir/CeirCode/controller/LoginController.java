@@ -14,10 +14,13 @@ import com.ceir.CeirCode.model.ChangeLanguage;
 import com.ceir.CeirCode.model.ForgotPassword;
 import com.ceir.CeirCode.model.LoginTracking;
 import com.ceir.CeirCode.model.NewPassword;
+import com.ceir.CeirCode.model.RequestHeaders;
 import com.ceir.CeirCode.model.User;
 import com.ceir.CeirCode.model.UserLogin;
+import com.ceir.CeirCode.repo.UserRepo;
 import com.ceir.CeirCode.repoService.UserRepoService;
 import com.ceir.CeirCode.service.LoginService;
+import com.ceir.CeirCode.service.ReqHeadersService;
 import com.ceir.CeirCode.service.UserService;
 import com.ceir.CeirCode.util.HttpResponse;
 
@@ -37,11 +40,27 @@ public class LoginController{
 	@Autowired
 	UserRepoService userRepoService;
 	
+	@Autowired
+	ReqHeadersService reqHeadersService;
+	
+	@Autowired
+	UserRepo userRepo;
 	@ApiOperation(value = "user Login", response = HttpResponse.class)
 	@CrossOrigin
 	@PostMapping("/checkUser")     
 	public ResponseEntity<?> userLogin(@RequestBody UserLogin user){
 		return loginService.userLogin(user); 
+	}  
+	
+	@ApiOperation(value = "IP Log", response = HttpResponse.class)
+	@PostMapping("/ipLog")     
+	public ResponseEntity<?> ipLog(@RequestBody UserLogin userLogin){
+		User UserData=userRepo.findByUsername(userLogin.getUsername());
+		RequestHeaders header=new RequestHeaders(userLogin.getUserAgent(),userLogin.getPublicIp(),UserData.getUsername(),userLogin.getBrowser());
+		ResponseEntity<?> reponse=reqHeadersService.saveRequestHeaders(header);
+			userService.saveUserTrail(UserData, "User Management","Login",41);
+			return reponse;
+		
 	}  
 	
 	

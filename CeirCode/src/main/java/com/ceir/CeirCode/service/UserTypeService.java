@@ -30,6 +30,7 @@ import com.ceir.CeirCode.filemodel.UserTypeFile;
 import com.ceir.CeirCode.filtermodel.UsertypeFilter;
 import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.SearchCriteria;
+import com.ceir.CeirCode.model.SystemConfigListDb;
 import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.Usertype;
 import com.ceir.CeirCode.model.constants.Features;
@@ -206,8 +207,16 @@ public FileDetails getFile(UsertypeFilter filter) {
 	
 	try {
 		mapStrategy.setType(UserTypeFile.class);
+		List<SystemConfigListDb> statusList=systemConfigRepo.getByTag("UserType_Status");
 		List<Usertype> list = viewAllUserytypes(filter, pageNo, pageSize).getContent();
-		
+		for(Usertype usertype:list) {
+		for(SystemConfigListDb status:statusList) {
+		Integer value=status.getValue();
+		if(usertype.getStatus()==value) {
+		usertype.setStatusInterp(status.getInterp());
+		}
+		}
+		}
 		if( list.size()> 0 ) {
 			fileName = LocalDateTime.now().format(dtf).replace(" ", "_")+"_CustomPort.csv";
 		}else {
