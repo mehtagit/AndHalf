@@ -181,6 +181,7 @@ div#error_Modal {
 						<li>
 						<form id="manualDownload" autocomplete="off" action="./Consignment/ManualFileDownload">
 						<input type="hidden" name="userTypeId" value="${usertypeId}">
+						<input type="hidden" name="${_csrf.parameterName}"value="${_csrf.token}" />
 						<input type="hidden" name="contextName">
 						<a href="javascript:{}" style="color: white; cursor: pointer;" onclick="document.getElementById('manualDownload').submit();">
 						<i

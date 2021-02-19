@@ -212,6 +212,7 @@ function pageRendering(){
 			var button=data.buttonList;
 
 			var date=data.inputTypeDateList;
+			if(window.parent.$("body").attr("data-usertype") == "CEIRAdmin"){
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){	
 					$("#consignmentTableDIv").append("<div class='input-field col s6 m2'>"+
@@ -226,7 +227,7 @@ function pageRendering(){
 						 maxDate: new Date()
 			        }); 
 				}else if(date[i].type === "text"){
-					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
 				else if(date[i].type === "select"){
 
@@ -247,9 +248,29 @@ function pageRendering(){
 				}
 				
 			} 
-
+			}
+			else{
+				for(i=0; i<date.length; i++){
+					alert(date.length)
+				if(date[i].type === "date"){
+					alert("11");
+					$("#consignmentTableDIv").append("<div class='input-field col s6 m2'>"+
+							"<div id='enddatepicker' class='input-group'>"+
+							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
+							"<label for="+date[i].id+">"+date[i].title
+							+"</label>"+
+							"<span	class='input-group-addon' style='color: #ff4081'>"+
+							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						 maxDate: new Date()
+			        }); 
+				}else if(date[i].type === "text"){
+					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+				}
+				}
 			// dynamic dropdown portion
-		/*	var dropdown=data.dropdownList;
+			var dropdown=data.dropdownList;
 			for(i=0; i<dropdown.length; i++){
 				var dropdownDiv=
 					$("#consignmentTableDIv").append("<div class='col s6 m2 selectDropdwn'>"+
@@ -264,7 +285,12 @@ function pageRendering(){
 							"</select>"+
 							"</div>"+
 					"</div>");
-			}*/
+			}
+			
+			}
+			
+			
+			
 
 			$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
 			$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' style='margin-left: 18px;' id='clearLawfullFilter'>"+$.i18n('clearFilter')+"</button></div>");

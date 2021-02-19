@@ -176,7 +176,7 @@ public class VisaUpdateDatableController {
 		 
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("table.transactionID"),"visaTxnId","","text",Translator.toLocale("input.passportNo"),"passportNumberFilter","","select",Translator.toLocale("input.VisaType"),"visaTypeFilter","","text",Translator.toLocale("input.VisaNumber"),"visaNumberFilter","","text",Translator.toLocale("table.fileName"),"fileNameFilter","","date",Translator.toLocale("table.VisaExpiryDate"),"expiryDateFilter","","select",Translator.toLocale("input.Status"),"status",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("table.transactionID"),"visaTxnId","18","text",Translator.toLocale("input.passportNo"),"passportNumberFilter","15","select",Translator.toLocale("input.VisaType"),"visaTypeFilter","","text",Translator.toLocale("input.VisaNumber"),"visaNumberFilter","15","text",Translator.toLocale("table.fileName"),"fileNameFilter","30","date",Translator.toLocale("table.VisaExpiryDate"),"expiryDateFilter","","select",Translator.toLocale("input.Status"),"status",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

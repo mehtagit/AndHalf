@@ -403,7 +403,7 @@ width: inherit;
 
 			<div class="row">
 				<h6 id=consignmentText>
-					<spring:message code="modal.message.consignmentDelete" />
+					<%-- <spring:message code="modal.message.consignmentDelete" /> --%>
 				</h6>
 			</div>
 

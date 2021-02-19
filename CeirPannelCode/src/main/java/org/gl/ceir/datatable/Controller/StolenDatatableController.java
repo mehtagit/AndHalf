@@ -392,10 +392,10 @@ public class StolenDatatableController {
 				  } pageElement.setDropdownList(dropdownList);
 				 */
 				//input type date list	
-				String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","", "select", Translator.toLocale("operator.Operator"),
+				String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","18", "select", Translator.toLocale("operator.Operator"),
 						  "operator", "","select",Translator.toLocale("table.requestType"),
 						  "requestType", "", "select", Translator.toLocale("input.mode"),
-						  "sourceStatus", "","select", Translator.toLocale("table.status"), "status","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter",""};
+						  "sourceStatus", "","select", Translator.toLocale("table.status"), "status","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","10","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","10"};
 				for (int i = 0; i < dateParam.length; i++) {
 					dateRelatedFields = new InputFields();
 					dateRelatedFields.setType(dateParam[i]);
@@ -411,9 +411,9 @@ public class StolenDatatableController {
 			}else if(("5".equals(featureId)) && "CEIRAdmin".equals(userType)) {
 				
 				//input type date list	
-				String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.BlockType"),"blockingTypeFilter","",
+				String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","18","text",Translator.toLocale("table.BlockType"),"blockingTypeFilter","15",
 						"select",Translator.toLocale("table.requestType"), "requestType", "", "select",
-						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter",""};
+						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","10","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","10"};
 				for (int i = 0; i < dateParam.length; i++) {
 					dateRelatedFields = new InputFields();
 					dateRelatedFields.setType(dateParam[i]);
@@ -448,7 +448,7 @@ public class StolenDatatableController {
 			}
 			else {
 				//input type date list	
-				String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","" };
+				String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","18" };
 				for (int i = 0; i < dateParam.length; i++) {
 					dateRelatedFields = new InputFields();
 					dateRelatedFields.setType(dateParam[i]);
@@ -500,7 +500,7 @@ public class StolenDatatableController {
 			pageElement.setButtonList(buttonList);
 			
 			//input type date list	
-			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID",""};
+			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","18"};
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

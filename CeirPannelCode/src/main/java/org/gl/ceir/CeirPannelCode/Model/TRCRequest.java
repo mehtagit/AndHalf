@@ -4,15 +4,32 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class TRCRequest {
-	private String endDate,searchString,startDate,tac,txnId,userType,filterUserType,userDisplayName,modifiedOn;
+	private String endDate,searchString,startDate,tac,txnId,userType,filterUserType,userDisplayName,modifiedOn,source;
+	
 	private Integer status,adminStatus,featureId,userTypeId,file;
-	private String displayName,Country;
+	private String displayName,Country,countryName;
 	private long userId;
-	private Long productName,modelNumber;
+	private Long productName;
+	private Integer modelNumber;
 	public String columnName,sort;
 	public String order,orderColumnName;
+	public Integer pageNo;
+	public Integer pageSize;
+	
 	public String getEndDate() {
 		return endDate;
+	}
+	public Integer getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(Integer pageNo) {
+		this.pageNo = pageNo;
+	}
+	public Integer getPageSize() {
+		return pageSize;
+	}
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
 	}
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
@@ -107,6 +124,12 @@ public class TRCRequest {
 	public void setCountry(String country) {
 		Country = country;
 	}
+	public String getCountryName() {
+		return countryName;
+	}
+	public void setCountryName(String countryName) {
+		this.countryName = countryName;
+	}
 	public long getUserId() {
 		return userId;
 	}
@@ -119,10 +142,10 @@ public class TRCRequest {
 	public void setProductName(Long productName) {
 		this.productName = productName;
 	}
-	public Long getModelNumber() {
+	public Integer getModelNumber() {
 		return modelNumber;
 	}
-	public void setModelNumber(Long modelNumber) {
+	public void setModelNumber(Integer modelNumber) {
 		this.modelNumber = modelNumber;
 	}
 	public String getColumnName() {
@@ -149,6 +172,12 @@ public class TRCRequest {
 	public void setOrderColumnName(String orderColumnName) {
 		this.orderColumnName = orderColumnName;
 	}
+	public String getSource() {
+		return source;
+	}
+	public void setSource(String source) {
+		this.source = source;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -170,6 +199,8 @@ public class TRCRequest {
 		builder.append(userDisplayName);
 		builder.append(", modifiedOn=");
 		builder.append(modifiedOn);
+		builder.append(", source=");
+		builder.append(source);
 		builder.append(", status=");
 		builder.append(status);
 		builder.append(", adminStatus=");
@@ -184,6 +215,8 @@ public class TRCRequest {
 		builder.append(displayName);
 		builder.append(", Country=");
 		builder.append(Country);
+		builder.append(", countryName=");
+		builder.append(countryName);
 		builder.append(", userId=");
 		builder.append(userId);
 		builder.append(", productName=");
@@ -198,6 +231,10 @@ public class TRCRequest {
 		builder.append(order);
 		builder.append(", orderColumnName=");
 		builder.append(orderColumnName);
+		builder.append(", pageNo=");
+		builder.append(pageNo);
+		builder.append(", pageSize=");
+		builder.append(pageSize);
 		builder.append("]");
 		return builder.toString();
 	}

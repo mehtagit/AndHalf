@@ -78,7 +78,7 @@ public class ImporterManageTypeAdmin {
 		TRCRequest filterrequest = gsonObject.fromJson(filter, TRCRequest.class);
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		
-		filterrequest.setOrderColumnName(request.getParameter("order[0][column]") == null ? "modifiedOn" : request.getParameter("order[0][column]"));
+		filterrequest.setOrderColumnName(request.getParameter("order[0][column]") == null ? "Modified On" : request.getParameter("order[0][column]"));
 		filterrequest.setOrder(request.getParameter("order[0][dir]") == null ? "desc" : request.getParameter("order[0][dir]"));
 		
 		log.info("--pageSize-" + pageSize + "----pageNo" + pageNo + "----file" + file + "-filterrequest-------"
@@ -263,7 +263,6 @@ public class ImporterManageTypeAdmin {
 				if("CEIRAdmin".equals(userType)){
 					//Dropdown items
 					String[] selectParam= {"select",Translator.toLocale("table.ProductName"),"filterdbrandname","","select",Translator.toLocale("table.ModelNumber"),"filteredModel","","select",Translator.toLocale("table.country"),"country","","select",Translator.toLocale("table.userType"),"userType","","select",Translator.toLocale("table.status"),"Status",""};
-					
 					for(int i=0; i< selectParam.length; i++) {
 						inputFields= new InputFields();
 						inputFields.setType(selectParam[i]);

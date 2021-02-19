@@ -369,8 +369,8 @@ public class UploadPaidStatus {
 			// input type date list
 			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
 					Translator.toLocale("input.endDate"), "endDate", "", "text",
-					Translator.toLocale("input.transactionID"), "transactionID", "", "text",
-					Translator.toLocale("input.passportNo"), "nId", "" };
+					Translator.toLocale("input.transactionID"), "transactionID", "18", "text",
+					Translator.toLocale("input.passportNo"), "nId", "15" };
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -385,8 +385,8 @@ public class UploadPaidStatus {
 		} else if ("Immigration".equals(userType)) {
 			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
 					Translator.toLocale("input.endDate"), "endDate", "", "text",
-					Translator.toLocale("input.transactionID"), "transactionID", "", "text",
-					Translator.toLocale("input.passportNo"), "nId", "" };
+					Translator.toLocale("input.transactionID"), "transactionID", "18", "text",
+					Translator.toLocale("input.passportNo"), "nId", "15" };
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -402,10 +402,10 @@ public class UploadPaidStatus {
 			// input type date list
 			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
 					Translator.toLocale("input.endDate"), "endDate", "", "text", Translator.toLocale("input.nidInput"),
-					"nId", "", "text", Translator.toLocale("input.transactionID"), "transactionID", "", "text",
-					Translator.toLocale("input.Nationality"), "filterNationality", "", "select",
+					"nId", "", "text", Translator.toLocale("input.transactionID"), "transactionID", "18", "text",
+					Translator.toLocale("input.Nationality"), "filterNationality", "15", "select",
 					Translator.toLocale("select.taxPaidStatus"), "taxPaidStatus", "", "text",
-					Translator.toLocale("table.origin"), "originFilter", "", "select",
+					Translator.toLocale("table.origin"), "originFilter", "20", "select",
 					Translator.toLocale("input.Status"), "recordStatus", "" };
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
@@ -422,7 +422,7 @@ public class UploadPaidStatus {
 			// input type date list
 			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
 					Translator.toLocale("input.endDate"), "endDate", "", "text", Translator.toLocale("input.nidInput"),
-					"nId", "", "text", Translator.toLocale("input.transactionID"), "transactionID", "" };
+					"nId", "15", "text", Translator.toLocale("input.transactionID"), "transactionID", "18" };
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

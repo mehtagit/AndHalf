@@ -55,6 +55,7 @@ function Datatable(Url, dataUrl) {
 	
 	var modelNumber = $('#filteredModel').val() == '' || $('#filteredModel').val() == undefined ? -1 : $('#filteredModel').val();
 	var productName = $('#filterdbrandname').val() == undefined || $('#filterdbrandname').val() == -1 ? null : $('#filterdbrandname').val();
+	var countryName = $('#country').val() == undefined || $('#country').val() == -1 ? null : $('#country').val();
 		var filterRequest = {
 			"endDate" : $('#endDate').val(),
 			"startDate" : $('#startDate').val(),
@@ -68,10 +69,11 @@ function Datatable(Url, dataUrl) {
 			"filterUserType" : FilterUserType,
 			
 			"displayName" : $('#filterDisaplay').val(),
-			"productName" : parseInt(productName),
+			"productName" : productName,
 			"modelNumber" : parseInt(modelNumber),
-			"Country" : $('#country').val(),
+			"countryName" : countryName,
 		}
+		
 	}else if(userType == "TRC"){
 		
 		var filterRequest = {
@@ -100,6 +102,8 @@ function Datatable(Url, dataUrl) {
 			"status" : parseInt($('#Status').val()),
 		}
 	}
+	
+	
 	if (lang == 'km') {
 		var langFile = "./resources/i18n/khmer_datatable.json";
 	}else if(lang=='en'){
@@ -114,6 +118,8 @@ function Datatable(Url, dataUrl) {
 		headers:
 		{ 'X-CSRF-TOKEN': token }
 	});
+	
+	console.log("filterRequest-->"+JSON.stringify(filterRequest));
 	
 	$.ajax({
 		url : Url,
@@ -367,56 +373,7 @@ if (userType == "CEIRAdmin") {
 	});
 }
 
-// **********************************************************Export Excel
-// file************************************************************************
-function exportTacData() {
-	
-	var txn = (txnIdValue == 'null' && transactionIDValue == undefined) ? $('#transactionID').val() : transactionIDValue;
-	
-	var tacStartDate = $('#startDate').val();
-	var tacEndDate = $('#endDate').val();
-	var tacStatus = parseInt($('#Status').val());
-	var tacNumber = $('#tac').val();
-	var txnId = txn;
-	var featureId = 21;
-	var userType = $("body").attr("data-roleType");
-	var userTypeId = parseInt($("body").attr("data-userTypeID"));
-	var userId = parseInt($("body").attr("data-userID"));
-
-	// ////console.log("tacStatus=="+tacStatus);
-	if (isNaN(tacStatus)) {
-		tacStatus = '';
-	}
-	//////console.log("transactionIDValue-->" +transactionIDValue);
-	//////console.log("tacStartDate---" +tacStartDate+  "tacEndDate---" +tacEndDate +  "tacStatus---" +tacStatus+  "tacNumber---" +tacNumber+  "txnId---" +txnId);
-	
-	var source__val;
-	if(transactionIDValue != undefined){
-		source__val = 'noti'
-	}else{
-		source__val = tacStartDate != ''|| tacEndDate != ''|| tacStatus != '-1'|| tacNumber != ''|| txnId != '' ? 'filter' : $("body").attr("data-session-source");
-	}
-	
-	//////console.log("source__val-->" +source__val);
-	
-	var table = $('#ImporterAdmintypeAprroveTable').DataTable();
-	var info = table.page.info();
-	var pageNo = info.page;
-	var pageSize = info.length;
-	// ////console.log("pageSize=="+pageSize+" tacNumber=="+tacNumber+"
-	// tacStartDate=="+tacStartDate+" tacEndDate=="+tacEndDate+"
-	// tacStatus=="+tacStatus+" txnId=="+txnId+" userId=="+userId+"
-	// pageSize=="+pageSize+" pageNo=="+pageNo);
-	
-	window.location.href = "./exportTac?tacNumber=" + tacNumber
-			+ "&tacStartDate=" + tacStartDate + "&tacEndDate=" + tacEndDate
-			+ "&tacStatus=" + tacStatus + "&txnId=" + txnId + "&featureId="
-			+ featureId + "&userType=" + userType + "&userTypeId=" + userTypeId
-			+ "&userId=" + userId +"&source=" +source__val+ "&pageSize=" + pageSize + "&pageNo="
-			+ pageNo;
-
-}
-
+// ******
 function ImporterviewByID(id, actionType, projectPath, modalID) {
 	$('#' + modalID).openModal({
 		dismissible : false
@@ -1287,4 +1244,116 @@ function Resetfilter(formID){
 	$("label").removeClass('active');
 	//registrationDatatable(lang,null);
 	typeApprovedDataTable(lang)
+}
+
+//****************************************************Export Excel ************************************************************************
+function exportTacData() {
+	
+	var txn = (txnIdValue == 'null' && transactionIDValue == undefined) ? $('#transactionID').val() : transactionIDValue;
+	var source__val;
+	var tacStartDate = $('#startDate').val();
+	var tacEndDate = $('#endDate').val();
+	var tacStatus = parseInt($('#Status').val());
+	var tacNumber = $('#tac').val();
+	var table = $('#ImporterAdmintypeAprroveTable').DataTable();
+	var info = table.page.info();
+	var pageNo = info.page;
+	var pageSize = info.length;
+	
+	if (isNaN(tacStatus)) {
+		tacStatus = '';
+	}
+	
+	if(transactionIDValue != undefined){
+		source__val = 'noti'
+	}else{
+		source__val = tacStartDate != ''|| tacEndDate != ''|| tacStatus != '-1'|| tacNumber != ''|| txn != '' ? 'filter' : $("body").attr("data-session-source");
+	}
+	
+	
+	var txn = (txnIdValue == 'null' && transactionIDValue == undefined) ? $(
+	'#transactionID').val() : transactionIDValue;
+
+	var FilterUserType = $('#userType').val() == '-1'
+	|| $('#userType').val() == undefined ? null : $(
+	"#userType option:selected").text();
+	if (userType == "CEIRAdmin") {
+
+		var modelNumber = $('#filteredModel').val() == '' || $('#filteredModel').val() == undefined ? -1 : $('#filteredModel').val();
+		var productName = $('#filterdbrandname').val() == undefined || $('#filterdbrandname').val() == -1 ? null : $('#filterdbrandname').val();
+		var countryName = $('#country').val() == undefined || $('#country').val() == -1 ? null : $('#country').val();
+
+var TRCRequest = {
+		"endDate" : $('#endDate').val(),
+		"startDate" : $('#startDate').val(),
+		"tac" : $('#tac').val(),
+		"txnId" : $('#transactionID').val() == null ? txn : $('#transactionID').val(),
+		"userId" : userId,
+		"featureId" : parseInt(featureId),
+		"userTypeId" : parseInt($("body").attr("data-userTypeID")),
+		"userType" :  userType,
+		//"userType" : $("body").attr("data-roleType"),
+		"status" : parseInt($('#Status').val()),
+		"filterUserType" : FilterUserType,
+		"displayName" : $('#filterDisaplay').val(),
+		"productName" : productName,
+		"source":source__val,
+		"modelNumber" : parseInt(modelNumber),
+		"countryName" : countryName,
+		"pageNo":parseInt(pageNo),
+		"pageSize":parseInt(pageSize)
+	}
+
+}else if(userType == "TRC"){
+
+var TRCRequest = {
+	"endDate" : $('#endDate').val(),
+	"startDate" : $('#startDate').val(),
+	"tac" : $('#tac').val(),
+	"txnId" :$('#transactionID').val() == null ? txn : $('#transactionID').val(),
+	"userId" : userId,
+	"featureId" : parseInt(featureId),
+	"userTypeId" : parseInt($("body").attr("data-userTypeID")),
+	"userType" : $("body").attr("data-roleType"),
+	"status" : parseInt($('#Status').val()),
+}
+
+} else {
+
+var TRCRequest = {
+	"endDate" : $('#endDate').val(),
+	"startDate" : $('#startDate').val(),
+	"tac" : $('#tac').val(),
+	"txnId" : $('#transactionID').val() == null ? txn : $('#transactionID').val(),
+	"userId" : userId,
+	"featureId" : parseInt(featureId),
+	"userTypeId" : parseInt($("body").attr("data-userTypeID")),
+	"userType" : $("body").attr("data-roleType"),
+	"status" : parseInt($('#Status').val()),
+}
+}
+
+	
+////console.log(JSON.stringify(filterRequest))
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
+	$.ajax({
+		url: './exportTac',
+		type: 'POST',
+		dataType : 'json',
+		contentType : 'application/json; charset=utf-8',
+		data : JSON.stringify(TRCRequest),
+		success: function (data, textStatus, jqXHR) {
+			  window.location.href = data.url;
+
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			
+		}
+	});
+
 }

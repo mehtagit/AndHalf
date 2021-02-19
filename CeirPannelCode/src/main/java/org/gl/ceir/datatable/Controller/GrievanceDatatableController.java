@@ -67,8 +67,8 @@ public class GrievanceDatatableController {
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		
-		filterrequest.setColumnName(request.getParameter("order[0][column]") == null ? "modifiedOn" : request.getParameter("order[0][column]"));
-		filterrequest.setSort(request.getParameter("order[0][dir]") == null ? "desc" : request.getParameter("order[0][dir]"));
+		filterrequest.setOrderColumnName(request.getParameter("order[0][column]") == null ? "Modified On" : request.getParameter("order[0][column]"));
+		filterrequest.setOrder(request.getParameter("order[0][dir]") == null ? "desc" : request.getParameter("order[0][dir]"));
 		
 		Integer file = 0;
 		Object response;
@@ -150,7 +150,6 @@ public class GrievanceDatatableController {
 						String action = iconState.adminGrievanceState(dataInsideList.getFileName(), txnId, grievanceId,
 						StatusofGrievance, userStatus, userId);
 						Object[] finalData = { createdOn, modifiedOn, txnId, grievanceId, userName,raisedBy, userTypeName, grievanceStatus, action };
-
 						List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
 						finalList.add(finalDataList);
 						datatableResponseModel.setData(finalList);
@@ -377,7 +376,6 @@ public class GrievanceDatatableController {
 		if("CEIRAdmin".equals(userType) || userType.equals("Customer Care")) {
 			// Dropdown items
 			String[] selectParam = {"select", Translator.toLocale("table.userType"), "userType", "","select", Translator.toLocale("table.status"), "recentStatus", "" };
-
 			for (int i = 0; i < selectParam.length; i++) {
 				inputFields = new InputFields();
 				inputFields.setType(selectParam[i]);
@@ -392,7 +390,7 @@ public class GrievanceDatatableController {
 			pageElement.setDropdownList(dropdownList);
 
 			// input type date list
-			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","date", Translator.toLocale("table.lastupdatedate"), "dateModified", "", "text",
+			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "", "text",
 					Translator.toLocale("input.transactionID"), "transactionID", "", "text",Translator.toLocale("table.grievanceID"), "grievanceID", "","text",Translator.toLocale("table.UserName"), "userName","","text",Translator.toLocale("table.raisedBy"), "raisedby", "" };
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
