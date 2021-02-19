@@ -13,9 +13,11 @@ import org.gl.ceir.CeirPannelCode.Model.UserStatus;
 import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.gl.ceir.pagination.model.UserManagementContent;
+import org.gl.ceir.pagination.model.UserfeatureContent;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -250,5 +252,10 @@ public interface UserProfileFeignImpl {
 		
 		@RequestMapping(value="/userMgmt/delete" ,method=RequestMethod.POST) 
 		public @ResponseBody GenricResponse deleteUserFeign(@RequestBody NewSystemUser newSystemUser);
+		
+		//***************************************************userToFeatureDropdown user Feign********************************
+		
+		@GetMapping("/userToFeatureDropdown/{featureId}/{usertypeId}")
+		public UserfeatureContent userToFeatureDropdownFeign(@PathVariable("featureId") Integer featureId, @PathVariable("usertypeId") Integer usertypeId);
 } 
 
