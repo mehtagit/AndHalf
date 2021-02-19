@@ -810,9 +810,16 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			}
 		});
 		
-		$.getJSON('./registrationUserType', function(data) {
+		/*$.getJSON('./registrationUserType', function(data) {
 			for (i = 0; i < data.length; i++) {
 				$('<option>').val(data[i].id).text(data[i].usertypeName)
+				.appendTo('#userType');
+			}
+		});*/
+		
+		$.getJSON('./getusertypefeature/4/8', function(data) {
+			for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].id).text(data[i].usertypeInterp)
 				.appendTo('#userType');
 			}
 		});
