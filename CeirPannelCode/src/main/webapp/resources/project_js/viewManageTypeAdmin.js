@@ -315,11 +315,11 @@ function pageRendering() {
 										}
 									});
 
-					$.getJSON('./registrationUserType?type=1',
+					$.getJSON('./getusertypefeature/' + featureId + '/'+ $("body").attr("data-userTypeID"),
 							function(data) {
 								for (i = 0; i < data.length; i++) {
 									$('<option>').val(data[i].id).text(
-											data[i].usertypeName).appendTo(
+											data[i].usertypeInterp).appendTo(
 											'#userType');
 								}
 populateCountries("country", "state");
