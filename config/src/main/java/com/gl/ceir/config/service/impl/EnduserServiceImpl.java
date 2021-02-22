@@ -1309,7 +1309,7 @@ public class EnduserServiceImpl {
 					uVFm.setStatus(visa.getStateInterp());
 					uVFm.setTxnId(visa.getTxnId());
 					uVFm.setFileName(visa.getVisaFileName());
-					uVFm.setFileName(visa.getNid());
+					uVFm.setNid((visa.getNid()));
 					//System.out.println(uVFm.toString());
 					fileRecords.add(uVFm);
 				}
