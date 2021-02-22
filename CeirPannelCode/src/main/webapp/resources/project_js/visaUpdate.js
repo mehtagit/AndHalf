@@ -364,7 +364,7 @@
 				else{
 					txn=$('#visaTxnId').val();
 				}
-				
+	
 				var filterRequest={
 						"endDate":$('#endDate').val(),
 						"startDate":$('#startDate').val(),
@@ -381,7 +381,8 @@
 						"visaType":$('#visaTypeFilter').val(),
 						"visaNumber":$('#visaNumberFilter').val(),
 						"visaExpiryDate":$('#expiryDateFilter').val(),
-						"fileName":$('#fileNameFilter').val()
+						"fileName":$('#fileNameFilter').val(),
+						"source":$("body").attr("data-session-source")
 				}
 				//////console.log(JSON.stringify(filterRequest))
 				var token = $("meta[name='_csrf']").attr("content");

@@ -86,6 +86,7 @@ function Datatable(Url, dataUrl) {
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 			"userType" : $("body").attr("data-roleType"),
 			"status" : parseInt($('#Status').val()),
+			
 		}
 		
 	} else {
@@ -100,6 +101,7 @@ function Datatable(Url, dataUrl) {
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 			"userType" : $("body").attr("data-roleType"),
 			"status" : parseInt($('#Status').val()),
+			
 		}
 	}
 	
@@ -133,7 +135,7 @@ function Datatable(Url, dataUrl) {
 						orderCellsTop : true,
 						"ordering" : true,
 						"bPaginate" : true,
-						"bFilter" : true,
+						"bFilter" : false,
 						"bInfo" : true,
 						"bSearchable" : true,
 						"oLanguage" : {
@@ -315,11 +317,11 @@ function pageRendering() {
 										}
 									});
 
-					$.getJSON('./registrationUserType?type=1',
+					$.getJSON('./getusertypefeature/' + featureId + '/'+ $("body").attr("data-userTypeID"),
 							function(data) {
 								for (i = 0; i < data.length; i++) {
 									$('<option>').val(data[i].id).text(
-											data[i].usertypeName).appendTo(
+											data[i].usertypeInterp).appendTo(
 											'#userType');
 								}
 populateCountries("country", "state");
@@ -1316,6 +1318,9 @@ var TRCRequest = {
 	"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 	"userType" : $("body").attr("data-roleType"),
 	"status" : parseInt($('#Status').val()),
+	"modelNumber" :  -1,
+	"pageNo":parseInt(pageNo),
+	"pageSize":parseInt(pageSize)
 }
 
 } else {
@@ -1330,6 +1335,9 @@ var TRCRequest = {
 	"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 	"userType" : $("body").attr("data-roleType"),
 	"status" : parseInt($('#Status').val()),
+	"modelNumber" :  -1,
+	"pageNo":parseInt(pageNo),
+	"pageSize":parseInt(pageSize)
 }
 }
 

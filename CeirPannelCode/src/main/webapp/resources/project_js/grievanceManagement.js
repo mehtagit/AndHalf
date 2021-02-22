@@ -153,7 +153,7 @@ var featureId = 6;
 							orderCellsTop : true,
 							"ordering" : true,
 							"bPaginate" : true,
-							"bFilter" : true,
+							"bFilter" : false,
 							"bInfo" : true,
 							"bSearchable" : true,
 							"oLanguage": {  

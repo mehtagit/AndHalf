@@ -46,7 +46,7 @@ public class VisaController {
 		Object response;
 		Integer file = 1;	
 		log.info("filterRequest:::::::::"+filterRequest);
-		response= feignCleintImplementation.viewVisaRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file,"filter");
+		response= feignCleintImplementation.viewVisaRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file,filterRequest.getSource());
 		FileExportResponse fileExportResponse;
 		Gson gson= new Gson(); 
 		String apiResponse = gson.toJson(response);

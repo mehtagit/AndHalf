@@ -5,6 +5,7 @@ import java.util.List;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GsmaFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserLoginFeignImpl;
+import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.AddressModel;
 import org.gl.ceir.CeirPannelCode.Model.AddressResponse;
@@ -14,6 +15,7 @@ import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceDropdown;
 import org.gl.ceir.CeirPannelCode.Model.InterRelatedRuleFeatureMapping;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
+import org.gl.ceir.pagination.model.UserfeatureContent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,13 @@ public class ProjectDropdownController {
 	GsmaFeignClient gsmaFeignClient;
 	@Autowired
 	UserLoginFeignImpl userLoginFeignImpl;
+	
+	
+	@Autowired
+	UserProfileFeignImpl userProfileFeignImpl;
+	
+	
+
 	
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
@@ -193,4 +202,11 @@ public class ProjectDropdownController {
 		List<String> dropdown = userLoginFeignImpl.getDistinctFeatureName();
 		return dropdown;
 	}
+	
+	@ResponseBody
+	@GetMapping("getusertypefeature/{featureId}/{usertypeId}")
+	public List <UserfeatureContent> userToFeatureDropdown(@PathVariable("featureId") Integer featureId, @PathVariable("usertypeId") Integer usertypeId ) {
+		List <UserfeatureContent> response = userProfileFeignImpl.userToFeatureDropdownFeign(featureId, usertypeId);
+		return response;
+	}	
 }		

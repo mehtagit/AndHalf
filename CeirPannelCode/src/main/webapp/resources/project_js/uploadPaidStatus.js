@@ -533,7 +533,7 @@ function pageButtons(url){
 						 maxDate: new Date()
 			        }); 
 				}else if(date[i].type === "text"){
-					$("#tableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" id="+date[i].id+" /><label for="+date[i].id+" id="+date[i].id+">"+date[i].title+"</label></div>");
+					$("#tableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" maxlength="+date[i].className+" id="+date[i].id+" /><label for="+date[i].id+" id="+date[i].id+">"+date[i].title+"</label></div>");
 				}
 				else if(date[i].type === "select"){
 
@@ -571,7 +571,7 @@ function pageButtons(url){
 							 maxDate: new Date()
 				        }); 
 					}else if(date[i].type === "text"){
-						$("#tableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" id="+date[i].id+" /><label for="+date[i].id+" id="+date[i].id+">"+date[i].title+"</label></div>");
+						$("#tableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" maxlength="+date[i].className+" id="+date[i].id+" /><label for="+date[i].id+" id="+date[i].id+">"+date[i].title+"</label></div>");
 					}
 					
 				} 
@@ -866,10 +866,13 @@ function exportpaidStatus(){
 		origin=$('#originFilter').val();
 	}
     else{
-    	origin=null;
+    	origin="";
     }
   
     var nationality =$('#filterNationality').val();
+    if(nationality=="undefined" || nationality==undefined){
+    	nationality="";	
+    }
     if( $("body").attr("data-filterSource")=='noti'){
     	txnId= (txnIdValue == 'null' && transactionIDValue == undefined)? $('#transactionID').val() : transactionIDValue;	
 	}
