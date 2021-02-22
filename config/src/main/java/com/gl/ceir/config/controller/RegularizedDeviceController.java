@@ -62,7 +62,7 @@ public class RegularizedDeviceController {
 			mapping = new MappingJacksonValue(customInfo);
 		}else {
 			logger.info("Regularized Device Export request " + filterRequest);
-			//ss
+			//
 			FileDetails fileDetails = regularizedDeviceServiceImpl.getFilteredDeviceInFile(filterRequest, source);
 			mapping = new MappingJacksonValue(fileDetails);
 		}
