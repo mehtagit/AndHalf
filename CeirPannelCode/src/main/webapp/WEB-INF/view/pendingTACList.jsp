@@ -127,7 +127,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 
 								<a href="" class="boton right" id="btnLink" hidden="hidden"></a>
 							</div>
-							<form action="${context}/pendingTacList"
+							<form action="${context}/pendingTacList" id="viewFilter"
 								method="post">
 								<div class="col s12 m12 l12" id="pendingTacTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">

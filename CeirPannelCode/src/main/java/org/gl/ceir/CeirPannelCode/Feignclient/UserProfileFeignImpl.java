@@ -1,5 +1,7 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
 
+import java.util.List;
+
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.NewRule;
@@ -256,6 +258,6 @@ public interface UserProfileFeignImpl {
 		//***************************************************userToFeatureDropdown user Feign********************************
 		
 		@GetMapping("/userToFeatureDropdown/{featureId}/{usertypeId}")
-		public UserfeatureContent userToFeatureDropdownFeign(@PathVariable("featureId") Integer featureId, @PathVariable("usertypeId") Integer usertypeId);
+		public List <UserfeatureContent> userToFeatureDropdownFeign(@PathVariable("featureId") Integer featureId, @PathVariable("usertypeId") Integer usertypeId);
 } 
 

@@ -201,8 +201,8 @@ public class ProjectDropdownController {
 	
 	@ResponseBody
 	@GetMapping("getusertypefeature/{featureId}/{usertypeId}")
-	public UserfeatureContent userToFeatureDropdown(@PathVariable("featureId") Integer featureId, @PathVariable("usertypeId") Integer usertypeId ) {
-		UserfeatureContent response = userProfileFeignImpl.userToFeatureDropdownFeign(featureId, usertypeId);
+	public List <UserfeatureContent> userToFeatureDropdown(@PathVariable("featureId") Integer featureId, @PathVariable("usertypeId") Integer usertypeId ) {
+		List <UserfeatureContent> response = userProfileFeignImpl.userToFeatureDropdownFeign(featureId, usertypeId);
 		return response;
 	}
 	
