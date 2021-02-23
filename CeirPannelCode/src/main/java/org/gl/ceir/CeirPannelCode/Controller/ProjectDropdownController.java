@@ -40,8 +40,12 @@ public class ProjectDropdownController {
 	@Autowired
 	UserLoginFeignImpl userLoginFeignImpl;
 	
+	
 	@Autowired
 	UserProfileFeignImpl userProfileFeignImpl;
+	
+	
+
 	
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
@@ -204,6 +208,5 @@ public class ProjectDropdownController {
 	public List <UserfeatureContent> userToFeatureDropdown(@PathVariable("featureId") Integer featureId, @PathVariable("usertypeId") Integer usertypeId ) {
 		List <UserfeatureContent> response = userProfileFeignImpl.userToFeatureDropdownFeign(featureId, usertypeId);
 		return response;
-	}
-	
+	}	
 }		

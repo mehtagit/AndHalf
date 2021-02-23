@@ -92,12 +92,10 @@ public class RegistrationReqDatatableController {
 																		request.getParameter("order[0][column]"))
 																				? "Status"
 																				: "Modified On";
-		String order;
-		if ("Modified On".equalsIgnoreCase(column)) {
+		String order=request.getParameter("order[0][dir]");
+		if (order == null) {
 			order = "desc";
-		} else {
-			order = request.getParameter("order[0][dir]");
-		}
+		} 
 		filterrequest.setColumnName(column);
 		filterrequest.setSort(order);
 

@@ -86,6 +86,7 @@ function Datatable(Url, dataUrl) {
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 			"userType" : $("body").attr("data-roleType"),
 			"status" : parseInt($('#Status').val()),
+			"modelNumber":"-1"
 			
 		}
 		
@@ -101,6 +102,7 @@ function Datatable(Url, dataUrl) {
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 			"userType" : $("body").attr("data-roleType"),
 			"status" : parseInt($('#Status').val()),
+			"modelNumber":"-1"
 			
 		}
 	}
