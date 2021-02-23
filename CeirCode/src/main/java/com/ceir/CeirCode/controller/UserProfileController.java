@@ -60,36 +60,6 @@ public class UserProfileController {
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
-	
-	@ApiOperation(value = "change password", response = HttpResponse.class)
-	@PostMapping("/changePassword")
-	public ResponseEntity<?> changePassword(@RequestBody ChangePassword password){
-		return userService.changePassword(password);   
-	} 
-	@ApiOperation(value = "change expriry password", response = HttpResponse.class)
-	@PostMapping("/updateExpirePassword")
-	public ResponseEntity<?> changeExpiryPassword(@RequestBody ChangePassword password){
-		return userService.updateExpirePassword(password);   
-	}
-
-	@ApiOperation(value = "change user status", response = HttpResponse.class)
-	@PostMapping("/updateUserStatus")
-	public ResponseEntity<?> updateUserStatus(@RequestBody UserStatusRequest userStatus){
-		return userService.updateUserStatus(userStatus);   
-	}                                                                                                                                     
-
-	@ApiOperation(value = "user profile data by user id", response = HttpResponse.class)
-	@PostMapping("/editProfile/{userid}") 
-	public ResponseEntity<?> editProfile(@PathVariable("userid") long userid){
-		return userService.editProfile(userid);  
-	} 
-
-	@ApiOperation(value = "user profile data", response = HttpResponse.class)
-	@PostMapping("/updateProfile") 
-	public ResponseEntity<?> updateProfile(@RequestBody UserProfile userProfile){
-		return userService.updateProfile(userProfile);
-	}
-
 	@ApiOperation(value = "user profile record data.", response = UserProfile.class)
 	@PostMapping("/record") 
 	public MappingJacksonValue viewRecord(@RequestBody FilterRequest filterRequest,
@@ -133,6 +103,60 @@ public class UserProfileController {
 		return mapping;
 	}
 
+
+	@ApiOperation(value = "user profile data by  id", response = HttpResponse.class)
+	@PostMapping("/viewProfile/{id}/{userId}") 
+	public ResponseEntity<?> viewProfile(@PathVariable("id") long id,@PathVariable("userId") long userId){
+		return userService.profileDataById(id,userId); 
+	} 
+
+	
+
+	@ApiOperation(value = "change user status", response = HttpResponse.class)
+	@PostMapping("/changeUserStatus")
+	public ResponseEntity<?> changeUserStatus(@RequestBody ChangeUserStatus userStatus){
+		return userService.changeUserStatus(userStatus);   
+	}
+	
+	@ApiOperation(value = "admin approve user", response = HttpResponse.class)
+	@PostMapping("/adminApproval") 
+	public HttpResponse adminApproval(@RequestBody UserStatusRequest userData){
+		return userService.AdminApproval(userData);
+	} 
+	
+	
+	
+	@ApiOperation(value = "change password", response = HttpResponse.class)
+	@PostMapping("/changePassword")
+	public ResponseEntity<?> changePassword(@RequestBody ChangePassword password){
+		return userService.changePassword(password);   
+	} 
+	@ApiOperation(value = "change expriry password", response = HttpResponse.class)
+	@PostMapping("/updateExpirePassword")
+	public ResponseEntity<?> changeExpiryPassword(@RequestBody ChangePassword password){
+		return userService.updateExpirePassword(password);   
+	}
+
+	@ApiOperation(value = "change user status", response = HttpResponse.class)
+	@PostMapping("/updateUserStatus")
+	public ResponseEntity<?> updateUserStatus(@RequestBody UserStatusRequest userStatus){
+		return userService.updateUserStatus(userStatus);   
+	}                                                                                                                                     
+
+	@ApiOperation(value = "user profile data by user id", response = HttpResponse.class)
+	@PostMapping("/editProfile/{userid}") 
+	public ResponseEntity<?> editProfile(@PathVariable("userid") long userid){
+		return userService.editProfile(userid);  
+	} 
+
+	@ApiOperation(value = "user profile data", response = HttpResponse.class)
+	@PostMapping("/updateProfile") 
+	public ResponseEntity<?> updateProfile(@RequestBody UserProfile userProfile){
+		return userService.updateProfile(userProfile);
+	}
+
+
+	
 	@ApiOperation(value = "search assignee.", response = UserProfile.class)
 	@PostMapping("/searchAssignee")
 	public MappingJacksonValue searchAssignee(@RequestBody SearchAssignee assignee,
@@ -151,22 +175,7 @@ public class UserProfileController {
 		return userService.updateStatus(user);
 	}
 
-	@ApiOperation(value = "user profile data by  id", response = HttpResponse.class)
-	@PostMapping("/viewProfile/{id}/{userId}") 
-	public ResponseEntity<?> viewProfile(@PathVariable("id") long id,@PathVariable("userId") long userId){
-		return userService.profileDataById(id,userId); 
-	} 
-
-	@ApiOperation(value = "admin approve user", response = HttpResponse.class)
-	@PostMapping("/adminApproval") 
-	public HttpResponse adminApproval(@RequestBody UserStatusRequest userData){
-		return userService.AdminApproval(userData);
-	} 
-	@ApiOperation(value = "change user status", response = HttpResponse.class)
-	@PostMapping("/changeUserStatus")
-	public ResponseEntity<?> changeUserStatus(@RequestBody ChangeUserStatus userStatus){
-		return userService.changeUserStatus(userStatus);   
-	}
+	
 
 	@ApiOperation(value = "add or delete roles", response = HttpResponse.class)
 	@PostMapping("/getAddDeleteRoles")

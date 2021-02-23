@@ -203,7 +203,7 @@ public class ReqHeadersService {
 					adFm.setUsername(req.getUsername());
 					adFm.setPublicIp(req.getPublicIp());
 					adFm.setBrowser(req.getBrowser());
-					adFm.setUserAgent(req.getUserAgent());
+					//adFm.setUserAgent(req.getUserAgent());
 					
 					
 					fileRecords.add(adFm);

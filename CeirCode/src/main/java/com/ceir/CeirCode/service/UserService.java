@@ -509,7 +509,8 @@ public class UserService {
 			Usertype userType=usertypeRepo.findByUsertypeName(userDetails.getUsertypeName());
 			if(userType!=null) {
 				if(userDetails.getRoles()==null) {
-					long data[]= {userType.getId()}; userDetails.setRoles(data);
+					long data[]= {userType.getId()};
+					userDetails.setRoles(data);
 				}
 			}
 			long rolesOutput=roleCheck(userDetails.getRoles());
