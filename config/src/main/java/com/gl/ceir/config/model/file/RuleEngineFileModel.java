@@ -10,7 +10,7 @@ public class RuleEngineFileModel {
 	@CsvBindByName(column = "Modified On")
 	@CsvBindByPosition(position = 1)
 	private String modifiedOn;
-	@CsvBindByName(column = "State")
+	@CsvBindByName(column = "Status")
 	@CsvBindByPosition(position = 2)
 	private String state;
 	@CsvBindByName(column = "Name")

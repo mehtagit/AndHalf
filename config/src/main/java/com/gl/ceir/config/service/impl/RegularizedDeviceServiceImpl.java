@@ -343,6 +343,7 @@ public class RegularizedDeviceServiceImpl {
 					rdfm.setTxnId(regularizeDeviceDb.getTxnId());
 					rdfm.setOrigin(regularizeDeviceDb.getOrigin());
 					rdfm.setNid(regularizeDeviceDb.getNid());
+					rdfm.setNationality(regularizeDeviceDb.getEndUserDB().getNationality());
 					rdfm.setStatus(regularizeDeviceDb.getStateInterp());
 					for(SystemConfigListDb systemConfigListDb : currencyList) {
 						if(regularizeDeviceDb.getCurrency() == systemConfigListDb.getValue()) {
