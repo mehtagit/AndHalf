@@ -19,7 +19,7 @@ public interface ProvinceRepo extends JpaRepository<Province, Long> {
 
 	@Transactional
 	@Modifying
-	@Query(value = "update province_db  set province =:currentProvinceName  where province =:province", nativeQuery = true)
+	@Query(value = "update province_db  set MODIFIED_ON=sysdate, province =:currentProvinceName  where province =:province", nativeQuery = true)
 	public int updateProvinceName(String currentProvinceName,String province);
 	public void deleteByProvince(String province);
 }

@@ -344,7 +344,7 @@ public class AddressManagementController {
 			for (District d : districtObject) {
 				long districtID = d.getId();
 				communeRepo.updateCommuneName(commune.getCurrentCommuneName(), districtID, commune.getCommune());
-
+				
 				log.info("commune_db updated with new commune ");
 
 				/*

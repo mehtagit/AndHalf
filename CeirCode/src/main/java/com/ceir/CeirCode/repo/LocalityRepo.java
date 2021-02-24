@@ -15,17 +15,17 @@ import com.ceir.CeirCode.model.Village;
 public interface LocalityRepo extends JpaRepository<Locality, Long>,JpaSpecificationExecutor<Locality>{
 	@Transactional
 	@Modifying
-	@Query(value = "update locality_db  MODIFIED_ON=sysdate,set province =:currentProvinceName  where province=:province", nativeQuery = true)
+	@Query(value = "update locality_db set MODIFIED_ON=sysdate, province =:currentProvinceName  where province=:province", nativeQuery = true)
 	public int updateProvince(String currentProvinceName,String province);
 
 	@Transactional
 	@Modifying
-	@Query(value = "update locality_db MODIFIED_ON=sysdate, set district =:currentDistrictName  where district =:district and province =:province", nativeQuery = true)
+	@Query(value = "update locality_db set MODIFIED_ON=sysdate, district =:currentDistrictName  where district =:district and province =:province", nativeQuery = true)
 	public int updateDistrict(String currentDistrictName,String district,String province);
 
 	@Transactional
 	@Modifying
-	@Query(value = "update locality_db  set commune =:currentCommuneName,MODIFIED_ON=sysdate  where district =:district and commune =:commune and province=:province", nativeQuery = true)
+	@Query(value = "update locality_db  set MODIFIED_ON=sysdate, commune =:currentCommuneName where district =:district and commune =:commune and province=:province", nativeQuery = true)
 	public int updateCommune(String currentCommuneName,String district,String commune,String province);
 
 	

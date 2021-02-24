@@ -21,7 +21,7 @@ public interface CommuneRepo extends JpaRepository<Commune, Long>{
 	
 	@Transactional
 	@Modifying
-	@Query(value = "update commune_db  set commune =:currentCommuneName  where DISTRICT_ID =:districtID and commune =:commune", nativeQuery = true)
+	@Query(value = "update commune_db  set MODIFIED_ON=sysdate, commune =:currentCommuneName  where DISTRICT_ID =:districtID and commune =:commune", nativeQuery = true)
 	public int updateCommuneName(String currentCommuneName,long districtID,String commune);
 	
 	public void deleteByCommune(String commune);

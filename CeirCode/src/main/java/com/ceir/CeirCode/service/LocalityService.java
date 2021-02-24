@@ -110,7 +110,7 @@ public class LocalityService {
 	public List<Locality> getAll(AddressObject filterRequest) {
 
 		try {
-			List<Locality> response = localityRepo.findAll( buildSpecification(filterRequest).build());
+			List<Locality> response = localityRepo.findAll( buildSpecification(filterRequest).build(),new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			return response;
 

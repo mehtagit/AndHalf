@@ -114,7 +114,7 @@ public class SlaService {
 	public List<SlaReport> getAll(SlaFilter filterRequest) {
 
 		try {
-			List<SlaReport> systemConfigListDbs = slaRepo.findAll( buildSpecification(filterRequest).build());
+			List<SlaReport> systemConfigListDbs = slaRepo.findAll( buildSpecification(filterRequest).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			return systemConfigListDbs;
 
