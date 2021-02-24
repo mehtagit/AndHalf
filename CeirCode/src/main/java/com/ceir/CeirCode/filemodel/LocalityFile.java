@@ -8,9 +8,17 @@ public class LocalityFile {
 		@CsvBindByName(column = "Created On")
 		@CsvBindByPosition(position = 0)
 		private String createdOn;
-		@CsvBindByName(column = "Country")
+		
+		 
+		@CsvBindByName(column = "Modified On")
 		@CsvBindByPosition(position = 1)
-		private String country;
+		private String modifiedOn;
+		
+		/*
+		 * @CsvBindByName(column = "Country")
+		 * 
+		 * @CsvBindByPosition(position = 2) private String country;
+		 */
 		
 		@CsvBindByName(column = "Province")
 		@CsvBindByPosition(position = 2)
@@ -21,32 +29,13 @@ public class LocalityFile {
 		@CsvBindByPosition(position = 3)
 		private String district;
 		
-		@CsvBindByName(column = "Commune")
-		@CsvBindByPosition(position = 4)
-		private String commune;
-		
-		@CsvBindByName(column = "Village")
-		@CsvBindByPosition(position = 5)
-		private String village;
-		public String getCreatedOn() {
-			return createdOn;
-		}
-
-		public void setCreatedOn(String createdOn) {
-			this.createdOn = createdOn;
-		}
-
-		public String getCountry() {
-			return country;
-		}
-
 		@Override
 		public String toString() {
 			StringBuilder builder = new StringBuilder();
 			builder.append("LocalityFile [createdOn=");
 			builder.append(createdOn);
-			builder.append(", country=");
-			builder.append(country);
+			builder.append(", modifiedOn=");
+			builder.append(modifiedOn);
 			builder.append(", province=");
 			builder.append(province);
 			builder.append(", district=");
@@ -59,8 +48,20 @@ public class LocalityFile {
 			return builder.toString();
 		}
 
-		public void setCountry(String country) {
-			this.country = country;
+		public String getCreatedOn() {
+			return createdOn;
+		}
+
+		public void setCreatedOn(String createdOn) {
+			this.createdOn = createdOn;
+		}
+
+		public String getModifiedOn() {
+			return modifiedOn;
+		}
+
+		public void setModifiedOn(String modifiedOn) {
+			this.modifiedOn = modifiedOn;
 		}
 
 		public String getProvince() {
@@ -95,5 +96,12 @@ public class LocalityFile {
 			this.village = village;
 		}
 
-
+		@CsvBindByName(column = "Commune")
+		@CsvBindByPosition(position = 4)
+		private String commune;
+		
+		@CsvBindByName(column = "Village")
+		@CsvBindByPosition(position = 5)
+		private String village;
+		
 }

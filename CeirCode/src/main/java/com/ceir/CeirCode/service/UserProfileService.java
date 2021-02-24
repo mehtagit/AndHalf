@@ -270,8 +270,8 @@ public class UserProfileService {
 		try { 
 			log.info("filter data:  "+filterRequest);
 		//	Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-			String orderColumn = "Created On".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
-					: "Modified On".equalsIgnoreCase(filterRequest.getColumnName()) ? "modifiedOn"
+			String orderColumn = "Created On".equalsIgnoreCase(filterRequest.getColumnName()) ? "user.createdOn"
+					: "Modified On".equalsIgnoreCase(filterRequest.getColumnName()) ? "user.modifiedOn"
 						:"User ID".equalsIgnoreCase(filterRequest.getColumnName()) ? "user.username"
 							: "Email".equalsIgnoreCase(filterRequest.getColumnName()) ? "email"
 									: "Phone No.".equalsIgnoreCase(filterRequest.getColumnName()) ? "phoneNo"
@@ -282,12 +282,12 @@ public class UserProfileService {
 															:"Status".equalsIgnoreCase(filterRequest.getColumnName())
 															? "user.currentStatus" : "modifiedOn";
 			Sort.Direction direction;
-			if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+			/*if("modifiedOn".equalsIgnoreCase(orderColumn)) {
 				direction=Sort.Direction.DESC;
 			}
-			else {
+			else {*/
 				direction= SortDirection.getSortDirection(filterRequest.getSort());
-			}
+				/* } */
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
 		
 			

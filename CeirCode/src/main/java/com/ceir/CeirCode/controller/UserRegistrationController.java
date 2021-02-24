@@ -122,7 +122,6 @@ public class UserRegistrationController {
 	}
 
 	@ApiOperation(value = "update email and phone status", response = HttpResponse.class)
-
 	@PostMapping("/validate")
 	public ResponseEntity<?> UpdateOtpStatus(@RequestBody Otp otp) {
 		return userService.validateUser(otp);

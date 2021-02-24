@@ -37,6 +37,7 @@ import com.ceir.CeirCode.model.RequestHeaders;
 import com.ceir.CeirCode.model.SearchCriteria;
 import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.User;
+import com.ceir.CeirCode.model.UserProfile;
 import com.ceir.CeirCode.model.constants.Features;
 import com.ceir.CeirCode.model.constants.SubFeatures;
 import com.ceir.CeirCode.repo.ReqHeadersRepo;
@@ -126,7 +127,7 @@ public class ReqHeadersService {
 	public List<RequestHeaders> getAll(ReqHeaderFilter filterRequest) {
 
 		try {
-			List<RequestHeaders> systemConfigListDbs = reqHeaderRepo.findAll( buildSpecification(filterRequest).build());
+			List<RequestHeaders> systemConfigListDbs = reqHeaderRepo.findAll( buildSpecification(filterRequest).build(), new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			return systemConfigListDbs;
 
@@ -203,7 +204,7 @@ public class ReqHeadersService {
 					adFm.setUsername(req.getUsername());
 					adFm.setPublicIp(req.getPublicIp());
 					adFm.setBrowser(req.getBrowser());
-					adFm.setUserAgent(req.getUserAgent());
+					//adFm.setUserAgent(req.getUserAgent());
 					
 					
 					fileRecords.add(adFm);

@@ -1,5 +1,6 @@
 package com.ceir.CeirCode.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -35,76 +36,78 @@ public class UserTypeFeatureController {
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired
 	UserTypeFeatureService userTypeFeatureService;
-	
+
 	@Autowired
 	SystemConfigDbListRepository systemConfigRepo;
-	
+
 	@Autowired
 	UserToStakehoderfeatureMappingRepo userToStakehoderfeatureMappingRepo;
-	
+
 	@Autowired
 	UsertypeRepo usertypeRepo;
-	
+
 	@ApiOperation(value = "user type feature  data.", response = UserToStakehoderfeatureMapping.class)
-	@PostMapping("/userTypeFeatureData") 
+	@PostMapping("/userTypeFeatureData")
 	public MappingJacksonValue viewRecord(@RequestBody UserTypeFeatureFilter filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-			@RequestParam(value = "file", defaultValue = "0") Integer file){
+			@RequestParam(value = "file", defaultValue = "0") Integer file) {
 		MappingJacksonValue mapping = null;
 		if (file == 0) {
-			Page<UserToStakehoderfeatureMapping> userTypeFeatureData  =userTypeFeatureService.viewAllUserTypeFeatures(filterRequest, pageNo, pageSize);
+			Page<UserToStakehoderfeatureMapping> userTypeFeatureData = userTypeFeatureService
+					.viewAllUserTypeFeatures(filterRequest, pageNo, pageSize);
 			mapping = new MappingJacksonValue(userTypeFeatureData);
-			if(userTypeFeatureData!=null) {
-				List<SystemConfigListDb> periodList=systemConfigRepo.getByTag("Period");
-				for(UserToStakehoderfeatureMapping feature:userTypeFeatureData.getContent()) {
+			if (userTypeFeatureData != null) {
+				List<SystemConfigListDb> periodList = systemConfigRepo.getByTag("Period");
+				for (UserToStakehoderfeatureMapping feature : userTypeFeatureData.getContent()) {
 					feature.setUsertypeInterp(feature.getUserTypeFeature().getUsertypeName());
 					feature.setFeatureInterp(feature.getStakeholderFeature().getName());
-					for(SystemConfigListDb data:periodList) {
-						Integer value=data.getValue();
-						if(feature.getPeriod()==value) {
+					for (SystemConfigListDb data : periodList) {
+						Integer value = data.getValue();
+						if (feature.getPeriod() == value) {
 							feature.setPeriodInterp(data.getInterp());
 						}
 					}
 				}
-				}
+			}
 			mapping = new MappingJacksonValue(userTypeFeatureData);
-		}else {
+		} else {
 			FileDetails fileDetails = userTypeFeatureService.getFile(filterRequest);
 			mapping = new MappingJacksonValue(fileDetails);
 		}
-			
+
 		return mapping;
 	}
 
 	@ApiOperation(value = "change usertype feature period", response = HttpResponse.class)
 	@PostMapping("/updatePeriod")
-	public ResponseEntity<?> updateUserTypeFeaturePeriod(@RequestBody ChangePeriod period){
-		return userTypeFeatureService.changePeriod(period);  
-	}  
-	
-	@ApiOperation(value = "features according to users", response = GenricResponse.class)
+	public ResponseEntity<?> updateUserTypeFeaturePeriod(@RequestBody ChangePeriod period) {
+		return userTypeFeatureService.changePeriod(period);
+	}
+
 	@GetMapping("/userToFeatureDropdown/{featureId}/{usertypeId}")
-	public List<UserToStakehoderfeatureMapping> userToFeatureDropdown(@PathVariable("featureId")long featureId,@PathVariable("usertypeId")long usertypeId){
-		
-		UserToStakehoderfeatureMapping obj = new UserToStakehoderfeatureMapping();
-		List<UserToStakehoderfeatureMapping> list = userToStakehoderfeatureMappingRepo.findByStakeholderFeature_IdAndUserTypeFeature_IdNot(featureId,usertypeId);
-		log.info("stakeholderList = "+list);
-		List<Usertype> userTypelist = usertypeRepo.findAll();
-		//log.info("userTypelist = "+userTypelist);
-		
-		for(UserToStakehoderfeatureMapping userToStakehoderfeatureMapping : list) {
-			
-		for(Usertype usertype : userTypelist) {
-			log.info(usertype.getId()+">>>>>>>>>>>>>>"+userToStakehoderfeatureMapping.getUserTypeFeature().getId());
-			if(usertype.getId() == userToStakehoderfeatureMapping.getUserTypeFeature().getId()) {
-				obj.setUsertypeInterp(usertype.getUsertypeName());
+	public List<UserToStakehoderfeatureMapping> userToFeatureDropdown(@PathVariable("featureId") long featureId,
+			@PathVariable("usertypeId") long usertypeId) {
+		List<UserToStakehoderfeatureMapping> response = new ArrayList<UserToStakehoderfeatureMapping>();
+	
+		List<UserToStakehoderfeatureMapping> list = userToStakehoderfeatureMappingRepo
+				.findByStakeholderFeature_IdAndUserTypeFeature_IdNot(featureId, usertypeId);
+		// log.info("userTypelist = "+userTypelist);
+
+		for (UserToStakehoderfeatureMapping userToStakehoderfeatureMapping : list) {
+			long id =  userToStakehoderfeatureMapping.getUserTypeFeature().getId();
+			Usertype userTypelist = usertypeRepo.findById(id);
+			if (userTypelist.getId() == id) {
+				UserToStakehoderfeatureMapping obj = new UserToStakehoderfeatureMapping();
+				obj.setUsertypeInterp(userTypelist.getUsertypeName());
+				obj.setId(userTypelist.getId());
+				obj.setCreatedOn(userTypelist.getCreatedOn());
+				obj.setModifiedOn(userTypelist.getModifiedOn());
+				response.add(obj);
 			}
-			list.add(obj);
+			
 		}
-		}
-		log.info("final List>>>>>>>"+list);
-		return list;
-		
-	} 
+		return response;
+
+	}
 }

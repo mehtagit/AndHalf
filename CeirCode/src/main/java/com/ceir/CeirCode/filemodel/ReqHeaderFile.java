@@ -25,59 +25,70 @@ public class ReqHeaderFile {
 	@CsvBindByName(column = "Browser")
 	@CsvBindByPosition(position = 3)
 	private String browser;
-	
-	@CsvBindByName(column = "User Agent")
-	@CsvBindByPosition(position = 4)
-	private String userAgent;
 
 
-	
-	public String getBrowser() {
-		return browser;
-	}
-	public void setBrowser(String browser) {
-		this.browser = browser;
-	}
-	public String getUserAgent() {
-		return userAgent;
-	}
-	public void setUserAgent(String userAgent) {
-		this.userAgent = userAgent;
-	}
-	public String getPublicIp() {
-		return publicIp;
-	}
-	public void setPublicIp(String publicIp) {
-		this.publicIp = publicIp;
-	}
-	public String getCreatedOn() {
-		return createdOn;
-	}
-	public void setCreatedOn(String createdOn) {
-		this.createdOn = createdOn;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("ReqHeaderFile [createdOn=");
 		builder.append(createdOn);
-		builder.append(", userAgent=");
-		builder.append(userAgent);
-		builder.append(", publicIp=");
-		builder.append(publicIp);
 		builder.append(", username=");
 		builder.append(username);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
 		builder.append(", browser=");
 		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}
+
+
+	public String getCreatedOn() {
+		return createdOn;
+	}
+
+
+	public void setCreatedOn(String createdOn) {
+		this.createdOn = createdOn;
+	}
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+	public String getPublicIp() {
+		return publicIp;
+	}
+
+
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+
+
+	public String getBrowser() {
+		return browser;
+	}
+
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+	
+	/*
+	 * @CsvBindByName(column = "User Agent")
+	 * 
+	 * @CsvBindByPosition(position = 4) private String userAgent;
+	 */
+
+	
 
 	
 }

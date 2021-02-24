@@ -166,7 +166,8 @@ public class LocalityService {
 				for( Locality locality : list ) {
 					uPFm = new LocalityFile();
 					uPFm.setCreatedOn(locality.getCreatedOn().format(dtf));
-					uPFm.setCountry(locality.getCountry());
+					uPFm.setModifiedOn(locality.getModifiedOn().format(dtf));
+//					uPFm.setCountry(locality.getCountry());
 					uPFm.setProvince(locality.getProvince());
 					uPFm.setDistrict(locality.getDistrict());
 					uPFm.setCommune(locality.getCommune());
