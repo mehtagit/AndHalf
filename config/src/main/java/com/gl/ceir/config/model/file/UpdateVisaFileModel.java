@@ -13,10 +13,10 @@ public class UpdateVisaFileModel {
 	
 	
 	@CsvBindByName(column = "Modified On")
-	@CsvBindByPosition(position = 0)
+	@CsvBindByPosition(position = 1)
 	private String modifiedOn;
 	@CsvBindByName(column = "Created On")
-	@CsvBindByPosition(position = 1)
+	@CsvBindByPosition(position = 0)
 	private String requestedOn;
 	@CsvBindByName(column = "Transaction ID")
 	@CsvBindByPosition(position = 2)
