@@ -19,7 +19,7 @@ public class StolenAndRecoveryFileModel {
 	@CsvBindByPosition(position = 2)
 	private String txnId;
 	
-	@CsvBindByName(column = "BLOCKING TYPE")
+	@CsvBindByName(column = "BLOCK TYPE")
 	@CsvBindByPosition(position = 3)
 	private String blockingType;
 	

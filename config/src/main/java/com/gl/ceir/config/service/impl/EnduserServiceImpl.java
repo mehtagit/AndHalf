@@ -1242,7 +1242,7 @@ public class EnduserServiceImpl {
 
 	}
 
-	public FileDetails getFilterDataInFile(FilterRequest filterRequest) {
+	public FileDetails getFilterDataInFile(FilterRequest filterRequest,Integer pageNo, Integer pageSize,String source ) {
 		logger.info("inside export user profile data into file service");
 		logger.info("filter data:  "+filterRequest);
 		String fileName = null;
@@ -1262,7 +1262,11 @@ public class EnduserServiceImpl {
 		MappingStrategy<UpdateVisaFileModel> mapStrategy = new CustomMappingStrategy<>();	
 		try {
 			//mapStrategy.setType(UpdateVisaFileModel.class);
-			List<VisaUpdateDb> visaData = this.getAllVisaUpdate(filterRequest);
+			pageNo=0;
+			pageSize=Integer.valueOf(configurationManagementServiceImpl.findByTag("file.max-file-record").getValue());
+			List<VisaUpdateDb> visaData = this.viewAllUpdateVisaRecord(filterRequest, pageNo, pageSize,source).getContent();
+			
+					/* this.getAllVisaUpdate(filterRequest); */
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 8L,
 					filterRequest.getUserType(), 43,Features.UPDATE_VISA, SubFeatures.EXPORT, "","NA",filterRequest.getUserType()));
 
