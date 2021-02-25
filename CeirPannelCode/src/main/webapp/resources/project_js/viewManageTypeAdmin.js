@@ -280,7 +280,7 @@ function pageRendering() {
 					var viewFilter="viewFilter";
 					$("#typeAprroveTableDiv").append(
 									"<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-					$("#typeAprroveTableDiv").append("<div class=' col s3 m2 l2'><button type='button' style='margin-left: 18px;' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
+					$("#typeAprroveTableDiv").append("<div class=' col s3 m2 l2'><button type='button' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
 					$("#typeAprroveTableDiv")
 							.append(
 									"<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportTacData()' type='button' class='export-to-excel right'>"
