@@ -75,7 +75,7 @@ public class VisaController {
 			mapping = new MappingJacksonValue(customInfo);
 		}else {
 			logger.info("visa update Export request " + filterRequest);
-			FileDetails fileDetails = enduserServiceImpl.getFilterDataInFile(filterRequest);
+			FileDetails fileDetails = enduserServiceImpl.getFilterDataInFile(filterRequest,pageNo,pageSize,source);
 			mapping = new MappingJacksonValue(fileDetails);
 		}	
 		return mapping;
