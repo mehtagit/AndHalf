@@ -17,7 +17,7 @@ public interface VillageRepo extends JpaRepository<Village, Long>{
 	public void deleteByVillage(String village);
 	@Transactional
 	@Modifying
-	@Query(value = "update village_db  set village =:village  where COMMUNE_ID =:communeID and village=:oldVillage", nativeQuery = true)
+	@Query(value = "update village_db  set MODIFIED_ON=sysdate, village =:village  where COMMUNE_ID =:communeID and village=:oldVillage", nativeQuery = true)
 	public int updateVillageName(String village,long communeID,String oldVillage);
 	
 }

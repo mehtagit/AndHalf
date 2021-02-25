@@ -216,8 +216,9 @@ public class UserMgmtService {
 				role);
 		user.setUserLanguage("en");
 		profile.setUser(user);
-		Userrole userRole = new Userrole(user, userType);
-		role.add(userRole);
+		/*
+		 * Userrole userRole = new Userrole(user, userType); role.add(userRole);
+		 */
 		User output = new User();
 		boolean emailExist = userProfileRepo.existsByEmailAndUser_CurrentStatusNot(details.getEmail(), 21);
 		if (emailExist) {
