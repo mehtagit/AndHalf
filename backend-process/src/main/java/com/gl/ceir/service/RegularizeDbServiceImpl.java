@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,8 +28,7 @@ import com.gl.ceir.util.Utility;
 @Service
 public class RegularizeDbServiceImpl {
 
-	private static final Logger logger = LogManager.getLogger(RegularizeDbServiceImpl.class);
-
+	private final Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	PropertiesReader propertiesReader;
 
@@ -87,16 +86,18 @@ public class RegularizeDbServiceImpl {
 					placeholderMap.put("<count>", Integer.toString(userWiseMailCount.getDeviceCount()));
 
 					userWiseMailCountMap.put(regularizeDeviceDb.getNid(), userWiseMailCount);
+					logger.info("NID is empty");
 				}else {
 					userWiseMailCount = userWiseMailCountMap.get(regularizeDeviceDb.getNid());
 					userWiseMailCount.setDeviceCount(userWiseMailCount.getDeviceCount() + 1);
 					placeholderMap = userWiseMailCount.getPlaceholderMap();
 					placeholderMap.put("<count>", Integer.toString(userWiseMailCount.getDeviceCount()));
+					logger.info("NID is not empty");
 				}
 			}
 
 			List<UserWiseMailCount> userWiseMailCounts = new ArrayList<>(userWiseMailCountMap.values());
-			logger.debug(userWiseMailCounts);
+			logger.info("List of UserWiseMailCount "+userWiseMailCounts);
 
 			return userWiseMailCounts;
 

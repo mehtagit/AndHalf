@@ -47,7 +47,7 @@ public class PolicyBreachNotiServiceImpl {
 				// Replace Placeholders from message.
 				if(Objects.nonNull(placeholders)) {
 					for (Map.Entry<String, String> entry : placeholders.entrySet()) {
-						logger.debug("Placeholder key : " + entry.getKey() + " value : " + entry.getValue());
+						logger.info("Placeholder key : " + entry.getKey() + " value : " + entry.getValue());
 						policyBreachMessage = policyBreachMessage.replaceAll(entry.getKey(), entry.getValue());
 					}
 				}
@@ -58,6 +58,7 @@ public class PolicyBreachNotiServiceImpl {
 						"", 
 						Long.parseLong(userWiseMailCount.getPhoneNo()), 
 						userWiseMailCount.getFirstImei()));
+				
 				if(Objects.nonNull(userWiseMailCount.getSecondImei()))
 					policyBreachNotifications.add(new PolicyBreachNotification(
 							channel, 
@@ -66,6 +67,7 @@ public class PolicyBreachNotiServiceImpl {
 							Long.parseLong(userWiseMailCount.getPhoneNo()), 
 							userWiseMailCount.getSecondImei()));
 
+				
 				if(Objects.nonNull(userWiseMailCount.getThirdImei()))
 					policyBreachNotifications.add(new PolicyBreachNotification(
 							channel, 
@@ -74,6 +76,7 @@ public class PolicyBreachNotiServiceImpl {
 							Long.parseLong(userWiseMailCount.getPhoneNo()), 
 							userWiseMailCount.getThirdImei()));
 
+				
 				if(Objects.nonNull(userWiseMailCount.getFourthImei()))
 					policyBreachNotifications.add(new PolicyBreachNotification(
 							channel, 

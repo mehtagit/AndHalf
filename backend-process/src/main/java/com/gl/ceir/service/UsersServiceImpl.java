@@ -34,7 +34,7 @@ public class UsersServiceImpl {
 
 	public List<User> getUserWithStatusPendingOtp(int day) {
 		try {
-			String fromDate = DateUtil.nextDate(day);
+			String fromDate = DateUtil.nextDate(day+1);
 			String toDate = DateUtil.nextDate(day-1);
 			logger.info("fromDate[" + fromDate + "] toDate[" + toDate + "]");
 			
@@ -54,8 +54,8 @@ public class UsersServiceImpl {
 	private GenericSpecificationBuilder<User> buildSpecification(String fromDate, String toDate){
 		GenericSpecificationBuilder<User> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
-		cmsb.with(new SearchCriteria("createdOn", fromDate , SearchOperation.GREATER_THAN_OR_EQUAL, Datatype.DATE));
-		cmsb.with(new SearchCriteria("createdOn", toDate , SearchOperation.LESS_THAN, Datatype.DATE));
+		cmsb.with(new SearchCriteria("createdOn", fromDate , SearchOperation.LESS_THAN, Datatype.DATE));
+	//	cmsb.with(new SearchCriteria("createdOn", toDate , SearchOperation.GREATER_THAN, Datatype.DATE));
 		cmsb.with(new SearchCriteria("currentStatus", 1, SearchOperation.EQUALITY, Datatype.STRING));
 
 		return cmsb;

@@ -1,5 +1,15 @@
 package com.gl.ceir.factory.service.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.gl.ceir.constant.Datatype;
 import com.gl.ceir.constant.SearchOperation;
 import com.gl.ceir.entity.EndUserDB;
@@ -12,19 +22,10 @@ import com.gl.ceir.repo.EndUserDbRepository;
 import com.gl.ceir.repo.VisaDbRepository;
 import com.gl.ceir.specification.GenericSpecificationBuilder;
 import com.gl.ceir.util.DateUtil;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 @Component
 public class VisaExpire extends BaseService {
-  private static final Logger logger = LogManager.getLogger(VisaExpire.class);
-  
+	private final Logger logger = LoggerFactory.getLogger(getClass());
   @Autowired
   EndUserDbRepository endUserDbRepository;
   

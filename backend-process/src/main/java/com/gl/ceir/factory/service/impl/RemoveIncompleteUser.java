@@ -1,5 +1,16 @@
 package com.gl.ceir.factory.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.gl.ceir.entity.SystemConfigurationDb;
 import com.gl.ceir.entity.User;
 import com.gl.ceir.factory.service.BaseService;
@@ -7,19 +18,10 @@ import com.gl.ceir.factory.service.transaction.RemoveInCompleteUserTransaction;
 import com.gl.ceir.pojo.RawMail;
 import com.gl.ceir.service.UsersServiceImpl;
 import com.gl.ceir.util.DateUtil;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 @Component
 public class RemoveIncompleteUser extends BaseService {
-  private static final Logger logger = LogManager.getLogger(RemoveIncompleteUser.class);
+	private final Logger logger = LoggerFactory.getLogger(getClass());
   
   List<RawMail> rawMails = new ArrayList<>();
   

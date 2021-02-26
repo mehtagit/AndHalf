@@ -15,8 +15,7 @@ import com.gl.ceir.factory.service.Service;
 public class App {
     public static void main( String[] args ){
     	
-    	String processName = args[0];
-    	
+    	String processName = args[0];    	
     	ApplicationContext context = SpringApplication.run(App.class, args);
     	Service service = context.getBean(Starter.class).start(processName);
     	service.fetchAndProcess();

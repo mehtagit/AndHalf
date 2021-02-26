@@ -1,5 +1,17 @@
 package com.gl.ceir.factory.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.gl.ceir.entity.DaywiseUserReg;
 import com.gl.ceir.entity.DeviceUsageDb;
 import com.gl.ceir.entity.PolicyBreachNotification;
@@ -12,21 +24,11 @@ import com.gl.ceir.repo.MessageConfigurationDbRepository;
 import com.gl.ceir.repo.PolicyBreachNotificationRepository;
 import com.gl.ceir.service.DeviceUsageServiceImpl;
 import com.gl.ceir.util.DateUtil;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 @Component
 public class FindUserReg extends BaseService {
-  private static final Logger logger = LogManager.getLogger(FindUserReg.class);
-  
+
+private final Logger logger = LoggerFactory.getLogger(getClass());
   List<PolicyBreachNotification> policyBreachNotifications = new LinkedList<>();
   
   List<RawMail> rawMails = new ArrayList<>();
@@ -52,7 +54,7 @@ public class FindUserReg extends BaseService {
       String policyBreachMessage = "";
       String tag = "BLOCK_DEVICE_TAX_NOT_PAID";
       List<DeviceUsageDb> deviceUsageDbs = this.deviceUsageServiceImpl.getDeviceUsageOfTodayHavingActionUserReg();
-      logger.info(deviceUsageDbs);
+      logger.info("deviceUsageDbs ::"+deviceUsageDbs);
       if (deviceUsageDbs.isEmpty()) {
         logger.info("No User_Reg found close today. [" + DateUtil.nextDate(0) + "]");
       } else {

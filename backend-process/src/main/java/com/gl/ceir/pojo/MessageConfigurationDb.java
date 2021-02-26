@@ -45,6 +45,15 @@ public class MessageConfigurationDb implements Serializable {
 	@NotNull
 	private Integer active;
 	
+	@Transient
+	private String modifiedMsg;
+	
+	public String getModifiedMsg() {
+		return modifiedMsg;
+	}
+	public void setModifiedMsg(String modifiedMsg) {
+		this.modifiedMsg = modifiedMsg;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -122,6 +131,10 @@ public class MessageConfigurationDb implements Serializable {
 		builder.append(channel);
 		builder.append(", channelInterp=");
 		builder.append(channelInterp);
+		builder.append(", active=");
+		builder.append(active);
+		builder.append(", modifiedMsg=");
+		builder.append(modifiedMsg);
 		builder.append("]");
 		return builder.toString();
 	}

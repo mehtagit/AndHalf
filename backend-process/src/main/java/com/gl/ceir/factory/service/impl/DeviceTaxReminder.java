@@ -1,5 +1,16 @@
 package com.gl.ceir.factory.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.gl.ceir.entity.EndUserDB;
 import com.gl.ceir.entity.RegularizeDeviceDb;
 import com.gl.ceir.entity.SystemConfigurationDb;
@@ -8,20 +19,10 @@ import com.gl.ceir.pojo.UserWiseMailCount;
 import com.gl.ceir.service.PolicyBreachNotiServiceImpl;
 import com.gl.ceir.service.RegularizeDbServiceImpl;
 import com.gl.ceir.util.DateUtil;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 @Component
 public class DeviceTaxReminder extends BaseService {
-  private static final Logger logger = LogManager.getLogger(DeviceTaxReminder.class);
-  
+	private final Logger logger = LoggerFactory.getLogger(getClass());
   @Autowired
   RegularizeDbServiceImpl regularizeDbServiceImpl;
   
@@ -56,7 +57,7 @@ public class DeviceTaxReminder extends BaseService {
       List<RegularizeDeviceDb> processedDeviceDbs = new ArrayList<>();
       for (RegularizeDeviceDb regularizeDeviceDb : regularizeDeviceDbs) {
         EndUserDB endUserDB = regularizeDeviceDb.getEndUserDB();
-        logger.info(endUserDB);
+        logger.info(""+endUserDB);
         if ("cambodian".equalsIgnoreCase(endUserDB.getNationality())) {
           regularizeDeviceDb.setReminderFlag("Y");
           processedDeviceDbs.add(regularizeDeviceDb);

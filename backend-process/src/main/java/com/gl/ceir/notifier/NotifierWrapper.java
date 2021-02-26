@@ -56,16 +56,16 @@ public class NotifierWrapper {
 				}
 				
 				if(message.getChannel() == 0) {
-					addNotifications(rawMail, "Email", message.getValue(), notifications);
+					addNotifications(rawMail, "Email", message.getModifiedMsg(), notifications);
 				}else if(message.getChannel() == 1) {
-					addNotifications(rawMail, "SMS", message.getValue(), notifications);
+					addNotifications(rawMail, "SMS", message.getModifiedMsg(), notifications);
 				}else {
-					addNotifications(rawMail, "Email", message.getValue(), notifications);
-					addNotifications(rawMail, "SMS", message.getValue(), notifications);
+					addNotifications(rawMail, "Email",message.getModifiedMsg(), notifications);
+					addNotifications(rawMail, "SMS", message.getModifiedMsg(), notifications);
 				}				
 			}
 			
-			
+			logger.info("notifications: "+notifications);
 			notificationServiceImpl.saveAllNotifications(notifications);
 			
 			logger.info("No. of total notification [" + notifications.size() + "] sent.");

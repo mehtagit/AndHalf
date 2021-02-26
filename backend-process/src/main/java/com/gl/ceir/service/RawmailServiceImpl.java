@@ -44,7 +44,7 @@ public class RawmailServiceImpl {
 			}
 		}
 		
-		messageDB.setValue(message);
+		messageDB.setModifiedMsg(message);
 		return messageDB;
 	}
 }
