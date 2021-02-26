@@ -216,7 +216,7 @@ var contextpath = "${context}";
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" id="contactNumber" name="contactNumber" pattern="[0-9]{7,15}"
+                                            <input type="text" id="contactNumber" name="contactNumber" pattern="[0-9]{9,10}"
  													oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 												  required   maxlength="15" />
@@ -260,7 +260,7 @@ var contextpath = "${context}";
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 													
 												  required   maxlength="200" class="materialize-textarea" style= "min-height: 8rem;"></textarea>
-                                            <label for="endUserRemark"><spring:message code="input.Remark" /><span
+                                            <label for="endUserRemark"><spring:message code="input.remarks" /><span
                                                     class="star">*</span></label>
                                         </div>
 

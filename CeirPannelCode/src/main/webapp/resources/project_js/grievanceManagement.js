@@ -116,7 +116,7 @@ var featureId = 6;
 						"grievanceStatus":grievanceStatus,
 						"endDate":$('#endDate').val(),
 						"startDate":$('#startDate').val(),
-						"recentStatus":parseInt($('#recentStatus').val()),
+						//"recentStatus":parseInt($('#recentStatus').val()),
 						/*"userId": parseInt($("body").attr("data-userTypeID") == 8 ? 0 : parseInt(userId)),*/
 						"featureId":parseInt(featureId),
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
