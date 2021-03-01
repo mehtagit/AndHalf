@@ -19,14 +19,14 @@ public interface DistrictRepo extends JpaRepository<District, Long>{
 	 */
 	@Transactional
 	@Modifying
-	@Query(value = "update district_db  set MODIFIED_ON=sysdate, district =:currentDistrictName  where district =:district and province =:province", nativeQuery = true)
+	@Query(value = "update district_db  set district =:currentDistrictName  where district =:district and province =:province", nativeQuery = true)
 	public int updateDistrictName(String currentDistrictName,String district,String province);
 
 	public void deleteByDistrict(String district);
 	
 	@Transactional
 	@Modifying
-	@Query(value = "update district_db set MODIFIED_ON=sysdate,  province =:province  where district =:district and province =:oldprovince ", nativeQuery = true)
+	@Query(value = "update district_db set  province =:province  where district =:district and province =:oldprovince ", nativeQuery = true)
 	public int updateProvinceInDistrict(String province,String district,String oldprovince);
 
 }
