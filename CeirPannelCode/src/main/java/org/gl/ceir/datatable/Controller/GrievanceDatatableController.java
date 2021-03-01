@@ -67,8 +67,29 @@ public class GrievanceDatatableController {
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		
-		filterrequest.setOrderColumnName(request.getParameter("order[0][column]") == null ? "Modified On" : request.getParameter("order[0][column]"));
-		filterrequest.setOrder(request.getParameter("order[0][dir]") == null ? "desc" : request.getParameter("order[0][dir]"));
+		//filterrequest.setOrderColumnName(request.getParameter("order[0][column]") == null ? "Modified On" : request.getParameter("order[0][column]"));
+		//filterrequest.setOrder(request.getParameter("order[0][dir]") == null ? "desc" : request.getParameter("order[0][dir]"));
+		
+		log.info("---->"+request.getParameter("order[0][column]")+"============>"+request.getParameter("order[0][dir]"));
+		String column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+			"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Modified On":
+				"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Transaction ID":
+					"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Grievance ID":
+						"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "User ID":
+							"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Raised By":
+								"6".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "User Type" :
+									"7".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Status"
+								:"Modified On";
+		String order;
+		if("Modified On".equalsIgnoreCase(column)) {
+			order="desc";
+		}
+		else {
+			order=request.getParameter("order[0][dir]");
+		}
+		filterrequest.setOrderColumnName(column);
+		filterrequest.setOrder(order);
+		
 		
 		Integer file = 0;
 		Object response;
