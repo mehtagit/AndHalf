@@ -226,10 +226,14 @@
 			$('#addCurrency').openModal({
 		        dismissible:false
 		    });
+			
 			//var tagDropDown =  document.getElementById("tag");
 			//var displayName = tagDropDown.options[tagDropDown.selectedIndex].text;
 		}
 		
+		$(document).on('change', '#currency', function(){
+			 $('#currency').val()== 0 ? $("#currencyDiv").css("display", "none") : $("#currencyDiv").css("display", "block");
+		});	
 	
 	/*----------------------------------- Save Field ----------------------------------------- */
 		
