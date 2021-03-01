@@ -251,9 +251,9 @@ function pageRendering(){
 			}
 			else{
 				for(i=0; i<date.length; i++){
-					alert(date.length)
+					
 				if(date[i].type === "date"){
-					alert("11");
+					
 					$("#consignmentTableDIv").append("<div class='input-field col s6 m2'>"+
 							"<div id='enddatepicker' class='input-group'>"+
 							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+

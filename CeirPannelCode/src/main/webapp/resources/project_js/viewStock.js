@@ -1007,6 +1007,9 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 		StockStatus='';
 		
 		}
+		if(filteredUserType=="Role type"){
+			filteredUserType=null;
+		}
 	
 		if(stockStartDate!="" ||stockEndDate!="" || stockTxnId!="" || StockStatus!="" || filteredUserType!=undefined || filterUserName!=undefined || quantity!=undefined || deviceQuantity!=undefined || fileName!=undefined ){
 		  sourceParam="filter";

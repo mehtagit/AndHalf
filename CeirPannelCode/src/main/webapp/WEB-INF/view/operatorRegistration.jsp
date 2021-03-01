@@ -423,7 +423,7 @@ var contextpath = "${context}";
 							<div class="row">
 
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="passportNo" required="required" id="passportNo" maxlength="14" pattern="<spring:eval expression="@environment.getProperty('pattern.nid')" />" 
+									<input type="text" name="passportNo" required="required" id="passportNo" maxlength="13" pattern="<spring:eval expression="@environment.getProperty('pattern.operatorNid')" />" 
 									 oninput="InvalidMsg(this,'input','<spring:message code="validation.14Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.14Character" />');" title="" required/>
 									<label for="passportNo"><spring:message code="registration.nationalid" /> <span class="star">*</span></label>
 								</div>
@@ -504,7 +504,7 @@ var contextpath = "${context}";
 										<label for="authorityEmail"><spring:message code="registration.ReportingAuthorityEmailid" /></label>
 								</div>
 								<div class="input-field col s12 m6 l6">
-									<input type="tel" name="authorityPhoneNo"  id="authorityPhoneNo" maxlength="15" pattern="<spring:eval expression="@environment.getProperty('pattern.contactNo')" />" 
+									<input type="tel" name="authorityPhoneNo"  id="authorityPhoneNo" maxlength="10" pattern="<spring:eval expression="@environment.getProperty('pattern.contactNo')" />" 
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" title="">
 									<label for="authorityPhoneNo"><spring:message code="registration.reportingauthoritycontactnumber" /></label>
 								</div>

@@ -118,7 +118,10 @@
 						},
 						"columns": result,
 						fixedColumns: true,
-						
+						columnDefs: [
+							{ width: 120, targets: 0 },
+							{ width: 120, targets: 1 }
+						]
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
