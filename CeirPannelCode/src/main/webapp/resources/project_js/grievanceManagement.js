@@ -116,7 +116,7 @@ var featureId = 6;
 						"grievanceStatus":grievanceStatus,
 						"endDate":$('#endDate').val(),
 						"startDate":$('#startDate').val(),
-						"recentStatus":parseInt($('#recentStatus').val()),
+						//"recentStatus":parseInt($('#recentStatus').val()),
 						/*"userId": parseInt($("body").attr("data-userTypeID") == 8 ? 0 : parseInt(userId)),*/
 						"featureId":parseInt(featureId),
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
@@ -267,7 +267,7 @@ var featureId = 6;
 						}
 						var viewFilter="viewFilter";
 						$("#greivanceTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'></div>");
-						$("#greivanceTableDiv").append("<div class=' col s3 m2 l2'><button type='button' style='margin-left: 18px;' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
+						$("#greivanceTableDiv").append("<div class=' col s3 m2 l2'><button type='button' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
 						$("#greivanceTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						$('#clearFilter').attr("onclick", "Resetfilter('viewFilter')");
 
