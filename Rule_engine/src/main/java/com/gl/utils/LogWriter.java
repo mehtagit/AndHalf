@@ -11,7 +11,7 @@ import java.util.Date;
 
 public class LogWriter {
 
-    final String logPath = "/home/ceirapp/ceir_parser/logs/";
+    final String logPath = "/u02/ceirdata/logs/";
 
     public boolean writeLogBlacklist(String log) {
         boolean result = false;

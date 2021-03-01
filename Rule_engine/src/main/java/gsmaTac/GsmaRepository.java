@@ -117,7 +117,7 @@ class GsmaDbDao {
                     logger.error("Database2  " + e);
                 }
                 if (resultid == 0) {
-                    output = "NAN";
+                    output = "NOTPRESENT";
                 } else {
                     output = "No";
                 }

@@ -49,7 +49,7 @@ public class BasicApplication {
           } else {
                logger.debug("Gsma Application Started");
                status = snt.getExistingGsmaDetails(imei_tac, conn);
-               if (status.equalsIgnoreCase("NAN")) {
+               if (status.equalsIgnoreCase("NOTPRESENT")) {
                     Map<String, String> map = snt.getGsmaApiDetails(imei_tac, conn);
                     String APIKey = null, Password = null, Salt_String = null, Organization_Id = null, Secretkey = null, httpPostUrl = null, gsma_tac_timewait = null;
                     APIKey = map.get("gsma_tac_APIKey");
@@ -100,7 +100,7 @@ public class BasicApplication {
                               status = "Yes";
                          } else {
                               logger.debug("GSMAINVALIDDB");
-                              snt.invalidGsmaDb(product.getDeviceId(), conn);
+                              snt.invalidGsmaDb(imei_tac.trim(), conn);
                               status = "No";
                          }
                     } catch (Exception e) {

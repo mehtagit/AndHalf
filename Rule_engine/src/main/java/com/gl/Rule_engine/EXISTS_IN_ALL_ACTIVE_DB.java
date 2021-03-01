@@ -83,7 +83,6 @@ class EXISTS_IN_ALL_ACTIVE_DB {
                     break;
                     case "Report": {
                          logger.debug("Action is Report");
-
                     }
                     break;
                     case "SYS_REG": {
@@ -105,6 +104,9 @@ class EXISTS_IN_ALL_ACTIVE_DB {
           }
      }
 }
+
+
+
 //    static String executeAction(String[] args, Connection conn , BufferedWriter bw) {
 //        String res = "Success";
 //        try{

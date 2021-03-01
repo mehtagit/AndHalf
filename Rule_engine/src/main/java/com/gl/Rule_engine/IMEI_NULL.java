@@ -20,7 +20,7 @@ public class IMEI_NULL {
     static String executeRule(String[] args, Connection conn) {
         String res = "";
         try {
-            if ((args[3] == null) || args[3] == "") {
+            if ((args[3] == null) || args[3] == ""   || args[3].contains("00000000") ) {
                 res = "Yes";
             } else {
                 res = "No";

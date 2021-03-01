@@ -73,7 +73,7 @@ public class LBD {
                     case "Reject": {
                          logger.debug("LBD  Action is Reject");
                          String errmsg = " Request in Progress ";
-                         String fileString = args[15] + ",  Error Code :CON_RULE_0001 ,  Error Description   : Request is in Progress ";
+                         String fileString = args[15] + ",  Error Code :CON_RULE_0001 ,  Error Description   : Block/Unblock request for this IMEI is already in progress ";
                          bw.write(fileString);
                          bw.newLine();
 

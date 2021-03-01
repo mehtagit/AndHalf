@@ -5,6 +5,7 @@
  */
 package com.gl.Rule_engine;
 
+import static com.gl.Rule_engine.EXIST_IN_BLACKLIST_DB.logger;
 import java.sql.Connection;
 import java.io.BufferedWriter;
 import java.sql.ResultSet;
@@ -17,7 +18,7 @@ import org.apache.log4j.Logger;
  */
 public class EXISTS_IN_GREYLIST_DB {
 
-    static final Logger logger = Logger.getLogger(EXIST_IN_CUSTOM_DB.class);
+    static final Logger logger = Logger.getLogger(EXISTS_IN_GREYLIST_DB.class);
  
     static String executeRule(String[] args, Connection conn) {
         String res = "";
@@ -77,6 +78,17 @@ public class EXISTS_IN_GREYLIST_DB {
             break;
             case "Block": {
                 logger.debug("Action is Block");
+                    
+                    try {
+                        Statement stmt = conn.createStatement();
+                        String qur = " insert into blocked_device_db  (imei ,IMSI,  msisdn , record_type , system_type , source,raw_cdr_file_name,imei_arrivalTime ,operator, file_name , created_on , modified_on    )  values "
+                                + "('" + args[3] + "' , '" + args[14] + "', '" + args[12] + "' ,'" + args[15] + "' , '" + args[16] + "',  '" + args[17] + "', '" + args[18] + "', '" + args[19] + "', '" + args[20] + "',   '" + args[21] + "', current_timestamp,  current_timestamp   ) ";
+                     logger.info(".." +  qur);
+                        stmt.executeUpdate(qur);
+                        stmt.close();
+                    } catch (Exception e) {
+                        logger.debug("Error " + e);
+                    }
             }
             break;
             case "Report": {
