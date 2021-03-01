@@ -190,7 +190,8 @@
                         <label for="cambodianRiel" class="">Cambodian Riel <span class="star"> *</span></label>
                     </div>
                     
-                    <div class="input-field col s12 m6">
+                    
+                    <div id="currencyDiv" class="input-field col s12 m6" style="display: none;">
                         <input type="number" id="dollar" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
                         <label for="number" class="">US Dollar <span class="star"> *</span></label>
                     </div>
