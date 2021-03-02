@@ -78,8 +78,31 @@ public class ImporterManageTypeAdmin {
 		TRCRequest filterrequest = gsonObject.fromJson(filter, TRCRequest.class);
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		
-		filterrequest.setOrderColumnName(request.getParameter("order[0][column]") == null ? "Modified On" : request.getParameter("order[0][column]"));
-		filterrequest.setOrder(request.getParameter("order[0][dir]") == null ? "desc" : request.getParameter("order[0][dir]"));
+		//filterrequest.setOrderColumnName(request.getParameter("order[0][column]") == null ? "Modified On" : request.getParameter("order[0][column]"));
+		//filterrequest.setOrder(request.getParameter("order[0][dir]") == null ? "desc" : request.getParameter("order[0][dir]"));
+		
+		log.info("---->"+request.getParameter("order[0][column]")+"============>"+request.getParameter("order[0][dir]"));
+		String column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+			"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Modified On":
+				"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Transaction ID":
+					"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Display Name":
+						"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "TAC":
+							"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Brand Name":
+								"6".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Model Number" :
+									"7".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Country" :
+										"7".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "User Type" :
+											"7".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Status"
+								:"Modified On";
+		String order;
+		if("Modified On".equalsIgnoreCase(column)) {
+			order="desc";
+		}
+		else {
+			order=request.getParameter("order[0][dir]");
+		}
+		filterrequest.setOrderColumnName(column);
+		filterrequest.setOrder(order);
+		
 		
 		log.info("--pageSize-" + pageSize + "----pageNo" + pageNo + "----file" + file + "-filterrequest-------"
 				+ filterrequest);

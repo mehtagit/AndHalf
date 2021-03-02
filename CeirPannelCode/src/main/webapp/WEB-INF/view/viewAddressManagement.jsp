@@ -475,7 +475,7 @@
 
 						<div class="input-field col s12 m6" style="margin-top: 10px">
 							<label for="editCountry" class="center-align"><spring:message
-							code="table.country" /> <span class="star">*</span></label>
+							code="table.country" /> </label>
 							<input type="text" name="editCountry" id="editCountry"
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
@@ -515,7 +515,7 @@
                                         <div class="input-field col s12 m6" style="margin-top: 10px">
                                         <label for="editProvinceforDistrict"
 										class="center-align"><spring:message
-										code="input.province" /> <span class="star">*</span></label>
+										code="input.province" /> </label>
 										<input type="text" name="editProvinceforDistrict" id="editProvinceforDistrict"
 										placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 										maxlength="50" required disabled /> 
@@ -554,7 +554,7 @@
                                    <div class="col s12 m6 l6" style="margin-bottom: 5px;">
                                    	<label for="editProvinceForCommune"
 											class="center-align"><spring:message
-											code="input.province" /> <span class="star">*</span></label>
+											code="input.province" /> </label>
 											<input type="text" name="commune" id="editProvinceForCommune"
 											placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 											maxlength="50" required disabled/> 
@@ -566,7 +566,7 @@
 									<div class="col s12 m6 l6" style="margin-bottom: 5px;">
 											<label for="editDistrictForCommune"
 											class="center-align"><spring:message
-											code="input.district" /> <span class="star">*</span></label>
+											code="input.district" /> </label>
 											<input type="text" name="editDistrictForCommune" id="editDistrictForCommune"
 											placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 											maxlength="50" required disabled/> 
@@ -603,7 +603,7 @@
                                    <div class="col s12 m6 l6" style="margin-bottom: 5px;">
                                    		<label for="editProvinceForVillage"
 										class="center-align"><spring:message
-										code="input.province" /> <span class="star">*</span></label>
+										code="input.province" /> </label>
 										<input type="text" name="editProvinceForVillage" id="editProvinceForVillage"
 										placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 										maxlength="50" required disabled/> 
@@ -617,7 +617,7 @@
                                    <div class="col s12 m6 l6" style="margin-bottom: 5px;">
                                    		<label for="editDistrictForVillage"
 										class="center-align"><spring:message
-										code="input.district" /> <span class="star">*</span></label>
+										code="input.district" /> </label>
 										<input type="text" name="editDistrictForVillage" id="editDistrictForVillage"
 										placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 										maxlength="50" required disabled/> 
@@ -626,7 +626,7 @@
                                    <div class="col s12 m6 l6" style="margin-bottom: 5px;">
                                    		 <label for="editCommuneForVillage"
 										class="center-align"><spring:message
-										code="input.commune" /> <span class="star">*</span></label>
+										code="input.commune" /> </label>
 										<input type="text" name="editCommuneForVillage" id="editCommuneForVillage"
 										placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 										maxlength="50" required disabled/>
