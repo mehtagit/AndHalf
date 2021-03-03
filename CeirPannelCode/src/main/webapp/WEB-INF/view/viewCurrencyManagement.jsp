@@ -187,13 +187,13 @@
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
                         <input type="number" id="cambodianRiel" name=""  pattern="[0-9]" title="Please enter numeric numbers"  maxlength="" required="required">
-                        <label for="cambodianRiel" class="">Cambodian Riel <span class="star"> *</span></label>
+                        <label for="cambodianRiel" class="">To Cambodian Riel <span class="star"> *</span></label>
                     </div>
                     
                     
                     <div id="currencyDiv" class="input-field col s12 m6" style="display: none;">
-                        <input type="number" id="dollar" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="" required="required">
-                        <label for="number" class="">US Dollar <span class="star"> *</span></label>
+                        <input type="number" id="dollar" name=""  pattern="[0-9]{8,8}" title="Please enter numeric numbers"  maxlength="">
+                        <label for="number" class="">To US Dollar <span class="star"> *</span></label>
                     </div>
 
 					 <div class="col s12 m12 center" style="margin-top: 20px;">

@@ -116,7 +116,9 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 
 <div class="row" >
 <div class="input-field col s12 m6 l6">
-<input type="text" id="TransactionId" pattern="[A-Z0-9]{18,18}" maxlength="18" 
+<input type="text" id="TransactionId" 
+pattern="<spring:eval expression="@environment.getProperty('pattern.transactionId')" />"
+ maxlength="18" 
 oninput="InvalidMsg(this,'input','<spring:message code="validation.T18characters" />');" 
 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.T18characters" />');" 
 class="form-control boxBorder boxHeight"/>
