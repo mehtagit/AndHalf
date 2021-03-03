@@ -278,7 +278,8 @@
                                                         <input type="text" name="bulkRecoveryquantity" required="required" class="form-control boxBorder boxHeight" placeholder=""
                                                               oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
                                                             oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
-                                                            id="bulkRecoveryquantity" maxlength="7" pattern="[0-9]{1,7}" 
+                                                            id="bulkRecoveryquantity"
+                                                            pattern="<spring:eval expression="@environment.getProperty('pattern.IMEI/DeviceQuantity')" />"
                                                             title="Please enter number up to 7 digits">
                                                         <label for="bulkRecoveryquantity"><spring:message code="operator.quantity" /> <span class="star">*</span></label>
                                                     </div>
@@ -289,8 +290,8 @@
 														code="input.devicequantity" /><span class="star">*</span></label>
 												<input type="text" name="devicequantity"
 													class="form-control boxBorder boxHeight" 
-													id="devicequantity" maxlength="7"
-													pattern=[0-9]{1,7}
+													id="devicequantity"
+													pattern="<spring:eval expression="@environment.getProperty('pattern.IMEI/DeviceQuantity')" />"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 													required> 
@@ -386,7 +387,8 @@ onclick="_Services._selectstartDate()"></i></span>
                                                     </div> -->
                                                     <div class="input-field col s12 m12">
                                                         <input type="text" name="bulkRecoveryaddress" class="form-control boxBorder boxHeight" placeholder=""
-                                                            id="bulkRecoveryaddress" pattern="[a-zA-Z0-9\s,'*$-]{0,200}" 
+                                                            id="bulkRecoveryaddress" 
+                                                            pattern="<spring:eval expression="@environment.getProperty('pattern.address')" />"
                                                             title="" oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
                                                            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
                                                              maxlength="200" required="required">
@@ -455,10 +457,11 @@ onclick="_Services._selectstartDate()"></i></span>
                     								
                                                     <div class="input-field col s12 m6 l6">
                                                         <input type="text" name="bulkRecoverystreetNumber" class="form-control boxBorder boxHeight" placeholder=""
-                                                            id="bulkRecoverystreetNumber" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
+                                                            id="bulkRecoverystreetNumber" title=""
+                                                            pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />"
                                                              oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
                                                        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-                                                             maxlength="30" required="required">
+                                                            required="required">
                                                         <label for="bulkRecoverystreetNumber"><spring:message code="input.streetNumber" /> <span class="star">*</span></label>
                                                     </div>
 
@@ -466,10 +469,11 @@ onclick="_Services._selectstartDate()"></i></span>
                     
                                                     <div class="input-field col s12 m6 l6" style="margin-left:1px;">
                                                         <input type="text" name="bulkRecoverylocality" class="form-control boxBorder boxHeight" placeholder=""
-                                                            id="bulkRecoverylocality" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" title=""
+                                                            id="bulkRecoverylocality" title=""
+                                                            pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
                                                              oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
                                                        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-                                                             maxlength="30">
+                                                            >
                                                         <label for="bulkRecoverylocality"> <spring:message code="input.locality" /><span class="star"></span></label>
                                                     </div>
                         
@@ -477,10 +481,11 @@ onclick="_Services._selectstartDate()"></i></span>
                         
                                                     <div class="input-field col s12 m6 l6" style="margin-right: -1px;">
                                                         <input type="text" name="bulkRecoverypin"  placeholder="" class="form-control boxBorder boxHeight"
-                                                            id="bulkRecoverypin" pattern="[0-9]{6,6}" title="" 
+                                                            id="bulkRecoverypin" title="" 
+                                                            pattern="<spring:eval expression="@environment.getProperty('pattern.postal')" />"
                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');" 
                                                              oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');"
-                                                        maxlength="6" required="required">
+                                                         required="required">
                                                         <label for="bulkRecoverypin"> <spring:message code="input.postalCode" /><span class="star">*</span></label>
                                                     </div>
                     

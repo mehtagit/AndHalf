@@ -235,11 +235,11 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 										</div>
 										<div class="input-field col s12 m3 l3">
 											<input type="text" id="nidForEndUser"
-												pattern="[A-Za-z0-9]{0,12}" 
+												pattern="<spring:eval expression="@environment.getProperty('pattern.nid')" />"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.12NID" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12NID" />');"
 												title="<spring:message code="validation.12NID" />"
-												required  maxlength="12" name="Search" />
+												required  name="Search" />
 
 										</div>
 										<div class="input-field col s12 m6" >
@@ -513,7 +513,7 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 										
 										<div class="input-field col s12 m6" style="margin-top: 22px;">
 											<input type="text" id="endUserVisaNumber" 
-													pattern="[a-zA-Z0-9]{1,15}"
+												pattern="<spring:eval expression="@environment.getProperty('pattern.departmentID')" />"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 													 maxlength="15" /> <label for=endUserVisaNumber><spring:message

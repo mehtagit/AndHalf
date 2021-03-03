@@ -252,11 +252,11 @@
                                                               </div>
 
                                                               <div class="input-field col s12 m6">
-                                                                <input type="text" name="sigleRecoveryserialNumber" id="sigleRecoveryserialNumber" placeholder="" pattern="[a-zA-Z0-9]{0,25}" 
-                                                                 title=""
-                                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');" 
+                                                                <input type="text" name="sigleRecoveryserialNumber" id="sigleRecoveryserialNumber" placeholder=""
+                                                                 pattern="<spring:eval expression="@environment.getProperty('pattern.serialNumber')" />" 
+                                                                 title="" oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');" 
                                                           oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
-                                                                  maxlength="25">
+                                                                  >
                                                                 <label for="sigleRecoveryserialNumber"><spring:message code="input.deviceSerialNumber" /></label>
                                                             </div>
                                                             <div id="IMEIndContact1" style="display: none">
@@ -265,37 +265,42 @@
 														</div>
 
 														<div class="input-field col s12 m6">
-															<input type="text" name="sigleRecoveryimeiNumber1" pattern="[0-9]{15,16}"  required="required"
+															<input type="text" name="sigleRecoveryimeiNumber1"
+															 pattern="<spring:eval expression="@environment.getProperty('pattern.IMEINumber')" />" 
+															  required="required"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-														  maxlength="16" id="sigleRecoveryimeiNumber1" /> 
+														    id="sigleRecoveryimeiNumber1" /> 
 															<label for="sigleRecoveryimeiNumber1"><spring:message code="registration.one" /> <span class="star"> *</span></label>
 														</div></div>
 														  <div id="IMEIndContact2" style="display: none">
 														<div class="input-field col s12 m6">
-															<input type="text" name="imeiNumberTwo" pattern="[0-9]{15,16}"  
+															<input type="text" name="imeiNumberTwo" 
+															pattern="<spring:eval expression="@environment.getProperty('pattern.IMEINumber')" />" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-													  maxlength="16" 	id="sigleRecoveryimeiNumber2" > <label
+													  	id="sigleRecoveryimeiNumber2" > <label
 																for="sigleRecoveryimeiNumber2"><spring:message code="registration.two" /></label>
 														</div>
 														</div>
 														  <div id="IMEIndContact3" style="display: none">
 														<div class="input-field col s12 m6">
-															<input type="text" name="imeiNumberThree" pattern="[0-9]{15,16}"
+															<input type="text" name="imeiNumberThree" 
+															pattern="<spring:eval expression="@environment.getProperty('pattern.IMEINumber')" />"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-														  maxlength="16" 	id="sigleRecoveryimeiNumber3" > <label
+														 	id="sigleRecoveryimeiNumber3" > <label
 																for="sigleRecoveryimeiNumber3"><spring:message code="registration.three" /></label>
 																<p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top: -136px;margin-left: 173px;"></p>
 														</div></div>
 														  <div id="IMEIndContact4" style="display: none">
 														
 														<div class="input-field col s12 m6">
-															<input type="text" name="imeiNumberFour" pattern="[0-9]{15,16}" 
+															<input type="text" name="imeiNumberFour"
+															 pattern="<spring:eval expression="@environment.getProperty('pattern.IMEINumber')" />" 
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-															  maxlength="16" 	id="sigleRecoveryimeiNumber4" > <label
+															  	id="sigleRecoveryimeiNumber4" > <label
 																for="sigleRecoveryimeiNumber4"><spring:message code="registration.four" /></label>
 														</div>
 														</div>
@@ -308,10 +313,10 @@
                                                             </div> -->
                                                             <div class="input-field col s12 m12">
                                                                 <input type="text" name="sigleRecoveryaddress" id="sigleRecoveryaddress" class="form-control boxBorder boxHeight" placeholder=""
-                                                                     pattern="[a-zA-Z0-9\s,'*$-]{0,200}" title="" 
+                                                                   pattern="<spring:eval expression="@environment.getProperty('pattern.address')" />" title="" 
                                                                       oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
                                                        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
-                                                                     maxlength="200" required="required">
+                                                                    required="required">
                                                                 <label for="sigleRecoveryaddress"><spring:message code="input.address" /> <span class="star">*</span></label>
                                                             </div>
                                                             
@@ -379,8 +384,9 @@
                                                             </div>
                                                             <div class="input-field col s12 m6 l6">
                                                                 <input type="text" name="sigleRecoverystreetNumber" class="form-control boxBorder boxHeight" placeholder=""
-                                                                    id="sigleRecoverystreetNumber"  maxlength="20" pattern="[a-zA-Z0-9\s,'*$-]{0,20}" required="required"
-                                                                    title=""
+                                                                    id="sigleRecoverystreetNumber"  
+                                                                     pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />"
+                                                                     required="required" title=""
                                                                      oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" 
                                                                 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');">
                                                                 <label for="sigleRecoverystreetNumber"><spring:message code="input.streetNumber" /> <span class="star">*</span></label>
@@ -390,9 +396,9 @@
                             
                                                             <div class="input-field col s12 m6 l6" style="margin-left: 1px;">
                                                                 <input type="text" name="sigleRecoverylocality" class="form-control boxBorder boxHeight" placeholder=""
-                                                                    id="sigleRecoverylocality" maxlength="30" pattern="[a-zA-Z0-9\s,'*$-]{0,30}" 
-                                                                    title=""
-                                                                    oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+                                                                    id="sigleRecoverylocality" 
+                                                                    pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
+                                                                    title="" oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
                                                                    oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');">
                                                                 <label for="sigleRecoverylocality"><spring:message code="input.locality" /> <span class="star"></span></label>
                                                             </div>
@@ -400,7 +406,8 @@
                                 
                                                             <div class="input-field col s12 m6 l6" style="    margin-right: -1px">
                                                                 <input type="text" name="sigleRecoverypin" class="form-control boxBorder boxHeight" placeholder=""
-                                                                    id="sigleRecoverypin" maxlength="6" pattern="[0-9]{6,6}" required="required"
+                                                                    id="sigleRecoverypin"  required="required"
+                                                                    pattern="<spring:eval expression="@environment.getProperty('pattern.postal')" />"
                                                                     title="" oninput="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');" 
                                                                     oninvalid="InvalidMsg(this,'input','<spring:message code="validation.6digit" />');">
                                                                 <label for="sigleRecoverypin"><spring:message code="input.postalCode" /> <span class="star">*</span></label>

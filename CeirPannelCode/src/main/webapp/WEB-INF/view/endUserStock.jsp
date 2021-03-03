@@ -222,22 +222,25 @@ var contextpath = "${context}";
                                         <div class="row myRow">
                                             <div class="input-field col s12 m6">
                                                 <label for="endUser" style="color: #000;"><spring:message code="input.EmailID" /> </label>
-                                                <input type="email" id="endUseremail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" 
+                                                <input type="email" id="endUseremail"
+                                                pattern="<spring:eval expression="@environment.getProperty('pattern.mail')" />"  
 											    oninput="InvalidMsg(this,'input','<spring:message code="validation.Matchformat" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.Matchformat" />');" 
-												   maxlength="280" name="email"/>
+												   name="email"/>
                                             </div>
 
                                             <div class="input-field col s12 m6 quantity" style="margin-top: 19px;">
                                                 <label for="endUserquantity" style="color: #000;"><spring:message code="input.quantity" />  <span class="star">*</span></label>
-                                                <input type="text" id="endUserquantity" maxlength="7" name="endUserquantity" pattern=[0-9]{0,7}
+                                                <input type="text" id="endUserquantity" maxlength="7" name="endUserquantity" 
+                                                pattern="<spring:eval expression="@environment.getProperty('pattern.IMEI/DeviceQuantity')" />"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
 												 title= "<spring:message code="validation.7digits" />" required> </div>
 												 
 											<div class="input-field col s12 m6 quantity" style="margin-top: 19px;">
                                                 <label for="endUserDevicequantity" style="color: #000;"><spring:message code="input.devicequantity" />  <span class="star">*</span></label>
-                                                <input type="text" id="endUserDevicequantity" maxlength="7" name="endUserDevicequantity" pattern=[0-9]{0,7}
+                                                <input type="text" id="endUserDevicequantity"  name="endUserDevicequantity"
+                                                   pattern="<spring:eval expression="@environment.getProperty('pattern.IMEI/DeviceQuantity')" />"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
 												 title= "<spring:message code="validation.7digits" />" required> </div>	 
@@ -319,7 +322,7 @@ var contextpath = "${context}";
                                             </div>
                                             <div class="input-field col s6 m7">
                                                <input type="text" id="checktransactionID" name="checktransactionID"
-                                                    pattern=[A-Z0-9]{18,18}  maxlength="18"
+                                                   pattern="<spring:eval expression="@environment.getProperty('pattern.transactionId')" />" 
  												oninput="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
 												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
 												 title= "<spring:message code="validation.T18characters" />" required />

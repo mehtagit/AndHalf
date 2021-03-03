@@ -115,11 +115,11 @@ $('#deviceIdType').on('change', function() {
 	switch (value) {
 	case 0:
 		$('#DeviceID').val('');
-		$("#DeviceID").attr("pattern","[0-9]{15,16}");
-		$("#DeviceID").attr("maxlength","16");
+	//	$("#DeviceID").attr("pattern","[0-9]{15,16}");
+		//$("#DeviceID").attr("maxlength","16");
 		$("#DeviceID").removeAttr("onkeyup");
-		$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
-		$("#DeviceID").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+		//$("#DeviceID").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
+		//$("#DeviceID").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
 		$('div p#errorMsgOnModal').text($.i18n('IMEIMsg'));
 		break;
 	case 1:
