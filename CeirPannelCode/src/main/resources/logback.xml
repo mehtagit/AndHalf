@@ -10,7 +10,7 @@
 			<pattern>%date %level [%file:%line] %msg%n</pattern>
 		</encoder>
 
-		<file>${GUI_CONFIG_LOG_PATH}/logs/log.log</file>
+		<file>${HOME}/ceir/gui/logs/log.log</file>
 		<!-- <file>/home/ceirapp/ceir/gui/logs/log.log</file> -->
 
 
@@ -23,9 +23,8 @@
            <!--  <File>${HOME}/logs/mylog.log</File>
 			<fileNamePattern>/home/ubuntu/CeirContent/logs/log.%d{yyyy-MM-dd}.log
 			</fileNamePattern> -->
-			<fileNamePattern>${GUI_CONFIG_LOG_PATH}/logs/log.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>${HOME}/ceir/gui/logs/log.%d{yyyy-MM-dd}.log</fileNamePattern>
 			<maxHistory>60</maxHistory>
-			<totalSizeCap>10GB</totalSizeCap>
 		</rollingPolicy>
 
 	</appender>
