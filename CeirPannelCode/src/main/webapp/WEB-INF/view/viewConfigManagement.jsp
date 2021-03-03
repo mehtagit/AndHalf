@@ -85,7 +85,14 @@
 <script src="${context}/resources/custom_js/1.12.1_jquery-ui.min.js"></script>
 
 	
-
+<style>
+.text-wrap{
+    white-space:normal;
+}
+.width-200{
+    width:200px;
+}
+</style>
 
 
 </head>
@@ -143,9 +150,15 @@
 						<input type="text" name="tag" id="viewTag"
 							placeholder="tag" disabled hidden="hidden"> 
 				
-					<div class="input-field col s12 m6" style="margin-top:22px">
+					<%-- <div class="input-field col s12 m6" style="margin-top:22px">
 					<input type="text" id="viewValue" class="materialize-textarea" placeholder="Value" readonly="readonly"  style="min-height:8rem" >
 					<label for="viewValue" class=""><spring:message code="registration.value" /></label>
+
+					</div> --%>
+					
+					<div class="input-field col s12 m6">
+					<textarea id="viewValue" class="materialize-textarea" Placeholder="" title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" readonly="readonly" style="min-height:8rem"></textarea>
+					<label for="viewValue" class=""><spring:message code="registration.value" /> </label>
 
 					</div>
 					

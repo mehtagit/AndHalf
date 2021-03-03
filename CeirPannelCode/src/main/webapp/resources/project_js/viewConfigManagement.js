@@ -17,7 +17,7 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 //**************************************************Config Detail table**********************************************
 
 function configManagementDatatable(){
-	
+	var ellipsis = "...";
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),
@@ -82,6 +82,13 @@ function configManagementDatatable(){
 				"columns": result,
 				fixedColumns: true,
 				columnDefs: [
+					{
+					render: function ( data, type, row ) {
+					    return data.length > 80 ?
+					        data.substr( 0, 80 ) + ellipsis : data;
+					},
+					targets: 3,
+				},
 		            { width: 100, targets: result.length - 1 }
 		        ]
 			});

@@ -203,17 +203,17 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 				<div class="row myRow">
 					<div class="input-field col s12 m6" id="editSupplierIdDiv">
 						<input type="text" name="SupplierId" id="editSupplierId"
-							placeholder="" pattern="[A-Za-z0-9]{0,15}"
+							placeholder="" pattern="<spring:eval expression="@environment.getProperty('pattern.supplierID')" />"
 					oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 					oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
-							maxlength="15" /> <label for="editSupplierId"
+							/> <label for="editSupplierId"
 							id="editSupplierIdLabel" class="center-align"><spring:message
 								code="input.supplierID" /></label>
 					</div>
 
 					<div class="input-field col s12 m6" id="editSupplierNameDiv">
 						<input type="text" name="SupplierName" id="editSupplierName"
-							placeholder="" pattern="[A-Za-z ]{0,50}" maxlength="50"
+							placeholder="" pattern="<spring:eval expression="@environment.getProperty('pattern.supplierName')" />"
 							oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 							> <label for="editSupplierName"
@@ -223,7 +223,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 
 					<div class="input-field col s12 m6">
 						<input type="text" name="Quantity" id="editQuantity"
-							placeholder="" pattern="[0-9]{0,7}" maxlength="7"
+							placeholder=""pattern="<spring:eval expression="@environment.getProperty('pattern.IMEI/DeviceQuantity')" />"
 							oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 							required> <label for="Quantity" class="center-align"><spring:message
@@ -232,17 +232,16 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 
 					<div class="input-field col s12 m6" id="editInvoiceNumberDiv">
 						<input type="text" name="InvoiceNumber" id="editInvoiceNumber"
-							placeholder="" pattern="[A-Za-z0-9]{0,15}"
+							placeholder="" pattern="<spring:eval expression="@environment.getProperty('pattern.consignmentNumber')" />"
 							oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
-							maxlength="15" /> <label for="InvoiceNumber" class="center-align"><spring:message
+							 /> <label for="InvoiceNumber" class="center-align"><spring:message
 								code="input.invoiceNumber" /></label>
 					</div>
                         <div class="input-field col s12 m6">
 											<input type="text" name="devicequantity" id="editdevicequantity"
-												pattern="[0-9]{0,7}"
-												
-												maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
+												pattern="<spring:eval expression="@environment.getProperty('pattern.IMEI/DeviceQuantity')" />"
+												 oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
 												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> 
 												 <label for="editdevicequantity"
 												class="center-align"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>

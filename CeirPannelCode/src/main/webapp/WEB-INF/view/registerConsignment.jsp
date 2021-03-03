@@ -181,14 +181,16 @@ input#quantity {
 									<div class="row myRow">
 										<div class="input-field col s12 m6">
 											<input type="text" name="supplierId" id="supplierId"
-												pattern="[A-Za-z0-9]{0,15}" oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+												pattern="<spring:eval expression="@environment.getProperty('pattern.supplierID')" />"
+												 oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 												maxlength="15" /> <label for="supplierId" class="center-align"><spring:message code="input.supplier" /></label>
 										</div>
 
 										<div class="input-field col s12 m6">
 											<input type="text" name="supplierName" id="supplierName"
-												pattern="[A-Za-z  ]{0,50}" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+												 pattern="<spring:eval expression="@environment.getProperty('pattern.supplierName')" />"
+												 oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 												
 												maxlength="50" required /> <label for="supplierName"
 												class="center-align"><spring:message code="input.suppliername"/> <span
@@ -198,7 +200,8 @@ input#quantity {
 									<div class="row myRow">
 										<div class="input-field col s12 m6">
 											<input type="text" name="consignmentNumber"
-												id="consignmentNumber" pattern="[A-Za-z0-9]{0,15}"
+												id="consignmentNumber" 
+												pattern="<spring:eval expression="@environment.getProperty('pattern.consignmentNumber')" />"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 												maxlength="15" /> <label for="consignmentNumber" class="center-align"><spring:message code="input.consignmentnumber" /></label>
@@ -265,9 +268,8 @@ input#quantity {
 									<div class="row myRow">
 										<div class="input-field col s12 m6">
 											<input type="text" name="quantity" id="quantity"
-												pattern="[0-9]{0,7}"
-												
-												maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> 
+												pattern="<spring:eval expression="@environment.getProperty('pattern.IMEI/DeviceQuantity')" />"
+											    oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> 
 												<label for="quantity" class="center-align" style="margin-top: 5px;"><spring:message code="input.quantity" /> <span class="star">*</span></label>
 										</div>
 										
@@ -295,15 +297,16 @@ input#quantity {
 										<div class="input-field col s12 m6">
 											<input type="text" name="deviceQuantity" id="deviceQuantity"
 												pattern="[0-9]{0,7}"
-												
-												maxlength="7"  oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> 
+												pattern="<spring:eval expression="@environment.getProperty('pattern.IMEI/DeviceQuantity')" />"
+												 oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> 
 												<label for="deviceQuantity" class="center-align" style="margin-top: 5px;"><spring:message code="input.deviceQty" /> <span class="star">*</span></label>
 										</div>
 										
 									
 										<div class="input-field col s12 m6">
-										<input type="text" name="totalPrice" id="totalPrice" pattern="[0-9]{0,12}"
-												maxlength="12" oninput="InvalidMsg(this,'input','<spring:message code="validation.12Char" />');"
+										<input type="text" name="totalPrice" id="totalPrice" 
+											pattern="<spring:eval expression="@environment.getProperty('pattern.price')" />"
+												 oninput="InvalidMsg(this,'input','<spring:message code="validation.12Char" />');"
 												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Char" />');"> 
 												 <label for="totalPrice" class="center-align"><spring:message code="input.totalprice" /></label>
 										</div>

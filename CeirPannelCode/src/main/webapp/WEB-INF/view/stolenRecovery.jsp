@@ -1242,10 +1242,10 @@ enctype="multipart/form-data">
 
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockserialNumber" name="serialNumber" placeholder=""
-pattern="[A-Za-z0-9]{1,25}" 
+pattern="<spring:eval expression="@environment.getProperty('pattern.serialNumber')" />" 
 oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
-title="Please enter your device serial number first" maxlength="25">
+title="Please enter your device serial number first">
 <label for="editsingleblockserialNumber">
 <spring:message code="input.deviceSerialNumber" /> <span class="star"></span></label>
 </div>
@@ -1337,20 +1337,21 @@ onclick="_Services._selectstartDate()"></i></span>
 </div>
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI1" name="IMEI1" placeholder="" 
-pattern="[0-9]{15,16}" required="required" 
+pattern="<spring:eval expression="@environment.getProperty('pattern.IMEINumber')" />"
+ required="required" 
 	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-title="" maxlength="16">
+title="" >
 <label for="editsingleblockIMEI1">
 <spring:message code="title.one" /> <span class="star">*</span></label><p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-top:-75px;margin-left:115px;"></p>
 </div></div>
 <div id="IMEIndContact2" style="display: none">
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI2" name="IMEI2" placeholder=""
-pattern="[0-9]{15,16}" 
+pattern="<spring:eval expression="@environment.getProperty('pattern.IMEINumber')" />"
 	oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-maxlength="16">
+>
 <label for="editsingleblockIMEI2">
 <spring:message code="title.two" /></label>
 </div></div>
@@ -1358,10 +1359,10 @@ maxlength="16">
 
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI3" name="IMEI3" placeholder=""
-pattern="[0-9]{15,16}"  
+pattern="<spring:eval expression="@environment.getProperty('pattern.IMEINumber')" />"
 oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-maxlength="16">
+>
 <label for="editsingleblockIMEI3">
 <spring:message code="title.three" /></label>
    
@@ -1369,10 +1370,10 @@ maxlength="16">
 <div id="IMEIndContact4" style="display: none">
 <div class="input-field col s12 m6">
 <input type="text" id="editsingleblockIMEI4" name="IMEI4[]" placeholder=""
-pattern="[0-9]{15,16}"  
+pattern="<spring:eval expression="@environment.getProperty('pattern.IMEINumber')" />"
 oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 	oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
-maxlength="16">
+>
 <label for="editsingleblockIMEI4">
 <spring:message code="title.four" /></label>
 <input type="text" id="editsingleblockTxnid" style="display: none">
@@ -1422,18 +1423,20 @@ maxlength="16">
 </div>
 
 <div class="input-field col s12 m6">
-<input type="text" id="editBulkBlockquantity" required name="editBulkBlockquantity" pattern="[0-9]{1,7}"
+<input type="text" id="editBulkBlockquantity" required name="editBulkBlockquantity" 
+pattern="<spring:eval expression="@environment.getProperty('pattern.IMEI/DeviceQuantity')" />"
 oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
-title="" maxlength="7" value="" placeholder="" >
+title=""  value="" placeholder="" >
 <label for="editBulkBlockquantity"><spring:message code="input.quantity" /> <span class="star">*</span></label>
 </div>
 
 <div class="input-field col s12 m6">
-<input type="text" id="editBulkBlockDevicequantity" required name="editBulkBlockDevicequantity" pattern="[0-9]{1,7}"
+<input type="text" id="editBulkBlockDevicequantity" required name="editBulkBlockDevicequantity" 
+pattern="<spring:eval expression="@environment.getProperty('pattern.IMEI/DeviceQuantity')" />"
 oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
-title="" maxlength="7" value="" placeholder="" >
+title=""  value="" placeholder="" >
 <label for="editBulkBlockDevicequantity"><spring:message code="input.devicequantity" /> <span class="star">*</span></label>
 </div>
 

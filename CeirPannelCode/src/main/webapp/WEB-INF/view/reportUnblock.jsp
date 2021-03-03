@@ -168,7 +168,8 @@ padding: 0 !important;
                                                             </div>
                                         
                                                             <div class="input-field col s12 m6" style="margin-top: 23px;">
-                                                                <input type="text" id="unbockSingleSerialNumber" name="unbockSingleserialNumber" pattern="[A-Za-z0-9]{1,25}"
+                                                                <input type="text" id="unbockSingleSerialNumber" name="unbockSingleserialNumber" 
+                                                                 pattern="<spring:eval expression="@environment.getProperty('pattern.serialNumber')" />"
                                                                    oninput="InvalidMsg(this,'select','<spring:message code="validation.numberfirst" />');" 
                                                                    oninvalid="InvalidMsg(this,'select','<spring:message code="validation.15serialNo" />');"
                                                                      maxlength="25">
@@ -291,18 +292,20 @@ aria-hidden="true" style="float: right; margin-top: -30px;"></i></span>
                                                         </select>
                                                     </div>
                                                     <div class="input-field col s12 m6 " style="margin-top: 22px;">
-                                                        <input type="text" id="unblockbulkquantity" name="quantity" pattern="[0-9]{1,7}" 
+                                                        <input type="text" id="unblockbulkquantity" name="quantity" 
+                                                         pattern="<spring:eval expression="@environment.getProperty('pattern.IMEI/DeviceQuantity')" />"
                                                         oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
                                                         oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
-                                                        required maxlength="7">
+                                                        required >
                                                         <label for="unblockbulkquantity"><spring:message code="input.quantity" /> <span class="star"> *</span></label>
                                                     </div>
                                                     
                                                     <div class="input-field col s12 m6 " style="margin-top: 28px;">
-                                                        <input type="text" id="unblockbulkDevicequantity" name="unblockbulkDevicequantity" pattern="[0-9]{1,7}" 
+                                                        <input type="text" id="unblockbulkDevicequantity" name="unblockbulkDevicequantity" 
+                                                         pattern="<spring:eval expression="@environment.getProperty('pattern.IMEI/DeviceQuantity')" />" 
                                                         oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');" 
                                                         oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
-                                                        required maxlength="7">
+                                                        required>
                                                         <label for="unblockbulkDevicequantity"><spring:message code="input.devicequantity" /> <span class="star"> *</span></label>
                                                     </div>
                                                     

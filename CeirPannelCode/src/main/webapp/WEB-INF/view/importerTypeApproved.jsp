@@ -105,7 +105,7 @@
 								<div class="row myRow">
 									<div class="input-field col s12 m6 l6" style="margin-top: 22px">
 										<input type="text" id="trademark" name="trademark"
-											pattern="[A-Za-z0-9 \s]{0,160}"
+											pattern="<spring:eval expression="@environment.getProperty('pattern.trademark')" />"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 											title="" maxlength="30" required> <label
@@ -161,14 +161,16 @@
 
 								<div class="row myRow">
 									<div class="input-field col s12 m6 l6">
-										<input type="text" id="frequencyrange" pattern="[A-Za-z0-9 ]{1,50}"
+										<input type="text" id="frequencyrange" 
+										pattern="<spring:eval expression="@environment.getProperty('pattern.frequencyRange')" />"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 											maxlength="50" required> <label for="frequencyrange"><spring:message
 												code="registration.frequencyrange" /> <span class="star">*</span></label>
 									</div>
 									<div class="input-field col s12 m6 l6">
-										<input type="text" id="tac" pattern="[A-Za-z0-9 \s]{8,8}"
+										<input type="text" id="tac"
+										pattern="<spring:eval expression="@environment.getProperty('pattern.tac')" />"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
 											name="tac" maxlength="8" required="required"> <label
