@@ -1272,7 +1272,7 @@ public class RegularizedDeviceServiceImpl {
 		if( Objects.nonNull(filterRequest.getTaxPaidStatus()) ) {
 			return Boolean.FALSE;
 		}
-		if( Objects.nonNull(filterRequest.getStatus()) ) {
+		if( Objects.nonNull(filterRequest.getStatus()) && !filterRequest.getStatus().equals(-1) ) {
 			return Boolean.FALSE;
 		}
 		if( Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty()) {

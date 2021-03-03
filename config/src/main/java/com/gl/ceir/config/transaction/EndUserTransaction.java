@@ -57,6 +57,7 @@ public class EndUserTransaction {
 	public boolean addUpdateVisaRequest(VisaUpdateDb visaUpdateDb,EndUserDB endUserdb,WebActionDb webActionDb) {
 		boolean status = Boolean.FALSE;
 		updateVisaRepository.save(visaUpdateDb);
+		endUserDbRepository.save(endUserdb);
 		logger.info("update Visa request of user have been updated succesfully.");
 		status = Boolean.TRUE;
 		return status;

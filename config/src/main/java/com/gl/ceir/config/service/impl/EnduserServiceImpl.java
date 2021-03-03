@@ -558,6 +558,7 @@ public class EnduserServiceImpl {
 					}
 					WebActionDb webAction=new	 WebActionDb(Features.UPDATE_VISA, SubFeatures.REQUEST, 0, 
 							endUserDB.getTxnId());
+					endUserDB1.setOnVisa("Y");
 					if(endUserTransaction.addUpdateVisaRequest(visaUpdateDb, endUserDB1,webAction)) {
 						webActionDbRepository.save(webAction);
 						logger.info(" addition in web_action_db. " + webAction );
