@@ -299,7 +299,7 @@ position: fixed;
 					<div class="row" style="margin-top: 10px;">
 						<div class="input-field col s12 m6 l6">
 							<input type="text" id="editTradmark" name="trademarkName"
-								pattern="[A-Za-z0-9 \s]{0,160}"
+								pattern="<spring:eval expression="@environment.getProperty('pattern.trademark')" />"
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 								maxlength="30" placeholder="" required /> <label
@@ -309,6 +309,7 @@ position: fixed;
 						
 						<div class="input-field col s12 m6 l6">
 						<input type="text" id="editImportertransactionid" name="transactioId"
+							pattern="<spring:eval expression="@environment.getProperty('pattern.transactionId')" />"
 							placeholder="" disabled=""> <label for="editImportertransactionid"
 							class="active"><spring:message code="table.transactionID" /></label>
 						</div>
@@ -357,7 +358,8 @@ position: fixed;
                                             </div> -->
                       	<div class="input-field col s12 m6 l6">
 							<input type="text" id="editfrequency" name="frequency"
-								placeholder="" pattern="[A-Za-z0-9 \s]{0,50}" maxlength="50"
+							pattern="<spring:eval expression="@environment.getProperty('pattern.frequencyRange')" />"
+								placeholder="" maxlength="50"
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 								required> <label for="editfrequency"><spring:message
@@ -366,7 +368,8 @@ position: fixed;
 						
 						 <div class="input-field col s12 m6 l6">
 							<input type="text" id="editImportertac" name="tac" placeholder=""
-								 pattern="[A-Za-z0-9 \s]{8,8}"  maxlength="8"
+								pattern="<spring:eval expression="@environment.getProperty('pattern.tac')" />"
+								maxlength="8"
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
 								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.tac8" />');"
 								required> <label for="tac"><spring:message
