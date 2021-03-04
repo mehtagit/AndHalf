@@ -189,7 +189,11 @@ i.fa.fa-times-circle-o.red-text {
 
 											</div>
 											<div class="input-field col s6 m7">
-												<input type="text" id="DeviceID"  required>
+												<input type="text" id="DeviceID" 
+												 pattern="<spring:eval expression="@environment.getProperty('pattern.IMEINumber')" />" 
+													 oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');" 
+                                                     oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
+												 required>
 
 											</div>
 
