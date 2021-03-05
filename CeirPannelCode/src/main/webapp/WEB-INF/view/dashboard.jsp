@@ -179,7 +179,7 @@ div#error_Modal {
 					<ul id="chat-out" class="right hide-on-med-and-down"
 						style="overflow: inherit !important;">
 						<li>
-						<form id="manualDownload" autocomplete="off" action="./Consignment/ManualFileDownload">
+						<form id="manualDownload" autocomplete="off" action="./Consignment/ManualFileDownload" method="post">
 						<input type="hidden" name="userTypeId" value="${usertypeId}">
 						<input type="hidden" name="${_csrf.parameterName}"value="${_csrf.token}" />
 						<input type="hidden" name="contextName">

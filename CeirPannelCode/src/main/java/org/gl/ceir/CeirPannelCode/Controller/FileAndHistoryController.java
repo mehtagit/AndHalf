@@ -227,10 +227,8 @@ PropertyReader propertyReader;
 		}
 	}
 
-	@RequestMapping(value = "/ManualFileDownload", method = {
-			org.springframework.web.bind.annotation.RequestMethod.GET })
-	public void  ManualSampleFile(@RequestParam(name = "userTypeId", required = false) int userTypeId,HttpServletResponse response)
-			throws IOException {
+	@RequestMapping(value = "/ManualFileDownload", method = {org.springframework.web.bind.annotation.RequestMethod.POST})
+	public void  ManualSampleFile(@RequestParam(name = "userTypeId", required = false, defaultValue="4") int userTypeId,HttpServletResponse response){
 		log.info("userTypeId===" + userTypeId);
 		  FileExportResponse fileExportResponse = feignCleintImplementation.manualDownloadSampleFile(userTypeId);
 		  String fileName=fileExportResponse.getFileName();
