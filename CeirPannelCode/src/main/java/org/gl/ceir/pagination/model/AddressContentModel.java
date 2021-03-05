@@ -20,6 +20,43 @@ public class AddressContentModel {
 	private String districtName;
 	private String communeID;
 	private String currentVillage;
+	private Integer userId;
+	private Integer featureId;
+	private Integer userTypeId;
+	private String userType;
+	private String username;
+	
+	
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	public Integer getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
+	}
+	public Integer getUserTypeId() {
+		return userTypeId;
+	}
+	public void setUserTypeId(Integer userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 	public String getCurrentVillage() {
 		return currentVillage;
 	}
@@ -143,6 +180,16 @@ public class AddressContentModel {
 		builder.append(communeID);
 		builder.append(", currentVillage=");
 		builder.append(currentVillage);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", username=");
+		builder.append(username);
 		builder.append("]");
 		return builder.toString();
 	}
