@@ -499,7 +499,7 @@ function pageElements(url){
 			var button=data.buttonList;
 
 			var date=data.inputTypeDateList;
-			if(window.parent.$("body").attr("data-roletype") == "CEIRAdmin"){
+			/*if(window.parent.$("body").attr("data-roletype") == "CEIRAdmin"){*/
 			
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){
@@ -538,7 +538,7 @@ function pageElements(url){
 			} 
 
 			
-			}
+			/*}
 			else{
 				
 				for(i=0; i<date.length; i++){
@@ -579,7 +579,7 @@ function pageElements(url){
 				}
 			
 				
-			}
+			}*/
 
 			
 			

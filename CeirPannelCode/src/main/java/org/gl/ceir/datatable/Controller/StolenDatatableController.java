@@ -448,7 +448,8 @@ public class StolenDatatableController {
 			}
 			else {
 				//input type date list	
-				String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","18" };
+				String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","18","select",Translator.toLocale("table.requestType"), "requestType", "", "select",
+						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","10","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","10" };
 				for (int i = 0; i < dateParam.length; i++) {
 					dateRelatedFields = new InputFields();
 					dateRelatedFields.setType(dateParam[i]);
@@ -460,21 +461,17 @@ public class StolenDatatableController {
 					dateRelatedFields.setClassName(dateParam[i]);
 					inputTypeDateList.add(dateRelatedFields);
 				}
-				//This is for Operator Dropdown
-				String[] selectParam = { "select", Translator.toLocale("table.requestType"), "requestType", "", "select",
-						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status",""};	
-				for (int i = 0; i < selectParam.length; i++) {
-					inputFields = new InputFields();
-					inputFields.setType(selectParam[i]);
-					i++;
-					inputFields.setTitle(selectParam[i]);
-					i++;
-					inputFields.setId(selectParam[i]);
-					i++;
-					inputFields.setClassName(selectParam[i]);
-					dropdownList.add(inputFields);
-				}
-				pageElement.setDropdownList(dropdownList);
+				/*
+				 * //This is for Operator Dropdown String[] selectParam = { "select",
+				 * Translator.toLocale("table.requestType"), "requestType", "", "select",
+				 * Translator.toLocale("input.mode"), "sourceStatus", "","select",
+				 * Translator.toLocale("table.status"), "status",""}; for (int i = 0; i <
+				 * selectParam.length; i++) { inputFields = new InputFields();
+				 * inputFields.setType(selectParam[i]); i++;
+				 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
+				 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
+				 * } pageElement.setDropdownList(dropdownList);
+				 */
 			}
 			
 	
@@ -500,7 +497,14 @@ public class StolenDatatableController {
 			pageElement.setButtonList(buttonList);
 			
 			//input type date list	
-			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","18"};
+			/*
+			 * String[] dateParam = { "date", Translator.toLocale("input.startDate"),
+			 * "startDate", "", "date",Translator.toLocale("input.endDate"), "endDate",
+			 * "","text",Translator.toLocale("input.transactionID"),"transactionID","18"};
+			 */
+			String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","18","text",Translator.toLocale("table.BlockType"),"blockingTypeFilter","15",
+					"select",Translator.toLocale("table.requestType"), "requestType", "", "select",
+					Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","10","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","10"};
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -515,21 +519,17 @@ public class StolenDatatableController {
 			
 		
 
-			String[] selectParam = { "select", Translator.toLocale("table.status"), "status", "", "select",
-					Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.requestType"), "requestType","" };	
-
-			for (int i = 0; i < selectParam.length; i++) {
-				inputFields = new InputFields();
-				inputFields.setType(selectParam[i]);
-				i++;
-				inputFields.setTitle(selectParam[i]);
-				i++;
-				inputFields.setId(selectParam[i]);
-				i++;
-				inputFields.setClassName(selectParam[i]);
-				dropdownList.add(inputFields);
-			}
-			pageElement.setDropdownList(dropdownList);
+			/*
+			 * String[] selectParam = { "select", Translator.toLocale("table.status"),
+			 * "status", "", "select", Translator.toLocale("input.mode"), "sourceStatus",
+			 * "","select", Translator.toLocale("table.requestType"), "requestType","" };
+			 * 
+			 * for (int i = 0; i < selectParam.length; i++) { inputFields = new
+			 * InputFields(); inputFields.setType(selectParam[i]); i++;
+			 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
+			 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
+			 * } pageElement.setDropdownList(dropdownList);
+			 */
 			
 			if("viaExistingRecovery".equals(sourceType)) {
 				//log.info("if sourceType in stolen Render controller 1--------"+sourceType);

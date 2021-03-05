@@ -212,7 +212,7 @@ function pageRendering(){
 			var button=data.buttonList;
 
 			var date=data.inputTypeDateList;
-			if(window.parent.$("body").attr("data-usertype") == "CEIRAdmin"){
+			/*if(window.parent.$("body").attr("data-usertype") == "CEIRAdmin"){*/
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){	
 					$("#consignmentTableDIv").append("<div class='input-field col s6 m2'>"+
@@ -248,7 +248,7 @@ function pageRendering(){
 				}
 				
 			} 
-			}
+			/*}
 			else{
 				for(i=0; i<date.length; i++){
 					
@@ -288,7 +288,7 @@ function pageRendering(){
 			}
 			
 			}
-			
+			*/
 			
 			
 

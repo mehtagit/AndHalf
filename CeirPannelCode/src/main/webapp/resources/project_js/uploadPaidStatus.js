@@ -518,7 +518,7 @@ function pageButtons(url){
 
 
 			var date=data.inputTypeDateList;
-			if(window.parent.$("body").attr("data-roletype") == "CEIRAdmin"){
+			/*if(window.parent.$("body").attr("data-roletype") == "CEIRAdmin"){*/
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){
 					$("#tableDiv").append("<div class='input-field col s6 m2'>"+
@@ -555,7 +555,7 @@ function pageButtons(url){
 				
 			} 
 
-			}
+			/*}
 			else{
 				for(i=0; i<date.length; i++){
 					if(date[i].type === "date"){
@@ -593,7 +593,7 @@ function pageButtons(url){
 							"</div>"+
 					"</div>");
 			}
-			}
+			}*/
 
 
 		/*	// dynamic dropdown portion
