@@ -206,21 +206,26 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
                                 <div class="col s12 m12 l12">
                                     <div class="row">
                                         <div class="input-field col s12 m4">
-                                            <input type="text" id="firstName"  name="firstName" pattern="[a-zA-Z]{0,20}" required="required"
+                                            <input type="text" id="firstName"  name="firstName" required="required"
+                                            pattern="<spring:eval expression="@environment.getProperty('pattern.name')" />" maxlength="20"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"/>
                                             <label for="firstName"><spring:message code="input.firstName" /> <span class="star">*</span></label>
                                         </div>
 
                                         <div class="input-field col s12 m4">
-                                            <input type="text" id="middleName" name="middleName" pattern="[a-zA-Z]{0,20}"
+                                            <input type="text" id="middleName" name="middleName"
+                                            pattern="<spring:eval expression="@environment.getProperty('pattern.name')" />"
+											maxlength="20"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" maxlength="20" />
                                             <label for="middleName"><spring:message code="input.middleName" /></label>
                                         </div>
 
                                         <div class="input-field col s12 m4">
-                                            <input type="text" id="lastName" name="lastName" pattern="[a-zA-Z]{0,20}" 
+                                            <input type="text" id="lastName" name="lastName"
+                                            pattern="<spring:eval expression="@environment.getProperty('pattern.name')" />"
+											maxlength="20"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													    maxlength="20" />
@@ -232,7 +237,8 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
  													oninput="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');" 
                              						oninvalid="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');"
 												  required   maxlength="15" /> -->
-											  <input type="text" name="contactNumber" maxlength="15" id="contactNumber" pattern="[0-9]{7,15}" 
+											  <input type="text" name="contactNumber" maxlength="10" id="contactNumber"
+											  pattern="<spring:eval expression="@environment.getProperty('pattern.contactNo')" />" 
                              		 oninput="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');" 
                               		 oninvalid="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');" required>	  
 												  
@@ -241,17 +247,18 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="email" id="emailID" name="emailID" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
+                                            <input type="email" id="emailID" name="emailID" 
+                                            pattern="<spring:eval expression="@environment.getProperty('pattern.mail')" />"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
-												required maxlength="30" />
+												required maxlength="280" />
                                             <label for="emailID"><spring:message code="input.EmailID" /> <span class="star"> *</span></label>
                                         </div>
 
 								<div class="input-field col s12 m6 l6">
 									<input type="password" name="password" class="password" autocomplete="off"
 										id="password"
-										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
+										pattern="<spring:eval expression="@environment.getProperty('pattern.password')" />"
 										min="8" maxlength="10"
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
@@ -266,7 +273,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
 								<div class="input-field col s12 m6 l6">
 									<input type="password" name="rePassword" class="password2" autocomplete="off"
 										id="confirmPassword"
-										pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,10}$"
+										pattern="<spring:eval expression="@environment.getProperty('pattern.password')" />"
 										maxlength="10" min="8"
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
