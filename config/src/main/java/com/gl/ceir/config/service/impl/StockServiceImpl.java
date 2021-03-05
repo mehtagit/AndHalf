@@ -469,7 +469,8 @@ public class StockServiceImpl {
 		if(Objects.nonNull(filterRequest.getFilteredUserType()) && !filterRequest.getFilteredUserType().isEmpty() 
 				&& !filterRequest.getFilteredUserType().equalsIgnoreCase("null")) {
 			logger.info("Inside getFilteredUserType block and user type is ["+filterRequest.getFilteredUserType()+"]");
-			specificationBuilder.with(new SearchCriteria("userType", filterRequest.getFilteredUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+//			specificationBuilder.with(new SearchCriteria("userType", filterRequest.getFilteredUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+			specificationBuilder.with(new SearchCriteria("roleType", filterRequest.getFilteredUserType(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
 		
 		if(Objects.nonNull(filterRequest.getDisplayName()) && !filterRequest.getDisplayName().isEmpty()) {
