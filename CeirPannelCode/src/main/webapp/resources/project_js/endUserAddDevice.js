@@ -504,8 +504,8 @@ $('#deviceIdType1').on('change', function() {
 	switch (value) {
 	case 0:
 		$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").val('');
-		$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("pattern","[0-9]{15,16}");
-		$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("maxlength","16");
+		/*$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("pattern","[0-9]{15,16}");
+		*/$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("maxlength","16");
 		
 		$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").removeAttr("onkeyup");
 		$("#IMEIA1,#IMEIB1,#IMEIC1,#IMEID1").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");

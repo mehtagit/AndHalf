@@ -307,23 +307,20 @@ public class ConsignmentDatatableController {
 
 
 	if("Importer".equals(userType)) {
-		//Dropdown items	
-		String[] selectParam= {"select",Translator.toLocale("select.consignmentStatus"),"filterConsignmentStatus","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus",""};
-		for(int i=0; i< selectParam.length; i++) {
-		inputFields= new InputFields();
-		inputFields.setType(selectParam[i]);
-		i++;
-		inputFields.setTitle(selectParam[i]);
-		i++;
-		inputFields.setId(selectParam[i]);
-		i++;
-		inputFields.setClassName(selectParam[i]);
-		dropdownList.add(inputFields);
-		}
-		pageElement.setDropdownList(dropdownList);
+			/*
+			 * //Dropdown items String[] selectParam=
+			 * {"select",Translator.toLocale("select.consignmentStatus"),
+			 * "filterConsignmentStatus","","select",Translator.toLocale(
+			 * "select.taxPaidStatus"),"taxPaidStatus",""}; for(int i=0; i<
+			 * selectParam.length; i++) { inputFields= new InputFields();
+			 * inputFields.setType(selectParam[i]); i++;
+			 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
+			 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
+			 * } pageElement.setDropdownList(dropdownList);
+			 */
 
 		//input type date list	
-		String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","18","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","10","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","10","text",Translator.toLocale("table.supplierName"),"supplierNameFilter","30"};
+		String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","18","text",Translator.toLocale("table.supplierName"),"supplierNameFilter","30","select",Translator.toLocale("select.consignmentStatus"),"filterConsignmentStatus","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus","","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","10","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","10"};
 		for(int i=0; i< dateParam.length; i++) {
 		dateRelatedFields= new InputFields();
 		dateRelatedFields.setType(dateParam[i]);
@@ -355,23 +352,20 @@ public class ConsignmentDatatableController {
 	}
 		else{
 			//Dropdown items	
-			String[] selectParam= {"select",Translator.toLocale("select.consignmentStatus"),"filterConsignmentStatus","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus",""};
-			for(int i=0; i< selectParam.length; i++) {
-			inputFields= new InputFields();
-			inputFields.setType(selectParam[i]);
-			i++;
-			inputFields.setTitle(selectParam[i]);
-			i++;
-			inputFields.setId(selectParam[i]);
-			i++;
-			inputFields.setClassName(selectParam[i]);
-			dropdownList.add(inputFields);
-			}
-			pageElement.setDropdownList(dropdownList);
-
+			/*
+			 * String[] selectParam=
+			 * {"select",Translator.toLocale("select.consignmentStatus"),
+			 * "filterConsignmentStatus","","select",Translator.toLocale(
+			 * "select.taxPaidStatus"),"taxPaidStatus",""}; for(int i=0; i<
+			 * selectParam.length; i++) { inputFields= new InputFields();
+			 * inputFields.setType(selectParam[i]); i++;
+			 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
+			 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
+			 * } pageElement.setDropdownList(dropdownList);
+			 */
 	
 		//input type date list	
-				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","18","text",Translator.toLocale("table.importerCompanyName"),"name","30","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","10","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","10"};
+				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","18","text",Translator.toLocale("table.importerCompanyName"),"name","30","select",Translator.toLocale("select.consignmentStatus"),"filterConsignmentStatus","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus","",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","10","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","10","text"};
 				for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

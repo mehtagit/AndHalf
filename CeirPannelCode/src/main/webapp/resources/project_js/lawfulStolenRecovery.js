@@ -1662,8 +1662,8 @@ $('#singleStolendeviceIDType').on('change', function() {
 
 	switch (value) {
 	case 0:
-		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("pattern","[0-9]{15,16}");
-		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("maxlength","16");
+		/*$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("pattern","[0-9]{15,16}");
+		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("maxlength","16");*/
 		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").removeAttr("onkeyup");
 		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
 		$("#singleStolenimei1,#singleStolenimei2,#singleStolenimei3,#singleStolenimei4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
@@ -1716,9 +1716,9 @@ $('#sigleRecoverydeviceIDType').on('change', function() {
 	switch (value) {
 	case 0:
 		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").val('');
-		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("pattern","[0-9]{15,16}");
+		/*$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("pattern","[0-9]{15,16}");
 		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("maxlength","16");
-		
+		*/
 		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").removeAttr("onkeyup");
 		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("oninput","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");
 		$("#sigleRecoveryimeiNumber1,#sigleRecoveryimeiNumber2,#sigleRecoveryimeiNumber3,#sigleRecoveryimeiNumber4").attr("oninvalid","InvalidMsg(this,'input','"+$.i18n('validationIMEI')+"')");

@@ -528,8 +528,8 @@ input[type="checkbox"] {
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="street" maxlength="20" id="street"
 										pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />"
-										oninput="InvalidMsg(this,'input','<spring:message code="validation.address20characters" />');"
-										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address20characters" />');"
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 										required /> <label for="street"><spring:message
 											code="input.streetNumber" /> <span class="star">*</span> </label>
 								</div>
