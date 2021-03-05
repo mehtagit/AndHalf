@@ -156,12 +156,16 @@
 					
 					
 					 <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="tagId" name="addFieldId"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30">
+                        <input type="text" id="tagId" name="addFieldId"  
+                        pattern="<spring:eval expression="@environment.getProperty('pattern.fieldID')" />"
+                        title="Please enter alphabets and numbers upto 30 characters only" maxlength="30">
                         <label for="addFieldId" class="">Field ID </label>
                     </div>
 					
                     <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="addInterp" name="interp" title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
+                        <input type="text" id="addInterp" name="interp" 
+                        pattern="<spring:eval expression="@environment.getProperty('pattern.fieldID')" />"
+                        title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
                         <label for="addInterp" class="">Display Name <span class="star">*</span></label>
                     </div>
 						
@@ -201,13 +205,17 @@
 					
 					
                     <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editFieldId" name="editField"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" >
+                        <input type="text" id="editFieldId" name="editField" 
+                        pattern="<spring:eval expression="@environment.getProperty('pattern.fieldID')" />"
+                         title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" >
                         <label for="editFieldId" class="">Field ID</label>
                     </div>
 					
 
                     <div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editInterp" name="interp"  title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
+                        <input type="text" id="editInterp" name="interp" 
+                        pattern="<spring:eval expression="@environment.getProperty('pattern.fieldID')" />"
+                        title="Please enter alphabets and numbers upto 30 characters only" maxlength="30" required="required">
                         <label for="editInterp" class="">Display Name <span class="star">*</span></label>
                     </div>
 					

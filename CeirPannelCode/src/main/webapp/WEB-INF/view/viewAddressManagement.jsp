@@ -199,6 +199,7 @@
 										
 									<div class="input-field col s12 m6" style="margin-top: 22px;">
 										<input type="text" name="province" id="addProvince"
+										pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
 							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 							maxlength="50" required/> <label for="addProvince"
 							class="center-align"><spring:message
@@ -247,6 +248,7 @@
 										
 									<div class="input-field col s12 m6" style="margin-top: 22px;">
 										<input type="text" name="district" id="addDistrict"
+										pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
 							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 							maxlength="50" required/> <label for="addDistrict"
 							class="center-align"><spring:message
@@ -298,6 +300,7 @@
 										
 									<div class="input-field col s12 m6" style="margin-top: 22px;">
 										<input type="text" name="commune" id="addCommune"
+										pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
 							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 							maxlength="50" required/> <label for="addCommune"
 							class="center-align"><spring:message
@@ -356,6 +359,7 @@
 										
 									<div class="input-field col s12 m6" style="margin-top: 22px;">
 										<input type="text" name="village" id="addVillage"
+							pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"										
 							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 							maxlength="50" required/> <label for="addVillage"
 							class="center-align"><spring:message
@@ -489,6 +493,7 @@
 							class="center-align"><spring:message
 							code="input.province" /> <span class="star">*</span></label>
 							<input type="text" name="editProvince" id="editProvince"
+							pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
 							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 							maxlength="50" required/> 
 						</div>		
@@ -528,6 +533,7 @@
 										class="center-align"><spring:message
 										code="input.district" /> <span class="star">*</span></label>
 										<input type="text" name="editDistrict" id="editDistrict"
+										pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
 										placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 										maxlength="50" required/> 
 								</div>		
@@ -577,6 +583,7 @@
 											class="center-align"><spring:message
 											code="input.commune" /> <span class="star">*</span></label>	
 											<input type="text" name="editCommune" id="editCommune"
+											pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
 											placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 											maxlength="50" required/> 
 									</div>		
@@ -638,6 +645,7 @@
 										class="center-align"><spring:message
 										code="input.village" /> <span class="star">*</span></label>
 										<input type="text" name="editVillage" id="editVillage"
+										pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
 										placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 										maxlength="50" required/> 
 								</div>		

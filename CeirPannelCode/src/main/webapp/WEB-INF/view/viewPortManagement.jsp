@@ -159,7 +159,9 @@
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="portAddress" name="value"  title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required">
+                        <input type="text" id="portAddress" name="value"  title="Please enter alphabets and numbers upto 100 characters only"
+                        pattern="<spring:eval expression="@environment.getProperty('pattern.portAddress')" />"
+                         maxlength="100" required="required">
                         <label for="portAddress" class="">Port Address <span class="star"> *</span></label>
                     </div>
 
@@ -189,7 +191,9 @@
                     </div>
 					
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
-                        <input type="text" id="editportAddress" name="value"  title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required">
+                        <input type="text" id="editportAddress" name="value"  title="Please enter alphabets and numbers upto 100 characters only" 
+                        pattern="<spring:eval expression="@environment.getProperty('pattern.portAddress')" />"
+                        maxlength="100" required="required">
                         <label for="editportAddress" class="">Port Address <span class="star"> *</span></label>
                     </div>
 

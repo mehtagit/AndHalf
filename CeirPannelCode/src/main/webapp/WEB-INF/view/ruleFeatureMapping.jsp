@@ -194,8 +194,9 @@ if (currentTime < dfd) {
 						</div>
 
 						<div class="input-field col s12 m6">
-							<input type="text" name="order" id="order" pattern="[0-9]{0,7}"
-								maxlength="7" placeholder=""
+							<input type="text" name="order" id="order"
+							pattern="<spring:eval expression="@environment.getProperty('pattern.order')" />"
+								maxlength="7" 
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
 								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"
 								required /> <label for="quantity" class="center-align"><spring:message
