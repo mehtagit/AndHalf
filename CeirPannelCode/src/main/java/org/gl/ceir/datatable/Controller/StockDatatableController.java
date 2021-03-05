@@ -378,23 +378,23 @@ public class StockDatatableController {
 		}
 		else {
 			// Dropdown items
-			String[] selectParam = { "select", Translator.toLocale("select.stockStatus"), "StockStatus", "" };
-			for (int i = 0; i < selectParam.length; i++) {
-				inputFields = new InputFields();
-				inputFields.setType(selectParam[i]);
-				i++;
-				inputFields.setTitle(selectParam[i]);
-				i++;
-				inputFields.setId(selectParam[i]);
-				i++;
-				inputFields.setClassName(selectParam[i]);
-				dropdownList.add(inputFields);
-			}
+			/*
+			 * String[] selectParam = { "select", Translator.toLocale("select.stockStatus"),
+			 * "StockStatus", "" }; for (int i = 0; i < selectParam.length; i++) {
+			 * inputFields = new InputFields(); inputFields.setType(selectParam[i]); i++;
+			 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
+			 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
+			 * }
+			 */
 
 			// input type date list
 			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
 					Translator.toLocale("input.endDate"), "endDate", "", "text",
-					Translator.toLocale("input.transactionID"), "transactionID", "18" };
+					Translator.toLocale("input.transactionID"), "transactionID", "18","text",
+					Translator.toLocale("table.fileName"), "fileNameFilter", "30", "select",
+					Translator.toLocale("select.stockStatus"), "StockStatus", "", "text",
+					Translator.toLocale("input.quantity"), "IMEIQuantityFilter", "10" ,"text",
+					Translator.toLocale("input.devicequantity"), "deviceQuantityFilter", "10" };
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
