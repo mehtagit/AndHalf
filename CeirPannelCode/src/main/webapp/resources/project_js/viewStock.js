@@ -586,7 +586,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 				var button=data.buttonList;
 
 				var date=data.inputTypeDateList;
-				if(window.parent.$("body").attr("data-usertype") == "CEIRAdmin"){
+				/*if(window.parent.$("body").attr("data-usertype") == "CEIRAdmin"){*/
 					for(i=0; i<date.length; i++){
 				
 					if(date[i].type === "date"){
@@ -622,7 +622,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 							"</div>");
 					
 					}
-				}}
+				}/*}
 				else{
 					for(i=0; i<date.length; i++){
 						if(date[i].type === "date"){
@@ -662,7 +662,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 					}
 
 				} 
-			
+*/			
 				if(sourceType=="viaStock"){
 					$("#btnLink").css({display: "none"});
 					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter' /></div>");
