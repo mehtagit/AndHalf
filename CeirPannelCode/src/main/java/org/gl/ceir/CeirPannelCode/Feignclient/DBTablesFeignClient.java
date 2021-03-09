@@ -21,14 +21,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public interface DBTablesFeignClient {
 	
 	@RequestMapping(value="/db/tables" ,method=RequestMethod.POST) 
-	public DBTableModel getAlltables(@RequestParam(name="dbName") String dbName);
+	public DBTableModel getAlltables(@RequestParam(name="dbName") String dbName,
+			@RequestParam(name="featureId", required = false) Integer featureId,
+			@RequestParam(name="userId", required = false) Integer userId,
+			@RequestParam(name="userType", required = false) String userType);
 	
 	@RequestMapping(value= "/db/table/data/V2" , method=RequestMethod.POST) 
 	public Object historyConsignmentFeign(@RequestBody DBrowDataModel filterRequest);
 	
 	
 	@RequestMapping(value="/report/list",method=RequestMethod.POST) 
-	public List<ReportResponse> getAllReports(@RequestParam(name="reportCategory", required = false) Integer reportCategory);
+	public List<ReportResponse> getAllReports(@RequestParam(name="reportCategory", required = false) Integer reportCategory,
+			@RequestParam(name="featureId", required = false) Integer featureId,
+			@RequestParam(name="userId", required = false) Integer userId,
+			@RequestParam(name="userType", required = false) String userType);
 	
 	//----------------------------Report TableData Feign------------------------------
 	

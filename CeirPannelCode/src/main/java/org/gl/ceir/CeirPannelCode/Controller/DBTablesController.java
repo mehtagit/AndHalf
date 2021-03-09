@@ -48,8 +48,11 @@ public class DBTablesController {
 	/*---------------------------------------- Select Table Dropdown ----------------------------------------*/
 	
 	@RequestMapping(value="/getallTables",method ={org.springframework.web.bind.annotation.RequestMethod.POST})
-	public @ResponseBody DBTableModel dbTableList(@RequestParam(name="dbName") String dbName){
-		DBTableModel dbTableList = dBTablesFeignClient.getAlltables(dbName);
+	public @ResponseBody DBTableModel dbTableList(@RequestParam(name="dbName") String dbName,
+			@RequestParam(name="featureId", required = false) Integer featureId,
+			@RequestParam(name="userId", required = false) Integer userId,
+			@RequestParam(name="userType", required = false) String userType){
+		DBTableModel dbTableList = dBTablesFeignClient.getAlltables(dbName,featureId,userId,userType);
 		return dbTableList;
 	}
 	

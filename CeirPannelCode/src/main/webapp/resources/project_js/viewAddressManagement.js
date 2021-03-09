@@ -535,12 +535,8 @@
 		 	var Request={
 					"country" : $("#country").val(),
 					"province" : $("#addProvince").val(),
-					"userId":parseInt(userId), 
-					"featureId":parseInt(featureId),
-					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType":$("body").attr("data-roleType"),
-					"username" : $("body").attr("data-selected-username")
-					
+					"username" : $("body").attr("data-selected-username"),
+					"userId" : parseInt(userId),
 				}
 			//console.log("Request-->"+JSON.stringify(Request));
 		 	var token = $("meta[name='_csrf']").attr("content");
@@ -574,11 +570,8 @@
 		 	var Request={
 					"province" : $("#provinceForDistrict").val(),
 					"district": $('#addDistrict').val(),
-					"userId":parseInt(userId), 
-					"featureId":parseInt(featureId),
-					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType":$("body").attr("data-roleType"),
-					"username" : $("body").attr("data-selected-username")
+					"username" : $("body").attr("data-selected-username"),
+					"userId" : parseInt(userId),
 				}
 			//console.log("Request-->"+JSON.stringify(Request));
 		 	var token = $("meta[name='_csrf']").attr("content");
@@ -612,11 +605,8 @@
 		 			"districtID": parseInt($('#districtForCommune').val()),
 					"commune": $('#addCommune').val(),
 					"province" : $('#provinceForCommune').val(),
-					"userId":parseInt(userId), 
-					"featureId":parseInt(featureId),
-					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType":$("body").attr("data-roleType"),
-					"username" : $("body").attr("data-selected-username")
+					"username" : $("body").attr("data-selected-username"),
+					"userId" : parseInt(userId),
 				}
 			//console.log("Request-->"+JSON.stringify(Request));
 		 	var token = $("meta[name='_csrf']").attr("content");
@@ -651,11 +641,8 @@
 		 			"communeID": parseInt($('#communeForVillage').val()),
 		 			"village": $('#addVillage').val(),
 		 			"districtID": parseInt($('#districtForVillage').val()),
-		 			"userId":parseInt(userId), 
-					"featureId":parseInt(featureId),
-					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType":$("body").attr("data-roleType"),
-					"username" : $("body").attr("data-selected-username")
+					"username" : $("body").attr("data-selected-username"),
+					"userId" : parseInt(userId),
 				}
 			//console.log("Request-->"+JSON.stringify(Request));
 		 	var token = $("meta[name='_csrf']").attr("content");
@@ -896,15 +883,13 @@
 		function updateProvince(){
 			//alert("localityID--->" +localityID)
 			var request ={ 
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username"),
 					"id" : parseInt(localityID),
 					"country" : $("#editCountry").val(),
 					"province" : $("#oldProvince").val(),
 					"updatingProvinceName" : $("#editProvince").val(),
-					"userId":parseInt(userId), 
-					"featureId":parseInt(featureId),
-					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType":$("body").attr("data-roleType"),
-					"username" : $("body").attr("data-selected-username")
 			}
 
 			//////console.log("request--->" +JSON.stringify(request))
@@ -945,15 +930,13 @@
 		function updateDistrict(){
 			//alert("localityID--->" +localityID)
 			var request ={ 
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username"),
 					"id" : localityID,
 					"province" : $("#editProvinceforDistrict").val(),
 					"currentDistrictName": $("#editDistrict").val(),
 					"district": $("#oldDistrict").val(),
-					"userId":parseInt(userId), 
-					"featureId":parseInt(featureId),
-					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType":$("body").attr("data-roleType"),
-					"username" : $("body").attr("data-selected-username")
 				}
 
 			//////console.log("request--->" +JSON.stringify(request))
@@ -994,16 +977,14 @@
 		function updateCommune(){
 			//alert("localityID--->" +localityID)
 			var request ={ 
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username"),
 					"id" : localityID,
 					"commune": $("#oldcommune").val(),
 					"currentCommuneName": $("#editCommune").val(),
 					"districtName": $("#editDistrictForCommune").val(),
 					"province" : $("#editProvinceForCommune").val(),
-					"userId":parseInt(userId), 
-					"featureId":parseInt(featureId),
-					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType":$("body").attr("data-roleType"),
-					"username" : $("body").attr("data-selected-username")
 				}
 
 			//////console.log("request--->" +JSON.stringify(request))
@@ -1044,16 +1025,14 @@
 		function updateVillage(){
 			//alert("localityID--->" +localityID)
 			var request ={ 
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username"),
 					"id" : localityID,
 					"currentVillage": $("#editVillage").val(),
 					"commune": $('#editCommuneForVillage').val(),
 					"districtName":  $("#editDistrictForVillage").val(),
-					"village" : $("#oldVillage").val(),
-					"userId":parseInt(userId), 
-					"featureId":parseInt(featureId),
-					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType":$("body").attr("data-roleType"),
-					"username" : $("body").attr("data-selected-username")
+					"village" : $("#oldVillage").val()
 					
 				}
 

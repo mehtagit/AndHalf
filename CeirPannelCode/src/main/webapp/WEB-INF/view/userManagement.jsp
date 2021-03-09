@@ -239,7 +239,13 @@
 											disabled required   maxlength="200" class="materialize-textarea" style= "min-height: 8rem;"></textarea>
                                             <label for="viewuserRemark">Remarks</label>
                                         </div>
-						
+							
+							 <div class="input-field col s12 m6" style="margin-top: 23px;">
+                                            <input type="text" id="viewModifiedBy" name="modifiedBy" disabled
+                                             maxlength="18" />
+                                            <label for="viewModifiedBy">Modified By</label>
+                            </div>
+                            
 						</div>
 
 		<div class="row">
@@ -269,7 +275,8 @@
 
 					<div class="row" style="margin-top: 10px;">
 						<div class="input-field col s12 m4">
-                                            <input type="text" id="editfirstName"  name="firstName" pattern="[a-zA-Z]{0,20}" required="required"
+                                            <input type="text" id="editfirstName"  name="firstName"  required="required"
+                                            pattern="<spring:eval expression="@environment.getProperty('pattern.name')" />" maxlength="20"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" disabled
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"/>
                                             <label for="editfirstName"><spring:message code="input.firstName" /></label>
@@ -278,14 +285,16 @@
 										<input type="text" id="editId" hidden="hidden">
                                        
                                         <div class="input-field col s12 m4">
-                                            <input type="text" id="editmiddleName" name="middleName" pattern="[a-zA-Z]{0,20}" disabled
+                                            <input type="text" id="editmiddleName" name="middleName" disabled
+                                            pattern="<spring:eval expression="@environment.getProperty('pattern.name')" />" maxlength="20"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" maxlength="20" />
                                             <label for="editmiddleName"><spring:message code="input.middleName" /></label>
                                         </div>
 										
 										<div class="input-field col s12 m4">
-                                            <input type="text" id="editlastName" name="lastName" pattern="[a-zA-Z]{0,20}" disabled
+                                            <input type="text" id="editlastName" name="lastName" disabled
+                                            pattern="<spring:eval expression="@environment.getProperty('pattern.name')" />" maxlength="20"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
 													 required   maxlength="20" />
@@ -302,7 +311,8 @@
  													oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 												  required   maxlength="10" /> --%>
-											<input type="text" name="contactNumber" maxlength="15" id="editcontactNumber" pattern="[0-9]{7,15}" 
+											<input type="text" name="contactNumber" maxlength="15" id="editcontactNumber" 
+											pattern="<spring:eval expression="@environment.getProperty('pattern.contactNo')" />"  
                               				 oninput="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');" 
                               				 oninvalid="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');" required>	  
                                             <label for="editcontactNumber"><spring:message code="input.contact" /><span
@@ -310,7 +320,8 @@
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="email" id="editemailID" name="emailID" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
+                                            <input type="email" id="editemailID" name="emailID"
+                                             pattern="<spring:eval expression="@environment.getProperty('pattern.mail')" />" 
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 												required maxlength="30" />
@@ -365,6 +376,12 @@
                                             <label for="edituserRemark">Remarks<span
                                                     class="star">*</span></label>
                                         </div>
+                                        
+                                <div class="input-field col s12 m6" style="margin-top: 23px;">
+                                            <input type="text" id="editModifiedBy" name="modifiedBy" disabled
+                                             maxlength="18" />
+                                            <label for="editModifiedBy">Modified By</label>
+                            </div>        
 						 </div>
 
 		<div class="row">
