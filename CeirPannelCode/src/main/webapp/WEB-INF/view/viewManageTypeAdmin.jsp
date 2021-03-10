@@ -241,7 +241,7 @@ position: fixed;
 						<input type="text" id="viewManufacturercountry" name="Country" 
 							placeholder="" disabled=""> <label
 							for="viewManufacturercountry" class="active"><spring:message
-								code="input.Country" /></label>
+								code="input.manufacturerCountry" /></label>
 				</div>
 				
 				<div class="input-field col s12 m6 l6">
@@ -359,7 +359,7 @@ position: fixed;
                       	<div class="input-field col s12 m6 l6">
 							<input type="text" id="editfrequency" name="frequency"
 							pattern="<spring:eval expression="@environment.getProperty('pattern.frequencyRange')" />"
-								placeholder="" maxlength="50"
+								placeholder="" maxlength="30"
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 								required> <label for="editfrequency"><spring:message
@@ -383,7 +383,7 @@ position: fixed;
 					</div>
 					
 						  <div class="col s12 m6 l6" style="width: 409px; margin-left: 7px;">
-							<label for="country"><spring:message code="input.Country" />
+							<label for="country"><spring:message code="input.manufacturerCountry" />
 								<span class="star">*</span></label> <select id="editmanufacturercountry"
 								class="browser-default" class="mySelect"
 								onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"

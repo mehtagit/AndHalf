@@ -441,3 +441,16 @@ else if($('#'+multiplesimstatus).val()==""){
 function filterReset(formID){
 	$('#'+formID).trigger('reset');
 }
+
+
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function test(x) {
+    const result = numberWithCommas(x);
+    const pass = result;
+    console.log(`${pass ? "✓" : "ERROR ====>"} ${x} => ${result}`);
+    return pass;
+}

@@ -249,7 +249,8 @@ function setViewPopupData(data){
 
 	}
 	else{
-		totalPrice=(parseInt(data.totalPrice));
+		totalPrice=(test(data.totalPrice));
+		
 		$("#viewCurrencyDiv").css("display", "block");
 	}
 	$("#supplierId").val(data.supplierId);
@@ -667,7 +668,7 @@ function pageButtons(url){
 			$("#pageHeader").append(elem);
 			var button=data.buttonList;
 			var date=data.inputTypeDateList;
-				if(window.parent.$("body").attr("data-usertype") == "CEIRAdmin"){
+			/*	if(window.parent.$("body").attr("data-usertype") == "CEIRAdmin"){*/
 					for(i=0; i<date.length; i++){
 				
 					if(date[i].type === "date"){
@@ -703,7 +704,7 @@ function pageButtons(url){
 							"</div>");
 					
 					}
-				}}
+				}/*}
 				else{
 					for(i=0; i<date.length; i++){
 						if(date[i].type === "date"){
@@ -744,7 +745,7 @@ function pageButtons(url){
 
 				} 
 
-
+*/
 
 
 			if(sourceType=="viaStolen"){

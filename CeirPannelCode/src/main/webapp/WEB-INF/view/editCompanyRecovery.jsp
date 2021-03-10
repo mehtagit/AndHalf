@@ -459,8 +459,8 @@ onclick="_Services._selectstartDate()"></i></span>
                                                         <input type="text" name="bulkRecoverystreetNumber" class="form-control boxBorder boxHeight" placeholder=""
                                                             id="bulkRecoverystreetNumber" title=""
                                                             pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />"
-                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                             oninput="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
+                                                       oninvalid="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
                                                             required="required">
                                                         <label for="bulkRecoverystreetNumber"><spring:message code="input.streetNumber" /> <span class="star">*</span></label>
                                                     </div>

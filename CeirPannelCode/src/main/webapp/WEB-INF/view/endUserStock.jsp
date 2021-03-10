@@ -224,8 +224,8 @@ var contextpath = "${context}";
                                                 <label for="endUser" style="color: #000;"><spring:message code="input.EmailID" /> </label>
                                                 <input type="email" id="endUseremail"
                                                 pattern="<spring:eval expression="@environment.getProperty('pattern.mail')" />"  
-											    oninput="InvalidMsg(this,'input','<spring:message code="validation.Matchformat" />');"
-												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.Matchformat" />');" 
+											    oninput="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');" 
 												   name="email"/>
                                             </div>
 

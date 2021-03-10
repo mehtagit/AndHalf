@@ -389,7 +389,7 @@ input[type="checkbox"] {
 								<div class="input-field col s12 m6 l6" id="passportNumberDiv"
 									style="display: none;">
 									<input type="text" name="passportNo" id="passportNo"
-										maxlength="13" pattern="[A-Za-z0-9()\s]{7,13}"
+										maxlength="13" pattern="<spring:eval expression="@environment.getProperty('pattern.importerNid')" />"
 										oninput="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');"
 										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');"
 										required /> <label for="passportNo"><spring:message
@@ -402,8 +402,8 @@ input[type="checkbox"] {
 									<input type="text" name="companyName" id="companyName"
 										pattern="<spring:eval expression="@environment.getProperty('pattern.companyName')" />"
 										maxlength="50"
-										oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
-										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" />
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.companyName" />');"
+										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.companyName" />');" />
 									<label for="companyName"><spring:message
 											code="registration.companyName" /> <span class="star">*</span></label>
 								</div>
@@ -528,8 +528,8 @@ input[type="checkbox"] {
 								<div class="input-field col s12 m6 l6">
 									<input type="text" name="street" maxlength="20" id="street"
 										pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />"
-										oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
+										oninvalid="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
 										required /> <label for="street"><spring:message
 											code="input.streetNumber" /> <span class="star">*</span> </label>
 								</div>
@@ -599,8 +599,8 @@ input[type="checkbox"] {
 										id="vatNumberField">
 										<input type="text" name="vatNo" maxlength="15" id="vatNo"
 											pattern="<spring:eval expression="@environment.getProperty('pattern.vatNo')" />"
-											oninput="InvalidMsg(this,'input','<spring:message code="validation9to12" />');"
-											oninvalid="InvalidMsg(this,'input','<spring:message code="validation9to12" />');">
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.vatNo" />');"
+											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.vatNo" />');">
 										<%-- 			<label for="vatNo"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label> --%>
 										<label for="vatNo"><spring:message
 												code="registration.vatnumber" /></label>

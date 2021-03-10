@@ -343,7 +343,7 @@ var contextpath = "${context}";
                                 <%if(usertypeId==12){%>
 								<div class="input-field col s12 m6 l6" id="companyNames" style="margin-top: 22px;">
 									<input type="text" name="companyName" id="companyName" pattern="<spring:eval expression="@environment.getProperty('pattern.companyName')" />"   maxlength="50"
-									oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" required="required"
+									oninput="InvalidMsg(this,'input','<spring:message code="validation.companyName" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.companyName" />');" required="required"
 									/>
 									<label for="companyName"><spring:message code="registration.companyName" /> <span class="star">*</span></label>
 								</div>
@@ -406,7 +406,7 @@ var contextpath = "${context}";
 
 <div class="input-field col s12 m6 l6">
 									<input type="text" name="street" maxlength="20" id="street" pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />"
-									oninput="InvalidMsg(this,'input','<spring:message code="validation.20Characters" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Characters" />');"
+									oninput="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
 										 required />
 									<label for="street"><spring:message code="input.streetNumber" /> <span class="star">*</span>
 									</label>
@@ -566,7 +566,7 @@ var contextpath = "${context}";
 									<div class="input-field col s12 m6 l6"  id="vatNumberField">
 									<input type="hidden" id="vatStatus" value="1"/>
 										<input type="text" required="required" name="vatNo" maxlength="15" id="vatNo" pattern="<spring:eval expression="@environment.getProperty('pattern.vatNumber')" />" 
-										oninput="InvalidMsg(this,'input','<spring:message code="validation.15alphanumeric" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15alphanumeric" />');" 
+										oninput="InvalidMsg(this,'input','<spring:message code="validation.vatNo" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.vatNo" />');" 
 										>
 										<label for="vatNo"><spring:message code="registration.vatnumber" /> <span class="star">*</span></label>
 									</div>

@@ -235,7 +235,7 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 										</div>
 										<div class="input-field col s12 m3 l3">
 											<input type="text" id="nidForEndUser"
-												pattern="<spring:eval expression="@environment.getProperty('pattern.nid')" />"
+												pattern="<spring:eval expression="@environment.getProperty('pattern.operatorNid')" />"
 												oninput="InvalidMsg(this,'input','<spring:message code="validation.12NID" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12NID" />');"
 												title="<spring:message code="validation.12NID" />"
@@ -514,8 +514,8 @@ background: url(resources/images/loader.gif) 50% 50% no-repeat white;
 										<div class="input-field col s12 m6" style="margin-top: 22px;">
 											<input type="text" id="endUserVisaNumber" 
 												pattern="<spring:eval expression="@environment.getProperty('pattern.departmentID')" />"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.departmentID" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.departmentID" />');"
 													 maxlength="15" /> <label for=endUserVisaNumber><spring:message
 														code="input.VisaNumber" /> <span class="star"></span></label>
 										</div>

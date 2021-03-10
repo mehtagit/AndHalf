@@ -365,7 +365,7 @@ public class ConsignmentDatatableController {
 			 */
 	
 		//input type date list	
-				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","18","text",Translator.toLocale("table.importerCompanyName"),"name","30","select",Translator.toLocale("select.consignmentStatus"),"filterConsignmentStatus","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus","",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","10","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","10","text"};
+				String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","18","text",Translator.toLocale("table.importerCompanyName"),"name","30","select",Translator.toLocale("select.consignmentStatus"),"filterConsignmentStatus","","select",Translator.toLocale("select.taxPaidStatus"),"taxPaidStatus","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","10","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","10"};
 				for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

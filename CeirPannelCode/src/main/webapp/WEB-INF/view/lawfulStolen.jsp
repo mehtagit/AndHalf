@@ -305,7 +305,7 @@
 															pattern="<spring:eval expression="@environment.getProperty('pattern.contactNo')" />"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');"
-															maxlength="15" required>
+															required>
 															
 													</div> 
 													<div class="col s12 m4 ">
@@ -413,8 +413,8 @@
 															class="form-control boxBorder boxHeight"
 															id="singleStolenstreetNumber"
 															pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />"
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
 															required > <label
 															for="singleStolenstreetNumber"> <spring:message
 																code="input.streetNumber" /><span class="star">
@@ -429,7 +429,7 @@
 															pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-															 maxlength="30"> <label for="singleStolenlocality">
+															> <label for="singleStolenlocality">
 															<spring:message code="input.locality" />
 														</label>
 													</div>
@@ -657,7 +657,7 @@
 																pattern="<spring:eval expression="@environment.getProperty('pattern.IMEINumber')" />"
 															    oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"  
-																maxlength="16" id="singleStolenimei1" > 
+																 id="singleStolenimei1" > 
 																<label for="singleStolenimei1"><spring:message code="registration.one.IMEI" /> <span class="star"> </span> 
 																</label><p id="errorMsgOnModal" class="deviceErrorTitle" style="margin-left: 45%;"></p>
 														</div>
@@ -679,7 +679,7 @@
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																
-																maxlength="16" id="singleStolenimei2" > <label
+																 id="singleStolenimei2" > <label
 																for="singleStolenimei12"> <spring:message
 																	code="registration.two.IMEI" /></label>
 														</div>
@@ -702,7 +702,7 @@
 																oninput="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.1516digit" />');"
 																
-																maxlength="16" id="singleStolenimei3"> <label
+																 id="singleStolenimei3"> <label
 																for="singleStolenimei3"> <spring:message code="registration.three.IMEI" /></label>
 														
 														</div>
@@ -887,8 +887,8 @@
 																class="form-control boxBorder boxHeight"
 																id="singleDevicestreetNumber"
 																pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />"
-																oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
 																required > <label
 																for="singleDevicestreetNumber"> <spring:message
 																	code="input.streetNumber" /> <span class="star">
@@ -1048,8 +1048,8 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 											<div class="input-field col s12 m6">
 												<input type="text" name="companyName"  pattern="[a-zA-Z ]{1,30}"
 													pattern="<spring:eval expression="@environment.getProperty('pattern.companyName')" />"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.companyName" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.companyName" />');"
 													required id="bulkStolencompanyName"> <label
 													for="bulkStolencompanyName"> <spring:message
 														code="registration.companyName" /> <span class="star">
@@ -1148,8 +1148,8 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 													class="form-control boxBorder boxHeight"
 													id="bulkStolenstreetNumber" 
 													pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
 													required  title="Please enter street number">
 												<label for="bulkStolenstreetNumber"> <spring:message
 														code="input.streetNumber" /><span class="star"> *</span></label>
@@ -1162,8 +1162,8 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 													class="form-control boxBorder boxHeight"
 													id="bulkStolenlocality"
 													pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 													 title="Please enter your locality">
 												<label for="bulkStolenlocality"> <spring:message
 														code="input.locality" /> </label>
@@ -1356,8 +1356,8 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 													class="form-control boxBorder boxHeight"
 													id="deviceBulkStolenstreetNumber"
 													pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
 													required > <label for="deviceBulkStolenstreetNumber">
 													<spring:message code="input.streetNumber" /> <span
 													class="star"> *</span>
@@ -1371,8 +1371,8 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 													class="form-control boxBorder boxHeight"
 													id="deviceBulkStolenlocality"
 													pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 													 > <label for="deviceBulkStolenlocality">
 													<spring:message code="input.locality" /> 
 												</label>

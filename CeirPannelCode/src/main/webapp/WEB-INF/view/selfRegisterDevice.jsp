@@ -403,8 +403,8 @@ position: fixed;
 										<div class="input-field col s12 m6 l6" style="margin-left: 0px;margin-top: 23px; ">
 											<input type="text" class="form-control boxBorder boxHeight"
 												id="streetNumber" pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />"
-												oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
 												required > <label for="streetNumber"><spring:message
 													code="input.streetNumber" /> <span class="star">*</span> </label>
 										</div>
@@ -412,8 +412,8 @@ position: fixed;
 										<div class="input-field col s12 m6 l6" style="margin-right:1px">
 											<input type="text" class="form-control boxBorder boxHeight"
 												pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
-												oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 												 class="form-control boxBorder boxHeight"
 												id="locality" id="endUserlocality"> <label
 												for="locality"><spring:message code="input.locality" />
@@ -520,8 +520,8 @@ position: fixed;
 											<div class="input-field col s12 m6">
 												<input type="text" id="departmentName"
 												pattern="<spring:eval expression="@environment.getProperty('pattern.departmentName')" />"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.department" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.department" />');"
 													  /> <label for="departmentName"><spring:message
 														code="input.DepartmentName" /> <span class="star">*</span></label>
 											</div>
@@ -529,8 +529,8 @@ position: fixed;
 											<div class="input-field col s12 m6">
 												<input type="text" id="endUserdepartmentID"
 													pattern="<spring:eval expression="@environment.getProperty('pattern.departmentID')" />"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.departmentID" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.departmentID" />');"
 													  /> <label for="endUserdepartmentID"><spring:message
 														code="input.DepartmentID" /><span class="star">*</span> </label>
 											</div>
@@ -600,8 +600,8 @@ position: fixed;
 											<div class="input-field col s12 m6">
 												<input type="text" id="visaNumber" 
 													pattern="<spring:eval expression="@environment.getProperty('pattern.departmentID')" />"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.departmentID" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.departmentID" />');"
 													/> <label for="visaNumber"><spring:message
 														code="input.VisaNumber" /> <span class="star">*</span></label>
 											</div>

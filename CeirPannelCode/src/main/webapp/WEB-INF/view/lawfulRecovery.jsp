@@ -471,8 +471,8 @@ select {
 															class="form-control boxBorder boxHeight"
 															id="sigleRecoverystreetNumber" 
 															pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />"
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
 															required /> <label for="sigleRecoverystreetNumber">
 															<spring:message code="input.streetNumber" /><span
 															class="star"> *</span>
@@ -486,8 +486,8 @@ select {
 															class="form-control boxBorder boxHeight"
 															id="sigleRecoverylocality" 
 																pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 															 /> <label for="sigleRecoverylocality"><spring:message
 																code="input.locality" /> </label>
 													</div>
@@ -822,8 +822,8 @@ onclick="_Services._selectstartDate()"></i></span>
 												class="form-control boxBorder boxHeight"
 												id="bulkRecoverystreetNumber"
 												pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />"
-												oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
-												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
+												oninvalid="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
 												required > <label
 												for="bulkRecoverystreetNumber"><spring:message
 													code="input.streetNumber" /> <span class="star"> *</span></label>

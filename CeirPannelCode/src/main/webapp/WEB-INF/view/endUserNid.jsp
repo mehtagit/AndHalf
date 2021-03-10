@@ -206,7 +206,7 @@ section {
 						<div class="input-field col s12  m12 l5 placeholderDiv">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 							<input type="text" id="Search" name="Search"
-								pattern="[A-Za-z0-9]{1,12}" maxlength="12"
+								 pattern="<spring:eval expression="@environment.getProperty('pattern.operatorNid')" />"
 								oninput="InvalidMsg(this,'input','<spring:message code="validation.12NID" />');" 
 								  oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12NID" />');"
 								placeholder="<spring:message code="input.nidInput" />" required>
