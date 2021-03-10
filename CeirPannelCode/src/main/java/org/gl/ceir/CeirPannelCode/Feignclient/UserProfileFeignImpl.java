@@ -259,5 +259,10 @@ public interface UserProfileFeignImpl {
 		
 		@GetMapping("/userToFeatureDropdown/{featureId}/{usertypeId}")
 		public List <UserfeatureContent> userToFeatureDropdownFeign(@PathVariable("featureId") Integer featureId, @PathVariable("usertypeId") Integer usertypeId);
+		
+		//***************************************************View Currency Feign********************************
+		
+		@RequestMapping(value="/usertype/viewById" ,method=RequestMethod.POST) 
+		public @ResponseBody GenricResponse viewUserTypeFeign(@RequestBody FilterRequest filterRequest);
 } 
 

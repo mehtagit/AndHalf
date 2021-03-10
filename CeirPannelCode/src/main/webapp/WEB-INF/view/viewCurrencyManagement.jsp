@@ -247,6 +247,11 @@
                         title="Please enter numeric numbers"  maxlength="8" required="required">
                         <label for="editCambodianRiel" class="">Cambodian Riel <span class="star"> *</span></label>
                     </div>
+                    <div class="row myRow">
+                   	<div class="input-field col s12 m6">
+                        <input type="text" id="editmodifiedBy" name="value" disabled>
+                        <label for="editmodifiedBy" class="">Modified By </label>
+                    </div>
                     
                     <div class="input-field col s12 m6">
                         <input type="number" id="editDollar"
@@ -254,7 +259,7 @@
                          title="Please enter numeric numbers"  maxlength="8" required="required">
                         <label for="editDollar" class="">US Dollar <span class="star">  *</span></label>
                     </div>
-
+					</div>
 					 <div class="col s12 m12 center" style="margin-top: 20px;">
                         <button class="btn" type="submit">Submit</button>
                         <a href="#" class="btn modal-close" id="Cancel" style="margin-left: 10px;">Cancel</a>

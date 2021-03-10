@@ -231,12 +231,55 @@
 		});
 		}
 
-	function userChangeStatus(id){
+	/*function userChangeStatus(id){
 		window.userId = id
 		$("#statusChangemodal").openModal({
 		 	   dismissible:false
 		    });
-	}
+		result.modifiedBy =="" || result.modifiedBy==null ?  $("#editmodifiedBy").val('NA'): $("#editmodifiedBy").val(result.modifiedBy);
+		$("label[for='editmodifiedBy']").addClass('active')
+	}*/
+	
+
+	/*--------------------------------- Edit Model View -----------------------------------*/
+	
+	
+	function userChangeStatus(id){
+		window.userId = id 
+		var request ={
+				"dataId" :  parseInt(id),
+				"userId": parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
+		}
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
+		$.ajax({
+				url: './userTypeViewByID',
+				type: 'POST',
+				data : JSON.stringify(request),
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				success: function (data, textStatus, jqXHR) {
+						var result = data.data
+						$("#statusChangemodal").openModal({
+						 	   dismissible:false
+						 });
+						result.modifiedBy =="" || result.modifiedBy==null ?  $("#editmodifiedBy").val('NA'): $("#editmodifiedBy").val(result.modifiedBy);
+						$("label[for='editmodifiedBy']").addClass('active')
+						//////console.log(JSON.stringify(result));
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					////console.log("error in ajax")
+				}
+			});	
+		}
 	
 	function chanegeUserStatus(){
 		var Request={
