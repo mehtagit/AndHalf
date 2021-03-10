@@ -357,7 +357,10 @@
 		$("#editport").val(result.port);
 		$("#editId").val(result.id);
 		$("#editportAddress").val(result.address);
+		result.approvedBy =="" || result.approvedBy==null ?  $("#editmodifiedBy").val('NA'): $("#editmodifiedBy").val(result.approvedBy);
 		$("label[for='editportAddress']").addClass('active');
+		$("label[for='editmodifiedBy']").addClass('active');
+		
 		
 	}
 	

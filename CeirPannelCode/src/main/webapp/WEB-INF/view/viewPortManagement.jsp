@@ -180,7 +180,7 @@
         <div class="modal-content">
           	<form action="" onsubmit="return updatedPort()">
                 <div class="row" style="margin-top: 10px;">
-					
+					<div class="row myRow">
 				<div class="col s12 m6">
 					<label for="editport" class="active">Port Type <span class="star">*</span></label>
                      	 <select class="browser-default" id="editport" >
@@ -188,15 +188,21 @@
                           </select>
                         
                          <input type="text" id="editId" hidden>
-                    </div>
-					
+                   
+				</div>	
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
                         <input type="text" id="editportAddress" name="value"  title="Please enter alphabets and numbers upto 100 characters only" 
                         pattern="<spring:eval expression="@environment.getProperty('pattern.portAddress')" />"
                         maxlength="100" required="required">
                         <label for="editportAddress" class="">Port Address <span class="star"> *</span></label>
                     </div>
-
+                 </div>
+                     
+                    <div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="editmodifiedBy" name="value" disabled>
+                        <label for="editmodifiedBy" class="">Modified By </label>
+                    </div>
+			
 					<div class="col s12 m12 center" style="margin-top: 20px;">
                         <button class="btn" type="submit">Update</button>
                         <a href="#" class="btn modal-close" id="Cancel" style="margin-left: 10px;">Cancel</a>
