@@ -387,8 +387,8 @@
                                                                     id="sigleRecoverystreetNumber"  
                                                                      pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />"
                                                                      required="required" title=""
-                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');" 
-                                                                oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');">
+                                                                     oninput="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');" 
+                                                                oninvalid="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');">
                                                                 <label for="sigleRecoverystreetNumber"><spring:message code="input.streetNumber" /> <span class="star">*</span></label>
                                                             </div>
         
@@ -398,8 +398,8 @@
                                                                 <input type="text" name="sigleRecoverylocality" class="form-control boxBorder boxHeight" placeholder=""
                                                                     id="sigleRecoverylocality" 
                                                                     pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
-                                                                    title="" oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-                                                                   oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');">
+                                                                    title="" oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+                                                                   oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');">
                                                                 <label for="sigleRecoverylocality"><spring:message code="input.locality" /> <span class="star"></span></label>
                                                             </div>
                                 

@@ -248,7 +248,8 @@ input[type='search'] {
 
 													<div class="input-field col s12 m6"
 														style="margin-top: 28px;">
-														<input type="text" id="serialNumber1" name="serialNumber" pattern="[A-Za-z0-9]{0,25}"
+														<input type="text" id="serialNumber1" name="serialNumber"
+														pattern="<spring:eval expression="@environment.getProperty('pattern.serialNumber')" />"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15serialNo" />');"
 															title=""
@@ -286,7 +287,7 @@ input[type='search'] {
 														<input type="text" name="Price" id="Price1"
 														oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
-															pattern="[0-9]{0,7}"  maxlength="7">
+															pattern="<spring:eval expression="@environment.getProperty('pattern.price')" />"  maxlength="9">
 														<label for="Price1"><spring:message code="select.price" /></label>
 													</div>
 

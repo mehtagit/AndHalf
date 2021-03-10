@@ -249,7 +249,8 @@ function setViewPopupData(data){
 
 	}
 	else{
-		totalPrice=(parseInt(data.totalPrice));
+		totalPrice=(test(data.totalPrice));
+		
 		$("#viewCurrencyDiv").css("display", "block");
 	}
 	$("#supplierId").val(data.supplierId);

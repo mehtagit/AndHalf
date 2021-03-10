@@ -106,9 +106,9 @@
 									<div class="input-field col s12 m6 l6" style="margin-top: 22px">
 										<input type="text" id="trademark" name="trademark"
 											pattern="<spring:eval expression="@environment.getProperty('pattern.trademark')" />"
-											oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-											title="" maxlength="30" required> <label
+											oninput="InvalidMsg(this,'input','<spring:message code="validation.trademark" />');"
+											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.trademark" />');"
+											title="" maxlength="160" required> <label
 											for="trademark"><spring:message
 												code="registration.trademark" /> <span class="star">*</span></label>
 									</div>
@@ -148,7 +148,7 @@
 									</div>
 
 									<div class="col s12 m6 l6">
-										<label><spring:message code="input.Country" /> <span
+										<label><spring:message code="input.manufacturerCountry" /> <span
 											class="star">*</span></label> <select id="country"
 											class="browser-default" class="mySelect"
 											style="padding-left: 0;"
@@ -165,7 +165,7 @@
 										pattern="<spring:eval expression="@environment.getProperty('pattern.frequencyRange')" />"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-											maxlength="50" required> <label for="frequencyrange"><spring:message
+											maxlength="30" required> <label for="frequencyrange"><spring:message
 												code="registration.frequencyrange" /> <span class="star">*</span></label>
 									</div>
 									<div class="input-field col s12 m6 l6">

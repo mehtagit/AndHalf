@@ -490,8 +490,8 @@
 												<input type="text" name="companyName"
 												pattern="<spring:eval expression="@environment.getProperty('pattern.companyName')" />"
 												 required  placeholder="" title="" 
-												    oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+												    oninput="InvalidMsg(this,'input','<spring:message code="validation.companyName" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.companyName" />');"
 													id="bulkStolencompanyName"> <label
 													for="companyName"> <spring:message code="registration.companyName" /><span class="star">*</span></label>
 											</div>
@@ -582,8 +582,8 @@
 													class="form-control boxBorder boxHeight"
 													id="bulkStolenstreetNumber" title=""
 													pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
 													required="required" >
 												<label for="streetNumber"> <spring:message code="input.streetNumber" /><span
 													class="star">*</span></label>
@@ -596,8 +596,8 @@
 													class="form-control boxBorder boxHeight"
 													id="bulkStolenlocality" 
 													pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
-													 title="" oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+													 title="" oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 													 maxlength="30" 
 													title="Please enter your locality"> <label
 													for="locality"><spring:message code="input.locality" /> <span class="star"></span></label>
@@ -767,9 +767,9 @@
 													class="form-control boxBorder boxHeight"
 													id="deviceBulkStolenstreetNumber"  title=""
 													pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />"
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-													 maxlength="20" required="required">
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
+													  required="required">
 												<label for="streetNumber"><spring:message code="input.streetNumber" /> <span
 													class="star">*</span></label>
 											</div>
@@ -780,9 +780,9 @@
 													class="form-control boxBorder boxHeight"
 													id="deviceBulkStolenlocality"  title=""
 													pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />" 
-													oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-													maxlength="30">
+													oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+													oninvalid="InvalidMsg(this,'input','<spring:message code="" />');"
+													>
 												<label for="locality"><spring:message code="input.locality" /> <span class="star"></span></label>
 											</div>
 

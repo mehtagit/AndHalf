@@ -57,8 +57,11 @@ public class ReportController {
 	/*---------------------------------------- Select Report Dropdown ----------------------------------------*/
 	
 	@RequestMapping(value="/getallreports", method = {org.springframework.web.bind.annotation.RequestMethod.POST})
-	public @ResponseBody List<ReportResponse> dbReportList(@RequestParam(name="reportCategory", required = false) Integer reportCategory){
-		List<ReportResponse> dbTableList = dBTablesFeignClient.getAllReports(reportCategory);
+	public @ResponseBody List<ReportResponse> dbReportList(@RequestParam(name="reportCategory", required = false) Integer reportCategory,
+			@RequestParam(name="featureId", required = false) Integer featureId,
+			@RequestParam(name="userId", required = false) Integer userId,
+			@RequestParam(name="userType", required = false) String userType){
+		List<ReportResponse> dbTableList = dBTablesFeignClient.getAllReports(reportCategory,featureId,userId,userType );
 		return  dbTableList;
 	}
 	

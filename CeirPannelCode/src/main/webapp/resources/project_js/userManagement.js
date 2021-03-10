@@ -258,11 +258,13 @@
 					        dismissible:false
 					    });
 						viewPopupData(result);
+						
 					}else{
 						$("#editModel").openModal({
 					        dismissible:false
 					    });
 						editPopupData(result);
+						
 					}
 					
 					////console.log(JSON.stringify(result));
@@ -285,6 +287,8 @@
 		result.viewUserType=="" || result.viewUserType==null ? $("#viewuserType").val('NA') : $("#viewuserType").val(result.viewUserType);
 		result.userName=="" || result.userName==null ? $("#viewuserName").val('NA') : $("#viewuserName").val(result.userName);
 		result.remarks=="" || result.remarks==null ? $("#viewuserRemark").val('NA') : $("#viewuserRemark").val(result.remarks);
+		result.approvedBy =="" || result.approvedBy==null ?  $("#viewModifiedBy").val('NA'): $("#viewModifiedBy").val(result.approvedBy);
+		
 		$("label[for='viewfirstName']").addClass('active');
 		$("label[for='viewmiddleName']").addClass('active');
 		$("label[for='viewlastName']").addClass('active');
@@ -295,6 +299,7 @@
 		$("label[for='viewuserType']").addClass('active');
 		$("label[for='viewuserRemark']").addClass('active');
 		$("label[for='viewuserName']").addClass('active');
+		$("label[for='viewModifiedBy']").addClass('active');
 		
 		
 	}
@@ -326,6 +331,8 @@
 		$("#EditconfirmPassword").val(result.password);
 		$("#edituserName").val(result.userName);
 		$("#edituserRemark").val(result.remarks);
+		//$("#editModifiedBy").val(result.approvedBy);
+		result.approvedBy =="" || result.approvedBy==null ?  $("#editModifiedBy").val('NA'): $("#editModifiedBy").val(result.approvedBy);
 		
 		
 		$("label[for='editfirstName']").addClass('active');
@@ -338,6 +345,7 @@
 		$("label[for='edituserName']").addClass('active');
 		$("label[for='edituserType']").addClass('active');
 		$("label[for='edituserRemark']").addClass('active');
+		$("label[for='editModifiedBy']").addClass('active');
 		
 	}
 

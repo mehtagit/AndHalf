@@ -445,8 +445,8 @@ select {
 															id="singleStolenstreetNumber"
 															pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />" required="required"
 															title=""
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
 															> <label for="streetNumber"><spring:message
 																code="input.streetNumber" /> <span class="star">*</span></label>
 													</div>
@@ -459,8 +459,8 @@ select {
 															id="singleStolenlocality"
 															pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
 															title=""
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 															> <label for="locality"> <spring:message
 																code="input.locality" /><span class="star"></span></label>
 													</div>
@@ -846,8 +846,8 @@ onclick="_Services._selectstartDate()"></i></span>
 																id="singleDevicestreetNumber"
 																pattern="<spring:eval expression="@environment.getProperty('pattern.street')" />"
 																required="required" title=""
-																oninput="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.20Character" />');"
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.streetNumber" />');"
 																> <label for="streetNumber"><spring:message
 																	code="input.streetNumber" /> <span class="star">*</span></label>
 														</div>
@@ -860,8 +860,8 @@ onclick="_Services._selectstartDate()"></i></span>
 																id="singleDevicelocality"
 															pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
 																 title=""
-																oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+																oninput="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
+																oninvalid="InvalidMsg(this,'input','<spring:message code="validation.address30characters" />');"
 																> <label for="locality"><spring:message
 																	code="input.locality" /> <span class="star"></span></label>
 														</div>

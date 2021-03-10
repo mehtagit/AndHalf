@@ -296,7 +296,7 @@ input#quantity {
 									
 										<div class="input-field col s12 m6">
 											<input type="text" name="deviceQuantity" id="deviceQuantity"
-												pattern="[0-9]{0,7}"
+										
 												pattern="<spring:eval expression="@environment.getProperty('pattern.IMEI/DeviceQuantity')" />"
 												 oninput="InvalidMsg(this,'input','<spring:message code="validation.7character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7character" />');"  required/> 
 												<label for="deviceQuantity" class="center-align" style="margin-top: 5px;"><spring:message code="input.deviceQty" /> <span class="star">*</span></label>
