@@ -287,7 +287,7 @@ input[type='search'] {
 														<input type="text" name="Price" id="Price1"
 														oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 											        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
-															pattern="<spring:eval expression="@environment.getProperty('pattern.price')" />"  maxlength="9">
+														pattern="^\d+(?:\.\d{1,2})?$"  maxlength="9">
 														<label for="Price1"><spring:message code="select.price" /></label>
 													</div>
 

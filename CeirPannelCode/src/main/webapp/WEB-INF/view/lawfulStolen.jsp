@@ -246,9 +246,9 @@
 													<div class="input-field col s12 m4 l6"
 														style="margin-top: 22px;">
 														<input type="text" name="nIDPassportNumber"
-															pattern="<spring:eval expression="@environment.getProperty('pattern.nid')" />" 
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.15alphanumeric" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15alphanumeric" />');"
+															pattern="<spring:eval expression="@environment.getProperty('pattern.importerNid')" />" 
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');"
 															required 
 															id="singleStolennIDPassportNumber"> <label
 															for="singleStolennIDPassportNumber"> <spring:message code="registration.nid/passportnumber" /> <span
@@ -1046,7 +1046,7 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 											onsubmit="return saveCompanyStolenRequest()" method="POST"
 											enctype="multipart/form-data">
 											<div class="input-field col s12 m6">
-												<input type="text" name="companyName"  pattern="[a-zA-Z ]{1,30}"
+												<input type="text" name="companyName" 
 													pattern="<spring:eval expression="@environment.getProperty('pattern.companyName')" />"
 													oninput="InvalidMsg(this,'input','<spring:message code="validation.companyName" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.companyName" />');"

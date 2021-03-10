@@ -711,7 +711,7 @@ width: inherit;
 					<div class="input-field col s12 m6">
 						<input type="text" name="supplierName" id="supplierNameEdit"
 							placeholder="" pattern="<spring:eval expression="@environment.getProperty('pattern.supplierName')" />"
-							oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.15alphanumeric" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15alphanumeric" />');"
 							 required /> <label for="Name"
 							class="center-align"><spring:message
 								code="input.suppliername" /><span class="star">*</span> </label>
@@ -841,7 +841,7 @@ width: inherit;
 				
 					<div class="input-field col s12 m6">
 						<input type="text" name="totalPrice" id="totalPrice" 
-							pattern="<spring:eval expression="@environment.getProperty('pattern.price')" />"
+							pattern="^\d+(?:\.\d{1,2})?$" maxlength="9"
 							placeholder=""  oninput="InvalidMsg(this,'input','<spring:message code="validation.12Char" />');"
 					 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Char" />');"/> <label for="totalPrice" class="center-align"><spring:message
 								code="input.totalprice" /></label>
