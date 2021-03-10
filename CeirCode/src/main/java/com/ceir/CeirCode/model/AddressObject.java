@@ -1,6 +1,6 @@
 package com.ceir.CeirCode.model;
 
-public class AddressObject {
+public class AddressObject extends AllRequest {
 private String province;
 private Long districtID;
 private Long communeID;
@@ -8,6 +8,8 @@ private String district;
 private String commune;
 private String village;
 public long localityId;
+
+
 
 public long getLocalityId() {
 	return localityId;

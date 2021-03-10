@@ -16,4 +16,5 @@ public interface Features {
 	String SLA_Management="SLA Management";
 	String User_Management="User Management";
 	String Profile="Profile";
+	String Address_Management="Address Management";
 }

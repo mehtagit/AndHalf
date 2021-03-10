@@ -31,6 +31,8 @@ import com.ceir.CeirCode.model.Locality;
 import com.ceir.CeirCode.model.SearchCriteria;
 import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.UserProfileFileModel;
+import com.ceir.CeirCode.model.constants.Features;
+import com.ceir.CeirCode.model.constants.SubFeatures;
 import com.ceir.CeirCode.repo.LocalityRepo;
 import com.ceir.CeirCode.repo.SystemConfigDbListRepository;
 import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
@@ -51,6 +53,9 @@ public class LocalityService {
 	
 	@Autowired
 	SystemConfigDbListRepository systemConfigRepo;
+	
+	@Autowired
+	UserService userService;
 	public Page<Locality>  viewAll(AddressObject filterRequest, Integer pageNo, Integer pageSize){
 		try { 
 			log.info("filter data:  "+filterRequest);
@@ -70,7 +75,16 @@ public class LocalityService {
 	
 	private GenericSpecificationBuilder<Locality> buildSpecification(AddressObject filterRequest){
 		GenericSpecificationBuilder<Locality> uPSB = new GenericSpecificationBuilder<Locality>(propertiesReader.dialect);	
-
+		long localityID = filterRequest.getLocalityId();
+		if (localityID > 0) {
+			log.info("recived locality ID for audit: " + localityID);
+			userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
+					filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.Address_Management,SubFeatures.VIEW,filterRequest.getFeatureId());
+		}else {
+			log.info("audit for view all: " + localityID);
+			userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
+				filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.Address_Management,SubFeatures.VIEW_ALL,filterRequest.getFeatureId());
+		}
 		if(Objects.nonNull(filterRequest.getStartDate()) && filterRequest.getStartDate()!="")
 			uPSB.with(new SearchCriteria("createdOn",filterRequest.getStartDate(), SearchOperation.GREATER_THAN, Datatype.DATE));
 
@@ -140,6 +154,8 @@ public class LocalityService {
 		List<LocalityFile> fileRecords       = null;
 		MappingStrategy<LocalityFile> mapStrategy = new CustomMappingStrategy<>();
 		
+		userService.saveUserTrail(filter.getUserId(),filter.getUsername(),
+				filter.getUserType(),filter.getUserTypeId(),Features.Address_Management,SubFeatures.EXPORT,filter.getFeatureId());
 		
 		try {
 			

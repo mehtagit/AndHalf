@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.envers.Audited;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Component
 @Entity
+@Audited
 @Table(name = "locality_db")
 public class Locality {
 	private static final long serialVersionUID = 1L;

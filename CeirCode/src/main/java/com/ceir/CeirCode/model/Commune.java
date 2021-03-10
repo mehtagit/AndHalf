@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.envers.Audited;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
@@ -21,9 +22,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Component
 @Entity
+@Audited
 @Table(name = "commune_db")
 
-public class Commune {
+public class Commune extends AllRequest {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

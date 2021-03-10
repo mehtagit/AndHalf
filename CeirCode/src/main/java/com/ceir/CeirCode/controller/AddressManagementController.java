@@ -30,6 +30,8 @@ import com.ceir.CeirCode.model.FilterRequest;
 import com.ceir.CeirCode.model.Locality;
 import com.ceir.CeirCode.model.Province;
 import com.ceir.CeirCode.model.Village;
+import com.ceir.CeirCode.model.constants.Features;
+import com.ceir.CeirCode.model.constants.SubFeatures;
 import com.ceir.CeirCode.repo.AuditTrailRepo;
 import com.ceir.CeirCode.repo.CommuneRepo;
 import com.ceir.CeirCode.repo.DistrictRepo;
@@ -38,6 +40,7 @@ import com.ceir.CeirCode.repo.ProvinceRepo;
 import com.ceir.CeirCode.repo.VillageRepo;
 import com.ceir.CeirCode.response.tags.RegistrationTags;
 import com.ceir.CeirCode.service.LocalityService;
+import com.ceir.CeirCode.service.UserService;
 import com.ceir.CeirCode.util.HttpResponse;
 
 import io.swagger.annotations.ApiOperation;
@@ -61,6 +64,8 @@ public class AddressManagementController {
 	LocalityService localityService;
 	@Autowired
 	AuditTrailRepo auditTrailRepo;
+	@Autowired
+	UserService userService;
 
 	/*************************** get Records ***************/
 
@@ -101,6 +106,8 @@ public class AddressManagementController {
 				response = new HttpResponse(RegistrationTags.exist.getMessage(), 409, RegistrationTags.exist.getTag());
 
 			} else {
+				userService.saveUserTrail(province.getUserId(),province.getUsername(),
+						province.getUserType(),province.getUserTypeId(),Features.Address_Management,SubFeatures.SAVE,province.getFeatureId());
 				provinceRepo.save(province);
 				response = new HttpResponse(RegistrationTags.Success_Save.getMessage(), 200,
 						RegistrationTags.Success_Save.getTag());
@@ -125,6 +132,8 @@ public class AddressManagementController {
 				response = new HttpResponse(RegistrationTags.exist.getMessage(), 409, RegistrationTags.exist.getTag());
 
 			} else {
+				userService.saveUserTrail(district.getUserId(),district.getUsername(),
+						district.getUserType(),district.getUserTypeId(),Features.Address_Management,SubFeatures.SAVE,district.getFeatureId());
 				districtRepo.save(district);
 				response = new HttpResponse(RegistrationTags.Success_Save.getMessage(), 200,
 						RegistrationTags.Success_Save.getTag());
@@ -150,6 +159,8 @@ public class AddressManagementController {
 				response = new HttpResponse(RegistrationTags.exist.getMessage(), 409, RegistrationTags.exist.getTag());
 
 			} else {
+				userService.saveUserTrail(commune.getUserId(),commune.getUsername(),
+						commune.getUserType(),commune.getUserTypeId(),Features.Address_Management,SubFeatures.SAVE,commune.getFeatureId());
 				communeRepo.save(commune);
 				response = new HttpResponse(RegistrationTags.Success_Save.getMessage(), 200,
 						RegistrationTags.Success_Save.getTag());
@@ -173,6 +184,8 @@ public class AddressManagementController {
 				response = new HttpResponse(RegistrationTags.exist.getMessage(), 409, RegistrationTags.exist.getTag());
 
 			} else {
+				userService.saveUserTrail(village.getUserId(),village.getUsername(),
+						village.getUserType(),village.getUserTypeId(),Features.Address_Management,SubFeatures.SAVE,village.getFeatureId());
 				villageRepo.save(village);
 				Locality locality = new Locality();
 				Optional<Commune> communeDetail = communeRepo.findById(village.getCommuneID());
@@ -270,7 +283,8 @@ public class AddressManagementController {
 			log.info(local + "------updated province in district_db with " + province.getUpdatingProvinceName());
 			districtRepo.updateProvinceInDistrict(province.getUpdatingProvinceName(), local.getDistrict(),
 					local.getProvince());
-
+			userService.saveUserTrail(province.getUserId(),province.getUsername(),
+					province.getUserType(),province.getUserTypeId(),Features.Address_Management,SubFeatures.UPDATE,province.getFeatureId());
 			localityRepo.updateProvince(province.getUpdatingProvinceName(), local.getProvince());
 			response = new HttpResponse(RegistrationTags.Success_Save.getMessage(), 200,
 					RegistrationTags.Success_Save.getTag());
@@ -307,6 +321,8 @@ public class AddressManagementController {
 			 * districtRepo.existsByProvinceAndDistrict(district.getProvince(),
 			 * district.getCurrentDistrictName()); if (isExistInDB) {
 			 */
+			userService.saveUserTrail(district.getUserId(),district.getUsername(),
+					district.getUserType(),district.getUserTypeId(),Features.Address_Management,SubFeatures.UPDATE,district.getFeatureId());
 			localityRepo.updateDistrict(district.getCurrentDistrictName(), district.getDistrict(),
 					district.getProvince());
 			response = new HttpResponse(RegistrationTags.Success_Save.getMessage(), 200,
@@ -351,6 +367,8 @@ public class AddressManagementController {
 				 * Boolean isExistInDB = communeRepo.existsByDistrictIDAndCommune(districtID,
 				 * commune.getCurrentCommuneName()); if (isExistInDB) {
 				 */
+				userService.saveUserTrail(commune.getUserId(),commune.getUsername(),
+						commune.getUserType(),commune.getUserTypeId(),Features.Address_Management,SubFeatures.UPDATE,commune.getFeatureId());
 				localityRepo.updateCommune(commune.getCurrentCommuneName(), commune.getDistrictName(),
 						commune.getCommune(), commune.getProvince());
 				response = new HttpResponse(RegistrationTags.Success_Save.getMessage(), 200,
@@ -393,7 +411,8 @@ public class AddressManagementController {
 			 * Boolean isExistInDB = communeRepo.existsByDistrictIDAndCommune(communeID,
 			 * village.getVillage()); if (isExistInDB) {
 			 */
-
+			userService.saveUserTrail(village.getUserId(),village.getUsername(),
+					village.getUserType(),village.getUserTypeId(),Features.Address_Management,SubFeatures.UPDATE,village.getFeatureId());
 			localityRepo.updateVillage(village.getCurrentVillage(), village.getDistrictName(), village.getCommune(),
 					village.getId());
 			response = new HttpResponse(RegistrationTags.Success_Save.getMessage(), 200,
@@ -468,7 +487,8 @@ public class AddressManagementController {
 				}
 
 			}
-
+			userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
+					filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.Address_Management,SubFeatures.DELETE,filterRequest.getFeatureId());
 			localityRepo.deleteById(filterRequest.getId());
 			response = new HttpResponse(RegistrationTags.delete_successfully.getMessage(), 200,
 					RegistrationTags.delete_successfully.getTag());

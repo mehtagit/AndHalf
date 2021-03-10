@@ -17,6 +17,7 @@ public class FilterRequest {
 	private Long id;
 	private String columnName;
 	private String sort;
+	private String userType;
 
 	public String getColumnName() {
 		return columnName;
@@ -80,6 +81,14 @@ public class FilterRequest {
 
 	public void setUserRoleTypeId(long userRoleTypeId) {
 		this.userRoleTypeId = userRoleTypeId;
+	}
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 
 	public Integer getViewAllUserStatus() {
@@ -181,6 +190,8 @@ public class FilterRequest {
 		builder.append(columnName);
 		builder.append(", sort=");
 		builder.append(sort);
+		builder.append(", userType=");
+		builder.append(userType);
 		builder.append("]");
 		return builder.toString();
 	}

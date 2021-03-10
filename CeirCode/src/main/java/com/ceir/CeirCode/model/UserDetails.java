@@ -13,7 +13,14 @@ public class UserDetails extends AllRequest{
 	private long usertypeId;
 
 	private String viewUserType;
+	private String approvedBy;
 
+	public String getApprovedBy() {
+		return approvedBy;
+	}
+	public void setApprovedBy(String approvedBy) {
+		this.approvedBy = approvedBy;
+	}
 
 	private String remarks;
 	public String getFirstName() {
@@ -90,7 +97,7 @@ public class UserDetails extends AllRequest{
 
 	public UserDetails(String firstName, String middleName, String lastName,
 			String phoneNo, String email, String userType, String userName, long id, long
-			userTypeId, String remarks) {
+			userTypeId, String remarks, String approvedBy) {
 		super();
 		this.firstName = firstName;
 			this.middleName = middleName;
@@ -102,6 +109,7 @@ public class UserDetails extends AllRequest{
 			this.id = id; 
 			this.usertypeId = userTypeId;
 			this.remarks = remarks; 
+			this.approvedBy = approvedBy;
 			}
 
 	@Override
@@ -127,10 +135,10 @@ public class UserDetails extends AllRequest{
 		builder.append(usertypeId);
 		builder.append(", viewUserType=");
 		builder.append(viewUserType);
+		builder.append(", approvedBy=");
+		builder.append(approvedBy);
 		builder.append(", remarks=");
 		builder.append(remarks);
-		builder.append(", toString()=");
-		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}

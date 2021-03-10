@@ -11,6 +11,7 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.envers.Audited;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +19,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Component
 @Entity
+@Audited
 @Table(name = "province_db")
-public class Province {
+public class Province extends AllRequest {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

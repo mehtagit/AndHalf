@@ -40,55 +40,107 @@ public class PortAddress extends AllRequest{
 	
 	private Integer port;
 	
+	private String approvedBy;
 	@Transient
 	private String portInterp;
+
+
+
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+
+
+	public static void setSerialVersionUID(long serialVersionUID) {
+		PortAddress.serialVersionUID = serialVersionUID;
+	}
+
+
 
 	public long getId() {
 		return id;
 	}
 
+
+
 	public void setId(long id) {
 		this.id = id;
 	}
+
+
 
 	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
 
+
+
 	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
+
+
 
 	public LocalDateTime getModifiedOn() {
 		return modifiedOn;
 	}
 
+
+
 	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
+
+
 
 	public String getAddress() {
 		return address;
 	}
 
+
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
+
+
 
 	public Integer getPort() {
 		return port;
 	}
 
+
+
 	public void setPort(Integer port) {
 		this.port = port;
 	}
+
+
+
+	public String getApprovedBy() {
+		return approvedBy;
+	}
+
+
+
+	public void setApprovedBy(String approvedBy) {
+		this.approvedBy = approvedBy;
+	}
+
+
+
 	public String getPortInterp() {
 		return portInterp;
 	}
 
+
+
 	public void setPortInterp(String portInterp) {
 		this.portInterp = portInterp;
 	}
+
+
 
 	@Override
 	public String toString() {
@@ -103,10 +155,10 @@ public class PortAddress extends AllRequest{
 		builder.append(address);
 		builder.append(", port=");
 		builder.append(port);
+		builder.append(", approvedBy=");
+		builder.append(approvedBy);
 		builder.append(", portInterp=");
 		builder.append(portInterp);
-		builder.append(", toString()=");
-		builder.append(super.toString());
 		builder.append("]");
 		return builder.toString();
 	}

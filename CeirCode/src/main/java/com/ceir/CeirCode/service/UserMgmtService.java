@@ -339,6 +339,8 @@ public class UserMgmtService {
 		// boolean phoneExist=userProfileRepo.existsByPhoneNo(details.getPhoneNo());
 
 		UserProfile profile = userData.getUserProfile();
+		String username = details.getUsername();
+		log.info("userName of System Admin "+username);
 		if (!details.getEmail().equalsIgnoreCase(profile.getEmail())) {
 			boolean emailExist = userProfileRepo.existsByEmailAndUser_CurrentStatusNot(details.getEmail(), 21);
 			if (emailExist) {
@@ -376,6 +378,8 @@ public class UserMgmtService {
 		userData.setUsertype(userType);
 		userData.setUserRole(role);
 		userData.setUserProfile(profile);
+		userData.setApprovedBy(username);
+		log.info("userName of System Admin going to save in Approved by field "+username);
 		User output = new User();
 		try {
 			output = userRepo.save(userData);
@@ -441,14 +445,15 @@ public class UserMgmtService {
 			GenricResponse response = new GenricResponse(500, "user id is wrong", "");
 			return response;
 		}
-
+		
 		if (output != null) {
 			Usertype usertype = usertypeRepo.findById(output.getUsertype().getId());
 			UserDetails details = new UserDetails(output.getUserProfile().getFirstName(),
 					output.getUserProfile().getMiddleName(), output.getUserProfile().getLastName(),
 					output.getUserProfile().getPhoneNo(), output.getUserProfile().getEmail(),
 					usertype.getUsertypeName(), output.getUsername(), request.getDataId(), output.getUsertype().getId(),
-					output.getRemark());
+					output.getRemark(),output.getApprovedBy());
+			log.info("Name of system Admin when viewing  "+output.getApprovedBy());
 			GenricResponse response = new GenricResponse(200, "", "", details);
 
 			return response;

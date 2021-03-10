@@ -166,6 +166,7 @@ public class PortAddressService {
 				}
 				
 					}
+					log.info("User Name of system Admin when viewing  "+output.getApprovedBy());
 					GenricResponse response=new GenricResponse(200,"","",output);		
 		
 			return  new ResponseEntity<>(response,HttpStatus.OK);
@@ -184,10 +185,13 @@ public class PortAddressService {
 //		headerService.saveRequestHeader(header);
 		userService.saveUserTrail(portAddress.getUserId(),portAddress.getUsername(),
 				portAddress.getUserType(),portAddress.getUserTypeId(),Features.Port_Management,SubFeatures.UPDATE,portAddress.getFeatureId());
-
+        
 		PortAddress data=portService.getById(portAddress.getId());
+		String username = portAddress.getUsername();
+		log.info("Modifeid By Username "+username);
 		if(data!=null) {
 			portAddress.setCreatedOn(data.getCreatedOn());
+			portAddress.setApprovedBy(username);
 		PortAddress output=portService.save(portAddress);
 		
 		if(output!=null) {

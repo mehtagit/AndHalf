@@ -58,84 +58,139 @@ public class Currency  extends AllRequest{
 	@Transient
 	private String monthInterp;
 	
+	private String modifiedBy;
 	
 	
 	public static long getSerialVersionUID() {
 		return serialVersionUID;
 	}
+
+
 	public static void setSerialVersionUID(long serialVersionUID) {
 		Currency.serialVersionUID = serialVersionUID;
 	}
+
+
 	public long getId() {
 		return id;
 	}
+
+
 	public void setId(long id) {
 		this.id = id;
 	}
+
+
 	public LocalDateTime getCreatedOn() {
 		return createdOn;
 	}
+
+
 	public void setCreatedOn(LocalDateTime createdOn) {
 		this.createdOn = createdOn;
 	}
+
+
 	public LocalDateTime getModifiedOn() {
 		return modifiedOn;
 	}
+
+
 	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
 	}
-	
-	public Integer getCurrency() {
-		return currency;
-	}
-	public void setCurrency(Integer currency) {
-		this.currency = currency;
-	}
-	public double getRiel() {
-		return riel;
-	}
-	public void setRiel(double riel) {
-		this.riel = riel;
-	}
-	public double getDollar() {
-		return dollar;
-	}
-	public void setDollar(double dollar) {
-		this.dollar = dollar;
-	}
-	
-	public String getCurrencyInterp() {
-		return currencyInterp;
-	}
-	public void setCurrencyInterp(String currencyInterp) {
-		this.currencyInterp = currencyInterp;
-	}
-	
-	public Integer getMonth() {
-		return month;
-	}
-	public void setMonth(Integer month) {
-		this.month = month;
-	}
-	public Integer getYear() {
-		return year;
-	}
-	public void setYear(Integer year) {
-		this.year = year;
-	}
+
+
 	public String getMonthDate() {
 		return monthDate;
 	}
+
+
 	public void setMonthDate(String monthDate) {
 		this.monthDate = monthDate;
 	}
-	
+
+
+	public Integer getMonth() {
+		return month;
+	}
+
+
+	public void setMonth(Integer month) {
+		this.month = month;
+	}
+
+
+	public Integer getYear() {
+		return year;
+	}
+
+
+	public void setYear(Integer year) {
+		this.year = year;
+	}
+
+
+	public Integer getCurrency() {
+		return currency;
+	}
+
+
+	public void setCurrency(Integer currency) {
+		this.currency = currency;
+	}
+
+
+	public double getRiel() {
+		return riel;
+	}
+
+
+	public void setRiel(double riel) {
+		this.riel = riel;
+	}
+
+
+	public double getDollar() {
+		return dollar;
+	}
+
+
+	public void setDollar(double dollar) {
+		this.dollar = dollar;
+	}
+
+
+	public String getCurrencyInterp() {
+		return currencyInterp;
+	}
+
+
+	public void setCurrencyInterp(String currencyInterp) {
+		this.currencyInterp = currencyInterp;
+	}
+
+
 	public String getMonthInterp() {
 		return monthInterp;
 	}
+
+
 	public void setMonthInterp(String monthInterp) {
 		this.monthInterp = monthInterp;
 	}
+
+
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -161,6 +216,8 @@ public class Currency  extends AllRequest{
 		builder.append(currencyInterp);
 		builder.append(", monthInterp=");
 		builder.append(monthInterp);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
 		builder.append("]");
 		return builder.toString();
 	}

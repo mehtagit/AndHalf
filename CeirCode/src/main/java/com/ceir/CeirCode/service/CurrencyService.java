@@ -149,6 +149,7 @@ public class CurrencyService {
 						output.setMonthInterp(monthInterp);
 					}
 					} 
+			log.info("Modified by Name of system Admin when viewing  "+output.getModifiedBy());
 			GenricResponse response=new GenricResponse(200,"","",output);
 			return  new ResponseEntity<>(response,HttpStatus.OK);
 		}
@@ -167,9 +168,12 @@ public class CurrencyService {
 		userService.saveUserTrail(currency.getUserId(),currency.getUsername(),
 		currency.getUserType(),currency.getUserTypeId(),Features.Exchange_Rate_Management,SubFeatures.UPDATE,currency.getFeatureId());
 		Currency data=currencyRepoService.getById(currency.getId());
+		String username = currency.getUsername();
+		log.info("Modifeid By User Name "+username);
 		if(data!=null) {
 			data.setDollar(currency.getDollar());
 			data.setRiel(currency.getRiel());
+			data.setModifiedBy(username);
 		Currency output=currencyRepoService.save(data);
 				if(output!=null) {
 					GenricResponse response=new GenricResponse(200,CurrencyTags.Curr_Update_Sucess.getTag(),CurrencyTags.Curr_Update_Sucess.getMessage(),"");
