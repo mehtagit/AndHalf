@@ -162,6 +162,10 @@
                                            	</select>
                                             </div>
                                    
+                                   	<div class="input-field col s12 m6">
+                        						<input type="text" id="editmodifiedBy" name="value" disabled>
+                        						<label for="editmodifiedBy" class="">Modified By </label>
+                    				</div>
                                         </div>
                                  		 <input type ="text" id="statusUserName" hidden="hidden" >
                                         <div class="row">

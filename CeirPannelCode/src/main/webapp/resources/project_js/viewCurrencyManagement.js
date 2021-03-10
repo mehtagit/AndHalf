@@ -353,12 +353,14 @@
 		$("#editCurrency").val(result.currency);
 		$("#editCambodianRiel").val(result.riel);
 		$("#editDollar").val(result.dollar);
+		result.modifiedBy =="" || result.modifiedBy==null ?  $("#editmodifiedBy").val('NA'): $("#editmodifiedBy").val(result.modifiedBy);
 		
 		$("label[for='editMonth']").addClass('active');
 		$("label[for='editYear']").addClass('active');
 		$("label[for='editCurrency']").addClass('active');
 		$("label[for='editCambodianRiel']").addClass('active');
 		$("label[for='editDollar']").addClass('active');
+		$("label[for='editmodifiedBy']").addClass('active');
 	}
 	
 	

@@ -458,7 +458,7 @@ var contextpath = "${context}";
 
 							<div class="row">
 								<div class="input-field col s12 m6 l6">
-									<input type="text" name="passportNo" id="passportNo" maxlength="13" pattern="<spring:eval expression="@environment.getProperty('pattern.nid')" />"
+									<input type="text" name="passportNo" id="passportNo" maxlength="13" pattern="<spring:eval expression="@environment.getProperty('pattern.operatorNid')" />"
 									oninput="InvalidMsg(this,'input','<spring:message code="validation.14Character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.14Character" />');"
 										required />
 									<label for="passportNo"><spring:message code="registration.nationalid" /> <span class="star">*</span></label>

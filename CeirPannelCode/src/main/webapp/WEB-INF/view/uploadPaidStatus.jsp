@@ -756,7 +756,7 @@ position: fixed;
 
 														<div class="input-field col s12 m6 l6" id="priceDiv">
 															<input type="text" name="Price" id="Price1"
-																pattern="<spring:eval expression="@environment.getProperty('pattern.price')" />" 
+																pattern="^\d+(?:\.\d{1,2})?$" maxlength="9"
 															oninput="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 											            oninvalid="InvalidMsg(this,'input','<spring:message code="validation.7digits" />');"
 																title= "<spring:message code="validation.7digits" />" >

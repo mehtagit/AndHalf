@@ -267,9 +267,9 @@ select {
 														style="margin-top: 22px;">
 														<input type="text" name="nIDPassportNumber" placeholder=""
 															required="required"  title=""
-															pattern="<spring:eval expression="@environment.getProperty('pattern.nid')" />"
-															oninput="InvalidMsg(this,'input','<spring:message code="validation.15alphanumeric" />');"
-															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15alphanumeric" />');"
+															pattern="<spring:eval expression="@environment.getProperty('pattern.importerNid')" />"
+															oninput="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');"
+															oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Character" />');"
 															maxlength="15" id="singleStolennIDPassportNumber">
 														<label for="nIDPassportNumber"> <spring:message
 																code="registration.nid/passportnumber" /> <span

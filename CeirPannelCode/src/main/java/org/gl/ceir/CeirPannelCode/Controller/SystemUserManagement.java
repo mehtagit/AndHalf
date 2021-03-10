@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Service.ProfileService;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.gl.ceir.pagination.model.UserManagementContent;
@@ -76,5 +77,15 @@ public class SystemUserManagement {
 			log.info("response  from  Export User Management api="+fileExportResponse);
 
 			return fileExportResponse;
-		}	
+		}
+		
+		//------------------------------------- view userType ----------------------------------------							
+		
+			@PostMapping("userTypeViewByID") 
+			public @ResponseBody GenricResponse viewCurrency (@RequestBody FilterRequest filterRequest )  {
+				log.info("request send to the View userType api="+filterRequest);
+				GenricResponse response= userProfileFeignImpl.viewUserTypeFeign(filterRequest);
+				log.info("response from userType api "+response);
+				return response;
+		}
 }

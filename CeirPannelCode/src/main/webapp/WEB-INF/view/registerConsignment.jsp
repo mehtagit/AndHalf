@@ -202,8 +202,8 @@ input#quantity {
 											<input type="text" name="consignmentNumber"
 												id="consignmentNumber" 
 												pattern="<spring:eval expression="@environment.getProperty('pattern.consignmentNumber')" />"
-												oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
-												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
+												oninput="InvalidMsg(this,'input','<spring:message code="validation.15alphanumeric" />');"
+												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15alphanumeric" />');"
 												maxlength="15" /> <label for="consignmentNumber" class="center-align"><spring:message code="input.consignmentnumber" /></label>
 										</div>
 
@@ -305,7 +305,7 @@ input#quantity {
 									
 										<div class="input-field col s12 m6">
 										<input type="text" name="totalPrice" id="totalPrice" 
-											pattern="<spring:eval expression="@environment.getProperty('pattern.price')" />"
+											pattern="^\d+(?:\.\d{1,2})?$" maxlength="9"
 												 oninput="InvalidMsg(this,'input','<spring:message code="validation.12Char" />');"
 												 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.12Char" />');"> 
 												 <label for="totalPrice" class="center-align"><spring:message code="input.totalprice" /></label>
