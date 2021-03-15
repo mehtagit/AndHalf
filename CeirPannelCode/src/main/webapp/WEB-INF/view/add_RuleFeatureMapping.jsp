@@ -197,6 +197,10 @@ textarea.materialize-textarea {
 section {
 	margin-top: 10px;
 }
+
+div#error_Modal {
+    width: 610px;
+}
 </style>
 
 </head>
