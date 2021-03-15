@@ -8,8 +8,8 @@
 	$('#btnLink').css({"display":"none"});	
 	var roleType = $("body").attr("data-roleType");
 	var userId = $("body").attr("data-userID");
-	var roleType = $("body").attr("data-roleType"); 
-
+	var userType = $("body").attr("data-roleType"); 
+	var featureId = 39; 
 
 	
 	
@@ -31,10 +31,10 @@
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
 		headers:
-		{ 'X-CSRF-TOKEN': token }
+		{ 'X-CSRF-TOKEN': token } 
 	});
 	$.ajax({
-		url: './getallTables?dbName='+dbName,
+		url: './getallTables?dbName='+dbName+'&featureId='+featureId+'&userId='+userId+'&userType='+userType,
 		type: 'POST',
 		dataType : 'json',
 		contentType : 'application/json; charset=utf-8',
