@@ -285,7 +285,9 @@ public class AddressManagementController {
 					local.getProvince());
 			userService.saveUserTrail(province.getUserId(),province.getUsername(),
 					province.getUserType(),province.getUserTypeId(),Features.Address_Management,SubFeatures.UPDATE,province.getFeatureId());
-			localityRepo.updateProvince(province.getUpdatingProvinceName(), local.getProvince());
+			log.info("------updated localityDB with Modified By "+ province.getUsername());
+			//local.setModifiedBy(province.getUsername());
+			localityRepo.updateProvince(province.getUpdatingProvinceName(), local.getProvince(),province.getUsername());
 			response = new HttpResponse(RegistrationTags.Success_Save.getMessage(), 200,
 					RegistrationTags.Success_Save.getTag());
 			log.info("locality_db updated with new province ");
@@ -323,8 +325,9 @@ public class AddressManagementController {
 			 */
 			userService.saveUserTrail(district.getUserId(),district.getUsername(),
 					district.getUserType(),district.getUserTypeId(),Features.Address_Management,SubFeatures.UPDATE,district.getFeatureId());
+			log.info("------updated localityDB with Modified By "+ district.getUsername());
 			localityRepo.updateDistrict(district.getCurrentDistrictName(), district.getDistrict(),
-					district.getProvince());
+					district.getProvince(),district.getUsername());
 			response = new HttpResponse(RegistrationTags.Success_Save.getMessage(), 200,
 					RegistrationTags.Success_Save.getTag());
 			log.info("locality_db updated with new district ");
@@ -369,8 +372,9 @@ public class AddressManagementController {
 				 */
 				userService.saveUserTrail(commune.getUserId(),commune.getUsername(),
 						commune.getUserType(),commune.getUserTypeId(),Features.Address_Management,SubFeatures.UPDATE,commune.getFeatureId());
+				log.info("------updated localityDB with Modified By "+ commune.getUsername());
 				localityRepo.updateCommune(commune.getCurrentCommuneName(), commune.getDistrictName(),
-						commune.getCommune(), commune.getProvince());
+						commune.getCommune(), commune.getProvince(),commune.getUsername());
 				response = new HttpResponse(RegistrationTags.Success_Save.getMessage(), 200,
 						RegistrationTags.Success_Save.getTag());
 				log.info("locality_db updated with new commune ");
@@ -413,8 +417,9 @@ public class AddressManagementController {
 			 */
 			userService.saveUserTrail(village.getUserId(),village.getUsername(),
 					village.getUserType(),village.getUserTypeId(),Features.Address_Management,SubFeatures.UPDATE,village.getFeatureId());
+			log.info("------updated localityDB with Modified By "+ village.getUsername());
 			localityRepo.updateVillage(village.getCurrentVillage(), village.getDistrictName(), village.getCommune(),
-					village.getId());
+					village.getId(),village.getUsername());
 			response = new HttpResponse(RegistrationTags.Success_Save.getMessage(), 200,
 					RegistrationTags.Success_Save.getTag());
 			log.info("locality_db updated with new village ");

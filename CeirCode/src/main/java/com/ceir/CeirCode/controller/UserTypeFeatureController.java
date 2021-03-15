@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ceir.CeirCode.filtermodel.UserTypeFeatureFilter;
+import com.ceir.CeirCode.model.AllRequest;
 import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.SystemConfigListDb;
 import com.ceir.CeirCode.model.UserToStakehoderfeatureMapping;
@@ -110,4 +111,11 @@ public class UserTypeFeatureController {
 		return response;
 
 	}
+	
+	@ApiOperation(value="view userType Period by id")
+	@PostMapping("/viewPeriodById")
+	public ResponseEntity<?> viewById(@RequestBody AllRequest request ){
+		return userTypeFeatureService.viewById(request);
+	}
+
 }

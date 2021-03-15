@@ -48,28 +48,7 @@ public class Locality {
 	private String district;
 	private String commune;
 	private String village;
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Locality [id=");
-		builder.append(id);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", country=");
-		builder.append(country);
-		builder.append(", province=");
-		builder.append(province);
-		builder.append(", district=");
-		builder.append(district);
-		builder.append(", commune=");
-		builder.append(commune);
-		builder.append(", village=");
-		builder.append(village);
-		builder.append("]");
-		return builder.toString();
-	}
+	private String modifiedBy;
 	public long getId() {
 		return id;
 	}
@@ -112,7 +91,39 @@ public class Locality {
 	public void setVillage(String village) {
 		this.village = village;
 	}
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Locality [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", province=");
+		builder.append(province);
+		builder.append(", district=");
+		builder.append(district);
+		builder.append(", commune=");
+		builder.append(commune);
+		builder.append(", village=");
+		builder.append(village);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
 }

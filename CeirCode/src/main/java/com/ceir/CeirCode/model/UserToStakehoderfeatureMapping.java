@@ -64,8 +64,18 @@ public class UserToStakehoderfeatureMapping {
 	
 	private Integer period;
 	 
+	private String modifiedBy;
+	
 	public long getId() {
 		return id;
+	}
+
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 
 	public void setId(long id) {

@@ -15,24 +15,24 @@ import com.ceir.CeirCode.model.Village;
 public interface LocalityRepo extends JpaRepository<Locality, Long>,JpaSpecificationExecutor<Locality>{
 	@Transactional
 	@Modifying
-	@Query(value = "update locality_db set MODIFIED_ON=sysdate, province =:currentProvinceName  where province=:province", nativeQuery = true)
-	public int updateProvince(String currentProvinceName,String province);
+	@Query(value = "update locality_db set MODIFIED_ON=sysdate, province =:currentProvinceName, MODIFIED_BY = :modifiedBy  where province=:province", nativeQuery = true)
+	public int updateProvince(String currentProvinceName,String province,String modifiedBy);
 
 	@Transactional
 	@Modifying
-	@Query(value = "update locality_db set MODIFIED_ON=sysdate, district =:currentDistrictName  where district =:district and province =:province", nativeQuery = true)
-	public int updateDistrict(String currentDistrictName,String district,String province);
+	@Query(value = "update locality_db set MODIFIED_ON=sysdate, district =:currentDistrictName, MODIFIED_BY = :modifiedBy  where district =:district and province =:province", nativeQuery = true)
+	public int updateDistrict(String currentDistrictName,String district,String province,String modifiedBy);
 
 	@Transactional
 	@Modifying
-	@Query(value = "update locality_db  set MODIFIED_ON=sysdate, commune =:currentCommuneName where district =:district and commune =:commune and province=:province", nativeQuery = true)
-	public int updateCommune(String currentCommuneName,String district,String commune,String province);
+	@Query(value = "update locality_db  set MODIFIED_ON=sysdate, commune =:currentCommuneName, MODIFIED_BY = :modifiedBy where district =:district and commune =:commune and province=:province", nativeQuery = true)
+	public int updateCommune(String currentCommuneName,String district,String commune,String province,String modifiedBy);
 
 	
 	@Transactional
 	@Modifying
-	@Query(value = "update locality_db  set MODIFIED_ON=sysdate,village =:village  where district =:district and commune =:commune and id =:id", nativeQuery = true)
-	public int updateVillage(String village,String district,String commune,long id);
+	@Query(value = "update locality_db  set MODIFIED_ON=sysdate,village =:village, MODIFIED_BY = :modifiedBy  where district =:district and commune =:commune and id =:id", nativeQuery = true)
+	public int updateVillage(String village,String district,String commune,long id,String modifiedBy);
 
 	public List<Locality> findByProvinceAndDistrictAndCommuneAndVillage(String province,String district,String commune,String village);
 	

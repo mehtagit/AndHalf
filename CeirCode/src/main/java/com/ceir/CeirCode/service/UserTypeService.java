@@ -28,6 +28,8 @@ import com.ceir.CeirCode.configuration.PropertiesReaders;
 import com.ceir.CeirCode.exceptions.ResourceServicesException;
 import com.ceir.CeirCode.filemodel.UserTypeFile;
 import com.ceir.CeirCode.filtermodel.UsertypeFilter;
+import com.ceir.CeirCode.model.AllRequest;
+import com.ceir.CeirCode.model.Currency;
 import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.SearchCriteria;
 import com.ceir.CeirCode.model.SystemConfigListDb;
@@ -44,6 +46,7 @@ import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
 import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
 import com.ceir.CeirCode.repoService.SystemConfigurationDbRepoService;
 import com.ceir.CeirCode.response.GenricResponse;
+import com.ceir.CeirCode.response.tags.CurrencyTags;
 import com.ceir.CeirCode.response.tags.RegistrationTags;
 import com.ceir.CeirCode.response.tags.UsertypeTags;
 import com.ceir.CeirCode.util.CustomMappingStrategy;
@@ -134,9 +137,10 @@ public class UserTypeService {
 			log.info(e.getMessage());
 			log.info(e.toString());
 		}
-
+		
 		if(userType!=null) {
 			userType.setStatus(usertypeStatus.getStatus());
+			userType.setModifiedBy(usertypeStatus.getUsername());
 			Usertype output=usertypeRepo.save(userType); 
 			log.info("usertype data after update the status: "+output);
 			if(output!=null) {
@@ -158,6 +162,26 @@ public class UserTypeService {
 			log.info("response send to user:  "+response);
 			return new ResponseEntity<>(response,HttpStatus.OK);	
 		}
+	}
+	
+	public ResponseEntity<?> viewById(AllRequest request){
+		log.info("inside view by Id userType controller");
+		log.info("data given : "+request);
+		Usertype output=usertypeRepo.findById(request.getDataId());
+//		RequestHeaders header=new RequestHeaders(request.getUserAgent(),request.getPublicIp(),request.getUsername());
+//		headerService.saveRequestHeader(header);
+		userService.saveUserTrail(request.getUserId(),request.getUsername(),
+				request.getUserType(),request.getUserTypeId(),Features.User_Type_Management,SubFeatures.VIEW,request.getFeatureId());
+		if(output!=null) {
+			log.info("Modified by Name of system Admin when viewing  "+output.getModifiedBy());
+			GenricResponse response=new GenricResponse(200,"","",output);
+			return  new ResponseEntity<>(response,HttpStatus.OK);
+		}
+		else {
+			GenricResponse response=new GenricResponse(500,CurrencyTags.Curr_Data_By_Id_Fail.getTag(),CurrencyTags.Curr_Data_By_Id_Fail.getMessage(),"");
+			return  new ResponseEntity<>(response,HttpStatus.OK);
+		}
+
 	}
 	
 	

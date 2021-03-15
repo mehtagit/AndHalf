@@ -105,6 +105,7 @@ public class LocalityService {
 			uPSB.with(new SearchCriteria("commune",filterRequest.getCommune(), SearchOperation.EQUALITY, Datatype.STRING));
 		if(Objects.nonNull(filterRequest.getVillage()) && filterRequest.getVillage()!="")
 			uPSB.with(new SearchCriteria("village",filterRequest.getVillage(), SearchOperation.EQUALITY, Datatype.STRING));
+		
 
 		
 		

@@ -63,7 +63,7 @@ public class Usertype {
 
 	private String defaultLink;
 	
-	
+	private String modifiedBy;
 	public long getId() {
 		return id; 
 	}
@@ -74,6 +74,14 @@ public class Usertype {
 	public void setUsertypeName(String usertypeName) {
 		this.usertypeName = usertypeName;
 	}
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
 	public void setId(long id) {
 		this.id = id;
 	} 
@@ -174,6 +182,8 @@ public class Usertype {
 		builder.append(selfRegister);
 		builder.append(", defaultLink=");
 		builder.append(defaultLink);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
 		builder.append("]");
 		return builder.toString();
 	}

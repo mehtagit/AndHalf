@@ -8,37 +8,28 @@ private String district;
 private String commune;
 private String village;
 public long localityId;
-
-
-
-public long getLocalityId() {
-	return localityId;
-}
-public void setLocalityId(long localityId) {
-	this.localityId = localityId;
-}
 public String  startDate;
 public String   endDate;
 private String searchString;
-public String getSearchString() {
-	return searchString;
+private String modifiedBy;
+public String getProvince() {
+	return province;
 }
-public void setSearchString(String searchString) {
-	this.searchString = searchString;
+public void setProvince(String province) {
+	this.province = province;
 }
-public String getStartDate() {
-	return startDate;
+public Long getDistrictID() {
+	return districtID;
 }
-public void setStartDate(String startDate) {
-	this.startDate = startDate;
+public void setDistrictID(Long districtID) {
+	this.districtID = districtID;
 }
-public String getEndDate() {
-	return endDate;
+public Long getCommuneID() {
+	return communeID;
 }
-public void setEndDate(String endDate) {
-	this.endDate = endDate;
+public void setCommuneID(Long communeID) {
+	this.communeID = communeID;
 }
-
 public String getDistrict() {
 	return district;
 }
@@ -57,7 +48,36 @@ public String getVillage() {
 public void setVillage(String village) {
 	this.village = village;
 }
-
+public long getLocalityId() {
+	return localityId;
+}
+public void setLocalityId(long localityId) {
+	this.localityId = localityId;
+}
+public String getStartDate() {
+	return startDate;
+}
+public void setStartDate(String startDate) {
+	this.startDate = startDate;
+}
+public String getEndDate() {
+	return endDate;
+}
+public void setEndDate(String endDate) {
+	this.endDate = endDate;
+}
+public String getSearchString() {
+	return searchString;
+}
+public void setSearchString(String searchString) {
+	this.searchString = searchString;
+}
+public String getModifiedBy() {
+	return modifiedBy;
+}
+public void setModifiedBy(String modifiedBy) {
+	this.modifiedBy = modifiedBy;
+}
 @Override
 public String toString() {
 	StringBuilder builder = new StringBuilder();
@@ -81,26 +101,14 @@ public String toString() {
 	builder.append(endDate);
 	builder.append(", searchString=");
 	builder.append(searchString);
+	builder.append(", modifiedBy=");
+	builder.append(modifiedBy);
 	builder.append("]");
 	return builder.toString();
 }
-public String getProvince() {
-	return province;
-}
-public void setProvince(String province) {
-	this.province = province;
-}
-public Long getDistrictID() {
-	return districtID;
-}
-public void setDistrictID(Long districtID) {
-	this.districtID = districtID;
-}
-public Long getCommuneID() {
-	return communeID;
-}
-public void setCommuneID(Long communeID) {
-	this.communeID = communeID;
-}
+
+
+
+
 
 }

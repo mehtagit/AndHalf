@@ -31,6 +31,7 @@ import com.ceir.CeirCode.filemodel.UserFeatureFile;
 import com.ceir.CeirCode.filtermodel.CurrencyFilter;
 import com.ceir.CeirCode.filtermodel.UserTypeFeatureFilter;
 import com.ceir.CeirCode.filtermodel.UsertypeFilter;
+import com.ceir.CeirCode.model.AllRequest;
 import com.ceir.CeirCode.model.Currency;
 import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.RequestHeaders;
@@ -51,6 +52,8 @@ import com.ceir.CeirCode.repo.UsertypeRepo;
 import com.ceir.CeirCode.repoService.ReqHeaderRepoService;
 import com.ceir.CeirCode.repoService.SystemConfigDbRepoService;
 import com.ceir.CeirCode.repoService.SystemConfigurationDbRepoService;
+import com.ceir.CeirCode.response.GenricResponse;
+import com.ceir.CeirCode.response.tags.CurrencyTags;
 import com.ceir.CeirCode.response.tags.UserTypeFeatureTags;
 import com.ceir.CeirCode.response.tags.UsertypeTags;
 import com.ceir.CeirCode.util.CustomMappingStrategy;
@@ -155,6 +158,7 @@ public class UserTypeFeatureService {
 
 		if(featureMapping!=null) {
 			featureMapping.setPeriod(userPeriod.getPeriod());
+			featureMapping.setModifiedBy(userPeriod.getUsername());
 			UserToStakehoderfeatureMapping output=userTypeFeatureRepo.save(featureMapping); 
 			if(output!=null) {
 				HttpResponse response=new HttpResponse(UserTypeFeatureTags.UTFPeriod_Update_Success.getMessage(),
@@ -252,6 +256,24 @@ public class UserTypeFeatureService {
 				if( writer != null )
 					writer.close();
 			} catch (IOException e) {}
+		}
+
+	}public ResponseEntity<?> viewById(AllRequest request){
+		log.info("inside view by Id userTypeFeature controller");
+		log.info("data given : "+request);
+		UserToStakehoderfeatureMapping output=userTypeFeatureRepo.findById(request.getDataId());
+//		RequestHeaders header=new RequestHeaders(request.getUserAgent(),request.getPublicIp(),request.getUsername());
+//		headerService.saveRequestHeader(header);
+		userService.saveUserTrail(request.getUserId(),request.getUsername(),
+				request.getUserType(),request.getUserTypeId(),Features.User_feature_mapping,SubFeatures.VIEW,request.getFeatureId());
+		if(output!=null) {
+			log.info("Modified by Name of system Admin when viewing  "+output.getModifiedBy());
+			GenricResponse response=new GenricResponse(200,"","",output);
+			return  new ResponseEntity<>(response,HttpStatus.OK);
+		}
+		else {
+			GenricResponse response=new GenricResponse(500,CurrencyTags.Curr_Data_By_Id_Fail.getTag(),CurrencyTags.Curr_Data_By_Id_Fail.getMessage(),"");
+			return  new ResponseEntity<>(response,HttpStatus.OK);
 		}
 
 	}

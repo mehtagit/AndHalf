@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ceir.CeirCode.filtermodel.UsertypeFilter;
+import com.ceir.CeirCode.model.AllRequest;
 import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.SystemConfigListDb;
 import com.ceir.CeirCode.model.UserProfile;
@@ -77,5 +78,11 @@ import io.swagger.annotations.ApiOperation;
 	public ResponseEntity<?> checkStatus(@PathVariable("usertypeId")long usertypeId){
 		return usertypeService.checkUsertypeStatus(usertypeId);
 	} 
+	
+	@ApiOperation(value="view userType by id")
+	@PostMapping("/usertype/viewById")
+	public ResponseEntity<?> viewById(@RequestBody AllRequest request ){
+		return usertypeService.viewById(request);
+	}
 
 }
