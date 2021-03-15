@@ -56,7 +56,12 @@ headers:
 		if(response.rejectedRemark=='' || response.rejectedRemark==null){
 			$('#bulkRecoveryRemarkReject').val("NA");	
 		}
-
+		if ($('#pageViewType').val() == 'view') {
+		if(response.stolenOrganizationUserDB.incidentVillage=="" || response.stolenOrganizationUserDB.incidentVillage==null){
+			$('#bulkRecoveryvillage').empty();
+			$('#bulkRecoveryvillage').append('<option value="" selected="">NA</option>');
+		}
+		}
 		$('div#initialloader').delay(300).fadeOut('slow');
 		//$('#bulkRecoveryFileLink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.fileName+'","'+response.txnId+'")');
 		
