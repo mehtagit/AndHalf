@@ -280,6 +280,11 @@ if (currentTime < dfd) {
 								<option value="No">No</option>
 							</select>
 						</div>
+						
+						<div class="input-field col s12 m6" style="margin-top: 16px;">
+                        <input type="text" id="editModifiedBy"  disabled>
+                        <label for="editModifiedBy" class="center-align">Modified By </label>
+                    </div>
 					</div>
 
 
@@ -476,7 +481,11 @@ if (currentTime < dfd) {
 						for="viewOutput" class="center-align"><spring:message
 							code="table.expectedOutput" /> </label>
 				</div>
-
+				
+				<div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="viewModifiedBy"  disabled>
+                        <label for="viewModifiedBy" class="center-align">Modified By </label>
+                    </div>
 			</div>
 
 

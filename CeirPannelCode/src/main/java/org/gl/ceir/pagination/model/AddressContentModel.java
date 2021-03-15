@@ -25,50 +25,7 @@ public class AddressContentModel {
 	private Integer userTypeId;
 	private String userType;
 	private String username;
-	
-	
-	public Integer getUserId() {
-		return userId;
-	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
-	public Integer getFeatureId() {
-		return featureId;
-	}
-	public void setFeatureId(Integer featureId) {
-		this.featureId = featureId;
-	}
-	public Integer getUserTypeId() {
-		return userTypeId;
-	}
-	public void setUserTypeId(Integer userTypeId) {
-		this.userTypeId = userTypeId;
-	}
-	public String getUserType() {
-		return userType;
-	}
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getCurrentVillage() {
-		return currentVillage;
-	}
-	public String getModifiedOn() {
-		return modifiedOn;
-	}
-	public void setModifiedOn(String modifiedOn) {
-		this.modifiedOn = modifiedOn;
-	}
-	public void setCurrentVillage(String currentVillage) {
-		this.currentVillage = currentVillage;
-	}
+	private String modifiedBy;
 	public Integer getId() {
 		return id;
 	}
@@ -80,6 +37,12 @@ public class AddressContentModel {
 	}
 	public void setCreatedOn(String createdOn) {
 		this.createdOn = createdOn;
+	}
+	public String getModifiedOn() {
+		return modifiedOn;
+	}
+	public void setModifiedOn(String modifiedOn) {
+		this.modifiedOn = modifiedOn;
 	}
 	public String getCountry() {
 		return country;
@@ -147,6 +110,48 @@ public class AddressContentModel {
 	public void setCommuneID(String communeID) {
 		this.communeID = communeID;
 	}
+	public String getCurrentVillage() {
+		return currentVillage;
+	}
+	public void setCurrentVillage(String currentVillage) {
+		this.currentVillage = currentVillage;
+	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	public Integer getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
+	}
+	public Integer getUserTypeId() {
+		return userTypeId;
+	}
+	public void setUserTypeId(Integer userTypeId) {
+		this.userTypeId = userTypeId;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -190,9 +195,13 @@ public class AddressContentModel {
 		builder.append(userType);
 		builder.append(", username=");
 		builder.append(username);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
 	
 	
 }

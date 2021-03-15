@@ -175,6 +175,11 @@
 						<label for="type"><spring:message code="table.Type" /></label>
 					</div>	
 					
+					<div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="viewModifiedBy"  disabled>
+                        <label for="viewModifiedBy" class="center-align">Modified By </label>
+                    </div>
+					
 					<div class="input-field col s12 m6">
 					<textarea id="remarks" class="materialize-textarea" placeholder="Remarks" readonly="readonly" style="min-height:8rem"></textarea>
 					<label for="remarks" class=""><spring:message code="input.remarks" /></label>
@@ -230,12 +235,19 @@
 						<input type="text" id="edittype" name="type" placeholder="" maxlength="20" disabled>
 						<label for="type"><spring:message code="table.Type" /></label>
 					</div>
-
+					
+					<div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="editModifiedBy"  disabled>
+                        <label for="editModifiedBy" class="center-align">Modified By </label>
+                    </div>
+                    
 					<div class="input-field col s12 m6">
 					<textarea id="editremarks" placeholder="Remarks" class="materialize-textarea" style="min-height:8rem" ></textarea>
 					<label for="editremarks" class=""><spring:message code="input.remarks" /></label>
 
 					</div>
+					
+					
 				</div>
 
 

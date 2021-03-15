@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Service.ProfileService;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.gl.ceir.pagination.model.UserFeaturePagination;
@@ -76,4 +77,14 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 
 			return fileExportResponse;
 		}
+		
+		//------------------------------------- view userType ----------------------------------------							
+		
+		@PostMapping("userTypeFeatureViewByID") 
+		public @ResponseBody GenricResponse viewUserPeriod (@RequestBody FilterRequest filterRequest )  {
+			log.info("request send to the View UserPeriod api="+filterRequest);
+			GenricResponse response= userProfileFeignImpl.viewUserTypeFeatureFeign(filterRequest);
+			log.info("response from UserPeriod api "+response);
+			return response;
+	}
 }

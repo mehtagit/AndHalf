@@ -166,8 +166,14 @@
 							onchange="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');" oninvalid="InvalidMsg(this,'select','<spring:message code="validation.selectFieldMsg" />');"
 							required></select> <label for="country" class="center-align"></label>
 					</div>
+					
+					<div class="input-field col s12 m6" style="margin-top: 20px;">
+                        <input type="text" id="editModifiedBy"  disabled>
+                        <label for="editModifiedBy" class="center-align">Modified By </label>
+                    </div>
 				</div>
-
+				
+				
 
 				<div class="row input_fields_wrap">
 					<div class="col s12 m12 center" style="margin-top: 10px;">
@@ -176,6 +182,7 @@
 				</div>
 
 				</div>
+				
 			</div>
 			</form>
 		</div>
@@ -213,6 +220,11 @@ readonly="readonly" > <label for="totalPrice" class="center-align"><spring:messa
 							
 							
 					</div>
+					
+					<div class="input-field col s12 m6" style="margin-top: 20px;">
+                        <input type="text" id="viewModifiedBy"  disabled>
+                        <label for="viewModifiedBy" class="center-align">Modified By </label>
+                    </div>
 				</div>
 
 

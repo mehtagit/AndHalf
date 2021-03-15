@@ -231,15 +231,6 @@
 		});
 		}
 
-	/*function userChangeStatus(id){
-		window.userId = id
-		$("#statusChangemodal").openModal({
-		 	   dismissible:false
-		    });
-		result.modifiedBy =="" || result.modifiedBy==null ?  $("#editmodifiedBy").val('NA'): $("#editmodifiedBy").val(result.modifiedBy);
-		$("label[for='editmodifiedBy']").addClass('active')
-	}*/
-	
 
 	/*--------------------------------- Edit Model View -----------------------------------*/
 	
@@ -272,6 +263,7 @@
 						 	   dismissible:false
 						 });
 						result.modifiedBy =="" || result.modifiedBy==null ?  $("#editmodifiedBy").val('NA'): $("#editmodifiedBy").val(result.modifiedBy);
+						$('#userStatus').val(result.status);
 						$("label[for='editmodifiedBy']").addClass('active')
 						//////console.log(JSON.stringify(result));
 				},

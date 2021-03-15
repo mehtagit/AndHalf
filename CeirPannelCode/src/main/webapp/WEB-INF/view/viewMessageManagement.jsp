@@ -144,34 +144,39 @@
 					
 					<div class="input-field col s12 m6" style="margin-top:22px">
 					<input type="text" id= "viewChannel" placeholder="" disabled>
-					<label for="viewChannel" class=""><spring:message code="registration.channel" /></label>
+					<label for="viewChannel" class="center-align"><spring:message code="registration.channel" /></label>
 
 					</div>
 					
 					<div class="input-field col s12 m6" style="margin-top:22px">
 					<input type="text" id="viewFeature" placeholder="" disabled>
-					<label for="viewFeature" class=""><spring:message code="table.feature" /></label>
+					<label for="viewFeature" class="center-align"><spring:message code="table.feature" /></label>
 
 					</div>
 					
 					<div class="input-field col s12 m6" >
 					<textarea id="viewSubject" class="materialize-textarea" readonly="readonly" style="min-height:8rem"></textarea>
-					<label for="viewSubject" class=""><spring:message code="table.subject" /> </label>
+					<label for="viewSubject" class="center-align"><spring:message code="table.subject" /> </label>
 
 					</div>
 					
 					<div class="input-field col s12 m6" >
 					<textarea id="viewValue" class="materialize-textarea" readonly="readonly" style="min-height:8rem"></textarea>
-					<label for="viewValue" class=""><spring:message code="registration.value" /> </label>
+					<label for="viewValue" class="center-align"><spring:message code="registration.value" /> </label>
 
 					</div>
 
 
 					<div class="input-field col s12 m6">
 					<textarea id="description" class="materialize-textarea" readonly="readonly" style="min-height:8rem"></textarea>
-					<label for="description" class=""><spring:message code="registration.description" /></label>
+					<label for="description" class="center-align"><spring:message code="registration.description" /></label>
 
 					</div>
+					
+					<div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="viewMessageModifiedBy"  disabled>
+                        <label for="viewModifiedBy" class="center-align">Modified By </label>
+                    </div>
 
 					
 
@@ -213,35 +218,40 @@
 					
 					<div class="input-field col s12 m6">
 					<input type="text" id= "editChannel"  placeholder="" disabled>
-					<label for="editChannel" class=""><spring:message code="registration.channel" /></label>
+					<label for="editChannel" class="center-align"><spring:message code="registration.channel" /></label>
 
 					</div>
 					
 					<div class="input-field col s12 m6">
 					<input type="text" id="editFeature" placeholder="" disabled>
-					<label for="editFeature" class=""><spring:message code="table.feature" /></label>
+					<label for="editFeature" class="center-align"><spring:message code="table.feature" /></label>
 
 					</div>
 					
 					<div class="input-field col s12 m6" >
 					<textarea id="editSubject" class="materialize-textarea" style="min-height:8rem"></textarea>
-					<label for="editSubject" class=""><spring:message code="table.subject" /> </label>
+					<label for="editSubject" class="center-align"><spring:message code="table.subject" /> </label>
 
 					</div>
 				
 					
 					<div class="input-field col s12 m6">
 					<textarea id="editValue" class="materialize-textarea" placeholder="" title="Please enter alphabets and numbers upto 500 characters only" maxlength="500" required="required" style="min-height:8rem"></textarea>
-					<label for="editValue" class=""><spring:message code="registration.value" /> <span class="star">*</span></label>
+					<label for="editValue" class="center-align"><spring:message code="registration.value" /> <span class="star">*</span></label>
 
 					</div>
 
 
 					<div class="input-field col s12 m6">
 					<textarea id="editdescription" class="materialize-textarea" placeholder="" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200" style="min-height:8rem"></textarea>
-					<label for="editdescription" class=""><spring:message code="registration.description" /></label>
+					<label for="editdescription" class="center-align"><spring:message code="registration.description" /></label>
 
 					</div>
+					
+					<div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="editMessageModifiedBy"  disabled>
+                        <label for="editModifiedBy" class="center-align">Modified By </label>
+                    </div>
 					
 					
 					
