@@ -106,11 +106,11 @@ public class ConsignmentDatatableController {
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		
 		log.info("session flag value==####@@@@@@@@@@@@@="+sessionFlag);
-		log.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$="+filterrequest);
 		
-		 
 		 // TODO Convert header to an ENUM.
 		// list provided via Back-end process
+		filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterrequest.setBrowser(session.getAttribute("browser").toString());
 		log.info("request send to the filter api ="+filterrequest);
 		response = feignCleintImplementation.consignmentFilter(filterrequest,pageNo,pageSize,file,source);
 		log.info("response:::::::::::::"+response);

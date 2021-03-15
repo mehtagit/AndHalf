@@ -305,6 +305,8 @@ public class LoginService {
 		user.setUserAgent(header.getUserAgent());
 		user.setPublicIp(header.getPublicIp());
 		user.setBrowser(header.getBrowser());
+		session.setAttribute("publicIP", user.getPublicIp());
+		session.setAttribute("browser", user.getBrowser());
 		log.info("user data:  "+user);
         log.info("user agent=  "+user.getUserAgent() +" public ip of user: "+user.getPublicIp()+" browser :"+header.getBrowser());		
         return userLoginFeignImpl.ipLog(user);
