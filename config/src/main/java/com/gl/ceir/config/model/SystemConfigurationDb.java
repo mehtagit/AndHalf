@@ -60,7 +60,13 @@ public class SystemConfigurationDb implements Serializable {
 	
 	private String featureName;
 	private String userType;
-	
+	private String modifiedBy;
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
 	@Transient
 	private long userId;
 	@Transient
@@ -174,6 +180,8 @@ public class SystemConfigurationDb implements Serializable {
 		builder.append(featureName);
 		builder.append(", userType=");
 		builder.append(userType);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
 		builder.append(", userId=");
 		builder.append(userId);
 		builder.append(", userName=");

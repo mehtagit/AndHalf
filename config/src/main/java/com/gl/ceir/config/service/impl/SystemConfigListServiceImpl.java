@@ -112,6 +112,8 @@ public class SystemConfigListServiceImpl {
 			systemConfigListDb2.setDescription(systemConfigListDb.getDescription());
 			systemConfigListDb2.setTagId(systemConfigListDb.getTagId());
 			systemConfigListDb2.setInterp(systemConfigListDb.getInterp());
+			logger.info("username when updating" +systemConfigListDb.getUsername()); 
+			systemConfigListDb2.setModifiedBy(systemConfigListDb.getUsername());
 			systemConfigListRepository.save(systemConfigListDb2);
 			return new GenricResponse(0);
 

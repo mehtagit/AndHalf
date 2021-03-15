@@ -89,7 +89,9 @@ public class RuleEngineMappingServiceImpl {
 		try {
 			RuleEngineMapping ruleEngineMappingOld =  ruleEngineMappingRepository.getById(ruleEngineMapping.getId());
 			logger.info("ruleEngineMappingOld : " + ruleEngineMappingOld);
+			logger.info("UserName while Updating Rule Mapping " +ruleEngineMapping.getUserName());
 			ruleEngineMapping.setId(ruleEngineMappingOld.getId());
+			ruleEngineMapping.setModifiedBy(ruleEngineMapping.getUserName());
 			//			ruleEngineMapping.setCreatedOn(ruleEngineMappingOld.getCreatedOn());			
 			ruleEngineMappingRepository.save(ruleEngineMapping);
 

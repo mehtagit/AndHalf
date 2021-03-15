@@ -59,6 +59,7 @@ public class RuleEngine implements Serializable {
 	@Column(length = 5)
 	private String output;
 	
+	public String modifiedBy;
 	
 	//@Transient parameters 	
 	@Transient
@@ -91,6 +92,14 @@ public class RuleEngine implements Serializable {
 
 	public LocalDateTime getModifiedOn() {
 		return modifiedOn;
+	}
+
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 
 	public void setModifiedOn(LocalDateTime modifiedOn) {
@@ -190,6 +199,8 @@ public class RuleEngine implements Serializable {
 		builder.append(state);
 		builder.append(", output=");
 		builder.append(output);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
 		builder.append(", userName=");
 		builder.append(userName);
 		builder.append(", featureId=");
