@@ -100,9 +100,7 @@ headers:
 		$('#sigleRecoveryaddress').val(response.stolenIndividualUserDB.deviceStolenPropertyLocation);
 		$('#sigleRecoverystreetNumber').val(response.stolenIndividualUserDB.deviceStolenStreet);
 		$('#sigleRecoveryvillage').val(response.stolenIndividualUserDB.deviceStolenVillage);
-		if(response.stolenIndividualUserDB.deviceStolenVillage=="" || response.stolenIndividualUserDB.deviceStolenVillage==null){
-			$('#sigleRecoveryvillage').val('NA');	
-		}
+		
 		$('#sigleRecoverylocality').val(response.stolenIndividualUserDB.deviceStolenLocality);
 		if(response.stolenIndividualUserDB.deviceStolenLocality=="" || response.stolenIndividualUserDB.deviceStolenLocality==null){
 			$('#sigleRecoverylocality').val('NA');	
@@ -159,6 +157,27 @@ headers:
 				
 				$("#deviceIdTypeSpan").css("display", "none");	
 			}
+		}
+		else{
+			if(response.stolenIndividualUserDB.deviceStolenVillage=="" || response.stolenIndividualUserDB.deviceStolenVillage==null){
+			
+				$('#sigleRecoveryvillage').empty();
+				$('#sigleRecoveryvillage').append('<option value="" selected="">NA</option>');
+			}
+			if(response.stolenIndividualUserDB.deviceIdType=="" || response.stolenIndividualUserDB.deviceIdType==null){
+				$('#sigleRecoverydeviceIDType').empty();
+				$('#sigleRecoverydeviceIDType').append('<option value="" selected="">NA</option>');
+			}
+			if(response.stolenIndividualUserDB.deviceType=="" || response.stolenIndividualUserDB.deviceType==null){
+				$('#sigleRecoverydeviceType').empty();
+				$('#sigleRecoverydeviceType').append('<option value="" selected="">NA</option>');
+			}
+			if(response.stolenIndividualUserDB.multiSimStatus=="" || response.stolenIndividualUserDB.multiSimStatus==null){
+				$('#sigleRecoverydeviceSimStatus').empty();
+				$('#sigleRecoverydeviceSimStatus').append('<option value="" selected="">NA</option>');
+			}
+			
+			
 		}
 		
 		},

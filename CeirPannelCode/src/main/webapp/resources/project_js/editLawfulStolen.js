@@ -171,10 +171,8 @@ function viewIndivisualStolen()
 			$('#singleStolenaddress').val(response.stolenIndividualUserDB.propertyLocation);
 			////alert(response.stolenIndividualUserDB.street+"-----"+response.stolenIndividualUserDB.alternateContactNumber)
 			$('#singleStolenstreetNumber').val(response.stolenIndividualUserDB.street);
-			$('#singleStolenvillage').val(response.stolenIndividualUserDB.village);
-			if(response.stolenIndividualUserDB.village=="" || response.stolenIndividualUserDB.village==null){
-				$('#singleStolenvillage').val('NA');
-			}
+		
+			
 			$('#singleStolenlocality').val(response.stolenIndividualUserDB.locality);
 			if(response.stolenIndividualUserDB.locality=="" || response.stolenIndividualUserDB.locality==null){
 				$('#singleStolenlocality').val('NA');
@@ -183,6 +181,7 @@ function viewIndivisualStolen()
 			$('#state').val(response.stolenIndividualUserDB.province).change();
 			$('#singleStolendistrict').val(response.stolenIndividualUserDB.district).change();
 			$('#singleStolencommune').val(response.stolenIndividualUserDB.commune).change();
+			$('#singleStolenvillage').val(response.stolenIndividualUserDB.village).change();
 			$('#singleStolenpin').val(response.stolenIndividualUserDB.postalCode);
 			$('#sigleStolenserialNumber').val(response.stolenIndividualUserDB.deviceSerialNumber);
 			if(isNaN(response.stolenIndividualUserDB.deviceBrandName)){
@@ -195,6 +194,10 @@ function viewIndivisualStolen()
 				$('#editsingleStolendeviceBrandName').val(response.stolenIndividualUserDB.deviceBrandName).change();	
 			}
 			
+			if(response.stolenIndividualUserDB.village=="" || response.stolenIndividualUserDB.village!=null){
+				$('#singleStolenvillage').empty();
+				$('#singleStolenvillage').append('<option value="" selected="">NA</option>');
+			}
 			////alert(response.stolenIndividualUserDB.deviceBrandName);
 			$('#editsingleStolenmodalNumber').val(response.stolenIndividualUserDB.modelNumber);
 			$('#singleStolenFileName').val(response.stolenIndividualUserDB.nidFileName);
@@ -330,6 +333,46 @@ $("#calender").css("display", "none");
 					$("#deviceIdTypeSpan").css("display", "block");	
 				}
 				setOpertorTypeMandaotry();
+			}
+			else{
+				if(response.stolenIndividualUserDB.village=="" || response.stolenIndividualUserDB.village==null){
+					$('#singleStolenvillage').empty();
+					$('#singleStolenvillage').append('<option value="" selected="">NA</option>');
+				}
+				
+				if(response.stolenIndividualUserDB.deviceIdType=="" || response.stolenIndividualUserDB.deviceIdType==null){
+					$('#singleStolendeviceIDType').empty();
+					$('#singleStolendeviceIDType').append('<option value="" selected="">NA</option>');
+				}
+				if(response.stolenIndividualUserDB.deviceType=="" || response.stolenIndividualUserDB.deviceType==null){
+					$('#singleStolendeviceType').empty();
+					$('#singleStolendeviceType').append('<option value="" selected="">NA</option>');
+				}
+				
+				if(response.stolenIndividualUserDB.country=="" || response.stolenIndividualUserDB.country==null){
+					$('#country').empty();
+					$('#country').append('<option value="" selected="">NA</option>');
+				}
+				if(response.stolenIndividualUserDB.province=="" || response.stolenIndividualUserDB.province==null){
+					$('#state').empty();
+					$('#state').append('<option value="" selected="">NA</option>');
+				}
+				if(response.stolenIndividualUserDB.district=="" || response.stolenIndividualUserDB.district==null){
+					$('#singleStolendistrict').empty();
+					$('#singleStolendistrict').append('<option value="" selected="">NA</option>');
+				}
+				if(response.stolenIndividualUserDB.commune=="" || response.stolenIndividualUserDB.commune==null){
+					$('#singleStolencommune').empty();
+					$('#singleStolencommune').append('<option value="" selected="">NA</option>');
+				}
+			
+				if(response.stolenIndividualUserDB.deviceStolenVillage=="" || response.stolenIndividualUserDB.deviceStolenVillage==null){
+					$('#singleDevicevillage').empty();
+					$('#singleDevicevillage').append('<option value="" selected="">NA</option>');
+				}
+				
+				$('#docTypetag1').empty();
+				$('#docTypetag1').append('<option value="" selected="">NA</option>');
 			}
 			
 				
@@ -775,7 +818,8 @@ $.i18n().load({
 
 function viewPageType() {
 	if ($('#pageViewType').val() == 'view') {
-	 
+		/*$('#singleStolendeviceType,#singleStolenvillage,#singleDevicevillage,#docTypetag1').empty();
+		$('#singleStolendeviceType,#singleStolenvillage,#singleDevicevillage,#docTypetag1').append('<option value="" selected="">NA</option>');*/
 		$('#headingType').text('');
 		$('#headingType').text(stolenIndivisual);
 		$("#passportImageDiv").removeClass("btn");

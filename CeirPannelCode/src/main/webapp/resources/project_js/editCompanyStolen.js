@@ -124,6 +124,20 @@ headers:
 				$('#bulkStolenofficeEmail').val("");
 			}
 		}
+		else{
+			
+		if(response.stolenOrganizationUserDB.incidentVillage=="" || response.stolenOrganizationUserDB.incidentVillage==null){
+			$('#deviceBulkStolenvillage').empty();
+			$('#deviceBulkStolenvillage').append('<option value="" selected="">NA</option>');
+		}
+		
+		if(response.stolenOrganizationUserDB.village=="" || response.stolenOrganizationUserDB.village==null){
+			$('#bulkStolenvillage').empty();
+			$('#bulkStolenvillage').append('<option value="" selected="">NA</option>');
+		}
+	
+		 
+		}
 		//$('#deviceListlink').attr("onclick",'previewFile("'+response.fileLink+'","'+response.fileName+'","'+response.txnId+'")');
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
