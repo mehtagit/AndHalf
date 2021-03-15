@@ -1142,7 +1142,7 @@ public class EnduserServiceImpl {
 		}
 
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
-			uPSB.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+			uPSB.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.LIKE, Datatype.STRING));
 		}
 		if(Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty()) {
 			uPSB.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.LIKE, Datatype.STRING));

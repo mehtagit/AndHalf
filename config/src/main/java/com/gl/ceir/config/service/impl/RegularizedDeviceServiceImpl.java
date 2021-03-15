@@ -1218,7 +1218,7 @@ public class RegularizedDeviceServiceImpl {
 		}
 
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
-			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
+			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.LIKE, Datatype.STRING));
 		}
 
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){

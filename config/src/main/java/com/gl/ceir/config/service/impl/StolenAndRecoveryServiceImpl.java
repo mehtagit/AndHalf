@@ -444,7 +444,7 @@ public class StolenAndRecoveryServiceImpl {
 			srsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
 
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
-			srsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
+			srsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.LIKE, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getSourceType())) {
 			srsb.with(new SearchCriteria("sourceType", filterRequest.getSourceType(), SearchOperation.EQUALITY, Datatype.STRING));

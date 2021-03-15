@@ -66,8 +66,18 @@ public class MessageConfigurationDb implements Serializable {
 	@Transient
 	private String userType;
 	
+	private String modifiedBy;
+	
 	public Long getId() {
 		return id;
+	}
+
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 
 	public void setId(Long id) {
@@ -187,6 +197,8 @@ public class MessageConfigurationDb implements Serializable {
 		builder.append(roleType);
 		builder.append(", userType=");
 		builder.append(userType);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
 		builder.append("]");
 		return builder.toString();
 	}

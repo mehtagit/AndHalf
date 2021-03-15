@@ -83,6 +83,9 @@ public class RuleEngineMapping implements Serializable {
 	@Column(length = 1)
 	private String output;
 	
+	
+	private String modifiedBy;
+	
 	//@Transient parameters 	
 	@Transient
 	public String userName;
@@ -183,6 +186,14 @@ public class RuleEngineMapping implements Serializable {
 		return failedRuleActionGrace;
 	}
 
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
 	public void setFailedRuleActionGrace(String failedRuleActionGrace) {
 		this.failedRuleActionGrace = failedRuleActionGrace;
 	}
@@ -255,6 +266,8 @@ public class RuleEngineMapping implements Serializable {
 		builder.append(failedRuleActionPostGrace);
 		builder.append(", output=");
 		builder.append(output);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
 		builder.append(", userName=");
 		builder.append(userName);
 		builder.append(", featureId=");

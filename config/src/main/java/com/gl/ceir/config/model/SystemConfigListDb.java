@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -49,6 +50,12 @@ public class SystemConfigListDb implements Serializable {
 	private String description;
 	private String displayName;
 	
+	
+	private String modifiedBy;
+	
+	@Transient
+	private String username;
+	
 	public SystemConfigListDb() {
 	}
 	
@@ -64,6 +71,14 @@ public class SystemConfigListDb implements Serializable {
 		this.id = id;
 	}
 	
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
+	}
+
 	public String getTag() {
 		return tag;
 	}
@@ -129,6 +144,15 @@ public class SystemConfigListDb implements Serializable {
 	public static void setSerialversionuid(long serialversionuid) {
 		serialVersionUID = serialversionuid;
 	}
+	
+	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	@Override
 	public String toString() {
@@ -153,6 +177,10 @@ public class SystemConfigListDb implements Serializable {
 		builder.append(description);
 		builder.append(", displayName=");
 		builder.append(displayName);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
+		builder.append(", username=");
+		builder.append(username);
 		builder.append("]");
 		return builder.toString();
 	}

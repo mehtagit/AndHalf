@@ -5,37 +5,41 @@ import com.opencsv.bean.CsvBindByPosition;
 
 public class StockImporterFileModel {
 		
-	@CsvBindByName(column = "Created On")
+	@CsvBindByName(column = "Modified On")
 	@CsvBindByPosition(position = 0)
+	private String modifiedOn;
+	
+	@CsvBindByName(column = "Created On")
+	@CsvBindByPosition(position = 1)
 	private String createdOn;
 	
 	@CsvBindByName(column = "Txn Id")
-	@CsvBindByPosition(position = 1)
+	@CsvBindByPosition(position = 2)
 	private String txnId;
 
 	@CsvBindByName(column = "File Name")
-	@CsvBindByPosition(position = 2)
+	@CsvBindByPosition(position = 3)
 	private String fileName;
 	
-	@CsvBindByName(column = "IMEI Quantity")
-	@CsvBindByPosition(position = 3)
-	private Integer quantity;
 
-	@CsvBindByName(column = "Modified On")
-	@CsvBindByPosition(position = 4)
-	private String modifiedOn;
-	
 	@CsvBindByName(column = "Status")
-	@CsvBindByPosition(position = 5)
+	@CsvBindByPosition(position = 4)
 	private String stockStatus;
 	
-	@CsvBindByName(column = "Supplier Name")
-	@CsvBindByPosition(position = 6)
-	private String supplierName;
+	@CsvBindByName(column = "IMEI Quantity")
+	@CsvBindByPosition(position = 5)
+	private Integer quantity;
+
 	
 	@CsvBindByName(column = "Device Quantity")
-	@CsvBindByPosition(position = 7)
+	@CsvBindByPosition(position = 6)
 	private Integer deviceQuantity;
+	
+	@CsvBindByName(column = "Supplier Name")
+	@CsvBindByPosition(position = 7)
+	private String supplierName;
+	
+
 	
 	public Integer getDeviceQuantity() {
 		return deviceQuantity;

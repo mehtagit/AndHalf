@@ -5,37 +5,43 @@ import com.opencsv.bean.CsvBindByPosition;
 
 public class StockCustomFileModel {
 		
-	@CsvBindByName(column = "Created On")
+	@CsvBindByName(column = "Modified On")
 	@CsvBindByPosition(position = 0)
+	private String modifiedOn;
+	
+	@CsvBindByName(column = "Created On")
+	@CsvBindByPosition(position = 1)
 	private String createdOn;
 	
+	@CsvBindByName(column = "Assigned To")
+	@CsvBindByPosition(position = 2)
+	private String assigneName;
+	
+	
 	@CsvBindByName(column = "Txn Id")
-	@CsvBindByPosition(position = 1)
+	@CsvBindByPosition(position = 3)
 	private String txnId;
 
 	@CsvBindByName(column = "File Name")
-	@CsvBindByPosition(position = 2)
-	private String fileName;
-	
-	@CsvBindByName(column = "IMEI Quantity")
-	@CsvBindByPosition(position = 3)
-	private Integer quantity;
-
-	@CsvBindByName(column = "Modified On")
 	@CsvBindByPosition(position = 4)
-	private String modifiedOn;
+	private String fileName;
 	
 	@CsvBindByName(column = "Status")
 	@CsvBindByPosition(position = 5)
 	private String stockStatus;
 	
-	@CsvBindByName(column = "Device Quantity")
+	
+	@CsvBindByName(column = "IMEI Quantity")
 	@CsvBindByPosition(position = 6)
+	private Integer quantity;
+
+
+	
+
+	@CsvBindByName(column = "Device Quantity")
+	@CsvBindByPosition(position = 7)
 	private Integer deviceQuantity;
 
-	@CsvBindByName(column = "Assigned To")
-	@CsvBindByPosition(position = 7)
-	private String assigneName;
 	
 	@CsvBindByName(column = "Invoice Number ")
 	@CsvBindByPosition(position = 8)

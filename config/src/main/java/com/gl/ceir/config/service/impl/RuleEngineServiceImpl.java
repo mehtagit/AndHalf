@@ -86,8 +86,9 @@ public class RuleEngineServiceImpl {
 	public GenricResponse updateById(RuleEngine ruleEngine){
 		try {
 			RuleEngine ruleEngineOld =  ruleEngineRepository.getById(ruleEngine.getId());
+			logger.info("UserName while Updating Rule Mapping" +ruleEngine.getUserName());
 			ruleEngine.setId(ruleEngineOld.getId());
-			
+			ruleEngine.setModifiedBy(ruleEngine.getUserName());
 			ruleEngineRepository.save(ruleEngine);
 			
 			return new GenricResponse(0);

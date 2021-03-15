@@ -162,7 +162,7 @@ public class ConfigurationManagementServiceImpl {
 	public GenricResponse updateSystemInfo(SystemConfigurationDb systemConfigurationDb) {
 		try {
 			logger.info("UserType for validation :" + systemConfigurationDb.getUserType());
-
+			
 			GenricResponse response = systemValidation.validateFieldsByObject(systemConfigurationDb,
 					systemConfigurationDb.getUserType(), 5);
 			if (response.getErrorCode() == 201) {
@@ -185,10 +185,11 @@ public class ConfigurationManagementServiceImpl {
 				if (Objects.isNull(systemConfigurationDb2)) {
 					return new GenricResponse(15, "This Id does not exist", "");
 				}
-
+				logger.info("ModifiedBy when Updating :" + systemConfigurationDb.getUserName());
 				systemConfigurationDb2.setValue(systemConfigurationDb.getValue());
 				systemConfigurationDb2.setDescription(systemConfigurationDb.getDescription());
 				systemConfigurationDb2.setRemark(systemConfigurationDb.getRemark());
+				systemConfigurationDb2.setModifiedBy(systemConfigurationDb.getUserName());
 				systemConfigurationDbRepository.save(systemConfigurationDb2);
 
 				return new GenricResponse(200, "System_configuration_update", "System configuration update Sucessfully",
@@ -277,6 +278,7 @@ public class ConfigurationManagementServiceImpl {
 			mcd.setValue(messageConfigurationDb.getValue());
 			mcd.setDescription(messageConfigurationDb.getDescription());
 			mcd.setSubject(messageConfigurationDb.getSubject());
+			mcd.setModifiedBy(messageConfigurationDb.getUserName());
 			// mcd.setFeatureName(mcd.getFeatureName() == null ? "NA" :
 			// mcd.getFeatureName());
 			mcd.setActive(0);

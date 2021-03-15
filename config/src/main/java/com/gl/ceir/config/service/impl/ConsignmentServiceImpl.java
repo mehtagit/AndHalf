@@ -341,7 +341,7 @@ public class ConsignmentServiceImpl {
 
 			auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUserId(), consignmentMgmt.getUserName(),
 					Long.valueOf(consignmentMgmt.getUserTypeId()), consignmentMgmt.getUserType(),
-					Long.valueOf(consignmentMgmt.getFeatureId()), Features.CONSIGNMENT, SubFeatures.VIEW, "", "NA",
+					Long.valueOf(consignmentMgmt.getFeatureId()), Features.CONSIGNMENT, SubFeatures.VIEW_ALL, "", "NA",
 					consignmentMgmt.getRoleType()));
 			logger.info("AUDIT : Saved view request in audit.");
 			return page;
