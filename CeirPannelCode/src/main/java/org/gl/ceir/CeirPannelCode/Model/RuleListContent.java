@@ -12,6 +12,7 @@ public class RuleListContent {
 	private String description;
 	private String state;
 	private String output;
+	private String modifiedBy;
 
 
 	// parameters 	
@@ -36,6 +37,12 @@ public class RuleListContent {
 	}
 	public String getModifiedOn() {
 		return modifiedOn;
+	}
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 	public void setModifiedOn(String modifiedOn) {
 		this.modifiedOn = modifiedOn;
@@ -81,6 +88,8 @@ public class RuleListContent {
 		builder.append(state);
 		builder.append(", output=");
 		builder.append(output);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
 		builder.append(", userName=");
 		builder.append(userName);
 		builder.append(", featureId=");

@@ -17,9 +17,9 @@
 		});
 
 	$('#btnLink').css({"display":"none"});	
-	var roleType = $("body").attr("data-roleType");
+	var userType = $("body").attr("data-roleType");
 	var userId = $("body").attr("data-userID");
-	var roleType = $("body").attr("data-roleType"); 
+	var featureId = 42; 
 	
 	$.getJSON('./getDropdownList/REPORT_CATEGORY', function(data) {
 		for (i = 0; i < data.length; i++) {
@@ -41,7 +41,7 @@
 				var reportCategory = parseInt($('#reportCatagory').val());
 				
 				$.ajax({
-					url: './getallreports?reportCategory='+reportCategory,
+					url: './getallreports?reportCategory='+reportCategory+'&featureId='+featureId+'&userId='+userId+'&userType='+userType,
 					type: 'POST',
 					dataType : 'json',
 					contentType : 'application/json; charset=utf-8',

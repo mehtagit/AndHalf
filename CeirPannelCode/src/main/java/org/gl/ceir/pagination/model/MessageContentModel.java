@@ -16,13 +16,19 @@ public class MessageContentModel {
 	private Integer channel;
 	private String channelInterp;
 	private String subject,featureName;
-	private String featureId,userTypeId,userType,userName,username,roleType;
+	private String featureId,userTypeId,userType,userName,username,roleType,modifiedBy;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	public Integer getId() {
 		return id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 	public String getCreatedOn() {
 		return createdOn;
@@ -119,6 +125,8 @@ public class MessageContentModel {
 		builder.append(username);
 		builder.append(", roleType=");
 		builder.append(roleType);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
 		builder.append(", additionalProperties=");
 		builder.append(additionalProperties);
 		builder.append("]");

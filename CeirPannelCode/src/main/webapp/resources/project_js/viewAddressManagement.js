@@ -845,13 +845,17 @@
 								});
 								$("#editCountry").val(data.country);
 								$('#editProvince,#oldProvince').val(data.province);
-								$("label[class='center-align']").addClass('active');
+								//$('#editProvinceModifiedBy').val(data.modifiedBy);
+								data.modifiedBy =="" || data.modifiedBy==null ?  $("#editProvinceModifiedBy").val('NA'): $("#editProvinceModifiedBy").val(data.modifiedBy);
+								
 							}else if(entity == "district"){
 								$("#editDistrictModal").openModal({
 									dismissible:false
 								});
 								$('#editProvinceforDistrict').val(data.province);
 								$('#editDistrict,#oldDistrict').val(data.district);
+								//$('#editDistrictModifiedBy').val(data.modifiedBy);
+								data.modifiedBy =="" || data.modifiedBy==null ?  $("#editDistrictModifiedBy").val('NA'): $("#editDistrictModifiedBy").val(data.modifiedBy);
 							}else if(entity == "commune"){
 								$("#editCommuneModal").openModal({
 									dismissible:false
@@ -859,6 +863,8 @@
 								$('#editProvinceForCommune').val(data.province);
 								$('#editDistrictForCommune,#oldDistrict').val(data.district);
 								$('#editCommune,#oldcommune').val(data.commune);
+								//$('#editCommuneModifiedBy').val(data.modifiedBy);
+								data.modifiedBy =="" || data.modifiedBy==null ?  $("#editCommuneModifiedBy").val('NA'): $("#editCommuneModifiedBy").val(data.modifiedBy);
 							}else if(entity == "village"){
 								$("#editVillageModal").openModal({
 									dismissible:false
@@ -867,9 +873,12 @@
 								$('#editDistrictForVillage').val(data.district);
 								$('#editCommuneForVillage').val(data.commune);
 								$('#editVillage,#oldVillage').val(data.village);
+								//$('#editVillageModifiedBy').val(data.modifiedBy);
+								data.modifiedBy =="" || data.modifiedBy==null ?  $("#editVillageModifiedBy").val('NA'): $("#editVillageModifiedBy").val(data.modifiedBy);
 								
 								
 							}
+							$("label[class='center-align']").addClass('active');
 						},
 						error: function (jqXHR, textStatus, errorThrown) {
 							////console.log("error in ajax")

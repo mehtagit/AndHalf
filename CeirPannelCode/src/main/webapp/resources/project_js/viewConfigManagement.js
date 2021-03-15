@@ -224,6 +224,7 @@ function viewDetails(tag){
 		success : function(data) {
 			//console.log(data);
 			setViewPopupData(data);
+			$("label[class='center-align']").addClass('active');
 		},
 		error : function() {
 			//alert("Failed");
@@ -237,6 +238,7 @@ function setViewPopupData(data){
 	data.typeInterp=="" || data.typeInterp==null ? $("#viewtype").val('NA') : $("#viewtype").val(data.typeInterp);
 	data.description=="" || data.description==null ? $("#description").val('NA') : $("#description").val(data.description); 
 	data.remark=="" || data.remark==null ? $("#remarks").val('NA') : $("#remarks").val(data.remark); 
+	data.modifiedBy =="" || data.modifiedBy==null ?  $("#viewModifiedBy").val('NA'): $("#viewModifiedBy").val(data.modifiedBy);
 	
 }
 
@@ -270,6 +272,7 @@ function updateDetails(tag){
 		success : function(data) {
 			//console.log(data);
 			setEditPopupData(data);
+			$("label[class='center-align']").addClass('active');
 		},
 		error : function() {
 			//alert("Failed");
@@ -285,6 +288,7 @@ function setEditPopupData(data){
 	$("#edittype").val(data.typeInterp);
 	$("#editdescription").val(data.description);
 	$("#editremarks").val(data.remark);
+	data.modifiedBy =="" || data.modifiedBy==null ?  $("#editModifiedBy").val('NA'): $("#editModifiedBy").val(data.modifiedBy);
 }
 
 function updateSystem(){

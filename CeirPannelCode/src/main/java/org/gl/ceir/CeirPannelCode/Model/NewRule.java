@@ -11,12 +11,18 @@ public class NewRule {
 	private String postGraceAction;
 	private Integer ruleOrder;
 	private String userType;
-	private String output;
+	private String output,modifiedBy;
 
 	public String userName;
 
 	public String getUserName() {
 		return userName;
+	}
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
@@ -90,6 +96,8 @@ public class NewRule {
 		builder.append(userType);
 		builder.append(", output=");
 		builder.append(output);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
 		builder.append(", userName=");
 		builder.append(userName);
 		builder.append(", userId=");

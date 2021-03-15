@@ -271,6 +271,7 @@ function getDetailBy(id){
 
 
 function setData(result){
+	$("label[class='center-align']").addClass('active');
 	$("#editRule").val(result.name).change();
 	
 	$("#editUser").val(result.userType);
@@ -280,7 +281,7 @@ function setData(result){
 	$("#MoveToGracePeriod").val(result.failedRuleActionGrace);
 	$("#MoveToPostGracePeriod").val(result.failedRuleActionPostGrace);
 	$("#editOutput").val(result.output);
-	
+	result.modifiedBy =="" || result.modifiedBy==null ?  $("#editModifiedBy").val('NA'): $("#editModifiedBy").val(result.modifiedBy);
 	
 	
 	var rule=$('#editRule').val();
@@ -605,5 +606,6 @@ function setData_view(result){
 	$("#viewMoveToGracePeriod").val(result.failedRuleActionGrace);
 	$("#viewMoveToPostGracePeriod").val(result.failedRuleActionPostGrace);
 	$("#viewOutput").val(result.output);
+	result.modifiedBy =="" || result.modifiedBy==null ?  $("#viewModifiedBy").val('NA'): $("#viewModifiedBy").val(result.modifiedBy);
 	
 }

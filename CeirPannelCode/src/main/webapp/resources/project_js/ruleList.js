@@ -227,9 +227,11 @@
 			
 			
 			function setData(result){
+				$("label[class='center-align']").addClass('active');
 				$("#editName").val(result.name);
 				$("#editDescription").val(result.description);
 				$("#editState").val(result.state);
+				result.modifiedBy =="" || result.modifiedBy==null ?  $("#editModifiedBy").val('NA'): $("#editModifiedBy").val(result.modifiedBy);
 			}
 			
 			
@@ -358,8 +360,10 @@
 			
 			
 			function view_data(result){
+				$("label[class='center-align']").addClass('active');
 				$("#viewName").val(result.name);
 				$("#viewDescription").val(result.description);
 				$("#viewState").val(result.state);
+				result.modifiedBy =="" || result.modifiedBy==null ?  $("#viewModifiedBy").val('NA'): $("#viewModifiedBy").val(result.modifiedBy);
 			}
 		

@@ -363,7 +363,8 @@
 		$("#editInterp").val(result.interp);
 		$("#editFieldId").val(result.tagId);
 		$("#editdisplayName").val(result.displayName);
-		
+		result.modifiedBy =="" || result.modifiedBy==null ?  $("#editModifiedBy").val('NA'): $("#editModifiedBy").val(result.modifiedBy);
+		$("label[class='center-align']").addClass('active');
 		$("label[for='editdescription']").addClass('active');
 		$("label[for='editInterp']").addClass('active');
 		$("label[for='editFieldId']").addClass('active');

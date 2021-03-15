@@ -227,12 +227,8 @@ function setViewPopupData(data){
 	data.channelInterp=="" || data.channelInterp==null ? $("#viewChannel").val('NA') : $('#viewChannel').val(data.channelInterp);
 	data.featureName=="" || data.featureName==null ? $("#viewFeature").val('NA') : $('#viewFeature').val(data.featureName);
 	data.subject=="" || data.subject==null ? $("#viewSubject").val('NA') : $('#viewSubject').val(data.subject);
-	$("label[for='viewTag']").addClass('active');
-	$("label[for='viewValue']").addClass('active');
-	$("label[for='description']").addClass('active');
-	$("label[for='viewChannel']").addClass('active');
-	$("label[for='viewFeature']").addClass('active');
-	$("label[for='viewSubject']").addClass('active');
+	data.modifiedBy ==undefined || data.modifiedBy==null ?  $("#viewMessageModifiedBy").val('NA'): $("#viewMessageModifiedBy").val(data.modifiedBy);
+	$("label[class='center-align']").addClass('active');
 }
 
 function updateDetails(tag){
@@ -279,7 +275,9 @@ function setEditData(data){
 	$("#editChannel").val(data.channelInterp);
 	data.featureName=="" || data.featureName==null ? $("#editFeature").val('NA') : $('#editFeature').val(data.featureName);
 	data.subject=="" || data.subject==null ? $("#editSubject").val('NA') : $('#editSubject').val(data.subject);
-	$("label[for='editSubject']").addClass('active');
+	data.modifiedBy =="" || data.modifiedBy==null ?  $("#editMessageModifiedBy").val('NA'): $("#editMessageModifiedBy").val(data.modifiedBy);
+	
+	$("label[class='center-align']").addClass('active');
 }
 
 

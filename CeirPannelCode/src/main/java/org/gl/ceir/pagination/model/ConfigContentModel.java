@@ -15,28 +15,7 @@ public class ConfigContentModel {
 	private String value;
 	private String description;
 	private Integer type;
-	private String typeInterp,roleType,userType,userName;
-	
-	public String getRoleType() {
-		return roleType;
-	}
-	public void setRoleType(String roleType) {
-		this.roleType = roleType;
-	}
-	public String getUserType() {
-		return userType;
-	}
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	private String remark;
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private String typeInterp,roleType,userType,userName,modifiedBy;
 	public Integer getId() {
 		return id;
 	}
@@ -85,24 +64,60 @@ public class ConfigContentModel {
 	public void setTypeInterp(String typeInterp) {
 		this.typeInterp = typeInterp;
 	}
-	public String getRemark() {
-		return remark;
+	public String getRoleType() {
+		return roleType;
 	}
-	public void setRemark(String remark) {
-		this.remark = remark;
+	public void setRoleType(String roleType) {
+		this.roleType = roleType;
 	}
-	public Map<String, Object> getAdditionalProperties() {
-		return additionalProperties;
+	public String getUserType() {
+		return userType;
 	}
-	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
-		this.additionalProperties = additionalProperties;
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getModifiedBy() {
+		return modifiedBy;
+	}
+	public void setModifiedBy(String modifiedBy) {
+		this.modifiedBy = modifiedBy;
 	}
 	@Override
 	public String toString() {
-		return "ConfigContentModel [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", tag="
-				+ tag + ", value=" + value + ", description=" + description + ", type=" + type + ", typeInterp="
-				+ typeInterp + ", roleType=" + roleType + ", userType=" + userType + ", userName=" + userName
-				+ ", remark=" + remark + ", additionalProperties=" + additionalProperties + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("ConfigContentModel [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", tag=");
+		builder.append(tag);
+		builder.append(", value=");
+		builder.append(value);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", typeInterp=");
+		builder.append(typeInterp);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
+		builder.append("]");
+		return builder.toString();
 	}
+	
 	
 }

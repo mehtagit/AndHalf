@@ -223,6 +223,11 @@
                         <input type="text" id="editdescription" name="value" title="Please enter alphabets and numbers upto 200 characters only" maxlength="200" style="min-height:8rem">
                         <label for="editdescription" class="">Description</label>
                     </div>
+                    
+                    <div class="input-field col s12 m6" style="margin-top: 20px;">
+                        <input type="text" id="editModifiedBy"  disabled>
+                        <label for="editModifiedBy" class="center-align">Modified By </label>
+                    </div>
 					
 
                     <div class="col s12 m12 center" style="margin-top: 20px;">

@@ -496,7 +496,14 @@
 							pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
 							placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 							maxlength="50" required/> 
-						</div>		
+						</div>	
+						
+						 <div class="input-field col s12 m6" style="margin-top: 22px;">
+                        	<input type="text" id="editProvinceModifiedBy" name="value" disabled>
+                        	<label for="editProvinceModifiedBy" class="center-align">Modified By </label>
+                    	</div>
+						
+							
                       </div>
                                <div class="row">
                                             <div class="input-field col s12 center" style="padding: 20px 0;">
@@ -536,7 +543,12 @@
 										pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
 										placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 										maxlength="50" required/> 
-								</div>		
+								</div>
+								
+								<div class="input-field col s12 m6" style="margin-top: 22px;">
+                        			<input type="text" id="editDistrictModifiedBy" name="value" disabled>
+                        			<label for="editDistrictModifiedBy" class="center-align">Modified By </label>
+                    		</div>		
                         	  </div>
                                <div class="row">
                                             <div class="input-field col s12 center" style="padding: 20px 0;">
@@ -587,6 +599,11 @@
 											placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 											maxlength="50" required/> 
 									</div>		
+									
+									<div class="input-field col s12 m6" style="margin-top: 22px;">
+                        			<input type="text" id="editCommuneModifiedBy" name="value" disabled>
+                        			<label for="editCommuneModifiedBy" class="center-align">Modified By </label>
+                    			</div>	
                           </div>
                                <div class="row">
                                             <div class="input-field col s12 center" style="padding: 20px 0;">
@@ -648,7 +665,12 @@
 										pattern="<spring:eval expression="@environment.getProperty('pattern.locality')" />"
 										placeholder="" oninput="InvalidMsg(this,'input','<spring:message code="validation.50character" />');" oninvalid="InvalidMsg(this,'input','<spring:message code="validation.50character" />');"
 										maxlength="50" required/> 
-								</div>		
+								</div>	
+								
+								<div class="input-field col s12 m6" style="margin-top: 18px;">
+                        			<input type="text" id="editVillageModifiedBy" name="value" disabled>
+                        			<label for="editVillageModifiedBy" class="center-align">Modified By </label>
+                    			</div>		
                           </div>
                                <div class="row">
                                             <div class="input-field col s12 center" style="padding: 20px 0;">
