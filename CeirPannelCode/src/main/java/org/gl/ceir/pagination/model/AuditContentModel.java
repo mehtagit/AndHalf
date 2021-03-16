@@ -18,6 +18,21 @@ public class AuditContentModel {
 	private String jSessionId;
 	private String txnId;
 	private String roleType;
+	private String publicIp;
+	private String browser;
+	
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -125,6 +140,10 @@ public class AuditContentModel {
 		builder.append(txnId);
 		builder.append(", roleType=");
 		builder.append(roleType);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}
