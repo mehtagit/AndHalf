@@ -213,6 +213,8 @@ public class Consignment {
 		consignment.setPortAddress(portAddress);
 		consignment.setDeviceQuantity(deviceQuantity);
 		consignment.setRoleType(roleType);
+		consignment.setPublicIp(session.getAttribute("publicIP").toString());
+		consignment.setBrowser(session.getAttribute("browser").toString());
 		log.info("consignment form parameters passed to register consignment api "+consignment.toString());
 		GenricResponse response = feignCleintImplementation.addConsignment(consignment);
 		log.info("response from register consignment api"+response.toString());
@@ -358,7 +360,8 @@ public class Consignment {
 			consignment.setDeviceQuantity(deviceQuantity);
 			consignment.setRoleType(roleType);
 		}
-
+		consignment.setPublicIp(session.getAttribute("publicIP").toString());
+		consignment.setBrowser(session.getAttribute("browser").toString());
 		log.info("Request passed to the update register consignment="+consignment.toString());
 		response = feignCleintImplementation.updateConsignment(consignment);
 		log.info(" response from update Consignment api="+response);
@@ -377,6 +380,9 @@ public class Consignment {
 
 		log.info("enter in delete consignment.");
 		String userType=(String) session.getAttribute("usertype");
+
+		consignmentModel.setPublicIp(session.getAttribute("publicIP").toString());
+		consignmentModel.setBrowser(session.getAttribute("browser").toString());
 		log.info("request passed to the deleteConsignment Api="+consignmentModel);
 		GenricResponse response=feignCleintImplementation.deleteConsignment(consignmentModel,userType);
 		log.info("response after delete consignment."+response);
@@ -407,6 +413,9 @@ public class Consignment {
 		request.setUserTypeId(consignmentUpdateRequest.getUserTypeId());
 		request.setFeatureId(consignmentUpdateRequest.getFeatureId());
 		request.setRoleType(consignmentUpdateRequest.getRoleType());
+		
+		request.setPublicIp(session.getAttribute("publicIP").toString());
+		request.setBrowser(session.getAttribute("browser").toString());
 		log.info(" request passed to the update consignment status="+request);
 		GenricResponse response=feignCleintImplementation.updateConsignmentStatus(request);
 		log.info("response after update consignment status="+response);
@@ -466,6 +475,9 @@ public class Consignment {
 		filterRequest.setUserType(roletype);
 		filterRequest.setFeatureId(3);
 		filterRequest.setRoleType(roletype);
+		
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequest.setBrowser(session.getAttribute("browser").toString());
 		/*
 		 * String txnId Long userId, String userName, Long userTypeId, String userType,
 		 * Long featureId, Long roleType
@@ -531,6 +543,8 @@ public class Consignment {
 		filterRequest.setDeviceQuantity(deviceQuantity);
 		filterRequest.setQuantity(imeiQuantity);
 		filterRequest.setSupplierName(supplierName);
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequest.setBrowser(session.getAttribute("browser").toString());
 		log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 		Object	response= feignCleintImplementation.consignmentFilter(filterRequest, pageNo, pageSize, file,source);
 

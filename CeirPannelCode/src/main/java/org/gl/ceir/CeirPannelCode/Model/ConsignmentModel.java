@@ -31,6 +31,8 @@ private String remarks;
 private String roleType;
 private Integer currency,portAddress;
 private String portAddressInterp,currencyInterp;
+private String publicIp;
+private String browser;
 
 public String getCurrencyInterp() {
 	return currencyInterp;
@@ -268,6 +270,18 @@ public String getPendingTacApprovedByCustomInterp() {
 public void setPendingTacApprovedByCustomInterp(String pendingTacApprovedByCustomInterp) {
 	this.pendingTacApprovedByCustomInterp = pendingTacApprovedByCustomInterp;
 }
+public String getPublicIp() {
+	return publicIp;
+}
+public void setPublicIp(String publicIp) {
+	this.publicIp = publicIp;
+}
+public String getBrowser() {
+	return browser;
+}
+public void setBrowser(String browser) {
+	this.browser = browser;
+}
 @Override
 public String toString() {
 	StringBuilder builder = new StringBuilder();
@@ -335,6 +349,10 @@ public String toString() {
 	builder.append(portAddressInterp);
 	builder.append(", currencyInterp=");
 	builder.append(currencyInterp);
+	builder.append(", publicIp=");
+	builder.append(publicIp);
+	builder.append(", browser=");
+	builder.append(browser);
 	builder.append(", userName=");
 	builder.append(userName);
 	builder.append(", userType=");
