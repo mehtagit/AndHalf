@@ -87,6 +87,8 @@ public class AuditDatatableController {
 				  String roleType = dataInsideList.getRoleType();
 				  String featureName = dataInsideList.getFeatureName();
 				  String subFeature = dataInsideList.getSubFeature();
+				  //String publicIp = dataInsideList.getPublicIp();
+				  //String browser = dataInsideList.getBrowser();
 				   String userStatus = (String) session.getAttribute("userStatus");
 				   String action=iconState.auditManagementIcons(userStatus,getuserId,id);		
 				   Object[] finalData={createdOn,txnId,userName,userTypeName,roleType,featureName,subFeature,action}; 

@@ -9,7 +9,8 @@ public class ConsignmentUpdateRequest {
 	private int userId;
 	private String remarks;
 	private Integer featureId;
-	
+	private String publicIp;
+	private String browser;
 	public String getUserName() {
 		return userName;
 	}
@@ -74,6 +75,18 @@ public class ConsignmentUpdateRequest {
 	public void setFeatureId(Integer featureId) {
 		this.featureId = featureId;
 	}
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -91,6 +104,10 @@ public class ConsignmentUpdateRequest {
 		builder.append(remarks);
 		builder.append(", featureId=");
 		builder.append(featureId);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append(", userName=");
 		builder.append(userName);
 		builder.append(", userType=");
@@ -100,5 +117,8 @@ public class ConsignmentUpdateRequest {
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
+	
 	
 }
