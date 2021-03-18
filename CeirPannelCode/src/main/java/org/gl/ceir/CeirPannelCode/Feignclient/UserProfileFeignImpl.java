@@ -11,6 +11,7 @@ import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.PaymentRequest;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
 import org.gl.ceir.CeirPannelCode.Model.SLAfilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.UserHeader;
 import org.gl.ceir.CeirPannelCode.Model.UserStatus;
 import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
@@ -44,7 +45,7 @@ public interface UserProfileFeignImpl {
 
 
 	@PostMapping("/userProfile/editProfile/{userid}") 
-    public Registration editUserProfile(@PathVariable("userid") Integer userid);
+    public Registration editUserProfile(@PathVariable("userid") Integer userid , @RequestBody UserHeader userHeader);
 	
 	@PostMapping("/userProfile/updateProfile") 
     public UpdateProfileResponse updateUserProfile(Registration registration);

@@ -2,7 +2,7 @@ package org.gl.ceir.CeirPannelCode.Model;
 
 import java.util.List;
 
-public class UserStatus {
+public class UserStatus extends UserHeader{
 	private Integer id;
 	private String status;
 	private Integer userId;
