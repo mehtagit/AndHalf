@@ -47,7 +47,11 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"username" : $("body").attr("data-selected-username")
+					"username" : $("body").attr("data-selected-username"),
+					"month" : parseInt($('#filterMonth').val()),
+					"riel" :  parseFloat($('#filterCambodian').val()),
+					"dollar" :	parseFloat($('#filterdoller').val())
+					
 			}				
 			if(lang=='km'){
 				var langFile="./resources/i18n/khmer_datatable.json";
@@ -68,14 +72,15 @@
 						destroy:true,
 						"serverSide": true,
 						orderCellsTop : true,
-						"ordering" : false,
+						"ordering" : true,
 						"bPaginate" : true,
-						"bFilter" : true,
+						"bFilter" : false,
 						"bInfo" : true,
 						"bSearchable" : true,
 						"oLanguage": {
 							"sEmptyTable": "No records found in the system"
 					    },
+					    "aaSorting": [],
 						initComplete: function() {
 					 		$('.dataTables_filter input')
 	       .off().on('keyup', function(event) {
@@ -103,7 +108,11 @@
 								
 							}
 						},
-						"columns": result
+						"columns": result,
+						columnDefs : [
+							{ orderable: false, targets: -1 }
+							]
+						
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
@@ -177,9 +186,11 @@
 									"</div>"+
 							"</div>");
 					}
-
+						var viewFilter="viewFilter";
 						$("#CurrencyTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+						$("#CurrencyTableDiv").append("<div class=' col s3 m2 l2'><button type='button' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
 						$("#CurrencyTableDiv").append("<div class=' col s3 m2 l3'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportCurrencyData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$('#clearFilter').attr("onclick", "Resetfilter('viewFilter')");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -217,7 +228,7 @@
 		
 		$.getJSON('./getDropdownList/Month', function(data) {
 			for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].value).text(data[i].interp).appendTo('#addMonth,#editMonth');
+				$('<option>').val(data[i].value).text(data[i].interp).appendTo('#addMonth,#editMonth,#filterMonth');
 			}
 		});
 	}
@@ -487,3 +498,8 @@
 		});
 	}
 	
+	function Resetfilter(formID){
+		$('#'+formID).trigger('reset');
+		$("label").removeClass('active');
+		currencyFieldTable(lang,null);
+	}

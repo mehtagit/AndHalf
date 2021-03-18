@@ -65,6 +65,26 @@ public class CurrencyDatatableController {
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		filterrequest.setSearchString(request.getParameter("search[value]"));
+		
+		log.info("---->"+request.getParameter("order[0][column]")+"============>"+request.getParameter("order[0][dir]"));
+		String column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+			"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Modified On":
+				"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Month":
+					"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Year" :
+							"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Currency" :
+								"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Cambodian Riel":
+									"6".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "US Dollar"
+											:"Modified On";
+		String order;
+		if("Modified On".equalsIgnoreCase(column)) {
+			order="desc";
+		}
+		else {
+			order=request.getParameter("order[0][dir]");
+		}
+		filterrequest.setOrderColumnName(column);
+		filterrequest.setOrder(order);
+		
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 		try {
 			log.info("request send to the filter api ="+filterrequest);
@@ -148,7 +168,7 @@ public class CurrencyDatatableController {
 			
 		
 		  //Dropdown items 
-		  String[] selectParam={"select",Translator.toLocale("table.currency"),"currencyType","","select",Translator.toLocale("table.year"),"year",""}; 
+		  String[] selectParam={"select",Translator.toLocale("table.month"),"filterMonth","","select",Translator.toLocale("table.year"),"year","","select",Translator.toLocale("table.currency"),"currencyType",""}; 
 		  for(int i=0; i<selectParam.length; i++) { 
 				inputFields= new InputFields();
 		  inputFields.setType(selectParam[i]); 
@@ -164,7 +184,7 @@ public class CurrencyDatatableController {
 		 
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","", "text", Translator.toLocale("table.cambodian"), "filterCambodian", "","text", Translator.toLocale("table.doller"), "filterdoller", ""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
