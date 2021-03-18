@@ -1,5 +1,5 @@
 package com.ceir.CeirCode.model;
-public class UserStatusRequest {
+public class UserStatusRequest extends UserHeader{
 	private String status;
 	private Integer userId;
 	private Integer statusValue;

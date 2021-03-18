@@ -1,6 +1,6 @@
 
 package com.ceir.CeirCode.model;
-public class ChangePassword {
+public class ChangePassword extends RequestHeaders {
 	private String password;
 	private String oldPassword;
 	private Integer userid;

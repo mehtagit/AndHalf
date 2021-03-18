@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -42,6 +43,10 @@ public class AuditTrail implements Serializable {
 	private String jSessionId;
 	private String  txnId;
 	private String roleType;
+	
+	private String publicIp;
+	
+	private String browser;
 	public AuditTrail() {
 
 	}
@@ -57,6 +62,22 @@ public class AuditTrail implements Serializable {
 		this.jSessionId = jSessionId;
 		this.txnId=txnId;
 		this.roleType=roleType;
+	
+	}
+	
+	public AuditTrail(long userId, String userName, long userTypeId, String userType, long featureId, String featureName, String subFeature, String jSessionId,String txnId,String roleType,String publicIp,String browser) {
+		this.userId = userId;
+		this.userName = userName;
+		this.userTypeId = userTypeId;
+		this.userType = userType;
+		this.featureId = featureId;
+		this.featureName = featureName;
+		this.subFeature = subFeature;
+		this.jSessionId = jSessionId;
+		this.txnId=txnId;
+		this.roleType=roleType;
+		this.publicIp=publicIp;
+		this.browser=browser;
 	}
 	
 	public static long getSerialVersionUID() {
@@ -158,14 +179,61 @@ public class AuditTrail implements Serializable {
 		serialVersionUID = serialversionuid;
 	}
 
-	
+	public String getPublicIp() {
+		return publicIp;
+	}
+
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+
+	public String getBrowser() {
+		return browser;
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 
 	@Override
 	public String toString() {
-		return "AuditTrail [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", userId=" + userId
-				+ ", userName=" + userName + ", userTypeId=" + userTypeId + ", userType=" + userType + ", featureId="
-				+ featureId + ", featureName=" + featureName + ", subFeature=" + subFeature + ", jSessionId="
-				+ jSessionId + ", txnId=" + txnId + ", roleType=" + roleType + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("AuditTrail [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", featureName=");
+		builder.append(featureName);
+		builder.append(", subFeature=");
+		builder.append(subFeature);
+		builder.append(", jSessionId=");
+		builder.append(jSessionId);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
+		builder.append("]");
+		return builder.toString();
 	}
+
+	
+
+	
 	
 }

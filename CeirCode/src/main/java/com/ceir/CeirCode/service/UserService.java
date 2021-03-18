@@ -32,6 +32,7 @@ import com.ceir.CeirCode.model.Securityquestion;
 import com.ceir.CeirCode.model.SystemConfigListDb;
 import com.ceir.CeirCode.model.SystemConfigurationDb;
 import com.ceir.CeirCode.model.User;
+import com.ceir.CeirCode.model.UserHeader;
 import com.ceir.CeirCode.model.UserPasswordHistory;
 import com.ceir.CeirCode.model.UserProfile;
 import com.ceir.CeirCode.model.UserSecurityquestion;
@@ -955,7 +956,7 @@ public class UserService {
 			log.info("inside change password controller");
 			log.info("ChangePassword data from form: "+password);
 			User user=userRepo.findById(password.getUserid());
-			saveUserTrail(user, "User Management","Change Password",41);
+			saveUserTrail(user, "User Management","Change Password",41,password.getPublicIp(),password.getBrowser());
 			return changePasswordMethod(user,password);
 		}
 
@@ -1242,7 +1243,7 @@ public class UserService {
 					log.info("current user status id "+ output.getCurrentStatus() );
 					subFeature="";
 				}
-				saveUserTrail(user, "User Management",subFeature,41);	
+				saveUserTrail(user, "User Management",subFeature,41,userStatus.getPublicIp(),userStatus.getBrowser());	
 				List<Long> usertypes = new ArrayList<Long>();
 				usertypes.add(4l);
 				usertypes.add(5l);
@@ -1631,14 +1632,14 @@ public class UserService {
 	}
 
 
-	public ResponseEntity<?> editProfile(long id){
+	public ResponseEntity<?> editProfile(long id,UserHeader header){
 		try {
 			log.info("inside into edit profile");     
 			log.info("user id:  "+id);    
 			log.info("get user  data by userid below");
 			UserProfile user=userProfileRepo.findByUser_Id(id);
 			if(Objects.nonNull(user)) {
-				saveUserTrail(user.getUser(),"User Management","View Profile",41);
+				saveUserTrail(user.getUser(),"User Management","View Profile",41,header.getPublicIp(),header.getBrowser());
 				log.info("user profile data: "+user);
 				List<QuestionPair> questionList=new ArrayList<QuestionPair>();
 				log.info("now going to fetch security question data of user");
@@ -1759,6 +1760,7 @@ public class UserService {
 
 	public ResponseEntity<?> updateProfile(UserProfile userProfile){
 		try {
+			
 			log.info("inside into update user profile");     
 			log.info("user profile data:  :  "+userProfile);    
 			UserProfile userProfileData=userProfileRepo.findById(userProfile.getId());
@@ -1768,7 +1770,7 @@ public class UserService {
 				 * long mainRole=roleCheck(userProfile.getRoles()); if(mainRole>0) {
 				 */
 				User userData=userRepo.findByUserProfile_Id(userProfile.getId());
-				saveUserTrail(userData,"User Management","Update",41);   
+				saveUserTrail(userData,"User Management","Update",41,userProfile.getPublicIp(),userProfile.getBrowser());   
 				boolean emailExist=userProfileRepo.existsByEmailAndUser_CurrentStatusNot(userProfile.getEmail(),21);
 				boolean phoneExist=userProfileRepo.existsByPhoneNoAndUser_CurrentStatusNot(userProfile.getPhoneNo(),21);
 				if(!userProfile.getPhoneNo().equals(userProfileData.getPhoneNo()) &&
@@ -2144,6 +2146,7 @@ public class UserService {
 
 	public int saveUserTrail(User user,String feature ,String subFeature,long featureId) {
 		try {
+			
 			AuditTrail auditTrail=new AuditTrail(user.getId(), user.getUsername(),
 					user.getUsertype().getId(),user.getUsertype().getUsertypeName(), featureId,
 					feature, subFeature,"0","NA",user.getUsertype().getUsertypeName());
@@ -2210,5 +2213,26 @@ public class UserService {
 			return new ResponseEntity<>(false,HttpStatus.EXPECTATION_FAILED);
 		}
 		
-	}		
+	}	
+	public int saveUserTrail(User user,String feature ,String subFeature,long featureId,String publicIP , String browser) {
+		try {
+			
+			AuditTrail auditTrail=new AuditTrail(user.getId(), user.getUsername(),
+					user.getUsertype().getId(),user.getUsertype().getUsertypeName(), featureId,
+					feature, subFeature,"0","NA",user.getUsertype().getUsertypeName(),publicIP,browser);
+			log.info("going to save audit trail"+auditTrail);
+			AuditTrail output=audiTrailRepoService.saveAuditTrail(auditTrail);
+			if(output!=null) {
+				log.info("audit trail sucessfully save");
+			}
+			else {
+				log.info("user trail fails to save");
+			}
+			return 1;
+		}
+		catch(Exception e) {
+			log.info(e.toString());
+			return 0;
+		}
+	}
 } 

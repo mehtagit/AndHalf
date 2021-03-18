@@ -1,6 +1,7 @@
 package com.ceir.CeirCode.model;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -139,6 +140,9 @@ public class UserProfile {
     private String userAgent;
     @Transient
 	private String publicIp;
+    
+    @Transient
+  	private String browser;
     
 	@Transient
 	private String userLanguage;
@@ -549,28 +553,150 @@ public class UserProfile {
 	public void setApprovedBy(String approvedBy) {
 		this.approvedBy = approvedBy;
 	}
+	
+	
+	
+	
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+	
+	
+	
 	@Override
 	public String toString() {
-		return "UserProfile [id=" + id + ", firstName=" + firstName + ", middleName=" + middleName + ", lastName="
-				+ lastName + ", companyName=" + companyName + ", type=" + type + ", vatStatus=" + vatStatus + ", vatNo="
-				+ vatNo + ", propertyLocation=" + propertyLocation + ", street=" + street + ", locality=" + locality
-				+ ", district=" + district + ", commune=" + commune + ", village=" + village + ", postalCode="
-				+ postalCode + ", province=" + province + ", country=" + country + ", passportNo=" + passportNo
-				+ ", email=" + email + ", phoneNo=" + phoneNo + ", arrivalPort=" + arrivalPort + ", arrivalPortName="
-				+ arrivalPortName + ", asTypeName=" + asTypeName + ", createdOn=" + createdOn + ", modifiedOn="
-				+ modifiedOn + ", phoneOtp=" + phoneOtp + ", emailOtp=" + emailOtp + ", displayName=" + displayName
-				+ ", employeeId=" + employeeId + ", natureOfEmployment=" + natureOfEmployment + ", designation="
-				+ designation + ", authorityName=" + authorityName + ", authorityEmail=" + authorityEmail
-				+ ", authorityPhoneNo=" + authorityPhoneNo + ", operatorTypeName=" + operatorTypeName
-				+ ", operatorTypeId=" + operatorTypeId + ", nidFilename=" + nidFilename + ", photoFilename="
-				+ photoFilename + ", idCardFilename=" + idCardFilename + ", vatFilename=" + vatFilename
-				+ ", nidFilePath=" + nidFilePath + ", photoFilePath=" + photoFilePath + ", idCardFilePath="
-				+ idCardFilePath + ", vatFilePath=" + vatFilePath + ", username=" + username + ", questionList="
-				+ questionList + ", roles=" + roles + ", usertypeName=" + usertypeName + ", password=" + password
-				+ ", source=" + source + ", expiryDate=" + expiryDate + ", sourceUsername=" + sourceUsername
-				+ ", userAgent=" + userAgent + ", publicIp=" + publicIp + ", userLanguage=" + userLanguage +
-				" portAddress=" + portAddress +" , PortAddressName=" + PortAddressName +", userTypeId=" + userTypeId +""
-						+ "  RolesList="+rolesList+"]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("UserProfile [id=");
+		builder.append(id);
+		builder.append(", firstName=");
+		builder.append(firstName);
+		builder.append(", middleName=");
+		builder.append(middleName);
+		builder.append(", lastName=");
+		builder.append(lastName);
+		builder.append(", companyName=");
+		builder.append(companyName);
+		builder.append(", type=");
+		builder.append(type);
+		builder.append(", vatStatus=");
+		builder.append(vatStatus);
+		builder.append(", vatNo=");
+		builder.append(vatNo);
+		builder.append(", propertyLocation=");
+		builder.append(propertyLocation);
+		builder.append(", street=");
+		builder.append(street);
+		builder.append(", locality=");
+		builder.append(locality);
+		builder.append(", district=");
+		builder.append(district);
+		builder.append(", commune=");
+		builder.append(commune);
+		builder.append(", village=");
+		builder.append(village);
+		builder.append(", postalCode=");
+		builder.append(postalCode);
+		builder.append(", province=");
+		builder.append(province);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", passportNo=");
+		builder.append(passportNo);
+		builder.append(", email=");
+		builder.append(email);
+		builder.append(", phoneNo=");
+		builder.append(phoneNo);
+		builder.append(", arrivalPort=");
+		builder.append(arrivalPort);
+		builder.append(", portAddress=");
+		builder.append(portAddress);
+		builder.append(", PortAddressName=");
+		builder.append(PortAddressName);
+		builder.append(", arrivalPortName=");
+		builder.append(arrivalPortName);
+		builder.append(", asTypeName=");
+		builder.append(asTypeName);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", phoneOtp=");
+		builder.append(phoneOtp);
+		builder.append(", emailOtp=");
+		builder.append(emailOtp);
+		builder.append(", displayName=");
+		builder.append(displayName);
+		builder.append(", employeeId=");
+		builder.append(employeeId);
+		builder.append(", natureOfEmployment=");
+		builder.append(natureOfEmployment);
+		builder.append(", natureOfEmploymentInterp=");
+		builder.append(natureOfEmploymentInterp);
+		builder.append(", designation=");
+		builder.append(designation);
+		builder.append(", authorityName=");
+		builder.append(authorityName);
+		builder.append(", authorityEmail=");
+		builder.append(authorityEmail);
+		builder.append(", authorityPhoneNo=");
+		builder.append(authorityPhoneNo);
+		builder.append(", operatorTypeName=");
+		builder.append(operatorTypeName);
+		builder.append(", operatorTypeId=");
+		builder.append(operatorTypeId);
+		builder.append(", nidFilename=");
+		builder.append(nidFilename);
+		builder.append(", photoFilename=");
+		builder.append(photoFilename);
+		builder.append(", idCardFilename=");
+		builder.append(idCardFilename);
+		builder.append(", vatFilename=");
+		builder.append(vatFilename);
+		builder.append(", nidFilePath=");
+		builder.append(nidFilePath);
+		builder.append(", photoFilePath=");
+		builder.append(photoFilePath);
+		builder.append(", idCardFilePath=");
+		builder.append(idCardFilePath);
+		builder.append(", vatFilePath=");
+		builder.append(vatFilePath);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", questionList=");
+		builder.append(questionList);
+		builder.append(", roles=");
+		builder.append(Arrays.toString(roles));
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", usertypeName=");
+		builder.append(usertypeName);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append(", source=");
+		builder.append(source);
+		builder.append(", expiryDate=");
+		builder.append(expiryDate);
+		builder.append(", sourceUsername=");
+		builder.append(sourceUsername);
+		builder.append(", userAgent=");
+		builder.append(userAgent);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
+		builder.append(", userLanguage=");
+		builder.append(userLanguage);
+		builder.append(", rolesList=");
+		builder.append(rolesList);
+		builder.append(", approvedBy=");
+		builder.append(approvedBy);
+		builder.append("]");
+		return builder.toString();
 	}
 	public UserProfile(String firstName, String middleName, String lastName, String propertyLocation, String street,
 			String locality, @NotNull String district, @NotNull String commune, @NotNull String village,

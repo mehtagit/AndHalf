@@ -58,7 +58,7 @@ public class LoginController{
 		User UserData=userRepo.findByUsername(userLogin.getUsername());
 		RequestHeaders header=new RequestHeaders(userLogin.getUserAgent(),userLogin.getPublicIp(),UserData.getUsername(),userLogin.getBrowser());
 		ResponseEntity<?> reponse=reqHeadersService.saveRequestHeaders(header);
-			userService.saveUserTrail(UserData, "User Management","Login",41);
+			userService.saveUserTrail(UserData, "User Management","Login",41,userLogin.getPublicIp(),userLogin.getBrowser());
 			return reponse;
 		
 	}  

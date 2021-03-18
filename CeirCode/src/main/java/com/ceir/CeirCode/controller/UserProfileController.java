@@ -26,6 +26,7 @@ import com.ceir.CeirCode.model.FileDetails;
 import com.ceir.CeirCode.model.FilterRequest;
 import com.ceir.CeirCode.model.SystemConfigListDb;
 import com.ceir.CeirCode.model.User;
+import com.ceir.CeirCode.model.UserHeader;
 import com.ceir.CeirCode.model.UserProfile;
 import com.ceir.CeirCode.model.UserStatusRequest;
 import com.ceir.CeirCode.model.Userrole;
@@ -145,8 +146,8 @@ public class UserProfileController {
 
 	@ApiOperation(value = "user profile data by user id", response = HttpResponse.class)
 	@PostMapping("/editProfile/{userid}") 
-	public ResponseEntity<?> editProfile(@PathVariable("userid") long userid){
-		return userService.editProfile(userid);  
+	public ResponseEntity<?> editProfile(@PathVariable("userid") long userid,@RequestBody UserHeader userheader){
+		return userService.editProfile(userid,userheader);  
 	} 
 
 	@ApiOperation(value = "user profile data", response = HttpResponse.class)
