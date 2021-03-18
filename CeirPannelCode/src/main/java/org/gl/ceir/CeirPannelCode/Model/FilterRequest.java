@@ -16,8 +16,14 @@ public class FilterRequest {
 	public String columnName,sort,blockingTypeFilter;
 	public String visaType,visaNumber,visaExpiryDate;
 	public String order,orderColumnName;
-	private String browser;
+	private String browser,filteredUsername;
 	
+	public String getFilteredUsername() {
+		return filteredUsername;
+	}
+	public void setFilteredUsername(String filteredUsername) {
+		this.filteredUsername = filteredUsername;
+	}
 	public String getStartDate() {
 		return startDate;
 	}
@@ -856,6 +862,8 @@ public class FilterRequest {
 		builder.append(orderColumnName);
 		builder.append(", browser=");
 		builder.append(browser);
+		builder.append(", filteredUsername=");
+		builder.append(filteredUsername);
 		builder.append("]");
 		return builder.toString();
 	}

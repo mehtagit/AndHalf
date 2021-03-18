@@ -50,19 +50,38 @@
 		
 		function DataTable(lang){
 			
-			var filterRequest={
-					"endDate":$('#endDate').val(),
-					"startDate":$('#startDate').val(),
-					"userId":parseInt(userId),
-					"featureId":parseInt(featureId),
-					"usertypeId" : parseInt($('#userType').val()),
-					"userTypeId": parseInt($("body").attr("data-userTypeID")),
-					"userType":$("body").attr("data-roleType"),
-					//"username" : $("body").attr("data-selected-username"),
-					"email" : $('#emailID').val(),
-					"phoneNo" : $('#phone').val(),
-					"username" :  $('#userName').val()==undefined || $('#userName').val()==null ? $("body").attr("data-selected-username") : $('#userName').val()
-			}		
+			if(sourceType='menu'){
+				var filterRequest={
+						"endDate":$('#endDate').val(),
+						"startDate":$('#startDate').val(),
+						"userId":parseInt(userId),
+						"featureId":parseInt(featureId),
+						"usertypeId" : parseInt($('#userType').val()),
+						"userTypeId": parseInt($("body").attr("data-userTypeID")),
+						"userType":$("body").attr("data-roleType"),
+						//"username" : $("body").attr("data-selected-username"),
+						"email" : $('#emailID').val(),
+						"phoneNo" : $('#phone').val(),
+						"username" :  $("body").attr("data-selected-username"),
+						"filteredUsername" : $('#userName').val()
+				}		
+			}else{
+				var filterRequest={
+						"endDate":$('#endDate').val(),
+						"startDate":$('#startDate').val(),
+						"userId":parseInt(userId),
+						"featureId":parseInt(featureId),
+						"usertypeId" : parseInt($('#userType').val()),
+						"userTypeId": parseInt($("body").attr("data-userTypeID")),
+						"userType":$("body").attr("data-roleType"),
+						//"username" : $("body").attr("data-selected-username"),
+						"email" : $('#emailID').val(),
+						"phoneNo" : $('#phone').val(),
+						"username" :  $("body").attr("data-selected-username"),
+								
+				}		
+			}
+			
 			
 			if(lang=='km'){
 				var langFile="./resources/i18n/khmer_datatable.json";
@@ -175,7 +194,7 @@
 								 maxDate: new Date()
 					        });
 						}else if(date[i].type === "text"){
-							$("#userTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+							$("#userTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='50' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 						}
 						 
 					} 
@@ -495,7 +514,45 @@
 		var pageNo=info.page;
 		var pageSize =info.length;
 		
-		var filterRequest={
+		if(sourceType='menu'){
+			var filterRequest={
+					"endDate":$('#endDate').val(),
+					"startDate":$('#startDate').val(),
+					"userId":parseInt(userId),
+					"featureId":parseInt(featureId),
+					"usertypeId" : parseInt($('#userType').val()),
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					//"username" : $("body").attr("data-selected-username"),
+					"email" : $('#emailID').val(),
+					"phoneNo" : $('#phone').val(),
+					"username" :  $("body").attr("data-selected-username"),
+					"filteredUsername" : $('#userName').val(),
+					"pageNo":parseInt(pageNo),
+					"pageSize":parseInt(pageSize)
+			}		
+		}else{
+			var filterRequest={
+					"endDate":$('#endDate').val(),
+					"startDate":$('#startDate').val(),
+					"userId":parseInt(userId),
+					"featureId":parseInt(featureId),
+					"usertypeId" : parseInt($('#userType').val()),
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					//"username" : $("body").attr("data-selected-username"),
+					"email" : $('#emailID').val(),
+					"phoneNo" : $('#phone').val(),
+					"username" :  $("body").attr("data-selected-username"),
+					"pageNo":parseInt(pageNo),
+					"pageSize":parseInt(pageSize)
+							
+			}		
+		}
+		
+		
+		
+		/*var filterRequest={
 				"endDate":$('#endDate').val(),
 				"startDate":$('#startDate').val(),
 				"userId":parseInt(userId),
@@ -510,7 +567,7 @@
 				"phoneNo" : $('#phone').val(),
 				"username" :  $('#userName').val()==undefined || $('#userName').val()==null ? $("body").attr("data-selected-username") : $('#userName').val()
 		}
-		
+		*/
 		//console.log(JSON.stringify(filterRequest))
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
