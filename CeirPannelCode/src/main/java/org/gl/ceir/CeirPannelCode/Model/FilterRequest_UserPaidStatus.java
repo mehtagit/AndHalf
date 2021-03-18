@@ -6,6 +6,8 @@ public class FilterRequest_UserPaidStatus {
 	private String createdOn,startDate,endDate,modifiedOn,nid,remarks,userType,txnId,origin,searchString,username,nationality;
 	public String columnName,sort; 
 	private String imei1;
+	private String publicIp;
+	private String browser;
 	public Integer getDeviceIdType() {
 		return deviceIdType;
 	}
@@ -151,6 +153,30 @@ public class FilterRequest_UserPaidStatus {
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
 	}
+	public String getColumnName() {
+		return columnName;
+	}
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -206,21 +232,17 @@ public class FilterRequest_UserPaidStatus {
 		builder.append(sort);
 		builder.append(", imei1=");
 		builder.append(imei1);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}
-	public String getColumnName() {
-		return columnName;
-	}
-	public void setColumnName(String columnName) {
-		this.columnName = columnName;
-	}
-	public String getSort() {
-		return sort;
-	}
-	public void setSort(String sort) {
-		this.sort = sort;
-	}
+	
+	
+	
+	
 	
 	
 	

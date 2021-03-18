@@ -344,7 +344,7 @@ public class DatatableHeaders {
 			//Port Management
 			
 			else if("portManagement".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.port","table.address","table.action"};
+				String[] headers = {"table.creationDate","table.lastupdatedate","table.address","table.port","table.action"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

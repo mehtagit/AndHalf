@@ -21,6 +21,8 @@ public class Register_UploadPaidStatus {
 	private List<UplodPaidStatusModel> regularizeDeviceDbs;
 	private String  firstImei;
 	private Integer taxPaidStatus,postalCode;
+	private String publicIp;
+	private String browser;
 	public String getFirstName() {
 		return firstName;
 	}
@@ -157,6 +159,24 @@ public class Register_UploadPaidStatus {
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
+	public String getFirstImei() {
+		return firstImei;
+	}
+	public void setFirstImei(String firstImei) {
+		this.firstImei = firstImei;
+	}
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -206,16 +226,13 @@ public class Register_UploadPaidStatus {
 		builder.append(taxPaidStatus);
 		builder.append(", postalCode=");
 		builder.append(postalCode);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}
-	public String getFirstImei() {
-		return firstImei;
-	}
-	public void setFirstImei(String firstImei) {
-		this.firstImei = firstImei;
-	}
-
-
+	
 
 }

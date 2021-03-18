@@ -80,6 +80,8 @@ public class VisaUpdateDatableController {
 			filterrequest.setUserId(userId);
 			filterrequest.setUsertypeId(userTypeid);
 			filterrequest.setFeatureId(43);
+			filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
+			filterrequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the filter api ="+filterrequest);
 			Object response = feignCleintImplementation.viewVisaRequest(filterrequest, pageNo, pageSize, file,source);
 			log.info("response in datatable"+response);

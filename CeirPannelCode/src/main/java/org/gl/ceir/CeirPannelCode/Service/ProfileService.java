@@ -28,6 +28,8 @@ public class ProfileService {
 	
 	public HttpResponse changePassword(Password password,HttpSession session) {
 		log.info("inside change password controller");
+		password.setPublicIp(session.getAttribute("publicIP").toString());
+		password.setBrowser(session.getAttribute("browser").toString());
 		log.info("password data is :  "+password);                 
 		Integer userid=(Integer)session.getAttribute("userid");
 		log.info("userid from session:  "+userid);

@@ -4,7 +4,8 @@ public class AllRequest {
 
 	private String username,userType,imei,nid,txnId;
     private long userId,featureId,userTypeId;
-    
+	private String publicIp;
+	private String browser;
 	public String getUsername() {
 		return username;
 	}
@@ -55,6 +56,18 @@ public class AllRequest {
 	public void setTxnId(String txnId) {
 		this.txnId = txnId;
 	}
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -74,11 +87,14 @@ public class AllRequest {
 		builder.append(featureId);
 		builder.append(", userTypeId=");
 		builder.append(userTypeId);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
+	 
 
 
 	

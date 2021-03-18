@@ -267,6 +267,8 @@ public class LawfulFormController
 		 * //lawfulIndivisualStolen.setFileName(file.getOriginalFilename()); } catch
 		 * (Exception e) { // TODO: handle exception e.printStackTrace(); } }
 		 */
+		lawfulIndivisualStolen.setPublicIp(session.getAttribute("publicIP").toString());
+		lawfulIndivisualStolen.setBrowser(session.getAttribute("browser").toString());
 		log.info("request passed to the save regularizeDeviceDbs api"+lawfulIndivisualStolen);
 		GenricResponse response = null;
 		try {
@@ -384,6 +386,8 @@ public class LawfulFormController
 				e.printStackTrace();
 			}
 		}
+		lawfulIndivisualStolen.setPublicIp(session.getAttribute("publicIP").toString());
+		lawfulIndivisualStolen.setBrowser(session.getAttribute("browser").toString());
 		log.info("request passed to the report Indivisual and comapny  api"+lawfulIndivisualStolen);
 		GenricResponse response = null;
 		try {
@@ -503,6 +507,8 @@ public class LawfulFormController
 		lawfulUser.setRequestType(requestType);
 		lawfulUser.setRoleType(roletype);
 		lawfulUser.setUserId(userId);
+		lawfulUser.setPublicIp(session.getAttribute("publicIP").toString());
+		lawfulUser.setBrowser(session.getAttribute("browser").toString());
 		log.info("request passed to the fetch Device api="+lawfulUser);
 		lawfulStolenRecovery=uploadPaidStatusFeignClient.fetchSingleDevicebyTxnId(lawfulUser);
 
@@ -704,6 +710,8 @@ public class LawfulFormController
 		 * //lawfulIndivisualStolen.setFileName(file.getOriginalFilename()); } catch
 		 * (Exception e) { // TODO: handle exception e.printStackTrace(); } }
 		 */
+		lawfulIndivisualStolen.setPublicIp(session.getAttribute("publicIP").toString());
+		lawfulIndivisualStolen.setBrowser(session.getAttribute("browser").toString());
 		log.info("request passed to the update stolen  api"+lawfulIndivisualStolen);
 		GenricResponse response = null;
 		try {

@@ -163,6 +163,9 @@ public class BlockUnblock {
 		singleImeiDetailsModel.setUserType(roletype);
 		singleImeiDetailsModel.setRoleType(roletype);
 		singleImeiDetailsModel.setOperatorTypeId(operatorTypeId);
+
+		singleImeiDetailsModel.setPublicIp(session.getAttribute("publicIP").toString());
+		singleImeiDetailsModel.setBrowser(session.getAttribute("browser").toString());
 		log.info("request send to the save signle Imei block devices="+singleImeiDetailsModel);
 		response= grievanceFeignClient.singleImeiBlockDevices(singleImeiDetailsModel);
 		log.info("response from save signle Imei block devices="+response);
@@ -308,6 +311,9 @@ public class BlockUnblock {
 			stolenRecoveryModel.setBlockCategory(deviceCategory);
 			stolenRecoveryModel.setRoleType(roletype);
 			stolenRecoveryModel.setDeviceQuantity(deviceQuantity);
+			
+			stolenRecoveryModel.setPublicIp(session.getAttribute("publicIP").toString());
+			stolenRecoveryModel.setBrowser(session.getAttribute("browser").toString());
 			log.info("request passed to the file stolen api ="+stolenRecoveryModel);
 			response=feignCleintImplementation.fileStolen(stolenRecoveryModel);
 			log.info("respondse from file stolen api="+response);
@@ -415,6 +421,9 @@ public class BlockUnblock {
 			stolenRecoveryModel.setDeviceQuantity(deviceQuantity);
 			stolenRecoveryModel.setBlockingType("Immediate");
 			log.info("request sent to fileRecovery api ="+stolenRecoveryModel);
+
+			stolenRecoveryModel.setPublicIp(session.getAttribute("publicIP").toString());
+			stolenRecoveryModel.setBrowser(session.getAttribute("browser").toString());
 			response=feignCleintImplementation.fileRecovery(stolenRecoveryModel);
 			log.info("request sent to file Recovery api ="+response);
 			log.info(" file Recovery api exist point .");
@@ -469,7 +478,8 @@ public class BlockUnblock {
 			viewbulkDevices.setUserId(userId);
 			viewbulkDevices.setRoleType(roletype);
 			viewbulkDevices.setRequestType(reqType);
-			
+			viewbulkDevices.setPublicIp(session.getAttribute("publicIP").toString());
+			viewbulkDevices.setBrowser(session.getAttribute("browser").toString());
 			log.info("request passed to the fetch Device api="+viewbulkDevices);
 			Object ds=feignCleintImplementation.fetchBulkDeviceByTxnId(viewbulkDevices);
 			//log.info("response from fetch stock api="+stockUploadModelResponse);

@@ -88,6 +88,8 @@ public class StolenDatatableController {
 		// list provided via Back-end process
 		try {
 			String quantity;
+			filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
+			filterrequest.setBrowser(session.getAttribute("browser").toString());
 			Object response = feignCleintImplementation.stolenFilter(filterrequest, pageNo, pageSize,exportFile,source);
 			log.info("response::::::::::::"+response);
 			Gson gson = new Gson();

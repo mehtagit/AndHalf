@@ -1,3 +1,4 @@
+var featureId=47;
 function featureDashboardGraph() {
 /*	var currentTime = new Date()
 	var month = ("0" + (currentTime.getMonth() + 1)).slice(-2)
@@ -24,7 +25,10 @@ function featureDashboardGraph() {
 			"pageSize" :1000,
 			"pageNo" :0,
 			"typeFlag": 2,
-			 "dayDataLimit":15
+			 "dayDataLimit":15,
+			 "featureId":parseInt(featureId),
+			    "userType":$("body").attr("data-roleType"),
+			    "userId" : parseInt($("body").attr("data-userID"))
 	}
 	}
 		else if(reportnameId==44){
@@ -41,7 +45,10 @@ function featureDashboardGraph() {
 						"file" : 0,
 						"pageSize" :1000,
 						"pageNo" :0,
-						"typeFlag": 2,"dayDataLimit":15
+						"typeFlag": 2,"dayDataLimit":15,
+						 "featureId":parseInt(featureId),
+						    "userType":$("body").attr("data-roleType"),
+						    "userId" : parseInt($("body").attr("data-userID"))
 				}			
 		}
 else if(reportnameId==16){
@@ -58,7 +65,10 @@ else if(reportnameId==16){
 						"file" : 0,
 						"pageSize" :1000,
 						"pageNo" :0,
-						"typeFlag": 2,"dayDataLimit":15
+						"typeFlag": 2,"dayDataLimit":15,
+						 "featureId":parseInt(featureId),
+						    "userType":$("body").attr("data-roleType"),
+						    "userId" : parseInt($("body").attr("data-userID"))
 				}			
 		}
 		
@@ -76,7 +86,10 @@ else if(reportnameId==57){
 				"file" : 0,
 				"pageSize" :1000,
 				"pageNo" :0,
-				"typeFlag": 2,"dayDataLimit":15
+				"typeFlag": 2,"dayDataLimit":15,
+				 "featureId":parseInt(featureId),
+				    "userType":$("body").attr("data-roleType"),
+				    "userId" : parseInt($("body").attr("data-userID"))
 		}			
 }	
 

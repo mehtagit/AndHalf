@@ -1,3 +1,4 @@
+var featureId=49;
 function LawfulGraph() {
 /*	var currentTime = new Date()
 	var month = ("0" + (currentTime.getMonth() + 1)).slice(-2)
@@ -30,7 +31,10 @@ function LawfulGraph() {
 						"pageSize" :1000,
 						"pageNo" :0,
 						"typeFlag": 2,
-						 "dayDataLimit":15
+						 "dayDataLimit":15,
+						 "featureId":parseInt(featureId),
+						    "userType":$("body").attr("data-roleType"),
+						    "userId" : parseInt($("body").attr("data-userID"))
 			}
 			
 			urlHit='./brandModel/data/'+featureFlag;
@@ -48,7 +52,10 @@ function LawfulGraph() {
 							"file" : 0,
 							"pageSize" :1000,
 							"pageNo" :0,
-							"typeFlag": 2, "dayDataLimit":15
+							"typeFlag": 2, "dayDataLimit":15,
+							 "featureId":parseInt(featureId),
+							    "userType":$("body").attr("data-roleType"),
+							    "userId" : parseInt($("body").attr("data-userID"))
 				}
 				chartID='Top5Stolen';
 				type='pie';
@@ -364,7 +371,10 @@ $(document).ready(function(){
 			"reportnameId": 31,
 			"file" : 0,
 			"pageSize" :1,
-			"pageNo" :0
+			"pageNo" :0,
+			 "featureId":parseInt(featureId),
+			    "userType":$("body").attr("data-roleType"),
+			    "userId" : parseInt($("body").attr("data-userID"))
 	}
 	
 	$.ajax({

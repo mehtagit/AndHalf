@@ -1,5 +1,5 @@
 package org.gl.ceir.CeirPannelCode.Model;
-public class Password {
+public class Password  extends UserHeader {
 	private String password;
 	private String confirmPassword;
 	private String username;

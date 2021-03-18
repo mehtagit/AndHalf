@@ -123,7 +123,7 @@
 
 								<a class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/userManagement"
+							<form action="${context}/userManagement" id="viewFilter"
 								method="post">
 								<div class="col s12 m12 l12" id="userTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">

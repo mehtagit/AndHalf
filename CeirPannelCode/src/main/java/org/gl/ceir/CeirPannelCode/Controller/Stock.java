@@ -236,6 +236,8 @@ public class Stock {
 		log.info("stock form parameters passed to upload stock api "+stockUpload);
 
 		try {
+			stockUpload.setPublicIp(session.getAttribute("publicIP").toString());
+			stockUpload.setBrowser(session.getAttribute("browser").toString());
 			response = feignCleintImplementation.uploadStock(stockUpload);
 			log.info("response from upload stock api"+response);
 			log.info("upload stock  exit point.");
@@ -259,6 +261,8 @@ public class Stock {
 	public @ResponseBody GenricResponse deleteStock(@RequestBody StockUploadModel stockUpload,HttpSession session) {
 
 		log.info("enter in  delete stock.");
+		stockUpload.setPublicIp(session.getAttribute("publicIP").toString());
+		stockUpload.setBrowser(session.getAttribute("browser").toString());
 		log.info("request passed to the deleteStock Api="+stockUpload);
 		GenricResponse response=feignCleintImplementation.deleteStock(stockUpload,stockUpload.getUserType());
 		log.info("response after delete Stock."+response);
@@ -288,7 +292,8 @@ public class Stock {
 		filterRequest.setRoleType(role);
 		filterRequest.setUserType(userType);
 		filterRequest.setUserId(userId);		
-
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequest.setBrowser(session.getAttribute("browser").toString());
 
 		log.info("request passed to the fetch stock api="+filterRequest);
 		if(reqType.equals("editPage")) {
@@ -412,6 +417,8 @@ public class Stock {
 			stockUpload.setUserType(roleType);
 			stockUpload.setDeviceQuantity(deviceQuantity);
 		}
+		stockUpload.setPublicIp(session.getAttribute("publicIP").toString());
+		stockUpload.setBrowser(session.getAttribute("browser").toString());
 		log.info("Request passed to the update register consignment="+stockUpload);
 		response = feignCleintImplementation.updateStock(stockUpload);
 		log.info(" response from update Consignment api="+response);
@@ -435,6 +442,8 @@ public class Stock {
 		request.setRemarks(consignmentUpdateRequest.getRemarks());
 		request.setTxnId(consignmentUpdateRequest.getTxnId());
 		request.setFeatureId(consignmentUpdateRequest.getFeatureId());
+		request.setPublicIp(session.getAttribute("publicIP").toString());
+		request.setBrowser(session.getAttribute("browser").toString());;
 		log.info(" request passed to the stock accept reject  api="+request);
 		GenricResponse response=feignCleintImplementation.acceptRejectStock(request);
 		log.info("response after stock accept reject  api="+response);
@@ -486,7 +495,8 @@ public class Stock {
 		filterRequest.setDeviceQuantity(deviceQuantity);
 		filterRequest.setQuantity(quantity);
 		log.info("source=="+source);;
-
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequest.setBrowser(session.getAttribute("browser").toString());
 		log.info(" request passed to the stock exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 		Object	response= feignCleintImplementation.stockFilter(filterRequest, pageNo, pageSize, file,source);
 
@@ -582,6 +592,8 @@ public class Stock {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		endUserStockModal.setPublicIp(session.getAttribute("publicIP").toString());
+		endUserStockModal.setBrowser(session.getAttribute("browser").toString());
 		log.info("request passed to  the end user upload stock api"+endUserStockModal);
 		GenricResponse  response = new GenricResponse();
 		response = feignCleintImplementation.uploadStock(endUserStockModal);

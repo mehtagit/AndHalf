@@ -1,3 +1,4 @@
+var featureId=45;
 function userloginGraph() {
 /*	var currentTime = new Date()
 	var month = ("0" + (currentTime.getMonth() + 1)).slice(-2)
@@ -21,7 +22,10 @@ function userloginGraph() {
 			"file" : 0,
 			"pageSize" :1000,
 			"pageNo" :0,
-		     "typeFlag": 2,"dayDataLimit":15
+		    "typeFlag": 2,"dayDataLimit":15,
+		    "featureId":parseInt(featureId),
+		    "userType":$("body").attr("data-roleType"),
+		    "userId" : parseInt($("body").attr("data-userID"))
 	}
 		}
 		
@@ -76,7 +80,10 @@ $(document).ready(function(){
 			"file" : 0,
 			"pageSize" :1000,
 			"pageNo" :0,
-			"typeFlag": 1,"dayDataLimit":15
+			"typeFlag": 1,"dayDataLimit":15,
+			 "featureId":parseInt(featureId),
+			    "userType":$("body").attr("data-roleType"),
+			    "userId" : parseInt($("body").attr("data-userID"))
 	}
 	
 	$.ajax({
@@ -111,7 +118,10 @@ var i=0;
 				"file" : 0,
 				"pageSize" :1000,
 				"pageNo" :0,
-			     "typeFlag": 2,"dayDataLimit":15
+			     "typeFlag": 2,"dayDataLimit":15,
+			     "featureId":parseInt(featureId),
+				    "userType":$("body").attr("data-roleType"),
+				    "userId" : parseInt($("body").attr("data-userID"))
 		}
 		
 		var token = $("meta[name='_csrf']").attr("content");

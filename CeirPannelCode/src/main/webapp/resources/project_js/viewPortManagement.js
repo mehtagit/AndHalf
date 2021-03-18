@@ -53,7 +53,8 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"username" : $("body").attr("data-selected-username")
+					"username" : $("body").attr("data-selected-username"),
+					"address" : $('#portAdress').val()
 			}				
 			if(lang=='km'){
 				var langFile="./resources/i18n/khmer_datatable.json";
@@ -74,14 +75,15 @@
 						destroy:true,
 						"serverSide": true,
 						orderCellsTop : true,
-						"ordering" : false,
+						"ordering" : true,
 						"bPaginate" : true,
-						"bFilter" : true,
+						"bFilter" : false,
 						"bInfo" : true,
 						"bSearchable" : true,
 						"oLanguage": {
 							"sEmptyTable": "No records found in the system"
 					    },
+					    "aaSorting": [],
 						initComplete: function() {
 					 		$('.dataTables_filter input')
 	       .off().on('keyup', function(event) {
@@ -109,7 +111,10 @@
 								
 							}
 						},
-						"columns": result
+						"columns": result,
+						columnDefs : [
+						{ orderable: false, targets: -1 }
+						]
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
@@ -183,9 +188,11 @@
 									"</div>"+
 							"</div>");
 					}
-
-						$("#PortTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+					    var viewFilter="viewFilter";
+					    $("#PortTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+					    $("#PortTableDiv").append("<div class=' col s3 m2 l2'><button type='button' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
 						$("#PortTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportCustomPortData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$('#clearFilter').attr("onclick", "Resetfilter('viewFilter')");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -217,7 +224,8 @@
 					"userType":$("body").attr("data-roleType"),
 					"username" : $("body").attr("data-selected-username"),
 					"pageNo":parseInt(pageNo),
-					"pageSize":parseInt(pageSize)
+					"pageSize":parseInt(pageSize),
+					"address" : $('#portAdress').val()
 			}
 			
 			console.log(JSON.stringify(filterRequest))
@@ -472,3 +480,9 @@
 	 $("label[for='portAddress']").removeClass('active');
 	 
  }	
+
+ function Resetfilter(formID){
+		$('#'+formID).trigger('reset');
+		$("label").removeClass('active');
+		filterFieldTable(lang,null);
+ }

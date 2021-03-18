@@ -17,7 +17,8 @@ public class StolenRecoveryModel {
 	private int sourceType,category;
 	private Integer qty,deviceCaegory,blockCategory,deviceQuantity  ;
 	private String categoryInterp,blockCategoryInterp;
-	
+	private String publicIp;
+	private String browser;
 	
 	
 	
@@ -301,6 +302,34 @@ public class StolenRecoveryModel {
 
 
 
+	public String getPublicIp() {
+		return publicIp;
+	}
+
+
+
+
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+
+
+
+
+	public String getBrowser() {
+		return browser;
+	}
+
+
+
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+
+
+
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -344,8 +373,15 @@ public class StolenRecoveryModel {
 		builder.append(categoryInterp);
 		builder.append(", blockCategoryInterp=");
 		builder.append(blockCategoryInterp);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}
 
+
+
+ 
 }

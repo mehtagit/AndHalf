@@ -5,6 +5,8 @@ public class SingleImeiDetailsModel {
 	private Integer category,deviceIdType,deviceType,multipleSimStatus,processState,requestType,sourceType,operatorTypeId,deviceQuantity;
 	private long userId,id;
 	private String firstImei,fourthImei,secondImei,thirdImei;
+	private String publicIp;
+	private String browser;
 	public String getCategoryInterp() {
 		return categoryInterp;
 	}
@@ -179,6 +181,20 @@ public class SingleImeiDetailsModel {
 	public void setDeviceQuantity(Integer deviceQuantity) {
 		this.deviceQuantity = deviceQuantity;
 	}
+	
+	
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -240,6 +256,10 @@ public class SingleImeiDetailsModel {
 		builder.append(secondImei);
 		builder.append(", thirdImei=");
 		builder.append(thirdImei);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}

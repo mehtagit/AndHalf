@@ -140,12 +140,15 @@ public class UploadPaidStatus {
 			order = "desc";
 		} else {
 			order = request.getParameter("order[0][dir]");
-		}
+		} 
 		filterrequest.setColumnName(column);
 		filterrequest.setSort(order);
 
 		filterrequest.setSearchString(request.getParameter("search[value]"));
+		filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterrequest.setBrowser(session.getAttribute("browser").toString());
 		log.info("filterrequest--->" + filterrequest);
+		
 		response = uploadPaidStatusFeignClient.view(filterrequest, pageNo, pageSize, file, source);
 		log.info("request passed to the filter api  =" + filterrequest);
 		String apiResponse = gson.toJson(response);
@@ -474,6 +477,9 @@ public class UploadPaidStatus {
 		request.setUserType(userType);
 		request.setUserId(userId);
 		request.setTxnId(txnId);
+
+		request.setPublicIp(session.getAttribute("publicIP").toString());
+		request.setBrowser(session.getAttribute("browser").toString());
 		log.info(" request==" + request);
 		GenricResponse response = uploadPaidStatusFeignClient.delete(request);
 		log.info("response after delete device." + response);
