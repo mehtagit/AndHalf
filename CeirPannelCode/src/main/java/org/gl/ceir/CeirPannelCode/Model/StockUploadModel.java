@@ -13,6 +13,7 @@ public class StockUploadModel {
 	private int stockStatus;
 	private String supplierId;
 	private Integer deviceQuantity,featureId;
+	public String publicIp , browser;
 	public Integer getDeviceQuantity() {
 		return deviceQuantity;
 	}
@@ -141,6 +142,18 @@ public class StockUploadModel {
 	public void setFeatureId(Integer featureId) {
 		this.featureId = featureId;
 	}
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -166,6 +179,10 @@ public class StockUploadModel {
 		builder.append(deviceQuantity);
 		builder.append(", featureId=");
 		builder.append(featureId);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append(", userType=");
 		builder.append(userType);
 		builder.append(", remarks=");
@@ -187,7 +204,7 @@ public class StockUploadModel {
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
 	
 	
 }

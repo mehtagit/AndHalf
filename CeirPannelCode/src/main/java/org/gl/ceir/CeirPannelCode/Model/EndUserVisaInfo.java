@@ -38,6 +38,8 @@ private String village,rejectedRemark;
 private List<VisaDb> visaDb;
 private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 private String origin;
+private String publicIp;
+private String browser;
 public String getCommune() {
 	return commune;
 }
@@ -244,6 +246,18 @@ public String getDocumentInterp() {
 public void setDocumentInterp(String documentInterp) {
 	this.documentInterp = documentInterp;
 }
+public String getPublicIp() {
+	return publicIp;
+}
+public void setPublicIp(String publicIp) {
+	this.publicIp = publicIp;
+}
+public String getBrowser() {
+	return browser;
+}
+public void setBrowser(String browser) {
+	this.browser = browser;
+}
 @Override
 public String toString() {
 	StringBuilder builder = new StringBuilder();
@@ -315,6 +329,10 @@ public String toString() {
 	builder.append(additionalProperties);
 	builder.append(", origin=");
 	builder.append(origin);
+	builder.append(", publicIp=");
+	builder.append(publicIp);
+	builder.append(", browser=");
+	builder.append(browser);
 	builder.append("]");
 	return builder.toString();
 }

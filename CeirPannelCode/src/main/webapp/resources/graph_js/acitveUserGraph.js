@@ -10,6 +10,7 @@
 	
 
 */
+var featureId=46;
 function activeDeviceGraph() {
 	/*[31,48,52,53,14].forEach(function(reportnameId) {*/
 	[31,14,52,53].forEach(function(reportnameId) {
@@ -30,7 +31,9 @@ function activeDeviceGraph() {
 						"file" : 0,
 						"pageSize" :1000,
 						"pageNo" :0,
-						 "typeFlag": 1,"dayDataLimit":15
+						 "typeFlag": 1,"dayDataLimit":15, "featureId":parseInt(featureId),
+						    "userType":$("body").attr("data-roleType"),
+						    "userId" : parseInt($("body").attr("data-userID"))
 						
 			}
 			chartID='pieGraph';
@@ -49,7 +52,9 @@ function activeDeviceGraph() {
 					"file" : 0,
 					"pageSize" :1000,
 					"pageNo" :0,
-					 "typeFlag": 1,"dayDataLimit":15
+					 "typeFlag": 1,"dayDataLimit":15,"featureId":parseInt(featureId),
+					    "userType":$("body").attr("data-roleType"),
+					    "userId" : parseInt($("body").attr("data-userID"))
 			}
 			
 			chartID='pieGraphBrandName';
@@ -66,7 +71,9 @@ function activeDeviceGraph() {
 					"file" : 0,
 					"pageSize" :1000,
 					"pageNo" :0,
-					 "typeFlag": 1,"dayDataLimit":15
+					 "typeFlag": 1,"dayDataLimit":15,"featureId":parseInt(featureId),
+					    "userType":$("body").attr("data-roleType"),
+					    "userId" : parseInt($("body").attr("data-userID"))
 			}
 			
 			chartID='pieGraphModelNumber';
@@ -87,7 +94,9 @@ function activeDeviceGraph() {
 					"pageNo" :0,
 					"lastDate": false,
 					"groupBy":"Equipment Type",
-					 "typeFlag": 2,"dayDataLimit":15
+					 "typeFlag": 2,"dayDataLimit":15,"featureId":parseInt(featureId),
+					    "userType":$("body").attr("data-roleType"),
+					    "userId" : parseInt($("body").attr("data-userID"))
 						  
 							
 			}
@@ -102,7 +111,9 @@ function activeDeviceGraph() {
 					"reportnameId": reportnameId,
 					"file" : 0,
 					"pageSize" :1000,
-					"pageNo" :0,"dayDataLimit":15
+					"pageNo" :0,"dayDataLimit":15,"featureId":parseInt(featureId),
+				    "userType":$("body").attr("data-roleType"),
+				    "userId" : parseInt($("body").attr("data-userID"))
 			}
 			chartID='lineGraph';
 			type='line';
@@ -543,7 +554,9 @@ $(document).ready(function(){
 			"file" : 0,
 			"pageSize" :1,
 			"pageNo" :0,
-			"typeFlag": 1
+			"typeFlag": 1,"featureId":parseInt(featureId),
+		    "userType":$("body").attr("data-roleType"),
+		    "userId" : parseInt($("body").attr("data-userID"))
 	}
 	}
 	else if(reportnameId==1 || reportnameId==27){
@@ -553,7 +566,9 @@ $(document).ready(function(){
 				"file" : 0,
 				"pageSize" :1,
 				"pageNo" :0,
-				"typeFlag": 2
+				"typeFlag": 2,"featureId":parseInt(featureId),
+			    "userType":$("body").attr("data-roleType"),
+			    "userId" : parseInt($("body").attr("data-userID"))
 		}	
 	}
 	$.ajax({

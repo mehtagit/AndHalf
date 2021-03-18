@@ -10,6 +10,7 @@
 	
 
 */
+var featureId=57;
 function activeDeviceGraph() {
 	['operatorActive',29,34,27].forEach(function(reportnameId) {
 		var graphRequest=null;
@@ -31,7 +32,10 @@ function activeDeviceGraph() {
 						  "file" : 0, 
 						  "pageSize" :1000, 
 						  "pageNo" :0,
-						  "typeFlag": 1,"dayDataLimit":15
+						  "typeFlag": 1,"dayDataLimit":15,
+						  "featureId":parseInt(featureId),
+						    "userType":$("body").attr("data-roleType"),
+						    "userId" : parseInt($("body").attr("data-userID"))
 			}
 			
 			
@@ -53,7 +57,10 @@ function activeDeviceGraph() {
 						  "pageNo" :0,
 						"groupBy": "Operator Name",
 						"reportnameId": 29,
-						"typeFlag": 1,"dayDataLimit":15
+						"typeFlag": 1,"dayDataLimit":15,
+						"featureId":parseInt(featureId),
+					    "userType":$("body").attr("data-roleType"),
+					    "userId" : parseInt($("body").attr("data-userID"))
 						}
 			
 		}
@@ -67,7 +74,10 @@ function activeDeviceGraph() {
 						  "pageSize" :1000, 
 						  "pageNo" :0,
 						  "typeFlag": 2,
-						  "dayDataLimit":15
+						  "dayDataLimit":15,
+						  "featureId":parseInt(featureId),
+						    "userType":$("body").attr("data-roleType"),
+						    "userId" : parseInt($("body").attr("data-userID"))
 			}
 			urlHit='./report/imeiUsageDashBoard';
 		}
@@ -87,7 +97,10 @@ function activeDeviceGraph() {
 						  "file" : 0, 
 						  "pageSize" :1000, 
 						  "pageNo" :0,
-						  "typeFlag": 2, "dayDataLimit":15
+						  "typeFlag": 2, "dayDataLimit":15,
+						  "featureId":parseInt(featureId),
+						    "userType":$("body").attr("data-roleType"),
+						    "userId" : parseInt($("body").attr("data-userID"))
 			}
 			
 		}
@@ -435,7 +448,10 @@ $(document).ready(function(){
 			  "file" : 0, 
 			  "pageSize" :5, 
 			  "pageNo" :0,
-			  "typeFlag": 1
+			  "typeFlag": 1,
+			  "featureId":parseInt(featureId),
+			    "userType":$("body").attr("data-roleType"),
+			    "userId" : parseInt($("body").attr("data-userID"))
 	}
 	
 	$.ajax({
@@ -518,7 +534,10 @@ $(document).ready(function(){
 			"file" : 0,
 			"pageSize" :1,
 			"pageNo" :0,
-			"typeFlag": 1
+			"typeFlag": 1,
+			"featureId":parseInt(featureId),
+		    "userType":$("body").attr("data-roleType"),
+		    "userId" : parseInt($("body").attr("data-userID"))
 	}
 	
 	$.ajax({

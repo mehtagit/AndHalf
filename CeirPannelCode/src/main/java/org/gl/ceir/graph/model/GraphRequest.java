@@ -20,8 +20,8 @@ public class GraphRequest {
 	private int file;
 	private int pageSize;
 	private int pageNo;
-	private Integer typeFlag,dayDataLimit;
-	
+	private Integer typeFlag,dayDataLimit,featureId,userId;
+	private String userType;
 	public List<String> getColumns() {
 		return columns;
 	}
@@ -117,6 +117,24 @@ public class GraphRequest {
 	public void setDayDataLimit(Integer dayDataLimit) {
 		this.dayDataLimit = dayDataLimit;
 	}
+	public Integer getFeatureId() {
+		return featureId;
+	}
+	public void setFeatureId(Integer featureId) {
+		this.featureId = featureId;
+	}
+	public Integer getUserId() {
+		return userId;
+	}
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -150,9 +168,17 @@ public class GraphRequest {
 		builder.append(typeFlag);
 		builder.append(", dayDataLimit=");
 		builder.append(dayDataLimit);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", userType=");
+		builder.append(userType);
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
 	 
 	
 	

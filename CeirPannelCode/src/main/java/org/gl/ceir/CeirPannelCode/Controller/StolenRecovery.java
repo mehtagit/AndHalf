@@ -284,6 +284,10 @@ public class StolenRecovery {
 			String roletype=session.getAttribute("usertype").toString();
 			log.info("enter in  delete stolenRecovery.==");
 			stolenRecoveryModel.setUserType(roletype);
+
+			stolenRecoveryModel.setPublicIp(session.getAttribute("publicIP").toString());
+			stolenRecoveryModel.setBrowser(session.getAttribute("browser").toString());
+	
 			log.info("request passed to the delete stolenRecovery Api="+stolenRecoveryModel);
 			
 			GenricResponse response=feignCleintImplementation.deleteStolenRecovery(stolenRecoveryModel);
@@ -305,7 +309,7 @@ public class StolenRecovery {
 					  @RequestParam(name="roleType",required = false) String roleType,  @RequestParam(name="sourceType",required = false) Integer sourceType,
 					  @RequestParam(name="userId",required = false) Integer userId,@RequestParam(name="txnId",required = false) String txnId,@RequestParam(name="id",required = false) Integer id,
 					  @RequestParam(name="blockCategory",required = false) Integer blockCategory,@RequestParam(name="remark",required = false) String remark,@RequestParam(name="fileName",required = false) String fileName,
-					  @RequestParam(name="qty",required = false) Integer qty, @RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity)
+					  @RequestParam(name="qty",required = false) Integer qty, @RequestParam(name="deviceQuantity",required = false) Integer deviceQuantity,HttpSession session)
 {	
 				  StolenRecoveryModel stolenRecoveryModel= new StolenRecoveryModel();
 				  GenricResponse response = new GenricResponse();
@@ -395,6 +399,8 @@ public class StolenRecovery {
 
 					stolenRecoveryModel.setRemark(remark);
 					stolenRecoveryModel.setDeviceQuantity(deviceQuantity);
+					stolenRecoveryModel.setPublicIp(session.getAttribute("publicIP").toString());
+					stolenRecoveryModel.setBrowser(session.getAttribute("browser").toString());
 					log.info("request passed to the update file stolen api ="+stolenRecoveryModel);
 					response=feignCleintImplementation.updateFileStolen(stolenRecoveryModel);
 					log.info("respondse from update  file stolen api="+response);
@@ -415,6 +421,10 @@ public class StolenRecovery {
 					Object response;
 					Integer file = 1;	
 					filterRequest.setUserId(userId);
+
+					filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+					filterRequest.setBrowser(session.getAttribute("browser").toString());
+					
 					log.info("filterRequest:::::::::"+filterRequest);
 					response= feignCleintImplementation.stolenFilter(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file,source);
 				FileExportResponse fileExportResponse;
@@ -432,7 +442,10 @@ public class StolenRecovery {
 				
 				
 				@PostMapping("blockUnblockApproveReject") 
-				public @ResponseBody GenricResponse approveRejectDevice (@RequestBody FilterRequest FilterRequest)  {
+				public @ResponseBody GenricResponse approveRejectDevice (@RequestBody FilterRequest FilterRequest,HttpSession session)  {
+					
+					FilterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+					FilterRequest.setBrowser(session.getAttribute("browser").toString());
 					log.info("request send to the approveRejectDevice api="+FilterRequest);
 					GenricResponse response= feignCleintImplementation.approveRejectFeign(FilterRequest);
 

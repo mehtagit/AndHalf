@@ -30,7 +30,8 @@ public class LawfulStolenRecovey {
 	private List<AttachedFile> attachedFiles;
 	private String txnId;
 	private Integer userId;
-	
+	private String publicIp;
+	private String browser;
 	
 	public Integer getBlockCategory() {
 	return blockCategory;
@@ -313,6 +314,22 @@ public class LawfulStolenRecovey {
 		this.attachedFiles = attachedFiles;
 	}
 
+	public String getPublicIp() {
+		return publicIp;
+	}
+
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+
+	public String getBrowser() {
+		return browser;
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -384,9 +401,15 @@ public class LawfulStolenRecovey {
 		builder.append(txnId);
 		builder.append(", userId=");
 		builder.append(userId);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}
+
+ 
 
 	 
 

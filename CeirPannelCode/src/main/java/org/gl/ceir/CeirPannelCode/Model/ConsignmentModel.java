@@ -32,7 +32,7 @@ private String roleType;
 private Integer currency,portAddress;
 private String portAddressInterp,currencyInterp;
 private String publicIp;
-private String browser;
+private String browser,details;
 
 public String getCurrencyInterp() {
 	return currencyInterp;
@@ -282,6 +282,12 @@ public String getBrowser() {
 public void setBrowser(String browser) {
 	this.browser = browser;
 }
+public String getDetails() {
+	return details;
+}
+public void setDetails(String details) {
+	this.details = details;
+}
 @Override
 public String toString() {
 	StringBuilder builder = new StringBuilder();
@@ -353,6 +359,8 @@ public String toString() {
 	builder.append(publicIp);
 	builder.append(", browser=");
 	builder.append(browser);
+	builder.append(", details=");
+	builder.append(details);
 	builder.append(", userName=");
 	builder.append(userName);
 	builder.append(", userType=");
@@ -368,6 +376,8 @@ public String toString() {
 	builder.append("]");
 	return builder.toString();
 }
+
+
 
 
 
