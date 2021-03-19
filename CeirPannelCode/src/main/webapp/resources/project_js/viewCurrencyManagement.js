@@ -470,6 +470,8 @@
 				"userTypeId": parseInt($("body").attr("data-userTypeID")),
 				"userType":$("body").attr("data-roleType"),
 				"username" : $("body").attr("data-selected-username"),
+				"riel" :  parseFloat($('#filterCambodian').val()),
+				"dollar" :	parseFloat($('#filterdoller').val()),
 				"pageNo":parseInt(pageNo),
 				"pageSize":parseInt(pageSize)
 		}

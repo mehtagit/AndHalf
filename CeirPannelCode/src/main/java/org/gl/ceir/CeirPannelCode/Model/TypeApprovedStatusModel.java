@@ -3,6 +3,22 @@ package org.gl.ceir.CeirPannelCode.Model;
 public class TypeApprovedStatusModel {
 		private String adminUserType,txnId,remark;
 		private Integer adminUserId,adminApproveStatus,featureId;
+		private String publicIp;
+		private String browser;
+		
+		
+		public String getPublicIp() {
+			return publicIp;
+		}
+		public void setPublicIp(String publicIp) {
+			this.publicIp = publicIp;
+		}
+		public String getBrowser() {
+			return browser;
+		}
+		public void setBrowser(String browser) {
+			this.browser = browser;
+		}
 		public String getAdminUserType() {
 			return adminUserType;
 		}
@@ -54,6 +70,10 @@ public class TypeApprovedStatusModel {
 			builder.append(adminApproveStatus);
 			builder.append(", featureId=");
 			builder.append(featureId);
+			builder.append(", publicIp=");
+			builder.append(publicIp);
+			builder.append(", browser=");
+			builder.append(browser);
 			builder.append("]");
 			return builder.toString();
 		}

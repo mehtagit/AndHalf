@@ -45,7 +45,9 @@ public interface GrievanceFeignClient {
 
 	// ******************************************** view 	grievance api ********************************************************************************
 	@RequestMapping(value="/grievance/msg" ,method=RequestMethod.GET) 
-	public List<GrievanceModel> viewGrievance(@RequestParam("grievanceId") String  grievanceId,@RequestParam("userId") Integer userId,@RequestParam("recordLimit") Integer recordLimit) ;
+	public List<GrievanceModel> viewGrievance(@RequestParam("grievanceId") String  grievanceId,@RequestParam("userId") Integer userId,@RequestParam("recordLimit") Integer recordLimit,
+			@RequestParam("PublicIp") String PublicIp,
+			 @RequestParam("browser") String browser) ;
 
 	// ******************************************** save 	grievance api ********************************************************************************
 	@RequestMapping(value="/grievance/saveMessage" ,method=RequestMethod.POST) 

@@ -21,12 +21,15 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
 import org.gl.ceir.CeirPannelCode.Model.PeriodValidate;
+import org.gl.ceir.CeirPannelCode.Model.UserHeader;
+import org.gl.ceir.CeirPannelCode.Service.RegistrationService;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -62,7 +65,8 @@ public class GrievanceController {
 
 	@Autowired
 	UserRegistrationFeignImpl userRegistrationFeignImpl;
-
+	@Autowired
+	RegistrationService registerService;
 	GrievanceModel grievance= new GrievanceModel();
 	GenricResponse response = new GenricResponse();
 
@@ -187,6 +191,8 @@ public class GrievanceController {
 		 * 
 		 */
 		log.info("grievance form parameters passed to save grievance api "+grievanceRequest);
+		grievanceRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		grievanceRequest.setBrowser(session.getAttribute("browser").toString());
 		response = grievanceFeignClient.saveGrievance(grievanceRequest);
 		response.setTxnId(grevnceId);
 
@@ -217,20 +223,26 @@ public class GrievanceController {
 		int userId= (int) session.getAttribute("userid");
 		List<GrievanceModel>  grievanceModel=new ArrayList<GrievanceModel> ();
 		log.info("Request pass to the view grievance api ="+grievanceId+"  userId= "+userId);
-		grievanceModel=grievanceFeignClient.viewGrievance(grievanceId, userId,recordLimit);
+		String PublicIp = session.getAttribute("publicIP").toString();
+		String browser = session.getAttribute("browser").toString();
+		grievanceModel=grievanceFeignClient.viewGrievance(grievanceId, userId,recordLimit,PublicIp,browser);
 		log.info("Response from  view grievance api = "+grievanceModel);
 		return grievanceModel;
 	}
 
 	//***************************************** end  view Grievance controller *********************************
 	@RequestMapping(value="/endUserViewGrievance",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-	public @ResponseBody List<GrievanceModel> EndUserviewGrievance(@RequestParam(name="grievanceId") String grievanceId,HttpSession session ,@RequestParam(name="recordLimit") Integer recordLimit,@RequestParam(name="userId") Integer userId )
+	public @ResponseBody List<GrievanceModel> EndUserviewGrievance(@RequestParam(name="grievanceId") String grievanceId,HttpSession session ,@RequestParam(name="recordLimit") Integer recordLimit,@RequestParam(name="userId") Integer userId,HttpServletRequest request )
 	{
 		log.info("entery point in end user view grievance.");
 		/* int userId= (int) session.getAttribute("userid"); */
 		List<GrievanceModel>  grievanceModel=new ArrayList<GrievanceModel> ();
 		log.info("Request pass to the end view grievance api ="+grievanceId+"  userId= "+userId);
-		grievanceModel=grievanceFeignClient.viewGrievance(grievanceId, userId,recordLimit);
+		
+		UserHeader header=registerService.getUserHeaders(request);
+		String PublicIp = header.getPublicIp();
+		String browser = header.getBrowser();
+		grievanceModel=grievanceFeignClient.viewGrievance(grievanceId, userId,recordLimit,PublicIp,browser);
 		log.info("Response from  end view grievance api = "+grievanceModel);
 		return grievanceModel;
 	}
@@ -320,6 +332,8 @@ public class GrievanceController {
 		 */
 
 		log.info("request passed to the save grievance method="+grievanceRequest);
+		grievanceRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		grievanceRequest.setBrowser(session.getAttribute("browser").toString());
 		response= grievanceFeignClient.saveGrievanceMessage(grievanceRequest);
 		log.info("response  from   save grievance method="+response);	
 		response.setTxnId(grievanceRequest.getGrievanceId());
@@ -408,6 +422,10 @@ public class GrievanceController {
 		 * grievanceModel.setGrievanceStatus(grievanceTicketStatus);
 		 */
 
+		
+		UserHeader header=registerService.getUserHeaders(request);
+		grievanceRequest.setPublicIp(header.getPublicIp());
+		grievanceRequest.setBrowser(header.getBrowser());
 		log.info("request passed to the save grievance method="+grievanceRequest);
 		response= grievanceFeignClient.saveGrievanceMessage(grievanceRequest);
 		log.info("response  from   save grievance method="+response);	
@@ -523,6 +541,10 @@ public class GrievanceController {
 		 * grievance.setGrievanceId(grevnceId);
 		 * 
 		 */
+	
+		UserHeader header=registerService.getUserHeaders(request);
+		grievanceRequest.setPublicIp(header.getPublicIp());
+		grievanceRequest.setBrowser(header.getBrowser());
 		log.info("grievance form parameters passed to save grievance api "+grievanceRequest);
 		response = grievanceFeignClient.saveEndUserGrievance(grievanceRequest);
 		response.setTxnId(grevnceId);
@@ -625,6 +647,8 @@ public class GrievanceController {
 		filterRequest.setUserType(userType);
 		filterRequest.setUserTypeId(usertypeId);
 		log.info("filterRequest:::::::::"+filterRequest);
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequest.setBrowser(session.getAttribute("browser").toString());
 		response= grievanceFeignClient.grievanceFilter(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file,filterRequest.getSource());
 		FileExportResponse fileExportResponse;
 		Gson gson= new Gson(); 

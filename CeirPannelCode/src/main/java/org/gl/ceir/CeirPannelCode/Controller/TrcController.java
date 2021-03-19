@@ -195,6 +195,8 @@ public class TrcController {
 		}
 		
 		log.info("TRC form parameters passed to save TRC api "+trcRequest);
+		trcRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		trcRequest.setBrowser(session.getAttribute("browser").toString());
 		GenricResponse response = typeApprovedFeignImpl.register(trcRequest);
 		 response.setTxnId(txnNumber);
 		
@@ -279,6 +281,7 @@ public class TrcController {
 			fileCopyRequest.setFileName(file.getOriginalFilename());
 			fileCopyRequest.setServerId(propertyReader.serverId);
 			log.info("request passed to move file to other server=="+fileCopyRequest);
+			
 			GenricResponse fileRespnose=grievanceFeignClient.saveUploadedFileOnANotherServer(fileCopyRequest);
 			log.info("file move api response==="+fileRespnose);
 			}
@@ -293,6 +296,8 @@ public class TrcController {
 		}
 		
 		log.info("request passed to the update method="+trcRequest);
+		trcRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		trcRequest.setBrowser(session.getAttribute("browser").toString());
 		GenricResponse response = typeApprovedFeignImpl.updateApproved(trcRequest);
 		log.info("response  from   update method="+response);	
 		response.setTxnId(trcRequest.getTxnId());
@@ -353,7 +358,7 @@ public class TrcController {
 	 */
 	
 	
-	//------------------------------------- Export Address controller -------------------------------------
+	//------------------------------------- Export TAC controller -------------------------------------
 	
 			@PostMapping("exportTac")
 			@ResponseBody
@@ -363,6 +368,8 @@ public class TrcController {
 				Object response;
 				Integer file = 1;	
 				log.info("filterRequest:::::::::"+trcRequest);
+				trcRequest.setPublicIp(session.getAttribute("publicIP").toString());
+				trcRequest.setBrowser(session.getAttribute("browser").toString());
 				response= typeApprovedFeignImpl.manageTypeFeign(trcRequest, trcRequest.getPageNo(), trcRequest.getPageSize(),trcRequest.getSource(),file);
 				FileExportResponse fileExportResponse;
 				Gson gson= new Gson(); 
@@ -377,8 +384,10 @@ public class TrcController {
 	
 	@ResponseBody
 	@PostMapping("TACAprroveDisapprove")
-	public GenricResponse TACAprroveDisapprove(@RequestBody TypeApprovedStatusModel model) {
+	public GenricResponse TACAprroveDisapprove(@RequestBody TypeApprovedStatusModel model,HttpSession session) {
 		log.info("request send to the typeApproved api="+model);
+		model.setPublicIp(session.getAttribute("publicIP").toString());
+		model.setBrowser(session.getAttribute("browser").toString());
 		GenricResponse response = typeApprovedFeignImpl.TypeApproveReject(model);
 		log.info("response from tac Approved/Disapprove api"+response);
 		return response;
