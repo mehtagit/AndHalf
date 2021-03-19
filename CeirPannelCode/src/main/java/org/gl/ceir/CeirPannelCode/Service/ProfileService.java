@@ -6,6 +6,7 @@ import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.EditProfile;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
+import org.gl.ceir.CeirPannelCode.Model.UserHeader;
 import org.gl.ceir.CeirPannelCode.Model.UserStatus;
 import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
@@ -54,6 +55,8 @@ public class ProfileService {
 		String username=(String)session.getAttribute("username");
 		log.info("username fom session: "+username);
 		userStatus.setUserId(userid); 
+		userStatus.setPublicIp(session.getAttribute("publicIP").toString());
+		userStatus.setBrowser(session.getAttribute("browser").toString());
 		log.info("userStatus data is :  "+userStatus);
 		HttpResponse response=new HttpResponse();             
 		response=userProfileFeignImpl.updateUserStatus(userStatus);
@@ -64,15 +67,22 @@ public class ProfileService {
 		log.info("inside edit User Profile  controller");
 		Integer userid=(Integer)session.getAttribute("userid");
 		log.info("userid from session:  "+userid);
+		UserHeader userheader = new UserHeader();
+		userheader.setPublicIp(session.getAttribute("publicIP").toString());
+		userheader.setBrowser(session.getAttribute("browser").toString());
+		log.info("userheader details =:  "+userheader);
 		Registration response=new Registration();             
-		response=userProfileFeignImpl.editUserProfile(userid);
+		response=userProfileFeignImpl.editUserProfile(userid,userheader);
 		session.removeAttribute("mainRole");
+		
 		session.setAttribute("mainRole",response.getUserTypeId());
 		return response;
 	}
 	
 	public UpdateProfileResponse updateProfile(Registration registration,HttpSession session) {
 		log.info("inside update profile controller");
+		registration.setPublicIp(session.getAttribute("publicIP").toString());
+		registration.setBrowser(session.getAttribute("browser").toString());
 		log.info("profile data=  "+registration);
 		UpdateProfileResponse response=new UpdateProfileResponse();   
 		response=userProfileFeignImpl.updateUserProfile(registration);

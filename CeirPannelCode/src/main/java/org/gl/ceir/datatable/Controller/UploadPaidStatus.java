@@ -379,8 +379,8 @@ public class UploadPaidStatus {
 			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
 					Translator.toLocale("input.endDate"), "endDate", "", "text",
 					Translator.toLocale("input.passportNo"), "nId", "15","text",
-					Translator.toLocale("input.transactionID"), "transactionID", "18","text",
-					Translator.toLocale("input.Nationality"), "filterNationality", "15","select",
+					Translator.toLocale("input.transactionID"), "transactionID", "18","select",
+					Translator.toLocale("input.Nationality"), "filterNationality", "","select",
 					Translator.toLocale("select.taxPaidStatus"), "taxPaidStatus", "", "text",
 					Translator.toLocale("table.origin"), "originFilter", "20", "select",
 					Translator.toLocale("input.Status"), "recordStatus", "" };
@@ -399,8 +399,8 @@ public class UploadPaidStatus {
 			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
 					Translator.toLocale("input.endDate"), "endDate", "", "text",
 					Translator.toLocale("input.passportNo"), "nId", "15","text",
-					Translator.toLocale("input.transactionID"), "transactionID", "18","text",
-					Translator.toLocale("input.Nationality"), "filterNationality", "15","select",
+					Translator.toLocale("input.transactionID"), "transactionID", "18","select",
+					Translator.toLocale("input.Nationality"), "filterNationality", "","select",
 					Translator.toLocale("select.taxPaidStatus"), "taxPaidStatus", "", "text",
 					Translator.toLocale("table.origin"), "originFilter", "20", "select",
 					Translator.toLocale("input.Status"), "recordStatus", "" };
@@ -419,8 +419,8 @@ public class UploadPaidStatus {
 			// input type date list
 			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
 					Translator.toLocale("input.endDate"), "endDate", "", "text", Translator.toLocale("input.nidInput"),
-					"nId", "15", "text", Translator.toLocale("input.transactionID"), "transactionID", "18", "text",
-					Translator.toLocale("input.Nationality"), "filterNationality", "15", "select",
+					"nId", "15", "text", Translator.toLocale("input.transactionID"), "transactionID", "18", "select",
+					Translator.toLocale("input.Nationality"), "filterNationality", "", "select",
 					Translator.toLocale("select.taxPaidStatus"), "taxPaidStatus", "", "text",
 					Translator.toLocale("table.origin"), "originFilter", "20", "select",
 					Translator.toLocale("input.Status"), "recordStatus", "" };
@@ -437,9 +437,19 @@ public class UploadPaidStatus {
 			}
 		} else {
 			// input type date list
+			/*
+			 * String[] dateParam = { "date", Translator.toLocale("input.startDate"),
+			 * "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "",
+			 * "text", Translator.toLocale("input.nidInput"), "nId", "15", "text",
+			 * Translator.toLocale("input.transactionID"), "transactionID", "18" };
+			 */
 			String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
 					Translator.toLocale("input.endDate"), "endDate", "", "text", Translator.toLocale("input.nidInput"),
-					"nId", "15", "text", Translator.toLocale("input.transactionID"), "transactionID", "18" };
+					"nId", "15", "text", Translator.toLocale("input.transactionID"), "transactionID", "18", "text",
+					Translator.toLocale("input.Nationality"), "filterNationality", "15", "select",
+					Translator.toLocale("select.taxPaidStatus"), "taxPaidStatus", "", "text",
+					Translator.toLocale("table.origin"), "originFilter", "20", "select",
+					Translator.toLocale("input.Status"), "recordStatus", "" };
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

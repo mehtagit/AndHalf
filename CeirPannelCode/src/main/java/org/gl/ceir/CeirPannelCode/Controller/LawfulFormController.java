@@ -475,6 +475,8 @@ public class LawfulFormController
 			}
 
 		}
+		lawfulIndivisualStolen.setPublicIp(session.getAttribute("publicIP").toString());
+		lawfulIndivisualStolen.setBrowser(session.getAttribute("browser").toString());
 		log.info("request passed to the report Indivisual and comapny recovery api"+lawfulIndivisualStolen);
 		GenricResponse response = null;
 		try {
