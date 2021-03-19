@@ -26,7 +26,9 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.PeriodValidate;
 import org.gl.ceir.CeirPannelCode.Model.StockUploadModel;
+import org.gl.ceir.CeirPannelCode.Model.UserHeader;
 import org.gl.ceir.CeirPannelCode.Model.Usertype;
+import org.gl.ceir.CeirPannelCode.Service.RegistrationService;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
@@ -68,7 +70,9 @@ public class Stock {
     PropertyReader propertyReader;
 	@Autowired
 	GrievanceFeignClient grievanceFeignClient;
-
+	@Autowired
+	RegistrationService registerService;
+	
 	@RequestMapping(value={"/assignDistributor"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST})
 	public ModelAndView  viewStock( HttpSession session , @RequestParam(name="userTypeId",required=false) String selectedUserTypeId,@RequestParam(name="selectedRoleTypeId",required=false) Integer selectedRoleTypeId 
 			,@RequestParam(name="txnID",required = false) String txnID ,@RequestParam(name="source",required = false,defaultValue = "menu") String source) {
@@ -592,8 +596,9 @@ public class Stock {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		endUserStockModal.setPublicIp(session.getAttribute("publicIP").toString());
-		endUserStockModal.setBrowser(session.getAttribute("browser").toString());
+		UserHeader header=registerService.getUserHeaders(request);
+		endUserStockModal.setPublicIp(header.getPublicIp());
+		endUserStockModal.setBrowser(header.getBrowser());
 		log.info("request passed to  the end user upload stock api"+endUserStockModal);
 		GenricResponse  response = new GenricResponse();
 		response = feignCleintImplementation.uploadStock(endUserStockModal);
@@ -608,7 +613,7 @@ public class Stock {
 
 	// *********************************************** open register page or edit popup ******************************
 	@RequestMapping(value="/fetchUploadAstock",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-	public @ResponseBody StockUploadModel openEndUserStockPopup(@RequestParam(name="txnId",required = false) String txnId)
+	public @ResponseBody StockUploadModel openEndUserStockPopup(@RequestParam(name="txnId",required = false) String txnId,HttpServletRequest request)
 	{
 		log.info("entry point of  fetch end user stock in the bases of transaction id .");
 		//StockUploadModel stockUploadModel= new StockUploadModel();
@@ -618,6 +623,9 @@ public class Stock {
 		filterRequest.setFeatureId(4);
 		filterRequest.setUserType("End User");
 		filterRequest.setUserId(17);
+		UserHeader header=registerService.getUserHeaders(request);
+		filterRequest.setPublicIp(header.getPublicIp());
+		filterRequest.setBrowser(header.getBrowser());
 		log.info("response from fetch stock api="+filterRequest);
 		filterRequest.setUserType("End User");
 		stockUploadModelResponse=feignCleintImplementation.fetchUploadedStockByTxnId(filterRequest);

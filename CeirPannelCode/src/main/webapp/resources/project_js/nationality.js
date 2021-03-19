@@ -37,8 +37,9 @@ var nationality = new Array("Afghan",  "Albanian", "Algerian", "American",  "And
  function nationalitySelect(){
 	
 	$('<option>').val("").text($.i18n('nationality')).appendTo('#nationality,#filterNationality');
+	
 	 for (var i=0; i<nationality.length; i++) {
-			$('<option>').val(nationality[i]).text(nationality[i]).appendTo('#nationality');
+			$('<option>').val(nationality[i]).text(nationality[i]).appendTo('#nationality,#filterNationality');
 		}
 	 
  }

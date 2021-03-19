@@ -288,7 +288,7 @@ $(document).ready(function () {
 				}
 			});
 
-
+		
 
 			$.getJSON('./getDropdownList/DEVICE_TYPE', function(data) {
 				var dropdownid=id-1;
@@ -554,6 +554,7 @@ function pageButtons(url){
 				}
 				
 			} 
+			
 
 			/*}
 			else{
@@ -671,7 +672,7 @@ function pageButtons(url){
 				}
 			});
 
-			
+			nationalitySelect();
 		}
 	}); 	
 

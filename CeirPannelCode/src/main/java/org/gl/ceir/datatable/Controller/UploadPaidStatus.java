@@ -13,6 +13,8 @@ import org.gl.ceir.CeirPannelCode.Model.AllRequest;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.UserHeader;
+import org.gl.ceir.CeirPannelCode.Service.RegistrationService;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
 import org.gl.ceir.configuration.ConfigParameters;
@@ -59,13 +61,15 @@ public class UploadPaidStatus {
 
 	@Autowired
 	Button button;
-
+	@Autowired
+	RegistrationService registerService;
+	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	@GetMapping("/paid-status/{nid}")
 	public ResponseEntity<?> respone(@PathVariable("nid") String nid, HttpSession session) {
 		AllRequest request = new AllRequest();
-		log.info("ssfsfsdfsdf" + nid);
+		log.info("Nid/PassportNumber" + nid);
 		String userType = (String) session.getAttribute("usertype");
 		String userName = session.getAttribute("username").toString();
 		int userId = (int) session.getAttribute("userid");
@@ -77,21 +81,24 @@ public class UploadPaidStatus {
 		request.setUsername(userName);
 		request.setUserTypeId(userTypeid);
 		request.setUserType(userType);
-
+		request.setPublicIp(session.getAttribute("publicIP").toString());
+		request.setBrowser(session.getAttribute("browser").toString());
 		GenricResponse response = uploadPaidStatusFeignClient.respone(request);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 
 	@GetMapping("/endUserpaid-status/{nid}")
-	public ResponseEntity<?> endUserpaid(@PathVariable("nid") String nid, HttpSession session) {
+	public ResponseEntity<?> endUserpaid(@PathVariable("nid") String nid, HttpSession session,HttpServletRequest requestHeader) {
 		AllRequest request = new AllRequest();
-		log.info("ssfsfsdfsdf" + nid);
+		log.info("Nid/PassportNumber" + nid);
 		request.setFeatureId(12);
 		request.setNid(nid);
 		request.setUserTypeId(17);
 		request.setUsername("NA");
 		request.setUserType("End User");
-
+		UserHeader header=registerService.getUserHeaders(requestHeader);
+		request.setPublicIp(header.getPublicIp());
+		request.setBrowser(header.getBrowser());
 		GenricResponse response = uploadPaidStatusFeignClient.respone(request);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
@@ -145,8 +152,9 @@ public class UploadPaidStatus {
 		filterrequest.setSort(order);
 
 		filterrequest.setSearchString(request.getParameter("search[value]"));
-		filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
-		filterrequest.setBrowser(session.getAttribute("browser").toString());
+		UserHeader header=registerService.getUserHeaders(request);
+		filterrequest.setPublicIp(header.getPublicIp());
+		filterrequest.setBrowser(header.getBrowser());
 		log.info("filterrequest--->" + filterrequest);
 		
 		response = uploadPaidStatusFeignClient.view(filterrequest, pageNo, pageSize, file, source);
@@ -498,7 +506,7 @@ public class UploadPaidStatus {
 
 	@DeleteMapping("/endUserdelete/{imei}/{txnId}")
 	public @ResponseBody GenricResponse endUserdeleteConsignment(@PathVariable("imei") String imei,
-			@PathVariable("imei") String txnId) {
+			@PathVariable("imei") String txnId , HttpServletRequest requestHeaders) {
 		AllRequest request = new AllRequest();
 		request.setFeatureId(12);
 
@@ -506,6 +514,9 @@ public class UploadPaidStatus {
 		request.setUserTypeId(17);
 		request.setUserType("End User");
 		request.setTxnId(txnId);
+		UserHeader header=registerService.getUserHeaders(requestHeaders);
+		request.setPublicIp(header.getPublicIp());
+		request.setBrowser(header.getBrowser());
 		log.info(" request==" + request);
 		GenricResponse response = uploadPaidStatusFeignClient.delete(request);
 		log.info("response after delete consignment." + response);
