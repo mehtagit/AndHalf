@@ -29,7 +29,9 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest_UserPaidStatus;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.PeriodValidate;
 import org.gl.ceir.CeirPannelCode.Model.UpdateVisaModel;
+import org.gl.ceir.CeirPannelCode.Model.UserHeader;
 import org.gl.ceir.CeirPannelCode.Model.VisaDb;
+import org.gl.ceir.CeirPannelCode.Service.RegistrationService;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.gl.ceir.pagination.model.UserPaidStatusContent;
@@ -88,6 +90,9 @@ PropertyReader propertyReader;
 
 @Autowired
 GrievanceFeignClient grievanceFeignClient;
+
+@Autowired
+RegistrationService registerService;
 
 	@GetMapping("uploadPaidStatus")
 	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,@RequestParam(name="NID", required = false) String NID,HttpSession session
@@ -248,8 +253,9 @@ GrievanceFeignClient grievanceFeignClient;
 		 * 
 		 * catch (Exception e) { // TODO: handle exception e.printStackTrace(); }
 		 */
-		regularizeDeviceDbs.setPublicIp(session.getAttribute("publicIP").toString());
-		regularizeDeviceDbs.setBrowser(session.getAttribute("browser").toString());
+		UserHeader header=registerService.getUserHeaders(request);
+		regularizeDeviceDbs.setPublicIp(header.getPublicIp());
+		regularizeDeviceDbs.setBrowser(header.getBrowser());
 		log.info("request passed to the save regularizeDeviceDbs api"+regularizeDeviceDbs);
 		GenricResponse response = null;
 		try {
@@ -337,7 +343,9 @@ GrievanceFeignClient grievanceFeignClient;
 	//********************************************Admin Approve/Reject Controller******************************************
 	
 	@PostMapping("approveRejectDevice") 
-	public @ResponseBody GenricResponse approveRejectDevice (@RequestBody FilterRequest_UserPaidStatus filterRequestuserpaidStatus)  {
+	public @ResponseBody GenricResponse approveRejectDevice (@RequestBody FilterRequest_UserPaidStatus filterRequestuserpaidStatus ,HttpSession session)  {
+		filterRequestuserpaidStatus.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequestuserpaidStatus.setBrowser(session.getAttribute("browser").toString());
 		log.info("request send to the approveRejectDevice api="+filterRequestuserpaidStatus);
 		GenricResponse response= uploadPaidStatusFeignClient.approveRejectFeign(filterRequestuserpaidStatus);
 
@@ -439,7 +447,7 @@ GrievanceFeignClient grievanceFeignClient;
 	}
 	
 	@PostMapping("findEndUserByNid")
-	public @ResponseBody GenricResponse findEndUserByNid(@RequestParam(name="findEndUserByNid",required = false) String findEndUserByNid,HttpSession session) {
+	public @ResponseBody GenricResponse findEndUserByNid(@RequestParam(name="findEndUserByNid",required = false) String findEndUserByNid,HttpSession session,HttpServletRequest requestHeader) {
 		log.info("---entry point in update visa validity page");
 		GenricResponse endUserVisaInfo= new GenricResponse();
 		  AllRequest request= new AllRequest();
@@ -448,8 +456,11 @@ GrievanceFeignClient grievanceFeignClient;
 		  request.setNid(findEndUserByNid);
 	      request.setUserTypeId(17);
 		  request.setUserType("End User");
-		  request.setPublicIp(session.getAttribute("publicIP").toString());
-		  request.setBrowser(session.getAttribute("browser").toString());
+		  UserHeader header=registerService.getUserHeaders(requestHeader);
+		  request.setPublicIp(header.getPublicIp());
+		  request.setBrowser(header.getBrowser());
+		  request.setPublicIp(header.getPublicIp());
+		  request.setBrowser(header.getBrowser());
 		log.info("Request send to the fetch record by Passport="+request);
 		addMoreFileModel.setTag("upload_file_link");
         urlToUpload=feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
@@ -641,8 +652,9 @@ GrievanceFeignClient grievanceFeignClient;
 	  	log.info("file move api response==="+fileRespnose);
 		
 		GenricResponse endUserVisaInfo= new GenricResponse();
-		endUservisaInfo.setPublicIp(session.getAttribute("publicIP").toString());
-		endUservisaInfo.setBrowser(session.getAttribute("browser").toString());
+		UserHeader header=registerService.getUserHeaders(request);
+		endUservisaInfo.setPublicIp(header.getPublicIp());
+		endUservisaInfo.setBrowser(header.getBrowser());
 		log.info("Request send to the update emd user visa details ="+endUservisaInfo);
 		endUserVisaInfo=	uploadPaidStatusFeignClient.updateEndUSerVisaDetailsby(endUservisaInfo);
 		log.info("Response from fetchVisaDetailsbyPassport api== "+endUserVisaInfo);
@@ -835,8 +847,9 @@ GrievanceFeignClient grievanceFeignClient;
 			  catch (Exception ex) { // TODO: handle exception e.printStackTrace(); } }
 			  }
 			  }
-			  endUservisaInfo.setPublicIp(session.getAttribute("publicIP").toString());
-			  endUservisaInfo.setBrowser(session.getAttribute("browser").toString());
+				UserHeader header=registerService.getUserHeaders(request);
+			  endUservisaInfo.setPublicIp(header.getPublicIp());
+			  endUservisaInfo.setBrowser(header.getBrowser());
 		  log.info("Request send to the update eNd user visa details ="+endUservisaInfo
 		  ); 
 		  GenricResponse endUserVisaInfo= new GenricResponse();

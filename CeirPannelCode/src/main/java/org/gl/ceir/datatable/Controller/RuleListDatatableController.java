@@ -104,7 +104,7 @@ public class RuleListDatatableController {
 				   String output=dataInsideList.getOutput();
 				   //log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
 				   String action=iconState.ruleListIcons(id,output);			   
-				   Object[] finalData={createdOn,modifiedOn,state,name,description,action}; 
+				   Object[] finalData={createdOn,modifiedOn,name,description,state,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
