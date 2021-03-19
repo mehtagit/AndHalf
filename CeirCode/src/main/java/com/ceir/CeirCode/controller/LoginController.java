@@ -49,7 +49,7 @@ public class LoginController{
 	@CrossOrigin
 	@PostMapping("/checkUser")     
 	public ResponseEntity<?> userLogin(@RequestBody UserLogin user){
-		//check user
+		
 		return loginService.userLogin(user); 
 	}  
 	
