@@ -45,7 +45,7 @@ public class ConsignmentTransaction {
 		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), consignmentMgmt.getUser().getUsername(), 
 				Long.valueOf(consignmentMgmt.getUserTypeId()), consignmentMgmt.getUserType(), 
 				Long.valueOf(consignmentMgmt.getFeatureId()), Features.CONSIGNMENT, 
-				SubFeatures.REGISTER, "", consignmentMgmt.getTxnId(),consignmentMgmt.getRoleType()));
+				SubFeatures.REGISTER, "", consignmentMgmt.getTxnId(),consignmentMgmt.getRoleType(),consignmentMgmt.getPublicIp(),consignmentMgmt.getBrowser()));
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
 
 		queryStatus = Boolean.TRUE;
@@ -64,7 +64,7 @@ public class ConsignmentTransaction {
 				Long.valueOf(consignmentMgmt.getUserTypeId()), 
 				consignmentMgmt.getUserType(),
 				Long.valueOf(consignmentMgmt.getFeatureId()),
-				Features.CONSIGNMENT, SubFeatures.UPDATE, "", consignmentMgmt.getTxnId(),consignmentMgmt.getRoleType()));
+				Features.CONSIGNMENT, SubFeatures.UPDATE, "", consignmentMgmt.getTxnId(),consignmentMgmt.getRoleType(),consignmentMgmt.getPublicIp(),consignmentMgmt.getBrowser()));
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
 
 		queryStatus = Boolean.TRUE;
@@ -80,7 +80,7 @@ public class ConsignmentTransaction {
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] updated in consigment_mgmt_db.");
 
 		auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUser().getId(), consignmentMgmt.getUserName(), Long.valueOf(consignmentMgmt.getUserTypeId()), consignmentMgmt.getUserType(), Long.valueOf(consignmentMgmt.getFeatureId()), 
-				Features.CONSIGNMENT, SubFeatures.DELETE, "", consignmentMgmt.getTxnId(),consignmentMgmt.getRoleType()));
+				Features.CONSIGNMENT, SubFeatures.DELETE, "", consignmentMgmt.getTxnId(),consignmentMgmt.getRoleType(),consignmentMgmt.getPublicIp(),consignmentMgmt.getBrowser()));
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail.");
 
 		queryStatus = Boolean.TRUE;
@@ -125,7 +125,7 @@ public class ConsignmentTransaction {
 				, Features.CONSIGNMENT, 
 				action, "", 
 				consignmentMgmt.getTxnId(),
-				consignmentUpdateRequest.getRoleType()));
+				consignmentUpdateRequest.getRoleType(),consignmentUpdateRequest.getPublicIp(),consignmentUpdateRequest.getBrowser()));
 		logger.info("Consignment [" + consignmentMgmt.getTxnId() + "] saved in audit_trail for "
 				+ "action[" + action 
 				+ "] usertype[" + consignmentUpdateRequest.getUserType() + "].");

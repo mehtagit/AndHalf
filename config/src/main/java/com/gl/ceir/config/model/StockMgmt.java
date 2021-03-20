@@ -90,6 +90,11 @@ public class StockMgmt implements Serializable {
 	
 	public Integer portAddress;
 	
+	@Transient
+	private String publicIp ;
+	@Transient
+	private String browser;
+	
 	public Long getCeirAdminId() {
 		return ceirAdminId;
 	}
@@ -292,16 +297,83 @@ public class StockMgmt implements Serializable {
 		this.portAddress = portAddress;
 	}
 
+	public String getPublicIp() {
+		return publicIp;
+	}
+
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+
+	public String getBrowser() {
+		return browser;
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+
 	@Override
 	public String toString() {
-		return "StockMgmt [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", suplierName="
-				+ suplierName + ", supplierId=" + supplierId + ", invoiceNumber=" + invoiceNumber + ", txnId=" + txnId
-				+ ", fileName=" + fileName + ", userId=" + userId + ", user=" + user + ", roleType=" + roleType
-				+ ", quantity=" + quantity + ", stockStatus=" + stockStatus + ", previousStockStatus="
-				+ previousStockStatus + ", currency=" + currency + ", userType=" + userType + ", totalPrice="
-				+ totalPrice + ", remarks=" + remarks + ", assignerId=" + assignerId + ", stateInterp=" + stateInterp
-				+ ", deleteFlag=" + deleteFlag + ", deleteFlagInterp=" + deleteFlagInterp + ", deviceQuantity="
-				+ deviceQuantity + ", ceirAdminId=" + ceirAdminId + ", portAddress=" + portAddress + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("StockMgmt [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", suplierName=");
+		builder.append(suplierName);
+		builder.append(", supplierId=");
+		builder.append(supplierId);
+		builder.append(", invoiceNumber=");
+		builder.append(invoiceNumber);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", fileName=");
+		builder.append(fileName);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", user=");
+		builder.append(user);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", quantity=");
+		builder.append(quantity);
+		builder.append(", stockStatus=");
+		builder.append(stockStatus);
+		builder.append(", previousStockStatus=");
+		builder.append(previousStockStatus);
+		builder.append(", currency=");
+		builder.append(currency);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", totalPrice=");
+		builder.append(totalPrice);
+		builder.append(", remarks=");
+		builder.append(remarks);
+		builder.append(", assignerId=");
+		builder.append(assignerId);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
+		builder.append(", deleteFlag=");
+		builder.append(deleteFlag);
+		builder.append(", deleteFlagInterp=");
+		builder.append(deleteFlagInterp);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
+		builder.append(", ceirAdminId=");
+		builder.append(ceirAdminId);
+		builder.append(", portAddress=");
+		builder.append(portAddress);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
+		builder.append("]");
+		return builder.toString();
 	}
+
+	
 
 }

@@ -23,7 +23,10 @@ public class AllRequest{
 	
 	@Transient
 	private String userType;
-	
+	@Transient
+	private String publicIp;
+	@Transient
+	private String browser;
 	public String getUsername() {
 		return username;
 	}
@@ -70,9 +73,42 @@ public class AllRequest{
 	public void setNid(String nid) {
 		this.nid = nid;
 	}
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	@Override
 	public String toString() {
-		return "AllRequest [username=" + username + ", userTypeId=" + userTypeId + ", userId=" + userId + ", featureId="
-				+ featureId + ", imei=" + imei + ", nid=" + nid + ", userType=" + userType + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("AllRequest [username=");
+		builder.append(username);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", imei=");
+		builder.append(imei);
+		builder.append(", nid=");
+		builder.append(nid);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
+		builder.append("]");
+		return builder.toString();
 	}
+	 
+	
 }

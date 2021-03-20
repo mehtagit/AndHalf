@@ -60,7 +60,7 @@ public class RegularizedDeviceController {
 			logger.info("Regularize Device view info request " + filterRequest);
 			Page<RegularizeDeviceDb> customInfo = regularizedDeviceServiceImpl.filter(filterRequest, pageNo, pageSize, source);
 			mapping = new MappingJacksonValue(customInfo);
-		}else {
+		} else {
 			logger.info("Regularized Device Export request " + filterRequest);
 			//
 			FileDetails fileDetails = regularizedDeviceServiceImpl.getFilteredDeviceInFile(filterRequest, source);

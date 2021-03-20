@@ -40,7 +40,8 @@ public class AuditTrail implements Serializable {
 	private String subFeature;
 	private String jSessionId;
 	private String roleType;
-	
+	private String publicIp;
+	private String browser,details;
 	@Column(length = 20)
 	private String txnId;
 	
@@ -84,6 +85,22 @@ public class AuditTrail implements Serializable {
 		this.jSessionId = jSessionId;
 		this.txnId = txnId;
 		this.roleType = roleType;
+	}
+	
+	public AuditTrail(long userId, String userName, Long userTypeId, String userType, long featureId, 
+			String featureName, String subFeature, String jSessionId, String txnId, String roleType,String publicIP,String browser) {
+		this.userId = userId;
+		this.userName = userName;
+		this.userTypeId = userTypeId;
+		this.userType = userType;
+		this.featureId = featureId;
+		this.featureName = featureName;
+		this.subFeature = subFeature;
+		this.jSessionId = jSessionId;
+		this.txnId = txnId;
+		this.roleType = roleType;
+		this.publicIp=publicIP;
+		this.browser=browser;
 	}
 	
 	
@@ -171,37 +188,67 @@ public class AuditTrail implements Serializable {
 		this.roleType = roleType;
 	}
 
+	public String getPublicIp() {
+		return publicIp;
+	}
+
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+
+	public String getBrowser() {
+		return browser;
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
 	@Override
 	public String toString() {
-		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("AuditTrail [id=");
-		stringBuilder.append(id);
-		stringBuilder.append(", createdOn=");
-		stringBuilder.append(createdOn);
-		stringBuilder.append(", modifiedOn=");
-		stringBuilder.append(modifiedOn);
-		stringBuilder.append(", userId=");
-		stringBuilder.append(userId);
-		stringBuilder.append(", userName=");
-		stringBuilder.append(userName);
-		stringBuilder.append(", userTypeId=");
-		stringBuilder.append(userTypeId);
-		stringBuilder.append(", userType=");
-		stringBuilder.append(userType);
-		stringBuilder.append(", featureId=");
-		stringBuilder.append(featureId);
-		stringBuilder.append(", featureName=");
-		stringBuilder.append(featureName);
-		stringBuilder.append(", subFeature=");
-		stringBuilder.append(subFeature);
-		stringBuilder.append(", jSessionId=");
-		stringBuilder.append(jSessionId);
-		stringBuilder.append(", roleType=");
-		stringBuilder.append(roleType);
-		stringBuilder.append(", txnId=");
-		stringBuilder.append(txnId);
-		stringBuilder.append("]");
-		return stringBuilder.toString();
+		StringBuilder builder = new StringBuilder();
+		builder.append("AuditTrail [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", featureName=");
+		builder.append(featureName);
+		builder.append(", subFeature=");
+		builder.append(subFeature);
+		builder.append(", jSessionId=");
+		builder.append(jSessionId);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
+		builder.append(", details=");
+		builder.append(details);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append("]");
+		return builder.toString();
 	}
 
 	

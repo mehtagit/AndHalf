@@ -342,7 +342,7 @@ public class ConsignmentServiceImpl {
 			auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUserId(), consignmentMgmt.getUserName(),
 					Long.valueOf(consignmentMgmt.getUserTypeId()), consignmentMgmt.getUserType(),
 					Long.valueOf(consignmentMgmt.getFeatureId()), Features.CONSIGNMENT, SubFeatures.VIEW_ALL, "", "NA",
-					consignmentMgmt.getRoleType()));
+					consignmentMgmt.getRoleType(),consignmentMgmt.getPublicIp(),consignmentMgmt.getBrowser()));
 			logger.info("AUDIT : Saved view request in audit.");
 			return page;
 
@@ -445,7 +445,7 @@ public class ConsignmentServiceImpl {
 			auditTrailRepository.save(
 					new AuditTrail(filterRequest.getUserId(), username, Long.valueOf(filterRequest.getUserTypeId()),
 							filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
-							Features.CONSIGNMENT, SubFeatures.VIEW, "", txnId, filterRequest.getRoleType()));
+							Features.CONSIGNMENT, SubFeatures.VIEW, "", txnId, filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
 			logger.info("AUDIT : Saved file export request in audit.");
 
 			return consignmentMgmt;
@@ -506,6 +506,8 @@ public class ConsignmentServiceImpl {
 				consignmentInfo.setRemarks(null);
 				consignmentInfo.setCeirAdminID(null);
 				consignmentInfo.setCustomID(null);
+				consignmentInfo.setBrowser(consignmentFileRequest.getBrowser());
+				consignmentInfo.setPublicIp(consignmentFileRequest.getPublicIp());
 				// Pending tac if available in pending_tac_approval_db.
 				FilterRequest filterRequest = new FilterRequest().setTxnId(consignmentFileRequest.getTxnId());
 				if (pendingTacApprovedImpl.findByTxnId(filterRequest).getErrorCode() == 0) {
@@ -642,7 +644,9 @@ public class ConsignmentServiceImpl {
 			consignmentMgmt.setUserName(consignmentUpdateRequest.getUserName());
 			consignmentMgmt.setUserType(consignmentUpdateRequest.getUserType());
 			consignmentMgmt.setRoleType(consignmentUpdateRequest.getRoleType());
-
+			consignmentMgmt.setBrowser(consignmentUpdateRequest.getBrowser());
+			consignmentMgmt.setPublicIp(consignmentUpdateRequest.getPublicIp());
+			
 			WebActionDb webActionDb = new WebActionDb();
 			webActionDb.setFeature(WebActionDbFeature.CONSIGNMENT.getName());
 			webActionDb.setSubFeature(WebActionDbSubFeature.DELETE.getName());
@@ -884,7 +888,7 @@ public class ConsignmentServiceImpl {
 			auditTrailRepository.save(
 					new AuditTrail(filterRequest.getUserId(), username, Long.valueOf(filterRequest.getUserTypeId()),
 							filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
-							Features.CONSIGNMENT, SubFeatures.EXPORT, "", "NA", filterRequest.getRoleType()));
+							Features.CONSIGNMENT, SubFeatures.EXPORT, "", "NA", filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
 			logger.info("AUDIT : Saved file export request in audit.");
 
 			FileDetails fileDetails = new FileDetails(fileName, filepath.getValue(),

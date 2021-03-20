@@ -137,7 +137,11 @@ public class EndUserDB   {
 	@Transient
 	private AllRequest auditParameters;
 	
+	@Transient
+	private String publicIp;
 	
+	@Transient
+	private String browser;
 	
 	public String getRejectedRemark() {
 		return rejectedRemark;
@@ -370,82 +374,18 @@ public class EndUserDB   {
 	public void setVisaUpdateDb(List<VisaUpdateDb> visaUpdateDb) {
 		this.visaUpdateDb = visaUpdateDb;
 	}
-	
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("EndUserDB [id=");
-		builder.append(id);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", nid=");
-		builder.append(nid);
-		builder.append(", txnId=");
-		builder.append(txnId);
-		builder.append(", firstName=");
-		builder.append(firstName);
-		builder.append(", middleName=");
-		builder.append(middleName);
-		builder.append(", lastName=");
-		builder.append(lastName);
-		builder.append(", propertyLocation=");
-		builder.append(propertyLocation);
-		builder.append(", street=");
-		builder.append(street);
-		builder.append(", locality=");
-		builder.append(locality);
-		builder.append(", district=");
-		builder.append(district);
-		builder.append(", commune=");
-		builder.append(commune);
-		builder.append(", village=");
-		builder.append(village);
-		builder.append(", postalCode=");
-		builder.append(postalCode);
-		builder.append(", province=");
-		builder.append(province);
-		builder.append(", country=");
-		builder.append(country);
-		builder.append(", email=");
-		builder.append(email);
-		builder.append(", phoneNo=");
-		builder.append(phoneNo);
-		builder.append(", docType=");
-		builder.append(docType);
-		builder.append(", docTypeInterp=");
-		builder.append(docTypeInterp);
-		builder.append(", documentInterp=");
-		builder.append(documentInterp);
-		builder.append(", nationality=");
-		builder.append(nationality);
-		builder.append(", onVisa=");
-		builder.append(onVisa);
-		builder.append(", visaDb=");
-		builder.append(visaDb);
-		builder.append(", isVip=");
-		builder.append(isVip);
-		builder.append(", userDepartment=");
-		builder.append(userDepartment);
-		builder.append(", passportFileName=");
-		builder.append(passportFileName);
-		builder.append(", creatorUserId=");
-		builder.append(creatorUserId);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", remarks=");
-		builder.append(remarks);
-		builder.append(", origin=");
-		builder.append(origin);
-		builder.append(", entryDateInCountry=");
-		builder.append(entryDateInCountry);
-		builder.append(", rejectedRemark=");
-		builder.append(rejectedRemark);
-		//builder.append(", toString()=");
-		//builder.append(super.toString());
-		builder.append("]");
-		return builder.toString();
+	public String getPublicIp() {
+		return publicIp;
 	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+	
 
 }

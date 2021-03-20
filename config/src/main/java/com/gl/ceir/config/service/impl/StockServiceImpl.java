@@ -197,7 +197,7 @@ public class StockServiceImpl {
 				stockMgmt.setPortAddress( userRepository.getById(stockMgmt.getAssignerId()).getUserProfile().getPortAddress() );
 				isStockAssignRequest = Boolean.TRUE;
 
-				addInAuditTrail(stockMgmt.getAssignerId(), stockMgmt.getTxnId(), SubFeatures.ASSIGN, "Custom");
+				addInAuditTrail(stockMgmt.getAssignerId(), stockMgmt.getTxnId(), SubFeatures.ASSIGN, "Custom",stockMgmt.getPublicIp(),stockMgmt.getBrowser());
 
 			}else if("End User".equalsIgnoreCase(stockMgmt.getUserType())){
 				// Check if this feature is supported in current period.
@@ -236,10 +236,10 @@ public class StockServiceImpl {
 					logger.info("Invalid request for stock registeration.", stockMgmt.getTxnId());
 					return new GenricResponse(3, "Invalid request for stock registeration.", stockMgmt.getTxnId());
 				}
-				addInAuditTrail(user.getId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD, stockMgmt.getRoleType());
+				addInAuditTrail(user.getId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD, stockMgmt.getRoleType(),stockMgmt.getPublicIp(),stockMgmt.getBrowser());
 			}else {
 				stockMgmt.setUser(new User().setId(new Long(stockMgmt.getUserId())));
-				addInAuditTrail(stockMgmt.getUserId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD,stockMgmt.getRoleType());
+				addInAuditTrail(stockMgmt.getUserId(), stockMgmt.getTxnId(), SubFeatures.UPLOAD,stockMgmt.getRoleType(),stockMgmt.getPublicIp(),stockMgmt.getBrowser());
 			}
 
 			WebActionDb webActionDb = new WebActionDb();
@@ -359,9 +359,9 @@ public class StockServiceImpl {
 			}
 
 			if(Objects.isNull(filterRequest.getTxnId())) {
-				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL,filterRequest.getRoleType());
+				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL,filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser());
 			}else {
-				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER,filterRequest.getRoleType());
+				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER,filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser());
 			}
 
 			return page;
@@ -557,7 +557,7 @@ public class StockServiceImpl {
 				User user = userRepository.getById(filterRequest.getUserId());
 				logger.info(user);
 			}
-			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.VIEW,filterRequest.getRoleType());
+			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.VIEW,filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser());
 			return stockMgmt2;
 
 		} catch (RequestInvalidException e) {
@@ -672,7 +672,7 @@ public class StockServiceImpl {
 				webActionDb.setState(WebActionDbState.INIT.getCode());
 				webActionDb.setTxnId(deleteObj.getTxnId());
 
-				addInAuditTrail(Long.valueOf(deleteObj.getUserId()), deleteObj.getTxnId(), SubFeatures.DELETE,deleteObj.getRoleType());
+				addInAuditTrail(Long.valueOf(deleteObj.getUserId()), deleteObj.getTxnId(), SubFeatures.DELETE,deleteObj.getRoleType(),deleteObj.getPublicIp(),deleteObj.getBrowser());
 				if(stockTransaction.executeDeleteStock(txnRecord, webActionDb)) {
 					logger.info("Deletion of Stock is in Progress." + deleteObj.getTxnId());
 					if(isUserCeirAdmin) {
@@ -827,7 +827,7 @@ public class StockServiceImpl {
 				webActionDb.setState(WebActionDbState.INIT.getCode());
 				webActionDb.setTxnId(distributerManagement.getTxnId());
 
-				addInAuditTrail(stockMgmt.getUserId(), stockMgmt.getTxnId(), SubFeatures.UPDATE, stockMgmt.getRoleType());
+				addInAuditTrail(stockMgmt.getUserId(), stockMgmt.getTxnId(), SubFeatures.UPDATE, stockMgmt.getRoleType(),stockMgmt.getPublicIp(),stockMgmt.getBrowser());
 
 				if(stockTransaction.executeUpdateStock(stockMgmt, webActionDb)) {
 					logger.info("Stock Update have been Successful." + stockMgmt.getTxnId());
@@ -988,7 +988,7 @@ public class StockServiceImpl {
 					logger.warn("Unable to update Stolen and recovery entity.");
 					return new GenricResponse(3, "Unable to update stock entity.", consignmentUpdateRequest.getTxnId()); 
 				}else {
-					addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()), consignmentUpdateRequest.getTxnId(), action, consignmentUpdateRequest.getRoleType());
+					addInAuditTrail(Long.valueOf(consignmentUpdateRequest.getUserId()), consignmentUpdateRequest.getTxnId(), action, consignmentUpdateRequest.getRoleType(),consignmentUpdateRequest.getPublicIp(),consignmentUpdateRequest.getBrowser());
 					placeholderMap.put("<Reason>", consignmentUpdateRequest.getRemarks() );
 					if( customUser != null ) {
 						placeholderMap.put("<First name>", customUser.getUserProfile().getFirstName() );
@@ -1227,7 +1227,7 @@ public class StockServiceImpl {
 			return null;
 	}
 
-	public void addInAuditTrail(Long userId, String txnId, String subFeatureName, String roleType) {
+	public void addInAuditTrail(Long userId, String txnId, String subFeatureName, String roleType,String publicIp,String browser) {
 
 		User requestUser = null;
 		try {
@@ -1252,7 +1252,7 @@ public class StockServiceImpl {
 					subFeatureName,
 					"", 
 					txnId,
-					roleType));
+					roleType,publicIp,browser));
 		}else {
 			logger.error("Could not find the user information");
 		}
