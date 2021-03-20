@@ -914,8 +914,9 @@ RegistrationService registerService;
 
 			log.info(""+regularizeDeviceDbs.toString());
 			log.info(" upload status  entry point.");
-			regularizeDeviceDbs.setPublicIp(session.getAttribute("publicIP").toString());
-			regularizeDeviceDbs.setBrowser(session.getAttribute("browser").toString());
+			UserHeader header=registerService.getUserHeaders(request);
+			regularizeDeviceDbs.setPublicIp(header.getPublicIp());
+			regularizeDeviceDbs.setBrowser(header.getBrowser());
 			log.info("request passed to the save regularizeDeviceDbs api"+regularizeDeviceDbs);
 			GenricResponse response = null;
 			try {
@@ -944,7 +945,7 @@ public ModelAndView  endUserdeviceInformationView(@RequestParam(name="lang",requ
 }		
 @PostMapping("viewDeviceInformation")
 public ModelAndView viewDeviceInformation(@RequestParam(name="viewbyImei",required = true) String imei,@RequestParam(name="viewbytxnId",required = true) String viewbytxnId,
-		@RequestParam(name="lang",required = false) String lang) {
+		@RequestParam(name="lang",required = false) String lang,HttpServletRequest requestHeader) {
 	log.info(" imei in end user  =="+imei+"==lang=="+lang);
 	ModelAndView modelAndView = new ModelAndView("viewAdddeviceInformation");
 	
@@ -955,6 +956,9 @@ public ModelAndView viewDeviceInformation(@RequestParam(name="viewbyImei",requir
 	  request.setTxnId(viewbytxnId);
       request.setUserTypeId(17);
 	  request.setUserType("End User");
+		UserHeader header=registerService.getUserHeaders(requestHeader);
+		request.setPublicIp(header.getPublicIp());
+		request.setBrowser(header.getBrowser());
 	  log.info(" request=="+request);
 	UserPaidStatusContent content= uploadPaidStatusFeignClient.viewByImei(request);
 	log.info(" response =="+content);
