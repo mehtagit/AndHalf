@@ -30,7 +30,7 @@ public class MySQLConnection {
                logger.info("Connnection created successfully " + conn + " .. " + java.time.LocalDateTime.now());
                return conn;
           } catch (Exception e) {
-               logger.error(" Error : : " + e + " :  " + java.time.LocalDateTime.now());
+               logger.error(" Error : : " + e + " :  " + java.time.LocalDateTime.now() );
                try {
                     conn.close();
                } catch (SQLException ex) {

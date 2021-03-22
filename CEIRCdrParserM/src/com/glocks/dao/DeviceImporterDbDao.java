@@ -38,7 +38,7 @@ public class DeviceImporterDbDao {
 			rs = stmt.executeQuery(query);
 
 			while(rs.next()){
-				deviceImporterDbs.add(new DeviceImporterDb(rs.getLong("id"), 0, rs.getString("created_on"),
+				deviceImporterDbs.add  (new DeviceImporterDb (rs.getLong("id"), 0, rs.getString("created_on"),
 						rs.getString("modified_on"), rs.getString("device_type"),  rs.getString("device_id_type"),
 						rs.getString("multiple_sim_status"),  rs.getString("sn_of_device"),
 						rs.getString("imei_esn_meid"),  rs.getString("launch_date"),

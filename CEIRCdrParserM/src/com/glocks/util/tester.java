@@ -12,7 +12,7 @@ import org.apache.commons.lang.StringUtils;
 
 class tester {
 
-     public static void main(String[] args) {
+    public static void main(String[] args) {
 
 //        String basePath = "/home/user/Music/testDataFiles/aa";
 //
@@ -34,7 +34,7 @@ class tester {
 //
 //      String str1  =  str.substring(0, str.length() - 10)   ;
 //      String str2  =  str1.substring(str1.length() -14, str1.length() );
-          // System.out.println("" + str2);
+        // System.out.println("" + str2);
 //        Date date = new Date();
 //        SimpleDateFormat DateFor = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        String stringDate = DateFor.format(date);
@@ -202,35 +202,32 @@ class tester {
 //           SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //  Date date = new Date();  
 //    System.out.println(sdf.format(date));  
-          Date date = new Date();
-          LocalDate currentDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
-          int day = currentDate.getDayOfMonth();
-          Month month = currentDate.getMonth();
-          int year = currentDate.getYear();
-          System.out.println("Day: " + day);
-          System.out.println("Month: " + month);
-          System.out.println("Year: " + year);
-
-          SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yy");
-//    Date date = new Date();  
-          System.out.println(formatter.format(date).toUpperCase());
-
+//          Date date = new Date();
+//          LocalDate currentDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+//          int day = currentDate.getDayOfMonth();
+//          Month month = currentDate.getMonth();
+//          int year = currentDate.getYear();
+//          System.out.println("Day: " + day);
+//          System.out.println("Month: " + month);
+//          System.out.println("Year: " + year);
+//          SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yy");
+////    Date date = new Date();  
+//          System.out.println(formatter.format(date).toUpperCase());
 //          String fromDate = DateUtil.nextDate(-5, "yyyy-MM-dd");
-          String testdate = "5";
+//          String testdate = "5";
 //          String fromDate = DateUtil.nextDate(Integer.parseInt(testdate.ge) * -1);
 //
 //          System.out.println(" fromDate  " + fromDate);
+//         LocalDateTime myObj = LocalDateTime.now();
+//           System.out.println("   ...   " + myObj);
+//            String timeSec = myObj.toString().substring ((myObj.toString().length()-3)   ,  (myObj.toString().length())  );
+//            System.out.println(";;;;;;;;;;;;;;; " + timeSec);
+        String a = "49328483d5";
+        if (a.matches("^[0-9]+$")) {
+            System.out.println("true ");
+        }else{
+            System.out.println("fasle");}
 
-
-
-         LocalDateTime myObj = LocalDateTime.now();
-           System.out.println("   ...   " + myObj);
-            String timeSec = myObj.toString().substring ((myObj.toString().length()-3)   ,  (myObj.toString().length())  );
-            System.out.println(";;;;;;;;;;;;;;; " + timeSec);
-
-
-
-     }
+    }
 
 }

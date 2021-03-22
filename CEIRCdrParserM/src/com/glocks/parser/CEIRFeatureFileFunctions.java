@@ -18,7 +18,6 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
-
 import org.apache.log4j.Logger;
 
 public class CEIRFeatureFileFunctions {
@@ -42,12 +41,12 @@ public class CEIRFeatureFileFunctions {
           }
           String stater = "";
           if (state == 0) {
-               stater = "  state  = 0  or  state  = 1    ";
+               stater = " ( state  = 0  or  state  = 1  )  ";
           } else {
-               stater = "  state  = 2   or  state  = 3  ";
+               stater = "  ( state  = 2   or  state  = 3 ) ";
           }
           try {                               //where state =  " + state + " 
-               query = "select * from web_action_db where " + stater + featureStmt + "   order by state desc , id asc " + limiter + "  ";
+               query = "select * from web_action_db where " + stater + featureStmt + " and retry_count < 20  order by state desc , id asc " + limiter + "  ";
                logger.info("Query to get File Details [" + query + "]");
                stmt = conn.createStatement();
                return rs = stmt.executeQuery(query);
@@ -136,20 +135,9 @@ public class CEIRFeatureFileFunctions {
      }
 
      public void updateFeatureFileStatus(Connection conn, String txn_id, int status, String feature, String subfeature) {
-          String query = "";
           Statement stmt = null;
-          int earlierState = 0;
-          if (status == 1) {
-               earlierState = 0;
-          } else {
-               earlierState = 1;
-          }
-          query = "update web_action_db set state=" + status + " where txn_id='" + txn_id + "' and feature='" + feature
-                  + "' and sub_feature='" + subfeature + "' "
-                  //						+ "  and  state = " + earlierState + " "
-                  + "";
-          logger.info("update web action db...[" + query + "]");
-          try {
+                try { String   query = "update web_action_db set state=" + status + "  where    txn_id='" + txn_id + "' and feature='" + feature
+                  + "' and sub_feature='" + subfeature + "' " ;
                stmt = conn.createStatement();
                stmt.executeUpdate(query);
           } catch (Exception e) {
