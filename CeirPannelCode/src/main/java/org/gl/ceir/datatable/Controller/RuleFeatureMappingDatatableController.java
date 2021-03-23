@@ -78,6 +78,8 @@ public class RuleFeatureMappingDatatableController {
 		filterRequest.setSearchString(request.getParameter("search[value]"));
 		log.info("pageSize" + pageSize + "-----------pageNo---" + pageNo);
 		try {
+			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+			filterRequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the filter api =" + filterRequest);
 			Object response = feignCleintImplementation.ruleFeatureMappingListFeign(filterRequest, pageNo, pageSize,
 					file);
@@ -199,7 +201,9 @@ public class RuleFeatureMappingDatatableController {
 
 	@RequestMapping(value = { "/save" }, method = { org.springframework.web.bind.annotation.RequestMethod.GET,
 			org.springframework.web.bind.annotation.RequestMethod.POST })
-	public GenricResponse saveRecord(@RequestBody NewRule newRule) {
+	public GenricResponse saveRecord(@RequestBody NewRule newRule,HttpSession session) {
+		newRule.setPublicIP(session.getAttribute("publicIP").toString());
+		newRule.setBrowser(session.getAttribute("browser").toString());
 		log.info("request::::::" + newRule);
 		// RuleListContent ruleList = new RuleListContent();
 		GenricResponse response =feignCleintImplementation.save(newRule);
@@ -214,7 +218,9 @@ public class RuleFeatureMappingDatatableController {
 	// page********************************************************************************/
 
 	@PostMapping("/updateRuleMapping")
-	public @ResponseBody GenricResponse updateRecord(@RequestBody NewRule newRule) {
+	public @ResponseBody GenricResponse updateRecord(@RequestBody NewRule newRule,HttpSession session) {
+		newRule.setPublicIP(session.getAttribute("publicIP").toString());
+		newRule.setBrowser(session.getAttribute("browser").toString());
 		log.info("request::::::" + newRule);
 		GenricResponse response = feignCleintImplementation.updateRuleFeatureMapping(newRule);
 		log.info(" response from update Consignment api=" + response);
@@ -235,7 +241,9 @@ public class RuleFeatureMappingDatatableController {
 	}
 
 	@PostMapping("deleteRuleMapping")
-	public @ResponseBody GenricResponse delete(@RequestBody NewRule newRule) {
+	public @ResponseBody GenricResponse delete(@RequestBody NewRule newRule,HttpSession session) {
+		newRule.setPublicIP(session.getAttribute("publicIP").toString());
+		newRule.setBrowser(session.getAttribute("browser").toString());
 		GenricResponse response = feignCleintImplementation.delete(newRule);
 		return response;
 

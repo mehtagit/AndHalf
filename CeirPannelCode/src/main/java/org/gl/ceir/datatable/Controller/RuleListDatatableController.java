@@ -102,6 +102,8 @@ public class RuleListDatatableController {
 		
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 		try {
+			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+			filterRequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the filter api ="+filterRequest);
 			Object response = feignCleintImplementation.ruleListFeign(filterRequest, pageNo, pageSize, file);
 			log.info("response in datatable"+response);
