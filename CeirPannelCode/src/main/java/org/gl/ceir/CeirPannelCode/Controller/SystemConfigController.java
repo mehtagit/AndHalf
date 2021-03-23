@@ -44,7 +44,9 @@ public class SystemConfigController {
 	
 	
 	@PostMapping("/system/viewTag") 
-	public @ResponseBody ConfigContentModel SystemConfigViewTag (@RequestBody FilterRequest filterRequest)  {
+	public @ResponseBody ConfigContentModel SystemConfigViewTag (@RequestBody FilterRequest filterRequest,HttpSession session)  {
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequest.setBrowser(session.getAttribute("browser").toString());
 		log.info("request send to the SystemConfigViewTag api="+filterRequest);
 		ConfigContentModel response= feignCleintImplementation.viewAdminFeign(filterRequest);
 		log.info("response from currency api "+response);
@@ -53,7 +55,9 @@ public class SystemConfigController {
 	
 	
 	@PutMapping("/system/update")
-	public @ResponseBody GenricResponse updateSystem (@RequestBody ConfigContentModel configContentModel) {
+	public @ResponseBody GenricResponse updateSystem (@RequestBody ConfigContentModel configContentModel,HttpSession session) {
+		configContentModel.setPublicIp(session.getAttribute("publicIP").toString());
+		configContentModel.setBrowser(session.getAttribute("browser").toString());
 		log.info("request send update Messsage api="+configContentModel);
 		GenricResponse Response = feignCleintImplementation.updateSystem(configContentModel);
 		log.info("response from update Message api "+Response);
@@ -71,6 +75,8 @@ public class SystemConfigController {
 		Gson gsonObject=new Gson();
 		Object response;
 		Integer file = 1;	
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequest.setBrowser(session.getAttribute("browser").toString());
 		log.info("filterRequest:::::::::"+filterRequest);
 		response= feignCleintImplementation.adminConfigFeign(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
 		FileExportResponse fileExportResponse;

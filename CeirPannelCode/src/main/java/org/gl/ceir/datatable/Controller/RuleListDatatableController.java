@@ -80,6 +80,26 @@ public class RuleListDatatableController {
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		filterRequest.setSearchString(request.getParameter("search[value]"));
+		
+		log.info("---->"+request.getParameter("order[0][column]")+"============>"+request.getParameter("order[0][dir]"));
+		String column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+			"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Modified On":
+				"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Name":
+					"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Description" :
+						"4".equalsIgnoreCase(request .getParameter("order[0][column]")) ? "Status"
+								:"Modified On";
+		String order;
+		if("Modified On".equalsIgnoreCase(column)) {
+			order="desc";
+		}
+		else {
+			order=request.getParameter("order[0][dir]");
+		}
+		filterRequest.setOrderColumnName(column);
+		filterRequest.setOrder(order);
+		
+		
+		
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 		try {
 			log.info("request send to the filter api ="+filterRequest);
@@ -104,7 +124,7 @@ public class RuleListDatatableController {
 				   String output=dataInsideList.getOutput();
 				   //log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
 				   String action=iconState.ruleListIcons(id,output);			   
-				   Object[] finalData={createdOn,modifiedOn,state,name,description,action}; 
+				   Object[] finalData={createdOn,modifiedOn,name,description,state,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
@@ -174,6 +194,20 @@ public class RuleListDatatableController {
 		  dropdownList.add(inputFields);
 		  } 
 		pageElement.setDropdownList(dropdownList);
+		
+		//input type date list		
+		String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text","Name", "filterRule", "","text","Description", "filterDescription", "" };
+		for(int i=0; i< dateParam.length; i++) {
+			dateRelatedFields= new InputFields();
+			dateRelatedFields.setType(dateParam[i]);
+			i++;
+			dateRelatedFields.setTitle(dateParam[i]);
+			i++;
+			dateRelatedFields.setId(dateParam[i]);
+			i++;
+			dateRelatedFields.setClassName(dateParam[i]);
+			inputTypeDateList.add(dateRelatedFields);
+		}
 		 
 		pageElement.setInputTypeDateList(inputTypeDateList);
 		pageElement.setUserStatus(userStatus);

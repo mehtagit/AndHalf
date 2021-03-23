@@ -26,6 +26,22 @@ public class AddressContentModel {
 	private String userType;
 	private String username;
 	private String modifiedBy;
+	private String publicIp;
+	private String browser;
+	
+	
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -197,6 +213,10 @@ public class AddressContentModel {
 		builder.append(username);
 		builder.append(", modifiedBy=");
 		builder.append(modifiedBy);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}

@@ -44,7 +44,9 @@ public class CurrencyController {
 	/*------------------------------------- Add Currency ------------------------------------------ */
 
 	    @PostMapping("add-currency") 
-	    public @ResponseBody GenricResponse AddCurrency (@RequestBody FilterRequest filterRequest)  {
+	    public @ResponseBody GenricResponse AddCurrency (@RequestBody FilterRequest filterRequest,HttpSession session)  {
+	       filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+	       filterRequest.setBrowser(session.getAttribute("browser").toString());
 		   log.info("request send to the add Currency api="+filterRequest);
 	 	   GenricResponse response= userProfileFeignImpl.AddCurrencyFeign(filterRequest);
 		   log.info("response from add Port api "+response);
@@ -55,7 +57,9 @@ public class CurrencyController {
 	//------------------------------------- view Currency ----------------------------------------							
 	
 		@PostMapping("currencyViewByID") 
-		public @ResponseBody GenricResponse viewCurrency (@RequestBody FilterRequest filterRequest )  {
+		public @ResponseBody GenricResponse viewCurrency (@RequestBody FilterRequest filterRequest,HttpSession session )  {
+			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		    filterRequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the View currency api="+filterRequest);
 			GenricResponse response= userProfileFeignImpl.viewCurrencyFeign(filterRequest);
 			log.info("response from Currency api "+response);
@@ -66,7 +70,9 @@ public class CurrencyController {
 	//------------------------------------- update Currency ----------------------------------------							
 		
 		@PostMapping("updateCurrency") 
-		public @ResponseBody GenricResponse updatePortAddress (@RequestBody FilterRequest filterRequest)  {
+		public @ResponseBody GenricResponse updatePortAddress (@RequestBody FilterRequest filterRequest,HttpSession session)  {
+			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		    filterRequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the Update Currency api="+filterRequest);
 			GenricResponse response= userProfileFeignImpl.updateCurrencyFeign(filterRequest);
 			log.info("response from update api "+response);
@@ -86,6 +92,8 @@ public class CurrencyController {
 			Integer usertypeId=(int) session.getAttribute("usertypeId");
 			filterRequest.setUserType(userType);
 			filterRequest.setUserTypeId(usertypeId);
+			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		    filterRequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("filterRequest:::::::::"+filterRequest);
 			response= userProfileFeignImpl.viewCurrencyRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
 			FileExportResponse fileExportResponse;

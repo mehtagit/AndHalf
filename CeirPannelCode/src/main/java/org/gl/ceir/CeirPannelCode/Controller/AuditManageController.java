@@ -51,7 +51,9 @@ public class AuditManageController {
 	
 	@ResponseBody
 	@GetMapping("/audit/view/{id}")
-	public AuditContentModel AuditManagementView(@PathVariable("id") Integer id) {
+	public AuditContentModel AuditManagementView(@PathVariable("id") Integer id, HttpSession session) {
+		String publicIP = session.getAttribute("publicIP").toString();
+		String browser = session.getAttribute("browser").toString();
 		AuditContentModel auditContentModel  = feignCleintImplementation.viewAuditManagementFeign(id);
 		log.info("AuditContentModel response::::::::"+auditContentModel);
 		return auditContentModel;

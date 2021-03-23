@@ -90,6 +90,8 @@ public class SytemUserDatatableController {
 		
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);		
 		try {
+			filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
+			filterrequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the filter api ="+filterrequest);
 			Object response = userProfileFeignImpl.viewSystemUserManagementRequest(filterrequest,pageNo,pageSize,file);
 			log.info("response in datatable"+response);

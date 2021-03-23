@@ -67,6 +67,8 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 			Integer usertypeId=(int) session.getAttribute("usertypeId");
 			filterRequest.setUserType(userType);
 			filterRequest.setUserTypeId(usertypeId);
+			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+			filterRequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("filterRequest:::::::::"+filterRequest);
 			response= userProfileFeignImpl.viewUserFeatureMappingRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
 			FileExportResponse fileExportResponse;
@@ -81,7 +83,9 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 		//------------------------------------- view userType ----------------------------------------							
 		
 		@PostMapping("userTypeFeatureViewByID") 
-		public @ResponseBody GenricResponse viewUserPeriod (@RequestBody FilterRequest filterRequest )  {
+		public @ResponseBody GenricResponse viewUserPeriod (@RequestBody FilterRequest filterRequest,HttpSession session )  {
+			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+			filterRequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the View UserPeriod api="+filterRequest);
 			GenricResponse response= userProfileFeignImpl.viewUserTypeFeatureFeign(filterRequest);
 			log.info("response from UserPeriod api "+response);

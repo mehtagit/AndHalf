@@ -14,6 +14,21 @@ public class NewSystemUser {
 	private Integer userTypeId,usertypeId;
 	private String username;
 	private String userName;
+	private String publicIp,browser;
+	
+	
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -161,6 +176,10 @@ public class NewSystemUser {
 		builder.append(username);
 		builder.append(", userName=");
 		builder.append(userName);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}

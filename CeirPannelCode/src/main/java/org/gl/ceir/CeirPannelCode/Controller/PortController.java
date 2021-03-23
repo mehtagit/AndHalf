@@ -45,7 +45,9 @@ public class PortController {
 	/*------------------------------------- Add Port ------------------------------------------ */
 
 	    @PostMapping("add-Port") 
-	    public @ResponseBody GenricResponse AddPortAddress (@RequestBody FilterRequest filterRequest)  {
+	    public @ResponseBody GenricResponse AddPortAddress (@RequestBody FilterRequest filterRequest,HttpSession session)  {
+	       filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+	       filterRequest.setBrowser(session.getAttribute("browser").toString());
 		   log.info("request send to the add Port api="+filterRequest);
 	 	   GenricResponse response= userProfileFeignImpl.AddPortAddressFeign(filterRequest);
 		   log.info("response from add Port api "+response);
@@ -56,7 +58,9 @@ public class PortController {
 	//------------------------------------- view Port Address ----------------------------------------							
 	
 		@PostMapping("portViewByID") 
-		public @ResponseBody GenricResponse viewPortAddress (@RequestBody FilterRequest filterRequest)  {
+		public @ResponseBody GenricResponse viewPortAddress (@RequestBody FilterRequest filterRequest,HttpSession session)  {
+			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		    filterRequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the View Port api="+filterRequest);
 			GenricResponse response= userProfileFeignImpl.viewPortFeign(filterRequest);
 			log.info("response from add View api "+response);
@@ -67,7 +71,9 @@ public class PortController {
 	//------------------------------------- update Port Address ----------------------------------------							
 		
 		@PostMapping("updatePortAddress") 
-		public @ResponseBody GenricResponse updatePortAddress (@RequestBody FilterRequest filterRequest)  {
+		public @ResponseBody GenricResponse updatePortAddress (@RequestBody FilterRequest filterRequest,HttpSession session)  {
+			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		    filterRequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the Update Port api="+filterRequest);
 			GenricResponse response= userProfileFeignImpl.updatePortAddressFeign(filterRequest);
 			log.info("response from update api "+response);
@@ -78,7 +84,9 @@ public class PortController {
 	//------------------------------------- delete Port Address ----------------------------------------	
 	
 		@PostMapping ("deletePort")
-		public @ResponseBody GenricResponse deletePortAddress(@RequestBody FilterRequest filterRequest) {
+		public @ResponseBody GenricResponse deletePortAddress(@RequestBody FilterRequest filterRequest,HttpSession session) {
+			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		    filterRequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the Delete PORT api="+filterRequest);
 			GenricResponse response= userProfileFeignImpl.deletePortFeign(filterRequest);
 			log.info("response after delete PORT."+response);
@@ -98,6 +106,8 @@ public class PortController {
 			Integer usertypeId=(int) session.getAttribute("usertypeId");
 			filterRequest.setUserType(userType);
 			filterRequest.setUserTypeId(usertypeId);
+			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		    filterRequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("filterRequest:::::::::"+filterRequest);
 			response= userProfileFeignImpl.viewPortRequest(filterRequest,filterRequest.getPageNo(), filterRequest.getPageSize(), file);
 			FileExportResponse fileExportResponse;

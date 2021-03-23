@@ -130,6 +130,8 @@ public class ProfileService {
 		//log.info("userid from session:  "+userid);
 		//userManagementContent.setId(id);
 		//log.info("userStatus data is :  "+userManagementContent);
+		userManagementContent.setPublicIp(session.getAttribute("publicIP").toString());
+		userManagementContent.setBrowser(session.getAttribute("browser").toString());
 		HttpResponse response=new HttpResponse();             
 		response=userProfileFeignImpl.changeSystemUserStatusFeign(userManagementContent);
 		return response;  
@@ -141,6 +143,8 @@ public class ProfileService {
 		//log.info("userid from session:  "+userid);
 		//userManagementContent.setId(id);
 		//log.info("userStatus data is :  "+userManagementContent);
+		userManagementContent.setPublicIp(session.getAttribute("publicIP").toString());
+		userManagementContent.setBrowser(session.getAttribute("browser").toString());
 		HttpResponse response=new HttpResponse();             
 		response=userProfileFeignImpl.changeSystemUserPeriodFeign(userManagementContent);
 		return response;  

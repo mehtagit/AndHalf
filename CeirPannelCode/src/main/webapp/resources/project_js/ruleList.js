@@ -33,7 +33,9 @@
 						"featureId":parseInt(featureId),
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
 						"userName":$("body").attr("data-selected-username"),
-						"roleType":$("body").attr("data-roleType")
+						"roleType":$("body").attr("data-roleType"),
+						"name" :  $("#filterRule").val(),
+						"description" : $("#filterDescription").val(),
 					
 			}
 			if(lang=='km'){
@@ -55,14 +57,15 @@
 						destroy:true,
 						"serverSide": true,
 						orderCellsTop : true,
-						"ordering" : false,
+						"ordering" : true,
 						"bPaginate" : true,
-						"bFilter" : true,
+						"bFilter" : false,
 						"bInfo" : true,
 						"bSearchable" : true,
 						"oLanguage": {
 							"sEmptyTable": "No records found in the system"
 					    },
+					    "aaSorting": [],
 						initComplete: function() {
 					 		$('.dataTables_filter input')
 	       .off().on('keyup', function(event) {
@@ -90,7 +93,10 @@
 								
 							}
 						},
-						"columns": result
+						"columns": result,
+						columnDefs : [
+							{ orderable: false, targets: -1 }
+							]
 					});
 
 
@@ -128,8 +134,8 @@
 					var elem='<p class="PageHeading">'+data.pageTitle+'</p>';		
 					$("#pageHeader").append(elem);
 					var button=data.buttonList;
-					/*				var date=data.inputTypeDateList;
-			for(i=0; i<date.length; i++){
+					var date=data.inputTypeDateList;
+					for(i=0; i<date.length; i++){
 						if(date[i].type === "date"){
 							$("#FieldTableDiv").append("<div class='input-field col s6 m2'>"+
 									"<div id='enddatepicker' class='input-group'>"+
@@ -143,10 +149,10 @@
 								 maxDate: new Date()
 					        });
 						}else if(date[i].type === "text"){
-							$("#FieldTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+							$("#FieldTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='50' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 						}
 						 
-					} */
+					} 
 				
 				// dynamic dropdown portion
 					var dropdown=data.dropdownList;
@@ -165,9 +171,11 @@
 									"</div>"+
 							"</div>");
 					}
-
+						var viewFilter="viewFilter";
 						$("#FieldTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+						$("#FieldTableDiv").append("<div class=' col s3 m2 l2'><button type='button' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
 						$("#FieldTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportRuleListData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$('#clearFilter').attr("onclick", "Resetfilter('viewFilter')");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -366,4 +374,8 @@
 				$("#viewState").val(result.state);
 				result.modifiedBy =="" || result.modifiedBy==null ?  $("#viewModifiedBy").val('NA'): $("#viewModifiedBy").val(result.modifiedBy);
 			}
-		
+			 function Resetfilter(formID){
+					$('#'+formID).trigger('reset');
+					$("label").removeClass('active');
+					filter(lang,null);
+			 }

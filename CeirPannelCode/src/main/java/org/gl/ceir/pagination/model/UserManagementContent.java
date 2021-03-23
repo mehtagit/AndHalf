@@ -13,6 +13,21 @@ public class UserManagementContent {
 	private Integer status;
 	private String statusInterp,userType,username;
 	private Integer period,featureId,userId,userTypeId;
+	private String publicIp;
+	private String browser;
+	
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -128,6 +143,10 @@ public class UserManagementContent {
 		builder.append(userId);
 		builder.append(", userTypeId=");
 		builder.append(userTypeId);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}

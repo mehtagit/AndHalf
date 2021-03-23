@@ -16,8 +16,24 @@ public class MessageContentModel {
 	private Integer channel;
 	private String channelInterp;
 	private String subject,featureName;
+	private String publicIp;
+	private String browser;
 	private String featureId,userTypeId,userType,userName,username,roleType,modifiedBy;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	
+	
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -90,48 +106,6 @@ public class MessageContentModel {
 	public void setAdditionalProperties(Map<String, Object> additionalProperties) {
 		this.additionalProperties = additionalProperties;
 	}
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("MessageContentModel [id=");
-		builder.append(id);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", tag=");
-		builder.append(tag);
-		builder.append(", value=");
-		builder.append(value);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", channel=");
-		builder.append(channel);
-		builder.append(", channelInterp=");
-		builder.append(channelInterp);
-		builder.append(", subject=");
-		builder.append(subject);
-		builder.append(", featureName=");
-		builder.append(featureName);
-		builder.append(", featureId=");
-		builder.append(featureId);
-		builder.append(", userTypeId=");
-		builder.append(userTypeId);
-		builder.append(", userType=");
-		builder.append(userType);
-		builder.append(", userName=");
-		builder.append(userName);
-		builder.append(", username=");
-		builder.append(username);
-		builder.append(", roleType=");
-		builder.append(roleType);
-		builder.append(", modifiedBy=");
-		builder.append(modifiedBy);
-		builder.append(", additionalProperties=");
-		builder.append(additionalProperties);
-		builder.append("]");
-		return builder.toString();
-	}
 	public String getFeatureId() {
 		return featureId;
 	}
@@ -168,6 +142,54 @@ public class MessageContentModel {
 	public void setRoleType(String roleType) {
 		this.roleType = roleType;
 	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("MessageContentModel [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", tag=");
+		builder.append(tag);
+		builder.append(", value=");
+		builder.append(value);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", channel=");
+		builder.append(channel);
+		builder.append(", channelInterp=");
+		builder.append(channelInterp);
+		builder.append(", subject=");
+		builder.append(subject);
+		builder.append(", featureName=");
+		builder.append(featureName);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", username=");
+		builder.append(username);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
+		builder.append(", additionalProperties=");
+		builder.append(additionalProperties);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
 	
 	
 

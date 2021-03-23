@@ -66,6 +66,8 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 				log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 				filterrequest.setSearchString(request.getParameter("search[value]"));
 		try {
+			filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
+			filterrequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the filter api ="+filterrequest);
 			Object response = feignCleintImplementation.adminConfigFeign(filterrequest, pageNo, pageSize, file);
 			log.info("response in datatable"+response);

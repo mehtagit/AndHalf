@@ -68,6 +68,8 @@ public class SystemUserManagement {
 			Integer usertypeId=(int) session.getAttribute("usertypeId");
 			filterRequest.setUserType(userType);
 			filterRequest.setUserTypeId(usertypeId);
+			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+			filterRequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("filterRequest:::::::::"+filterRequest);
 			response= userProfileFeignImpl.viewUserTypeRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
 			FileExportResponse fileExportResponse;
@@ -82,7 +84,9 @@ public class SystemUserManagement {
 		//------------------------------------- view userType ----------------------------------------							
 		
 			@PostMapping("userTypeViewByID") 
-			public @ResponseBody GenricResponse viewCurrency (@RequestBody FilterRequest filterRequest )  {
+			public @ResponseBody GenricResponse viewCurrency (@RequestBody FilterRequest filterRequest,HttpSession session )  {
+				filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+				filterRequest.setBrowser(session.getAttribute("browser").toString());
 				log.info("request send to the View userType api="+filterRequest);
 				GenricResponse response= userProfileFeignImpl.viewUserTypeFeign(filterRequest);
 				log.info("response from userType api "+response);

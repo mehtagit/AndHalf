@@ -68,6 +68,8 @@ public class AddressDatatableController {
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 		try {
+			filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
+			filterrequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the filter api ="+filterrequest);
 			Object response = userLoginFeignImpl.viewAllLocality(filterrequest,pageNo,pageSize,file);
 			log.info("response in datatable"+response);

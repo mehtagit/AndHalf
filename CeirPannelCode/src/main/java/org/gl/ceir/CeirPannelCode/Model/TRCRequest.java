@@ -15,7 +15,21 @@ public class TRCRequest {
 	public String order,orderColumnName;
 	public Integer pageNo;
 	public Integer pageSize;
+	private String publicIp;
+	private String browser;
 	
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	public String getEndDate() {
 		return endDate;
 	}
@@ -235,6 +249,10 @@ public class TRCRequest {
 		builder.append(pageNo);
 		builder.append(", pageSize=");
 		builder.append(pageSize);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}
