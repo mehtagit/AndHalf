@@ -12,7 +12,20 @@ public class NewRule {
 	private Integer ruleOrder;
 	private String userType;
 	private String output,modifiedBy;
-
+	private String publicIP,browser;
+	
+	public String getPublicIP() {
+		return publicIP;
+	}
+	public void setPublicIP(String publicIP) {
+		this.publicIP = publicIP;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	public String userName;
 
 	public String getUserName() {
@@ -98,6 +111,10 @@ public class NewRule {
 		builder.append(output);
 		builder.append(", modifiedBy=");
 		builder.append(modifiedBy);
+		builder.append(", publicIP=");
+		builder.append(publicIP);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append(", userName=");
 		builder.append(userName);
 		builder.append(", userId=");

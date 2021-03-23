@@ -230,7 +230,7 @@ var featureId = 6;
 						var date=data.inputTypeDateList;
 						for(i=0; i<date.length; i++){
 							if(date[i].type === "date"){
-								$("#greivanceTableDiv").append("<div class='input-field col s6 m2'>"+
+								$("#greivanceTableDiv").append("<div class='input-field'>"+
 										"<div id='enddatepicker' class='input-group date'>"+
 										"<input class='form-control datepicker' type='text' onchange='checkDate(startDate,endDate)' id="+date[i].id+" autocomplete='off'>"+
 										"<label for="+date[i].id+">"+date[i].title
@@ -243,7 +243,7 @@ var featureId = 6;
 						        });
 								}
 							else if(date[i].type === "text"){
-								$("#greivanceTableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+								$("#greivanceTableDiv").append("<div class='input-field'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 
 							}
 						} 
@@ -252,7 +252,7 @@ var featureId = 6;
 						var dropdown=data.dropdownList;
 						for(i=0; i<dropdown.length; i++){
 							var dropdownDiv=
-								$("#greivanceTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
+								$("#greivanceTableDiv").append("<div class='selectDropdwn'>"+
 										
 										"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
 										"<span class='caret'>"+"</span>"+
@@ -266,9 +266,9 @@ var featureId = 6;
 								"</div>");
 						}
 						var viewFilter="viewFilter";
-						$("#greivanceTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'></div>");
-						$("#greivanceTableDiv").append("<div class=' col s3 m2 l2'><button type='button' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
-						$("#greivanceTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#greivanceTableDiv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='submitFilter'></div>");
+						$("#greivanceTableDiv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
+						$("#greivanceTableDiv").append("<div class='filter_btn'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						$('#clearFilter').attr("onclick", "Resetfilter('viewFilter')");
 
 						for(i=0; i<button.length; i++){

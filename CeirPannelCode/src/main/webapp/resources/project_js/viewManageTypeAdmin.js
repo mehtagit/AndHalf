@@ -220,7 +220,7 @@ function pageRendering() {
 						if (date[i].type === "date") {
 							$("#typeAprroveTableDiv")
 									.append(
-											"<div class='input-field col s6 m2'>"
+											"<div class='input-field'>"
 													+ "<div id='enddatepicker' class='input-group'>"
 													+ "<input class='form-control datepicker' type='text'  id="
 													+ date[i].id
@@ -239,7 +239,7 @@ function pageRendering() {
 							});
 						} else if (date[i].type === "text") {
 							$("#typeAprroveTableDiv").append(
-									"<div class='input-field col s6 m2' ><input type="
+									"<div class='input-field' ><input type="
 											+ date[i].type + " id="
 											+ date[i].id
 											+ " maxlength='18' /><label for="
@@ -257,7 +257,7 @@ function pageRendering() {
 						
 							var dropdownDiv = $("#typeAprroveTableDiv")
 							.append(
-									"<div class='col s6 m2 selectDropdwn'>"
+									"<div class='selectDropdwn'>"
 											+
 
 											"<div class='select-wrapper select2  initialized'>"
@@ -277,11 +277,11 @@ function pageRendering() {
 					
 					var viewFilter="viewFilter";
 					$("#typeAprroveTableDiv").append(
-									"<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-					$("#typeAprroveTableDiv").append("<div class=' col s3 m2 l2'><button type='button' style='margin-left: 18px;' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
+									"<div class='filter_btn'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+					$("#typeAprroveTableDiv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
 					$("#typeAprroveTableDiv")
 							.append(
-									"<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportTacData()' type='button' class='export-to-excel right'>"
+									"<div class='filter_btn'><a href='JavaScript:void(0)' onclick='exportTacData()' type='button' class='export-to-excel right'>"
 											+ $.i18n('Export')
 											+ " <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 					$('#clearFilter').attr("onclick", "Resetfilter('viewFilter')");

@@ -209,6 +209,9 @@ public class BlockUnblock {
 		singleImeiDetailsModel.setUserType(roletype);
 		singleImeiDetailsModel.setRoleType(roletype);
 		singleImeiDetailsModel.setOperatorTypeId(operatorTypeId);
+		
+		singleImeiDetailsModel.setPublicIp(session.getAttribute("publicIP").toString());
+		singleImeiDetailsModel.setBrowser(session.getAttribute("browser").toString());
 		log.info("request send to the upate signle Imei block devices="+singleImeiDetailsModel);
 		response= grievanceFeignClient.updateSingleImeiBlockDevices(singleImeiDetailsModel);
 		log.info("response from update signle Imei block devices="+response);

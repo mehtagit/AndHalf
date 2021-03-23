@@ -49,6 +49,8 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 			Integer usertypeId=(int) session.getAttribute("usertypeId");
 			//filterRequest.setUserType(userType);
 			filterRequest.setUserTypeId(usertypeId);
+			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+			filterRequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("filterRequest:::::::::"+filterRequest);
 			response= feignCleintImplementation.ruleFeatureMappingListFeign(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
 			FileExportResponse fileExportResponse;

@@ -139,7 +139,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right
 							</div>
 							<form action="${context}/Grievance/grievanceManagement" id="viewFilter"
 								method="post">
-								<div class="col s12 m12 l12" id="greivanceTableDiv"
+								<div class="registrationTableDiv_box" id="greivanceTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv"></div>
 								</div>
