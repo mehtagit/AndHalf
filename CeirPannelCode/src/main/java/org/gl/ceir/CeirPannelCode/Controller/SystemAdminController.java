@@ -42,7 +42,9 @@ public class SystemAdminController {
 	
 	
 	@PostMapping("/message/viewTag") 
-	public @ResponseBody MessageContentModel policyViewTag (@RequestBody FilterRequest filterRequest)  {
+	public @ResponseBody MessageContentModel policyViewTag (@RequestBody FilterRequest filterRequest, HttpSession session)  {
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequest.setBrowser(session.getAttribute("browser").toString());
 		log.info("request send to the policyViewTag api="+filterRequest);
 		MessageContentModel response= feignCleintImplementation.viewMessageFeign(filterRequest);
 
@@ -54,7 +56,9 @@ public class SystemAdminController {
 	
 	
 	@PutMapping("/message/update")
-	public @ResponseBody MessageContentModel updateMessage (@RequestBody MessageContentModel messageContentModel) {
+	public @ResponseBody MessageContentModel updateMessage (@RequestBody MessageContentModel messageContentModel,HttpSession session) {
+		messageContentModel.setPublicIp(session.getAttribute("publicIP").toString());
+		messageContentModel.setBrowser(session.getAttribute("browser").toString());
 		log.info("request send update Messsage api="+messageContentModel);
 		messageContentModel = feignCleintImplementation.updateMessages(messageContentModel);
 		log.info("response from update Message api "+messageContentModel);
@@ -69,6 +73,8 @@ public class SystemAdminController {
 		Gson gsonObject=new Gson();
 		Object response;
 		Integer file = 1;	
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequest.setBrowser(session.getAttribute("browser").toString());
 		log.info("filterRequest:::::::::"+filterRequest);
 		response= feignCleintImplementation.adminMessageFeign(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
 		FileExportResponse fileExportResponse;

@@ -60,13 +60,15 @@ public class UserManagementController {
 	@RequestMapping(value = { "/saveNewSystemUser" }, method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET,
 			org.springframework.web.bind.annotation.RequestMethod.POST })
-	public @ResponseBody GenricResponse saveRecord(@RequestBody NewSystemUser newSystemUser) {
+	public @ResponseBody GenricResponse saveRecord(@RequestBody NewSystemUser newSystemUser,HttpSession session) {
 
 		if (newSystemUser.getRePassword().equals(newSystemUser.getPassword())) {
 			log.info("if password and confirm password match");
 			String username = randomDigits.getAlphaNumericString(4) + randomDigits.getNumericString(4)
 					+ randomDigits.getAlphaNumericString(1);
 			newSystemUser.setUserName(username);
+			newSystemUser.setPublicIp(session.getAttribute("publicIP").toString());
+			newSystemUser.setBrowser(session.getAttribute("browser").toString());
 			log.info("request::::::" + newSystemUser);
 			GenricResponse response = userProfileFeignImpl.saveSystemUser(newSystemUser);
 			log.info("response::::::" + response);
@@ -85,7 +87,9 @@ public class UserManagementController {
 	// ----------------------------------------
 
 	@PostMapping("viewUser")
-	public @ResponseBody GenricResponse viewUser(@RequestBody NewSystemUser newSystemUser) {
+	public @ResponseBody GenricResponse viewUser(@RequestBody NewSystemUser newSystemUser,HttpSession session) {
+		newSystemUser.setPublicIp(session.getAttribute("publicIP").toString());
+		newSystemUser.setBrowser(session.getAttribute("browser").toString());
 		log.info("request send to the viewUser api=" + newSystemUser);
 		GenricResponse response = userProfileFeignImpl.viewUserFeign(newSystemUser);
 		log.info("response from viewUser api " + response);
@@ -96,7 +100,9 @@ public class UserManagementController {
 	// ----------------------------------------
 
 	@PostMapping("updateUser")
-	public @ResponseBody GenricResponse updateUserDetail(@RequestBody NewSystemUser newSystemUser) {
+	public @ResponseBody GenricResponse updateUserDetail(@RequestBody NewSystemUser newSystemUser,HttpSession session) {
+		newSystemUser.setPublicIp(session.getAttribute("publicIP").toString());
+		newSystemUser.setBrowser(session.getAttribute("browser").toString());
 		log.info("request send to the Update user api=" + newSystemUser);
 		GenricResponse response = userProfileFeignImpl.updateUserFeign(newSystemUser);
 		log.info("response from update api " + response);
@@ -107,7 +113,9 @@ public class UserManagementController {
 	// ----------------------------------------
 
 	@PostMapping("deleteSystemUserType")
-	public @ResponseBody GenricResponse delete(@RequestBody NewSystemUser newSystemUser) {
+	public @ResponseBody GenricResponse delete(@RequestBody NewSystemUser newSystemUser,HttpSession session) {
+		newSystemUser.setPublicIp(session.getAttribute("publicIP").toString());
+		newSystemUser.setBrowser(session.getAttribute("browser").toString());
 		GenricResponse response = userProfileFeignImpl.deleteUserFeign(newSystemUser);
 		return response;
 
@@ -126,6 +134,8 @@ public class UserManagementController {
 		Integer usertypeId = (int) session.getAttribute("usertypeId");
 		filterRequest.setUserType(userType);
 		filterRequest.setUserTypeId(usertypeId);
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequest.setBrowser(session.getAttribute("browser").toString());
 		log.info("filterRequest:::::::::" + filterRequest);
 		response = userProfileFeignImpl.viewSystemUserManagementRequest(filterRequest, filterRequest.getPageNo(),
 				filterRequest.getPageSize(), file);

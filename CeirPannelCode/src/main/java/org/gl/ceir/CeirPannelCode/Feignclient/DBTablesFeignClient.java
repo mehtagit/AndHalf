@@ -24,7 +24,9 @@ public interface DBTablesFeignClient {
 	public DBTableModel getAlltables(@RequestParam(name="dbName") String dbName,
 			@RequestParam(name="featureId", required = false) Integer featureId,
 			@RequestParam(name="userId", required = false) Integer userId,
-			@RequestParam(name="userType", required = false) String userType);
+			@RequestParam(name="userType", required = false) String userType,
+			@RequestParam(name="publicIP", required = false) String publicIP, 
+			@RequestParam(name="browser", required = false) String browser);
 	
 	@RequestMapping(value= "/db/table/data/V2" , method=RequestMethod.POST) 
 	public Object historyConsignmentFeign(@RequestBody DBrowDataModel filterRequest);
@@ -34,7 +36,9 @@ public interface DBTablesFeignClient {
 	public List<ReportResponse> getAllReports(@RequestParam(name="reportCategory", required = false) Integer reportCategory,
 			@RequestParam(name="featureId", required = false) Integer featureId,
 			@RequestParam(name="userId", required = false) Integer userId,
-			@RequestParam(name="userType", required = false) String userType);
+			@RequestParam(name="userType", required = false) String userType,
+			@RequestParam(name="publicIP", required = false) String publicIP, 
+			@RequestParam(name="browser", required = false) String browser);
 	
 	//----------------------------Report TableData Feign------------------------------
 	

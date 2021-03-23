@@ -47,7 +47,9 @@ public class AddressManagementController {
 		/*------------------------------------- Add Province ------------------------------------------ */
 
 	    @PostMapping("addProvince") 
-	    public @ResponseBody GenricResponse saveProvince (@RequestBody FilterRequest filterRequest)  {
+	    public @ResponseBody GenricResponse saveProvince (@RequestBody FilterRequest filterRequest,HttpSession session)  {
+	       filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+	       filterRequest.setBrowser(session.getAttribute("browser").toString());
 		   log.info("request send to the add Province api="+filterRequest);
 	 	   GenricResponse response= userLoginFeignImpl.AddProvinceManagementFeign(filterRequest);
 		   log.info("response from add Province api "+response);
@@ -57,7 +59,9 @@ public class AddressManagementController {
 	    /*------------------------------------- Add District ------------------------------------------ */
 
 	    @PostMapping("addDistrict") 
-	    public @ResponseBody GenricResponse saveDistrict (@RequestBody FilterRequest filterRequest)  {
+	    public @ResponseBody GenricResponse saveDistrict (@RequestBody FilterRequest filterRequest,HttpSession session)  {
+	       filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		   filterRequest.setBrowser(session.getAttribute("browser").toString());
 		   log.info("request send to the add District api="+filterRequest);
 	 	   GenricResponse response= userLoginFeignImpl.AddDistrictManagementFeign(filterRequest);
 		   log.info("response from add District api "+response);
@@ -67,7 +71,9 @@ public class AddressManagementController {
 	    /*------------------------------------- Add commune ------------------------------------------ */
 
 	    @PostMapping("addCommune") 
-	    public @ResponseBody GenricResponse saveCommune (@RequestBody FilterRequest filterRequest)  {
+	    public @ResponseBody GenricResponse saveCommune (@RequestBody FilterRequest filterRequest,HttpSession session)  {
+	       filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		   filterRequest.setBrowser(session.getAttribute("browser").toString());
 		   log.info("request send to the add commune api="+filterRequest);
 	 	   GenricResponse response= userLoginFeignImpl.AddCommuneManagementFeign(filterRequest);
 		   log.info("response from add commune api "+response);
@@ -77,7 +83,9 @@ public class AddressManagementController {
 	    /*------------------------------------- Add village ------------------------------------------ */
 
 	    @PostMapping("addVillage") 
-	    public @ResponseBody GenricResponse saveVillage (@RequestBody FilterRequest filterRequest)  {
+	    public @ResponseBody GenricResponse saveVillage (@RequestBody FilterRequest filterRequest,HttpSession session)  {
+	       filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		   filterRequest.setBrowser(session.getAttribute("browser").toString());
 		   log.info("request send to the add village api="+filterRequest);
 	 	   GenricResponse response= userLoginFeignImpl.AddVillageManagementFeign(filterRequest);
 		   log.info("response from add village api "+response);
@@ -87,7 +95,9 @@ public class AddressManagementController {
 		//------------------------------------- View province --------------------------------------------							
 		
 		@PostMapping("viewAddress") 
-		public @ResponseBody AddressContentModel viewProvince (@RequestBody FilterRequest filterRequest)  {
+		public @ResponseBody AddressContentModel viewProvince (@RequestBody FilterRequest filterRequest,HttpSession session)  {
+			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+			filterRequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the View province api="+filterRequest);
 			AddressContentModel response= userLoginFeignImpl.viewProvinceFeign(filterRequest);
 			log.info("response from View province api "+response);
@@ -97,7 +107,9 @@ public class AddressManagementController {
 		//------------------------------------- update Province Address ----------------------------------------							
 		
 		@PutMapping("updateProvince") 
-		public @ResponseBody GenricResponse updateProvince (@RequestBody AddressContentModel addressContentModel)  {
+		public @ResponseBody GenricResponse updateProvince (@RequestBody AddressContentModel addressContentModel,HttpSession session)  {
+			addressContentModel.setPublicIp(session.getAttribute("publicIP").toString());
+			addressContentModel.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the Update Province api="+addressContentModel);
 			GenricResponse response= userLoginFeignImpl.updateprovinceFeign(addressContentModel);
 			log.info("response from update Province api "+response);
@@ -107,7 +119,9 @@ public class AddressManagementController {
 		//------------------------------------- update District Address ----------------------------------------							
 
 		@PutMapping("updateDistrict") 
-		public @ResponseBody GenricResponse updateDistrict (@RequestBody AddressContentModel addressContentModel)  {
+		public @ResponseBody GenricResponse updateDistrict (@RequestBody AddressContentModel addressContentModel,HttpSession session)  {
+			addressContentModel.setPublicIp(session.getAttribute("publicIP").toString());
+			addressContentModel.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the Update District api="+addressContentModel);
 			GenricResponse response= userLoginFeignImpl.updateDistrictFeign(addressContentModel);
 			log.info("response from update District "+response);
@@ -117,7 +131,9 @@ public class AddressManagementController {
 		//------------------------------------- update Commune Address ----------------------------------------							
 
 		@PutMapping("updateCommune") 
-		public @ResponseBody GenricResponse updateCommune (@RequestBody AddressContentModel addressContentModel)  {
+		public @ResponseBody GenricResponse updateCommune (@RequestBody AddressContentModel addressContentModel,HttpSession session)  {
+			addressContentModel.setPublicIp(session.getAttribute("publicIP").toString());
+			addressContentModel.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the Update Commune api="+addressContentModel);
 			GenricResponse response= userLoginFeignImpl.updateCommuneFeign(addressContentModel);
 			log.info("response from update Commune "+response);
@@ -127,7 +143,9 @@ public class AddressManagementController {
 		//------------------------------------- update Village Address ----------------------------------------							
 
 		@PutMapping ("/updateVillage")
-		public @ResponseBody GenricResponse updateVillage (@RequestBody AddressContentModel addressContentModel)  {
+		public @ResponseBody GenricResponse updateVillage (@RequestBody AddressContentModel addressContentModel,HttpSession session)  {
+			addressContentModel.setPublicIp(session.getAttribute("publicIP").toString());
+			addressContentModel.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the Update Village api="+addressContentModel);
 			GenricResponse response= userLoginFeignImpl.updateVillageFeign(addressContentModel);
 			log.info("response from update Village "+response);
@@ -137,7 +155,9 @@ public class AddressManagementController {
 		//------------------------------------- Delete Address ----------------------------------------	
 		
 		@DeleteMapping ("deleteAddress")
-		public @ResponseBody GenricResponse deleteAddressDetails(@RequestBody FilterRequest filterRequest) {
+		public @ResponseBody GenricResponse deleteAddressDetails(@RequestBody FilterRequest filterRequest,HttpSession session) {
+			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+			filterRequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the Delete Addresss api="+filterRequest);
 			GenricResponse response=userLoginFeignImpl.deleteAddressFeign(filterRequest);
 			log.info("response after Delete Addresss api."+response);
@@ -158,6 +178,8 @@ public class AddressManagementController {
 			Integer usertypeId=(int) session.getAttribute("usertypeId");
 			filterRequest.setUserType(userType);
 			filterRequest.setUserTypeId(usertypeId);
+			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+			filterRequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("filterRequest:::::::::"+filterRequest);
 			response= userLoginFeignImpl.viewAllLocality(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
 			FileExportResponse fileExportResponse;

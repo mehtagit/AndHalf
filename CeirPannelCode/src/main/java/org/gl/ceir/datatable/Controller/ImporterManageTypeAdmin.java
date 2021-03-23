@@ -110,7 +110,6 @@ public class ImporterManageTypeAdmin {
 		try {
 			filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
 			filterrequest.setBrowser(session.getAttribute("browser").toString());
-			
 			response = grievanceFeignClient.viewTRC(filterrequest, pageNo, pageSize, file);
 			log.info("response after Feign----->" + response);
 			String apiResponse = gson.toJson(response);

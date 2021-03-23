@@ -15,7 +15,24 @@ public class ConfigContentModel {
 	private String value;
 	private String description;
 	private Integer type;
+	public String publicIp;
+	private String browser;
 	private String typeInterp,roleType,userType,userName,modifiedBy;
+	
+	
+	
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -105,6 +122,10 @@ public class ConfigContentModel {
 		builder.append(description);
 		builder.append(", type=");
 		builder.append(type);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append(", typeInterp=");
 		builder.append(typeInterp);
 		builder.append(", roleType=");
@@ -118,6 +139,7 @@ public class ConfigContentModel {
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 	
 }

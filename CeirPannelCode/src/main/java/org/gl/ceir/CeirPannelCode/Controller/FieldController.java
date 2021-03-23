@@ -51,7 +51,9 @@ public class FieldController {
 	/*------------------------------------- Add Fields ------------------------------------------ */
 	
 	@PostMapping("add-Field") 
-	public @ResponseBody GenricResponse AddfieldManagement (@RequestBody FilterRequest filterRequest)  {
+	public @ResponseBody GenricResponse AddfieldManagement (@RequestBody FilterRequest filterRequest, HttpSession session)  {
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequest.setBrowser(session.getAttribute("browser").toString());
 		log.info("request send to the add Field api="+filterRequest);
 		GenricResponse response= feignCleintImplementation.AddfieldManagementFeign(filterRequest);
 		log.info("response from add Field api "+response);
@@ -62,7 +64,9 @@ public class FieldController {
 	//------------------------------------- viewfieldManagement ----------------------------------------							
 	
 	@PostMapping("fieldViewByID") 
-	public @ResponseBody GenricResponse viewfieldManagement (@RequestBody FilterRequest filterRequest)  {
+	public @ResponseBody GenricResponse viewfieldManagement (@RequestBody FilterRequest filterRequest, HttpSession session)  {
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequest.setBrowser(session.getAttribute("browser").toString());
 		log.info("request send to the View Field api="+filterRequest);
 		GenricResponse response= feignCleintImplementation.viewfieldManagementFeign(filterRequest);
 		log.info("response from add View api "+response);
@@ -73,7 +77,9 @@ public class FieldController {
 	//------------------------------------- update fieldManagement ----------------------------------------							
 	
 	@PutMapping("updateSystemTags") 
-	public @ResponseBody GenricResponse updatefieldManagement (@RequestBody FilterRequest filterRequest)  {
+	public @ResponseBody GenricResponse updatefieldManagement (@RequestBody FilterRequest filterRequest, HttpSession session)  {
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequest.setBrowser(session.getAttribute("browser").toString());
 		log.info("request send to the update Field api="+filterRequest);
 		GenricResponse response= feignCleintImplementation.updatefieldManagementFeign(filterRequest);
 		log.info("response from update api "+response);
@@ -84,7 +90,9 @@ public class FieldController {
 	//------------------------------------- delete fieldManagement ----------------------------------------	
 	
 	@DeleteMapping ("deleteField")
-	public @ResponseBody GenricResponse deleteFieldManagement(@RequestBody FilterRequest filterRequest) {
+	public @ResponseBody GenricResponse deleteFieldManagement(@RequestBody FilterRequest filterRequest, HttpSession session) {
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequest.setBrowser(session.getAttribute("browser").toString());
 		log.info("request send to the Delete Field api="+filterRequest);
 		GenricResponse response=feignCleintImplementation.deleteFieldFeign(filterRequest);
 		log.info("response after delete consignment."+response);
@@ -106,6 +114,8 @@ public class FieldController {
 		Integer usertypeId=(int) session.getAttribute("usertypeId");
 		filterRequest.setUserType(userType);
 		filterRequest.setUserTypeId(usertypeId);
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequest.setBrowser(session.getAttribute("browser").toString());
 		log.info("filterRequest:::::::::"+filterRequest);
 		response= feignCleintImplementation.fieldManagementFeign(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
 		FileExportResponse fileExportResponse;
