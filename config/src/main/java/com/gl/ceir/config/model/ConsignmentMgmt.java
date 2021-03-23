@@ -136,6 +136,12 @@ public class ConsignmentMgmt implements Serializable {
 
 	@Transient
 	private String deleteFlagInterp;	
+	
+	@Transient
+	private String publicIp;
+	
+	@Transient
+	private String browser;
 
 	public String getRoleType() {
 		return roleType;
@@ -467,6 +473,22 @@ public class ConsignmentMgmt implements Serializable {
 		this.pendingTacApprovedByCustomInterp = pendingTacApprovedByCustomInterp;
 	}
 
+	public String getPublicIp() {
+		return publicIp;
+	}
+
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+
+	public String getBrowser() {
+		return browser;
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -544,12 +566,20 @@ public class ConsignmentMgmt implements Serializable {
 		builder.append(user);
 		builder.append(", pendingTacApprovedByCustom=");
 		builder.append(pendingTacApprovedByCustom);
+		builder.append(", pendingTacApprovedByCustomInterp=");
+		builder.append(pendingTacApprovedByCustomInterp);
 		builder.append(", deleteFlag=");
 		builder.append(deleteFlag);
 		builder.append(", deleteFlagInterp=");
 		builder.append(deleteFlagInterp);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}
+
+	
 
 }

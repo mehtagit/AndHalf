@@ -126,6 +126,13 @@ public class RegularizeDeviceDb implements Serializable {
     private String taxCollectedBy;
     
     private String deviceRemark;
+	
+	  @Transient 
+	  private String publicIp;
+	  
+	  @Transient
+	  private String browser;
+	 
     
 	public String getMultiSimStatusInterp() {
 		return multiSimStatusInterp;
@@ -410,21 +417,22 @@ public class RegularizeDeviceDb implements Serializable {
 		this.deviceRemark = deviceRemark;
 	}
 
-	@Override
-	public String toString() {
-		return "RegularizeDeviceDb [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", nid="
-				+ nid + ", deviceStatus=" + deviceStatus + ", deviceStatusInterp=" + deviceStatusInterp
-				+ ", taxPaidStatus=" + taxPaidStatus + ", taxPaidStatusInterp=" + taxPaidStatusInterp + ", deviceType="
-				+ deviceType + ", deviceTypeInterp=" + deviceTypeInterp + ", deviceIdType=" + deviceIdType
-				+ ", deviceIdTypeInterp=" + deviceIdTypeInterp + ", multiSimStatus=" + multiSimStatus + ", country="
-				+ country + ", deviceSerialNumber=" + deviceSerialNumber + ", txnId=" + txnId + ", price=" + price
-				+ ", currency=" + currency + ", currencyInterp=" + currencyInterp + ", firstImei=" + firstImei
-				+ ", secondImei=" + secondImei + ", thirdImei=" + thirdImei + ", fourthImei=" + fourthImei + ", remark="
-				+ remark + ", status=" + status + ", stateInterp=" + stateInterp + ", endUserDB=" + endUserDB
-				+ ", origin=" + origin + ", nationality=" + nationality + ", creatorUserId=" + creatorUserId
-				+ ", multiSimStatusInterp=" + multiSimStatusInterp + ", auditParameters=" + auditParameters
-				+ ", approvedBy=" + approvedBy + ", taxCollectedBy=" + taxCollectedBy + ", deviceRemark=" + deviceRemark
-				+ "]";
+	public String getPublicIp() {
+		return publicIp;
 	}
+
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+
+	public String getBrowser() {
+		return browser;
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+
+	
 	
 }

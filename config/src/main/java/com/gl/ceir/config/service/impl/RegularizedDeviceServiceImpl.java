@@ -259,7 +259,7 @@ public class RegularizedDeviceServiceImpl {
 					filterRequest.getUserType(), 
 					12, Features.REGISTER_DEVICE, 
 					SubFeatures.VIEW_ALL, 
-					"", "NA",filterRequest.getUserType());
+					"", "NA",filterRequest.getUserType(),filterRequest.getPublicIp(),filterRequest.getBrowser());
 			auditTrailRepository.save(auditTrail);
 			logger.info("AUDIT : View in audit_trail. " + auditTrail);
 			return page;
@@ -392,7 +392,7 @@ public class RegularizedDeviceServiceImpl {
 					filterRequest.getUserType(), 
 					12, Features.REGISTER_DEVICE, 
 					SubFeatures.EXPORT, 
-					"", "NA",filterRequest.getUserType());
+					"", "NA",filterRequest.getUserType(),filterRequest.getPublicIp(),filterRequest.getBrowser());
 			auditTrailRepository.save(auditTrail);
 			logger.info("AUDIT : export in audit_trail. ");
 
@@ -434,7 +434,7 @@ public class RegularizedDeviceServiceImpl {
 			logger.info("transaction id:"+transactionId);
 			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
 					endUserDB.getAuditParameters().getUserType(), 12,Features.REGISTER_DEVICE,
-					SubFeatures.Add_Device, "",transactionId,endUserDB.getAuditParameters().getUserType()));
+					SubFeatures.Add_Device, "",transactionId,endUserDB.getAuditParameters().getUserType(),endUserDB.getPublicIp(),endUserDB.getBrowser()));
 			logger.info("AUDIT : Saved request in audit.");
 
 			String txnId = null;
@@ -597,7 +597,7 @@ public class RegularizedDeviceServiceImpl {
 			logger.info("txn_id is : "+regularizeDeviceDb.getTxnId());
 			AuditTrail auditTrail = new AuditTrail(audit.getUserId(), audit.getUsername(), audit.getUserTypeId(), 
 					audit.getUserType(), 12, Features.REGISTER_DEVICE, 
-					SubFeatures.Tax_Paid, "",regularizeDeviceDb.getTxnId(),audit.getUserType());
+					SubFeatures.Tax_Paid, "",regularizeDeviceDb.getTxnId(),audit.getUserType(),regularizeDeviceDb.getPublicIp(),regularizeDeviceDb.getBrowser());
 			auditTrailRepository.save(auditTrail);
 			logger.info("AUDIT : update in audit_trail. " + auditTrail);
 			RegularizeDeviceDb userCustomDbDetails = regularizedDeviceDbRepository.getByFirstImei(regularizeDeviceDb.getFirstImei());
@@ -671,7 +671,7 @@ public class RegularizedDeviceServiceImpl {
 				userId=data.getUserId();
 			}
 			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
-					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.VIEW, "",data.getTxnId(),data.getUserType()));
+					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.VIEW, "",data.getTxnId(),data.getUserType(),data.getPublicIp(),data.getBrowser()));
 			logger.info("AUDIT : Saved request in audit.");
 
 
@@ -732,7 +732,7 @@ public class RegularizedDeviceServiceImpl {
 				userId=data.getUserId();
 			}
 			auditTrailRepository.save(new AuditTrail(userId, username, 17L,
-					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.DELETE, "", data.getTxnId(),data.getUserType()));
+					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.DELETE, "", data.getTxnId(),data.getUserType(),data.getPublicIp(),data.getBrowser()));
 			logger.info("AUDIT : Saved request in audit.");
 			RegularizeDeviceDb regularizeDeviceDb = regularizedDeviceDbRepository.getByFirstImei(data.getImei());
 
@@ -1118,7 +1118,7 @@ public class RegularizedDeviceServiceImpl {
 		GenericSpecificationBuilder<RegularizeDeviceDb> specificationBuilder = new GenericSpecificationBuilder<RegularizeDeviceDb>(propertiesReader.dialect);
 
 		if(Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty())
-			specificationBuilder.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
+			specificationBuilder.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.LIKE, Datatype.STRING));
 		else {
 			if(Objects.nonNull(filterRequest.getUserTypeId())) {
 				if(filterRequest.getUserTypeId()==18)		
@@ -1218,7 +1218,7 @@ public class RegularizedDeviceServiceImpl {
 		}
 
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
-			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
+			specificationBuilder.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.LIKE, Datatype.STRING));
 		}
 
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){

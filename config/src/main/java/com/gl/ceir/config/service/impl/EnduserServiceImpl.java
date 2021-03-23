@@ -177,7 +177,7 @@ public class EnduserServiceImpl {
 				userId=data.getUserId();
 			}
 			auditTrailRepository.save(new AuditTrail(userId, username, data.getUserTypeId(),
-					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.Search_NID, "", data.getNid(),data.getUserType()));
+					data.getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.Search_NID, "", data.getNid(),data.getUserType(),data.getPublicIp(),data.getBrowser()));
 			logger.info("AUDIT : Saved request in audit.");
 
 //			EndUserDB endUserDB = endUserDbRepository.getByNid(data.getNid());
@@ -267,7 +267,7 @@ public class EnduserServiceImpl {
 				}
 			}
 			auditTrailRepository.save(new AuditTrail(userId, username, endUserDB.getAuditParameters().getUserTypeId(),
-					endUserDB.getAuditParameters().getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.REGISTER, "", endUserDB.getTxnId(),endUserDB.getAuditParameters().getUserType()));
+					endUserDB.getAuditParameters().getUserType(), 12,Features.REGISTER_DEVICE, SubFeatures.REGISTER, "", endUserDB.getTxnId(),endUserDB.getAuditParameters().getUserType(),endUserDB.getPublicIp(),endUserDB.getBrowser()));
 			logger.info("AUDIT : Saved request in audit.");
 
 
@@ -488,7 +488,7 @@ public class EnduserServiceImpl {
 			VisaDb latestVisa = null;
 			// Check if request is null
 			auditTrailRepository.save(new AuditTrail(0, "", 17L, 
-					"End User", 43L, Features.UPDATE_VISA, SubFeatures.REQUEST, "",endUserDB.getTxnId(),"End User"));
+					"End User", 43L, Features.UPDATE_VISA, SubFeatures.REQUEST, "",endUserDB.getTxnId(),"End User",endUserDB.getPublicIp(),endUserDB.getBrowser()));
 			logger.info("VisaUpdate [" + endUserDB.getTxnId() + "] saved in audit_trail.");
 
 			if(Objects.isNull(endUserDB.getNid())) {
@@ -919,7 +919,7 @@ public class EnduserServiceImpl {
 				}
 				
 				auditTrailRepository.save(new AuditTrail(userId, username, userTypeId,
-						ceirActionRequest.getUserType(), 43,Features.UPDATE_VISA, sufeature, "", txnId,ceirActionRequest.getUserType()));
+						ceirActionRequest.getUserType(), 43,Features.UPDATE_VISA, sufeature, "", txnId,ceirActionRequest.getUserType(),ceirActionRequest.getPublicIp(),ceirActionRequest.getBrowser()));
 
 			}else if("CEIRSYSTEM".equalsIgnoreCase(ceirActionRequest.getUserType())){
 				visaDb = visaUpdateRepo.getByTxnId(ceirActionRequest.getTxnId());
@@ -1142,7 +1142,7 @@ public class EnduserServiceImpl {
 		}
 
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
-			uPSB.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY, Datatype.STRING));
+			uPSB.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.LIKE, Datatype.STRING));
 		}
 		if(Objects.nonNull(filterRequest.getNid()) && !filterRequest.getNid().isEmpty()) {
 			uPSB.with(new SearchCriteria("nid", filterRequest.getNid(), SearchOperation.LIKE, Datatype.STRING));
@@ -1190,7 +1190,7 @@ public class EnduserServiceImpl {
 
 
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 8L,
-					filterRequest.getUserType(), 43,Features.UPDATE_VISA, SubFeatures.VIEW_ALL, "","NA",filterRequest.getUserType()));
+					filterRequest.getUserType(), 43,Features.UPDATE_VISA, SubFeatures.VIEW_ALL, "","NA",filterRequest.getUserType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
 
 
 			for(VisaUpdateDb visa : page.getContent()) {
@@ -1269,7 +1269,7 @@ public class EnduserServiceImpl {
 			
 					/* this.getAllVisaUpdate(filterRequest); */
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 8L,
-					filterRequest.getUserType(), 43,Features.UPDATE_VISA, SubFeatures.EXPORT, "","NA",filterRequest.getUserType()));
+					filterRequest.getUserType(), 43,Features.UPDATE_VISA, SubFeatures.EXPORT, "","NA",filterRequest.getUserType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
 
 			for(VisaUpdateDb visa : visaData) {
 				List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
@@ -1342,7 +1342,7 @@ public class EnduserServiceImpl {
 			logger.info("inside end user data by id service and given data: "+filterRequest.getId());
 
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 8L,
-					filterRequest.getUserType(), 43,Features.UPDATE_VISA, SubFeatures.VIEW, "","NA",filterRequest.getUserType()));
+					filterRequest.getUserType(), 43,Features.UPDATE_VISA, SubFeatures.VIEW, "","NA",filterRequest.getUserType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
 
 
 			if(Objects.nonNull(endUserDB)) {

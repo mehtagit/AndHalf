@@ -41,14 +41,8 @@ public class AuditTrail implements Serializable {
 	private String subFeature;
 	private String jSessionId;
 	private String roleType;
-	
-	
-	@Transient
-	private String publicIP;
-	
-	@Transient
-	private String browser;
-	
+	private String publicIp;
+	private String browser,details;
 	@Column(length = 20)
 	private String txnId;
 	
@@ -81,7 +75,7 @@ public class AuditTrail implements Serializable {
 	}
 	
 	public AuditTrail(long userId, String userName, Long userTypeId, String userType, long featureId, 
-			String featureName, String subFeature, String jSessionId, String txnId, String roleType, String publicIP, String browser) {
+			String featureName, String subFeature, String jSessionId, String txnId, String roleType) {
 		this.userId = userId;
 		this.userName = userName;
 		this.userTypeId = userTypeId;
@@ -94,23 +88,23 @@ public class AuditTrail implements Serializable {
 		this.roleType = roleType;
 	}
 	
+	public AuditTrail(long userId, String userName, Long userTypeId, String userType, long featureId, 
+			String featureName, String subFeature, String jSessionId, String txnId, String roleType,String publicIP,String browser) {
+		this.userId = userId;
+		this.userName = userName;
+		this.userTypeId = userTypeId;
+		this.userType = userType;
+		this.featureId = featureId;
+		this.featureName = featureName;
+		this.subFeature = subFeature;
+		this.jSessionId = jSessionId;
+		this.txnId = txnId;
+		this.roleType = roleType;
+		this.publicIp=publicIP;
+		this.browser=browser;
+	}
 	
-	public String getPublicIP() {
-		return publicIP;
-	}
-
-	public void setPublicIP(String publicIP) {
-		this.publicIP = publicIP;
-	}
-
-	public String getBrowser() {
-		return browser;
-	}
-
-	public void setBrowser(String browser) {
-		this.browser = browser;
-	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -195,6 +189,30 @@ public class AuditTrail implements Serializable {
 		this.roleType = roleType;
 	}
 
+	public String getPublicIp() {
+		return publicIp;
+	}
+
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+
+	public String getBrowser() {
+		return browser;
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -222,10 +240,12 @@ public class AuditTrail implements Serializable {
 		builder.append(jSessionId);
 		builder.append(", roleType=");
 		builder.append(roleType);
-		builder.append(", publicIP=");
-		builder.append(publicIP);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
 		builder.append(", browser=");
 		builder.append(browser);
+		builder.append(", details=");
+		builder.append(details);
 		builder.append(", txnId=");
 		builder.append(txnId);
 		builder.append("]");

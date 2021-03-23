@@ -208,7 +208,7 @@ public class StolenAndRecoveryServiceImpl {
 				logger.info("Upload Successfully." +  stolenandRecoveryMgmt.getTxnId());
 				addInAuditTrail(stolenandRecoveryMgmt.getUserId(), stolenandRecoveryMgmt.getTxnId(), 
 						SubFeatures.UPLOAD, stolenandRecoveryMgmt.getRoleType(), 
-						stolenandRecoveryMgmt.getRequestType(), 0);
+						stolenandRecoveryMgmt.getRequestType(), 0,stolenandRecoveryMgmt.getPublicIp(),stolenandRecoveryMgmt.getBrowser());
 
 				return new GenricResponse(0, "Upload Successfully.", stolenandRecoveryMgmt.getTxnId());
 			}else {
@@ -274,7 +274,7 @@ public class StolenAndRecoveryServiceImpl {
 			stolenAndRecoveryRepository.save(stolenandRecoveryDetails);
 
 			webActionDbRepository.save(webActionDb);
-			addInAuditTrail(stolenandRecoveryDetails.getUserId(), stolenandRecoveryDetails.getTxnId(), SubFeatures.UPLOAD, stolenandRecoveryDetails.getRoleType(),stolenandRecoveryDetails.getRequestType(),0);
+			addInAuditTrail(stolenandRecoveryDetails.getUserId(), stolenandRecoveryDetails.getTxnId(), SubFeatures.UPLOAD, stolenandRecoveryDetails.getRoleType(),stolenandRecoveryDetails.getRequestType(),0,stolenandRecoveryDetails.getPublicIp(),stolenandRecoveryDetails.getBrowser());
 			return new GenricResponse(0, "Upload Successfully.", stolenandRecoveryDetails.getTxnId());
 
 		}catch (RequestInvalidException e) {
@@ -364,9 +364,9 @@ public class StolenAndRecoveryServiceImpl {
 
 			logger.info(stolenandRecoveryMgmtPage.getContent());
 			if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
-				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER, filterRequest.getRoleType(), filterRequest.getRequestType(),filterRequest.getFeatureId());
+				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER, filterRequest.getRoleType(), filterRequest.getRequestType(),filterRequest.getFeatureId(),filterRequest.getPublicIp(),filterRequest.getBrowser());
 			} else {
-				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
+				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId(),filterRequest.getPublicIp(),filterRequest.getBrowser());
 			}
 			return stolenandRecoveryMgmtPage;
 
@@ -444,7 +444,7 @@ public class StolenAndRecoveryServiceImpl {
 			srsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
 
 		if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty())
-			srsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
+			srsb.with(new SearchCriteria("txnId", filterRequest.getTxnId(), SearchOperation.LIKE, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getSourceType())) {
 			srsb.with(new SearchCriteria("sourceType", filterRequest.getSourceType(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -639,7 +639,7 @@ public class StolenAndRecoveryServiceImpl {
 				}
 				csvWriter.write(fileRecords);
 			}
-			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
+			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId(),filterRequest.getPublicIp(),filterRequest.getBrowser());
 			return new FileDetails( fileName, filePath, link.getValue().replace("$LOCAL_IP", propertiesReader.localIp) + fileName ); 
 
 		}catch (Exception e) {
@@ -716,7 +716,7 @@ public class StolenAndRecoveryServiceImpl {
 				}
 				csvWriter.write(fileRecords);
 			}
-			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
+			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId(),filterRequest.getPublicIp(),filterRequest.getBrowser());
 			return new FileDetails( fileName, filePath, link.getValue().replace("$LOCAL_IP", propertiesReader.localIp) + fileName ); 
 
 		} catch (Exception e) {
@@ -779,7 +779,7 @@ public class StolenAndRecoveryServiceImpl {
 				webActionDb.setData(request.getTxnId());
 
 				webActionDbRepository.save(webActionDb);
-				addInAuditTrail(request.getUserId(), request.getTxnId(), SubFeatures.UPLOAD, request.getRoleType(),request.getRequestType(),0);
+				addInAuditTrail(request.getUserId(), request.getTxnId(), SubFeatures.UPLOAD, request.getRoleType(),request.getRequestType(),0,request.getPublicIp(),request.getBrowser());
 
 			}
 
@@ -977,7 +977,7 @@ public class StolenAndRecoveryServiceImpl {
 							"Users");
 					logger.info("Record delete by user ,Notfication for user have  been saved.");	
 				}
-				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.DELETE, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId());
+				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.DELETE, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId(),filterRequest.getPublicIp(),filterRequest.getBrowser());
 				return new GenricResponse(0,"Record Delete Sucessfully", filterRequest.getTxnId());
 			}
 		} catch (Exception e) {
@@ -1076,7 +1076,7 @@ public class StolenAndRecoveryServiceImpl {
 				webActionDbRepository.save(webActionDb);
 				logger.info("Update request saved in web action : " + webActionDb);
 				stolenAndRecoveryRepository.save(stolenandRecoveryMgmtInfo);
-				addInAuditTrail(Long.valueOf(stolenandRecoveryMgmt.getUserId()), stolenandRecoveryMgmt.getTxnId(), SubFeatures.UPDATE, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0);
+				addInAuditTrail(Long.valueOf(stolenandRecoveryMgmt.getUserId()), stolenandRecoveryMgmt.getTxnId(), SubFeatures.UPDATE, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0,stolenandRecoveryMgmt.getPublicIp(),stolenandRecoveryMgmt.getBrowser());
 				return new GenricResponse(0, "Record update sucessfully", stolenandRecoveryMgmt.getTxnId());
 			}
 		}catch (RequestInvalidException e) {
@@ -1117,7 +1117,7 @@ public class StolenAndRecoveryServiceImpl {
 			StolenandRecoveryMgmt stolenandRecoveryMgmt2 = stolenAndRecoveryRepository.getByTxnId(stolenandRecoveryMgmt.getTxnId());
 			setInterp(stolenandRecoveryMgmt2);
 
-			addInAuditTrail(Long.valueOf(stolenandRecoveryMgmt.getUserId()), stolenandRecoveryMgmt.getTxnId(), SubFeatures.VIEW, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0);
+			addInAuditTrail(Long.valueOf(stolenandRecoveryMgmt.getUserId()), stolenandRecoveryMgmt.getTxnId(), SubFeatures.VIEW, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0,stolenandRecoveryMgmt.getPublicIp(),stolenandRecoveryMgmt.getBrowser());
 			return stolenandRecoveryMgmt2;
 		} catch (RequestInvalidException e) {
 			logger.error("Request validation failed for txnId[" + stolenandRecoveryMgmt.getTxnId() + "]" + e);
@@ -1316,7 +1316,7 @@ public class StolenAndRecoveryServiceImpl {
 
 				//}
 
-				addInAuditTrail(Long.valueOf(stolenandRecoveryMgmt.getUserId()), stolenandRecoveryMgmt.getTxnId(), action, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0);
+				addInAuditTrail(Long.valueOf(stolenandRecoveryMgmt.getUserId()), stolenandRecoveryMgmt.getTxnId(), action, stolenandRecoveryMgmt.getRoleType(),stolenandRecoveryMgmt.getRequestType(),0,consignmentUpdateRequest.getPublicIp(),consignmentUpdateRequest.getBrowser());
 			}else if("CEIRSYSTEM".equalsIgnoreCase(consignmentUpdateRequest.getRoleType())){
 				String mailTag = null;
 				String ceirMailTag = null;
@@ -1592,7 +1592,7 @@ public class StolenAndRecoveryServiceImpl {
 		return count == 0? 1 : count;
 	}
 
-	private void addInAuditTrail(Long userId, String txnId, String subFeatureName, String roleType, Integer requestType, Integer featureId) {
+	private void addInAuditTrail(Long userId, String txnId, String subFeatureName, String roleType, Integer requestType, Integer featureId,String publicIP,String browesr) {
 
 		User requestUser = null;
 		String fearure = null;
@@ -1637,7 +1637,7 @@ public class StolenAndRecoveryServiceImpl {
 					subFeatureName,
 					"", 
 					txnId,
-					roleType);
+					roleType,publicIP,browesr);
 			logger.info("Inserting in audit table object = "+obj);
 			auditTrailRepository.save(obj);
 		}else {

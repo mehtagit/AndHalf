@@ -9,33 +9,37 @@ public class StockRetailerFileModel {
 	@CsvBindByPosition(position = 0)
 	private String createdOn;
 	
-	@CsvBindByName(column = "Txn Id")
+	@CsvBindByName(column = "Modified On")
 	@CsvBindByPosition(position = 1)
+	private String modifiedOn;
+	
+	@CsvBindByName(column = "Txn Id")
+	@CsvBindByPosition(position = 2)
 	private String txnId;
 
 	@CsvBindByName(column = "File Name")
-	@CsvBindByPosition(position = 2)
+	@CsvBindByPosition(position = 3)
 	private String fileName;
 	
-	@CsvBindByName(column = "IMEI Quantity")
-	@CsvBindByPosition(position = 3)
-	private Integer quantity;
 
-	@CsvBindByName(column = "Modified On")
-	@CsvBindByPosition(position = 4)
-	private String modifiedOn;
-	
 	@CsvBindByName(column = "Status")
-	@CsvBindByPosition(position = 5)
+	@CsvBindByPosition(position = 4)
 	private String stockStatus;
 	
-	@CsvBindByName(column = "Supplier Name")
+	@CsvBindByName(column = "IMEI Quantity")
+	@CsvBindByPosition(position = 5)
+	private Integer quantity;
+
+
+	@CsvBindByName(column = "Device Quantity")
 	@CsvBindByPosition(position = 6)
+	private Integer deviceQuantity;
+	
+	
+	@CsvBindByName(column = "Supplier Name")
+	@CsvBindByPosition(position = 7)
 	private String supplierName;
 	
-	@CsvBindByName(column = "Device Quantity")
-	@CsvBindByPosition(position = 7)
-	private Integer deviceQuantity;
 	
 	public Integer getDeviceQuantity() {
 		return deviceQuantity;

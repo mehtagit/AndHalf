@@ -92,7 +92,7 @@ public class ExportFileStockRetailer implements ExportFile{
 				csvWriter.write(fileRecords);
 			}
 
-			stockServiceImpl.addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT,filterRequest.getRoleType());
+			stockServiceImpl.addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT,filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser());
 
 			return new FileDetails( fileName, filePath, link.getValue().replace("$LOCAL_IP", propertiesReader.localIp) + fileName ); 
 		}catch (Exception e) {

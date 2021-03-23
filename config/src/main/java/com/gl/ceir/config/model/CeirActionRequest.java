@@ -1,5 +1,7 @@
 package com.gl.ceir.config.model;
 
+import javax.persistence.Transient;
+
 public class CeirActionRequest {
 
 	private int action;
@@ -22,6 +24,11 @@ public class CeirActionRequest {
 	
 	
 	private String imei1;
+	
+	@Transient
+	private String publicIp;
+	@Transient
+	private String browser;
 	
 	public int getAction() {
 		return action;
@@ -86,6 +93,18 @@ public class CeirActionRequest {
 	public void setUsername(String username) {
 		this.username = username;
 	}
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -109,8 +128,13 @@ public class CeirActionRequest {
 		builder.append(id);
 		builder.append(", imei1=");
 		builder.append(imei1);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 
 }

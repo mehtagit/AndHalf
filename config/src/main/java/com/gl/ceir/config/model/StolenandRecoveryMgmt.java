@@ -118,6 +118,11 @@ public class StolenandRecoveryMgmt implements Serializable {
 	@Column(name = "deviceQuantity")
 	private Integer deviceQuantity;
 
+	@Transient
+	private String publicIp;
+	@Transient
+	private String browser;
+	
 	@OneToMany(
         cascade = CascadeType.ALL,
         orphanRemoval = true
@@ -351,6 +356,22 @@ public class StolenandRecoveryMgmt implements Serializable {
 		this.deviceQuantity = deviceQuantity;
 	}
 
+	public String getPublicIp() {
+		return publicIp;
+	}
+
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+
+	public String getBrowser() {
+		return browser;
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -360,6 +381,8 @@ public class StolenandRecoveryMgmt implements Serializable {
 		builder.append(userId);
 		builder.append(", fileName=");
 		builder.append(fileName);
+		builder.append(", firFileName=");
+		builder.append(firFileName);
 		builder.append(", fileStatus=");
 		builder.append(fileStatus);
 		builder.append(", txnId=");
@@ -384,6 +407,8 @@ public class StolenandRecoveryMgmt implements Serializable {
 		builder.append(qty);
 		builder.append(", remark=");
 		builder.append(remark);
+		builder.append(", rejectedRemark=");
+		builder.append(rejectedRemark);
 		builder.append(", sourceTypeInterp=");
 		builder.append(sourceTypeInterp);
 		builder.append(", stateInterp=");
@@ -400,21 +425,35 @@ public class StolenandRecoveryMgmt implements Serializable {
 		builder.append(dateOfStolen);
 		builder.append(", dateOfRecovery=");
 		builder.append(dateOfRecovery);
+		builder.append(", complaintType=");
+		builder.append(complaintType);
 		builder.append(", singleImeiDetails=");
 		builder.append(singleImeiDetails);
 		builder.append(", stolenIndividualUserDB=");
+		builder.append(stolenIndividualUserDB);
+		builder.append(", stolenOrganizationUserDB=");
 		builder.append(stolenOrganizationUserDB);
 		builder.append(", imei=");
 		builder.append(imei);
-		builder.append(", firFileName=");
-		builder.append(firFileName);
-		builder.append(", rejectedRemark=");
-		builder.append(rejectedRemark);
+		builder.append(", deleteFlag=");
+		builder.append(deleteFlag);
+		builder.append(", deleteFlagInterp=");
+		builder.append(deleteFlagInterp);
+		builder.append(", ceirAdminId=");
+		builder.append(ceirAdminId);
+		builder.append(", deviceQuantity=");
+		builder.append(deviceQuantity);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
+		builder.append(", attachedFiles=");
+		builder.append(attachedFiles);
 		builder.append("]");
 		return builder.toString();
 	}
 
-
+ 
 
 
 }
