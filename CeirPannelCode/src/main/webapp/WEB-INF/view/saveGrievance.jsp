@@ -184,8 +184,7 @@ style="font-size: 20px;">+</span><spring:message code="input.addmorefile" /></bu
 
 <div class="row" style="margin-top: 10px;">
 <div class="input-field col s12 m12">
-<textarea id="Remark" class="materialize-textarea"  
-pattern="<spring:eval expression="@environment.getProperty('pattern.remak')" />"
+<textarea id="Remark" class="materialize-textarea" maxlength="200" 
 oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
  required></textarea>

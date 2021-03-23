@@ -521,7 +521,7 @@ function pageButtons(url){
 			/*if(window.parent.$("body").attr("data-roletype") == "CEIRAdmin"){*/
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){
-					$("#tableDiv").append("<div class='input-field col s6 m2'>"+
+					$("#tableDiv").append("<div class='input-field'>"+
 							"<div id='enddatepicker' class='input-group'>"+
 							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 							"<label for="+date[i].id+">"+date[i].title
@@ -533,12 +533,12 @@ function pageButtons(url){
 						 maxDate: new Date()
 			        }); 
 				}else if(date[i].type === "text"){
-					$("#tableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" maxlength="+date[i].className+" id="+date[i].id+" /><label for="+date[i].id+" id="+date[i].id+">"+date[i].title+"</label></div>");
+					$("#tableDiv").append("<div class='input-field'><input type="+date[i].type+" maxlength="+date[i].className+" id="+date[i].id+" /><label for="+date[i].id+" id="+date[i].id+">"+date[i].title+"</label></div>");
 				}
 				else if(date[i].type === "select"){
 
 					var dropdownDiv=
-						$("#tableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
+						$("#tableDiv").append("<div class='col s6 m2'>"+
 								
 								"<div class='select-wrapper select2  initialized'>"+
 								"<span class='caret'>"+"</span>"+
@@ -617,9 +617,9 @@ function pageButtons(url){
 
 
 
-			$("#tableDiv").append("<div class='col s3 m2 l1'><button type='button' class='btn primary botton'  id='submitFilter' /></div></div></div>");
-			$("#tableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' style='margin-left: 18px;' id='clearRegisterDeviceFilter'>"+$.i18n('clearFilter')+"</button></div>");
-			$("#tableDiv").append("<div class='col s3 m2 l1'><a href='JavaScript:void(0)' onclick='exportpaidStatus()' style='margin-right: -105px;' type='button' class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+			$("#tableDiv").append("<div class='filter_btn'><button type='button' class='btn primary botton'  id='submitFilter' /></div></div></div>");
+			$("#tableDiv").append("<div class='filter_btn'><button type='button' class='btn primary botton'  id='clearRegisterDeviceFilter'>"+$.i18n('clearFilter')+"</button></div>");
+			$("#tableDiv").append("<div class='filter_btn'><a href='JavaScript:void(0)' onclick='exportpaidStatus()'  type='button' class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 		
 			$('#clearRegisterDeviceFilter').attr("onclick", "filterResetregisterDevice('viewRegisterDeviceFilter')");
 			for(i=0; i<button.length; i++){
@@ -671,7 +671,12 @@ function pageButtons(url){
 					.appendTo('#deviceIDType');
 				}
 			});
-
+			$.getJSON('./getDropdownList/ORIGIN', function(data) {
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].value).text(data[i].interp)
+					.appendTo('#originFilter');
+				}
+			});
 			nationalitySelect();
 		}
 	}); 	

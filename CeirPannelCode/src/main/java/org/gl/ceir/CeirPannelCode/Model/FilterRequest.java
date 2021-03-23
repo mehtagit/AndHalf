@@ -18,13 +18,6 @@ public class FilterRequest {
 	public String order,orderColumnName;
 	private String browser,filteredUsername,name;
 	
-	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	public String getFilteredUsername() {
 		return filteredUsername;
 	}
@@ -657,6 +650,12 @@ public class FilterRequest {
 	}
 	public void setBrowser(String browser) {
 		this.browser = browser;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	@Override
 	public String toString() {

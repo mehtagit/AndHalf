@@ -33,10 +33,9 @@ textarea.materialize-textarea {
     line-height: 1.5 !important;
     text-align: center;
 }
-
 .round-circle {
-	overflow-wrap: break-word;
-    width: 180px;
+    overflow-wrap: break-word;
+    width: 210px;
     height: 150px;
     border: solid 1px #444;
     border-radius: 5px;
@@ -45,42 +44,18 @@ textarea.materialize-textarea {
     background-color: #fff;
     align-items: center;
 }
-
-@media only screen and (max-width: 567px) {
-    .round-circle {
-        width: 100%;
-        height: 150px;
-        border: solid 1px #444;
-        border-radius: 5px;
-        margin-top: 30px;
-        /* position: absolute; */
-        background-color: #fff;
-        align-items: center;
-    }
-}
-
-@media only screen and (max-width: 567px) {
-    .round-circle-center-responsive {
-        margin: auto;
-        width: 100%;
-    }
+#wrapperPage .round-circle {
+    width: 210px;
+    height: 90px;
 }
 
 
-@media only screen and (max-width: 567px) {
-    .view-div-info {
-        border-top: solid 1px rgb(209, 208, 208);
-        margin-top: 120px;
-        width: 90% !important;
-        margin-left: 5% !important;
-    }
-}
 
 .circle-para {
     text-align: justify;
     width: 180px;
     margin-left: 15px;
-    text-align: center;
+    text-align: right;
     padding-right: 25px;
 }
 
@@ -90,22 +65,8 @@ textarea.materialize-textarea {
     align-items: center;
     justify-content: start;
 }
-/* @media only screen and (min-width: 992px) {
-    .info-div {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 30px;
-        flex-wrap: wrap;
-        align-items: center;
-      justify-content: center;
-    }
-} */
 
-@media only screen and (min-width: 992px) {
-    .space-div {
-        margin: 0 10% !important;
-    }
-}
+
 
 .icon-div {
     width: 50px;
@@ -125,7 +86,7 @@ textarea.materialize-textarea {
 .view-div-info {
     border-top: solid 1px rgb(209, 208, 208);
     margin-top: 120px;
-    width: 170px;
+    width: 197px;
     margin-left: 5px;
 }
 
@@ -140,3 +101,79 @@ h6 {
 .round-circle-center-responsive {
     margin: 15px;
 }
+
+/* new css start 23-02-2021 */
+
+#wrapperPage .split {
+    display: flex;
+    flex-direction: column;
+}
+
+.cgraph_box {
+    display: flex;
+    justify-content: space-between;
+}
+.graph_info {
+    margin-right: 20px;
+    width: calc(50% - 10px);
+}
+.graph_info:last-child{
+    margin-right: 0px;
+}
+.section {
+    margin-top: 20px !important;
+}   
+
+
+/* --------------------------------------responsive css start ---------------------------------------*/
+@media only screen and (min-width: 992px) {
+    .space-div {
+        margin: 0 10% !important;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .space-div {
+        margin: 0 10% !important;
+    }
+    .cgraph_box {
+        flex-direction: column;
+    }
+
+    .graph_info {
+        margin-right: 0px;
+        width:100%;
+    }
+
+
+}
+
+
+
+@media only screen and (max-width: 567px) {
+    .view-div-info {
+        border-top: solid 1px rgb(209, 208, 208);
+        margin-top: 120px;
+        width: 90% !important;
+        margin-left: 5% !important;
+    }
+    .round-circle-center-responsive {
+        margin: auto;
+        width: 100%;
+    }
+
+    .round-circle {
+        width: 100%;
+        height: 150px;
+        border: solid 1px #444;
+        border-radius: 5px;
+        margin-top: 30px;
+        /* position: absolute; */
+        background-color: #fff;
+        align-items: center;
+    }
+    
+    
+}
+
+/* ------------------------------------------responsive css end -----------------//---------------------*/

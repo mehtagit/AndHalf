@@ -860,7 +860,7 @@ position: fixed;
 								
 									<div class="container" id="user456" style="display: none;">
 										<form action="${context}/uploadPaidStatus" id="viewRegisterDeviceFilter">
-										<div class="col s12 m12 l12" id="tableDiv"
+										<div class="registrationTableDiv_box" id="tableDiv"
 											style="padding-bottom: 5px; background-color: #e2edef52;">
 										</div>
 											<div id="filterBtnDiv"></div>

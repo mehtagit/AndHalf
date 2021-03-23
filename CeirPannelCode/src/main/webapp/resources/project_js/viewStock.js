@@ -590,7 +590,7 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 					for(i=0; i<date.length; i++){
 				
 					if(date[i].type === "date"){
-					$("#consignmentTableDIv").append("<div class='input-field col s6 m2'>"+
+					$("#consignmentTableDIv").append("<div class='input-field'>"+
 							"<div id='enddatepicker' class='input-group'>"+
 							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 							"<label for="+date[i].id+">"+date[i].title
@@ -603,12 +603,12 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 					});
 				}else if(date[i].type === "text"){
 					
-					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+					$("#consignmentTableDIv").append("<div class='input-field' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
 				else if(date[i].type === "select"){
 
 						var dropdownDiv=
-							$("#consignmentTableDIv").append("<div class='col s6 m2 selectDropdwn'>"+
+							$("#consignmentTableDIv").append("<div class='selectDropdwn'>"+
 									
 									"<div class='select-wrapper select2  initialized'>"+
 									"<span class='caret'>"+"</span>"+
@@ -665,9 +665,9 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 */			
 				if(sourceType=="viaStock"){
 					$("#btnLink").css({display: "none"});
-					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter' /></div>");
-					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' style='margin-left: 18px;' id='clearStockFilter'>"+$.i18n('clearFilter')+"</button></div>");
-					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' style='margin-right: -105px;' type='button' class='export-to-excel right' onclick='exportStockData()'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+					$("#consignmentTableDIv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='submitFilter' /></div>");
+					$("#consignmentTableDIv").append("<div class='filter_btn'><button type='button' class='btn primary botton'  id='clearStockFilter'>"+$.i18n('clearFilter')+"</button></div>");
+					$("#consignmentTableDIv").append("<div class='filter_btn'><a href='JavaScript:void(0)'  type='button' class='export-to-excel right' onclick='exportStockData()'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 					
 					$('#clearStockFilter').attr("onclick", "filterReset('viewStockFilter')");	
 					for(i=0; i<button.length; i++){
@@ -683,9 +683,9 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 
 				}else{
 
-					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter' /></div>");
-					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' style='margin-left: 18px;' id='clearStockFilter'>"+$.i18n('clearFilter')+"</button></div>");
-					$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' style='margin-right: -105px;' type='button' class='export-to-excel right' onclick='exportStockData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+					$("#consignmentTableDIv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='submitFilter' /></div>");
+					$("#consignmentTableDIv").append("<div class='filter_btn'><button type='button' class='btn primary botton'  id='clearStockFilter'>"+$.i18n('clearFilter')+"</button></div>");
+					$("#consignmentTableDIv").append("<div class='filter_btn'><a href='JavaScript:void(0)'  type='button' class='export-to-excel right' onclick='exportStockData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 					
 					$('#clearStockFilter').attr("onclick", "filterResetStock('viewStockFilter')");	
 					for(i=0; i<button.length; i++){

@@ -275,7 +275,7 @@ display: none !important;
 
 </head>
 <body data-id="45" 
-data-roleType="${usertype}" >
+data-roleType="${usertype}" data-userID="${userid}" >
 	<!-- START MAIN -->
 		<div id="initialloader"></div>
 	<!-- START WRAPPER -->
@@ -299,8 +299,8 @@ data-roleType="${usertype}" >
                             	 				 <div class="split">
                             						<div class="col s12 m12 info-div center" id="infoBox"></div>
                            			
-                            <div style="display:flex; margin-left: 12px;">
-                            <div class="col-xl-8 col-lg-7">
+                            <div class="cgraph_box">
+                            <div class="graph_info">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -319,7 +319,7 @@ data-roleType="${usertype}" >
              
              
              
-             <div class="col-xl-8 col-lg-7">
+             <div class="graph_info">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

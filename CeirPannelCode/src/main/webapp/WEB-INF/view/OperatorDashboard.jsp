@@ -276,7 +276,7 @@ th {
 }
 </style>
 </head>
-<body data-id="46" data-roleType="${usertype}">
+<body data-id="46" data-roleType="${usertype}" data-userID="${userid}">
 	<!-- START MAIN -->
 		<div id="initialloader"></div>
 	<!-- START WRAPPER -->
@@ -303,9 +303,9 @@ th {
                             				 <div class="split">
                             						<div class="col s12 m12 info-div center" id="infoBox"></div>
                            	
-                           <div style="display:flex; margin-left: 12px;">
+                           <div class="cgraph_box">
                             
-                               <div class="col-xl-8 col-lg-7">
+                               <div class="graph_info">
                                <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -364,7 +364,7 @@ th {
             </div>
             
             
-                            <div class="col-xl-8 col-lg-7">
+                            <div class="graph_info">
               <%-- <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -396,7 +396,7 @@ th {
              </div>               
               </div> </div>
               
-                                       <div style="display:flex; margin-left: 12px;">
+                                       <div class="cgraph_box">
 <%--                                           <div class="col-xl-8 col-lg-7">
     <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
@@ -414,7 +414,7 @@ th {
     
     </div> --%>
     
-               <div class="col-xl-8 col-lg-7">
+               <div class="graph_info">
     <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">

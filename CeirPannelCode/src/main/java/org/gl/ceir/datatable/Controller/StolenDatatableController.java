@@ -413,7 +413,7 @@ public class StolenDatatableController {
 			}else if(("5".equals(featureId)) && "CEIRAdmin".equals(userType)) {
 				
 				//input type date list	
-				String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","18","text",Translator.toLocale("table.BlockType"),"blockingTypeFilter","15",
+				String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","18","select",Translator.toLocale("table.BlockType"),"blockingTypeFilter","",
 						"select",Translator.toLocale("table.requestType"), "requestType", "", "select",
 						Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","10","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","10"};
 				for (int i = 0; i < dateParam.length; i++) {
@@ -504,7 +504,7 @@ public class StolenDatatableController {
 			 * "startDate", "", "date",Translator.toLocale("input.endDate"), "endDate",
 			 * "","text",Translator.toLocale("input.transactionID"),"transactionID","18"};
 			 */
-			String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","18","text",Translator.toLocale("table.BlockType"),"blockingTypeFilter","15",
+			String[] dateParam = { "date",Translator.toLocale("input.startDate"), "startDate", "", "date", Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("input.transactionID"),"transactionID","18","select",Translator.toLocale("table.BlockType"),"blockingTypeFilter","",
 					"select",Translator.toLocale("table.requestType"), "requestType", "", "select",
 					Translator.toLocale("input.mode"), "sourceStatus", "","select", Translator.toLocale("table.status"), "status","","text",Translator.toLocale("input.quantity"),"IMEIQuantityFilter","10","text",Translator.toLocale("input.devicequantity"),"deviceQuantityFilter","10"};
 			for (int i = 0; i < dateParam.length; i++) {

@@ -3089,9 +3089,10 @@ div#iconLable {
 
 .fixPage-modal-header {
 	background-color: #529dba;
-	padding: 15px 24px;
+	padding: 25px 24px;
 	color: #fff;
 	margin: -20px -21px 1rem -21px;
+	max-height: 50px;
 }
 
 
@@ -3130,6 +3131,10 @@ div#viewuplodedModel {
 .register-device-responsive-page {
 	width: 50%;
 }
+.card-body {
+    overflow-x: auto !important;
+}
+
 
 @media only screen and (max-width: 992px) {
 	.register-device-responsive-page {
@@ -3469,6 +3474,33 @@ position:fixed;
 margin-bottom: 10px;
 }
 
+  
+
+.registrationTableDiv_box {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 20px !important;
+    padding-top: 15px;
+}
+.registrationTableDiv_box .input-field, .registrationTableDiv_box .selectDropdwn {
+    margin: 10px 10px 20px;
+    width: 22%;
+}
+.registrationTableDiv_box .filter_btn { 
+    margin-right: 10px;
+    margin-left: 10px;
+}
+#errorMsg{
+	top: 155px !important;
+}
+.registrationTableDiv_box .selectDropdwn {
+    position: relative;
+    top: -5px;
+}
+
+
+/* -------------responsive css start --------------*/
+
 @media (max-width:991px){
 
 	.dataTables_scrollHeadInner table{
@@ -3538,6 +3570,9 @@ width: 100% !important;
 	.navbar-fixed nav.navbar-color {
 	    height: 120px !important;
 	}
+	 .registrationTableDiv_box .input-field, .registrationTableDiv_box .selectDropdwn {
+        width: 28%;
+    }
 	
 	
 }
@@ -3575,6 +3610,10 @@ width: 100% !important;
 		margin-top: 0px
 	}
 
+	 .filter_btn button#clearFilter, .filter_btn button#clearStockFilter, .filter_btn button#clearRegisterDeviceFilter, .filter_btn button#clearLawfullFilter, .filter_btn button#clearVisaFilter {
+        margin-top: 10px;
+    }
+
 }
 
 
@@ -3605,4 +3644,8 @@ a#wholePageImage {
     float: right;
     margin: 10px 20px;
     color: #fff;
+}
+.registrationTableDiv_box .input-field, .registrationTableDiv_box .selectDropdwn {
+        width: 100%;
+    }
 }

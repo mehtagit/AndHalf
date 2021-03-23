@@ -140,7 +140,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 							</div>
                     <form action="${context}/viewConsignment" id="viewStockFilter"
 								method="post">
-							<div class="col s12 m12 l12" id="consignmentTableDIv"
+							<div class="registrationTableDiv_box" id="consignmentTableDIv"
 								style="padding-bottom: 5px; background-color: #e2edef52;">
 								<div id="filterBtnDiv"></div>
 							</div>
@@ -232,7 +232,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 
 					<div class="input-field col s12 m6" id="editInvoiceNumberDiv">
 						<input type="text" name="InvoiceNumber" id="editInvoiceNumber"
-							placeholder="" pattern="<spring:eval expression="@environment.getProperty('pattern.consignmentNumber')" />"
+							placeholder="" pattern="<spring:eval expression="@environment.getProperty('pattern.supplierID')" />"
 							oninput="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15character" />');"
 							 /> <label for="InvoiceNumber" class="center-align"><spring:message

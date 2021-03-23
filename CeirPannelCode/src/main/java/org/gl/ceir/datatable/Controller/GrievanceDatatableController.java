@@ -10,8 +10,6 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
-import org.gl.ceir.CeirPannelCode.Model.UserHeader;
-import org.gl.ceir.CeirPannelCode.Service.RegistrationService;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
 import org.gl.ceir.configuration.ConfigParameters;
@@ -52,8 +50,7 @@ public class GrievanceDatatableController {
 	GrievancePaginationModel grievancepaginationmodel;
 	@Autowired
 	GrievanceFeignClient grievanceFeignClient;
-	@Autowired
-	RegistrationService registerService;
+
 	@PostMapping("grievanceData")
 	public ResponseEntity<?> viewStockList(
 			@RequestParam(name = "type", defaultValue = "grievance", required = false) String role,
@@ -95,7 +92,7 @@ public class GrievanceDatatableController {
 		
 		
 		Integer file = 0;
- 		Object response;
+		Object response;
 		log.info("session value user Type==" + session.getAttribute("usertype") + " grievanceSessionUsesFlag=="
 				+ grievanceSessionUsesFlag);
 		String userType = (String) session.getAttribute("usertype");
@@ -110,11 +107,6 @@ public class GrievanceDatatableController {
 		filterrequest.setUserType(userType);
 		Integer userId = (Integer) session.getAttribute("userid");
 		
-		
-		
-		UserHeader header=registerService.getUserHeaders(request);
-		filterrequest.setPublicIp(header.getPublicIp());
-		filterrequest.setBrowser(header.getBrowser());
 		log.info("request parameters send to view grievance api=" + filterrequest);
 		response = grievanceFeignClient.grievanceFilter(filterrequest,pageNo,pageSize,file,source);
 		log.info("response::::::::::::::" + response);

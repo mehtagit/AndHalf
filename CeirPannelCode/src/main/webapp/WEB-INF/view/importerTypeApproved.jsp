@@ -108,7 +108,7 @@
 											pattern="<spring:eval expression="@environment.getProperty('pattern.trademark')" />"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.trademark" />');"
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.trademark" />');"
-											title="" required> <label
+											title="" maxlength="160" required> <label
 											for="trademark"><spring:message
 												code="registration.trademark" /> <span class="star">*</span></label>
 									</div>

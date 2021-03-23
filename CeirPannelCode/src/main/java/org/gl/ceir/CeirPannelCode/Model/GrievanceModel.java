@@ -19,24 +19,6 @@ private String userDisplayName,email,firstName,lastName,middleName,phoneNo,raise
 private Integer raisedByUserId,userTypeId;
 private GrievanceMessageModal grievance;
 private List<MultipleFileModel> attachedFiles;
-private String publicIp;
-private String browser;
-
-
-
-
-public String getPublicIp() {
-	return publicIp;
-}
-public void setPublicIp(String publicIp) {
-	this.publicIp = publicIp;
-}
-public String getBrowser() {
-	return browser;
-}
-public void setBrowser(String browser) {
-	this.browser = browser;
-}
 public int getId() {
 	return id;
 }
@@ -248,10 +230,6 @@ public String toString() {
 	builder.append(grievance);
 	builder.append(", attachedFiles=");
 	builder.append(attachedFiles);
-	builder.append(", publicIp=");
-	builder.append(publicIp);
-	builder.append(", browser=");
-	builder.append(browser);
 	builder.append("]");
 	return builder.toString();
 }
