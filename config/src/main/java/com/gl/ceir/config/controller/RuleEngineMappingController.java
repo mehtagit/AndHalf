@@ -96,7 +96,7 @@ public class RuleEngineMappingController {
 					ruleEngineMapping.getUserName(), Long.valueOf(ruleEngineMapping.getUserTypeId()),
 			  "CEIRSystem", Long.valueOf(ruleEngineMapping.getFeatureId()),
 			  Features.RULE_FEATURE_MAPPING, SubFeatures.REGISTER, "","NA",
-			  ruleEngineMapping.getRoleType()));
+			  ruleEngineMapping.getRoleType(),ruleEngineMapping.getPublicIp(),ruleEngineMapping.getBrowser()));
 			
 		}
 		return genricResponse;
@@ -117,7 +117,7 @@ public class RuleEngineMappingController {
 					ruleEngineMapping.getUserName(), Long.valueOf(ruleEngineMapping.getUserTypeId()),
 			  "CEIRSystem", Long.valueOf(ruleEngineMapping.getFeatureId()),
 			  Features.RULE_FEATURE_MAPPING, SubFeatures.UPDATE, "","NA",
-			  ruleEngineMapping.getRoleType()));
+			  ruleEngineMapping.getRoleType(),ruleEngineMapping.getPublicIp(),ruleEngineMapping.getBrowser()));
 		}
 		
 		MappingJacksonValue mapping = new MappingJacksonValue(ruleEngineMapping);
@@ -142,7 +142,7 @@ public class RuleEngineMappingController {
 					ruleEngineMapping.getUserName(), Long.valueOf(ruleEngineMapping.getUserTypeId()),
 			  "CEIRSystem", Long.valueOf(ruleEngineMapping.getFeatureId()),
 			  Features.RULE_FEATURE_MAPPING, SubFeatures.DELETE, "","NA",
-			  ruleEngineMapping.getRoleType()));
+			  ruleEngineMapping.getRoleType(),ruleEngineMapping.getPublicIp(),ruleEngineMapping.getBrowser()));
 		}
 		
 		logger.info("Response to send = " + mapping);

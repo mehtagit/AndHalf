@@ -73,6 +73,29 @@ public class RuleEngine implements Serializable {
 	
 	@Transient
 	private Integer userId;
+	
+	@Transient
+	private String publicIp;
+	
+	@Transient
+	private String browser;
+	
+	
+	public String getPublicIp() {
+		return publicIp;
+	}
+
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+
+	public String getBrowser() {
+		return browser;
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 
 	public Long getId() {
 		return id;
@@ -211,6 +234,10 @@ public class RuleEngine implements Serializable {
 		builder.append(roleType);
 		builder.append(", userId=");
 		builder.append(userId);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}

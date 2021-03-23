@@ -68,6 +68,30 @@ public class MessageConfigurationDb implements Serializable {
 	
 	private String modifiedBy;
 	
+	@Transient
+	private String publicIp;
+	
+	@Transient
+	private String browser;
+	
+	
+	
+	public String getPublicIp() {
+		return publicIp;
+	}
+
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+
+	public String getBrowser() {
+		return browser;
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -160,49 +184,6 @@ public class MessageConfigurationDb implements Serializable {
 		return serialVersionUID;
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("MessageConfigurationDb [id=");
-		builder.append(id);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", tag=");
-		builder.append(tag);
-		builder.append(", value=");
-		builder.append(value);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", channel=");
-		builder.append(channel);
-		builder.append(", channelInterp=");
-		builder.append(channelInterp);
-		builder.append(", active=");
-		builder.append(active);
-		builder.append(", subject=");
-		builder.append(subject);
-		builder.append(", featureName=");
-		builder.append(featureName);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append(", userName=");
-		builder.append(userName);
-		builder.append(", userTypeId=");
-		builder.append(userTypeId);
-		builder.append(", featureId=");
-		builder.append(featureId);
-		builder.append(", roleType=");
-		builder.append(roleType);
-		builder.append(", userType=");
-		builder.append(userType);
-		builder.append(", modifiedBy=");
-		builder.append(modifiedBy);
-		builder.append("]");
-		return builder.toString();
-	}
-
 	public long getUserId() {
 		return userId;
 	}
@@ -257,6 +238,53 @@ public class MessageConfigurationDb implements Serializable {
 
 	public void setFeatureName(String featureName) {
 		this.featureName = featureName;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("MessageConfigurationDb [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", tag=");
+		builder.append(tag);
+		builder.append(", value=");
+		builder.append(value);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", channel=");
+		builder.append(channel);
+		builder.append(", channelInterp=");
+		builder.append(channelInterp);
+		builder.append(", active=");
+		builder.append(active);
+		builder.append(", subject=");
+		builder.append(subject);
+		builder.append(", featureName=");
+		builder.append(featureName);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

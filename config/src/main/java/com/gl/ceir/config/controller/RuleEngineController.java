@@ -109,7 +109,7 @@ else {
 					ruleEngine.getUserName(), Long.valueOf(ruleEngine.getUserTypeId()),
 					   "SystemAdmin", Long.valueOf(ruleEngine.getFeatureId()),
 					  Features.RULE_LIST, SubFeatures.UPDATE, "","NA",
-					  ruleEngine.getRoleType()));
+					  ruleEngine.getRoleType(),ruleEngine.getPublicIp(),ruleEngine.getBrowser()));
 					
 		}
 

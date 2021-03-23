@@ -126,7 +126,7 @@ public class ConfigurationManagementServiceImpl {
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(),
 					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
 					Long.valueOf(filterRequest.getFeatureId()), Features.SYSTEM_MANAGEMENT, SubFeatures.VIEW, "", "NA",
-					filterRequest.getRoleType()));
+					filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
 			logger.info("SYSTEM_MANAGEMENT : successfully inserted in Audit trail.");
 			return page;
 
@@ -233,7 +233,7 @@ public class ConfigurationManagementServiceImpl {
 			auditTrailRepository.save(new AuditTrail(Long.valueOf(filterRequest.getUserId()),
 					filterRequest.getUserName(), Long.valueOf(filterRequest.getUserTypeId()),
 					filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
-					Features.MESSAGE_MANAGEMENT, SubFeatures.VIEW, "", "NA", filterRequest.getRoleType()));
+					Features.MESSAGE_MANAGEMENT, SubFeatures.VIEW, "", "NA", filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
 			logger.info("MESSAGE_MANAGEMENT : successfully inserted in Audit trail.");
 
 			return page;
@@ -367,7 +367,7 @@ public class ConfigurationManagementServiceImpl {
 				auditTrailRepository.save(new AuditTrail(Long.valueOf(filterRequest.getUserId()),
 						filterRequest.getUserName(), Long.valueOf(filterRequest.getUserTypeId()),
 						filterRequest.getUserType(), Long.valueOf(filterRequest.getFeatureId()),
-						Features.POLICY_MANAGEMENT, SubFeatures.VIEW, "", "NA", filterRequest.getRoleType()));
+						Features.POLICY_MANAGEMENT, SubFeatures.VIEW, "", "NA", filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
 				logger.info("POLICY_MANAGEMENT : successfully inserted in Audit trail ");
 
 			}

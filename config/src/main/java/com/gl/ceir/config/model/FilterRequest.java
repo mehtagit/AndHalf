@@ -1,5 +1,7 @@
 package com.gl.ceir.config.model;
 
+import javax.persistence.Transient;
+
 public class FilterRequest {
 
 	private Long id;
@@ -63,7 +65,60 @@ public class FilterRequest {
 	private String sort,blockingTypeFilter;
 	
 	public String visaType,visaNumber,visaExpiryDate;
+	public String order,orderColumnName;
+	public String description,name;
+	private String publicIp;
+	private String browser;
 	
+	
+	public String getPublicIp() {
+		return publicIp;
+	}
+
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+
+	public String getBrowser() {
+		return browser;
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getOrder() {
+		return order;
+	}
+
+	public void setOrder(String order) {
+		this.order = order;
+	}
+
+	public String getOrderColumnName() {
+		return orderColumnName;
+	}
+
+	public void setOrderColumnName(String orderColumnName) {
+		this.orderColumnName = orderColumnName;
+	}
+
 	public String getFilteredUserType() {
 		return filteredUserType;
 	}
@@ -371,6 +426,30 @@ public class FilterRequest {
 		this.blockingTypeFilter = blockingTypeFilter;
 	}
 
+	public String getVisaType() {
+		return visaType;
+	}
+
+	public void setVisaType(String visaType) {
+		this.visaType = visaType;
+	}
+
+	public String getVisaNumber() {
+		return visaNumber;
+	}
+
+	public void setVisaNumber(String visaNumber) {
+		this.visaNumber = visaNumber;
+	}
+
+	public String getVisaExpiryDate() {
+		return visaExpiryDate;
+	}
+
+	public void setVisaExpiryDate(String visaExpiryDate) {
+		this.visaExpiryDate = visaExpiryDate;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -474,35 +553,24 @@ public class FilterRequest {
 		builder.append(visaNumber);
 		builder.append(", visaExpiryDate=");
 		builder.append(visaExpiryDate);
+		builder.append(", order=");
+		builder.append(order);
+		builder.append(", orderColumnName=");
+		builder.append(orderColumnName);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}
 
-	public String getVisaType() {
-		return visaType;
-	}
-
-	public void setVisaType(String visaType) {
-		this.visaType = visaType;
-	}
-
-	public String getVisaNumber() {
-		return visaNumber;
-	}
-
-	public void setVisaNumber(String visaNumber) {
-		this.visaNumber = visaNumber;
-	}
-
-	public String getVisaExpiryDate() {
-		return visaExpiryDate;
-	}
-
-	public void setVisaExpiryDate(String visaExpiryDate) {
-		this.visaExpiryDate = visaExpiryDate;
-	}
-
-	 
+	
+	
 }
 
 

@@ -82,7 +82,7 @@ public class SystemConfigListController {
 			FileDetails fileDetails = systemConfigListServiceImpl.getFilteredAuditTrailInFile(filterRequest);
 			mapping = new MappingJacksonValue(fileDetails);
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 0L, "System", 0L, 
-					Features.FIELD_MANGEMENT, SubFeatures.EXPORT, "","NA","System"));
+					Features.FIELD_MANGEMENT, SubFeatures.EXPORT, "","NA","System",filterRequest.getPublicIp(),filterRequest.getBrowser()));
 		}
 
 		logger.info("Response of view Request = " + mapping);

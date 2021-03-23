@@ -96,6 +96,29 @@ public class RuleEngineMapping implements Serializable {
 	@Transient
 	private String roleType;
 	
+	@Transient
+	private String publicIp;
+	
+	@Transient
+	private String browser;
+	
+	
+	public String getPublicIp() {
+		return publicIp;
+	}
+
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+
+	public String getBrowser() {
+		return browser;
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+
 	public String getOutput() {
 		return output;
 	}
@@ -276,6 +299,10 @@ public class RuleEngineMapping implements Serializable {
 		builder.append(userTypeId);
 		builder.append(", roleType=");
 		builder.append(roleType);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}
