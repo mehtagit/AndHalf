@@ -146,7 +146,7 @@ width: inherit;
 							</div>
 							<form action="${context}/viewConsignment" id="viewFilter"
 								method="post">
-								<div class="col s12 m12 l12" id="consignmentTableDIv"
+								<div class="registrationTableDiv_box" id="consignmentTableDIv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv"></div>
 								</div>

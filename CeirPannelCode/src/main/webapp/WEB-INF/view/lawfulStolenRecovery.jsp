@@ -133,7 +133,7 @@ width: inherit;
 								<a class="boton right" id="btnLink"></a>
 							</div>
 							<form action="${context}/stakeholder/record" method="post" id="LawfullStolenFilterForm">
-								<div class="col s12 m12 l12" id="consignmentTableDIv"
+								<div class="registrationTableDiv_box" id="consignmentTableDIv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
 										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>

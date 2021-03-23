@@ -25,7 +25,7 @@ function userloginGraph() {
 		    "typeFlag": 2,"dayDataLimit":15,
 		    "featureId":parseInt(featureId),
 		    "userType":$("body").attr("data-roleType"),
-		    "userId" : parseInt($("body").attr("data-userID"))
+		    "userId" : parseInt($("body").attr("data-userid"))
 	}
 		}
 		
@@ -83,9 +83,9 @@ $(document).ready(function(){
 			"typeFlag": 1,"dayDataLimit":15,
 			 "featureId":parseInt(featureId),
 			    "userType":$("body").attr("data-roleType"),
-			    "userId" : parseInt($("body").attr("data-userID"))
+			    "userId" : parseInt($("body").attr("data-userid"))
 	}
-	
+
 	$.ajax({
 		type : 'POST',
 		url : './user/report/count',
@@ -121,7 +121,7 @@ var i=0;
 			     "typeFlag": 2,"dayDataLimit":15,
 			     "featureId":parseInt(featureId),
 				    "userType":$("body").attr("data-roleType"),
-				    "userId" : parseInt($("body").attr("data-userID"))
+				    "userId" : parseInt($("body").attr("data-userid"))
 		}
 		
 		var token = $("meta[name='_csrf']").attr("content");

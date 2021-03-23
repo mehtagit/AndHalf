@@ -672,7 +672,7 @@ function pageButtons(url){
 					for(i=0; i<date.length; i++){
 				
 					if(date[i].type === "date"){
-					$("#consignmentTableDIv").append("<div class='input-field col s6 m2'>"+
+					$("#consignmentTableDIv").append("<div class='input-field'>"+
 							"<div id='enddatepicker' class='input-group'>"+
 							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 							"<label for="+date[i].id+">"+date[i].title
@@ -685,12 +685,12 @@ function pageButtons(url){
 					});
 				}else if(date[i].type === "text"){
 					
-					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+					$("#consignmentTableDIv").append("<div class='input-field' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
 				else if(date[i].type === "select"){
 
 						var dropdownDiv=
-							$("#consignmentTableDIv").append("<div class='col s6 m2 selectDropdwn'>"+
+							$("#consignmentTableDIv").append("<div class='selectDropdwn'>"+
 									
 									"<div class='select-wrapper select2  initialized'>"+
 									"<span class='caret'>"+"</span>"+
@@ -751,9 +751,9 @@ function pageButtons(url){
 			if(sourceType=="viaStolen"){
 				$("#btnLink").css({display: "none"});
 
-				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' style='margin-left: 18px;' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
-				$("#consignmentTableDIv").append("<div class=' col s3 m2 l2'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				$("#consignmentTableDIv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+				$("#consignmentTableDIv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
+				$("#consignmentTableDIv").append("<div class='filter_btn'><a href='JavaScript:void(0)' type='button' class='export-to-excel right' onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			
 				$('#clearFilter').attr("onclick", "filterResetConsignment('viewFilter')");	
 				for(i=0; i<button.length; i++){
@@ -781,9 +781,9 @@ function pageButtons(url){
 			}else{
 				var viewFilter="viewFilter";
 			
-				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-				$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' style='margin-left: 18px;' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
-				$("#consignmentTableDIv").append("<div class=' col s3 m2 l2'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+				$("#consignmentTableDIv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+				$("#consignmentTableDIv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
+				$("#consignmentTableDIv").append("<div class='filter_btn'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportConsignmentData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 				
 				$('#clearFilter').attr("onclick", "filterResetConsignment('viewFilter')");	
 				for(i=0; i<button.length; i++){

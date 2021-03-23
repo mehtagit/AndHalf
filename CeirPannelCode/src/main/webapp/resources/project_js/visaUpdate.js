@@ -203,7 +203,7 @@
 						var date=data.inputTypeDateList;
 						for(i=0; i<date.length; i++){
 							if(date[i].type === "date"){
-								$("#pendingTacTableDiv").append("<div class='input-field col s6 m2'>"+
+								$("#pendingTacTableDiv").append("<div class='input-field'>"+
 										"<div id='enddatepicker' class='input-group date'>"+
 										"<input class='form-control datepicker' type='text' onchange='checkDate(startDate,endDate)' id="+date[i].id+" autocomplete='off'>"+
 										"<label for="+date[i].id+">"+date[i].title
@@ -216,13 +216,13 @@
 						        });
 								}
 							else if(date[i].type === "text"){
-								$("#pendingTacTableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+								$("#pendingTacTableDiv").append("<div class='input-field'><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 
 							}
 							else if(date[i].type === "select"){
 
 								var dropdownDiv=
-									$("#pendingTacTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
+									$("#pendingTacTableDiv").append("<div class='selectDropdwn'>"+
 											
 											"<div class='select-wrapper select2  initialized'>"+
 											"<span class='caret'>"+"</span>"+
@@ -256,9 +256,9 @@
 								"</div>");
 						}*/
 
-						$("#pendingTacTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'></div>");
-						$("#pendingTacTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' style='margin-left: 18px;' id='clearVisaFilter'>"+$.i18n('clearFilter')+"</button></div>");
-						$("#pendingTacTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' style='margin-right: -105px;' type='button' class='export-to-excel right'  onclick='exportData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#pendingTacTableDiv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='submitFilter'></div>");
+						$("#pendingTacTableDiv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='clearVisaFilter'>"+$.i18n('clearFilter')+"</button></div>");
+						$("#pendingTacTableDiv").append("<div class='filter_btn'><a href='JavaScript:void(0)'  type='button' class='export-to-excel right'  onclick='exportData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						$('#clearVisaFilter').attr("onclick", "visafilterReset('visaViewTable')");	
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);

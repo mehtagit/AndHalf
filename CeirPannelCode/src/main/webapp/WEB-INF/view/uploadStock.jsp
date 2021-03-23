@@ -286,7 +286,7 @@ to {
 									<div class="input-field col s12 m6" id="invoiceNumberDiv"
 										style="display: none">
 										<input type="text" name="invoiceNumber" id="invoiceNumber"
-										pattern="<spring:eval expression="@environment.getProperty('pattern.consignmentNumber')" />"
+										pattern="<spring:eval expression="@environment.getProperty('pattern.supplierID')" />"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.15numbers" />');"
 											oninvalid="InvalidMsg(this,'input','<spring:message code="validation.15numbers" />');"
 											maxlength="15" /> <label for="invoiceNumber"

@@ -215,7 +215,7 @@ function pageRendering(){
 			/*if(window.parent.$("body").attr("data-usertype") == "CEIRAdmin"){*/
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){	
-					$("#consignmentTableDIv").append("<div class='input-field col s6 m2'>"+
+					$("#consignmentTableDIv").append("<div class='input-field'>"+
 							"<div id='enddatepicker' class='input-group'>"+
 							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 							"<label for="+date[i].id+">"+date[i].title
@@ -227,12 +227,12 @@ function pageRendering(){
 						 maxDate: new Date()
 			        }); 
 				}else if(date[i].type === "text"){
-					$("#consignmentTableDIv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+					$("#consignmentTableDIv").append("<div class='input-field' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
 				else if(date[i].type === "select"){
 
 					var dropdownDiv=
-						$("#consignmentTableDIv").append("<div class='col s6 m2 selectDropdwn'>"+
+						$("#consignmentTableDIv").append("<div class='selectDropdwn'>"+
 								
 								"<div class='select-wrapper select2  initialized'>"+
 								"<span class='caret'>"+"</span>"+
@@ -292,9 +292,9 @@ function pageRendering(){
 			
 			
 
-			$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-			$("#consignmentTableDIv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' style='margin-left: 18px;' id='clearLawfullFilter'>"+$.i18n('clearFilter')+"</button></div>");
-			$("#consignmentTableDIv").append("<div class='col s12 m4'><a href='JavaScript:void(0);' onclick='exportStolenRecoveryData()'  class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+			$("#consignmentTableDIv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+			$("#consignmentTableDIv").append("<div class='filter_btn'><button type='button' class='btn primary botton'  id='clearLawfullFilter'>"+$.i18n('clearFilter')+"</button></div>");
+			$("#consignmentTableDIv").append("<div class='filter_btn'><a href='JavaScript:void(0);' onclick='exportStolenRecoveryData()'  class='export-to-excel right'>"+$.i18n('Export')+" <i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			$('#clearLawfullFilter').attr("onclick", "filterResetLawfull('LawfullStolenFilterForm')");	
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
@@ -353,6 +353,14 @@ function setAllDropdowns(){
 	});
 
 
+	$.getJSON('./getDropdownList/BLOCKINGTYPE', function(data) {
+		for (i = 0; i < data.length; i++) {
+			$('<option>').val(data[i].value).text(data[i].interp)
+			.appendTo('#blockingTypeFilter');
+		}
+		/*$('<option>').val("-1").text("Operation")
+		.appendTo('#operator');*/
+	});
 }
 
 function openStolenRecoveryModal(){

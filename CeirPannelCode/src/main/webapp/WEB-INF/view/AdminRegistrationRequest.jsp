@@ -135,7 +135,7 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
 							</div>
 							<form action="${context}/registrationRequest" id="viewFilter"
 								method="post">
-								<div class="col s12 m12 l12" id="registrationTableDiv"
+								<div class="registrationTableDiv_box" id="registrationTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
 										
