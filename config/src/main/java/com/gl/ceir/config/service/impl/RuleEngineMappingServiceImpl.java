@@ -154,7 +154,7 @@ public class RuleEngineMappingServiceImpl {
 					filterRequest.getUserName(), Long.valueOf(filterRequest.getUserTypeId()),
 					"SystemAdmin", Long.valueOf(filterRequest.getFeatureId()),
 					Features.RULE_FEATURE_MAPPING, operationType, "","NA",
-					filterRequest.getRoleType()));
+					filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
 
 			return page;
 		} catch (Exception e) {

@@ -70,6 +70,27 @@ public class PolicyConfigurationDb implements Serializable {
 	
 	@Transient
 	private String typeInterp;
+	
+	@Transient
+	private String publicIp;
+	
+	@Transient
+	private String browser;
+	
+	
+	
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -125,7 +146,7 @@ public class PolicyConfigurationDb implements Serializable {
 		this.remark = remark;
 	}
 	public int getPolicyOrder() {
-		return policyOrder;
+	  	return policyOrder;
 	}
 	public void setPolicyOrder(int policyOrder) {
 		this.policyOrder = policyOrder;
@@ -196,6 +217,10 @@ public class PolicyConfigurationDb implements Serializable {
 		builder.append(userType);
 		builder.append(", typeInterp=");
 		builder.append(typeInterp);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}

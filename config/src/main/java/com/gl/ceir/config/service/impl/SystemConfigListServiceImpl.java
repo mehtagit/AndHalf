@@ -132,7 +132,7 @@ public class SystemConfigListServiceImpl {
 			User user = userRepository.getById(filterRequest.getUserId());
 
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), user.getUsername(), 0L, "System", 0L,
-					Features.FIELD_MANGEMENT, SubFeatures.VIEW, "", "NA", "System"));
+					Features.FIELD_MANGEMENT, SubFeatures.VIEW, "", "NA", "System",filterRequest.getPublicIp(),filterRequest.getBrowser()));
 //				Features.CONFIG_LIST, SubFeatures.VIEW, ""));
 			/*
 			 * auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(),
@@ -164,7 +164,7 @@ public class SystemConfigListServiceImpl {
 			// Features.CONFIG_LIST, SubFeatures.VIEW, ""));
 
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), user.getUsername(), 0L, "SystemAdmin",
-					0L, Features.FIELD_MANGEMENT, SubFeatures.VIEW, "", "NA", "SystemAdmin"));
+					0L, Features.FIELD_MANGEMENT, SubFeatures.VIEW, "", "NA", "SystemAdmin",filterRequest.getPublicIp(),filterRequest.getBrowser()));
 
 			logger.info("AUDIT : Unique Tags list saved in audit_trail.");
 

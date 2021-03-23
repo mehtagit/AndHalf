@@ -1,5 +1,7 @@
 package com.gl.ceir.config.model;
 
+import javax.persistence.Transient;
+
 public class FilterRequest {
 
 	private Long id;
@@ -63,6 +65,8 @@ public class FilterRequest {
 	private String sort,blockingTypeFilter;
 	
 	public String visaType,visaNumber,visaExpiryDate;
+	public String order,orderColumnName;
+	public String description,name;
 	private String publicIp;
 	private String browser;
 	
@@ -413,6 +417,38 @@ public class FilterRequest {
 		this.browser = browser;
 	}
 
+	public String getOrder() {
+		return order;
+	}
+
+	public void setOrder(String order) {
+		this.order = order;
+	}
+
+	public String getOrderColumnName() {
+		return orderColumnName;
+	}
+
+	public void setOrderColumnName(String orderColumnName) {
+		this.orderColumnName = orderColumnName;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -516,6 +552,14 @@ public class FilterRequest {
 		builder.append(visaNumber);
 		builder.append(", visaExpiryDate=");
 		builder.append(visaExpiryDate);
+		builder.append(", order=");
+		builder.append(order);
+		builder.append(", orderColumnName=");
+		builder.append(orderColumnName);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", name=");
+		builder.append(name);
 		builder.append(", publicIp=");
 		builder.append(publicIp);
 		builder.append(", browser=");
@@ -524,6 +568,7 @@ public class FilterRequest {
 		return builder.toString();
 	}
 
+	 
 	
 	
 }

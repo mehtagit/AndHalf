@@ -109,7 +109,7 @@ public class ConfigurationController {
 		if(GenricResponse.getErrorCode()==200) {
 			auditTrailRepository.save(new AuditTrail(systemConfigurationDb.getUserId(), systemConfigurationDb.getUserName(), 
 					Long.valueOf(systemConfigurationDb.getUserTypeId()), systemConfigurationDb.getUserType(), Long.valueOf(systemConfigurationDb.getFeatureId()),
-					Features.SYSTEM_MANAGEMENT, SubFeatures.UPDATE, "", "NA",systemConfigurationDb.getRoleType()));
+					Features.SYSTEM_MANAGEMENT, SubFeatures.UPDATE, "", "NA",systemConfigurationDb.getRoleType(),systemConfigurationDb.getPublicIp(),systemConfigurationDb.getBrowser()));
 			logger.info("SYSTEM_MANAGEMENT : successully inserted in audit trail ");
 		}
 		logger.info("Update sytem config response="+GenricResponse);
@@ -182,7 +182,7 @@ public class ConfigurationController {
 		if(GenricResponse.getErrorCode()==0) {
 			auditTrailRepository.save(new AuditTrail(messageConfigurationDb.getUserId(), messageConfigurationDb.getUserName(), 
 					Long.valueOf(messageConfigurationDb.getUserTypeId()), messageConfigurationDb.getUserType(), Long.valueOf(messageConfigurationDb.getFeatureId()),
-					Features.MESSAGE_MANAGEMENT, SubFeatures.UPDATE, "", "NA",messageConfigurationDb.getRoleType()));
+					Features.MESSAGE_MANAGEMENT, SubFeatures.UPDATE, "", "NA",messageConfigurationDb.getRoleType(),messageConfigurationDb.getPublicIp(),messageConfigurationDb.getBrowser()));
 			logger.info("MESSAGE_MANAGEMENT : successully inserted in audit trail ");
 		}
 
@@ -247,7 +247,7 @@ public class ConfigurationController {
 		if(GenricResponse.getErrorCode() == 0) {
 			auditTrailRepository.save(new AuditTrail(Long.valueOf(policyConfigurationDb.getUserId()), policyConfigurationDb.getUserName(), 
 					Long.valueOf(policyConfigurationDb.getUserTypeId()), policyConfigurationDb.getUserType(), Long.valueOf(policyConfigurationDb.getFeatureId()),
-					Features.POLICY_MANAGEMENT, SubFeatures.UPDATE, "", "NA",policyConfigurationDb.getRoleType()));
+					Features.POLICY_MANAGEMENT, SubFeatures.UPDATE, "", "NA",policyConfigurationDb.getRoleType(),policyConfigurationDb.getPublicIp(),policyConfigurationDb.getBrowser()));
 			logger.info("POLICY_MANAGEMENT : successfully inserted in Audit trail ");
 		}
 

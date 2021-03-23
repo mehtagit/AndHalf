@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.ceir.CeirCode.configuration.SortDirection;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
@@ -74,6 +75,7 @@ public class RuleEngineServiceImpl {
 	
 	@Autowired
 	SystemConfigurationDbRepository systemConfigurationDbRepository;
+	
 	public RuleEngine findById(long id){
 		try {
 			return ruleEngineRepository.getById(id);
@@ -100,9 +102,26 @@ public class RuleEngineServiceImpl {
 	
 	public Page<RuleEngine> filterRuleEngine(FilterRequest filterRequest, Integer pageNo, 
 			Integer pageSize,String operation) {
-
+			
+		String orderColumn;
+		
+		if(operation.equals("Export")) {
+			orderColumn = "modifiedOn";
+			
+		}else {
+			orderColumn = "Created On".equalsIgnoreCase(filterRequest.getOrderColumnName()) ? "createdOn"
+				: "Modified On".equalsIgnoreCase(filterRequest.getOrderColumnName()) ? "modifiedOn"
+					: "Name".equalsIgnoreCase(filterRequest.getOrderColumnName()) ? "name"
+						:"Description".equalsIgnoreCase(filterRequest.getOrderColumnName()) ? "description" :
+							"Status".equalsIgnoreCase(filterRequest.getOrderColumnName()) ? "state"
+						: "modifiedOn";
+		}
+		Sort.Direction direction;
+		direction= SortDirection.getSortDirection(filterRequest.getOrder() == null ? "desc" : filterRequest.getOrder());
+		logger.info("orderColumn is : "+orderColumn+ " & direction is : "+direction);
+		
 		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
 
 			Page<RuleEngine> page = ruleEngineRepository.findAll( buildSpecification(filterRequest).build(), pageable );
 			String operationType= "view".equalsIgnoreCase(operation) ? SubFeatures.VIEW_ALL : SubFeatures.EXPORT;
@@ -111,7 +130,7 @@ public class RuleEngineServiceImpl {
 					  filterRequest.getUserName(), Long.valueOf(filterRequest.getUserTypeId()),
 					   "SystemAdmin", Long.valueOf(filterRequest.getFeatureId()),
 					  Features.RULE_LIST, operationType, "","NA",
-					  filterRequest.getRoleType()));
+					  filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
 					
 			
 			return page;
@@ -122,6 +141,8 @@ public class RuleEngineServiceImpl {
 		}
 
 	}
+	
+	
 	
 	public List<RuleEngine> allRuleNames() {
 
@@ -140,10 +161,20 @@ public class RuleEngineServiceImpl {
 		//ranjeet
 
 		GenericSpecificationBuilder<RuleEngine> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
-		
+		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
+			cmsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
+
+		if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
+			cmsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
 		
 		if(Objects.nonNull(filterRequest.getState()))
 			cmsb.with(new SearchCriteria("state", filterRequest.getState(), SearchOperation.EQUALITY, Datatype.STRING));
+		
+		if(Objects.nonNull(filterRequest.getDescription()))
+			cmsb.with(new SearchCriteria("description", filterRequest.getDescription(), SearchOperation.EQUALITY, Datatype.STRING));
+		
+		if(Objects.nonNull(filterRequest.getName()))
+			cmsb.with(new SearchCriteria("name", filterRequest.getName(), SearchOperation.EQUALITY, Datatype.STRING));
 		
 		 if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			 

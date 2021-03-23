@@ -78,6 +78,13 @@ public class SystemConfigurationDb implements Serializable {
 	@Transient
 	private String roleType;
 	
+	@Transient
+	private String publicIp;
+	
+	@Transient
+	private String browser;
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -92,6 +99,18 @@ public class SystemConfigurationDb implements Serializable {
 	}
 	public LocalDateTime getModifiedOn() {
 		return modifiedOn;
+	}
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
 	}
 	public void setModifiedOn(LocalDateTime modifiedOn) {
 		this.modifiedOn = modifiedOn;
@@ -192,6 +211,10 @@ public class SystemConfigurationDb implements Serializable {
 		builder.append(featureId);
 		builder.append(", roleType=");
 		builder.append(roleType);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}
