@@ -145,7 +145,7 @@ position: fixed;
 								<a href="" class="boton right" id="btnLink"></a>
 							</div>
 							<form action="${context}/manageTypeDevices" id="viewFilter" method="post">
-								<div class="col s12 m12 l12" id="typeAprroveTableDiv" 
+								<div class="registrationTableDiv_box" id="typeAprroveTableDiv" 
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
 										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
