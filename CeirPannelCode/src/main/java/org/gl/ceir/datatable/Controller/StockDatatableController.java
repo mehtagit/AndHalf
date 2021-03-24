@@ -71,16 +71,21 @@ public class StockDatatableController {
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
 		// TODO Convert header to an ENUM.
 		// list provided via Back-end process
+		/*
+		 * if("CEIRAdmin".equals(userType)) {
+		 * filterrequest.setColumnName(request.getParameter("order[0][column]") == null
+		 * ? "modifiedOn" : request.getParameter("order[0][column]"));
+		 * filterrequest.setSort(request.getParameter("order[0][dir]") == null ? "desc"
+		 * : request.getParameter("order[0][dir]")); }
+		 * 
+		 * else { filterrequest.setColumnName("modifiedOn");
+		 * filterrequest.setSort(request.getParameter("desc")); }
+		 */
 		
-		if("CEIRAdmin".equals(userType)) {
 		filterrequest.setColumnName(request.getParameter("order[0][column]") == null ? "modifiedOn" : request.getParameter("order[0][column]"));
 		filterrequest.setSort(request.getParameter("order[0][dir]") == null ? "desc" : request.getParameter("order[0][dir]"));
-		}
-		else {
-			filterrequest.setColumnName("modifiedOn");
-			filterrequest.setSort(request.getParameter("desc"));
-		}
 		filterrequest.setSearchString(request.getParameter("search[value]"));
+		
 		Object response = feignCleintImplementation.stockFilter(filterrequest, pageNo, pageSize, exportFile,
 				sourceParam);
 		log.info("request passed to the filter api  =" + filterrequest);
@@ -364,6 +369,28 @@ public class StockDatatableController {
 					Translator.toLocale("select.stockStatus"), "StockStatus", "", "text",
 					Translator.toLocale("input.quantity"), "IMEIQuantityFilter", "10" ,"text",
 					Translator.toLocale("input.devicequantity"), "deviceQuantityFilter", "10"};
+			for (int i = 0; i < dateParam.length; i++) {
+				dateRelatedFields = new InputFields();
+				dateRelatedFields.setType(dateParam[i]);
+				i++;
+				dateRelatedFields.setTitle(dateParam[i]);
+				i++;
+				dateRelatedFields.setId(dateParam[i]);
+				i++;
+				dateRelatedFields.setClassName(dateParam[i]);
+				inputTypeDateList.add(dateRelatedFields);
+			}
+		}
+		else if ("Custom".equals(userType)) {
+			// input type date list
+						String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
+								Translator.toLocale("input.endDate"), "endDate", "", "text",
+								Translator.toLocale("table.assignto"), "name","30","text",
+								Translator.toLocale("input.transactionID"), "transactionID", "18","text",
+								Translator.toLocale("table.fileName"), "fileNameFilter", "30", "select",
+								Translator.toLocale("select.stockStatus"), "StockStatus", "", "text",
+								Translator.toLocale("input.quantity"), "IMEIQuantityFilter", "10" ,"text",
+								Translator.toLocale("input.devicequantity"), "deviceQuantityFilter", "10" };
 			for (int i = 0; i < dateParam.length; i++) {
 				dateRelatedFields = new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
