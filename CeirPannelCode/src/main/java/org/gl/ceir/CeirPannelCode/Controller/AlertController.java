@@ -43,8 +43,10 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 	//------------------------------------- view Alert Address ----------------------------------------							
 	
 			@PostMapping("alertViewByID") 
-			public @ResponseBody GenricResponse viewAlertAddress (@RequestBody FilterRequest filterRequest)  {
+			public @ResponseBody GenricResponse viewAlertAddress (@RequestBody FilterRequest filterRequest,HttpSession session)  {
 				log.info("request send to the View Alert api="+filterRequest);
+				filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+				filterRequest.setBrowser(session.getAttribute("browser").toString());
 				GenricResponse response= userProfileFeignImpl.viewAlertFeign(filterRequest);
 				log.info("response from View api "+response);
 				return response;
@@ -54,8 +56,10 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 	//------------------------------------- update alert ----------------------------------------							
 			
 			@PostMapping("updateAlert") 
-			public @ResponseBody GenricResponse updateAlerts (@RequestBody FilterRequest filterRequest)  {
+			public @ResponseBody GenricResponse updateAlerts (@RequestBody FilterRequest filterRequest,HttpSession session)  {
 				log.info("request send to the Update Alert api="+filterRequest);
+				filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+				filterRequest.setBrowser(session.getAttribute("browser").toString());
 				GenricResponse response= userProfileFeignImpl.updateAlertFeign(filterRequest);
 				log.info("response from update api "+response);
 				return response;
@@ -72,6 +76,8 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 		Object response;
 		Integer file = 1;	
 		log.info("filterRequest:::::::::"+filterRequest);
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequest.setBrowser(session.getAttribute("browser").toString());
 	response= userProfileFeignImpl.viewAlertRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
 	FileExportResponse fileExportResponse;
 	   Gson gson= new Gson(); 

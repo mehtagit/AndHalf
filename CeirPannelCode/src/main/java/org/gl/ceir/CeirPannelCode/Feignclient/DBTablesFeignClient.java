@@ -25,7 +25,7 @@ public interface DBTablesFeignClient {
 			@RequestParam(name="featureId", required = false) Integer featureId,
 			@RequestParam(name="userId", required = false) Integer userId,
 			@RequestParam(name="userType", required = false) String userType,
-			@RequestParam(name="publicIP", required = false) String publicIP, 
+			@RequestParam(name="publicIp", required = false) String publicIp, 
 			@RequestParam(name="browser", required = false) String browser);
 	
 	@RequestMapping(value= "/db/table/data/V2" , method=RequestMethod.POST) 
@@ -37,7 +37,7 @@ public interface DBTablesFeignClient {
 			@RequestParam(name="featureId", required = false) Integer featureId,
 			@RequestParam(name="userId", required = false) Integer userId,
 			@RequestParam(name="userType", required = false) String userType,
-			@RequestParam(name="publicIP", required = false) String publicIP, 
+			@RequestParam(name="publicIp", required = false) String publicIp, 
 			@RequestParam(name="browser", required = false) String browser);
 	
 	//----------------------------Report TableData Feign------------------------------

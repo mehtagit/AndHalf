@@ -103,6 +103,8 @@ public class RegistrationReqDatatableController {
 		log.info("pageSize" + pageSize + "-----------pageNo---" + pageNo + "------------source--->" + source);
 
 		try {
+			filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
+			filterrequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the filter api =" + filterrequest);
 			Object response = userProfileFeignImpl.registrationRequest(filterrequest, pageNo, pageSize, file, source);
 			log.info("response in datatable" + response);

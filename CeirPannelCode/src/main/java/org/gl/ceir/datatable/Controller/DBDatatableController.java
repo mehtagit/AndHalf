@@ -71,7 +71,7 @@ public class DBDatatableController {
 
 		DBrowDataModel paginationContentList = null;
 		try {
-			filterrequest.setPublicIP(session.getAttribute("publicIP").toString());
+			filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
 			filterrequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request passed to API:::::::::" + filterrequest);
 			Object response = dBTablesFeignClient.DBRowDetailsFeign(filterrequest, pageNumber, pageSize,file);

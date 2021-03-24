@@ -14,14 +14,15 @@ public class DBrowDataModel {
 	
 	private String endDate,startDate,txnId,username,userType;
 	private Integer reportnameId,userTypeId,userId,featureId,typeFlag;
-	private String publicIP,browser;
+	private String publicIp,browser;
 	
 	
-	public String getPublicIP() {
-		return publicIP;
+	
+	public String getPublicIp() {
+		return publicIp;
 	}
-	public void setPublicIP(String publicIP) {
-		this.publicIP = publicIP;
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
 	}
 	public String getBrowser() {
 		return browser;
@@ -160,13 +161,16 @@ public class DBrowDataModel {
 		builder.append(featureId);
 		builder.append(", typeFlag=");
 		builder.append(typeFlag);
-		builder.append(", publicIP=");
-		builder.append(publicIP);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
 		builder.append(", browser=");
 		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
+	
 
 	
 	

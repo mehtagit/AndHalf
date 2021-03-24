@@ -53,9 +53,9 @@ public class DBTablesController {
 			@RequestParam(name="userId", required = false) Integer userId,
 			@RequestParam(name="userType", required = false) String userType,HttpSession session
 			){
-		String publicIP=session.getAttribute("publicIP").toString();
+		String publicIp=session.getAttribute("publicIP").toString();
 	    String browser=session.getAttribute("browser").toString();
-		DBTableModel dbTableList = dBTablesFeignClient.getAlltables(dbName,featureId,userId,userType,publicIP,browser);
+		DBTableModel dbTableList = dBTablesFeignClient.getAlltables(dbName,featureId,userId,userType,publicIp,browser);
 		return dbTableList;
 	}
 	
@@ -69,7 +69,7 @@ public class DBTablesController {
 		Gson gsonObject=new Gson();
 		Object response;
 		Integer file = 1;	
-		filterRequest.setPublicIP(session.getAttribute("publicIP").toString());
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
 		filterRequest.setBrowser(session.getAttribute("browser").toString());
 		log.info("DBrowDataModel:::::::::"+filterRequest);
 		response=  dBTablesFeignClient.DBRowDetailsFeign(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);

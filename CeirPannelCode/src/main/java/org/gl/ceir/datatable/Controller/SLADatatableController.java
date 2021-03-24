@@ -67,6 +67,8 @@ public class SLADatatableController {
 		filterRequest.setSearchString(request.getParameter("search[value]"));
 		
 		try {
+			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+			filterRequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the filter api ="+filterRequest);
 			Object response = userProfileFeignImpl.viewSLARequest(filterRequest, pageNo, pageSize, file);
 			log.info("response in datatable"+response);

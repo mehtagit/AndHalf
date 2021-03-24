@@ -72,14 +72,15 @@ public class StockDatatableController {
 		// TODO Convert header to an ENUM.
 		// list provided via Back-end process
 		
-		if("CEIRAdmin".equals(userType)) {
 		filterrequest.setColumnName(request.getParameter("order[0][column]") == null ? "modifiedOn" : request.getParameter("order[0][column]"));
 		filterrequest.setSort(request.getParameter("order[0][dir]") == null ? "desc" : request.getParameter("order[0][dir]"));
-		}
-		else {
-			filterrequest.setColumnName("modifiedOn");
-			filterrequest.setSort(request.getParameter("desc"));
-		}
+		
+		/*
+		 * if("CEIRAdmin".equals(userType)) {
+		 * 
+		 * } else { filterrequest.setColumnName("modifiedOn");
+		 * filterrequest.setSort(request.getParameter("desc")); }
+		 */
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		Object response = feignCleintImplementation.stockFilter(filterrequest, pageNo, pageSize, exportFile,
 				sourceParam);

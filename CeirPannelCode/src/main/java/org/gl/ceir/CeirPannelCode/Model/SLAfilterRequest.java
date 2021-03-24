@@ -3,6 +3,20 @@ package org.gl.ceir.CeirPannelCode.Model;
 public class SLAfilterRequest {
 	private String searchString,username,userType;
 	private Integer featureId,feature, pageNo, pageSize,userTypeId,usertype,userId;
+	private String publicIp,browser;
+	
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	public String getSearchString() {
 		return searchString;
 	}
@@ -86,6 +100,10 @@ public class SLAfilterRequest {
 		builder.append(usertype);
 		builder.append(", userId=");
 		builder.append(userId);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}
