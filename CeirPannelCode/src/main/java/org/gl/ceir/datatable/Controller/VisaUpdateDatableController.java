@@ -69,6 +69,31 @@ public class VisaUpdateDatableController {
 		String filter = request.getParameter("filter");
 		Gson gsonObject=new Gson();
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
+		
+		String column = "0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On"
+				: "1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Modified On"
+						: "2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Transaction ID"
+								: "3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Passport Number"
+								     : "4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Visa Type"
+										: "5".equalsIgnoreCase(request.getParameter("order[0][column]"))
+												? "Visa Number"
+												: "6".equalsIgnoreCase(request.getParameter("order[0][column]"))
+														? "File Name"
+														: "7".equalsIgnoreCase(request.getParameter("order[0][column]"))
+																? "Visa Expiry Date"
+																		: "8".equalsIgnoreCase(request.getParameter("order[0][column]"))
+																		? "Status"
+																: "Modified On";
+		String order;
+		if ("Modified On".equalsIgnoreCase(column)) {
+			order = "desc";
+		} else {
+			order = request.getParameter("order[0][dir]");
+		} 
+		filterrequest.setColumnName(column);
+		filterrequest.setSort(order);
+		
+		
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		filterrequest.setSearchString(request.getParameter("search[value]"));
