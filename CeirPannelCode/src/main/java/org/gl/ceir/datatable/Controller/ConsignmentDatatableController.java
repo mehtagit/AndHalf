@@ -80,10 +80,11 @@ public class ConsignmentDatatableController {
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		
-
+		String column=null;
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
 		log.info("---->"+request.getParameter("order[0][column]")+"============>"+request.getParameter("order[0][dir]"));
-		String column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+		if("CEIRAdmin".equals(userType) || "Custom".equals(userType)) {
+		 column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
 			"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Transaction ID":
 				"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Name":
 					"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Status":
@@ -91,6 +92,17 @@ public class ConsignmentDatatableController {
 							"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "IMEI/MEID Quantity":
 								"6".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Device Quantity"
 								:"Modified On";
+		}
+		else {
+			column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+				"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Transaction ID":
+					"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Supplier Name":
+						"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Status":
+							"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Tax Paid Status":
+								"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "IMEI/MEID Quantity":
+									"6".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Device Quantity"
+									:"Modified On";	
+		}
 		String order;
 		if("Modified On".equalsIgnoreCase(column)) {
 			order="desc";

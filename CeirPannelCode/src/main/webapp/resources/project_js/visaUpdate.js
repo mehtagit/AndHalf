@@ -129,15 +129,19 @@
 						var table=	$("#pendingTACLibraryTable").DataTable({
 							destroy:true,
 							"serverSide": true,
+							"ordering" : true,
 							orderCellsTop : true,
-							"ordering" : false,
-							"bPaginate" : true,
+						   "bPaginate" : true,
 							"bFilter" : false,
 							"bInfo" : true,
 							"bSearchable" : true,
 							"oLanguage": {  
 									"sUrl": langFile  
 								},
+								"aaSorting": [],
+								columnDefs: [
+									   { orderable: false, targets: -1 }
+									],
 								initComplete: function() {
 							 		$('.dataTables_filter input')
 			       .off().on('keyup', function(event) {
