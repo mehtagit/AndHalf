@@ -70,7 +70,7 @@ public class ReportDatatableController {
 		Integer pageNumber = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		
 		log.info("pageSize"+pageSize+"-----------pageNumber---"+pageNumber);
-		filterrequest.setPublicIP(session.getAttribute("publicIP").toString());
+		filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
 		filterrequest.setBrowser(session.getAttribute("browser").toString());
 		log.info("request passed to API:::::::::" + filterrequest);
 		Object response = dBTablesFeignClient.ReportDetailsFeign(filterrequest, pageNumber, pageSize, file);

@@ -97,6 +97,8 @@ public class ProfileService {
 		log.info("userid from session:  "+userid);
 		userStatus.setId(id);
 		userStatus.setUserId(userid); 
+		userStatus.setPublicIp(session.getAttribute("publicIP").toString());
+		userStatus.setBrowser(session.getAttribute("browser").toString());
 		log.info("userStatus data is :  "+userStatus);
 		HttpResponse response=new HttpResponse();             
 		response=userProfileFeignImpl.adminUserApproval(userStatus);
@@ -106,7 +108,9 @@ public class ProfileService {
 	public Registration ViewAdminUserService(HttpSession session, long id,Integer userId) {
 		log.info("inside View AdminStatus controller---------"+userId+"----->"+id);
 		Integer userid=(Integer)session.getAttribute("userid");
-		Registration response=new Registration();             
+		Registration response=new Registration();   
+		String publicIp = session.getAttribute("publicIP").toString();
+		String browser = session.getAttribute("browser").toString();
 		response=userProfileFeignImpl.ViewAdminUser(id, userId);
 		return response; 
 	}
@@ -119,6 +123,8 @@ public class ProfileService {
 		//userStatus.setUserId(userid); 
 		//userStatus.setId(id);
 		log.info("userStatus data is :  "+userStatus);
+		userStatus.setPublicIp(session.getAttribute("publicIP").toString());
+		userStatus.setBrowser(session.getAttribute("browser").toString());
 		HttpResponse response=new HttpResponse();             
 		response=userProfileFeignImpl.changeUserStatusFeign(userStatus);
 		return response;  

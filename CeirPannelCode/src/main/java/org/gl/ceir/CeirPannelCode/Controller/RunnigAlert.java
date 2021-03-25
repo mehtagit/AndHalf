@@ -45,6 +45,8 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 		Gson gsonObject=new Gson();
 		Object response;
 		Integer file = 1;	
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequest.setBrowser(session.getAttribute("browser").toString());
 		log.info("filterRequest:::::::::"+filterRequest);
 	response= userProfileFeignImpl.viewRunningAlertRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
 	FileExportResponse fileExportResponse;

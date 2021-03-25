@@ -58,7 +58,8 @@ public class AdminRegistrationRequest {
 		log.info("ID----->"+id+"----- Roles----->"+roles+"----type------>"+asType+"----userId---->"+userId);
 		
 		roles = roles.replace("=", " ");
-		
+		String publicIp = session.getAttribute("publicIP").toString();
+		String browser = session.getAttribute("browser").toString();
 		Registration registration = userProfileFeignImpl.ViewAdminUser(id, userId);
 		log.info("View registration API Response--------------->" +registration);
 		mv.addObject("registration", registration);
@@ -148,7 +149,10 @@ public class AdminRegistrationRequest {
 		filterRequest.setEmail(email);
 		filterRequest.setPhoneNo(phoneNo);
 		filterRequest.setUsername(username);
+		
 		log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterRequest.setBrowser(session.getAttribute("browser").toString());
 		Object response = userProfileFeignImpl.registrationRequest(filterRequest, pageNo, pageSize,file,source);
 		Gson gson= new Gson(); 
 		String apiResponse = gson.toJson(response);
