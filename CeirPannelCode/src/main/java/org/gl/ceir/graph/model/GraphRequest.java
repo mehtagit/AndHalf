@@ -22,6 +22,7 @@ public class GraphRequest {
 	private int pageNo;
 	private Integer typeFlag,dayDataLimit,featureId,userId;
 	private String userType;
+	private String publicIP,browser;
 	public List<String> getColumns() {
 		return columns;
 	}
@@ -135,6 +136,19 @@ public class GraphRequest {
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
+	 
+	public String getPublicIP() {
+		return publicIP;
+	}
+	public void setPublicIP(String publicIP) {
+		this.publicIP = publicIP;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -174,9 +188,14 @@ public class GraphRequest {
 		builder.append(userId);
 		builder.append(", userType=");
 		builder.append(userType);
+		builder.append(", publicIP=");
+		builder.append(publicIP);
+		builder.append(", browser=");
+		builder.append(browser);
 		builder.append("]");
 		return builder.toString();
 	}
+	 
 	
 	
 	 
