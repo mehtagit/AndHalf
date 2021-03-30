@@ -64,7 +64,7 @@ public class SmsUtil {
 		 
 		return true;
 	}
-	public boolean sendEmail(String toAddress, String fromAddress, String subject, String msgBody,int totalData,int dataRead,Integer sleep) {
+	public boolean sendSmss(String toAddress, String fromAddress, String subject, String msgBody,int totalData,int dataRead,Integer sleep) {
 		try {
 			if(!toAddress.isEmpty() && !msgBody.isEmpty()) {
 			logger.info("adding sms into the array");

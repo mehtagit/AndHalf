@@ -7,90 +7,90 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Arrays;
 import org.json.JSONObject;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.ceir.CEIRPostman.RepositoryService.SystemConfigurationDbRepoImpl;
 import com.ceir.CEIRPostman.model.SystemConfigurationDb;
 
-
 @Service
 public class SmsConfig {
 
-	private Logger log = LogManager.getRootLogger();
-	
-	@Autowired
-	SystemConfigurationDbRepoImpl systemConfigRepoImpl;
-	
-	public boolean[] sendSMS(String msisdn[], String text[]){
+    private final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(getClass());
 
-		boolean[] status = new boolean[msisdn.length];
-		SystemConfigurationDb smsSubmitUrl = systemConfigRepoImpl.getDataByTag("sms_submit_url");
-      log.info("sms_submit_url: "+smsSubmitUrl);
-		Arrays.fill(status, false);
-		try {
-			int size=msisdn.length;
-			for(int i=0;i<size;i++) {
-				log.info("SendSMS msisnd=" + msisdn[i] + ",Text=" + text[i]);
-				String enText = URLEncoder.encode(text[i], "UTF-8");
-				String enMsisdn = URLEncoder.encode(msisdn[i], "UTF-8");
+    @Autowired
+    SystemConfigurationDbRepoImpl systemConfigRepoImpl;
 
-				String url = smsSubmitUrl.getValue();
+    public boolean[] sendSMS(String msisdn[], String text[]) {
 
-				url = url.replaceAll("<MSISDN>", enMsisdn );
-				url = url.replaceAll("<MESSAGE>", enText );
+        boolean[] status = new boolean[msisdn.length];
+        SystemConfigurationDb smsSubmitUrl = systemConfigRepoImpl.getDataByTag("sms_submit_url");
+        log.info("sms_submit_url: " + smsSubmitUrl);
+        Arrays.fill(status, false);
+        try {
+            int size = msisdn.length;
+            for (int i = 0; i < size; i++) {
+                log.info("SendSMS msisnd=" + msisdn[i] + ",Text=" + text[i]);
+                String enText = URLEncoder.encode(text[i], "UTF-8");
+                String enMsisdn = URLEncoder.encode(msisdn[i], "UTF-8");
 
-				String resp = callURL(url);
-				resp = resp.toLowerCase();
-				log.info("Response: "+resp);
-				//resp??
-				if (resp.indexOf("message_id") != -1) {
-					status[i] = true;
-				}else {
-					status[i] = false;
-				}	
-				log.info("Status of message "+i+":"+status[i]);
-			}
-			} catch (Exception exp) {
-				exp.printStackTrace();
-			}
-			return status;
-			}
+                String url = smsSubmitUrl.getValue();
 
+                url = url.replaceAll("<MSISDN>", enMsisdn);
+                url = url.replaceAll("<MESSAGE>", enText);
 
-	public String callURL(String urlString) {
-		String inputResponse = "";
-		String messageId = "";
-		try {
-			
-			log.info(urlString);
-			URL url = new URL(urlString);
-			HttpURLConnection urlConn =(HttpURLConnection) url.openConnection();
-			urlConn.setConnectTimeout(30 * 1000);
-			urlConn.setReadTimeout(30 * 1000);
-			int code = urlConn.getResponseCode();
-			BufferedReader inputReader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
-			String inputLine;
-			while ((inputLine = inputReader.readLine()) != null)
-				inputResponse = inputResponse + inputLine;
-			inputReader.close();
-			if("200".equals(Integer.toString(code)) || "OK".equals(Integer.toString(code))) {
-				JSONObject myResponse = new JSONObject(inputResponse.toString());
-				log.info("Message Sent Successfully");
-				log.info("messageId: "+myResponse.getString("message_id"));
-				messageId = myResponse.getString("message_id");
-			}else
-				messageId = "No message id as message failed to send";
-				log.info("messageId: "+messageId);
-		} catch (Exception exp) {
-			inputResponse = exp.getMessage();
-		}
-		log.info(inputResponse);
-		return inputResponse;
+                String resp = callURL(url);
+                resp = resp.toLowerCase();
+                log.info("Response: " + resp);
+                //resp??
+                if (resp.indexOf("message_id") != -1) {
+                    status[i] = true;
+                } else {
+                    status[i] = false;
+                }
+                log.info("Status of message " + i + ":" + status[i]);
+            }
+        } catch (Exception exp) {
+            exp.printStackTrace();
+        }
+        return status;
+    }
 
-	}
+    public String callURL(String urlString) {
+        String inputResponse = "";
+        String messageId = "";
+        try {
+
+            log.info(urlString);
+            URL url = new URL(urlString);
+            HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
+            urlConn.setConnectTimeout(30 * 1000);
+            urlConn.setReadTimeout(30 * 1000);
+            int code = urlConn.getResponseCode();
+             log.info("urlConn Code " + code);
+            BufferedReader inputReader = new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+            String inputLine;
+            while ((inputLine = inputReader.readLine()) != null) {
+                inputResponse = inputResponse + inputLine;
+            }
+            inputReader.close();
+            
+            
+            if ("200".equals(Integer.toString(code)) || "OK".equals(Integer.toString(code))) {
+                JSONObject myResponse = new JSONObject(inputResponse.toString());
+                log.info("Message Sent Successfully");
+                log.info("messageId: " + myResponse.getString("message_id"));
+                messageId = myResponse.getString("message_id");
+            } else {
+                messageId = "No message id as message failed to send";
+            }
+            log.info("messageId: " + messageId);
+        } catch (Exception exp) {
+            inputResponse = exp.getMessage();
+        }
+        log.info( "Response : " + inputResponse);
+        return inputResponse;
+
+    }
 
 }

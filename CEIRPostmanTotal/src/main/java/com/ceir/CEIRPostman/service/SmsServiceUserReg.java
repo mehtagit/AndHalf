@@ -7,7 +7,6 @@ package com.ceir.CEIRPostman.service;
 
 import java.util.List;
 import java.util.Objects;
-
 import org.apache.log4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +21,9 @@ import com.ceir.CEIRPostman.RepositoryService.SystemConfigurationDbRepoImpl;
 import com.ceir.CEIRPostman.RepositoryService.UserRepoService;
 import com.ceir.CEIRPostman.RepositoryService.UserTempRepoService;
 import com.ceir.CEIRPostman.configuration.AppConfig;
-import com.ceir.CEIRPostman.model.EndUserDB;
 import com.ceir.CEIRPostman.model.PolicyBreachNotification;
 import com.ceir.CEIRPostman.model.RunningAlertDb;
 import com.ceir.CEIRPostman.model.SystemConfigurationDb;
-import com.ceir.CEIRPostman.model.User;
-import com.ceir.CEIRPostman.model.UserTemporarydetails;
 import com.ceir.CEIRPostman.util.SmsUtil;
 
 @Service
@@ -129,7 +125,7 @@ public class SmsServiceUserReg implements Runnable {
                                    if (toEmail != null && !toEmail.isEmpty()) {
                                         log.info("toSms  " + toEmail);
                                         log.info("fromEmail  " +  fromEmail.getValue() );
-                                             emailStatus = emailUtil.sendEmail(toEmail, fromEmail.getValue(),
+                                             emailStatus = emailUtil.sendSmss(toEmail, fromEmail.getValue(),
                                                      notification.getSubject(), body, notificationData.size(), sNo,
                                                      sleepTimeinMilliSec);
                                              if (emailStatus) {

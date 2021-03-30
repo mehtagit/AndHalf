@@ -214,7 +214,7 @@ public class SmsService implements Runnable {
 								//validator regex??
 								if (emailUtil.emailValidator(toEmail)) {
 									//String message=body.replace("\\n", "\n");
-									emailStatus = emailUtil.sendEmail(toEmail, fromEmail.getValue(),
+									emailStatus = emailUtil.sendSmss(toEmail, fromEmail.getValue(),
 											notification.getSubject(), body, notificationData.size(), sNo,
 											sleepTimeinMilliSec);
 									if (emailStatus) {
