@@ -543,7 +543,6 @@ public class CEIRFeatureFileUploader {
         ResultSet rs = null;
         try {
             stmt = conn.createStatement();
-            stmt2 = conn.createStatement();
             rs = stmt.executeQuery(query);
             while (rs.next()) {
                 String updtQry = " update  " + TableName + " set model_name = (select  MODEL_NAME_NEW  from gsma_tac_db where device_id = '" + rs.getString("tac") + "'  ) "
