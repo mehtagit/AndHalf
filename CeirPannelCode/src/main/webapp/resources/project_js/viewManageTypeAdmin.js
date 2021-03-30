@@ -51,11 +51,14 @@ function Datatable(Url, dataUrl) {
 	var FilterUserType = $('#userType').val() == '-1'
 			|| $('#userType').val() == undefined ? null : $(
 			"#userType option:selected").text();
-	if (userType == "CEIRAdmin") {
 	
 	var modelNumber = $('#filteredModel').val() == '' || $('#filteredModel').val() == undefined ? -1 : $('#filteredModel').val();
 	var productName = $('#filterdbrandname').val() == undefined || $('#filterdbrandname').val() == -1 ? null : $('#filterdbrandname').val();
 	var countryName = $('#country').val() == undefined || $('#country').val() == -1 ? null : $('#country').val();
+	
+	
+	if (userType == "CEIRAdmin") {
+	
 		var filterRequest = {
 			"endDate" : $('#endDate').val(),
 			"startDate" : $('#startDate').val(),
@@ -85,8 +88,12 @@ function Datatable(Url, dataUrl) {
 			"featureId" : parseInt(featureId),
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 			"userType" : $("body").attr("data-roleType"),
-			"status" : parseInt($('#Status').val()),
 			
+			"status" : parseInt($('#Status').val()),
+			"productName" : productName,
+			"modelNumber" : parseInt(modelNumber),
+			"countryName" : countryName,
+			"trademark" : $('#trademark').val()
 		}
 		
 	} else {
@@ -100,8 +107,12 @@ function Datatable(Url, dataUrl) {
 			"featureId" : parseInt(featureId),
 			"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 			"userType" : $("body").attr("data-roleType"),
-			"status" : parseInt($('#Status').val()),
 			
+			"status" : parseInt($('#Status').val()),
+			"productName" : productName,
+			"modelNumber" : parseInt(modelNumber),
+			"countryName" : countryName,
+			"trademark" : $('#trademark').val()
 		}
 	}
 	
@@ -1279,12 +1290,14 @@ function exportTacData() {
 	var FilterUserType = $('#userType').val() == '-1'
 	|| $('#userType').val() == undefined ? null : $(
 	"#userType option:selected").text();
+	var modelNumber = $('#filteredModel').val() == '' || $('#filteredModel').val() == undefined ? -1 : $('#filteredModel').val();
+	var productName = $('#filterdbrandname').val() == undefined || $('#filterdbrandname').val() == -1 ? null : $('#filterdbrandname').val();
+	var countryName = $('#country').val() == undefined || $('#country').val() == -1 ? null : $('#country').val();
+
+	
 	if (userType == "CEIRAdmin") {
 
-		var modelNumber = $('#filteredModel').val() == '' || $('#filteredModel').val() == undefined ? -1 : $('#filteredModel').val();
-		var productName = $('#filterdbrandname').val() == undefined || $('#filterdbrandname').val() == -1 ? null : $('#filterdbrandname').val();
-		var countryName = $('#country').val() == undefined || $('#country').val() == -1 ? null : $('#country').val();
-
+		
 var TRCRequest = {
 		"endDate" : $('#endDate').val(),
 		"startDate" : $('#startDate').val(),
@@ -1320,7 +1333,8 @@ var TRCRequest = {
 	"status" : parseInt($('#Status').val()),
 	"modelNumber" :  -1,
 	"pageNo":parseInt(pageNo),
-	"pageSize":parseInt(pageSize)
+	"pageSize":parseInt(pageSize),
+	"trademark" : $('#trademark').val()
 }
 
 } else {
@@ -1335,9 +1349,12 @@ var TRCRequest = {
 	"userTypeId" : parseInt($("body").attr("data-userTypeID")),
 	"userType" : $("body").attr("data-roleType"),
 	"status" : parseInt($('#Status').val()),
-	"modelNumber" :  -1,
+	"productName" : productName,
+	"modelNumber" : parseInt(modelNumber),
+	"countryName" : countryName,
 	"pageNo":parseInt(pageNo),
-	"pageSize":parseInt(pageSize)
+	"pageSize":parseInt(pageSize),
+	"trademark" : $('#trademark').val()
 }
 }
 

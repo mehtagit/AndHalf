@@ -80,19 +80,32 @@ public class ImporterManageTypeAdmin {
 		
 		//filterrequest.setOrderColumnName(request.getParameter("order[0][column]") == null ? "Modified On" : request.getParameter("order[0][column]"));
 		//filterrequest.setOrder(request.getParameter("order[0][dir]") == null ? "desc" : request.getParameter("order[0][dir]"));
+		String column;
+		if("CEIRAdmin".equals(userType)){
+			column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+				"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Modified On":
+					"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Transaction ID":
+						"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Display Name":
+							"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "TAC":
+								"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Brand Name":
+									"6".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Model Number" :
+										"7".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Country" :
+											"8".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "User Type" :
+												"9".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Status"
+									:"Modified On";
+		}else {
+			column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+				"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Trademark":
+					"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Transaction ID":
+						"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "TAC":
+							"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Brand Name":
+								"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Model Number" :
+									"6".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Country" :
+										"7".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Status"
+									:"Modified On";
+		}
 		
 		log.info("---->"+request.getParameter("order[0][column]")+"============>"+request.getParameter("order[0][dir]"));
-		String column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
-			"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Modified On":
-				"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Transaction ID":
-					"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Display Name":
-						"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "TAC":
-							"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Brand Name":
-								"6".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Model Number" :
-									"7".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Country" :
-										"7".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "User Type" :
-											"7".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Status"
-								:"Modified On";
 		String order;
 		if("Modified On".equalsIgnoreCase(column)) {
 			order="desc";
@@ -149,7 +162,7 @@ public class ImporterManageTypeAdmin {
 						String approveState = String.valueOf(trcContentModelList.getApproveStatus());	
 						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
 						String action = iconState.importalTrcManageIcons(approveState,trcContentModelList.getId(),txnId,userStatus,fileName1);
-						Object[] data = {createdOn,trademark,productName,txnId,modelNumber,manufacturerCountry,tac,status,action};
+						Object[] data = {createdOn,trademark,txnId,tac,productName,modelNumber,manufacturerCountry,status,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);
@@ -184,7 +197,8 @@ public class ImporterManageTypeAdmin {
 						String approveState = String.valueOf(trcContentModelList.getApproveStatus());	
 						log.info("status----->" +status+"--Id--------->"+trcContentModelList.getId()+"--fileName1------->"+fileName1+"--txnId------>"+txnId);
 						String action = iconState.importalTrcManageIcons(approveState,trcContentModelList.getId(),txnId,userStatus,fileName1);
-						Object[] data = {createdOn,trademark,productName,txnId,modelNumber,manufacturerCountry,tac,status,action};
+						//Object[] data = {createdOn,trademark,productName,txnId,modelNumber,manufacturerCountry,tac,status,action};
+						Object[] data = {createdOn,trademark,txnId,tac,productName,modelNumber,manufacturerCountry,status,action};
 						List<Object> datatableList = Arrays.asList(data);
 						finalList.add(datatableList);
 						datatableResponseModel.setData(finalList);
@@ -316,7 +330,7 @@ public class ImporterManageTypeAdmin {
 					}
 				}else {
 					//Dropdown items
-					String[] selectParam= {"select",Translator.toLocale("table.status"),"Status",""};
+					String[] selectParam= {"select",Translator.toLocale("table.ProductName"),"filterdbrandname","","select",Translator.toLocale("table.ModelNumber"),"filteredModel","","select",Translator.toLocale("table.country"),"country","","select",Translator.toLocale("table.status"),"Status",""};
 					for(int i=0; i< selectParam.length; i++) {
 						inputFields= new InputFields();
 						inputFields.setType(selectParam[i]);
@@ -330,8 +344,10 @@ public class ImporterManageTypeAdmin {
 					}
 					pageElement.setDropdownList(dropdownList);
 					
+					
+					
 					//input type date list		
-					String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.TAC"),"tac",""};
+					String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("table.Trademark"),"trademark","","text",Translator.toLocale("input.transactionID"),"transactionID","","text",Translator.toLocale("table.TAC"),"tac",""};
 					for(int i=0; i< dateParam.length; i++) {
 						dateRelatedFields= new InputFields();
 						dateRelatedFields.setType(dateParam[i]);
@@ -343,6 +359,8 @@ public class ImporterManageTypeAdmin {
 						dateRelatedFields.setClassName(dateParam[i]);
 						inputTypeDateList.add(dateRelatedFields);
 					}
+					
+					
 				}
 				
 					

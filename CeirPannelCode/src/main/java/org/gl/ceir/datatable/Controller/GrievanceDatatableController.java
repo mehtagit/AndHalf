@@ -69,17 +69,38 @@ public class GrievanceDatatableController {
 		
 		//filterrequest.setOrderColumnName(request.getParameter("order[0][column]") == null ? "Modified On" : request.getParameter("order[0][column]"));
 		//filterrequest.setOrder(request.getParameter("order[0][dir]") == null ? "desc" : request.getParameter("order[0][dir]"));
+		String userType = (String) session.getAttribute("usertype");
+		if(userType!=null){
+			log.info("inside if----->" +userType);
+			userType = (String) session.getAttribute("usertype");
+		}else {
+			log.info("inside else----->" +userType);
+			userType = "End User";
+		}
+		log.info("user type is ______________" +userType);
+		filterrequest.setUserType(userType);
 		
+		String column;
+		if("CEIRAdmin".equals(userType)){
+		   column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+				"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Modified On":
+					"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Transaction ID":
+						"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Grievance ID":
+							"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "User ID":
+								"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Raised By":
+									"6".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "User Type" :
+										"7".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Status"
+									:"Modified On";
+		}else {
+			column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+				"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Modified On":
+					"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Transaction ID":
+						"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Grievance ID":
+							"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Status"
+									:"Modified On";
+		}
 		log.info("---->"+request.getParameter("order[0][column]")+"============>"+request.getParameter("order[0][dir]"));
-		String column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
-			"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Modified On":
-				"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Transaction ID":
-					"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Grievance ID":
-						"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "User ID":
-							"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Raised By":
-								"6".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "User Type" :
-									"7".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Status"
-								:"Modified On";
+		
 		String order;
 		if("Modified On".equalsIgnoreCase(column)) {
 			order="desc";
@@ -95,16 +116,7 @@ public class GrievanceDatatableController {
 		Object response;
 		log.info("session value user Type==" + session.getAttribute("usertype") + " grievanceSessionUsesFlag=="
 				+ grievanceSessionUsesFlag);
-		String userType = (String) session.getAttribute("usertype");
-		if(userType!=null){
-			log.info("inside if----->" +userType);
-			userType = (String) session.getAttribute("usertype");
-		}else {
-			log.info("inside else----->" +userType);
-			userType = "End User";
-		}
-		log.info("user type is ______________" +userType);
-		filterrequest.setUserType(userType);
+		
 		Integer userId = (Integer) session.getAttribute("userid");
 		
 		log.info("request parameters send to view grievance api=" + filterrequest);
