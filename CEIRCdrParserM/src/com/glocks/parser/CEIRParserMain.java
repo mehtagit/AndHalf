@@ -205,7 +205,7 @@ public class CEIRParserMain {
                boolean isOracle = conn.toString().contains("oracle");
                String dateFunction = Util.defaultDateNow(isOracle);
                while (rs.next()) {
-                    logger.info("Served IMEI =" + rs.getString("IMEI"));
+                     logger.info("Served IMEI =" + rs.getString("IMEI"));
                     device_info.put("servedIMEI", rs.getString("IMEI"));
                     device_info.put("recordType", rs.getString("record_type"));
                     device_info.put("servedIMSI", rs.getString("IMSI"));
@@ -336,7 +336,8 @@ public class CEIRParserMain {
                               if (output == 0) {
                                    my_query = "insert into device_duplicate_db (imei,msisdn,imsi,create_filename,update_filename,"
                                            + "updated_on,created_on,system_type,failed_rule_id,failed_rule_name,tac,period,action  "
-                                           + " , mobile_operator , record_type , failed_rule_date,  modified_on  ,record_time , imei_index ) "
+                                           + " , mobile_operator , record_type , failed_rule_date,  modified_on  ,record_time , imei_index "
+                                           + "  ) "
                                            + "values('" + rs.getString("IMEI") + "',"
                                            + "'" + ((rs.getString("MSISDN").startsWith("19") || rs.getString("MSISDN").startsWith("00") )  ? rs.getString("MSISDN").substring(2) : rs.getString("MSISDN")) + "',"
                                            + "'" + rs.getString("IMSI") + "',"

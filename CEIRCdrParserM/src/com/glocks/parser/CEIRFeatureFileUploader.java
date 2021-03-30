@@ -298,12 +298,14 @@ public class CEIRFeatureFileUploader {
         CEIRFeatureFileParser cEIRFeatureFileParser = new CEIRFeatureFileParser();
         stolnRcvryDetails = cEIRFeatureFileParser.getStolenRecvryDetails(conn, txnId);   //IMEI_ESN_MEID   
 //          String dfnc =;   // "+ Util.defaultDateNow(true) +"
+
         String query = "update " + TableName + " set DEVICE_STATUS  = 'Approved' , modified_on =    " + Util.defaultDateNow(true) + " "
                 + " where actual_imei  in   "
                 + "(select       IMEIESNMEID   from  " + stolnRcvryDetails.get("reason") + "_raw  where  TXN_ID =  '" + txnId + "'   ) "
                 + "   ";
         Statement stmt = null;
         logger.info("update   as  APPROVED  ...[" + query + "]");
+
         try {
             stmt = conn.createStatement();
             stmt.executeUpdate(query);
@@ -313,6 +315,7 @@ public class CEIRFeatureFileUploader {
             try {
                 stmt.close();
                 conn.commit();
+                updateModelBrandNameByTxnId(conn, txnId, TableName);
             } catch (Exception e) {
                 logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
             }
@@ -369,8 +372,8 @@ public class CEIRFeatureFileUploader {
                 try {
 
                     query = "delete from " + tableName + " where imei_esn_meid = '" + rs.getString("imei_esn_meid") + "' ";
-    logger.info(" ..:::: " + query);
-                
+                    logger.info(" ..:::: " + query);
+
                     stmt2.executeUpdate(query);
 
                 } catch (Exception e) {
@@ -381,14 +384,15 @@ public class CEIRFeatureFileUploader {
                     query = "delete from greylist_db where imei  = '" + rs.getString("imei_esn_meid") + "' ";
                     logger.info(" ___ " + query);
                     stmt3.executeUpdate(query);
-                    
+
                 } catch (Exception e) {
                     logger.error(" .. $ :" + e);
                 }
                 try {
                     query = "delete from black_list where imei = '" + rs.getString("imei_esn_meid") + "' ";
-                   
-                    logger.info(" ___ " + query); stmt3.executeUpdate(query);
+
+                    logger.info(" ___ " + query);
+                    stmt3.executeUpdate(query);
                 } catch (Exception e) {
                     logger.error(" .. $$ :" + e);
                 }
@@ -418,18 +422,16 @@ public class CEIRFeatureFileUploader {
         CEIRFeatureFileParser cEIRFeatureFileParser = new CEIRFeatureFileParser();
         stolnRcvryDetails = cEIRFeatureFileParser.getStolenRecvryDetails(conn, txnId);   //IMEI_ESN_MEID
 //                    String query = "select imei_esn_meid , user_id  from  " + tableName + "  where txn_id = '" + txnId + "'   ";
- // mar9
+        // mar9
 //        String query = " select actual_imei, imei_esn_meid , user_id , DEVICE_ID_TYPE , DEVICE_TYPE  from   " + tableName + "  where SN_OF_DEVICE in (   select SN_OF_DEVICE from   " + tableName + " where actual_imei in "
 //                + "(select IMEIESNMEID  from  " + stolnRcvryDetails.get("reason") + "_raw  where  TXN_ID =  '" + txnId + "'   ) "
 //                + "  and  SN_OF_DEVICE is not null and SN_OF_DEVICE != 'null' )      "
 //                + "  UNION      select actual_imei,  imei_esn_meid   , user_id , DEVICE_ID_TYPE , DEVICE_TYPE from    " + tableName + "  "
 //                + " where actual_imei  in  ( select IMEIESNMEID from  " + stolnRcvryDetails.get("reason") + "_raw where  TXN_ID =  '" + txnId + "'   )    and   SN_OF_DEVICE =  'null'   ";
-        
-        String   query = " select actual_imei, imei_esn_meid , user_id , DEVICE_ID_TYPE , DEVICE_TYPE  from   " + tableName + " "
-                 + "  where   actual_imei     in (select IMEIESNMEID  from " + stolnRcvryDetails.get("reason") + "_raw  where  TXN_ID =   '" + txnId + "'   )  "  ;
-        
-        
-        
+
+        String query = " select actual_imei, imei_esn_meid , user_id , DEVICE_ID_TYPE , DEVICE_TYPE  from   " + tableName + " "
+                + "  where   actual_imei     in (select IMEIESNMEID  from " + stolnRcvryDetails.get("reason") + "_raw  where  TXN_ID =   '" + txnId + "'   )  ";
+
         logger.info(" ...[" + query + "]");
         String device_greylist_db_qry = null;
         String device_greylist_History_db_qry = null;
@@ -530,6 +532,37 @@ public class CEIRFeatureFileUploader {
             logger.error(e);
         }
         return "TO_DATE('" + finalDate + "','YYYY-MM-DD HH24:MI:SS')";
+    }
+
+    private static void updateModelBrandNameByTxnId(Connection conn, String txnId, String TableName) {
+
+        String query = " select tac from  " + TableName + " where  txn_id =   '" + txnId + "'   ";
+        Statement stmt = null;
+        Statement stmt2 = null;
+        logger.info("tac       ...[" + query + "]");
+        ResultSet rs = null;
+        try {
+            stmt = conn.createStatement();
+            rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                String updtQry = " update  " + TableName + " set model_name = (select  MODEL_NAME_NEW  from gsma_tac_db where device_id = '" + rs.getString("tac") + "'  ) "
+                        + "   brand_name = ( select BRAND_NAME_NEW  from gsma_tac_db where device_id = '" + rs.getString("tac") + "' )    where tac =   '" + rs.getString("tac") + "'  ";
+                stmt2.executeUpdate(updtQry);
+            }
+        } catch (Exception e) {
+            logger.info("Error" + e);
+        } finally {
+            try {
+                rs.close();
+                 stmt.close();
+                stmt2.close();
+                conn.commit();
+
+            } catch (Exception e) {
+                logger.error("" + l.getClassName() + "/" + l.getMethodName() + ":" + l.getLineNumber() + e);
+            }
+        }
+
     }
 }
 

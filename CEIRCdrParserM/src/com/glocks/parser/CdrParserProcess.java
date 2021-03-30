@@ -293,8 +293,7 @@ public class CdrParserProcess {
                         if (output == 1) {  //  new ArrivalTime  came  from file  >  arrival time in db already                      // imei found with same msisdn  update_raw_cdr_file_name , update_imei_arrival_time  
                             my_query = "update device_usage_db set "
                                     + "update_filename = '" + device_info.get("file_name")
-                                    //								+"', updated_on=TO_DATE('"+device_info.get("record_time")+"','yyyy/mm/dd hh24:mi:ss')"
-                                    + "', updated_on=" + dateFunction + ""
+                                      + "', updated_on=" + dateFunction + ""
                                     + ", modified_on=" + dateFunction + ""
                                     + ", failed_rule_date=" + failedRuleDate + ""
                                     + ", failed_rule_id='" + failed_rule_id
@@ -331,7 +330,8 @@ public class CdrParserProcess {
                             if (output == 0) {
                                 my_query = "insert into device_duplicate_db (actual_imei,msisdn,imsi,create_filename,update_filename,"
                                         + "updated_on,created_on,system_type,failed_rule_id,failed_rule_name,tac,period,action  "
-                                        + " , mobile_operator , record_type , failed_rule_date,  modified_on  ,record_time, imei ,raw_cdr_file_name , imei_arrival_time , source , feature_name ,server_origin) "
+                                        + " , mobile_operator , record_type , failed_rule_date,  modified_on  ,record_time, imei ,raw_cdr_file_name , imei_arrival_time , source , feature_name ,server_origin "
+                                        + "  , update_raw_cdr_file_name ,update_imei_arrival_time  ) "
                                         + "values('" + device_info.get("IMEI") + "',"
                                         + "'" + device_info.get("MSISDN") + "',"
                                         + "'" + device_info.get("IMSI") + "',"
@@ -355,7 +355,9 @@ public class CdrParserProcess {
                                         + "'" + device_info.get("imei_arrival_time") + "',"
                                         + "'" + device_info.get("source") + "' , "
                                         + "'" + gsmaTac + "' , "
-                                        + "'" + server_origin + "'  "
+                                        + "'" + server_origin + "' , "
+                                         + "'" + device_info.get("raw_cdr_file_name") + "',"
+                                        + "'" + device_info.get("imei_arrival_time") + "' "
                                         + ")";
                                 duplicateInsert++;
                             }   else if(output == 1)  {
@@ -372,7 +374,7 @@ public class CdrParserProcess {
                                         + "',update_imei_arrival_time='" + device_info.get("imei_arrival_time")
                                         + "',server_origin='" + server_origin
                                         + "',action='" + finalAction
-                                        + "' where msisdn='" + device_info.get("MSISDN") + "' and imei='" + device_info.get("IMEI").substring(0, 14) + "'";
+                                        + "' where msisdn='" + device_info.get("MSISDN") + "'  and imei='" + device_info.get("IMEI").substring(0, 14) + "'";
                                 duplicateUpdate++;
                             }else{
                                 
@@ -388,7 +390,7 @@ public class CdrParserProcess {
                                 + "',action='" + finalAction
                                 + "' where msisdn='" + device_info.get("MSISDN") + "' and imei='" + device_info.get("IMEI").substring(0, 14) + "'";
 
-
+                                     duplicateUpdate++;
                             }
                         }
                     }

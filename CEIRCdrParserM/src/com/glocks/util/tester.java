@@ -14,6 +14,21 @@ class tester {
 
     public static void main(String[] args) {
 
+        String a = new String("HI");
+        String b = new String("HI");
+
+        String c = a;
+
+        if (c == a) {
+            System.out.println(" = =");
+        } else {
+            System.out.println(" =!! =");
+        }
+
+        a = a.concat("ypp");
+         
+        System.out.println("" + a);
+
 //        String basePath = "/home/user/Music/testDataFiles/aa";
 //
 //        File logDir = new File(basePath);
@@ -222,12 +237,12 @@ class tester {
 //           System.out.println("   ...   " + myObj);
 //            String timeSec = myObj.toString().substring ((myObj.toString().length()-3)   ,  (myObj.toString().length())  );
 //            System.out.println(";;;;;;;;;;;;;;; " + timeSec);
-        String a = "49328483d5";
-        if (a.matches("^[0-9]+$")) {
-            System.out.println("true ");
-        }else{
-            System.out.println("fasle");}
-
+//        String a = "49328483d5";
+//        if (a.matches("^[0-9]+$")) {
+//            System.out.println("true ");
+//        } else {
+//            System.out.println("fasle");
+//        }
     }
 
 }
