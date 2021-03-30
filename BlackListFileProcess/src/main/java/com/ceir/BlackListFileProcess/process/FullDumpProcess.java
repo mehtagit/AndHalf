@@ -68,7 +68,6 @@ public class FullDumpProcess {
 		//systemConfigurationDb.setTag("BlackLIST_FILEPATH");
 		log.info("now checking whether full dump data exist in file_dump_mgmt table or not");
 		if(topDataForFulldump!=null) {
-
 			log.info("topDataForFulldump: "+topDataForFulldump.toString());
 			fullDumpFileProcess(filePath);
 		}
