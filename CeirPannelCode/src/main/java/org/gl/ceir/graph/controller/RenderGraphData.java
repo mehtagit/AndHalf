@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.gl.ceir.CeirPannelCode.Feignclient.AnalyticsFeign;
 import org.gl.ceir.CeirPannelCode.Service.GraphService;
 import org.gl.ceir.graph.model.ActiveDeviceGraphContent;
@@ -125,8 +127,10 @@ public class RenderGraphData {
 
 	@ResponseBody
 	@RequestMapping(value = "/userLoginGraph", method = { RequestMethod.POST })
-	public ResponseEntity<?> userLoginGraph(@RequestBody GraphRequest graphRequest) {
+	public ResponseEntity<?> userLoginGraph(@RequestBody GraphRequest graphRequest,HttpSession session) {
 		Object response = null;
+		graphRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		graphRequest.setBrowser(session.getAttribute("browser").toString());
 		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(), graphRequest.getPageSize(),
 				graphRequest.getFile());
 
@@ -153,8 +157,10 @@ public class RenderGraphData {
 
 	@PostMapping("/report/data")
 	public ResponseEntity<?> activeDeviceGraph(@RequestBody GraphRequest graphRequest,
-			@RequestParam(name = "Type", required = false) String Type) {
+			@RequestParam(name = "Type", required = false) String Type,HttpSession session) {
 		Object response = null;
+		graphRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		graphRequest.setBrowser(session.getAttribute("browser").toString());
 		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(), graphRequest.getPageSize(),
 				graphRequest.getFile());
 
@@ -207,8 +213,10 @@ public class RenderGraphData {
 
 	@PostMapping("/brandModel/data/{featureFlag}")
 	public ResponseEntity<?> topBrandModel(@RequestBody GraphRequest graphRequest,
-			@PathVariable("featureFlag") String featureFlag) {
+			@PathVariable("featureFlag") String featureFlag,HttpSession session) {
 		Object response = null;
+		graphRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		graphRequest.setBrowser(session.getAttribute("browser").toString());
 		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(), graphRequest.getPageSize(),
 				graphRequest.getFile());
 		log.info("featureFlag== " + featureFlag);
@@ -314,8 +322,10 @@ public class RenderGraphData {
 	}
 
 	@PostMapping("/report/imeiUsageDashBoard")
-	public ResponseEntity<?> imeiUsageDashBoard(@RequestBody GraphRequest graphRequest) {
+	public ResponseEntity<?> imeiUsageDashBoard(@RequestBody GraphRequest graphRequest,HttpSession session) {
 		Object response = null;
+		graphRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		graphRequest.setBrowser(session.getAttribute("browser").toString());
 		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(), graphRequest.getPageSize(),
 				graphRequest.getFile());
 

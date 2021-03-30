@@ -538,7 +538,7 @@ function pageButtons(url){
 				else if(date[i].type === "select"){
 
 					var dropdownDiv=
-						$("#tableDiv").append("<div class='col s6 m2'>"+
+						$("#tableDiv").append("<div class='selectDropdwn'>"+
 								
 								"<div class='select-wrapper select2  initialized'>"+
 								"<span class='caret'>"+"</span>"+
@@ -876,6 +876,7 @@ function exportpaidStatus(){
     }
   
     var nationality =$('#filterNationality').val();
+    
     if(nationality=="undefined" || nationality==undefined){
     	nationality="";	
     }

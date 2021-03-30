@@ -454,3 +454,34 @@ function test(x) {
     console.log(`${pass ? "✓" : "ERROR ====>"} ${x} => ${result}`);
     return pass;
 }
+
+$(document).bind("contextmenu",function(e) {
+	 e.preventDefault();
+	});
+
+document.onkeypress = function (event) {  
+	
+	event = (event || window.event);  
+	if (event.keyCode == 123) {  
+	return false;  
+	}  
+	}
+
+function disabledInspect(e){
+	    if(e.which === 123){
+	  
+	       return false;
+	    }
+	    else if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
+	  
+	    	return false;
+	    	}
+	    else if(e.ctrlKey && e.shiftKey && e.keyCode == 73){
+	  
+	    	return false;
+	    	}
+	    else if(e.shiftKey)
+	    	{
+	    	alert("shift")
+	    	}
+	};

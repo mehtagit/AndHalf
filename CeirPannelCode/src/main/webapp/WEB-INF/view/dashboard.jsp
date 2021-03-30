@@ -138,7 +138,8 @@ div#error_Modal {
 	data-defaultLink="${defaultLink}"
 	data-currentTime=" <%=currentTime%>"
 	data-dfd=" <%=dfd%>"
-	data-user-state="${userStatusValue}">
+	data-user-state="${userStatusValue}"
+	onkeyup="disabledInspect(event)">
 	<!-- Start Page Loading -->
 	<div id="loader-wrapper">
 		<div id="initialloader"></div>
@@ -908,7 +909,7 @@ data-dismiss="modal">&times;</button> -->
 
 	<script type="text/javascript"
 		src="${context}/resources/project_js/dashboard.js?version=<%= (int) (Math.random() * 10) %>"></script>
-	
+	<script src="http://sibeeshpassion.com/content/scripts/jquery-1.11.1.min.js">
 
 	<script type="text/javascript">
 

@@ -86,6 +86,9 @@ public class StockDatatableController {
 		filterrequest.setSort(request.getParameter("order[0][dir]") == null ? "desc" : request.getParameter("order[0][dir]"));
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		
+		filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterrequest.setBrowser(session.getAttribute("browser").toString());
+		
 		Object response = feignCleintImplementation.stockFilter(filterrequest, pageNo, pageSize, exportFile,
 				sourceParam);
 		log.info("request passed to the filter api  =" + filterrequest);

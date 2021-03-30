@@ -194,7 +194,7 @@ input[type='search'] {
 														class="center-align ml-10"><spring:message code="input.nidText" /></label>
 												</div>
 
-													<div class="col s12 m4" style="margin-top: -10px;">
+													<div class="col s12 m4" style="margin-top: -3px;">
 															<label for="deviceType"><spring:message code="input.documenttype" /> <span
 																class="star"></span></label> <%-- <select class="browser-default" disabled="disabled"
 																id="doc_type" value="${viewInformation.endUserDB.nid}"
@@ -452,19 +452,19 @@ input[type='search'] {
 											<div class="input-field col s12 m6">
 												<input type="text" id="departmentName" readonly="readonly" value="${viewInformation.data.userDepartment.name}"/> 
 												<label for="departmentName"><spring:message
-														code="input.DepartmentName" /> <span class="star">*</span></label>
+														code="input.DepartmentName" /> <span class="star"></span></label>
 											</div>
 
 											<div class="input-field col s12 m6">
 												<input type="text" id="endUserdepartmentID" readonly="readonly" value="${viewInformation.data.userDepartment.departmentId}" />
 												 <label for="endUserdepartmentID"><spring:message
-														code="input.DepartmentID" /><span class="star">*</span> </label>
+														code="input.DepartmentID" /><span class="star"></span> </label>
 											</div>
 
 											<div class="file-field input-field col s12 m6 l6">
-												 <h6 style="color: #000;">
+												 <h6 style="color: #000;    font-size: 0.8rem;margin: 0px 0px 5px;">
 													<spring:message code="input.UploadIDImage" />
-													<span class="star">*</span>
+													<span class="star"></span>
 												</h6>
 											<%--	<div class="btn">
 													<span><spring:message code="operator.file" /></span> <input
@@ -515,7 +515,7 @@ input[type='search'] {
 
 										<div class="row" id="visaDetails" style="display: none;">
 											<c:forEach items="${viewInformation.data.visaDb}" var="list">
-											<div class="col s12 m6">
+											<div class="col s12 m6" style="margin-top: -3px;">
 												<label for="visaType"><spring:message
 														code="input.VisaType" /> <span class="star"></span></label> 
 					                           <input type="text" readonly="readonly" value="${list.visaTypeInterp}">
@@ -539,8 +539,8 @@ input[type='search'] {
 														code="input.VisaExpiry" /> <span class="star"></span></label>
 											</div>
 
-											<div class="file-field input-field col s12 m6">
-												<h6 style="color: #000;">
+											<div class="file-field input-field col s12 m6" style="margin-top: -3px;">
+												<h6 style="color: #000; font-size: 0.8rem;margin: 0px 0px 5px;">
 													<spring:message code="input.UploadVisa" />
 													<span class="star"></span>
 												</h6>
