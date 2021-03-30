@@ -84,7 +84,7 @@ public class BlackList {
      private String deviceStatus;
      private String DeviceLaunchDate;
      private String multipleSimStatus;
-     private String deviceId;
+     private String deviceIdType;
      private String imeiEsnMeid;
      private String modeType;
      private String requestType;
@@ -168,12 +168,12 @@ public class BlackList {
           this.multipleSimStatus = multipleSimStatus;
      }
 
-     public String getDeviceId() {
-          return deviceId;
+     public String getDeviceIdType() {
+          return deviceIdType;
      }
 
-     public void setDeviceId(String deviceId) {
-          this.deviceId = deviceId;
+     public void setDeviceIdType(String deviceIdType) {
+          this.deviceIdType = deviceIdType;
      }
 
      public String getImeiEsnMeid() {
@@ -254,7 +254,7 @@ public class BlackList {
 
      @Override
      public String toString() {
-          return "BlackList{" + "id=" + id + ", imei=" + imei + ", msisdn=" + msisdn + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", requestedBy=" + requestedBy + ", approvedBy=" + approvedBy + ", roleType=" + roleType + ", userId=" + userId + ", txnId=" + txnId + ", operator_id=" + operator_id + ", operator_name=" + operator_name + ", deviceNumber=" + deviceNumber + ", deviceType=" + deviceType + ", deviceAction=" + deviceAction + ", deviceStatus=" + deviceStatus + ", DeviceLaunchDate=" + DeviceLaunchDate + ", multipleSimStatus=" + multipleSimStatus + ", deviceId=" + deviceId + ", imeiEsnMeid=" + imeiEsnMeid + ", modeType=" + modeType + ", requestType=" + requestType + ", userType=" + userType + ", complainType=" + complainType + ", actualImei=" + actualImei + ", expiryDate=" + expiryDate + '}';
+          return "BlackList{" + "id=" + id + ", imei=" + imei + ", msisdn=" + msisdn + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", requestedBy=" + requestedBy + ", approvedBy=" + approvedBy + ", roleType=" + roleType + ", userId=" + userId + ", txnId=" + txnId + ", operator_id=" + operator_id + ", operator_name=" + operator_name + ", deviceNumber=" + deviceNumber + ", deviceType=" + deviceType + ", deviceAction=" + deviceAction + ", deviceStatus=" + deviceStatus + ", DeviceLaunchDate=" + DeviceLaunchDate + ", multipleSimStatus=" + multipleSimStatus + ", deviceIdtype=" + deviceIdType + ", imeiEsnMeid=" + imeiEsnMeid + ", modeType=" + modeType + ", requestType=" + requestType + ", userType=" + userType + ", complainType=" + complainType + ", actualImei=" + actualImei + ", expiryDate=" + expiryDate + '}';
      }
 
      
@@ -262,7 +262,7 @@ public class BlackList {
      
      public BlackList(@NotNull String imei, @NotNull Long msisdn, String roleType, String userId, String txnId,
              String deviceNumber, String deviceType, String deviceAction, String deviceStatus, String deviceLaunchDate,
-             String multipleSimStatus, String deviceId, String imeiEsnMeid, String modeType,
+             String multipleSimStatus, String deviceIdType, String imeiEsnMeid, String modeType,
              String requestType, String userType, String complainType, Date expiryDate, String operator_id, String operator_name,String actualImei) {
           super();
           this.imei = imei;
@@ -276,7 +276,7 @@ public class BlackList {
           this.deviceStatus = deviceStatus;
           DeviceLaunchDate = deviceLaunchDate;
           this.multipleSimStatus = multipleSimStatus;
-          this.deviceId = deviceId;
+          this.deviceIdType = deviceIdType;
           this.imeiEsnMeid = imeiEsnMeid;
           this.modeType = modeType;
           this.requestType = requestType;

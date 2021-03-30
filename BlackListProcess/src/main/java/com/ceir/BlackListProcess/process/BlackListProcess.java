@@ -47,7 +47,7 @@ public class BlackListProcess {
 	private final Logger log =Logger.getLogger(getClass());
     @Transactional
 	public void blackListProcess() {
-		log.info("inside blacklist process");
+		log.info("inside blacklistPro");
 		//boolean checkStolenStatus=webActionRepoImpl.checkFeatureExist("Stolen");
 		//if(checkStolenStatus==false) {
 		SystemConfigurationDb greyToBlackListPeriodInDay=new SystemConfigurationDb();
@@ -62,6 +62,7 @@ public class BlackListProcess {
 		List<GreylistDb> greyListData=new ArrayList<GreylistDb>();
 		log.info("going to fetch grey list data:");
 		greyListData=nationalislmServiceImpl.findAllGreyListData();
+                log.info("Record No :"+ greyListData.size());
 		if(greyListData.isEmpty()==false) {
 			greyListProcess(greyListData);
 		}
@@ -87,11 +88,12 @@ public class BlackListProcess {
 			if(currentDate.after(greyListDb.getExpiryDate())) {
 				log.info("if grace period for this imei is completed: "+greyListDb.getImei());	
 				log.info("so move this grey list data to greylist history and blacklist table");
-				GreylistDbHistory greyListHistory=new GreylistDbHistory(new Date(),new Date(),
+				GreylistDbHistory greyListHistory=new GreylistDbHistory(
+//                                        new Date(),new Date(),
 						greyListDb.getImei(), greyListDb.getRoleType(), greyListDb.getUserId(),
 						greyListDb.getTxnId(), greyListDb.getDeviceNumber(), greyListDb.getDeviceType(),
 						greyListDb.getDeviceAction(),greyListDb.getDeviceStatus(),greyListDb.getDeviceLaunchDate(),
-						greyListDb.getMultipleSimStatus(), greyListDb.getDeviceId(),greyListDb.getImeiEsnMeid(),GreyListOperation.DELETE.getCode()
+						greyListDb.getMultipleSimStatus(), greyListDb.getDeviceIdType(),greyListDb.getImeiEsnMeid(),GreyListOperation.DELETE.getCode()
 						,"Moved to BlackList",greyListDb.getModeType(),greyListDb.getRequestType(),
 						greyListDb.getUserType(),greyListDb.getComplainType(),greyListDb.getExpiryDate() ,greyListDb.getOperator_id() , greyListDb.getOperator_name() , greyListDb.getActualImei() );
 				GreylistDbHistory greylistDbHistory=nationalislmServiceImpl.saveGreyListHistory(greyListHistory);
@@ -105,7 +107,7 @@ public class BlackListProcess {
 						BlackList blackList=new BlackList(greyListDb.getImei(),0l,greyListDb.getRoleType(),
 								greyListDb.getUserId(),greyListDb.getTxnId(),greyListDb.getDeviceNumber(),greyListDb.getDeviceType(),
 								greyListDb.getDeviceAction(),greyListDb.getDeviceStatus(),greyListDb.getDeviceLaunchDate(),
-								greyListDb.getMultipleSimStatus(),greyListDb.getDeviceId(),greyListDb.getImeiEsnMeid(),
+								greyListDb.getMultipleSimStatus(),greyListDb.getDeviceIdType(),greyListDb.getImeiEsnMeid(),
 								greyListDb.getModeType(),greyListDb.getRequestType(),greyListDb.getUserType(),
 								greyListDb.getComplainType(),greyListDb.getExpiryDate(), greyListDb.getOperator_id() , greyListDb.getOperator_name()  , greyListDb.getActualImei() );
 					
@@ -117,7 +119,7 @@ public class BlackListProcess {
 									greyListDb.getImei(), greyListDb.getRoleType(), greyListDb.getUserId(),
 									greyListDb.getDeviceNumber(), greyListDb.getDeviceType(),
 									greyListDb.getDeviceAction(),greyListDb.getDeviceStatus(),greyListDb.getDeviceLaunchDate(),
-									greyListDb.getMultipleSimStatus(), greyListDb.getDeviceId(),greyListDb.getImeiEsnMeid(),GreyListOperation.Add.getCode()
+									greyListDb.getMultipleSimStatus(), greyListDb.getDeviceIdType(),greyListDb.getImeiEsnMeid(),GreyListOperation.Add.getCode()
 									,greyListDb.getModeType(),greyListDb.getRequestType(),greyListDb.getUserType(),
 									greyListDb.getComplainType(),greyListDb.getExpiryDate() , greyListDb.getOperator_id() , greyListDb.getOperator_name()  , greyListDb.getActualImei());
 							BlacklistDbHistory output=blackListRepoImpl.saveBlackListHistory(blackListHistory);	

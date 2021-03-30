@@ -14,18 +14,54 @@ import com.ceir.BlackListProcess.model.GreylistDb;
 import com.ceir.BlackListProcess.model.GreylistDbHistory;
 import com.ceir.BlackListProcess.repository.GreyListRepository;
 import com.ceir.BlackListProcess.repository.GreyListTrackRepository;
-
+import org.apache.log4j.Logger;
 
 @Service
 public class NationalislmServiceImpl {
 
-	@Autowired
-	GreyListRepository greyListRepository;
+    private final Logger log = Logger.getLogger(getClass());
+    @Autowired
+    GreyListRepository greyListRepository;
 
-	@Autowired
-	GreyListTrackRepository greyListTrackRepository;
+    @Autowired
+    GreyListTrackRepository greyListTrackRepository;
 
-	/*
+    public GreylistDbHistory saveGreyListHistory(GreylistDbHistory greyListData) {
+
+        GreylistDbHistory greyList = new GreylistDbHistory();
+        try {
+            greyList = greyListTrackRepository.save(greyListData);
+            return greyList;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public int deleteGreyListById(long id) {
+
+        try {
+            greyListRepository.deleteById(id);
+            return 1;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    public List<GreylistDb> findAllGreyListData() {
+        List<GreylistDb> greyListData = new ArrayList<GreylistDb>();
+        try {
+            greyListData = greyListRepository.findAll();
+            log.info(this);
+            return greyListData;
+        } catch (Exception e) {
+            log.warn(e);
+            return new ArrayList<GreylistDb>();
+        }
+    }
+
+}
+
+/*
 	 * @Autowired PropertiesReader propertiesReader;
 	 * 
 	 * public List<GreylistDb> greyListDataByCreatedOn(FileDumpFilter
@@ -63,45 +99,4 @@ public class NationalislmServiceImpl {
 	 * 
 	 * catch(Exception e) { e.getMessage(); List<GreylistDbHistory> greyListData=new
 	 * ArrayList<GreylistDbHistory>(); return greyListData; } }
-	 */
-	
-	public GreylistDbHistory saveGreyListHistory(GreylistDbHistory greyListData) {
-	
-		GreylistDbHistory greyList=new GreylistDbHistory();
-		try {
-		greyList=greyListTrackRepository.save(greyListData);
-		return greyList;
-		}
-		catch(Exception e) {
-			return null;
-		}
-	}
-	
-	
-	
-	public int deleteGreyListById(long id) {
-		
-		try {
-		greyListRepository.deleteById(id);
-		return 1;
-		}
-		catch(Exception e) {
-			return 0;
-		}
-	}
-	
-public List<GreylistDb> findAllGreyListData() {
-		List<GreylistDb> greyListData=new ArrayList<GreylistDb>();
-		try {
-			greyListData=greyListRepository.findAll();
-		return greyListData;
-		}
-		catch(Exception e) {
-			return new ArrayList<GreylistDb>();
-		}
-	}
-
-	
-	
-		
-}
+ */

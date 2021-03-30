@@ -45,18 +45,16 @@ public class GreylistDb implements Serializable {
 	private String	 deviceStatus;
 	private String DeviceLaunchDate;
 	private String multipleSimStatus;
-	private String  deviceId;
+	private String  deviceIdType;
 	private String imeiEsnMeid;
 	private String actualImei;
 	private String modeType;
 	private String requestType;
 	private String userType;
-   
- 
-   private String operator_id;     
+      private String operator_id;     
    private String operator_name;
-   
 	private String complainType;
+        
 	@Type(type="date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date expiryDate;
@@ -151,11 +149,11 @@ public class GreylistDb implements Serializable {
 	public void setMultipleSimStatus(String multipleSimStatus) {
 		this.multipleSimStatus = multipleSimStatus;
 	}
-	public String getDeviceId() {
-		return deviceId;
+	public String getDeviceIdType() {
+		return deviceIdType;
 	}
-	public void setDeviceId(String deviceId) {
-		this.deviceId = deviceId;
+	public void setDeviceIdType(String deviceIdType) {
+		this.deviceIdType = deviceIdType;
 	}
 	public String getImeiEsnMeid() {
 		return imeiEsnMeid;
