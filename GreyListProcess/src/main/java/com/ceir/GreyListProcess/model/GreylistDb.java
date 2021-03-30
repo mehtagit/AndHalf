@@ -44,7 +44,7 @@ public class GreylistDb {
 	private String	 deviceStatus;
 	private String DeviceLaunchDate;
 	private String multipleSimStatus;
-	private String  deviceId;
+	private String  deviceIdType;
 	private String imeiEsnMeid;
 	private String actualImei;
 	private String modeType;
@@ -129,12 +129,15 @@ public class GreylistDb {
 	public void setMultipleSimStatus(String multipleSimStatus) {
 		this.multipleSimStatus = multipleSimStatus;
 	}
-	public String getDeviceId() {
-		return deviceId;
-	}
-	public void setDeviceId(String deviceId) {
-		this.deviceId = deviceId;
-	}
+
+    public String getDeviceIdType() {
+        return deviceIdType;
+    }
+
+    public void setDeviceIdType(String deviceIdType) {
+        this.deviceIdType = deviceIdType;
+    }
+	 
 	public String getImeiEsnMeid() {
 		return imeiEsnMeid;
 	}
@@ -187,11 +190,12 @@ public class GreylistDb {
           this.actualImei = actualImei;
      }
 
-     @Override
-     public String toString() {
-          return "GreylistDb{" + "id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", imei=" + imei + ", roleType=" + roleType + ", userId=" + userId + ", txnId=" + txnId + ", deviceNumber=" + deviceNumber + ", deviceType=" + deviceType + ", deviceAction=" + deviceAction + ", deviceStatus=" + deviceStatus + ", DeviceLaunchDate=" + DeviceLaunchDate + ", multipleSimStatus=" + multipleSimStatus + ", deviceId=" + deviceId + ", imeiEsnMeid=" + imeiEsnMeid + ", actualImei=" + actualImei + ", modeType=" + modeType + ", requestType=" + requestType + ", userType=" + userType + ", complainType=" + complainType + ", expiryDate=" + expiryDate + '}';
-     }
- 
+    @Override
+    public String toString() {
+        return "GreylistDb{" + "id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", imei=" + imei + ", roleType=" + roleType + ", userId=" + userId + ", txnId=" + txnId + ", deviceNumber=" + deviceNumber + ", deviceType=" + deviceType + ", deviceAction=" + deviceAction + ", deviceStatus=" + deviceStatus + ", DeviceLaunchDate=" + DeviceLaunchDate + ", multipleSimStatus=" + multipleSimStatus + ", deviceIdType=" + deviceIdType + ", imeiEsnMeid=" + imeiEsnMeid + ", actualImei=" + actualImei + ", modeType=" + modeType + ", requestType=" + requestType + ", userType=" + userType + ", complainType=" + complainType + ", expiryDate=" + expiryDate + '}';
+    }
+
+     
 
 }
 

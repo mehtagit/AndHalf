@@ -44,7 +44,7 @@ public class GreylistDbHistory {
      private String deviceStatus;
      private String DeviceLaunchDate;
      private String multipleSimStatus;
-     private String deviceId;
+     private String deviceIdType;
      private String imeiEsnMeid;
      private int operation;
      private String reason;
@@ -168,13 +168,14 @@ public class GreylistDbHistory {
           this.multipleSimStatus = multipleSimStatus;
      }
 
-     public String getDeviceId() {
-          return deviceId;
-     }
+    public String getDeviceIdType() {
+        return deviceIdType;
+    }
 
-     public void setDeviceId(String deviceId) {
-          this.deviceId = deviceId;
-     }
+    public void setDeviceIdType(String deviceIdType) {
+        this.deviceIdType = deviceIdType;
+    }
+ 
 
      public String getImeiEsnMeid() {
           return imeiEsnMeid;
@@ -226,7 +227,7 @@ public class GreylistDbHistory {
 
      public GreylistDbHistory(Date createdOn, Date modifiedOn, String imei, String roleType, String userId,
              String txnId, String deviceNumber, String deviceType, String deviceAction, String deviceStatus,
-             String deviceLaunchDate, String multipleSimStatus, String deviceId, String imeiEsnMeid, int operation, String reason,
+             String deviceLaunchDate, String multipleSimStatus, String deviceIdType, String imeiEsnMeid, int operation, String reason,
              String mode, String requestType, String userType, String complainType, Date expiryDate, String actualImei) {
           this.createdOn = createdOn;
           this.modifiedOn = modifiedOn;
@@ -240,7 +241,7 @@ public class GreylistDbHistory {
           this.deviceStatus = deviceStatus;
           DeviceLaunchDate = deviceLaunchDate;
           this.multipleSimStatus = multipleSimStatus;
-          this.deviceId = deviceId;
+          this.deviceIdType = deviceIdType;
           this.imeiEsnMeid = imeiEsnMeid;
           this.operation = operation;
           this.reason = reason;

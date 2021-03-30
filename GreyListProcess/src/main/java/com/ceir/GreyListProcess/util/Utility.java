@@ -89,7 +89,6 @@ public class Utility {
 	
 	public	void writeGreyListInFile(String fileName, String header, List<GreylistDb> record) {
 		try {
-
 			File tmpDir = new File(fileName);
 			boolean exists = tmpDir.exists();
 			if (exists) {
