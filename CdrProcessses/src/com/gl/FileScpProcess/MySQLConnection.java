@@ -30,8 +30,8 @@ public class MySQLConnection {
           try {
                final String JDBC_DRIVER = propertyReader.getPropValue("jdbc_driver").trim();
                final String DB_URL =propertyReader.getPropValue("db_url").trim();
-               final String USER = propertyReader.getPropValue("username").trim();
-               final String PASS = propertyReader.getPropValue("password").trim();
+               final String USER = propertyReader.getPropValue("db_username").trim();
+               final String PASS = propertyReader.getPropValue("db_password").trim();
                logger.debug(JDBC_DRIVER + " :: " + DB_URL + " :: " + USER + " :: " + PASS);
                logger.debug("Connnection  Init " + java.time.LocalDateTime.now());
                Class.forName(JDBC_DRIVER);

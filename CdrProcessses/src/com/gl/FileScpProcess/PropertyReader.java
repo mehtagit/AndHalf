@@ -33,7 +33,7 @@ public class PropertyReader {
         try {
             prop = new Properties();
             String currentDirectory = System.getProperty("user.dir");
-            String propFileName = currentDirectory + "/conf/config.properties";
+            String propFileName = currentDirectory + "/conf/conf.properties";
             inputStream = new FileInputStream(propFileName);
             if (inputStream != null) {
                 prop.load(inputStream);
