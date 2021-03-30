@@ -129,7 +129,7 @@ public class RenderGraphData {
 	@RequestMapping(value = "/userLoginGraph", method = { RequestMethod.POST })
 	public ResponseEntity<?> userLoginGraph(@RequestBody GraphRequest graphRequest,HttpSession session) {
 		Object response = null;
-		graphRequest.setPublicIP(session.getAttribute("publicIP").toString());
+		graphRequest.setPublicIp(session.getAttribute("publicIP").toString());
 		graphRequest.setBrowser(session.getAttribute("browser").toString());
 		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(), graphRequest.getPageSize(),
 				graphRequest.getFile());
@@ -159,7 +159,7 @@ public class RenderGraphData {
 	public ResponseEntity<?> activeDeviceGraph(@RequestBody GraphRequest graphRequest,
 			@RequestParam(name = "Type", required = false) String Type,HttpSession session) {
 		Object response = null;
-		graphRequest.setPublicIP(session.getAttribute("publicIP").toString());
+		graphRequest.setPublicIp(session.getAttribute("publicIP").toString());
 		graphRequest.setBrowser(session.getAttribute("browser").toString());
 		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(), graphRequest.getPageSize(),
 				graphRequest.getFile());
@@ -215,7 +215,7 @@ public class RenderGraphData {
 	public ResponseEntity<?> topBrandModel(@RequestBody GraphRequest graphRequest,
 			@PathVariable("featureFlag") String featureFlag,HttpSession session) {
 		Object response = null;
-		graphRequest.setPublicIP(session.getAttribute("publicIP").toString());
+		graphRequest.setPublicIp(session.getAttribute("publicIP").toString());
 		graphRequest.setBrowser(session.getAttribute("browser").toString());
 		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(), graphRequest.getPageSize(),
 				graphRequest.getFile());
@@ -324,7 +324,7 @@ public class RenderGraphData {
 	@PostMapping("/report/imeiUsageDashBoard")
 	public ResponseEntity<?> imeiUsageDashBoard(@RequestBody GraphRequest graphRequest,HttpSession session) {
 		Object response = null;
-		graphRequest.setPublicIP(session.getAttribute("publicIP").toString());
+		graphRequest.setPublicIp(session.getAttribute("publicIP").toString());
 		graphRequest.setBrowser(session.getAttribute("browser").toString());
 		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(), graphRequest.getPageSize(),
 				graphRequest.getFile());

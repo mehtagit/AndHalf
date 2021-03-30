@@ -7,7 +7,7 @@ public class TRCRequest {
 	private String endDate,searchString,startDate,tac,txnId,userType,filterUserType,userDisplayName,modifiedOn,source;
 	
 	private Integer status,adminStatus,featureId,userTypeId,file;
-	private String displayName,Country,countryName;
+	private String displayName,Country,countryName,trademark;
 	private long userId;
 	private Long productName;
 	private Integer modelNumber;
@@ -18,6 +18,13 @@ public class TRCRequest {
 	private String publicIp;
 	private String browser;
 	
+	
+	public String getTrademark() {
+		return trademark;
+	}
+	public void setTrademark(String trademark) {
+		this.trademark = trademark;
+	}
 	public String getPublicIp() {
 		return publicIp;
 	}
@@ -231,6 +238,8 @@ public class TRCRequest {
 		builder.append(Country);
 		builder.append(", countryName=");
 		builder.append(countryName);
+		builder.append(", trademark=");
+		builder.append(trademark);
 		builder.append(", userId=");
 		builder.append(userId);
 		builder.append(", productName=");

@@ -1493,3 +1493,4 @@ function filterResetConsignment(formID){
 	$("label").removeClass('active');
 	filterConsignment(lang,null);
 }
+

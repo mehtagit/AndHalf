@@ -202,10 +202,10 @@ section {
                     <div class="row ">
                       <form action="#" onsubmit="return hide()">
                         <div class="col s12 m12 l12 bx-shadow">
-                          <div class="row">
+                          <div  class="registrationTableDiv_box bx-shadow">
                            
                             
-                            <div class="col s12 m3 l3">
+                            <div class="selectDropdwn" style="margin-top: 3px;">
                               <label for="deviceIdType"><spring:message code="select.deviceIDType" /> <span class="star">*</span></label>
                               <select class="browser-default" id="deviceType" style="height: 30px" 
                               					
@@ -214,7 +214,7 @@ section {
                               </select>
                           </div>
                             
-                            <div class="input-field col s12 m3 l3">
+                            <div class="input-field">
                               <input type="text" name="IMEI" id="imei" maxlength="16"
                               pattern="<spring:eval expression="@environment.getProperty('pattern.IMEINumber')" />"
                               required/>
@@ -222,7 +222,7 @@ section {
                               <label for="imei" ><spring:message code="title.imeiMeidEsn" /><span class="star">*</span></label>
                             </div>
                             
-                             <div class="input-field col s12 m3 l3">
+                             <div class="input-field">
                               <input type="text" name="MSISDN" maxlength="15" id="msisdn"  
                               pattern="<spring:eval expression="@environment.getProperty('pattern.MSISDN')" />"
                               oninput="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');" 
@@ -230,7 +230,7 @@ section {
                               <label for="MSISDN" ><spring:message code="input.msisdn" /></label>
                             </div>
                             
-                            <div class="input-field col s12 m3 l3">
+                            <div class="input-field">
                               <button class="btn " type="submit"><spring:message code="button.submit" /></button>
                               <a onclick="clearFields()" class="btn" style="margin-left: 10px;"><spring:message code="button.clear" /></a>
                             </div>

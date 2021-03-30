@@ -73,7 +73,7 @@ public class GraphDashboardCount {
 	@PostMapping("/report/count/{featureTag}") 
 	public ResponseEntity<?> activeDeviceCount(@RequestBody GraphRequest graphRequest, @PathVariable("featureTag") int featureTag,HttpSession session) {
 		Object response= null;
-		graphRequest.setPublicIP(session.getAttribute("publicIP").toString());
+		graphRequest.setPublicIp(session.getAttribute("publicIP").toString());
 		graphRequest.setBrowser(session.getAttribute("browser").toString());
 		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(),  graphRequest.getPageSize(),  graphRequest.getFile());
 		 
@@ -115,7 +115,7 @@ public class GraphDashboardCount {
 	public ResponseEntity<?> activeDeviceGraph(@RequestBody GraphRequest graphRequest,HttpSession session) {
 
 		Object response= null;
-		graphRequest.setPublicIP(session.getAttribute("publicIP").toString());
+		graphRequest.setPublicIp(session.getAttribute("publicIP").toString());
 		graphRequest.setBrowser(session.getAttribute("browser").toString());
 		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(),  graphRequest.getPageSize(),  graphRequest.getFile());
 		 
@@ -140,7 +140,7 @@ public class GraphDashboardCount {
 	public ResponseEntity<?> mobileDeviceCount(@RequestBody GraphRequest graphRequest,HttpSession session) {
 
 		Object response= null;
-		graphRequest.setPublicIP(session.getAttribute("publicIP").toString());
+		graphRequest.setPublicIp(session.getAttribute("publicIP").toString());
 		graphRequest.setBrowser(session.getAttribute("browser").toString());
 		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(),  graphRequest.getPageSize(),  graphRequest.getFile());
 		 
@@ -165,7 +165,7 @@ public class GraphDashboardCount {
 	public ResponseEntity<?> lawfulCount(@RequestBody GraphRequest graphRequest,HttpSession session) {
 
 		Object response= null;
-		graphRequest.setPublicIP(session.getAttribute("publicIP").toString());
+		graphRequest.setPublicIp(session.getAttribute("publicIP").toString());
 		graphRequest.setBrowser(session.getAttribute("browser").toString());
 		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(),  graphRequest.getPageSize(),  graphRequest.getFile());
 		 
@@ -190,7 +190,7 @@ public class GraphDashboardCount {
 	public ResponseEntity<?> importerCount(@RequestBody GraphRequest graphRequest , @PathVariable("featureFlag") String featureFlag,HttpSession session) {
 
 		Object response= null;
-		graphRequest.setPublicIP(session.getAttribute("publicIP").toString());
+		graphRequest.setPublicIp(session.getAttribute("publicIP").toString());
 		graphRequest.setBrowser(session.getAttribute("browser").toString());
 		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(),  graphRequest.getPageSize(),  graphRequest.getFile());
 		 
@@ -229,7 +229,7 @@ public class GraphDashboardCount {
 	@PostMapping("/operatorReport/count/{featureTag}") 
 	public ResponseEntity<?> operatorReport(@RequestBody GraphRequest graphRequest, @PathVariable("featureTag") int featureTag,HttpSession session) {
 		Object response= null;
-		graphRequest.setPublicIP(session.getAttribute("publicIP").toString());
+		graphRequest.setPublicIp(session.getAttribute("publicIP").toString());
 		graphRequest.setBrowser(session.getAttribute("browser").toString());
 		response = analyticsFeign.graph(graphRequest, graphRequest.getPageNo(),  graphRequest.getPageSize(),  graphRequest.getFile());
 		 
