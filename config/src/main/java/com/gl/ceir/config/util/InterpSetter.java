@@ -27,7 +27,7 @@ public final class InterpSetter {
 			}
 
 			List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag(tag);
-			return systemConfigListDbs.stream().filter(o -> o.getValue() == value).findAny().get().getInterp();
+			return systemConfigListDbs.stream().filter(o -> Integer.valueOf(o.getValue()) == value).findAny().get().getInterp();
 
 		}catch (Exception e) {
 			return "";
@@ -42,7 +42,7 @@ public final class InterpSetter {
 			}
 
 			List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag(tag);
-			return systemConfigListDbs.stream().filter(o -> o.getValue() == value).findAny().get().getTagId();
+			return systemConfigListDbs.stream().filter(o -> Integer.valueOf(o.getValue()) == value).findAny().get().getTagId();
 
 		}catch (Exception e) {
 			return "";
@@ -54,7 +54,7 @@ public final class InterpSetter {
 
 			List<SystemConfigListDb> systemConfigListDbs = configurationManagementServiceImpl.getSystemConfigListByTag(tag);
 			return systemConfigListDbs.stream()
-					.filter(o -> o.getValue() == value)
+					.filter(o -> Integer.valueOf(o.getValue()) == value)
 					.findAny()
 					.get()
 					.getInterp()

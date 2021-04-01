@@ -529,7 +529,7 @@ public class ConfigurationManagementServiceImpl {
 
 			for (SystemConfigUserwiseDb systemConfigUserwiseDb : systemConfigUserwiseDbs) {
 
-				if (systemConfigListDb.getValue() == systemConfigUserwiseDb.getValue()) {
+				if (Integer.valueOf(systemConfigListDb.getValue()) == systemConfigUserwiseDb.getValue()) {
 					systemConfigListDbResult.add(systemConfigListDb);
 					break;
 				}

@@ -38,7 +38,7 @@ public class SystemConfigListDb implements Serializable {
 	
 	private String tag;
 	
-	private Integer value;
+	private String value;
 	
 	private String interp;
 	
@@ -56,6 +56,52 @@ public class SystemConfigListDb implements Serializable {
 	@Transient
 	private String username;
 	
+	@Transient
+	private Integer userId;
+	
+	@Transient
+	private String publicIp;
+	
+	@Transient
+	private String browser;
+	
+	@Transient
+	private String userName;
+	
+	
+	
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
+
+	public String getPublicIp() {
+		return publicIp;
+	}
+
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+
+	public String getBrowser() {
+		return browser;
+	}
+
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public SystemConfigListDb() {
 	}
 	
@@ -85,12 +131,18 @@ public class SystemConfigListDb implements Serializable {
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-	public Integer getValue() {
+	
+	
+	
+	
+	public String getValue() {
 		return value;
 	}
-	public void setValue(Integer value) {
+
+	public void setValue(String value) {
 		this.value = value;
 	}
+
 	public String getInterp() {
 		return interp;
 	}
@@ -181,6 +233,14 @@ public class SystemConfigListDb implements Serializable {
 		builder.append(modifiedBy);
 		builder.append(", username=");
 		builder.append(username);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
+		builder.append(", userName=");
+		builder.append(userName);
 		builder.append("]");
 		return builder.toString();
 	}

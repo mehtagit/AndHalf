@@ -18,7 +18,7 @@ public class StockCustomFileModel {
 	private String assigneName;
 	
 	
-	@CsvBindByName(column = "Txn Id")
+	@CsvBindByName(column = "Transaction ID")
 	@CsvBindByPosition(position = 3)
 	private String txnId;
 

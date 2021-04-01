@@ -472,7 +472,7 @@ public class StolenAndRecoveryServiceImpl {
 
 				if(Objects.nonNull(systemConfigListDbs)) {	
 					for(SystemConfigListDb systemConfigListDb : systemConfigListDbs ) {
-						configuredRequestTypeOfFeature.add(systemConfigListDb.getValue());
+						configuredRequestTypeOfFeature.add(Integer.valueOf(systemConfigListDb.getValue()));
 					}
 
 					if(!configuredRequestTypeOfFeature.isEmpty()) {

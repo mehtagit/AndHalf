@@ -53,7 +53,7 @@ public class CustomerCareRegularizeDevice implements CustomerCareTarget{
 	@Override
 	public CustomerCareDeviceState fetchDetailsByImei(String imei, CustomerCareDeviceState customerCareDeviceState, String deviceIdTypeInterp ) {
 		logger.info("TAG:["+Tags.DEVICE_ID_TYPE+"] and Interp:["+deviceIdTypeInterp+"]");
-		Integer deviceIdType = systemConfigListRepository.findByTagAndInterpIgnoreCase(Tags.DEVICE_ID_TYPE, deviceIdTypeInterp).getValue();
+		Integer deviceIdType = Integer.valueOf(systemConfigListRepository.findByTagAndInterpIgnoreCase(Tags.DEVICE_ID_TYPE, deviceIdTypeInterp).getValue());
 		
 		RegularizeDeviceDb deviceDb = regularizedDeviceDbRepository.getByImeiAndDeviceIdType(imei, deviceIdType);
 

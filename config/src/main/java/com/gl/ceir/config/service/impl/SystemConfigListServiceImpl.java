@@ -91,8 +91,10 @@ public class SystemConfigListServiceImpl {
 			}
 
 			systemConfigListDb.setListOrder(0);
-
 			systemConfigListRepository.save(systemConfigListDb);
+			auditTrailRepository.save(new AuditTrail(systemConfigListDb.getUserId(), systemConfigListDb.getUserName(), 0L, "System", 0L, 
+					Features.FIELD_MANGEMENT, SubFeatures.Save, "","NA","System",systemConfigListDb.getPublicIp(),systemConfigListDb.getBrowser()));
+			
 			return new GenricResponse(0);
 
 		} catch (Exception e) {
@@ -107,7 +109,6 @@ public class SystemConfigListServiceImpl {
 				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(),
 						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
-
 			SystemConfigListDb systemConfigListDb2 = systemConfigListRepository.getById(systemConfigListDb.getId());
 			systemConfigListDb2.setDescription(systemConfigListDb.getDescription());
 			systemConfigListDb2.setTagId(systemConfigListDb.getTagId());
@@ -115,6 +116,8 @@ public class SystemConfigListServiceImpl {
 			logger.info("username when updating" +systemConfigListDb.getUsername()); 
 			systemConfigListDb2.setModifiedBy(systemConfigListDb.getUsername());
 			systemConfigListRepository.save(systemConfigListDb2);
+			auditTrailRepository.save(new AuditTrail(systemConfigListDb.getUserId(), systemConfigListDb.getUserName(), 0L, "System", 0L, 
+					Features.FIELD_MANGEMENT, SubFeatures.UPDATE, "","NA","System",systemConfigListDb.getPublicIp(),systemConfigListDb.getBrowser()));
 			return new GenricResponse(0);
 
 		} catch (Exception e) {
@@ -189,7 +192,7 @@ public class SystemConfigListServiceImpl {
 
 			auditTrailRepository
 					.save(new AuditTrail(filterRequest.getUserId(), user.getUsername(), Usertype.SYSTEM_ADMIN.getCode(),
-							Usertype.SYSTEM_ADMIN.getName(), 0L, Features.CONFIG_LIST, SubFeatures.VIEW, ""));
+							Usertype.SYSTEM_ADMIN.getName(), 0L, Features.CONFIG_LIST, SubFeatures.VIEW, "",filterRequest.getPublicIp(),filterRequest.getBrowser()));
 			logger.info("AUDIT :  findById saved in audit_trail.");
 
 			SystemConfigListDb systemConfigListDb = systemConfigListRepository.getById(filterRequest.getId());
@@ -372,7 +375,9 @@ public class SystemConfigListServiceImpl {
 	private GenericSpecificationBuilder<SystemConfigListDb> buildSpecification(FilterRequest filterRequest) {
 		GenericSpecificationBuilder<SystemConfigListDb> cmsb = new GenericSpecificationBuilder<>(
 				propertiesReader.dialect);
-
+		auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 0L, "System", 0L, 
+				Features.FIELD_MANGEMENT, SubFeatures.VIEW_ALL, "","NA","System",filterRequest.getPublicIp(),filterRequest.getBrowser()));
+		
 		if (Objects.nonNull(filterRequest.getTag()) && !"-1".equals(filterRequest.getTag())) {
 			cmsb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
@@ -405,7 +410,7 @@ public class SystemConfigListServiceImpl {
 			User user = userRepository.getById(filterRequest.getUserId());
 
 			auditTrailRepository.save(new AuditTrail(user.getId(), user.getUsername(), 0L, "System", 0L,
-					Features.CONFIG_LIST, SubFeatures.DELETE, ""));
+					Features.CONFIG_LIST, SubFeatures.DELETE, "",filterRequest.getPublicIp(),filterRequest.getBrowser()));
 			logger.info("AUDIT : Delete Tags list saved in audit_trail.");
 
 			systemConfigListRepository.deleteById(filterRequest.getId());

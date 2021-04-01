@@ -311,9 +311,11 @@ public class StockServiceImpl {
 
 	public Page<StockMgmt> getAllFilteredData(FilterRequest filterRequest, Integer pageNo, Integer pageSize, 
 			String source){
-
+		
 		List<StateMgmtDb> statusList = null;
-		String orderColumn = "0".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
+		String orderColumn=null;
+		if(filterRequest.getUserType().equalsIgnoreCase("CEIRAdmin")) {
+		 orderColumn = "0".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
 				: "1".equalsIgnoreCase(filterRequest.getColumnName()) ? "txnId"
 					:"2".equalsIgnoreCase(filterRequest.getColumnName()) ? "user.userProfile.displayName"
 						: "3".equalsIgnoreCase(filterRequest.getColumnName()) ? "roleType"
@@ -322,8 +324,30 @@ public class StockServiceImpl {
 												? "stockStatus"
 												:"6".equalsIgnoreCase(filterRequest.getColumnName()) ? "quantity" 
 												: "7".equalsIgnoreCase(filterRequest.getColumnName()) ? "deviceQuantity":"modifiedOn";
+		}
+		else if(filterRequest.getUserType().equalsIgnoreCase("Custom")) {
+			orderColumn = "0".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
+					: "1".equalsIgnoreCase(filterRequest.getColumnName()) ? "txnId"
+						:"2".equalsIgnoreCase(filterRequest.getColumnName()) ? "suplierName"
+							: "3".equalsIgnoreCase(filterRequest.getColumnName()) ? "roleType"
+									: "4".equalsIgnoreCase(filterRequest.getColumnName()) ? "fileName"
+											: "5".equalsIgnoreCase(filterRequest.getColumnName())
+													? "stockStatus"
+													:"6".equalsIgnoreCase(filterRequest.getColumnName()) ? "quantity" 
+													: "7".equalsIgnoreCase(filterRequest.getColumnName()) ? "deviceQuantity":"modifiedOn";	
+		}
 		
-		
+		else {
+			orderColumn = "0".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
+					: "1".equalsIgnoreCase(filterRequest.getColumnName()) ? "txnId"
+						:"2".equalsIgnoreCase(filterRequest.getColumnName()) ? "fileName"
+							: "3".equalsIgnoreCase(filterRequest.getColumnName()) ? "stockStatus"
+									: "4".equalsIgnoreCase(filterRequest.getColumnName()) ? "quantity"
+											: "5".equalsIgnoreCase(filterRequest.getColumnName())
+													? "deviceQuantity"
+													 :"modifiedOn";
+		}
+		logger.info("column name for sorting==[" + orderColumn + "]" );
 		Sort.Direction direction;
 		if("modifiedOn".equalsIgnoreCase(orderColumn)) {
 			direction=Sort.Direction.DESC;
@@ -437,7 +461,12 @@ public class StockServiceImpl {
 			if(Objects.nonNull(filterRequest.getRoleType()))
 				specificationBuilder.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 		} 
-
+		else if("Custom".equalsIgnoreCase(filterRequest.getUserType())) {
+			if(Objects.nonNull(filterRequest.getDisplayName()) && !filterRequest.getDisplayName().isEmpty()) {
+				specificationBuilder.with(new SearchCriteria("suplierName", filterRequest.getDisplayName().trim().replace("  ", " ")
+						, SearchOperation.LIKE, Datatype.STRING));
+			}
+		}
 		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
 			specificationBuilder.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 
@@ -458,6 +487,11 @@ public class StockServiceImpl {
 		
 		if(Objects.nonNull(filterRequest.getQuantity()) && !filterRequest.getQuantity().isEmpty())
 			specificationBuilder.with(new SearchCriteria("quantity", filterRequest.getQuantity(), SearchOperation.LIKE, Datatype.STRING));
+		
+		
+		if(Objects.nonNull(filterRequest.getQuantity()) && !filterRequest.getQuantity().isEmpty())
+			specificationBuilder.with(new SearchCriteria("quantity", filterRequest.getQuantity(), SearchOperation.LIKE, Datatype.STRING));
+		
 		
 		if(Objects.nonNull(filterRequest.getDeviceQuantity()) && !filterRequest.getDeviceQuantity().isEmpty())
 			specificationBuilder.with(new SearchCriteria("deviceQuantity", filterRequest.getDeviceQuantity(), SearchOperation.LIKE, Datatype.STRING));
