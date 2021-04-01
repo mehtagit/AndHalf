@@ -51,9 +51,9 @@ public class LoginController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/changeLanguage/{lang}",method = {RequestMethod.POST})
-	public HttpResponse changeLanguage(@PathVariable("lang")String lang,HttpSession session){
+	public HttpResponse changeLanguage(@PathVariable("lang")String lang,HttpSession session,HttpServletRequest request){
 		    
-			return loginService.changeLanguage(lang,session);
+			return loginService.changeLanguage(lang,session,request);
   }
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)

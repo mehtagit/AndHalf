@@ -40,6 +40,21 @@ public class TRCRegisteration {
 	private String modelNumberInterp;
 	private Integer featureId;
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	public String publicIp,browser;
+	
+	
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
 	public Integer getAdminApproveStatus() {
 		return adminApproveStatus;
 	}
@@ -228,17 +243,74 @@ public class TRCRegisteration {
 	}
 	@Override
 	public String toString() {
-		return "TRCRegisteration [adminApproveStatus=" + adminApproveStatus + ", adminRemark=" + adminRemark
-				+ ", adminStateInterp=" + adminStateInterp + ", adminUserId=" + adminUserId + ", adminUserType="
-				+ adminUserType + ", approveDisapproveDate=" + approveDisapproveDate + ", approveStatus="
-				+ approveStatus + ", attachedFiles=" + attachedFiles + ", country=" + country + ", createdOn="
-				+ createdOn + ", fileName=" + fileName + ", frequencyRange=" + frequencyRange + ", id=" + id
-				+ ", manufacturerCountry=" + manufacturerCountry + ", manufacturerId=" + manufacturerId
-				+ ", manufacturerName=" + manufacturerName + ", modelNumber=" + modelNumber + ", modifiedOn="
-				+ modifiedOn + ", productName=" + productName + ", remark=" + remark + ", requestDate=" + requestDate
-				+ ", stateInterp=" + stateInterp + ", tac=" + tac + ", trademark=" + trademark + ", txnId=" + txnId
-				+ ", userId=" + userId + ", userType=" + userType + ", productNameInterp=" + productNameInterp
-				+ ", modelNumberInterp=" + modelNumberInterp + ", featureId=" + featureId + ", additionalProperties="
-				+ additionalProperties + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("TRCRegisteration [adminApproveStatus=");
+		builder.append(adminApproveStatus);
+		builder.append(", adminRemark=");
+		builder.append(adminRemark);
+		builder.append(", adminStateInterp=");
+		builder.append(adminStateInterp);
+		builder.append(", adminUserId=");
+		builder.append(adminUserId);
+		builder.append(", adminUserType=");
+		builder.append(adminUserType);
+		builder.append(", approveDisapproveDate=");
+		builder.append(approveDisapproveDate);
+		builder.append(", approveStatus=");
+		builder.append(approveStatus);
+		builder.append(", attachedFiles=");
+		builder.append(attachedFiles);
+		builder.append(", country=");
+		builder.append(country);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", fileName=");
+		builder.append(fileName);
+		builder.append(", frequencyRange=");
+		builder.append(frequencyRange);
+		builder.append(", id=");
+		builder.append(id);
+		builder.append(", manufacturerCountry=");
+		builder.append(manufacturerCountry);
+		builder.append(", manufacturerId=");
+		builder.append(manufacturerId);
+		builder.append(", manufacturerName=");
+		builder.append(manufacturerName);
+		builder.append(", modelNumber=");
+		builder.append(modelNumber);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", productName=");
+		builder.append(productName);
+		builder.append(", remark=");
+		builder.append(remark);
+		builder.append(", requestDate=");
+		builder.append(requestDate);
+		builder.append(", stateInterp=");
+		builder.append(stateInterp);
+		builder.append(", tac=");
+		builder.append(tac);
+		builder.append(", trademark=");
+		builder.append(trademark);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append(", userType=");
+		builder.append(userType);
+		builder.append(", productNameInterp=");
+		builder.append(productNameInterp);
+		builder.append(", modelNumberInterp=");
+		builder.append(modelNumberInterp);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", additionalProperties=");
+		builder.append(additionalProperties);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
+		builder.append("]");
+		return builder.toString();
 	}
 }

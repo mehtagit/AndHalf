@@ -29,6 +29,7 @@ import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -140,7 +141,7 @@ public class LoginService {
 		}
 	}
 		
-	public HttpResponse changeLanguage(String language,HttpSession session) {
+	public HttpResponse changeLanguage(String language,HttpSession session,HttpServletRequest request) {
 		log.info("inside check change language controller ");
 		log.info("language data:  "+language);
 		Integer userID=(Integer)session.getAttribute("userid");
@@ -150,7 +151,10 @@ public class LoginService {
 		Integer userTypeId=(Integer)session.getAttribute("usertypeId");
 		ChangeLanguage languageData=new ChangeLanguage(language, username,
 				userTypeId, userID, 0, userType);
-		HttpResponse response=userLoginFeignImpl.changeUserLanguage(languageData);
+		UserHeader header=registerService.getUserHeaders(request);
+		String publicIp=header.getPublicIp();
+		String browser =header.getBrowser();
+		HttpResponse response=userLoginFeignImpl.changeUserLanguage(languageData,publicIp,browser);
 		if(response!=null) {
 			log.info("response from controller: "+response);
 			session.removeAttribute("updatedLanguage");

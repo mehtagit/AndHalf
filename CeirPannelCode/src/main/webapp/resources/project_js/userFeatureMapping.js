@@ -83,14 +83,15 @@
 						destroy:true,
 						"serverSide": true,
 						orderCellsTop : true,
-						"ordering" : false,
+						"ordering" : true,
 						"bPaginate" : true,
-						"bFilter" : true,
+						"bFilter" : false,
 						"bInfo" : true,
 						"bSearchable" : true,
 						"oLanguage": {
 							"sEmptyTable": "No records found in the system"
 					    },
+					    "aaSorting": [],
 						initComplete: function() {
 					 		$('.dataTables_filter input')
 	       .off().on('keyup', function(event) {
@@ -118,7 +119,10 @@
 								
 							}
 						},
-						"columns": result
+						"columns": result,
+						columnDefs : [
+							{ orderable: false, targets: -1 }
+							]
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
@@ -192,9 +196,11 @@
 									"</div>"+
 							"</div>");
 					}
-
+					    var viewFilter="viewFilter";
 						$("#userFeatureTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+						$("#userFeatureTableDiv").append("<div class=' col s3 m2 l2'><button type='button' class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
 						$("#userFeatureTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportUserFeatureData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$('#clearFilter').attr("onclick", "Resetfilter('viewFilter')");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -368,3 +374,9 @@
 			}
 		});
 	}
+	
+	 function Resetfilter(formID){
+			$('#'+formID).trigger('reset');
+			$("label").removeClass('active');
+			viewDatatable(lang,null);
+	 }

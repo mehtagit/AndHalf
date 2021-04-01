@@ -194,7 +194,9 @@ public class TrcController {
 
 		}
 		
-		log.info("TRC form parameters passed to save TRC api "+trcRequest);
+		trcRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		trcRequest.setBrowser(session.getAttribute("browser").toString());
+		log.info("TRC form parameters passed to save TRC api ="+trcRequest);
 		GenricResponse response = typeApprovedFeignImpl.register(trcRequest);
 		 response.setTxnId(txnNumber);
 		
@@ -291,7 +293,8 @@ public class TrcController {
 		}
 		i++;
 		}
-		
+		trcRequest.setPublicIp(session.getAttribute("publicIP").toString());
+		trcRequest.setBrowser(session.getAttribute("browser").toString());
 		log.info("request passed to the update method="+trcRequest);
 		GenricResponse response = typeApprovedFeignImpl.updateApproved(trcRequest);
 		log.info("response  from   update method="+response);	
@@ -362,6 +365,8 @@ public class TrcController {
 				Gson gsonObject=new Gson();
 				Object response;
 				Integer file = 1;	
+				trcRequest.setPublicIp(session.getAttribute("publicIP").toString());
+				trcRequest.setBrowser(session.getAttribute("browser").toString());
 				log.info("filterRequest:::::::::"+trcRequest);
 				response= typeApprovedFeignImpl.manageTypeFeign(trcRequest, trcRequest.getPageNo(), trcRequest.getPageSize(),trcRequest.getSource(),file);
 				FileExportResponse fileExportResponse;
@@ -377,7 +382,9 @@ public class TrcController {
 	
 	@ResponseBody
 	@PostMapping("TACAprroveDisapprove")
-	public GenricResponse TACAprroveDisapprove(@RequestBody TypeApprovedStatusModel model) {
+	public GenricResponse TACAprroveDisapprove(@RequestBody TypeApprovedStatusModel model,HttpSession session) {
+		model.setPublicIp(session.getAttribute("publicIP").toString());
+		model.setBrowser(session.getAttribute("browser").toString());
 		log.info("request send to the typeApproved api="+model);
 		GenricResponse response = typeApprovedFeignImpl.TypeApproveReject(model);
 		log.info("response from tac Approved/Disapprove api"+response);

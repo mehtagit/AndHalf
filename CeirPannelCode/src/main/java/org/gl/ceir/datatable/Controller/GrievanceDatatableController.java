@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.UserHeader;
+import org.gl.ceir.CeirPannelCode.Service.RegistrationService;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
 import org.gl.ceir.configuration.ConfigParameters;
@@ -50,6 +52,8 @@ public class GrievanceDatatableController {
 	GrievancePaginationModel grievancepaginationmodel;
 	@Autowired
 	GrievanceFeignClient grievanceFeignClient;
+	@Autowired
+	RegistrationService registerService;
 
 	@PostMapping("grievanceData")
 	public ResponseEntity<?> viewStockList(
@@ -118,6 +122,10 @@ public class GrievanceDatatableController {
 				+ grievanceSessionUsesFlag);
 		
 		Integer userId = (Integer) session.getAttribute("userid");
+		
+		UserHeader header=registerService.getUserHeaders(request);
+		filterrequest.setPublicIp(header.getPublicIp());
+		filterrequest.setBrowser(header.getBrowser());
 		
 		log.info("request parameters send to view grievance api=" + filterrequest);
 		response = grievanceFeignClient.grievanceFilter(filterrequest,pageNo,pageSize,file,source);

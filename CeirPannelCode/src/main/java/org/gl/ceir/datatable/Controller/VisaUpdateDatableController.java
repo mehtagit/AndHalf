@@ -75,15 +75,11 @@ public class VisaUpdateDatableController {
 						: "2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Transaction ID"
 								: "3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Passport Number"
 								     : "4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Visa Type"
-										: "5".equalsIgnoreCase(request.getParameter("order[0][column]"))
-												? "Visa Number"
-												: "6".equalsIgnoreCase(request.getParameter("order[0][column]"))
-														? "File Name"
-														: "7".equalsIgnoreCase(request.getParameter("order[0][column]"))
-																? "Visa Expiry Date"
-																		: "8".equalsIgnoreCase(request.getParameter("order[0][column]"))
-																		? "Status"
-																: "Modified On";
+										: "5".equalsIgnoreCase(request.getParameter("order[0][column]"))? "Visa Number"
+												: "6".equalsIgnoreCase(request.getParameter("order[0][column]"))? "File Name"
+														: "7".equalsIgnoreCase(request.getParameter("order[0][column]"))? "Visa Expiry Date"
+																: "8".equalsIgnoreCase(request.getParameter("order[0][column]"))? "Status"
+																  : "Modified On";
 		String order;
 		if ("Modified On".equalsIgnoreCase(column)) {
 			order = "desc";

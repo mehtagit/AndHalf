@@ -65,7 +65,23 @@ public class UserFeatureDatatable {
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		filterrequest.setSearchString(request.getParameter("search[value]"));
-		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
+		log.info("---->"+request.getParameter("order[0][column]")+"============>"+request.getParameter("order[0][dir]"));
+		String column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+			"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Modified On":
+				"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "User Type":
+					"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Feature" :
+						"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Period"	
+							:"Modified On";
+		String order;
+		if("Modified On".equalsIgnoreCase(column)) {
+			order="desc";
+		}
+		else {
+			order=request.getParameter("order[0][dir]");
+		}
+		filterrequest.setOrderColumnName(column);
+		filterrequest.setOrder(order);
+		
 		try{
 			filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
 			filterrequest.setBrowser(session.getAttribute("browser").toString());
