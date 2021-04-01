@@ -378,6 +378,8 @@ a#newUserLink {
 		<script type="text/javascript"
 		src="${context}/resources/ajax/Registration.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	
+	<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	
 	<script type="text/javascript" src="${context}/resources/ajax/clearSession.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript" src="${context}/resources/ajax/Login.js?version=<%= (int) (Math.random() * 10) %>"></script>

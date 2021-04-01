@@ -458,7 +458,7 @@ function test(x) {
 $(document).bind("contextmenu",function(e) {
 	 e.preventDefault();
 	});
-
+/*
 document.onkeypress = function (event) {  
 	
 	event = (event || window.event);  
@@ -467,21 +467,35 @@ document.onkeypress = function (event) {
 	}  
 	}
 
-function disabledInspect(e){
+
+function doWhichKey(e) { 
+	  e = e || window.event; 
+	  let charCode = e.keyCode || e.which; 
+	  return String.fromCharCode(charCode); 
+	} */
+/*
+$(document).ready(function(){
+
+	$(document).keydown(function(e){
+	
 	    if(e.which === 123){
 	  
 	       return false;
 	    }
-	    else if(e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)){
-	  
+	    
+	    
+	    else if(e.keyCode == 73){
+	    
 	    	return false;
 	    	}
-	    else if(e.ctrlKey && e.shiftKey && e.keyCode == 73){
+	    
 	  
-	    	return false;
-	    	}
-	    else if(e.shiftKey)
-	    	{
-	    	alert("shift")
-	    	}
-	};
+	  
+	});
+});
+
+*/
+/*
+shortcut.remove("F12",function() {
+	return false;
+	});*/

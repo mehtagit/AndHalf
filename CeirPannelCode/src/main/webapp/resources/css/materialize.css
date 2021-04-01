@@ -13241,12 +13241,12 @@ form {
 	width: 100%;
 }
 
-::-webkit-scrollbar {
-width: 0;
+/* ::-webkit-scrollbar {
+width: 10px;
 background: transparent;
-}
+} */
 
-textarea::-webkit-scrollbar {
+/* textarea::-webkit-scrollbar {
 width: 10px;
 cursor: auto;
 }
@@ -13266,7 +13266,7 @@ textarea::-webkit-scrollbar-thumb {
 textarea::-webkit-scrollbar-thumb:hover {
   background: #999; 
   cursor: auto;
-}
+} */
 .green-text {
     color: #4CAF50 !important;
     font-size: 25px !important;
