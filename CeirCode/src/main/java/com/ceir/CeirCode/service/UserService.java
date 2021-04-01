@@ -2186,6 +2186,26 @@ public class UserService {
 			return 0;
 		}
 	}
+	public int saveUserTrail(long userId,String username,String userType,long userTypeId,String feature ,String subFeature,long featureId,String publicIP ,String browser) {
+		try {
+			AuditTrail auditTrail=new AuditTrail(userId, username,
+					userTypeId,userType, featureId,
+					feature, subFeature,"0","NA",userType,publicIP,browser);
+			log.info("going to save audit trail with request:::::"+auditTrail);
+			AuditTrail output=audiTrailRepoService.saveAuditTrail(auditTrail);
+			if(output!=null) {
+				log.info("audit trail sucessfully save");
+			}
+			else {
+				log.info("user trail fails to save");
+			}
+			return 1;
+		}
+		catch(Exception e) {
+			log.info(e.toString());
+			return 0;
+		}
+	}
 
 	public boolean delete(long userId) {
 		// TODO Auto-generated method stub

@@ -395,14 +395,14 @@ public class LoginService
 		}    
 	}
 
-	public ResponseEntity<?> changeLanguage(ChangeLanguage languageData)
+	public ResponseEntity<?> changeLanguage(ChangeLanguage languageData,String publicIP ,String browser)
 	{
 		try 
 		{
 			log.info("lanugage data:  "+languageData);
 			User user=new User();
 			userService.saveUserTrail(languageData.getUserId(),languageData.getUsername(),
-		    languageData.getUserType(),languageData.getUserTypeId(),"User Management",SubFeatures.Change_Language,41);
+		    languageData.getUserType(),languageData.getUserTypeId(),"User Management",SubFeatures.Change_Language,41,publicIP,browser);
 			user=userRepo.findById(languageData.getUserId());
 			if(user!=null) {
 				user.setUserLanguage(languageData.getLanguage());

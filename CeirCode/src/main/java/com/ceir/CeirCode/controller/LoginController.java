@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ceir.CeirCode.model.ChangeLanguage;
@@ -87,9 +88,9 @@ public class LoginController{
 	@ApiOperation(value = "change langauge", response = HttpResponse.class)
 	@CrossOrigin
 	@PostMapping("/changeLanguage")     
-	public ResponseEntity<?> changeLanguage(@RequestBody ChangeLanguage languageData  ){
+	public ResponseEntity<?> changeLanguage(@RequestBody ChangeLanguage languageData ,@RequestParam(name="publicIP") String publicIP ,@RequestParam(name="browser") String browser ){
 		log.info("inside change language controller");
-		return loginService.changeLanguage(languageData);  
+		return loginService.changeLanguage(languageData,publicIP,browser);  
 	}
 	
 	@ApiOperation(value = "forgot password", response = HttpResponse.class)
