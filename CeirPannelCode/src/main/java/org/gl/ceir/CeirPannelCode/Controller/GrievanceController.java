@@ -21,6 +21,8 @@ import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GrievanceModel;
 import org.gl.ceir.CeirPannelCode.Model.PeriodValidate;
+import org.gl.ceir.CeirPannelCode.Model.UserHeader;
+import org.gl.ceir.CeirPannelCode.Service.RegistrationService;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
@@ -62,6 +64,10 @@ public class GrievanceController {
 
 	@Autowired
 	UserRegistrationFeignImpl userRegistrationFeignImpl;
+	
+	@Autowired
+	RegistrationService registerService;
+
 
 	GrievanceModel grievance= new GrievanceModel();
 	GenricResponse response = new GenricResponse();
@@ -115,6 +121,8 @@ public class GrievanceController {
 		//grievanceRequest.setUserId(userId);
 		//grievanceRequest.setUserType(roletype);
 		grievanceRequest.setGrievanceId(grevnceId);
+		
+		
 
 		for (int i=0;i<grievanceRequest.getAttachedFiles().size();i++) {
 			grievanceRequest.getAttachedFiles().get(i).setGrievanceId(grevnceId);
@@ -186,6 +194,9 @@ public class GrievanceController {
 		 * grievance.setGrievanceId(grevnceId);
 		 * 
 		 */
+		UserHeader header=registerService.getUserHeaders(request);
+		grievanceRequest.setPublicIp(header.getPublicIp());
+		grievanceRequest.setBrowser(header.getBrowser());
 		log.info("grievance form parameters passed to save grievance api "+grievanceRequest);
 		response = grievanceFeignClient.saveGrievance(grievanceRequest);
 		response.setTxnId(grevnceId);
@@ -318,7 +329,9 @@ public class GrievanceController {
 		 * grievanceModel.setUserType(roletype);
 		 * grievanceModel.setGrievanceStatus(grievanceTicketStatus);
 		 */
-
+		UserHeader header=registerService.getUserHeaders(request);
+		grievanceRequest.setPublicIp(header.getPublicIp());
+		grievanceRequest.setBrowser(header.getBrowser());
 		log.info("request passed to the save grievance method="+grievanceRequest);
 		response= grievanceFeignClient.saveGrievanceMessage(grievanceRequest);
 		log.info("response  from   save grievance method="+response);	
@@ -407,7 +420,9 @@ public class GrievanceController {
 		 * grievanceModel.setUserType(roletype);
 		 * grievanceModel.setGrievanceStatus(grievanceTicketStatus);
 		 */
-
+		UserHeader header=registerService.getUserHeaders(request);
+		grievanceRequest.setPublicIp(header.getPublicIp());
+		grievanceRequest.setBrowser(header.getBrowser());
 		log.info("request passed to the save grievance method="+grievanceRequest);
 		response= grievanceFeignClient.saveGrievanceMessage(grievanceRequest);
 		log.info("response  from   save grievance method="+response);	
@@ -523,6 +538,9 @@ public class GrievanceController {
 		 * grievance.setGrievanceId(grevnceId);
 		 * 
 		 */
+		UserHeader header=registerService.getUserHeaders(request);
+		grievanceRequest.setPublicIp(header.getPublicIp());
+		grievanceRequest.setBrowser(header.getBrowser());
 		log.info("grievance form parameters passed to save grievance api "+grievanceRequest);
 		response = grievanceFeignClient.saveEndUserGrievance(grievanceRequest);
 		response.setTxnId(grevnceId);
@@ -615,7 +633,7 @@ public class GrievanceController {
 	//***************************************** Export Grievance controller *********************************
 	@PostMapping("exportGrievance")
 	@ResponseBody
-	public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session)
+	public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session,HttpServletRequest request)
 	{
 		Gson gsonObject=new Gson();
 		Object response;
@@ -624,6 +642,9 @@ public class GrievanceController {
 		Integer usertypeId=(int) session.getAttribute("usertypeId");
 		filterRequest.setUserType(userType);
 		filterRequest.setUserTypeId(usertypeId);
+		UserHeader header=registerService.getUserHeaders(request);
+		filterRequest.setPublicIp(header.getPublicIp());
+		filterRequest.setBrowser(header.getBrowser());
 		log.info("filterRequest:::::::::"+filterRequest);
 		response= grievanceFeignClient.grievanceFilter(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file,filterRequest.getSource());
 		FileExportResponse fileExportResponse;

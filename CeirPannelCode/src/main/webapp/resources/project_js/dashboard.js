@@ -15,8 +15,11 @@ $('#langlist').on('change', function() {
 	window.location.replace("?lang=" + lang);
 
 });
-var urlController;
-if ($('.navData li a').attr("data-featureid") == 31
+
+
+var urlController = ($("body").attr("data-defaultLink") == '' || $("body").attr("data-defaultLink") == undefined) ? "./Home?FeatureId=1" : $("body").attr("data-defaultLink");
+
+/*if ($('.navData li a').attr("data-featureid") == 31
 		|| $('.navData li a').attr("data-featureid") == 26
 		|| $('.navData li a').attr("data-featureid") == 45
 		|| $('.navData li a').attr("data-featureid") == 16) {
@@ -24,11 +27,15 @@ if ($('.navData li a').attr("data-featureid") == 31
 	urlController = $("body").attr("data-defaultLink");
 } else {
 	urlController = "./Home?FeatureId=1";
-}
+}*/
+
+var featurID = urlController.split("FeatureId=")[1];
+
+
+
 
 $('.navData li:nth-child(1)').addClass("active");
-var featurID = sessionStorage.getItem("data-feature") == null ? $(
-		'.navData li a').attr("data-featureid") : sessionStorage
+var featurID = sessionStorage.getItem("data-feature") == null ? urlController.split("FeatureId=")[1] : sessionStorage
 		.getItem("data-feature");
 var intialController = sessionStorage.getItem("currentPageLocation") == null ? urlController
 		: sessionStorage.getItem("currentPageLocation");
