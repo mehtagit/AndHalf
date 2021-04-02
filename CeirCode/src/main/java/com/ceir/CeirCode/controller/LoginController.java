@@ -77,12 +77,12 @@ public class LoginController{
 	@ApiOperation(value = "user session", response = HttpResponse.class)
 	@CrossOrigin
 	@PostMapping("/sessionTracking/{userid}")     
-	public ResponseEntity<?> sessionTracking(@PathVariable("userid") long userid  ){
+	public ResponseEntity<?> sessionTracking(@PathVariable("userid") long userid ,@RequestParam(name="publicIP") String publicIP ,@RequestParam(name="browser") String browser ){
 		log.info("inside sessionTracking controller and userId is: "+userid);
 		User output=userRepoService.findByUSerId(userid);
 		// 0 -for logout 1-for login
 		LoginTracking loginTracking=new LoginTracking(0,output);
-		return loginService.sessionTracking(loginTracking);  
+		return loginService.sessionTracking(loginTracking,publicIP,browser);  
 	}
 	
 	@ApiOperation(value = "change langauge", response = HttpResponse.class)

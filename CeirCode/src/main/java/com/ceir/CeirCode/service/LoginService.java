@@ -360,9 +360,9 @@ public class LoginService
 		}
 	}
 
-	public ResponseEntity<?> sessionTracking(LoginTracking loginTracking){
+	public ResponseEntity<?> sessionTracking(LoginTracking loginTracking , String publicIP ,String browser ){
 		try {
-			userService.saveUserTrail(loginTracking.getUserTrack(), "User Management","Logout",41);
+			userService.saveUserTrail(loginTracking.getUserTrack(), "User Management","Logout",41,publicIP,browser);
 			LoginTracking loginTrackingOutput=loginTrackingRepo.save(loginTracking);
 			long userId=loginTracking.getUserTrack().getId();
 			log.info("now going to check data in current_login table by user id: "+userId);
