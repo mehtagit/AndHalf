@@ -300,8 +300,8 @@ position: fixed;
 						<div class="input-field col s12 m6 l6">
 							<input type="text" id="editTradmark" name="trademarkName"
 								pattern="<spring:eval expression="@environment.getProperty('pattern.trademark')" />"
-								oninput="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
-								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.30characters" />');"
+								oninput="InvalidMsg(this,'input','<spring:message code="validation.trademark" />');"
+								oninvalid="InvalidMsg(this,'input','<spring:message code="validation.trademark" />');"
 								maxlength="30" placeholder="" required /> <label
 								for="editTradmark"><spring:message
 									code="input.Trademark" /> <span class="star">*</span></label>

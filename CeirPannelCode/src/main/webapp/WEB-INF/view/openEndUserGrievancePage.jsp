@@ -220,7 +220,7 @@ var contextpath = "${context}";
                                         </div>
 
                                         <div class="input-field col s12 m6">
-                                            <input type="text" id="contactNumber" name="contactNumber" 
+                                            <input type="text" id="contactNumber" name="contactNumber" maxlength="10"
                                             pattern="<spring:eval expression="@environment.getProperty('pattern.contactNo')" />"
  													oninput="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10digits" />');"
@@ -251,7 +251,7 @@ var contextpath = "${context}";
 
                                        
                                        <div class="input-field col s12 m6" style="margin-top: 22px;">
-                                            <input type="text" id="endUsertransactionId" name="transactionId"
+                                            <input type="text" id="endUsertransactionId" name="transactionId" 
                                                pattern="<spring:eval expression="@environment.getProperty('pattern.transactionId')" />"  
       										 oninput="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.18digit" />');"
