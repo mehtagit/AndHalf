@@ -59,7 +59,7 @@ public class LoginService {
 	 * ModelAndView mv=new ModelAndView(); mv.setViewName("login");
 	 * log.info("exit from login controller"); return mv; }
 	 */
-	public  ModelAndView loginPage(String isExpired,HttpSession session){
+	public  ModelAndView loginPage(String isExpired,HttpSession session,HttpServletRequest request){
 		log.info("inside login controller");
 		//this.sessionRemoveCode(null, session);
 		ModelAndView mv=new ModelAndView();
@@ -74,7 +74,7 @@ public class LoginService {
 			 */
 			
 			if( "yes".equalsIgnoreCase(isExpired)) {
-				sessionRemoveCode( userid, session);
+				sessionRemoveCode( userid, session,request);
 				mv.setViewName("login");	
 			}
 			else {
@@ -164,12 +164,19 @@ public class LoginService {
 		return response;
 	}
 
-	public void sessionRemoveCode(Integer userid,HttpSession session) {
+	public void sessionRemoveCode(Integer userid,HttpSession session,HttpServletRequest request) {
 		
 		log.info("userid from session: "+userid);
+		UserHeader header=registerService.getUserHeaders(request);
+		String publicIp=null;
+		String browser=null;
 		if(userid!=null) {
 			HttpResponse response=new HttpResponse();
-			response=userLoginFeignImpl.sessionTracking(userid);
+		
+			
+			publicIp= header.getPublicIp();
+			browser=header.getBrowser();
+			response=userLoginFeignImpl.sessionTracking(userid,publicIp,browser);
 			log.info("response got: "+response);
 		
 		} 
@@ -183,10 +190,10 @@ public class LoginService {
 		session.invalidate(); 
 		//SecurityContextHolder.clearContext();
 	}
-	public ModelAndView logout(HttpSession session){
+	public ModelAndView logout(HttpSession session,HttpServletRequest request){
 		log.info("inside logout controller");
 		Integer userid=(Integer)session.getAttribute("userid");
-		sessionRemoveCode( userid, session);
+		sessionRemoveCode( userid, session,request);
 		
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("msg","you have been logged out successfully");
@@ -195,10 +202,10 @@ public class LoginService {
 		return mv;
 }
 	
-	public void  indexPageSessionOut(HttpSession session,HttpServletResponse http){
+	public void  indexPageSessionOut(HttpSession session,HttpServletResponse http,HttpServletRequest request){
 		log.info("inside index controller");
 		Integer userid=(Integer)session.getAttribute("userid");
-		sessionRemoveCode( userid, session);
+		sessionRemoveCode( userid, session,request);
 		log.info("exit index controller");
 		Tag tagData=new Tag("link_dmc_portal");
 		Dropdown dropdown = feignCleintImplementation.dataByTag(tagData);

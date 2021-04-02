@@ -31,8 +31,8 @@ public class LoginController {
 	LoginService loginService;
 
 	@RequestMapping(value = "/login",method = {RequestMethod.GET,RequestMethod.POST})
-	public ModelAndView login(@RequestParam(name="isExpired",required = false) String isExpired,HttpSession session){
-			return loginService.loginPage(isExpired,session);	
+	public ModelAndView login(@RequestParam(name="isExpired",required = false) String isExpired,HttpSession session,HttpServletRequest request){
+			return loginService.loginPage(isExpired,session,request);	
 	} 
 	
 	@ResponseBody
@@ -57,14 +57,14 @@ public class LoginController {
   }
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
-	public ModelAndView logout(HttpSession session) {
-		return loginService.logout(session);
+	public ModelAndView logout(HttpSession session,HttpServletRequest request) {
+		return loginService.logout(session,request);
 
 	}
 	
 	@RequestMapping(value = "/homePage", method = RequestMethod.GET)
-	public void indexSessionOut(HttpSession session,HttpServletResponse response) {
-		 loginService.indexPageSessionOut(session,response);
+	public void indexSessionOut(HttpSession session,HttpServletResponse response,HttpServletRequest request) {
+		 loginService.indexPageSessionOut(session,response,request);
 	}
     
 

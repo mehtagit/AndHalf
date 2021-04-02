@@ -1039,6 +1039,7 @@ function disapproveSubmit(actiontype){
 
 		}
 	});
+	return false;
 }	
 
 
