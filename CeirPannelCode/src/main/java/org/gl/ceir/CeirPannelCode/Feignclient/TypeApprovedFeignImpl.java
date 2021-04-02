@@ -34,7 +34,9 @@ public interface TypeApprovedFeignImpl {
 	
 	
 	@PostMapping("/TypeApproved/viewById/{id}") 
-	public TRCRegisteration viewByID(@PathVariable("id") int id) ;
+	public TRCRegisteration viewByID(@RequestParam(name="id", required = false) int id,
+			@RequestParam(name="publicIp", required = false) String publicIp,
+			@RequestParam(name="browser", required = false) String browser) ;
 	
 	
 	@PostMapping("/TypeApproved/update") 

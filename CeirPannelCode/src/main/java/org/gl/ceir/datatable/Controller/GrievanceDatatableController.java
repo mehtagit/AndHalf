@@ -105,11 +105,15 @@ public class GrievanceDatatableController {
 		}
 		log.info("---->"+request.getParameter("order[0][column]")+"============>"+request.getParameter("order[0][dir]"));
 		
+		
 		String order;
+		if("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")=="asc" ) {
+			filterrequest.setOrder(request.getParameter("order[0][dir]")); 
+		}
+		
 		if("Modified On".equalsIgnoreCase(column)) {
 			order="desc";
-		}
-		else {
+		} else {
 			order=request.getParameter("order[0][dir]");
 		}
 		filterrequest.setOrderColumnName(column);

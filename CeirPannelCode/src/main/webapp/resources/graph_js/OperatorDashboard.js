@@ -10,7 +10,7 @@
 	
 
 */
-var featureId=57;
+var featureId=47;
 function activeDeviceGraph() {
 	['operatorActive',29,34,27].forEach(function(reportnameId) {
 		var graphRequest=null;

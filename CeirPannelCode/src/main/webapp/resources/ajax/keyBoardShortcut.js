@@ -6,7 +6,7 @@
  *
  */
 
-alert("shorcut");
+
 
 
 shortcut = {
@@ -213,7 +213,7 @@ shortcut = {
 
 	//Remove the shortcut - just specify the shortcut and I will remove the binding
 	'remove':function(shortcut_combination) {
-		alert("remove=="+shortcut_combination);
+	
 		shortcut_combination = shortcut_combination.toLowerCase();
 		var binding = this.all_shortcuts[shortcut_combination];
 		delete(this.all_shortcuts[shortcut_combination])

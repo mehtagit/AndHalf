@@ -213,8 +213,10 @@ public class TrcController {
 
 	@ResponseBody
 	@PostMapping("viewByID/{id}")
-	public ResponseEntity<?> viewByID(@PathVariable("id") int id) {
-		TRCRegisteration result = typeApprovedFeignImpl.viewByID(id);
+	public ResponseEntity<?> viewByID(@PathVariable("id") int id,HttpSession session) {
+		String publicIp=session.getAttribute("publicIP").toString();
+	    String browser=session.getAttribute("browser").toString();
+		TRCRegisteration result = typeApprovedFeignImpl.viewByID(id,publicIp,browser);
 		return new ResponseEntity<>(result,HttpStatus.OK);
 	}
 
