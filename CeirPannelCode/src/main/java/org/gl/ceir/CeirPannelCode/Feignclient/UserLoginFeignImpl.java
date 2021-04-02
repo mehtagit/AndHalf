@@ -40,7 +40,7 @@ public interface UserLoginFeignImpl {
 	public HttpResponse changeUserLanguage(ChangeLanguage language,@RequestParam("publicIP") String publicIP ,@RequestParam("browser")  String browser);
 	  
 	@PostMapping("/Login/sessionTracking/{userid}")
-	public HttpResponse sessionTracking(@PathVariable("userid") Integer userid);
+	public HttpResponse sessionTracking(@PathVariable("userid") Integer userid,@RequestParam(name="publicIP") String publicIP ,@RequestParam(name="browser") String browser );
 	
 	@PostMapping("/Login/forgotPassword")
 	public UpdateProfileResponse ForgotPassword(ForgotPassword forgotPassword);

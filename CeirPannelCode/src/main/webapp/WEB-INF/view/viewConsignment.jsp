@@ -508,7 +508,7 @@ width: inherit;
 		<div class="scrollDivHeight"></div>
 		<div class="modal-content">
 
-
+<form action="" onsubmit=" return disapproveSubmit(1)" method="POST">
 			<div class="row">
 				<h6>
 					<spring:message code="modal.message.markConsignment" />
@@ -522,7 +522,7 @@ width: inherit;
 			</div>
 			<div class="row">
 				<div class="input-field col s12 m12" style="margin-left: -10px;">
-					<textarea id="dispproveRemarks" class="materialize-textarea"
+					<textarea id="dispproveRemarks" class="materialize-textarea" required="required"
 					style="min-height: 8rem;" style="padding-left: 0;"></textarea>
 					<label for="textarea1"><spring:message code="input.remarks" />
 						<span class="star">*</span></label>
@@ -535,16 +535,16 @@ width: inherit;
 			<div class="row button-div">
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
-						<button class="modal-close modal-trigger btn"
-							onclick="disapproveSubmit(1)">
+						<button class="btn" type="submit">
 							<spring:message code="modal.yes" />
 						</button>
-						<button class="modal-close btn" style="margin-left: 10px;">
+						<button class="modal-close btn" type="button" style="margin-left: 10px;">
 							<spring:message code="modal.no" />
 						</button>
 					</div>
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 

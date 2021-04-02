@@ -70,7 +70,7 @@ public class RegistrationController {
 	 * log.info("userid::::::::::"+userid); loginService.sessionRemoveCode(userid,
 	 * session); mv.setViewName("index"); return mv; }
 	 */  
-	public ModelAndView index(HttpServletRequest request,HttpSession session){
+	public ModelAndView index(HttpServletRequest request,HttpSession session,HttpServletRequest request1){
 	log.info("inside index controller ");
 	ModelAndView mv=new ModelAndView();
 	Integer userid=(Integer)session.getAttribute("userid");
@@ -82,11 +82,11 @@ public class RegistrationController {
 			return new ModelAndView("redirect:./?lang="+(String)session.getAttribute("language"));
 		else {
 			//mv.setViewName("login");
-			loginService.sessionRemoveCode(userid, session);
+			loginService.sessionRemoveCode(userid, session,request1);
 			mv.setViewName("index");
 		}
 	}else {
-		loginService.sessionRemoveCode(userid, session);
+		loginService.sessionRemoveCode(userid, session,request1);
 		mv.setViewName("index");
 	}
 	return mv;      
