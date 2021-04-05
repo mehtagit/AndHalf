@@ -60,7 +60,7 @@ public class AdminRegistrationRequest {
 		roles = roles.replace("=", " ");
 		String publicIp = session.getAttribute("publicIP").toString();
 		String browser = session.getAttribute("browser").toString();
-		Registration registration = userProfileFeignImpl.ViewAdminUser(id, userId);
+		Registration registration = userProfileFeignImpl.ViewAdminUser(id, userId,publicIp,browser);
 		log.info("View registration API Response--------------->" +registration);
 		mv.addObject("registration", registration);
 		

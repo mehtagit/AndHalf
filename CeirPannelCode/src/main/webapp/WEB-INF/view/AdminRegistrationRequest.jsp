@@ -208,8 +208,8 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
                     <div class="input-field" style="margin-top: 30px;">
                     
                         <textarea id="Reason"
-                        oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
-						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" 
+                        oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
+						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
                          class="materialize-textarea" style="min-height: 8rem;"  required></textarea>
                         <label for="Reason" style="margin-left: -10px;"><spring:message code="input.remarks" /><span class="star">*</span></label>
                     </div>
@@ -280,8 +280,8 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
 								<div class="input-field col s12 m12">
 							<textarea id="changeStatusRemark" style="min-height: 8rem;" 
 								class="materialize-textarea" 
-							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
-							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" required></textarea>
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
+							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" maxlength="50" required></textarea>
 							<label for="textarea1" class=""><spring:message
 									code="input.remarks" /> <span class="star">*</span> </label>
 								</div>
@@ -397,8 +397,8 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
 								<div class="input-field col s12 m6">
 							<textarea id="changeRoleRemark" style="min-height: 8rem;" 
 								class="materialize-textarea" 
-							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
-							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" required></textarea>
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
+							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" maxlength="50" required></textarea>
 							<label for="textarea1" class=""><spring:message
 									code="input.remarks" /> <span class="star">*</span> </label>
 								</div>

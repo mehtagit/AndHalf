@@ -1255,7 +1255,10 @@ function historyRecord(txnID) {
 function Resetfilter(formID){
 	$('#'+formID).trigger('reset');
 	$("label").removeClass('active');
+	//$('#filteredModel').val('');
 	//registrationDatatable(lang,null);
+	$('#filteredModel').empty();
+	getModelName();
 	typeApprovedDataTable(lang)
 }
 
