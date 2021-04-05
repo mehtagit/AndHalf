@@ -116,7 +116,7 @@
 							</div>
 							<form action="${context}/systempConfigManagement"
 								method="post">
-								<div class="col s12 m12 l12" id="configTableDiv"
+								<div class="registrationTableDiv_box" id="configTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
 										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
@@ -244,7 +244,7 @@
                     </div>
                     
 					<div class="input-field col s12 m6">
-					<textarea id="editremarks" placeholder="Remarks" class="materialize-textarea" style="min-height:8rem" ></textarea>
+					<textarea id="editremarks" placeholder="Remarks" class="materialize-textarea" style="min-height:8rem" maxlength="200" ></textarea>
 					<label for="editremarks" class=""><spring:message code="input.remarks" /></label>
 
 					</div>

@@ -170,8 +170,9 @@ public class LoginService {
 		UserHeader header=registerService.getUserHeaders(request);
 		String publicIp=null;
 		String browser=null;
+		HttpResponse response=new HttpResponse();
 		if(userid!=null) {
-			HttpResponse response=new HttpResponse();
+			
 		
 			
 			publicIp= header.getPublicIp();
@@ -179,7 +180,13 @@ public class LoginService {
 			response=userLoginFeignImpl.sessionTracking(userid,publicIp,browser);
 			log.info("response got: "+response);
 		
-		} 
+		} else {
+			publicIp= header.getPublicIp();
+			browser=header.getBrowser();
+			response=userLoginFeignImpl.sessionTracking(userid,publicIp,"Chrome/Win8");
+			log.info("response got: "+response);
+		}
+		
 		session.removeAttribute("username");
 		session.removeAttribute("userid"); 
 		session.removeAttribute("usertypeList");

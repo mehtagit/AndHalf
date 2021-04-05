@@ -95,11 +95,11 @@ public class ImporterManageTypeAdmin {
 									:"Modified On";
 		}else {
 			column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
-				"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Trademark":
+				"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "trademark":
 					"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Transaction ID":
 						"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "TAC":
-							"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Brand Name":
-								"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Model Number" :
+							"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "brandName":
+								"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "modelNumber" :
 									"6".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Country" :
 										"7".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Status"
 									:"Modified On";

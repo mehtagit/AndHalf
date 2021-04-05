@@ -324,7 +324,7 @@
                                              pattern="<spring:eval expression="@environment.getProperty('pattern.mail')" />" 
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
-												required maxlength="30" />
+												required  />
                                             <label for="editemailID"><spring:message code="input.EmailID" /> <span class="star"> *</span></label>
                                         </div>
 

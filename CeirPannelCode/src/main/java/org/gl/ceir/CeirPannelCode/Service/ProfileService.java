@@ -111,7 +111,7 @@ public class ProfileService {
 		Registration response=new Registration();   
 		String publicIp = session.getAttribute("publicIP").toString();
 		String browser = session.getAttribute("browser").toString();
-		response=userProfileFeignImpl.ViewAdminUser(id, userId);
+		response=userProfileFeignImpl.ViewAdminUser(id, userId,publicIp,browser);
 		return response; 
 	}
 	
