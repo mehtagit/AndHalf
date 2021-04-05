@@ -313,8 +313,8 @@
 												  required   maxlength="10" /> --%>
 											<input type="text" name="contactNumber" maxlength="15" id="editcontactNumber" 
 											pattern="<spring:eval expression="@environment.getProperty('pattern.contactNo')" />"  
-                              				 oninput="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');" 
-                              				 oninvalid="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');" required>	  
+                              				 	 oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" 
+                              		 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" required>	  
                                             <label for="editcontactNumber"><spring:message code="input.contact" /><span
                                                     class="star">*</span></label>
                                         </div>

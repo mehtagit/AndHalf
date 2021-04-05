@@ -239,8 +239,8 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
 												  required   maxlength="15" /> -->
 											  <input type="text" name="contactNumber" maxlength="10" id="contactNumber"
 											  pattern="<spring:eval expression="@environment.getProperty('pattern.contactNo')" />" 
-                             		 oninput="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');" 
-                              		 oninvalid="InvalidMsg(this,'input','Please enter phone number between 7 to 15 characters only');" required>	  
+                             		 oninput="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" 
+                              		 oninvalid="InvalidMsg(this,'input','<spring:message code="validation.contact" />');" required>	  
 												  
                                             <label for="contactNumber"><spring:message code="input.contact" /><span
                                                     class="star">*</span></label>
@@ -251,7 +251,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
                                             pattern="<spring:eval expression="@environment.getProperty('pattern.mail')" />"
 											oninput="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.emailformate" />');"
-												required maxlength="280" />
+												required   />
                                             <label for="emailID"><spring:message code="input.EmailID" /> <span class="star"> *</span></label>
                                         </div>
 

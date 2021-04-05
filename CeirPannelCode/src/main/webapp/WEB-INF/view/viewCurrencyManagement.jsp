@@ -188,7 +188,9 @@
 					<div class="input-field col s12 m6" style="margin-top: 22px;">
                         <input type="number" id="cambodianRiel" 
                         pattern="<spring:eval expression="@environment.getProperty('pattern.Currency')" />"
-                        title="Please enter numeric numbers"  maxlength="8" required="required">
+                        oninput="InvalidMsg(this,'input','<spring:message code="validation.currencyMsg" />');" 
+                        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.currencyMsg" />');"
+                        maxlength="8" required="required">
                         <label for="cambodianRiel" class="">To Cambodian Riel <span class="star"> *</span></label>
                     </div>
                     
@@ -244,7 +246,9 @@
 					<div class="input-field col s12 m6" style="margin-top: 23px;">
                         <input type="number" id="editCambodianRiel" 
                         pattern="<spring:eval expression="@environment.getProperty('pattern.Currency')" />"
-                        title="Please enter numeric numbers"  maxlength="8" required="required">
+                         oninput="InvalidMsg(this,'input','<spring:message code="validation.currencyMsg" />');" 
+                        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.currencyMsg" />');"
+                         maxlength="8" required="required">
                         <label for="editCambodianRiel" class="">Cambodian Riel <span class="star"> *</span></label>
                     </div>
                     <div class="row myRow">
@@ -256,6 +260,8 @@
                     <div class="input-field col s12 m6">
                         <input type="number" id="editDollar"
                         pattern="<spring:eval expression="@environment.getProperty('pattern.Currency')" />"
+                           oninput="InvalidMsg(this,'input','<spring:message code="validation.currencyMsg" />');" 
+                        oninvalid="InvalidMsg(this,'input','<spring:message code="validation.currencyMsg" />');"
                          title="Please enter numeric numbers"  maxlength="8" required="required">
                         <label for="editDollar" class="">US Dollar <span class="star">  *</span></label>
                     </div>
