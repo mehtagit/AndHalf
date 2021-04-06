@@ -58,6 +58,7 @@ public class LoginController {
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	public ModelAndView logout(HttpSession session,HttpServletRequest request) {
+		log.info("Coming first time in logout");
 		return loginService.logout(session,request);
 
 	}

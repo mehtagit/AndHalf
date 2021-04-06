@@ -222,7 +222,7 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
                     <button type="submit" class="btn" type="submit">
 								<spring:message code="modal.yes" />
 							</button>
-                    <button class="btn modal-close" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+                    <button class="modal-close btn" type="button" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                 </div>
             </div>
         </div>
