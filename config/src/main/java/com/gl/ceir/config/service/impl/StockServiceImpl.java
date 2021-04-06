@@ -381,12 +381,17 @@ public class StockServiceImpl {
 					} 
 				}
 			}
-
-			if(Objects.isNull(filterRequest.getTxnId())) {
-				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL,filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser());
-			}else {
-				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER,filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser());
-			}
+			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL,filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser());
+			/*
+			 * if(Objects.isNull(filterRequest.getTxnId())) {
+			 * addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA",
+			 * SubFeatures.VIEW_ALL,filterRequest.getRoleType(),filterRequest.getPublicIp(),
+			 * filterRequest.getBrowser()); }else {
+			 * addInAuditTrail(Long.valueOf(filterRequest.getUserId()),
+			 * filterRequest.getTxnId(),
+			 * SubFeatures.FILTER,filterRequest.getRoleType(),filterRequest.getPublicIp(),
+			 * filterRequest.getBrowser()); }
+			 */
 
 			return page;
 
