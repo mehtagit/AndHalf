@@ -69,6 +69,28 @@ public class TacListDatatableController {
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
+		
+		String column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+			"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Modified On":
+				"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Transaction ID":
+					"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "TAC"
+						:"Modified On";
+		
+		log.info("---->"+request.getParameter("order[0][column]")+"============>"+request.getParameter("order[0][dir]"));
+		
+		String order;
+		if ("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")==null) {
+			order = "desc";
+		} 
+		else if("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")=="asc"){
+			order ="asc";
+		}
+		else {
+			order = request.getParameter("order[0][dir]");
+		}
+		filterrequest.setOrderColumnName(column);
+		filterrequest.setOrder(order);
+		
 		try{
 			log.info("request send to the filter api ="+filterrequest);
 			Object response = feignCleintImplementation.pendingTACFeign(filterrequest, pageNo, pageSize, file);

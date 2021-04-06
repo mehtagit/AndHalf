@@ -951,6 +951,8 @@ function openDisapproveTACPopUp(txnId, manufacturerName) {
 
 	$('#RejectTacTxnId').text(txnId);
 	$('#setRejectTacTxnId').val(txnId);
+	$('#rejectTrcRemark').val("");
+	$("label").removeClass('active');
 
 }
 
@@ -1010,6 +1012,8 @@ function DeleteTacRecord(txnId, id) {
 	});
 	$("#tacdeleteTxnId").text(txnId);
 	$("#deleteTacId").val(id);
+	$('#deleteTacRemark').val("");
+	$("label").removeClass('active');
 }
 
 function confirmantiondelete() {

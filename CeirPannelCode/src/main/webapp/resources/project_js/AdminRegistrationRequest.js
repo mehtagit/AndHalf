@@ -403,11 +403,11 @@
 		$('#rejectInformation').openModal({
 		 	   dismissible:false
 	    });
-		//////console.log("Reject userId is---->"+Id);
+		//console.log("Reject userId is---->"+Id);
 		$("#userId").text(Id)
 		$("#rejectUserName").val(sessionUserName);
-		
-		
+		$('#Reason').val("");
+		$("label").removeClass('active');
 	}
 
 

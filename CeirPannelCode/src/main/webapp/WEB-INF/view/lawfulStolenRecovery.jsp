@@ -172,7 +172,7 @@ width: inherit;
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
 						<button class="btn" type="submit"><spring:message code="modal.ok" /></button>
-						<button type="button" class="modal-close btn" onclick="closeUpdateModal()"
+						<button type="reset" class="modal-close btn" onclick="closeUpdateModal()"
 							style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 					</div>
 				</div>
@@ -312,7 +312,7 @@ width: inherit;
             <div class="row">
                 <div class="input-field col s12 center">
                     <button  class="btn" type="submit"><spring:message code="modal.yes" /></button>
-                    <button class="btn modal-close" type="button" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+                    <button class="btn modal-close" type="reset" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                 </div>
             </div>
                 </form>

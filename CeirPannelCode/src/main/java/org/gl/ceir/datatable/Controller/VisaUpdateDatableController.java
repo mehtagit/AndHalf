@@ -81,9 +81,13 @@ public class VisaUpdateDatableController {
 																: "8".equalsIgnoreCase(request.getParameter("order[0][column]"))? "Status"
 																  : "Modified On";
 		String order;
-		if ("Modified On".equalsIgnoreCase(column)) {
+		if ("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")==null) {
 			order = "desc";
-		} else {
+		} 
+		else if("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")=="asc"){
+			order ="asc";
+		}
+		else {
 			order = request.getParameter("order[0][dir]");
 		} 
 		filterrequest.setColumnName(column);
