@@ -235,7 +235,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
             <div class="row">
                 <div class="input-field col s12 center">
                     <button type="submit" class="btn"><spring:message code="modal.yes" /></button>
-                    <button class="btn modal-close" type="button"  style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+                    <button class="btn modal-close" type="reset"  style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                 </div>
             </div>
             </form>

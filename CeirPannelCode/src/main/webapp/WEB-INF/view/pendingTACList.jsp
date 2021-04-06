@@ -182,7 +182,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 							<button type="submit" class="btn" type="submit">
 								<spring:message code="modal.yes" />
 							</button>
-							<button class="modal-close btn" type="button"
+							<button class="modal-close btn" type="reset"
 								style="margin-left: 10px;">
 								<spring:message code="modal.no" />
 							</button>

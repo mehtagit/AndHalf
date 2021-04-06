@@ -424,7 +424,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 						<button class=" btn" type="submit">
 							<spring:message code="modal.yes" />
 						</button>
-						<button class="modal-close btn" type="button"
+						<button class="modal-close btn" type="reset"
 							style="margin-left: 10px;">
 							<spring:message code="modal.no" />
 						</button>
@@ -589,7 +589,7 @@ button.modal-action.modal-close.waves-effect.waves-green.btn-flat.right {
 						<button class="btn" type="submit">
 							<spring:message code="modal.yes" />
 						</button>
-						<button class="modal-close btn" style="margin-left: 10px;">
+						<button class="modal-close btn" type="reset" style="margin-left: 10px;" >
 							<spring:message code="modal.no" />
 						</button>
 					</div>

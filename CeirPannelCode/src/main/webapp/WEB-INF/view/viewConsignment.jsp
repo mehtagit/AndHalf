@@ -315,7 +315,7 @@ width: inherit;
 		<h6 class="modal-header">
 			<spring:message code="modal.header.deleteConsignment" />
 		</h6>
-		<form action="" onsubmit=" return confirmantiondelete()" method="POST">
+		<form action="" id="deleteFormID" onsubmit=" return confirmantiondelete()" method="POST">
 		<div class="modal-content">
 		
 				<h6>
@@ -336,7 +336,7 @@ width: inherit;
 					<div class="input-field col s12 center">
 						<button class="btn" type="submit"><spring:message
 								code="modal.yes" /></button>
-						<button class="modal-close btn" type="button"
+						<button class="modal-close btn" type="reset"
 							onclick="closeUpdateModal()" style="margin-left: 10px;">
 							<spring:message code="modal.no" />
 						</button>
@@ -538,7 +538,7 @@ width: inherit;
 						<button class="btn" type="submit">
 							<spring:message code="modal.yes" />
 						</button>
-						<button class="modal-close btn" type="button" style="margin-left: 10px;">
+						<button class="modal-close btn" type="reset" style="margin-left: 10px;">
 							<spring:message code="modal.no" />
 						</button>
 					</div>

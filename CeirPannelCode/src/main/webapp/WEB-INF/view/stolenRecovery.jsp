@@ -285,7 +285,7 @@ position: fixed;
 				<div class="input-field col s12 center">
 					<div class="input-field col s12 center">
 					<button class="btn" type="submit"><spring:message code="modal.ok" /></button>
-					<button class="modal-close btn" onclick="closeUpdateModal()" type="button"
+					<button class="modal-close btn" onclick="closeUpdateModal()" type="reset"
 							style="margin-left: 10px;"><spring:message code="modal.no" /></button>
 					</div>
 				</div>
@@ -1627,7 +1627,7 @@ type="submit" ><spring:message code="button.update" /></button>
             <div class="row">
                 <div class="input-field col s12 center">
                     <button type="submit" class="btn"><spring:message code="modal.yes" /></button>
-                    <button class="btn modal-close" type="button" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
+                    <button class="btn modal-close" type="reset" style="margin-left: 10px;"><spring:message code="modal.no" /></button>
                 </div>
             </div>
             </form>
