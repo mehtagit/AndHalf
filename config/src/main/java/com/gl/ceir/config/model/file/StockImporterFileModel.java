@@ -13,7 +13,7 @@ public class StockImporterFileModel {
 	@CsvBindByPosition(position = 1)
 	private String createdOn;
 	
-	@CsvBindByName(column = "Txn Id")
+	@CsvBindByName(column = "Transaction ID")
 	@CsvBindByPosition(position = 2)
 	private String txnId;
 

@@ -363,11 +363,19 @@ public class StolenAndRecoveryServiceImpl {
 			}
 
 			logger.info(stolenandRecoveryMgmtPage.getContent());
-			if(Objects.nonNull(filterRequest.getTxnId()) && !filterRequest.getTxnId().isEmpty()) {
-				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), filterRequest.getTxnId(), SubFeatures.FILTER, filterRequest.getRoleType(), filterRequest.getRequestType(),filterRequest.getFeatureId(),filterRequest.getPublicIp(),filterRequest.getBrowser());
-			} else {
-				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId(),filterRequest.getPublicIp(),filterRequest.getBrowser());
-			}
+			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId(),filterRequest.getPublicIp(),filterRequest.getBrowser());
+			/*
+			 * if(Objects.nonNull(filterRequest.getTxnId()) &&
+			 * !filterRequest.getTxnId().isEmpty()) {
+			 * addInAuditTrail(Long.valueOf(filterRequest.getUserId()),
+			 * filterRequest.getTxnId(), SubFeatures.FILTER, filterRequest.getRoleType(),
+			 * filterRequest.getRequestType(),filterRequest.getFeatureId(),filterRequest.
+			 * getPublicIp(),filterRequest.getBrowser()); } else {
+			 * addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA",
+			 * SubFeatures.VIEW_ALL,
+			 * filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.
+			 * getFeatureId(),filterRequest.getPublicIp(),filterRequest.getBrowser()); }
+			 */
 			return stolenandRecoveryMgmtPage;
 
 		} catch (RequestInvalidException e) {
@@ -472,7 +480,7 @@ public class StolenAndRecoveryServiceImpl {
 
 				if(Objects.nonNull(systemConfigListDbs)) {	
 					for(SystemConfigListDb systemConfigListDb : systemConfigListDbs ) {
-						configuredRequestTypeOfFeature.add(systemConfigListDb.getValue());
+						configuredRequestTypeOfFeature.add(Integer.valueOf(systemConfigListDb.getValue()));
 					}
 
 					if(!configuredRequestTypeOfFeature.isEmpty()) {

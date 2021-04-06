@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.configuration.SortDirection;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.feign.UserFeignClient;
 import com.gl.ceir.config.model.AllRequest;
@@ -1185,7 +1186,30 @@ public class EnduserServiceImpl {
 		try { 
 			logger.info("filter data:  "+filterRequest);
 			List<StateMgmtDb> statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(filterRequest.getFeatureId(), filterRequest.getUserTypeId());
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			logger.info("filter data column :  "+filterRequest.getColumnName());
+			String orderColumn = "Created On".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
+					: "Modified On".equalsIgnoreCase(filterRequest.getColumnName()) ? "modifiedOn"
+						:"Transaction ID".equalsIgnoreCase(filterRequest.getColumnName()) ? "txnId"
+							: "Passport Number".equalsIgnoreCase(filterRequest.getColumnName()) ? "nid"
+									: "Visa Type".equalsIgnoreCase(filterRequest.getColumnName()) ? "visaType"
+											: "Visa Number".equalsIgnoreCase(filterRequest.getColumnName())
+													? "visaNumber"
+													:"File Name".equalsIgnoreCase(filterRequest.getColumnName())
+															? "visaFileName" 
+																	:"Visa Expiry Date".equalsIgnoreCase(filterRequest.getColumnName())
+																	? "visaExpiryDate"
+																			:"Status".equalsIgnoreCase(filterRequest.getColumnName())
+																			? "status"
+																	  : "modifiedOn";
+			Sort.Direction direction;
+			if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+				direction=Sort.Direction.DESC;
+			}
+			else {
+				direction= SortDirection.getSortDirection(filterRequest.getSort());
+			}
+			logger.info("final column :  "+orderColumn);
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction,orderColumn));
 			Page<VisaUpdateDb> page = updateVisaRepository.findAll( buildSpecification(filterRequest,statusList, source).build(), pageable );
 
 

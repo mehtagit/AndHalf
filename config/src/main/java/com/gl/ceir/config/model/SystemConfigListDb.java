@@ -38,7 +38,7 @@ public class SystemConfigListDb implements Serializable {
 	
 	private String tag;
 	
-	private Integer value;
+	private String value;
 	
 	private String interp;
 	
@@ -131,12 +131,18 @@ public class SystemConfigListDb implements Serializable {
 	public void setTag(String tag) {
 		this.tag = tag;
 	}
-	public Integer getValue() {
+	
+	
+	
+	
+	public String getValue() {
 		return value;
 	}
-	public void setValue(Integer value) {
+
+	public void setValue(String value) {
 		this.value = value;
 	}
+
 	public String getInterp() {
 		return interp;
 	}

@@ -23,7 +23,7 @@ public class ConsignmentFileModel {
 	@CsvBindByName(column = "Tax Paid Status")
 	@CsvBindByPosition(position = 5)
 	private String taxPaidStatus;
-	@CsvBindByName(column = "IMEI/MEID Quantity")
+	@CsvBindByName(column = "IMEI Quantity")
 	@CsvBindByPosition(position = 6)
 	private Integer quantity;	
 	@CsvBindByName(column = "Device Quantity")

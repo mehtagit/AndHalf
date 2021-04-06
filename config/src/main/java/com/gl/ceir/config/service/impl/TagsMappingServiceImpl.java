@@ -65,7 +65,7 @@ public class TagsMappingServiceImpl {
 			for(SystemConfigListDb systemConfigListDb : systemConfigListDbs) {
 
 				for(TagsMapping tagsMapping : tagsMappings) {
-					if(systemConfigListDb.getValue() == tagsMapping.getChildValue()) {
+					if(Integer.valueOf(systemConfigListDb.getValue()) == tagsMapping.getChildValue()) {
 						systemConfigListDbResult.add(systemConfigListDb);
 					}
 				}

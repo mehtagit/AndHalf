@@ -302,10 +302,11 @@ public class ConsignmentServiceImpl {
 
 			statusList = stateMgmtServiceImpl.getByFeatureIdAndUserTypeId(consignmentMgmt.getFeatureId(),
 					consignmentMgmt.getUserTypeId());
-
+			String orderColumn =null;
 //			createdOn,taxPaidStatus,quantity,deviceQuantity,supplierName,consignmentStatus
 			logger.info("column Name :: " + consignmentMgmt.getColumnName());
-			String orderColumn = "Created On".equalsIgnoreCase(consignmentMgmt.getColumnName()) ? "createdOn"
+			if(consignmentMgmt.getUserType().equalsIgnoreCase("CEIRAdmin") || consignmentMgmt.getUserType().equalsIgnoreCase("Custom")) {
+			 orderColumn = "Created On".equalsIgnoreCase(consignmentMgmt.getColumnName()) ? "createdOn"
 					: "Transaction ID".equalsIgnoreCase(consignmentMgmt.getColumnName()) ? "txnId"
 							: "Name".equalsIgnoreCase(consignmentMgmt.getColumnName()) ? "user.userProfile.displayName"
 									: "Status".equalsIgnoreCase(consignmentMgmt.getColumnName()) ? "consignmentStatus"
@@ -315,6 +316,21 @@ public class ConsignmentServiceImpl {
 															? "quantity"
 															:"Device Quantity".equalsIgnoreCase(consignmentMgmt.getColumnName())
 															? "deviceQuantity" : "modifiedOn";
+			
+			}
+			else {
+				orderColumn = "Created On".equalsIgnoreCase(consignmentMgmt.getColumnName()) ? "createdOn"
+						: "Transaction ID".equalsIgnoreCase(consignmentMgmt.getColumnName()) ? "txnId"
+								: "Supplier Name".equalsIgnoreCase(consignmentMgmt.getColumnName()) ? "supplierName"
+										: "Status".equalsIgnoreCase(consignmentMgmt.getColumnName()) ? "consignmentStatus"
+												: "Tax Paid Status".equalsIgnoreCase(consignmentMgmt.getColumnName())
+														? "taxPaidStatus"
+														: "IMEI/MEID Quantity".equalsIgnoreCase(consignmentMgmt.getColumnName())
+																? "quantity"
+																:"Device Quantity".equalsIgnoreCase(consignmentMgmt.getColumnName())
+																? "deviceQuantity" : "modifiedOn";
+				
+			}
 			Sort.Direction direction;
 			if("modifiedOn".equalsIgnoreCase(orderColumn)) {
 				direction=Sort.Direction.DESC;

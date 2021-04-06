@@ -346,7 +346,7 @@ public class RegularizedDeviceServiceImpl {
 					rdfm.setNationality(regularizeDeviceDb.getEndUserDB().getNationality());
 					rdfm.setStatus(regularizeDeviceDb.getStateInterp());
 					for(SystemConfigListDb systemConfigListDb : currencyList) {
-						if(regularizeDeviceDb.getCurrency() == systemConfigListDb.getValue()) {
+						if(regularizeDeviceDb.getCurrency() == Integer.valueOf(systemConfigListDb.getValue())) {
 							if(!Objects.nonNull(systemConfigListDb.getInterp())) {
 								//rdfm.setCurrency("NA"); 	
 							}
