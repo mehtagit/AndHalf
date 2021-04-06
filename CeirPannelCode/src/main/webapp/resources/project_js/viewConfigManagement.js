@@ -129,7 +129,7 @@ function pageRendering(){
 			
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){
-					$("#configTableDiv").append("<div class='col s6 m2 l2 responsiveDiv'>"+
+					$("#configTableDiv").append("<div class='responsiveDiv'>"+
 							"<div id='enddatepicker' class='input-group date'>"+
 							"<label for='TotalPrice'>"+date[i].title
 							+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
@@ -141,7 +141,7 @@ function pageRendering(){
 			        }); 	
 				}
 					else if(date[i].type === "text"){
-						$("#configTableDiv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+"><label for='parametername' class='center-align'>"+date[i].title+"</label></div>");
+						$("#configTableDiv").append("<div class='input-field' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+"><label for='parametername' class='center-align'>"+date[i].title+"</label></div>");
 						
 					}
 				
@@ -151,7 +151,7 @@ function pageRendering(){
 			var dropdown=data.dropdownList;
 			for(i=0; i<dropdown.length; i++){
 				var dropdownDiv=
-					$("#configTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
+					$("#configTableDiv").append("<div class='selectDropdwn'>"+
 							
 							"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
 							"<span class='caret'>"+"</span>"+
@@ -167,8 +167,8 @@ function pageRendering(){
 
 			
 			
-			$("#configTableDiv").append("<div class='col s12 m2 l2'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
-			$("#configTableDiv").append("<div class=' col s3 m2 l8'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>Export<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+			$("#configTableDiv").append("<div class='filter_btn'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
+			$("#configTableDiv").append("<div class='filter_btn'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>Export<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);

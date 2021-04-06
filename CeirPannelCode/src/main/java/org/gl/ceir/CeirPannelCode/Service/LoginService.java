@@ -172,6 +172,9 @@ public class LoginService {
 		String browser=null;
 		HttpResponse response=new HttpResponse();
 		if(userid!=null) {
+			
+		
+			
 			publicIp= header.getPublicIp();
 			browser=header.getBrowser();
 			response=userLoginFeignImpl.sessionTracking(userid,publicIp,browser);
@@ -183,6 +186,7 @@ public class LoginService {
 			response=userLoginFeignImpl.sessionTracking(userid,publicIp,"Chrome/Win8");
 			log.info("response got: "+response);
 		}
+		
 		session.removeAttribute("username");
 		session.removeAttribute("userid"); 
 		session.removeAttribute("usertypeList");
