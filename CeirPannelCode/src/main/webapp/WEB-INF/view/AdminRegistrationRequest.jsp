@@ -210,7 +210,7 @@ data-session-source="${not empty param.source ? param.source : 'menu'}">
                         <textarea id="Reason"
                         oninput="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');"
 						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200characters" />');" 
-                         class="materialize-textarea" style="min-height: 8rem;"  required></textarea>
+                         class="materialize-textarea" style="min-height: 8rem;" maxlength="200"  required></textarea>
                         <label for="Reason" style="margin-left: -10px;"><spring:message code="input.remarks" /><span class="star">*</span></label>
                     </div>
                     

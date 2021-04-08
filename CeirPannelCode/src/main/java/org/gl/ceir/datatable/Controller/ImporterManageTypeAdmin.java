@@ -87,8 +87,8 @@ public class ImporterManageTypeAdmin {
 					"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Transaction ID":
 						"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Display Name":
 							"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "TAC":
-								"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Brand Name":
-									"6".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Model Number" :
+								"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "brandName":
+									"6".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "modelNumber" :
 										"7".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Country" :
 											"8".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "User Type" :
 												"9".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Status"

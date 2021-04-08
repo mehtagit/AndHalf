@@ -73,7 +73,7 @@
 				"userType":$("body").attr("data-roleType"),
 				"email" : $('#emailID').val(),
 				"phoneNo" : $('#phone').val(),
-				"username" : $("body").attr("session-valuetxnid") == "null" ? $('#userName').val() : $("body").attr("session-valuetxnid"),
+				"username" : $("body").attr("session-valuetxnid") == "null" ? $('#userName').val() : $("body").attr("session-valuetxnid")
 		}}
 
 

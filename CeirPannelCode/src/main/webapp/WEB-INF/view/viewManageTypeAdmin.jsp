@@ -556,7 +556,7 @@ position: fixed;
 				</div>
 				<div class="row">
 						<div class="input-field col s12 m12">
-							<textarea id="rejectTrcRemark"  maxlength="250"
+							<textarea id="rejectTrcRemark"  maxlength="200"
 								class="materialize-textarea" 
 							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" style="min-height: 8rem;" required></textarea>
@@ -632,7 +632,7 @@ position: fixed;
 					</div>
 					<div class="row">
 						<div class="input-field col s12 m12">
-							<textarea id="deleteTacRemark"  maxlength="250"
+							<textarea id="deleteTacRemark"  maxlength="200"
 								class="materialize-textarea" 
 							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" style="min-height: 8rem;" required></textarea>

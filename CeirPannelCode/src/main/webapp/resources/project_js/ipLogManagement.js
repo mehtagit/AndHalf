@@ -57,7 +57,7 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"username" : $("#userName").val() == "" || $("#userName").val() == undefined ? "" : $("#userName").val(),
+					"username" : $("#userName").val() == "" || $("#userName").val() == undefined ? $("body").attr("data-selected-username") : $("#userName").val(),
 					"publicIp" : $('#publicIp').val()
 			}				
 			if(lang=='km'){
