@@ -4,7 +4,22 @@ public class SLAfilterRequest {
 	private String searchString,username,userType;
 	private Integer featureId,feature, pageNo, pageSize,userTypeId,usertype,userId;
 	private String publicIp,browser;
+	public String order,orderColumnName;
 	
+	
+	
+	public String getOrder() {
+		return order;
+	}
+	public void setOrder(String order) {
+		this.order = order;
+	}
+	public String getOrderColumnName() {
+		return orderColumnName;
+	}
+	public void setOrderColumnName(String orderColumnName) {
+		this.orderColumnName = orderColumnName;
+	}
 	public String getPublicIp() {
 		return publicIp;
 	}
@@ -104,9 +119,15 @@ public class SLAfilterRequest {
 		builder.append(publicIp);
 		builder.append(", browser=");
 		builder.append(browser);
+		builder.append(", order=");
+		builder.append(order);
+		builder.append(", orderColumnName=");
+		builder.append(orderColumnName);
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
 	
 	
 }

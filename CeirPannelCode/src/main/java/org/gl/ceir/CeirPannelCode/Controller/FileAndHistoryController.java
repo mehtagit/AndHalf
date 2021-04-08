@@ -204,9 +204,9 @@ PropertyReader propertyReader;
 			
 			allrequest.setPublicIp(header.getPublicIp());
 			allrequest.setBrowser(header.getBrowser());
-			allrequest.setFeatureId(featureIdForFile);
-			log.info("request send to the sample file download api=" + allrequest);
-		FileExportResponse response = feignCleintImplementation.downloadSampleFile(allrequest);
+	 
+			log.info(" featureIdForFile=="+featureIdForFile+"  request send to the sample file download api=" + allrequest);
+		FileExportResponse response = feignCleintImplementation.downloadSampleFile(featureIdForFile,allrequest);
 		log.info("response from sample file download file " + response);
         
 		return "redirect:" + response.getUrl();
@@ -216,19 +216,28 @@ PropertyReader propertyReader;
 	// consignment History
 
 	@PostMapping("consignment-history")
-	public ResponseEntity<?> viewHistory(HttpServletRequest request) {
+	public ResponseEntity<?> viewHistory(HttpServletRequest request,HttpSession session) {
 		List<List<Object>> finalList = new ArrayList<List<Object>>();
 		List<List<String>> mul = new ArrayList<List<String>>();
 		String filter = request.getParameter("filter");
 		MapDatatableResponse map = new MapDatatableResponse();
 		Gson gsonObject = new Gson();
 		  UserHeader header=registerService.getUserHeaders(request);
-		 
+		  
+			  int userTypeid=(int) session.getAttribute("usertypeId"); String
+			  roleType=String.valueOf(session.getAttribute("usertype")); String
+			  userName=session.getAttribute("username").toString(); int userId= (int)
+			  session.getAttribute("userid");
+			  
 		DBrowDataModel filterRequest = gsonObject.fromJson(filter, DBrowDataModel.class);
 		try {
 			 filterRequest.setPublicIp(header.getPublicIp());
 			  filterRequest.setBrowser(header.getBrowser());
-			log.info("request passed to API:::::::::" + filter);
+			  filterRequest.setUserId(userId);
+			  filterRequest.setUserType(roleType);
+			  filterRequest.setUsername(userName);
+			  filterRequest.setUserTypeId(userTypeid);
+			log.info("request passed to API:::::::::" + filterRequest);
 			Object response = dBTablesFeignClient.historyConsignmentFeign(filterRequest);
 			Gson gson = new Gson();
 			String apiResponse = gson.toJson(response);

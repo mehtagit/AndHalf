@@ -66,6 +66,30 @@ public class SLADatatableController {
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		filterRequest.setSearchString(request.getParameter("search[value]"));
 		
+
+		String column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+			"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "User ID":
+				"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Transaction ID":
+					"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "User Type" :
+							"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Feature Name" :
+									"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Status"
+						:"Modified On";
+		
+		log.info("---->"+request.getParameter("order[0][column]")+"============>"+request.getParameter("order[0][dir]"));
+		
+		String order;
+		if ("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")==null) {
+			order = "desc";
+		} 
+		else if("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")=="asc"){
+			order ="asc";
+		}
+		else {
+			order = request.getParameter("order[0][dir]");
+		}
+		filterRequest.setOrderColumnName(column);
+		filterRequest.setOrder(order);
+		
 		try {
 			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
 			filterRequest.setBrowser(session.getAttribute("browser").toString());

@@ -56,7 +56,9 @@ public interface GsmaFeignClient {
 		
 		@PostMapping(path = "gsma/CheckImeiMsisdnValues")
 				public @ResponseBody String checkImeiDetails(@RequestParam(name = "imei", required = false) String imei,
-						@RequestParam(name = "msisdn", required = false) String msisdn);
+						@RequestParam(name = "msisdn", required = false) String msisdn,
+						@RequestParam(name="publicIp", required = false) String publicIp,
+						@RequestParam(name="browser", required = false) String browser);
 		
 		
 		

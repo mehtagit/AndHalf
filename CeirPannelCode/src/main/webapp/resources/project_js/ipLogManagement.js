@@ -81,14 +81,16 @@
 						destroy:true,
 						"serverSide": true,
 						orderCellsTop : true,
-						"ordering" : false,
+						"ordering" : true,
 						"bPaginate" : true,
-						"bFilter" : true,
+						"bFilter" : false,
 						"bInfo" : true,
 						"bSearchable" : true,
 						"oLanguage": {  
 							"sUrl": langFile  
 						},
+						"aaSorting": [],
+						
 						initComplete: function() {
 					 		$('.dataTables_filter input')
 	       .off().on('keyup', function(event) {
@@ -117,11 +119,8 @@
 							}
 						},
 						"columns": result,
-						fixedColumns: true,
-						columnDefs: [
-							{ width: 120, targets: 0 },
-							{ width: 120, targets: 1 }
-						]
+						fixedColumns: true
+						
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
