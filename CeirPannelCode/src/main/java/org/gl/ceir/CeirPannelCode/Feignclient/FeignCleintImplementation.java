@@ -5,6 +5,7 @@ import org.gl.ceir.CeirPannelCode.Model.ActionModel;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.AddressModel;
 import org.gl.ceir.CeirPannelCode.Model.AddressResponse;
+import org.gl.ceir.CeirPannelCode.Model.AllRequest;
 import org.gl.ceir.CeirPannelCode.Model.CCPolicyBreachRequest;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentModel;
 import org.gl.ceir.CeirPannelCode.Model.ConsignmentUpdateRequest;
@@ -105,7 +106,7 @@ public interface FeignCleintImplementation {
 
 	//download file(Error or Uploaded file) feign  controller
 	@RequestMapping(value="/Download/SampleFile" ,method=RequestMethod.GET) 
-	public @ResponseBody FileExportResponse downloadSampleFile(@RequestParam("featureId") Integer featureId);
+	public @ResponseBody FileExportResponse downloadSampleFile(@RequestBody AllRequest allrequest);
 
 
 	/// **************************************** Stock Api integration ******************************************************************************************
@@ -352,7 +353,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 		
 				//download file(Error or Uploaded file) feign  controller
 				@RequestMapping(value="/Download/manuals" ,method=RequestMethod.GET) 
-				public @ResponseBody FileExportResponse manualDownloadSampleFile(@RequestParam("userTypeId") int userTypeId);
+				public @ResponseBody FileExportResponse manualDownloadSampleFile(@RequestBody AllRequest auditRequest);
 				
 //******************************* Tag Updated DropDown in Field ****************************************
 				

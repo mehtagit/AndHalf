@@ -224,7 +224,7 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeri
                     <input type="hidden" id="usernamedata">
 					<label for="password" style="color: #000; font-size: 12px;">
 						<spring:message code="registration.newpassword" /></label> <input type="password"  id="password" class="password"
-						pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
+						pattern="<spring:eval expression="@environment.getProperty('pattern.password')" />"
 						oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
 						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');" 
 												 title= "<spring:message code="validation.minumum8" />" required/>
@@ -240,7 +240,7 @@ oninput="InvalidMsg(this,'input','<spring:message code="validation.50alphanumeri
 				<div class="input-field col s11">
 					<label for="confirm_password" style="color: #000; font-size: 12px;">
 						<spring:message code="registration.confirmpassword" /></label> <input type="password" class="password2" id="confirm_password"
-						pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" maxlength="10" min="8"
+						pattern="<spring:eval expression="@environment.getProperty('pattern.password')" />"
 						oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
 						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');" 
 												 title= "<spring:message code="validation.minumum8" />" required/>								

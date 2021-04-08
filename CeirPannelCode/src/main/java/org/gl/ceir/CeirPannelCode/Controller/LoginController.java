@@ -90,8 +90,8 @@ public class LoginController {
 
 	@RequestMapping(value = "forgotPasswordRequest",method = RequestMethod.POST)
 	@ResponseBody 
-	public  UpdateProfileResponse forgotPasswordRequest(@RequestBody ForgotPassword forgotPassword) {
-		return loginService.forgotPasswordRequest(forgotPassword);
+	public  UpdateProfileResponse forgotPasswordRequest(@RequestBody ForgotPassword forgotPassword,HttpServletRequest request) {
+		return loginService.forgotPasswordRequest(forgotPassword,request);
 	} 
 
 	@RequestMapping(value = "updateNewPassword",method = RequestMethod.POST)

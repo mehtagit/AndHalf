@@ -169,7 +169,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
 					<div class="row">
 						<div class="input-field col s12 m12">
 							<textarea id="deleteTacRemark"  
-								class="materialize-textarea" 
+								class="materialize-textarea"  maxlength="200"
 							oninput="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 							oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');" style="min-height: 8rem;" required></textarea>
 							<label for="textarea1" class=""><spring:message
