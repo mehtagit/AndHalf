@@ -435,7 +435,7 @@ public class LoginService
 		}    
 	}
 
-	public ResponseEntity<?> forgotPassword(ForgotPassword forgotPassword)
+	public ResponseEntity<?> forgotPassword(ForgotPassword forgotPassword,String publicIp,String browser)
 	{ 
 		log.info("inside forgot controller");
 		log.info("forgot password data:  "+forgotPassword);
@@ -445,7 +445,7 @@ public class LoginService
 		if(userData!=null)
 		{
 			log.info("now match user question and answer on UserSecurityquestion");
-			userService.saveUserTrail(userData, "User Management","Forgot Password",41);
+			userService.saveUserTrail(userData, "User Management","Forgot Password",41,publicIp,browser);
 			Securityquestion securityData=new Securityquestion();
 			securityData.setId(forgotPassword.getQuestionId());
 			UserSecurityquestion questionDetails=userSecurityQuestionRepo.findByUser_IdAndSecurityQuestion_IdAndAnswer(userData.getId(),securityData.getId(),forgotPassword.getAnswer());

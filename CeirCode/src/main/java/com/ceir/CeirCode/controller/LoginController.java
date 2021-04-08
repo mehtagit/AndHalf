@@ -1,4 +1,6 @@
 package com.ceir.CeirCode.controller;
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +83,8 @@ public class LoginController{
 		log.info("inside sessionTracking controller and userId is: "+userid);
 		User output=userRepoService.findByUSerId(userid);
 		// 0 -for logout 1-for login
+		
+		log.info("publicIP is: "+publicIP+"   browser      ===="+browser);
 		LoginTracking loginTracking=new LoginTracking(0,output);
 		return loginService.sessionTracking(loginTracking,publicIP,browser);  
 	}
@@ -96,9 +100,9 @@ public class LoginController{
 	@ApiOperation(value = "forgot password", response = HttpResponse.class)
 	@CrossOrigin
 	@PostMapping("/forgotPassword")   
-	public ResponseEntity<?> forgotPassword(@RequestBody ForgotPassword forgotPassword)
+	public ResponseEntity<?> forgotPassword(@RequestBody ForgotPassword forgotPassword,@RequestParam(name="publicIP") String publicIP ,@RequestParam(name="browser") String browser)
 	{     
-		return loginService.forgotPassword(forgotPassword);
+		return loginService.forgotPassword(forgotPassword,publicIP,browser);
 	}
 	
 	@ApiOperation(value = "update new  password", response = HttpResponse.class)
