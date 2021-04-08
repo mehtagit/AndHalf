@@ -179,12 +179,6 @@ public class LoginService {
 			browser=header.getBrowser();
 			response=userLoginFeignImpl.sessionTracking(userid,publicIp,browser);
 			log.info("response got: "+response);
-		
-		} else {
-			publicIp= header.getPublicIp();
-			browser=header.getBrowser();
-			response=userLoginFeignImpl.sessionTracking(userid,publicIp,"Chrome/Win8");
-			log.info("response got: "+response);
 		}
 		
 		session.removeAttribute("username");
@@ -269,11 +263,15 @@ public class LoginService {
 		}
 	}
 
-	public UpdateProfileResponse forgotPasswordRequest(ForgotPassword password) {
+	public UpdateProfileResponse forgotPasswordRequest(ForgotPassword password,HttpServletRequest request) {
 		log.info("inside forgot password controller");
 		log.info("password data is:  "+password);
-		UpdateProfileResponse response=new UpdateProfileResponse();           
-		response=userLoginFeignImpl.ForgotPassword(password);
+		UpdateProfileResponse response=new UpdateProfileResponse();   
+		UserHeader header=registerService.getUserHeaders(request);
+		
+		String publicIp=header.getPublicIp();
+		String browser=header.getBrowser();
+		response=userLoginFeignImpl.ForgotPassword(password,publicIp,browser);
 		return response;
 	}  
 

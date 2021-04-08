@@ -13,6 +13,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.PropertyReader;
 import org.gl.ceir.CeirPannelCode.Feignclient.DBTablesFeignClient;
@@ -20,10 +21,13 @@ import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GrievanceFeignClient;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
+import org.gl.ceir.CeirPannelCode.Model.AllRequest;
 import org.gl.ceir.CeirPannelCode.Model.DBrowDataModel;
 import org.gl.ceir.CeirPannelCode.Model.DbListDataHeaders;
 import org.gl.ceir.CeirPannelCode.Model.FileExportResponse;
 import org.gl.ceir.CeirPannelCode.Model.MapDatatableResponse;
+import org.gl.ceir.CeirPannelCode.Model.UserHeader;
+import org.gl.ceir.CeirPannelCode.Service.RegistrationService;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +42,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import com.google.gson.Gson;
 
@@ -64,6 +69,9 @@ PropertyReader propertyReader;
 	DBTablesFeignClient dBTablesFeignClient;
 	@Autowired
 	DBrowDataModel dBrowDataModel;
+	@Autowired
+	RegistrationService registerService;
+	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 
 	// ************************************************* download file
@@ -168,13 +176,39 @@ PropertyReader propertyReader;
 	// *************************************************
 	@RequestMapping(value = "/sampleFileDownload/{featureId}", method = {
 			org.springframework.web.bind.annotation.RequestMethod.GET })
-	public String downloadSampleFile(@PathVariable("featureId") String featureId) throws IOException {
-		log.info("request send to the sample file download api=" + featureId);
+	public String downloadSampleFile(@PathVariable("featureId") String featureId,HttpSession session,HttpServletRequest request) throws IOException {
+		
 		int featureIdForFile = Integer.parseInt(featureId);
-
-		FileExportResponse response = feignCleintImplementation.downloadSampleFile(featureIdForFile);
+		   AllRequest allrequest= new AllRequest();
+		   UserHeader header=registerService.getUserHeaders(request);
+		
+		/*
+		 * int userTypeid=(int) session.getAttribute("usertypeId"); String
+		 * roleType=String.valueOf(session.getAttribute("usertype")); String
+		 * userName=session.getAttribute("username").toString(); int userId= (int)
+		 * session.getAttribute("userid");
+		 */ 
+			if(session.getAttribute("usertypeId")==null || session.getAttribute("usertype").equals(null) || session.getAttribute("username").equals(null) || session.getAttribute("userid").equals(null)) 
+			{
+				allrequest.setUserTypeId((int)  session.getAttribute("usertypeId"));
+				allrequest.setUserType(String.valueOf(session.getAttribute("usertype")));
+				allrequest.setUserId((int) session.getAttribute("userid"));
+				allrequest.setUsername(session.getAttribute("username").toString());
+			}
+			else {
+				allrequest.setUserTypeId(17);
+				allrequest.setUserType("End User");
+				allrequest.setUserId(0123);
+				allrequest.setUsername("End User");
+			}
+			
+			allrequest.setPublicIp(header.getPublicIp());
+			allrequest.setBrowser(header.getBrowser());
+			allrequest.setFeatureId(featureIdForFile);
+			log.info("request send to the sample file download api=" + allrequest);
+		FileExportResponse response = feignCleintImplementation.downloadSampleFile(allrequest);
 		log.info("response from sample file download file " + response);
-
+        
 		return "redirect:" + response.getUrl();
 
 	}
@@ -188,8 +222,12 @@ PropertyReader propertyReader;
 		String filter = request.getParameter("filter");
 		MapDatatableResponse map = new MapDatatableResponse();
 		Gson gsonObject = new Gson();
+		  UserHeader header=registerService.getUserHeaders(request);
+		 
 		DBrowDataModel filterRequest = gsonObject.fromJson(filter, DBrowDataModel.class);
 		try {
+			 filterRequest.setPublicIp(header.getPublicIp());
+			  filterRequest.setBrowser(header.getBrowser());
 			log.info("request passed to API:::::::::" + filter);
 			Object response = dBTablesFeignClient.historyConsignmentFeign(filterRequest);
 			Gson gson = new Gson();
@@ -228,12 +266,23 @@ PropertyReader propertyReader;
 	}
 
 	@RequestMapping(value = "/ManualFileDownload", method = {org.springframework.web.bind.annotation.RequestMethod.POST})
-	public void  ManualSampleFile(@RequestParam(name = "userTypeId", required = false, defaultValue="4") int userTypeId,HttpServletResponse response){
+	public void  ManualSampleFile(@RequestParam(name = "userTypeId", required = false, defaultValue="4") int userTypeId,HttpServletResponse response,HttpSession session){
 		log.info("userTypeId===" + userTypeId);
-		  FileExportResponse fileExportResponse = feignCleintImplementation.manualDownloadSampleFile(userTypeId);
+	      AllRequest allrequest= new AllRequest();
+		String roleType=String.valueOf(session.getAttribute("usertype"));
+		String userName=session.getAttribute("username").toString();
+		int userId= (int) session.getAttribute("userid");  
+		allrequest.setUserTypeId(userTypeId);
+		allrequest.setUserType(roleType);
+		allrequest.setUserId(userId);
+		allrequest.setUsername(userName);
+		allrequest.setPublicIp(session.getAttribute("publicIP").toString());
+		allrequest.setBrowser(session.getAttribute("browser").toString());
+		log.info("request send to the manual sample file download api=="+allrequest);
+		  FileExportResponse fileExportResponse = feignCleintImplementation.manualDownloadSampleFile(allrequest);
 		  String fileName=fileExportResponse.getFileName();
 		  String fileLocation=propertyReader.downloadFilePath;
-		log.info("request send to the manual sample file download api=");
+		
 		try {
 		response.setContentType("application/pdf");
 		response.setHeader("Content-Disposition", "attachment; filename=\""+fileName+"\"");

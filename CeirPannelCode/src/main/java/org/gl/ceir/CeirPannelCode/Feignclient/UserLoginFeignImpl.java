@@ -43,7 +43,7 @@ public interface UserLoginFeignImpl {
 	public HttpResponse sessionTracking(@PathVariable("userid") Integer userid,@RequestParam(name="publicIP") String publicIP ,@RequestParam(name="browser") String browser );
 	
 	@PostMapping("/Login/forgotPassword")
-	public UpdateProfileResponse ForgotPassword(ForgotPassword forgotPassword);
+	public UpdateProfileResponse ForgotPassword(ForgotPassword forgotPassword,@RequestParam(name="publicIP") String publicIP ,@RequestParam(name="browser") String browser);
 	
 	@PostMapping("/Login/updateNewPassword")
 	public HttpResponse updateNewPassword(Password forgotPassword);

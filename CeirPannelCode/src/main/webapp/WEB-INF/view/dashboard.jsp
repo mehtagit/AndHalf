@@ -715,11 +715,11 @@ data-dismiss="modal">&times;</button> -->
 						id="add_user"><spring:message code="modal.yes" /></a> --%>
 
 
-					<form action="./logout" method="post" id="logoutForm">
+					<form action="" onsubmit="return sessionLogOut()" method="POST" method="post" id="logoutForm">
 						<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
 
-						<button type="button" onclick="sessionLogOut(<%=session.getLastAccessedTime()+timeout %>, <%=new Date().getTime()  %>)" class="btn">
+						<button type="submit"  class="btn">
 							<spring:message code="modal.yes" />
 						</button>
 						<a href="#" class="modal-close btn" style="margin-left: 10px;"><spring:message
@@ -929,47 +929,32 @@ data-dismiss="modal">&times;</button> -->
 		
 	</script>
 	<script type="text/javascript">
-		function sessionLogOut(timeOut,currentTime){
-			$('#logoutForm').submit();    
-			/* if(currentTime > timeOut){
-					$('#logoutForm').submit();
-				}
-				else{
-					 window.location.href = "./login";
-				} */
-	}
-	
-		/* function openPDF(url){
-			$.ajax({
-				type : 'GET',
-				url : url,
-				contentType : "application/json",
-				success : function(data) {
-					 $.ajax({
-					    url:data['url'],
-					    type:'HEAD',
-					    error: function()
-					    {
-					        //file not exists
-					      errorMessageReg(("file does not exist"));
-					    },
-					    success: function(result)
-					    {
-					        //file exists
-					    	 var w=window.open($("body").attr("data-context")+"/"+data['url'], '_blank');
-							   w.focus(); 
-					    }
-					}); 
-					
-					
-				},
-				error : function(xhr, ajaxOptions, thrownError) {
+		function sessionLogOut(){
+			alert("KK")
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			$.ajaxSetup({
+				headers : {
+					'X-CSRF-TOKEN' : token
 				}
 			});
-			
-			
-			 
-			} */
+			$.ajax({
+				type : 'POST',
+				url : './logout',
+				contentType : "application/json",
+				dataType : 'html',
+			    success : function(data) {
+					alert("SUCCESS");
+					}, 
+				
+				error : function(xhr, ajaxOptions, thrownError) {
+					alert("error");
+				}
+			});
+		 
+	}
+	
+		
 		</script>
 <script type="text/javascript">$( document ).ready(function() {if($("body").attr("data-roleType") == '' || ($("body").attr("data-roleType") != window.parent.$("body").attr("data-roleType"))){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>

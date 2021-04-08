@@ -623,7 +623,7 @@ function closeUpdateModal(){
 	$("#DeleteConsignment").closeModal();
 	$('#updateModal').closeModal();
 	$(".lean-overlay").remove();
-
+	$("#deleteFormID").trigger("reset");
 }
 
 function closeViewModal()
