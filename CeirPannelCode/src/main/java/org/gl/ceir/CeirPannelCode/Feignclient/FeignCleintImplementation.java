@@ -105,8 +105,8 @@ public interface FeignCleintImplementation {
 
 
 	//download file(Error or Uploaded file) feign  controller
-	@RequestMapping(value="/Download/SampleFile" ,method=RequestMethod.GET) 
-	public @ResponseBody FileExportResponse downloadSampleFile(@RequestBody AllRequest allrequest);
+	@RequestMapping(value="/Download/SampleFile" ,method=RequestMethod.POST) 
+	public @ResponseBody FileExportResponse downloadSampleFile(@RequestParam("featureId") int featureId,@RequestBody AllRequest allrequest);
 
 
 	/// **************************************** Stock Api integration ******************************************************************************************
@@ -352,7 +352,7 @@ public @ResponseBody ConfigContentModel viewAdminFeign(FilterRequest filterReque
 				
 		
 				//download file(Error or Uploaded file) feign  controller
-				@RequestMapping(value="/Download/manuals" ,method=RequestMethod.GET) 
+				@RequestMapping(value="/Download/manuals" ,method=RequestMethod.POST) 
 				public @ResponseBody FileExportResponse manualDownloadSampleFile(@RequestBody AllRequest auditRequest);
 				
 //******************************* Tag Updated DropDown in Field ****************************************
