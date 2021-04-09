@@ -24,4 +24,9 @@ public interface Features {
 	String MESSAGE_MANAGEMENT = "Message Management";
 	String RULE_LIST = "Rule List";
 	String FIELD_MANGEMENT="Field Management";
+	String MANUAL_FILE="Manual File";
+	String SAMPLE_FILE="Sample File";
+	String FILE_DOWNLOAD="File Download";
+	String ERROR_FILE="Error File";
+	String UPLOADED_FILE="Uploaded File";
 }

@@ -7,8 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.model.AllRequest;
+import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.SystemConfigurationDb;
+import com.gl.ceir.config.model.constants.Features;
+import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.util.InterpSetter;
 import com.gl.ceir.config.util.Utility;
@@ -36,11 +40,19 @@ public class FileServiceImpl {
 	@Autowired
 	InterpSetter interpSetter;
 
-	public FileDetails getSampleFile(int featureId) {
+	public FileDetails getSampleFile(int featureId,AllRequest request) {
 
 		String fileName = null;
 		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.sample_file_link);
-
+		AuditTrail auditTrail = new AuditTrail(request.getUserId(), 
+				request.getUsername(), 
+				request.getUserTypeId(), 
+				request.getUserType(), 
+				Features.FILE_DOWNLOAD, 
+				Features.SAMPLE_FILE, 
+				"", "NA",request.getUserType(),request.getPublicIp(),request.getBrowser());
+		logger.info("AUDIT : View in audit_trail. " + auditTrail);
+		auditTrailRepository.save(auditTrail);
 		switch (featureId) {
 		case 3:
 			fileName = "Consignment.csv";
@@ -62,12 +74,23 @@ public class FileServiceImpl {
 				propertiesReader.localIp) + fileName);
 	}
 
-	public FileDetails getManuals(int userTypeId) {
+	public FileDetails getManuals(AllRequest auditRequest) {
 
 		String fileName = null;
-		SystemConfigurationDb systemConfigurationDb1  = configurationManagementServiceImpl.findByTag(ConfigTags.manuals_file_name+"_"+userTypeId);
+		SystemConfigurationDb systemConfigurationDb1  = configurationManagementServiceImpl.findByTag(ConfigTags.manuals_file_name+"_"+auditRequest.getUserTypeId());
 		
-		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.manuals_link+"_"+userTypeId);
+		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.manuals_link+"_"+auditRequest.getUserTypeId());
+		
+		AuditTrail auditTrail = new AuditTrail(auditRequest.getUserId(), 
+				auditRequest.getUsername(), 
+				auditRequest.getUserTypeId(), 
+				auditRequest.getUserType(), 
+				Features.FILE_DOWNLOAD, 
+				Features.MANUAL_FILE, 
+				"", "NA",auditRequest.getUserType(),auditRequest.getPublicIp(),auditRequest.getBrowser());
+		logger.info("AUDIT : View in audit_trail. " + auditTrail);
+		auditTrailRepository.save(auditTrail);
+		
 		/*switch (userTypeId) {
 		case 1:
 			fileName = "";
@@ -125,11 +148,32 @@ public class FileServiceImpl {
 				propertiesReader.localIp));
 	}
 
-	public FileDetails downloadUploadedFile(String fileName, String txnId, String fileType, String tag) {
+	public FileDetails downloadUploadedFile(String fileName, String txnId, String fileType, String tag,AllRequest auditRequest) {
 
 		String fileLink = null;
 		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.upload_file_link);
-
+		if(fileType.equalsIgnoreCase("error")) {
+		AuditTrail auditTrail = new AuditTrail(auditRequest.getUserId(), 
+				auditRequest.getUsername(), 
+				auditRequest.getUserTypeId(), 
+				auditRequest.getUserType(), 
+				Features.FILE_DOWNLOAD, 
+				Features.ERROR_FILE, 
+				"", txnId,auditRequest.getUserType(),auditRequest.getPublicIp(),auditRequest.getBrowser());
+		logger.info("AUDIT : View in audit_trail. error " + auditTrail);
+		auditTrailRepository.save(auditTrail);
+		}
+		else if(fileType.equalsIgnoreCase("actual")) {
+			AuditTrail auditTrail = new AuditTrail(auditRequest.getUserId(), 
+					auditRequest.getUsername(), 
+					auditRequest.getUserTypeId(), 
+					auditRequest.getUserType(), 
+					Features.FILE_DOWNLOAD, 
+					Features.UPLOADED_FILE, 
+					"", txnId,auditRequest.getUserType(),auditRequest.getPublicIp(),auditRequest.getBrowser());
+			logger.info("AUDIT : View in audit_trail. actual file " + auditTrail);
+			auditTrailRepository.save(auditTrail);	
+		}
 		if("actual".equalsIgnoreCase(fileType)) {
 			if("DEFAULT".equalsIgnoreCase(tag)) {
 				fileLink = systemConfigurationDb.getValue().replace("$LOCAL_IP",

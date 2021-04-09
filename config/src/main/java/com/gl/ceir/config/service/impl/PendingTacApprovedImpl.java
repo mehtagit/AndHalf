@@ -18,10 +18,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.configuration.SortDirection;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
@@ -181,7 +181,28 @@ public class PendingTacApprovedImpl {
 	public Page<PendingTacApprovedDb> filterPendingTacApprovedDb(FilterRequest filterRequest, Integer pageNo,
 			Integer pageSize) {
 		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			
+			String orderColumn = "Created On".equalsIgnoreCase(filterRequest.getOrderColumnName()) ? "createdOn"
+					: "Modified On".equalsIgnoreCase(filterRequest.getOrderColumnName()) ? "modifiedOn"
+					:"Transaction ID".equalsIgnoreCase(filterRequest.getOrderColumnName()) ? "txnId"
+					: "TAC".equalsIgnoreCase(filterRequest.getOrderColumnName()) ? "tac"
+					:"modifiedOn";
+			
+			Sort.Direction direction;
+			if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+				direction=Sort.Direction.DESC;
+			}
+			else {
+				direction= SortDirection.getSortDirection(filterRequest.getSort());
+				
+			}
+			
+			
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
+			
+			logger.info("orderColumn Name is : "+orderColumn+ "  -------------  direction is : "+direction);
+			
+			//Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
 			Page<PendingTacApprovedDb> page = pendingTacApprovedRepository.findAll( buildSpecification(filterRequest).build(), pageable );
 

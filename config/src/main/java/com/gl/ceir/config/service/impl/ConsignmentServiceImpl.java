@@ -354,11 +354,21 @@ public class ConsignmentServiceImpl {
 
 				setInterp(consignmentMgmt2);
 			}
-
-			auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUserId(), consignmentMgmt.getUserName(),
-					Long.valueOf(consignmentMgmt.getUserTypeId()), consignmentMgmt.getUserType(),
-					Long.valueOf(consignmentMgmt.getFeatureId()), Features.CONSIGNMENT, SubFeatures.VIEW_ALL, "", "NA",
-					consignmentMgmt.getRoleType(),consignmentMgmt.getPublicIp(),consignmentMgmt.getBrowser()));
+			
+			if(source.equalsIgnoreCase("menu")) {
+				auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUserId(), consignmentMgmt.getUserName(),
+						Long.valueOf(consignmentMgmt.getUserTypeId()), consignmentMgmt.getUserType(),
+						Long.valueOf(consignmentMgmt.getFeatureId()), Features.CONSIGNMENT, SubFeatures.VIEW_ALL, "", "NA",
+						consignmentMgmt.getRoleType(),consignmentMgmt.getPublicIp(),consignmentMgmt.getBrowser()));
+			}
+			else {
+				auditTrailRepository.save(new AuditTrail(consignmentMgmt.getUserId(), consignmentMgmt.getUserName(),
+						Long.valueOf(consignmentMgmt.getUserTypeId()), consignmentMgmt.getUserType(),
+						Long.valueOf(consignmentMgmt.getFeatureId()), Features.CONSIGNMENT, SubFeatures.FILTER, "", "NA",
+						consignmentMgmt.getRoleType(),consignmentMgmt.getPublicIp(),consignmentMgmt.getBrowser()));
+			}
+				
+		
 			logger.info("AUDIT : Saved view request in audit.");
 			return page;
 
