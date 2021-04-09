@@ -652,17 +652,17 @@ public class UserService {
 				//return validateNewUser( output,otp);
 				if(output.getPreviousStatus()==UserStatus.APPROVED.getCode()) {
 					if(otp.getForgotPassword()==1) {
-						saveUserTrail(output,"User Management","User Validate Forgot Password",41);
+						saveUserTrail(output,"User Management","User Validate Forgot Password",41,otp.getPublicIp(),otp.getBrowser());
 						return validateNewUser( output,otp);
 					}
 					else {
-						saveUserTrail(output,"User Management","User Validate Update Profile",41);
+						saveUserTrail(output,"User Management","User Validate Update Profile",41,otp.getPublicIp(),otp.getBrowser());
 						return validateOldUser(output,otp);
 					}
 
 				} 
 				else {
-					saveUserTrail(output,"User Management","User Validate",41);
+					saveUserTrail(output,"User Management","User Validate",41,otp.getPublicIp(),otp.getBrowser());
 					return validateNewUser( output,otp);
 				}
 			}
@@ -812,7 +812,7 @@ public class UserService {
 	public ResponseEntity<?> resendOtp(ResendOtp otp) {   
 		log.info("inside resend otp controller"); 
 		UserProfile profile=userProfileRepo.findByUser_Id(otp.getUserId());
-		saveUserTrail(profile.getUser(),"User Management","Resend OTP",41);
+		saveUserTrail(profile.getUser(),"User Management","Resend OTP",41,otp.getPublicIp(),otp.getBrowser());
 		String smsOtp=otpService.phoneOtp(profile.getPhoneNo());
 		String emailOtp=randomDigits.getNumericString(6);
 		profile.setEmailOtp(emailOtp);
@@ -2150,7 +2150,7 @@ public class UserService {
 			AuditTrail auditTrail=new AuditTrail(user.getId(), user.getUsername(),
 					user.getUsertype().getId(),user.getUsertype().getUsertypeName(), featureId,
 					feature, subFeature,"0","NA",user.getUsertype().getUsertypeName());
-			log.info("going to save audit trail");
+			log.info("going to save audit trail="+auditTrail);
 			AuditTrail output=audiTrailRepoService.saveAuditTrail(auditTrail);
 			if(output!=null) {
 				log.info("audit trail sucessfully save");

@@ -108,8 +108,8 @@ public class LoginController{
 	@ApiOperation(value = "update new  password", response = HttpResponse.class)
 	@CrossOrigin
 	@PostMapping("/updateNewPassword")   
-	public ResponseEntity<?> updateNewPassword(@RequestBody NewPassword password)
+	public ResponseEntity<?> updateNewPassword(@RequestBody NewPassword password,@RequestParam(name="publicIP") String publicIP ,@RequestParam(name="browser") String browser )
 	{      
-		return loginService.updateNewUserPassword(password);  
+		return loginService.updateNewUserPassword(password,publicIP,browser);  
 	}
 }

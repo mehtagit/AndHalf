@@ -490,14 +490,15 @@ public class LoginService
 		}
 	}
 
-	public ResponseEntity<?> updateNewUserPassword(NewPassword password){
-		log.info("inside set update new password controller");  
+	public ResponseEntity<?> updateNewUserPassword(NewPassword password,String publicIp,String browser){
+		log.info("inside set update new password controller publicIp="+publicIp+" browser=="+browser);  
 		log.info(" password data:  "+password); 
 		log.info("get user  data by username below");
 		User user=userRepo.findByUsername(password.getUsername());
 		if(user!=null) 
 		{
-//			userService.saveUserTrail(user, "Login","update new password",0);
+			userService.saveUserTrail(user, "Forgot Password","update new password",0,publicIp,browser);
+//			
 //			user.setPassword(password.getPassword());
 //			userRepo.save(user);
 //			HttpResponse response=new HttpResponse(ProfileTags.NEW_PASS_SUC.getMessage(),200,ProfileTags.NEW_PASS_SUC.getTag());
