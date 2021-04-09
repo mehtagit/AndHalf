@@ -182,10 +182,10 @@ public class PendingTacApprovedImpl {
 			Integer pageSize) {
 		try {
 			
-			String orderColumn = "0".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
-					: "1".equalsIgnoreCase(filterRequest.getColumnName()) ? "modifiedOn"
-						:"2".equalsIgnoreCase(filterRequest.getColumnName()) ? "txnId"
-							: "3".equalsIgnoreCase(filterRequest.getColumnName()) ? "tac"
+			String orderColumn = "Created On".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
+					: "Modified On".equalsIgnoreCase(filterRequest.getColumnName()) ? "modifiedOn"
+						:"Transaction ID".equalsIgnoreCase(filterRequest.getColumnName()) ? "txnId"
+							: "TAC".equalsIgnoreCase(filterRequest.getColumnName()) ? "tac"
 									:"modifiedOn";
 			
 			Sort.Direction direction;
@@ -196,6 +196,8 @@ public class PendingTacApprovedImpl {
 				direction= SortDirection.getSortDirection(filterRequest.getSort());
 				
 			}
+			
+			
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
 			
 			logger.info("orderColumn Name is : "+orderColumn+ "  -------------  direction is : "+direction);
