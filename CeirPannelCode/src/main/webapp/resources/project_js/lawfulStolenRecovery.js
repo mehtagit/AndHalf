@@ -1507,7 +1507,8 @@ function historyRecord(txnID, requestType, source){
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",
 				"dbName" : "ceirconfig",
-				"txnId":txnID
+				"txnId":txnID,
+				"featureId":5
 		} 
 		 ////alert("requestType1-->" +requestType+" source1-->" +source);
 	 }else if(userTypeValue=='CEIRAdmin'&& requestType == 0 && source=='6'){
@@ -1519,7 +1520,8 @@ function historyRecord(txnID, requestType, source){
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",
 				"dbName" : "ceirconfig",
-				"txnId":txnID
+				"txnId":txnID,
+				"featureId":5
 		} 
 		 ////alert("requestType2-->" +requestType+" source2-->" +source);
 	 }else if(userTypeValue=='CEIRAdmin' && requestType == 1 && source=='5'){
@@ -1531,7 +1533,8 @@ function historyRecord(txnID, requestType, source){
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",
 				"dbName" : "ceirconfig",
-				"txnId":txnID
+				"txnId":txnID,
+				"featureId":5
 		} 
 		 ////alert("requestType3-->" +requestType+" source3-->" +source);
 	 }else if(userTypeValue=='CEIRAdmin' && requestType == 1 && source=='6'){
@@ -1543,7 +1546,8 @@ function historyRecord(txnID, requestType, source){
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",
 				"dbName" : "ceirconfig",
-				"txnId":txnID
+				"txnId":txnID,
+				"featureId":5
 		} 
 		 ////alert("requestType4-->" +requestType+" source4-->" +source); 
 	 }
@@ -1556,7 +1560,8 @@ function historyRecord(txnID, requestType, source){
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",
 				"dbName" : "ceirconfig",
-				"txnId":txnID
+				"txnId":txnID,
+				"featureId":5
 		}
 		 ////alert("requestType5-->" +requestType+" source5-->" +source);
 	 } else if(userTypeValue !='CEIRAdmin' && requestType == 0 && source=='6'){
@@ -1568,7 +1573,8 @@ function historyRecord(txnID, requestType, source){
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",
 				"dbName" : "ceirconfig",
-				"txnId":txnID
+				"txnId":txnID,
+				"featureId":5
 		}
 		 ////alert("requestType6-->" +requestType+" source6-->" +source);
 	 } else if(userTypeValue !='CEIRAdmin' && requestType == 1 && source=='5'){
@@ -1580,7 +1586,8 @@ function historyRecord(txnID, requestType, source){
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",
 				"dbName" : "ceirconfig",
-				"txnId":txnID
+				"txnId":txnID,
+				"featureId":5
 		}
 		 ////alert("requestType7-->" +requestType+" source7-->" +source);
 	 }else if(userTypeValue !='CEIRAdmin' && requestType == 1 && source=='6'){
@@ -1592,7 +1599,8 @@ function historyRecord(txnID, requestType, source){
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",
 				"dbName" : "ceirconfig",
-				"txnId":txnID
+				"txnId":txnID,
+				"featureId":5
 		}
 		 ////alert("requestType8-->" +requestType+" source8-->" +source);
 	 }

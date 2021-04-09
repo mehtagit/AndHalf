@@ -1400,7 +1400,8 @@ function historyRecord(txnID){
 					],
 					"tableName": "consignment_mgmt_aud",
 					"dbName" : "ceirconfig",
-					"txnId":txnID
+					"txnId":txnID,
+					"featureId":3
 		}
 
 	}
@@ -1415,7 +1416,8 @@ function historyRecord(txnID){
 					],
 					"tableName": "consignment_mgmt_aud",
 					"dbName" : "ceirconfig",
-					"txnId":txnID
+					"txnId":txnID,
+					"featureId":3
 		}
 	}
 	else{
@@ -1429,7 +1431,8 @@ function historyRecord(txnID){
 					],
 					"tableName": "consignment_mgmt_aud",
 					"dbName" : "ceirconfig",
-					"txnId":txnID
+					"txnId":txnID,
+					"featureId":3
 		}
 	}
 

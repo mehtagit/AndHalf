@@ -1186,7 +1186,8 @@ function historyRecord(txnID) {
 				"remark","admin_user_id","user_id" ],
 		"tableName" : "type_approved_db_aud",
 		"dbName" : "ceirconfig",
-		"txnId" : txnID
+		"txnId" : txnID,
+		"featureId":43
 	}
 	}else{
 		var filterRequest = {
@@ -1197,7 +1198,8 @@ function historyRecord(txnID) {
 						"remark","user_id" ],
 				"tableName" : "type_approved_db_aud",
 				"dbName" : "ceirconfig",
-				"txnId" : txnID
+				"txnId" : txnID,
+				"featureId":43
 			}
 	}
 	

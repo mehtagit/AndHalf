@@ -545,7 +545,8 @@
 							    ],
 						"tableName": "visa_update_db_aud",
 						"dbName" : "ceirconfig",
-						"txnId":txnID
+						"txnId":txnID,
+						"featureId":43
 				}
 				formData.append("filter",JSON.stringify(filterRequest));	
 				if(lang=='km'){

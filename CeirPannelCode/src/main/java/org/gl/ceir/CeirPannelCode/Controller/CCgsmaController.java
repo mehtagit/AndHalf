@@ -56,12 +56,14 @@ public class CCgsmaController {
 	}
 	
 	@PostMapping("/customeCareByTxnId")
-	public @ResponseBody GenricResponse customeCareByTxnId(HttpServletRequest request) {
+	public @ResponseBody GenricResponse customeCareByTxnId(HttpServletRequest request,HttpSession session) {
 		
 		log.info("request......"+ request);
 		String filter = request.getParameter("customerCareRequest");
 		Gson gson= new Gson(); 
 		CustomerCareByTxnId customerCarebytxnId  = gson.fromJson(filter,CustomerCareByTxnId.class);
+		customerCarebytxnId.setPublicIp(session.getAttribute("publicIP").toString());
+		customerCarebytxnId.setBrowser(session.getAttribute("browser").toString());
 		log.info("request passed to the api=="+customerCarebytxnId);
 		GenricResponse response = feignCleintImplementation.customerCareViaTxnId(customerCarebytxnId);
 		log.info("response from Customer details api " + response);
@@ -72,10 +74,14 @@ public class CCgsmaController {
 	//----------------------------  Check imei exist or not  ------------------------------- 
 	
 	@PostMapping("/checkMsisdnExist")
-	public @ResponseBody String checkMsisdnExist(
+	public @ResponseBody String checkMsisdnExist(HttpSession session,
 			@RequestParam(name = "imei", required = false) String imei,@RequestParam(name = "msisdn", required = false) String msisdn) {
+		
+		String publicIp=session.getAttribute("publicIP").toString();
+	    String browser=session.getAttribute("browser").toString();
+		
 		log.info("request send to the check msisdn exist or not  details api=" + msisdn+" imei-->" +imei);
-		String response  = gsmaFeignClient.checkImeiDetails(imei,msisdn);
+		String response  = gsmaFeignClient.checkImeiDetails(imei,msisdn,publicIp,browser);
 		log.info("response from check msisdn exist api-----------------++++++++&&&&&&&&& " + response);
 		return response;
 

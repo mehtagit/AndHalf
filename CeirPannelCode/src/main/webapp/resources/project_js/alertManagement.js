@@ -60,7 +60,8 @@
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"username" : $("body").attr("data-selected-username"),
-					"alertId" : alertId
+					"alertId" : alertId,
+					"feature" : $('#filterfeature').val(),
 					
 			}				
 			if(lang=='km'){
@@ -84,14 +85,18 @@
 						destroy:true,
 						"serverSide": true,
 						orderCellsTop : true,
-						"ordering" : false,
+						"ordering" : true,
 						"bPaginate" : true,
-						"bFilter" : true,
+						"bFilter" : false,
 						"bInfo" : true,
 						"bSearchable" : true,
 						"oLanguage": {  
 							"sUrl": langFile  
 						},
+						"aaSorting": [],
+						columnDefs: [
+							   { orderable: false, targets: -1 }
+							],
 						initComplete: function() {
 					 		$('.dataTables_filter input')
 	       .off().on('keyup', function(event) {
@@ -224,6 +229,12 @@
 			$('<option>').val(data[i].id).text(data[i].alertId).appendTo('#alertId');
 			}
 		});
+			
+			$.getJSON('./getAllfeatures', function(data) {
+				for (i = 0; i < data.length; i++) {
+				$('<option>').val(data[i].id).text(data[i].name).appendTo('#filterfeature');
+				}
+			});
 			
 		}	
 

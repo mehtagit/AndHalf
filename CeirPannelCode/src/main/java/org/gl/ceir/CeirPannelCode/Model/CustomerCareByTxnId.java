@@ -4,23 +4,20 @@ public class CustomerCareByTxnId {
 
 	private String date,imei,name,status,txnId;
 	private int featureId;
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("CustomerCareByTxnId [date=");
-		builder.append(date);
-		builder.append(", imei=");
-		builder.append(imei);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", status=");
-		builder.append(status);
-		builder.append(", txnId=");
-		builder.append(txnId);
-		builder.append(", featureId=");
-		builder.append(featureId);
-		builder.append("]");
-		return builder.toString();
+	private String publicIp,browser;
+	
+	
+	public String getPublicIp() {
+		return publicIp;
+	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
 	}
 	public String getDate() {
 		return date;
@@ -57,6 +54,28 @@ public class CustomerCareByTxnId {
 	}
 	public void setFeatureId(int featureId) {
 		this.featureId = featureId;
+	}
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("CustomerCareByTxnId [date=");
+		builder.append(date);
+		builder.append(", imei=");
+		builder.append(imei);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", txnId=");
+		builder.append(txnId);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

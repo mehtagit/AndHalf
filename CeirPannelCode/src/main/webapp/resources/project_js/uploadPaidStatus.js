@@ -1955,7 +1955,8 @@ function deptImageValidation() {
 						    ],
 					"tableName": "regularize_device_db_aud",
 					"dbName" : "ceirconfig",
-					"txnId":txnID
+					"txnId":txnID,
+					"featureId":12
 			} 
 		 
 		

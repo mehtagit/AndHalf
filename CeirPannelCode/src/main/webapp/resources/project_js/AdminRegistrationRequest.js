@@ -58,7 +58,7 @@
 					"userType":$("body").attr("data-roleType"),
 					"email" : $('#emailID').val(),
 					"phoneNo" : $('#phone').val(),
-					"username" : $('#userName').val()
+					"username" : $('#userName').val() == "" || $('#userName').val() == undefined ? $("body").attr("data-selected-username") : $('#userName').val()
 			}
 		}else{
 			var filterRequest={
@@ -73,8 +73,9 @@
 				"userType":$("body").attr("data-roleType"),
 				"email" : $('#emailID').val(),
 				"phoneNo" : $('#phone').val(),
-				"username" : $("body").attr("session-valuetxnid") == "null" ? $('#userName').val() : $("body").attr("session-valuetxnid")
-		}}
+				//"username" : $("body").attr("session-valuetxnid") == "null" ? $('#userName').val() : $("body").attr("session-valuetxnid")
+				"username" : $('#userName').val() == "" || $('#userName').val() == undefined ? $("body").attr("data-selected-username") : $('#userName').val()
+      }}
 
 
 
@@ -768,7 +769,8 @@ function userChangeStatus(entity){
 						"tableName": "users_aud_user_profile",
 						"dbName" : "ceirconfig",
 						"userid":txnID,
-						"txnId":txnID
+						"txnId":txnID,
+						"featureId":21
 			}
 			
 		
