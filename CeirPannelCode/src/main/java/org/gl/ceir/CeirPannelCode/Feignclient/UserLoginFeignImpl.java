@@ -46,7 +46,7 @@ public interface UserLoginFeignImpl {
 	public UpdateProfileResponse ForgotPassword(ForgotPassword forgotPassword,@RequestParam(name="publicIP") String publicIP ,@RequestParam(name="browser") String browser);
 	
 	@PostMapping("/Login/updateNewPassword")
-	public HttpResponse updateNewPassword(Password forgotPassword);
+	public HttpResponse updateNewPassword(Password forgotPassword,@RequestParam(name="publicIP") String publicIP ,@RequestParam(name="browser") String browser);
 	
 	@PostMapping("/Login/testLogin") 
 	public LoginResponse searchUserDetailFeign(UserStatus userStatus);

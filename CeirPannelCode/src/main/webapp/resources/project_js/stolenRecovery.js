@@ -1434,7 +1434,8 @@ function historyRecord(txnID,sourceType){
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",
 				"dbName" : "ceirconfig",
-				"txnId":txnID
+				"txnId":txnID,
+				"featureId":7
 		} 
 		 
 	 }
@@ -1448,7 +1449,8 @@ function historyRecord(txnID,sourceType){
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",
 				"dbName" : "ceirconfig",
-				"txnId":txnID
+				"txnId":txnID,
+				"featureId":7
 		} 
 		
 	 }
@@ -1461,7 +1463,8 @@ function historyRecord(txnID,sourceType){
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",
 				"dbName" : "ceirconfig",
-				"txnId":txnID
+				"txnId":txnID,
+				"featureId":7
 		}
 		 
 	 }else{
@@ -1474,7 +1477,8 @@ function historyRecord(txnID,sourceType){
 					    ],
 				"tableName": "stolenand_recovery_mgmt_aud",
 				"dbName" : "ceirconfig",
-				"txnId":txnID
+				"txnId":txnID,
+				"featureId":7
 		}
 		 
 	 }

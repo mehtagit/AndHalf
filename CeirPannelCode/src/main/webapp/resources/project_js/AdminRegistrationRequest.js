@@ -61,7 +61,7 @@
 					"username" : $('#userName').val() == "" || $('#userName').val() == undefined ? $("body").attr("data-selected-username") : $('#userName').val()
 			}
 		}else{
-			var filterRequest={	
+			var filterRequest={
 				"endDate":$('#endDate').val(),
 				"startDate":$('#startDate').val(),
 				"asType": parseInt(asType),
@@ -75,8 +75,9 @@
 				"phoneNo" : $('#phone').val(),
 				//"username" : $("body").attr("session-valuetxnid") == "null" ? $('#userName').val() : $("body").attr("session-valuetxnid")
 				"username" : $('#userName').val() == "" || $('#userName').val() == undefined ? $("body").attr("data-selected-username") : $('#userName').val()
-		}}
-		
+      }}
+
+
 
 		if(lang=='km'){
 			var langFile="./resources/i18n/khmer_datatable.json";
@@ -768,7 +769,8 @@ function userChangeStatus(entity){
 						"tableName": "users_aud_user_profile",
 						"dbName" : "ceirconfig",
 						"userid":txnID,
-						"txnId":txnID
+						"txnId":txnID,
+						"featureId":21
 			}
 			
 		

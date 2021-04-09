@@ -1085,7 +1085,8 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			 ],
 			 "tableName": "stock_mgmt_aud",
 			 "dbName" : "ceirconfig",
-			 "txnId":txnID
+			 "txnId":txnID,
+			 "featureId":4
 			 }
 			 }else if(userTypeValue=='Manufacturer' || userTypeValue=='Custom'){
 				 var filterRequest={
@@ -1095,7 +1096,8 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 						 ],
 						 "tableName": "stock_mgmt_aud",
 						 "dbName" : "ceirconfig",
-						 "txnId":txnID
+						 "txnId":txnID,
+						 "featureId":4
 						 }
 			}
 			 else{
@@ -1106,7 +1108,8 @@ var currentRoleTypeAssignei = $("body").attr("data-selected-roleType");
 			 ],
 			 "tableName": "stock_mgmt_aud",
 			 "dbName" : "ceirconfig",
-			 "txnId":txnID
+			 "txnId":txnID,
+			 "featureId":4
 			 }
 			 }
 			 

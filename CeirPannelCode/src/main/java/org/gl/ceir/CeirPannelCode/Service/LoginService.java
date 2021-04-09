@@ -265,22 +265,27 @@ public class LoginService {
 
 	public UpdateProfileResponse forgotPasswordRequest(ForgotPassword password,HttpServletRequest request) {
 		log.info("inside forgot password controller");
-		log.info("password data is:  "+password);
+	
 		UpdateProfileResponse response=new UpdateProfileResponse();   
 		UserHeader header=registerService.getUserHeaders(request);
 		
 		String publicIp=header.getPublicIp();
 		String browser=header.getBrowser();
+		log.info("password data is:  "+password+"  publicIp=="+publicIp+"  browser=="+browser);
 		response=userLoginFeignImpl.ForgotPassword(password,publicIp,browser);
 		return response;
 	}  
 
-	public HttpResponse updateNewPassword(Password password) {
+	public HttpResponse updateNewPassword(Password password,HttpServletRequest request) {
 		log.info("inside update new password controller");
 		log.info("password data is :  "+password);
 		if(password.getPassword().equals(password.getConfirmPassword())) {
-			HttpResponse response=new HttpResponse();            
-			response=userLoginFeignImpl.updateNewPassword(password);
+			HttpResponse response=new HttpResponse();     
+			UserHeader header=registerService.getUserHeaders(request);
+			
+			String publicIp=header.getPublicIp();
+			String browser=header.getBrowser();
+			response=userLoginFeignImpl.updateNewPassword(password,publicIp,browser);
 			return response;
 		}
 		else {

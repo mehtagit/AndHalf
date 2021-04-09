@@ -84,7 +84,7 @@ PropertyReader propertyReader;
 
 	public @ResponseBody FileExportResponse downloadFile(@PathVariable("transactionNumber") String txnid,
 			@PathVariable("fileName") String fileName, @PathVariable("filetype") String filetype,
-			@PathVariable(name = "doc_TypeTag", required = false) String doc_TypeTag) throws IOException {
+			@PathVariable(name = "doc_TypeTag", required = false) String doc_TypeTag,HttpSession session,HttpServletRequest request) throws IOException {
 
 		FileExportResponse response = new FileExportResponse();
 		log.info("inside file download method" + doc_TypeTag);
@@ -93,10 +93,28 @@ PropertyReader propertyReader;
 
 		urlToUpload = feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 		log.info("url to download file==" + urlToUpload.getValue());
-
+		   AllRequest allrequest= new AllRequest();
+		   UserHeader header=registerService.getUserHeaders(request);
+		if(session.getAttribute("usertypeId")==null || session.getAttribute("usertype").equals(null) || session.getAttribute("username").equals(null) || session.getAttribute("userid").equals(null)) 
+		{
+			allrequest.setUserTypeId(17);
+			allrequest.setUserType("End User");
+			allrequest.setUserId(0123);
+			allrequest.setUsername("End User");
+		}
+		else {
+			allrequest.setUserTypeId((int)  session.getAttribute("usertypeId"));
+			allrequest.setUserType(String.valueOf(session.getAttribute("usertype")));
+			allrequest.setUserId((int) session.getAttribute("userid"));
+			allrequest.setUsername(session.getAttribute("username").toString());
+		}
+		
+		allrequest.setPublicIp(header.getPublicIp());
+		allrequest.setBrowser(header.getBrowser());
+ 
 		if (filetype.equalsIgnoreCase("actual")) {
 
-			if (!doc_TypeTag.equals("DEFAULT")) {
+			if (!doc_TypeTag.equals("DEFAULT")) { 
 				log.info("doc_TypeTag_______" + doc_TypeTag);
 				String rootPath = urlToUpload.getValue() + txnid + "/" + doc_TypeTag + "/";
 				File tmpDir = new File(rootPath + fileName);
@@ -110,7 +128,7 @@ PropertyReader propertyReader;
 					if (extension.equalsIgnoreCase(".png") || extension.equalsIgnoreCase(".jpeg")
 							|| extension.equalsIgnoreCase(".gif") || extension.equalsIgnoreCase(".jpg")) {
 						response = feignCleintImplementation.downloadFile(txnid, filetype, fileName.replace("%20", " "),
-								doc_TypeTag);
+								doc_TypeTag,allrequest);
 						response.setFilePath("imageType");
 						return response;
 					}
@@ -153,11 +171,11 @@ PropertyReader propertyReader;
 			}
 
 		}
-
+		
 		log.info(" everything is fine for hit to api for file downloading");
 		log.info("request send to the download file api= txnid(" + txnid + ") fileName (" + fileName + ") fileType ("
-				+ filetype + ")" + doc_TypeTag);
-		response = feignCleintImplementation.downloadFile(txnid, filetype, fileName.replace("%20", " "), doc_TypeTag);
+				+ filetype + ")" + doc_TypeTag+"  ip and browser=="+allrequest);
+		response = feignCleintImplementation.downloadFile(txnid, filetype, fileName.replace("%20", " "), doc_TypeTag,allrequest);
 
 		log.info("response of download api=" + response + "------------------" + fileName.replace("%20", " "));
 		log.info("redirect:" + response.getUrl());
@@ -190,16 +208,16 @@ PropertyReader propertyReader;
 		 */ 
 			if(session.getAttribute("usertypeId")==null || session.getAttribute("usertype").equals(null) || session.getAttribute("username").equals(null) || session.getAttribute("userid").equals(null)) 
 			{
-				allrequest.setUserTypeId((int)  session.getAttribute("usertypeId"));
-				allrequest.setUserType(String.valueOf(session.getAttribute("usertype")));
-				allrequest.setUserId((int) session.getAttribute("userid"));
-				allrequest.setUsername(session.getAttribute("username").toString());
-			}
-			else {
 				allrequest.setUserTypeId(17);
 				allrequest.setUserType("End User");
 				allrequest.setUserId(0123);
 				allrequest.setUsername("End User");
+			}
+			else {
+				allrequest.setUserTypeId((int)  session.getAttribute("usertypeId"));
+				allrequest.setUserType(String.valueOf(session.getAttribute("usertype")));
+				allrequest.setUserId((int) session.getAttribute("userid"));
+				allrequest.setUsername(session.getAttribute("username").toString());
 			}
 			
 			allrequest.setPublicIp(header.getPublicIp());

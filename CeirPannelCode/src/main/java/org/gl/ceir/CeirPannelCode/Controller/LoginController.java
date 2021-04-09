@@ -96,8 +96,8 @@ public class LoginController {
 
 	@RequestMapping(value = "updateNewPassword",method = RequestMethod.POST)
 	@ResponseBody
-	public  HttpResponse newPassword(@RequestBody Password password) {
-		return loginService.updateNewPassword(password); 
+	public  HttpResponse newPassword(@RequestBody Password password,HttpServletRequest request) {
+		return loginService.updateNewPassword(password,request); 
 	}
 	
 	@ResponseBody

@@ -432,10 +432,12 @@ public class RegistrationService {
 
 	public HttpResponse verifyOtp(Otp otp,HttpServletRequest request) {
 		log.info("inside verify otp controller");
-		log.info("otp data:  "+otp);    
+		  
 		UserHeader header=getUserHeaders(request);
 		otp.setUserAgent(header.getUserAgent());
 		otp.setPublicIp(header.getPublicIp());
+		otp.setBrowser(header.getBrowser());
+		log.info("otp data:  "+otp);  
 		HttpResponse response=userRegistrationFeignImpl.otpValidate(otp);
 		log.info("verify otp api response:  "+response);
 		log.info("exit from verify otp controller");
@@ -458,6 +460,8 @@ public class RegistrationService {
 		log.info("id:   "+id);     
 		UserHeader header=getUserHeaders(request);
 		ResendOtp otp=new ResendOtp(header.getUserAgent(),header.getPublicIp(),id);
+		otp.setBrowser(header.getBrowser());
+		log.info("otp resend:   "+otp);
 		HttpResponse response=userRegistrationFeignImpl.otpResend(otp); 
 		log.info("resend otp api response:  "+response);
 		log.info("exit from resend otp controller");

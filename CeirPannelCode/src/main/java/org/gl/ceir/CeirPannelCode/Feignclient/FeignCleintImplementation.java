@@ -98,8 +98,8 @@ public interface FeignCleintImplementation {
 
 
 	//download file(Error or Uploaded file) feign  controller
-	@RequestMapping(value="/Download/uploadFile" ,method=RequestMethod.GET) 
-	public @ResponseBody FileExportResponse downloadFile(@RequestParam("txnId") String txnId,@RequestParam("fileType") String fileType,@RequestParam("fileName") String fileName,@RequestParam(name="tag",required = false) String tag);
+	@RequestMapping(value="/Download/uploadFile" ,method=RequestMethod.POST) 
+	public @ResponseBody FileExportResponse downloadFile(@RequestParam("txnId") String txnId,@RequestParam("fileType") String fileType,@RequestParam("fileName") String fileName,@RequestParam(name="tag",required = false) String tag,@RequestBody AllRequest allrequest);
 
 
 
