@@ -182,11 +182,11 @@ public class PendingTacApprovedImpl {
 			Integer pageSize) {
 		try {
 			
-			String orderColumn = "Created On".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
-					: "Modified On".equalsIgnoreCase(filterRequest.getColumnName()) ? "modifiedOn"
-						:"Transaction ID".equalsIgnoreCase(filterRequest.getColumnName()) ? "txnId"
-							: "TAC".equalsIgnoreCase(filterRequest.getColumnName()) ? "tac"
-									:"modifiedOn";
+			String orderColumn = "Created On".equalsIgnoreCase(filterRequest.getOrderColumnName()) ? "createdOn"
+					: "Modified On".equalsIgnoreCase(filterRequest.getOrderColumnName()) ? "modifiedOn"
+					:"Transaction ID".equalsIgnoreCase(filterRequest.getOrderColumnName()) ? "txnId"
+					: "TAC".equalsIgnoreCase(filterRequest.getOrderColumnName()) ? "tac"
+					:"modifiedOn";
 			
 			Sort.Direction direction;
 			if("modifiedOn".equalsIgnoreCase(orderColumn)) {

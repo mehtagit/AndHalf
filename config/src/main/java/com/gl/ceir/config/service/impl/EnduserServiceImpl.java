@@ -1202,20 +1202,28 @@ public class EnduserServiceImpl {
 																			? "status"
 																	  : "modifiedOn";
 			Sort.Direction direction;
+			logger.info("direction and column name:  "+SortDirection.getSortDirection(filterRequest.getSort())+"-----"+orderColumn);
 			if("modifiedOn".equalsIgnoreCase(orderColumn)) {
 				direction=Sort.Direction.DESC;
 			}
 			else {
 				direction= SortDirection.getSortDirection(filterRequest.getSort());
 			}
-			logger.info("final column :  "+orderColumn);
+			if("modifiedOn".equalsIgnoreCase(orderColumn) && SortDirection.getSortDirection(filterRequest.getSort()).equals(Sort.Direction.ASC)) {
+				direction=Sort.Direction.ASC;
+			}
+			logger.info("final column :  "+orderColumn+"  direction--"+direction);
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction,orderColumn));
 			Page<VisaUpdateDb> page = updateVisaRepository.findAll( buildSpecification(filterRequest,statusList, source).build(), pageable );
 
-
+			if(source.equalsIgnoreCase("menu")) {
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 8L,
 					filterRequest.getUserType(), 43,Features.UPDATE_VISA, SubFeatures.VIEW_ALL, "","NA",filterRequest.getUserType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
-
+			}
+			else {
+				auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 8L,
+						filterRequest.getUserType(), 43,Features.UPDATE_VISA, SubFeatures.FILTER, "","NA",filterRequest.getUserType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));	
+			}
 
 			for(VisaUpdateDb visa : page.getContent()) {
 				logger.info("after fetching state mgmt data");

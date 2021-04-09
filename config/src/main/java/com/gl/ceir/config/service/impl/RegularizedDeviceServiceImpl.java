@@ -253,15 +253,30 @@ public class RegularizedDeviceServiceImpl {
 					userId=filterRequest.getUserId();
 				}
 			}
-			AuditTrail auditTrail = new AuditTrail(userId, 
-					username, 
-					Long.valueOf(filterRequest.getUserTypeId()), 
-					filterRequest.getUserType(), 
-					12, Features.REGISTER_DEVICE, 
-					SubFeatures.VIEW_ALL, 
-					"", "NA",filterRequest.getUserType(),filterRequest.getPublicIp(),filterRequest.getBrowser());
-			auditTrailRepository.save(auditTrail);
-			logger.info("AUDIT : View in audit_trail. " + auditTrail);
+			if(source.equalsIgnoreCase("menu")) {
+				AuditTrail auditTrail = new AuditTrail(userId, 
+						username, 
+						Long.valueOf(filterRequest.getUserTypeId()), 
+						filterRequest.getUserType(), 
+						12, Features.REGISTER_DEVICE, 
+						SubFeatures.VIEW_ALL, 
+						"", "NA",filterRequest.getUserType(),filterRequest.getPublicIp(),filterRequest.getBrowser());
+				auditTrailRepository.save(auditTrail);
+				logger.info("AUDIT : View in audit_trail. " + auditTrail);
+			}
+			else {
+				AuditTrail auditTrail = new AuditTrail(userId, 
+						username, 
+						Long.valueOf(filterRequest.getUserTypeId()), 
+						filterRequest.getUserType(), 
+						12, Features.REGISTER_DEVICE, 
+						SubFeatures.FILTER, 
+						"", "NA",filterRequest.getUserType(),filterRequest.getPublicIp(),filterRequest.getBrowser());
+				auditTrailRepository.save(auditTrail);
+				logger.info("AUDIT : View in audit_trail. " + auditTrail);
+			}
+			
+			
 			return page;
 
 		} catch (Exception e) {

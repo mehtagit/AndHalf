@@ -363,7 +363,12 @@ public class StolenAndRecoveryServiceImpl {
 			}
 
 			logger.info(stolenandRecoveryMgmtPage.getContent());
+			if(source.equalsIgnoreCase("menu")) {
 			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId(),filterRequest.getPublicIp(),filterRequest.getBrowser());
+			}
+			else {
+				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.FILTER, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId(),filterRequest.getPublicIp(),filterRequest.getBrowser());
+			}
 			/*
 			 * if(Objects.nonNull(filterRequest.getTxnId()) &&
 			 * !filterRequest.getTxnId().isEmpty()) {

@@ -327,14 +327,14 @@ public class StockServiceImpl {
 		}
 		else if(filterRequest.getUserType().equalsIgnoreCase("Custom")) {
 			orderColumn = "0".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
-					: "1".equalsIgnoreCase(filterRequest.getColumnName()) ? "txnId"
-						:"2".equalsIgnoreCase(filterRequest.getColumnName()) ? "suplierName"
-							: "3".equalsIgnoreCase(filterRequest.getColumnName()) ? "roleType"
-									: "4".equalsIgnoreCase(filterRequest.getColumnName()) ? "fileName"
+					: "1".equalsIgnoreCase(filterRequest.getColumnName()) ? "suplierName"
+						:"2".equalsIgnoreCase(filterRequest.getColumnName()) ? "txnId "
+							: "3".equalsIgnoreCase(filterRequest.getColumnName()) ? "fileName"
+									: "4".equalsIgnoreCase(filterRequest.getColumnName()) ? "stockStatus"
 											: "5".equalsIgnoreCase(filterRequest.getColumnName())
-													? "stockStatus"
-													:"6".equalsIgnoreCase(filterRequest.getColumnName()) ? "quantity" 
-													: "7".equalsIgnoreCase(filterRequest.getColumnName()) ? "deviceQuantity":"modifiedOn";	
+													? "quantity"
+													:"6".equalsIgnoreCase(filterRequest.getColumnName()) ? "deviceQuantity":"modifiedOn"; 
+														
 		}
 		
 		else {
@@ -381,7 +381,12 @@ public class StockServiceImpl {
 					} 
 				}
 			}
+			if(source.equalsIgnoreCase("menu")) {
 			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.VIEW_ALL,filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser());
+			}
+			else {
+				addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.FILTER,filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser());
+			}
 			/*
 			 * if(Objects.isNull(filterRequest.getTxnId())) {
 			 * addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA",
@@ -391,7 +396,7 @@ public class StockServiceImpl {
 			 * filterRequest.getTxnId(),
 			 * SubFeatures.FILTER,filterRequest.getRoleType(),filterRequest.getPublicIp(),
 			 * filterRequest.getBrowser()); }
-			 */
+			 */ 
 
 			return page;
 
