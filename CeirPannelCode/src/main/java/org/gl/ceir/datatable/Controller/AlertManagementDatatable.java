@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
-import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.AlertRequest;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
 import org.gl.ceir.configuration.ConfigParameters;
@@ -19,8 +19,6 @@ import org.gl.ceir.pageElement.model.InputFields;
 import org.gl.ceir.pageElement.model.PageElement;
 import org.gl.ceir.pagination.model.AlertContentModel;
 import org.gl.ceir.pagination.model.AlertPaginationModel;
-import org.gl.ceir.pagination.model.CurrencyContantModel;
-import org.gl.ceir.pagination.model.CurrencyPaginationModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +51,8 @@ public class AlertManagementDatatable {
 	AlertContentModel alertContentModel;
 	@Autowired
 	AlertPaginationModel alertPaginationModel;
+	@Autowired
+	AlertRequest alertRequest; 
 	
 	@PostMapping("alertManagementData")
 	public ResponseEntity<?> viewAlertRecord(@RequestParam(name="type",defaultValue = "alertManagement",required = false) String role, HttpServletRequest request,HttpSession session) {
@@ -63,7 +63,7 @@ public class AlertManagementDatatable {
 		List<List<Object>> finalList=new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
 		Gson gsonObject=new Gson();
-		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
+		AlertRequest filterrequest = gsonObject.fromJson(filter, AlertRequest.class);
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		filterrequest.setSearchString(request.getParameter("search[value]"));

@@ -2,11 +2,10 @@ package org.gl.ceir.CeirPannelCode.Feignclient;
 
 import java.util.List;
 
+import org.gl.ceir.CeirPannelCode.Model.AlertRequest;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
-import org.gl.ceir.CeirPannelCode.Model.NewRule;
 import org.gl.ceir.CeirPannelCode.Model.NewSystemUser;
-import org.gl.ceir.CeirPannelCode.Model.OtpResponse;
 import org.gl.ceir.CeirPannelCode.Model.Password;
 import org.gl.ceir.CeirPannelCode.Model.PaymentRequest;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
@@ -177,7 +176,7 @@ public interface UserProfileFeignImpl {
 		/*-------------------------- view Alert Management Feign ------------------------------*/
 		
 		@RequestMapping(value="/alertDb/viewAll" ,method=RequestMethod.POST) 
-		public Object viewAlertRequest(@RequestBody FilterRequest filterRequest,
+		public Object viewAlertRequest(@RequestBody AlertRequest filterRequest,
 		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 		@RequestParam(value = "file", defaultValue = "0") Integer file);	
