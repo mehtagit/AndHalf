@@ -90,7 +90,7 @@ PropertyReader propertyReader;
 		log.info("inside file download method" + doc_TypeTag);
 
 		addMoreFileModel.setTag("system_upload_filepath");
-
+		 
 		urlToUpload = feignCleintImplementation.addMoreBuutonCount(addMoreFileModel);
 		log.info("url to download file==" + urlToUpload.getValue());
 		   AllRequest allrequest= new AllRequest();
@@ -108,7 +108,25 @@ PropertyReader propertyReader;
 			allrequest.setUserId((int) session.getAttribute("userid"));
 			allrequest.setUsername(session.getAttribute("username").toString());
 		}
-		
+		 String txnIDfirstLetter = txnid.substring(0, 1);
+		 if(txnIDfirstLetter.equalsIgnoreCase("C")) {
+			 allrequest.setFeatureId(3);
+		 }
+		 else if(txnIDfirstLetter.equalsIgnoreCase("S")) {
+			 allrequest.setFeatureId(4);
+		 }
+		 else if(txnIDfirstLetter.equalsIgnoreCase("R") || txnIDfirstLetter.equalsIgnoreCase("I") || txnIDfirstLetter.equalsIgnoreCase("A")) {
+			 allrequest.setFeatureId(12);
+		 }
+		 else if(txnIDfirstLetter.equalsIgnoreCase("B")) {
+			 allrequest.setFeatureId(7);
+		 }
+		 else if(txnIDfirstLetter.equalsIgnoreCase("L")) {
+			 allrequest.setFeatureId(5);
+		 }
+		 else if(txnIDfirstLetter.equalsIgnoreCase("T")) {
+			 allrequest.setFeatureId(21);
+		 }
 		allrequest.setPublicIp(header.getPublicIp());
 		allrequest.setBrowser(header.getBrowser());
  

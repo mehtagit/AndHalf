@@ -50,8 +50,8 @@
 		
 		function alertFieldTable(lang){
 			
-			var alertId = $("#alertId").val() == 'null' ? null : $("#alertId option:selected").text();
-			
+			var alertId = $("#alertId").val() == null ? "" : $("#alertId option:selected").text();
+			var feature = $("#filterfeature").val() == null || $("#filterfeature").val() == undefined ? "" : $("#filterfeature option:selected").text();
 			var filterRequest={
 					"endDate":$('#endDate').val(),
 					"startDate":$('#startDate').val(),
@@ -61,7 +61,8 @@
 					"userType":$("body").attr("data-roleType"),
 					"username" : $("body").attr("data-selected-username"),
 					"alertId" : alertId,
-					"feature" : $('#filterfeature').val(),
+					"feature" : feature,
+					//"description" : " "
 					
 			}				
 			if(lang=='km'){
@@ -196,15 +197,17 @@
 									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 									"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-									"<option value= null selected>"+dropdown[i].title+
+									"<option selected>"+dropdown[i].title+
 									"</option>"+
 									"</select>"+
 									"</div>"+
 							"</div>");
 					}
-
+						var viewFilter="viewFilter";
 						$("#alertTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+						$("#alertTableDiv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
 						$("#alertTableDiv").append("<div class=' col s3 m2 l5'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportAlertData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$('#clearFilter').attr("onclick", "Resetfilter('viewFilter')");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -391,3 +394,8 @@
 			
 			return false
 		}
+		
+		function Resetfilter(formID){
+			$('#'+formID).trigger('reset');
+			//alertFieldTable(lang)
+		}		
