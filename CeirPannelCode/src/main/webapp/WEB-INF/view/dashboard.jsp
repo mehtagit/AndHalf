@@ -940,7 +940,7 @@ data-dismiss="modal">&times;</button> -->
 			});
 			$.ajax({
 				type : 'POST',
-				url : './logout',
+				url : './manualLogout',
 				processData : false,
 				contentType : false,
 			    success : function(data) {
