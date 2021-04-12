@@ -311,6 +311,7 @@ public class RegistrationService {
 		UserHeader header=getUserHeaders(request);
 		registration.setUserAgent(header.getUserAgent());
 		registration.setPublicIp(header.getPublicIp());
+		registration.setBrowser(header.getBrowser());
 		log.info("save registration page starting point");
 		log.info("registration data:  "+registration);        
 		String validCaptcha=(String)session.getAttribute("captcha_security");      
