@@ -48,7 +48,7 @@ public class FileServiceImpl {
 				request.getUsername(), 
 				request.getUserTypeId(), 
 				request.getUserType(), 
-				Features.FILE_DOWNLOAD, 
+				request.getFeatureId(), 
 				Features.SAMPLE_FILE, 
 				"", "NA",request.getUserType(),request.getPublicIp(),request.getBrowser());
 		logger.info("AUDIT : View in audit_trail. " + auditTrail);
@@ -85,7 +85,7 @@ public class FileServiceImpl {
 				auditRequest.getUsername(), 
 				auditRequest.getUserTypeId(), 
 				auditRequest.getUserType(), 
-				Features.FILE_DOWNLOAD, 
+				auditRequest.getFeatureId(), 
 				Features.MANUAL_FILE, 
 				"", "NA",auditRequest.getUserType(),auditRequest.getPublicIp(),auditRequest.getBrowser());
 		logger.info("AUDIT : View in audit_trail. " + auditTrail);
@@ -157,7 +157,7 @@ public class FileServiceImpl {
 				auditRequest.getUsername(), 
 				auditRequest.getUserTypeId(), 
 				auditRequest.getUserType(), 
-				Features.FILE_DOWNLOAD, 
+				auditRequest.getFeatureId(), 
 				Features.ERROR_FILE, 
 				"", txnId,auditRequest.getUserType(),auditRequest.getPublicIp(),auditRequest.getBrowser());
 		logger.info("AUDIT : View in audit_trail. error " + auditTrail);
@@ -168,7 +168,7 @@ public class FileServiceImpl {
 					auditRequest.getUsername(), 
 					auditRequest.getUserTypeId(), 
 					auditRequest.getUserType(), 
-					Features.FILE_DOWNLOAD, 
+					auditRequest.getFeatureId(), 
 					Features.UPLOADED_FILE, 
 					"", txnId,auditRequest.getUserType(),auditRequest.getPublicIp(),auditRequest.getBrowser());
 			logger.info("AUDIT : View in audit_trail. actual file " + auditTrail);

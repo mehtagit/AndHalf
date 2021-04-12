@@ -104,6 +104,20 @@ public class AuditTrail implements Serializable {
 		this.browser=browser;
 	}
 	public AuditTrail(long userId, String userName, Long userTypeId, String userType, 
+			long featureId, String subFeature, String jSessionId, String txnId, String roleType,String publicIP,String browser) {
+		this.userId = userId;
+		this.userName = userName;
+		this.userTypeId = userTypeId;
+		this.userType = userType;
+		this.featureId = featureId;
+		this.subFeature = subFeature;
+		this.jSessionId = jSessionId;
+		this.txnId = txnId;
+		this.roleType = roleType;
+		this.publicIp=publicIP;
+		this.browser=browser;
+	}
+	public AuditTrail(long userId, String userName, Long userTypeId, String userType, 
 			String featureName, String subFeature, String jSessionId, String txnId, String roleType,String publicIP,String browser) {
 		this.userId = userId;
 		this.userName = userName;
@@ -117,7 +131,6 @@ public class AuditTrail implements Serializable {
 		this.publicIp=publicIP;
 		this.browser=browser;
 	}
-	
 	public Long getId() {
 		return id;
 	}
