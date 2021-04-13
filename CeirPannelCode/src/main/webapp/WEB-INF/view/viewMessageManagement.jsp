@@ -106,9 +106,9 @@
 
 								<a href="" class="boton right" id="btnLink" hidden></a>
 							</div>
-							<form action="${context}/messageManagement"
+							<form action="${context}/messageManagement" id="viewFilter"
 								method="post">
-								<div class="col s12 m12 l12" id="messageTableDiv"
+								<div class="registrationTableDiv_box" id="messageTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
 										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>

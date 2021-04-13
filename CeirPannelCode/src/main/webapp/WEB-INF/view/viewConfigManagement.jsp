@@ -114,7 +114,7 @@
 
 								<a href="" class="boton right" id="btnLink" hidden></a>
 							</div>
-							<form action="${context}/systempConfigManagement"
+							<form action="${context}/systempConfigManagement" id="viewFilter"
 								method="post">
 								<div class="registrationTableDiv_box" id="configTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">

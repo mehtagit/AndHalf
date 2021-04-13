@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.NEVER).invalidSessionUrl("/login").and()
 			.formLogin().disable()
-			.logout().logoutUrl("/logout").permitAll().invalidateHttpSession(true).deleteCookies("JSESSIONID").and().
+			.logout().logoutUrl("/manualLogout").permitAll().invalidateHttpSession(true).deleteCookies("JSESSIONID").and().
 			headers().frameOptions().sameOrigin().cacheControl().disable().and()
 			.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
 		}catch( Exception ex) {
