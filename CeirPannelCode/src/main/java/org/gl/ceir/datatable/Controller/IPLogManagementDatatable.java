@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
@@ -52,7 +53,7 @@ public class IPLogManagementDatatable {
 	IPLogPaginationModel iPLogPaginationModel;
 	
 	@PostMapping("iPLogManagementData")
-	public ResponseEntity<?> viewAlertRecord(HttpServletRequest request,HttpSession session) {
+	public ResponseEntity<?> viewAlertRecord(HttpServletRequest request,HttpSession session,@RequestParam(name = "source", defaultValue = "menu", required = false) String source) {
 		//String userType = (String) session.getAttribute("usertype");
 		//int userId=	(int) session.getAttribute("userid");
 		int file=0;
@@ -86,6 +87,15 @@ public class IPLogManagementDatatable {
 		}
 		filterrequest.setOrderColumnName(column);
 		filterrequest.setOrder(order);
+		
+		if(source=="menu") {
+			filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
+			filterrequest.setBrowser(session.getAttribute("browser").toString());
+		}else {
+			filterrequest.setPublicIp(filterrequest.getPublicIp());
+			filterrequest.setBrowser(filterrequest.getBrowser());
+		}
+		
 		
 		try {
 			filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
@@ -153,7 +163,7 @@ public class IPLogManagementDatatable {
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
 			String[] names = { "HeaderButton", Translator.toLocale("button.addCurrency"), "AddCurrencyAddress()", "btnLink",
-					"FilterButton", Translator.toLocale("button.filter"),"DataTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
+					"FilterButton", Translator.toLocale("button.filter"),"DataTable(" + ConfigParameters.languageParam + ",'filter')", "submitFilter" };
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);
@@ -173,7 +183,7 @@ public class IPLogManagementDatatable {
 		 
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text","User ID","userName","","text","Public IP","publicIp",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("table.UserName"),"userName","","text",Translator.toLocale("table.publicIp"),"publicIp","","text",Translator.toLocale("table.browser"),"browser",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

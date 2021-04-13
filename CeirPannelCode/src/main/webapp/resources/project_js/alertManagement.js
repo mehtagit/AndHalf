@@ -50,8 +50,8 @@
 		
 		function alertFieldTable(lang){
 			
-			var alertId = $("#alertId").val() == null ? "" : $("#alertId option:selected").text();
-			var feature = $("#filterfeature").val() == null || $("#filterfeature").val() == undefined ? "" : $("#filterfeature option:selected").text();
+			var alertId = $("#alertId").val() == "-1" || $("#alertId").val() == undefined ? "" : $("#alertId option:selected").text();
+			var feature = $("#filterfeature").val() == "-1" || $("#filterfeature").val() == undefined ? null : $("#filterfeature option:selected").text();
 			var filterRequest={
 					"endDate":$('#endDate').val(),
 					"startDate":$('#startDate').val(),
@@ -61,8 +61,8 @@
 					"userType":$("body").attr("data-roleType"),
 					"username" : $("body").attr("data-selected-username"),
 					"alertId" : alertId,
-					"feature" : feature,
-					//"description" : " "
+					"feature" : feature
+					
 					
 			}				
 			if(lang=='km'){
@@ -169,25 +169,41 @@
 					var date=data.inputTypeDateList;
 					for(i=0; i<date.length; i++){
 						if(date[i].type === "date"){
-							$("#alertTableDiv").append("<div class='input-field col s6 m2'>"+
-									"<div id='enddatepicker' class='input-group'>"+
-									"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
-									"<label for="+date[i].id+">"+date[i].title
-									+"</label>"+
-									"<span	class='input-group-addon' style='color: #ff4081'>"+
-									"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-							$( "#"+date[i].id ).datepicker({
-								dateFormat: "yy-mm-dd",
-								 maxDate: new Date()
-					        });
-						}else if(date[i].type === "text"){
-							$("#alertTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+						$("#alertTableDiv").append("<div class='input-field'>"+
+								"<div id='enddatepicker' class='input-group'>"+
+								"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
+								"<label for="+date[i].id+">"+date[i].title
+								+"</label>"+
+								"<span	class='input-group-addon' style='color: #ff4081'>"+
+								"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+						$( "#"+date[i].id ).datepicker({
+							dateFormat: "yy-mm-dd",
+							maxDate: new Date()
+						});
+					}else if(date[i].type === "text"){
+						$("#alertTableDiv").append("<div class='input-field' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+					}
+					else if(date[i].type === "select"){
+
+							var dropdownDiv=
+								$("#alertTableDiv").append("<div class='selectDropdwn'>"+
+										
+										"<div class='select-wrapper select2  initialized'>"+
+										"<span class='caret'>"+"</span>"+
+										"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+
+										"<select id="+date[i].id+" class='select2 initialized'>"+
+										"<option>"+date[i].title+
+										"</option>"+
+										"</select>"+
+										"</div>"+
+								"</div>");
+						
 						}
-						 
-					} 
+					}
 				
 				// dynamic dropdown portion
-					var dropdown=data.dropdownList;
+					/*var dropdown=data.dropdownList;
 					for(i=0; i<dropdown.length; i++){
 						var dropdownDiv=
 							$("#alertTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
@@ -197,12 +213,12 @@
 									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
 									"<select id="+dropdown[i].id+" class='select2 initialized'>"+
-									"<option selected>"+dropdown[i].title+
+									"<option value='-1' selected>"+dropdown[i].title+
 									"</option>"+
 									"</select>"+
 									"</div>"+
 							"</div>");
-					}
+					}*/
 						var viewFilter="viewFilter";
 						$("#alertTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
 						$("#alertTableDiv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");

@@ -30,7 +30,7 @@
 
          $(window).load(function(){
 			$('div#initialloader').fadeIn('fast');
-			DataTable(lang);
+			DataTable(lang,null);
 			sessionStorage.removeItem("session-value");
 			pageRendering();
 			
@@ -45,10 +45,22 @@
 		var sourceType =localStorage.getItem("sourceType");
 		var TagId = sessionStorage.getItem("tagId");
 		
+		//************************************************** filter table **********************************************
 		
-		//**************************************************filter table**********************************************
-		
-		function DataTable(lang){
+		function DataTable(lang,source){
+			
+			var source__val;
+
+			if(source == 'filter' ) {
+				source__val= source;
+				$("body").attr("data-session-source","filter");
+			}
+			else{
+				source__val= $("body").attr("data-session-source");
+				
+			}
+			
+			alert(parseInt(source__val));
 			
 			var filterRequest={
 					"endDate":$('#endDate').val(),
@@ -58,7 +70,8 @@
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"username" : $("#userName").val() == "" || $("#userName").val() == undefined ? $("body").attr("data-selected-username") : $("#userName").val(),
-					"publicIp" : $('#publicIp').val()
+					"publicIp" : $('#publicIp').val(),
+					"browser" : $('#browser').val()
 			}				
 			if(lang=='km'){
 				var langFile="./resources/i18n/khmer_datatable.json";
@@ -101,7 +114,7 @@
 	       });
 		   },
 						ajax: {
-							url : 'iPLogManagementData',
+							url : 'iPLogManagementData?source='+source__val,
 							type: 'POST',
 							dataType: "json",
 							data : function(d) {

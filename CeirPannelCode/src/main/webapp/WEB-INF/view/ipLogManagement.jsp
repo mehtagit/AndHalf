@@ -95,7 +95,8 @@
 	data-selected-consignmentStatus="${consignmentStatus}"
 	data-selected-username="${username}"
 	session-value="en"
-	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
+	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
+	data-session-source="${not empty param.source ? param.source : 'menu'}">
 
 	<%-- session-value="${not empty param.NID ? param.NID : 'null'}" --%>
 
