@@ -30,7 +30,10 @@ function messageManagementDatatable(){
 			"userName" : $("body").attr("data-selected-username"),
 			"username" : $("body").attr("data-selected-username"),
 			"roleType":$("body").attr("data-roleType"),
-			"featureName" : Feature
+			"featureName" : Feature,
+			"description":$('#descriptionID').val(),
+			"value":$('#valueID').val(),
+			"subject":$('#subjectID').val()
 	}
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
@@ -48,14 +51,18 @@ function messageManagementDatatable(){
 				destroy:true,
 				"serverSide": true,
 				orderCellsTop : true,
-				"ordering" : false,
+				"ordering" : true,
 				"bPaginate" : true,
-				"bFilter" : true,
+				"bFilter" : false,
 				"bInfo" : true,
 				"bSearchable" : true,
 				"oLanguage": {
 					"sEmptyTable": "No records found in the system"
 			    },
+			    "aaSorting": [],
+				columnDefs: [
+					   { orderable: false, targets: -1 }
+					],
 				initComplete: function() {
 			 		$('.dataTables_filter input')
    .off().on('keyup', function(event) {
@@ -115,13 +122,43 @@ function pageRendering(){
 
 			var date=data.inputTypeDateList;
 			for(i=0; i<date.length; i++){
-				if(date[i].type === "text"){
-					$("#messageTableDiv").append("<div class='input-field col s6 m2' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+"><label for='parametername' class='center-align'>"+date[i].title+"</label></div>");
+				if(date[i].type === "date"){
+					$("#messageTableDiv").append("<div class='input-field'>"+
+							"<div id='enddatepicker' class='input-group'>"+
+							"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
+							"<label for="+date[i].id+">"+date[i].title
+							+"</label>"+
+							"<span	class='input-group-addon' style='color: #ff4081'>"+
+							"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+					$( "#"+date[i].id ).datepicker({
+						dateFormat: "yy-mm-dd",
+						maxDate: new Date()
+					});
+				}else if(date[i].type === "text"){
+					
+					$("#messageTableDiv").append("<div class='input-field' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 				}
+				else if(date[i].type === "select"){
+
+						var dropdownDiv=
+							$("#messageTableDiv").append("<div class='selectDropdwn'>"+
+									
+									"<div class='select-wrapper select2  initialized'>"+
+									"<span class='caret'>"+"</span>"+
+									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+
+									"<select id="+date[i].id+" class='select2 initialized'>"+
+									"<option>"+date[i].title+
+									"</option>"+
+									"</select>"+
+									"</div>"+
+							"</div>");
+					
+					}
 				
 			} 
 			
-			// dynamic dropdown portion
+			/*// dynamic dropdown portion
 			var dropdown=data.dropdownList;
 			for(i=0; i<dropdown.length; i++){
 				var dropdownDiv=
@@ -137,10 +174,12 @@ function pageRendering(){
 							"</div>"+
 					"</div>");
 			}
+			*/
 			
-			
-			$("#messageTableDiv").append("<div class='col s12 m2 l2'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
-			$("#messageTableDiv").append("<div class=' col s3 m1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>Export<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+			$("#messageTableDiv").append("<div class='filter_btn'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
+			$("#messageTableDiv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>Clear all filters</button></div>");
+			$("#messageTableDiv").append("<div class='filter_btn'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>Export<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+			$('#clearFilter').attr("onclick", "filterResetMessageManageement('viewFilter')");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -348,7 +387,10 @@ function exportData(){
 			"userName" : $("body").attr("data-selected-username"),
 			"featureName" : Feature,
 			"pageNo":parseInt(pageNo),
-			"pageSize":parseInt(pageSize)
+			"pageSize":parseInt(pageSize),
+			"description":$('#descriptionID').val(),
+			"value":$('#valueID').val(),
+			"subject":$('#subjectID').val()
 			
 	}
 	//////console.log(JSON.stringify(filterRequest))
@@ -374,4 +416,12 @@ function exportData(){
 	});
 
 }
+
+
+function filterResetMessageManageement(formID){
+	$('#'+formID).trigger('reset');
+	$("label").removeClass('active');
+	messageManagementDatatable();
+}
+
 

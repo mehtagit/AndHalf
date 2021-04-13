@@ -60,6 +60,34 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 				String filter = request.getParameter("filter");
 				Gson gsonObject=new Gson();
 				FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
+				String column=null;
+				 column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+						"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Modified On":
+							"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Description":
+								"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Value":
+									"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Type":
+										"Modified On";
+					String order;
+		/*
+		 * if("Modified On".equalsIgnoreCase(column)) { order="desc"; } else {
+		 * order=request.getParameter("order[0][dir]"); }
+		 *
+		 *
+		 */
+					
+					if ("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")==null) {
+						order = "desc";
+					} 
+					else if("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")=="asc"){
+						order ="asc";
+					}
+					else {
+						order = request.getParameter("order[0][dir]");
+					} 
+					filterrequest.setColumnName(column);
+					filterrequest.setSort(order);
+					
+				 
 				Integer file = 0;
 				Integer pageSize = Integer.parseInt(request.getParameter("length"));
 				Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
@@ -145,22 +173,29 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 				buttonList.add(button);
 			}			
 			pageElement.setButtonList(buttonList);
-		
+			//input type date list	
+			String[] dateParam= {"date","Creation Start Date","startDate","","date","Creation End Date","endDate","","text","Decription","descriptionID","50","text","value","valueID","50","select","Type","type",""};
+			for(int i=0; i< dateParam.length; i++) {
+			dateRelatedFields= new InputFields();
+			dateRelatedFields.setType(dateParam[i]);
+			i++;
+			dateRelatedFields.setTitle(dateParam[i]);
+			i++;
+			dateRelatedFields.setId(dateParam[i]);
+			i++;
+			dateRelatedFields.setClassName(dateParam[i]);
+			inputTypeDateList.add(dateRelatedFields);
+			}
 			
 			//Dropdown items			
-			String[] selectParam= {"select","Type","type","",};
-			for(int i=0; i< selectParam.length; i++) {
-				inputFields= new InputFields();
-				inputFields.setType(selectParam[i]);
-				i++;
-				inputFields.setTitle(selectParam[i]);
-				i++;
-				inputFields.setId(selectParam[i]);
-				i++;
-				inputFields.setClassName(selectParam[i]);
-				dropdownList.add(inputFields);
-			}
-			pageElement.setDropdownList(dropdownList);
+		/*
+		 * String[] selectParam= {"select","Type","type","",}; for(int i=0; i<
+		 * selectParam.length; i++) { inputFields= new InputFields();
+		 * inputFields.setType(selectParam[i]); i++;
+		 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
+		 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
+		 * } pageElement.setDropdownList(dropdownList);
+		 */
 			
 			pageElement.setInputTypeDateList(inputTypeDateList);
 			pageElement.setUserStatus(userStatus);

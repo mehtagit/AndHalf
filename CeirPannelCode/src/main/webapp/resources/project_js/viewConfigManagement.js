@@ -28,7 +28,8 @@ function configManagementDatatable(){
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userType":$("body").attr("data-roleType"),
 			"username" : $("body").attr("data-selected-username"),
-			
+			"description":$('#descriptionID').val(),
+			"value":$('#valueID').val(),
 			"userName" : $("body").attr("data-selected-username"),
 			"roleType":$("body").attr("data-roleType")
 	}
@@ -52,14 +53,18 @@ function configManagementDatatable(){
 				destroy:true,
 				"serverSide": true,
 				orderCellsTop : true,
-				"ordering" : false,
+				"ordering" : true,
 				"bPaginate" : true,
-				"bFilter" : true,
+				"bFilter" : false,
 				"bInfo" : true,
 				"bSearchable" : true,
 				"oLanguage": {
 			        "sEmptyTable": "No records found in the system"
 			    },
+			    "aaSorting": [],
+				columnDefs: [
+					   { orderable: false, targets: -1 }
+					],
 				initComplete: function() {
 			 		$('.dataTables_filter input')
    .off().on('keyup', function(event) {
@@ -129,7 +134,7 @@ function pageRendering(){
 			
 			for(i=0; i<date.length; i++){
 				if(date[i].type === "date"){
-					$("#configTableDiv").append("<div class='responsiveDiv'>"+
+					$("#configTableDiv").append("<div class='input-field responsiveDiv'>"+
 							"<div id='enddatepicker' class='input-group date'>"+
 							"<label for='TotalPrice'>"+date[i].title
 							+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
@@ -141,14 +146,31 @@ function pageRendering(){
 			        }); 	
 				}
 					else if(date[i].type === "text"){
-						$("#configTableDiv").append("<div class='input-field' style='margin-top: 22px;'><input type="+date[i].type+" id="+date[i].id+"><label for='parametername' class='center-align'>"+date[i].title+"</label></div>");
+						$("#configTableDiv").append("<div class='input-field'><input type="+date[i].type+" maxlength="+date[i].className+" id="+date[i].id+"><label for='parametername' class='center-align'>"+date[i].title+"</label></div>");
 						
+					}
+					else if(date[i].type === "select"){
+
+						var dropdownDiv=
+							$("#configTableDiv").append("<div class='selectDropdwn'>"+
+									
+									"<div class='select-wrapper select2  initialized'>"+
+									"<span class='caret'>"+"</span>"+
+									"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+
+									"<select id="+date[i].id+" class='select2 initialized'>"+
+									"<option>"+date[i].title+
+									"</option>"+
+									"</select>"+
+									"</div>"+
+							"</div>");
+					
 					}
 				
 				} 
 			
 			// dynamic dropdown portion
-			var dropdown=data.dropdownList;
+		/*	var dropdown=data.dropdownList;
 			for(i=0; i<dropdown.length; i++){
 				var dropdownDiv=
 					$("#configTableDiv").append("<div class='selectDropdwn'>"+
@@ -163,12 +185,14 @@ function pageRendering(){
 							"</select>"+
 							"</div>"+
 					"</div>");
-			}
+			}*/
 
 			
 			
 			$("#configTableDiv").append("<div class='filter_btn'><button class='btn primary botton' type='button' id='submitFilter'></button></div>");
+			$("#configTableDiv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>Clear all filters</button></div>");
 			$("#configTableDiv").append("<div class='filter_btn'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>Export<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+			$('#clearFilter').attr("onclick", "filterResetSystemAdmin('viewFilter')");
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -388,7 +412,9 @@ function exportData(){
 			"pageNo":parseInt(pageNo),
 			"pageSize":parseInt(pageSize),
 			"userName" : $("body").attr("data-selected-username"),
-			"roleType":$("body").attr("data-roleType")
+			"roleType":$("body").attr("data-roleType"),
+			"description":$('#descriptionID').val(),
+			"value":$('#valueID').val(),
 			
 	}
 	//console.log(JSON.stringify(filterRequest))
@@ -415,6 +441,12 @@ function exportData(){
 
 }
 
+
+function filterResetSystemAdmin(formID){
+	$('#'+formID).trigger('reset');
+	$("label").removeClass('active');
+	configManagementDatatable();
+}
 
 
 
