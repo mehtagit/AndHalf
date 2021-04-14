@@ -50,17 +50,18 @@
 		function DataTable(lang,source){
 			
 			var source__val;
-
-			if(source == 'filter' ) {
+			var username;
+			if(source == 'filter') {
 				source__val= source;
 				$("body").attr("data-session-source","filter");
+				username = $("#userName").val() != " " ? $("#userName").val() : $("#userName").val();
 			}
 			else{
-				source__val= $("body").attr("data-session-source");
+				source__val = $("body").attr("data-session-source");
 				
 			}
 			
-			alert(parseInt(source__val));
+			//alert(JSON.stringify(source__val));
 			
 			var filterRequest={
 					"endDate":$('#endDate').val(),
@@ -69,7 +70,8 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"username" : $("#userName").val() == "" || $("#userName").val() == undefined ? $("body").attr("data-selected-username") : $("#userName").val(),
+					//"username" : $("#userName").val() == " " || $("#userName").val() == undefined ? $("body").attr("data-selected-username") : $("#userName").val(),
+					"username" : username,
 					"publicIp" : $('#publicIp').val(),
 					"browser" : $('#browser').val()
 			}				
@@ -207,9 +209,11 @@
 									"</div>"+
 							"</div>");
 					}*/
-
+						var viewFilter="viewFilter";
 						$("#ipLogTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+						$("#ipLogTableDiv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
 						$("#ipLogTableDiv").append("<div class=' col s3 m2'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportIPLogData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$('#clearFilter').attr("onclick", "Resetfilter('viewFilter')");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -248,7 +252,8 @@
 					"userType":$("body").attr("data-roleType"),
 					"userId" : parseInt($("body").attr("data-userID")),
 					"username" : $("#userName").val() == "" || $("#userName").val() == undefined ? "" : $("#userName").val(),
-					"publicIp" : $('#publicIp').val()
+					"publicIp" : $('#publicIp').val(),
+					"browser" : $('#browser').val()
 					
 					
 			}
@@ -274,4 +279,11 @@
 				}
 			});
 
+		}
+		
+		function Resetfilter(formID){
+			$('#'+formID).trigger('reset');
+			$("label").removeClass('active');
+			DataTable(lang);
+			
 		}

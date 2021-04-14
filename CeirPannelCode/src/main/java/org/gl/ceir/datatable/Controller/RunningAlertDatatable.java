@@ -165,25 +165,8 @@ public class RunningAlertDatatable {
 			}			
 			pageElement.setButtonList(buttonList);
 			
-		
-			  //Dropdown items 
-			  String[] selectParam={"select",Translator.toLocale("table.alertId"),"alertId","",}; 
-			  for(int i=0; i<selectParam.length; i++) { 
-					inputFields= new InputFields();
-			  inputFields.setType(selectParam[i]); 
-			  i++;
-			  inputFields.setTitle(selectParam[i]);
-			  i++; 
-			  inputFields.setId(selectParam[i]);
-			  i++; 
-			  inputFields.setClassName(selectParam[i]);
-			  dropdownList.add(inputFields);
-			  } 
-			pageElement.setDropdownList(dropdownList);
-		 
-			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","select",Translator.toLocale("table.alertId"),"alertId","","text",Translator.toLocale("table.Description"),"description","200","select",Translator.toLocale("table.status"),"status",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

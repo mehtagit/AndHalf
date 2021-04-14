@@ -17,7 +17,28 @@ public class FilterRequest {
 	public String visaType,visaNumber,visaExpiryDate;
 	public String order,orderColumnName;
 	private String browser,filteredUsername,name,subject;
+	public String msisdn,imei,identifierType;
 	
+	
+	
+	public String getMsisdn() {
+		return msisdn;
+	}
+	public void setMsisdn(String msisdn) {
+		this.msisdn = msisdn;
+	}
+	public String getImei() {
+		return imei;
+	}
+	public void setImei(String imei) {
+		this.imei = imei;
+	}
+	public String getIdentifierType() {
+		return identifierType;
+	}
+	public void setIdentifierType(String identifierType) {
+		this.identifierType = identifierType;
+	}
 	public String getFilteredUsername() {
 		return filteredUsername;
 	}
@@ -880,6 +901,12 @@ public class FilterRequest {
 		builder.append(name);
 		builder.append(", subject=");
 		builder.append(subject);
+		builder.append(", msisdn=");
+		builder.append(msisdn);
+		builder.append(", imei=");
+		builder.append(imei);
+		builder.append(", identifierType=");
+		builder.append(identifierType);
 		builder.append("]");
 		return builder.toString();
 	}

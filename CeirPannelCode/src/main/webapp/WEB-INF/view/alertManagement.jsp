@@ -163,7 +163,7 @@
 					<div class="input-field col s12 m6 l6">
 						<input type="text" name="period" id="editAlertId"
 							placeholder="Period" disabled>
-						<label for="editAlertId"><spring:message code="table.alertId" /> <span class="star">*</span></label>
+						<label for="editAlertId"><spring:message code="table.alertId" /></label>
 					</div>
 					
 					<input type="text" name="period" id="editId" placeholder="" disabled hidden="hidden">
@@ -171,7 +171,7 @@
 					<div class="input-field col s12 m6" style="margin-top:15.5px">
 						<input type="text" id="editfeature" name="feature"
 							placeholder="" maxlength="20" placeholder="Status" disabled>
-						<label for="editfeature"><spring:message code="table.featureName" /> <span class="star">*</span></label>
+						<label for="editfeature"><spring:message code="table.featureName" /> </label>
 					</div>
 				
 					<div class="input-field col s12 m6">
