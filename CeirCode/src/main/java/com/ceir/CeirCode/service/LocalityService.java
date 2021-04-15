@@ -23,6 +23,7 @@ import com.ceir.CeirCode.Constants.Datatype;
 import com.ceir.CeirCode.Constants.SearchOperation;
 import com.ceir.CeirCode.SpecificationBuilder.GenericSpecificationBuilder;
 import com.ceir.CeirCode.configuration.PropertiesReaders;
+import com.ceir.CeirCode.configuration.SortDirection;
 import com.ceir.CeirCode.exceptions.ResourceServicesException;
 import com.ceir.CeirCode.filemodel.LocalityFile;
 import com.ceir.CeirCode.model.AddressObject;
@@ -59,7 +60,38 @@ public class LocalityService {
 	public Page<Locality>  viewAll(AddressObject filterRequest, Integer pageNo, Integer pageSize){
 		try { 
 			log.info("filter data:  "+filterRequest);
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			
+			String orderColumn =null;
+//			createdOn,taxPaidStatus,quantity,deviceQuantity,supplierName,consignmentStatus
+			log.info("column Name :: " + filterRequest.getColumnName());
+			
+			orderColumn = "Created On".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
+					          : "Modified On".equalsIgnoreCase(filterRequest.getColumnName()) ? "modifiedOn"
+					        		  : "Province".equalsIgnoreCase(filterRequest.getColumnName()) ? "province"
+					        				  : "District".equalsIgnoreCase(filterRequest.getColumnName()) ? "district"
+					        						  : "Commune".equalsIgnoreCase(filterRequest.getColumnName()) ? "commune"
+					        								  : "Village".equalsIgnoreCase(filterRequest.getColumnName()) ? "village"
+					        						               : "modifiedOn";
+			
+			Sort.Direction direction;
+			/*
+			 * if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+			 * direction=Sort.Direction.DESC; } else { direction=
+			 * SortDirection.getSortDirection(filterRequest.getSort()); }
+			 */
+			if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+				direction=Sort.Direction.DESC;
+			}
+			else {
+				direction= SortDirection.getSortDirection(filterRequest.getSort());
+			}
+			if("modifiedOn".equalsIgnoreCase(orderColumn) && SortDirection.getSortDirection(filterRequest.getSort()).equals(Sort.Direction.ASC)) {
+				direction=Sort.Direction.ASC;
+			}
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
+			log.info("column Name :: " + filterRequest.getColumnName()+"---system.getSort() : "+filterRequest.getSort());
+			
+			//Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
             Page<Locality> page=localityRepo.findAll(buildSpecification(filterRequest).build(),pageable);
 			return page;
 

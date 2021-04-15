@@ -51,6 +51,7 @@ import com.ceir.CeirCode.response.tags.RegistrationTags;
 import com.ceir.CeirCode.response.tags.UsertypeTags;
 import com.ceir.CeirCode.util.CustomMappingStrategy;
 import com.ceir.CeirCode.util.HttpResponse;
+import com.ceir.CeirCode.configuration.SortDirection;
 import com.opencsv.CSVWriter;
 import com.opencsv.bean.MappingStrategy;
 import com.opencsv.bean.StatefulBeanToCsv;
@@ -93,7 +94,36 @@ public class UserTypeService {
 			userService.saveUserTrail(filterRequest.getUserId(),filterRequest.getUsername(),
 					filterRequest.getUserType(),filterRequest.getUserTypeId(),Features.User_Type_Management,SubFeatures.VIEW_ALL,filterRequest.getFeatureId());
 			
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			String orderColumn =null;
+//			createdOn,taxPaidStatus,quantity,deviceQuantity,supplierName,consignmentStatus
+			log.info("column Name :: " + filterRequest.getColumnName());
+			
+			orderColumn = "Created On".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
+					          : "Modified On".equalsIgnoreCase(filterRequest.getColumnName()) ? "modifiedOn"
+					        		  : "User Type".equalsIgnoreCase(filterRequest.getColumnName()) ? "usertypeName"
+					        				  : "Status".equalsIgnoreCase(filterRequest.getColumnName()) ? "status"
+					        						 
+					 : "modifiedOn";
+			
+			Sort.Direction direction;
+			/*
+			 * if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+			 * direction=Sort.Direction.DESC; } else { direction=
+			 * SortDirection.getSortDirection(filterRequest.getSort()); }
+			 */
+			if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+				direction=Sort.Direction.DESC;
+			}
+			else {
+				direction= SortDirection.getSortDirection(filterRequest.getSort());
+			}
+			if("modifiedOn".equalsIgnoreCase(orderColumn) && SortDirection.getSortDirection(filterRequest.getSort()).equals(Sort.Direction.ASC)) {
+				direction=Sort.Direction.ASC;
+			}
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
+			log.info("column Name :: " + filterRequest.getColumnName()+"---system.getSort() : "+filterRequest.getSort());
+			
+			//Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 			GenericSpecificationBuilder<Usertype> uPSB = new GenericSpecificationBuilder<Usertype>(propertiesReader.dialect);	
 			if(Objects.nonNull(filterRequest.getStartDate()) && filterRequest.getStartDate()!="")
 				uPSB.with(new SearchCriteria("createdOn",filterRequest.getStartDate(), SearchOperation.GREATER_THAN, Datatype.DATE));

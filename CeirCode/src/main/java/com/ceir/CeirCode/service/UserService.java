@@ -541,7 +541,7 @@ public class UserService {
 					RequestHeaders header=new RequestHeaders(userDetails.getUserAgent(),userDetails.getPublicIp(),userOutput.getUsername());
 					headerService.saveRequestHeader(header);
 					int rolesAddStatus=saveRoles(userDetails.getRoles(),userOutput.getId());
-					saveUserTrail(userOutput,"User Management","Register User",41);
+					saveUserTrail(userOutput,"User Management","Register User",41,header.getPublicIp(),header.getBrowser());
 					log.info("role addition status:  "+rolesAddStatus); 
 					long userid=userOutput.getId();
 					log.info("userid= "+userid);

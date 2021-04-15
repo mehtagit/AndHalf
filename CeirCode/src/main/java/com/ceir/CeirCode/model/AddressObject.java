@@ -12,6 +12,7 @@ public String  startDate;
 public String   endDate;
 private String searchString;
 private String modifiedBy;
+private String columnName,sort;
 public String getProvince() {
 	return province;
 }
@@ -78,6 +79,18 @@ public String getModifiedBy() {
 public void setModifiedBy(String modifiedBy) {
 	this.modifiedBy = modifiedBy;
 }
+public String getColumnName() {
+	return columnName;
+}
+public void setColumnName(String columnName) {
+	this.columnName = columnName;
+}
+public String getSort() {
+	return sort;
+}
+public void setSort(String sort) {
+	this.sort = sort;
+}
 @Override
 public String toString() {
 	StringBuilder builder = new StringBuilder();
@@ -103,12 +116,13 @@ public String toString() {
 	builder.append(searchString);
 	builder.append(", modifiedBy=");
 	builder.append(modifiedBy);
+	builder.append(", columnName=");
+	builder.append(columnName);
+	builder.append(", sort=");
+	builder.append(sort);
 	builder.append("]");
 	return builder.toString();
-}
-
-
-
+} 
 
 
 }

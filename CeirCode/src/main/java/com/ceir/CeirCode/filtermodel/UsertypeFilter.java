@@ -8,7 +8,7 @@ public class UsertypeFilter extends AllRequest{
 	private Integer id;
 	private String searchString;
 	private Integer status;
-	
+	private String columnName,sort;
 	public String getStartDate() {
 		return startDate;
 	}
@@ -41,7 +41,18 @@ public class UsertypeFilter extends AllRequest{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
+	public String getColumnName() {
+		return columnName;
+	}
+	public void setColumnName(String columnName) {
+		this.columnName = columnName;
+	}
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -55,11 +66,15 @@ public class UsertypeFilter extends AllRequest{
 		builder.append(searchString);
 		builder.append(", status=");
 		builder.append(status);
-		builder.append(", toString()=");
-		builder.append(super.toString());
+		builder.append(", columnName=");
+		builder.append(columnName);
+		builder.append(", sort=");
+		builder.append(sort);
 		builder.append("]");
 		return builder.toString();
 	}
-
+	 
+	
+	 
 }
 
