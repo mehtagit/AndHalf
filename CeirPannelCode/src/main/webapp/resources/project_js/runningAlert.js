@@ -50,7 +50,8 @@
 		
 		function alertFieldTable(lang){
 			
-			var alertId = $("#alertId").val() == 'null' ? null : $("#alertId option:selected").text();
+			var alertId = $("#alertId").val() == "-1" || $("#alertId").val() == undefined ? "" : $("#alertId option:selected").text();
+			var description = $("#description").val() == "" || $("#description").val() == undefined ? null : $("#description").val();
 			var filterRequest={
 					"endDate":$('#endDate').val(),
 					"startDate":$('#startDate').val(),
@@ -59,7 +60,9 @@
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"alertId" : alertId,
-					"username" : $("body").attr("data-selected-username")
+					"username" : $("body").attr("data-selected-username"),
+					"description" : description,
+					"status" : $('#status').val()
 					
 			}				
 			if(lang=='km'){
@@ -92,9 +95,7 @@
 							"sUrl": langFile  
 						},
 						"aaSorting": [],
-						columnDefs: [
-							   { orderable: false, targets: -1 }
-							],
+						
 						initComplete: function() {
 					 		$('.dataTables_filter input')
 	       .off().on('keyup', function(event) {
@@ -181,12 +182,26 @@
 					        });
 						}else if(date[i].type === "text"){
 							$("#alertTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+						}else if(date[i].type === "select"){
+							var dropdownDiv=
+								$("#alertTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
+										
+										"<div class='select-wrapper select2  initialized'>"+
+										"<span class='caret'>"+"</span>"+
+										"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+
+										"<select id="+date[i].id+" class='select2 initialized'>"+
+										"<option value='-1' selected>"+date[i].title+
+										"</option>"+
+										"</select>"+
+										"</div>"+
+								"</div>");
 						}
 						 
 					} 
 				
 				// dynamic dropdown portion
-					var dropdown=data.dropdownList;
+					/*var dropdown=data.dropdownList;
 					for(i=0; i<dropdown.length; i++){
 						var dropdownDiv=
 							$("#alertTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
@@ -201,11 +216,11 @@
 									"</select>"+
 									"</div>"+
 							"</div>");
-					}
+					}*/
 						var viewFilter="viewFilter";	
 						$("#alertTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
 						$("#alertTableDiv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
-						$("#alertTableDiv").append("<div class=' col s3 m2 l5'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportRunningAlertData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#alertTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportRunningAlertData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						$('#clearFilter').attr("onclick", "Resetfilter('viewFilter')");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
@@ -231,6 +246,12 @@
 			$('<option>').val(data[i].id).text(data[i].alertId).appendTo('#alertId');
 			}
 		});
+		
+			$.getJSON('./getDropdownList/ALERT_STATE', function(data) {
+				for (i = 0; i < data.length; i++) {
+					$('<option>').val(data[i].value).text(data[i].interp).appendTo('#status');
+				}	
+			});	
 			
 		}
 		
@@ -246,7 +267,9 @@
 			var info = table.page.info(); 
 			var pageNo=info.page;
 			var pageSize =info.length;
-			var alertId = $("#alertId").val() == 'null' ? null : $("#alertId option:selected").text();
+			
+			var alertId = $("#alertId").val() == "-1" || $("#alertId").val() == undefined ? "" : $("#alertId option:selected").text();
+			var description = $("#description").val() == "" || $("#description").val() == undefined ? null : $("#description").val();
 			
 			var filterRequest={
 					"endDate":$('#endDate').val(),
@@ -258,7 +281,9 @@
 					"userType":$("body").attr("data-roleType"),
 					"userId" : parseInt($("body").attr("data-userID")),
 					"alertId" : alertId,
-					"username" : $("body").attr("data-selected-username")
+					"username" : $("body").attr("data-selected-username"),
+					"description" : description,
+					"status" : $('#status').val()
 					
 					
 			}
@@ -288,5 +313,6 @@
 
 		function Resetfilter(formID){
 			$('#'+formID).trigger('reset');
+			$("label").removeClass('active');
 			alertFieldTable(lang)
 		}		

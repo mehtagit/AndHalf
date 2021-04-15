@@ -120,9 +120,9 @@
 
 								<a class="boton right" id="btnLink"  hidden="hidden"></a>
 							</div>
-							<form action="${context}/userManagement"
+							<form action="${context}/userManagement" id="viewFilter"
 								method="post">
-								<div class="col s12 m12 l12" id="userManagementTableDiv"
+								<div class="registrationTableDiv_box" id="userManagementTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv"></div>
 								</div>

@@ -63,6 +63,27 @@ public class AddressDatatableController {
 		String filter = request.getParameter("filter");
 		Gson gsonObject=new Gson();
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
+		String column=null;
+		 column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+				  "1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Modified On":
+					"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Province":
+						"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "District":
+							"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Commune":
+								"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Village":
+							"Modified On";
+			String order;
+			if ("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")==null) {
+				order = "desc";
+			} 
+			else if("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")=="asc"){
+				order ="asc";
+			}
+			else {
+				order = request.getParameter("order[0][dir]");
+			} 
+			filterrequest.setColumnName(column);
+			filterrequest.setSort(order);
+		
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		filterrequest.setSearchString(request.getParameter("search[value]"));
@@ -149,24 +170,21 @@ public class AddressDatatableController {
 			pageElement.setButtonList(buttonList);
 			
 		
-		  //Dropdown items 
-		  String[] selectParam={"select",Translator.toLocale("input.province"),"proviance","","select",Translator.toLocale("input.district"),"district","","select",Translator.toLocale("input.commune"),"commune","","select",Translator.toLocale("input.village"),"village",""}; 
-		  for(int i=0; i<selectParam.length; i++) { 
-				inputFields= new InputFields();
-		  inputFields.setType(selectParam[i]); 
-		  i++;
-		  inputFields.setTitle(selectParam[i]);
-		  i++; 
-		  inputFields.setId(selectParam[i]);
-		  i++; 
-		  inputFields.setClassName(selectParam[i]);
-		  dropdownList.add(inputFields);
-		  } 
-		pageElement.setDropdownList(dropdownList);
-		 
+		/*
+		 * //Dropdown items String[]
+		 * selectParam={"select",Translator.toLocale("input.province"),"proviance","",
+		 * "select",Translator.toLocale("input.district"),"district","","select",
+		 * Translator.toLocale("input.commune"),"commune","","select",Translator.
+		 * toLocale("input.village"),"village",""}; for(int i=0; i<selectParam.length;
+		 * i++) { inputFields= new InputFields(); inputFields.setType(selectParam[i]);
+		 * i++; inputFields.setTitle(selectParam[i]); i++;
+		 * inputFields.setId(selectParam[i]); i++;
+		 * inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields); }
+		 * pageElement.setDropdownList(dropdownList);
+		 */
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","select",Translator.toLocale("input.province"),"proviance","","select",Translator.toLocale("input.district"),"district","","select",Translator.toLocale("input.commune"),"commune","","select",Translator.toLocale("input.village"),"village",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

@@ -7,6 +7,7 @@ import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GsmaFeignClient;
 import org.gl.ceir.CeirPannelCode.Model.CustomerCareByTxnId;
 import org.gl.ceir.CeirPannelCode.Model.CustomerCareRequest;
+import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.GsmaDetail;
 import org.slf4j.Logger;
@@ -30,11 +31,12 @@ public class CCgsmaController {
 	
 
 	@PostMapping("getGsmaDetails")
-	public @ResponseBody GsmaDetail getDetails(@RequestParam(name = "msisdn", required = false) String msisdn,
-			@RequestParam(name = "imei", required = false) String imei,
-			@RequestParam(name = "identifierType", required = false) String identifierType, HttpSession session) {
-		log.info("request passed to the getGsmaDetails Api msisdn-->"+msisdn+ " imei-->"+imei+" identifierType-->"+identifierType);
-		GsmaDetail response = gsmaFeignClient.viewGsmaFeign(msisdn, imei, identifierType);
+	public @ResponseBody GsmaDetail getDetails(
+			@RequestBody FilterRequest filterRequest,HttpSession session) {
+		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+	    filterRequest.setBrowser(session.getAttribute("browser").toString());
+		log.info("request passed to the getGsmaDetails Api msisdn-->"+filterRequest);
+		GsmaDetail response = gsmaFeignClient.viewGsmaFeign(filterRequest);
 		log.info("response after getGsmaDetails." + response);
 		return response;
 

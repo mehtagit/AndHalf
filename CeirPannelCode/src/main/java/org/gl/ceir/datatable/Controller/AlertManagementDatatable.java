@@ -174,7 +174,7 @@ public class AlertManagementDatatable {
 		
 			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","",
 					"select",Translator.toLocale("table.alertId"),"alertId","","select",Translator.toLocale("table.featureName"),"filterfeature","",
-					"text",Translator.toLocale("table.Description"),"description",""};
+					"text",Translator.toLocale("table.Description"),"description","200"};
 for(int i=0; i< dateParam.length; i++) {
 	dateRelatedFields= new InputFields();
 	dateRelatedFields.setType(dateParam[i]);

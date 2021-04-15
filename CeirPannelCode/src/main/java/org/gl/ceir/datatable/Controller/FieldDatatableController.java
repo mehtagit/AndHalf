@@ -59,6 +59,27 @@ public class FieldDatatableController {
 		String filter = request.getParameter("filter");
 		Gson gsonObject = new Gson();
 		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
+		
+		String column=null;
+		 column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
+				"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Modified On":
+					"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Field":
+						"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Display Name":
+							"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Field ID":
+								"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Description":
+								"Modified On";
+			String order;
+			if ("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")==null) {
+				order = "desc";
+			} 
+			else if("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")=="asc"){
+				order ="asc";
+			}
+			else {
+				order = request.getParameter("order[0][dir]");
+			} 
+			filterrequest.setColumnName(column);
+			filterrequest.setSort(order);
 		Integer file = 0;
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
@@ -140,24 +161,19 @@ public class FieldDatatableController {
 		pageElement.setButtonList(buttonList);
 
 		
-		  //Dropdown items 
-		String[] selectParam={"select",Translator.toLocale("select.filterTagId"),"filterTagId",""}; 
-		for(int i=0; i<selectParam.length; i++) {
-		  inputFields= new InputFields();
-		  inputFields.setType(selectParam[i]); 
-		  i++;
-		  inputFields.setTitle(selectParam[i]);
-		  i++; inputFields.setId(selectParam[i]);
-		  i++; 
-		  inputFields.setClassName(selectParam[i]); 
-		  dropdownList.add(inputFields);
-		  } 
-		pageElement.setDropdownList(dropdownList);
-		 
+		/*
+		 * //Dropdown items String[]
+		 * selectParam={"select",Translator.toLocale("select.filterTagId"),"filterTagId"
+		 * ,""}; for(int i=0; i<selectParam.length; i++) { inputFields= new
+		 * InputFields(); inputFields.setType(selectParam[i]); i++;
+		 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
+		 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
+		 * } pageElement.setDropdownList(dropdownList);
+		 */
 
 		// input type date list
 		String[] dateParam = { "date", Translator.toLocale("input.startDate"), "startDate", "", "date",
-				Translator.toLocale("input.endDate"), "endDate", "","text",Translator.toLocale("table.displayName"),"displayName",""};
+				Translator.toLocale("input.endDate"), "endDate", "","select",Translator.toLocale("select.filterTagId"),"filterTagId","","text",Translator.toLocale("table.displayName"),"displayName","20","text",Translator.toLocale("tabel.fieldId"),"fieldID","50","text",Translator.toLocale("table.Description"),"decriptionID","50"};
 		for (int i = 0; i < dateParam.length; i++) {
 			dateRelatedFields = new InputFields();
 			dateRelatedFields.setType(dateParam[i]);

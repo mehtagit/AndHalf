@@ -95,12 +95,10 @@ public class IPLogManagementDatatable {
 			filterrequest.setPublicIp(filterrequest.getPublicIp());
 			filterrequest.setBrowser(filterrequest.getBrowser());
 		}
-		
+		log.info("request send to the filter api ="+filterrequest);
 		
 		try {
-			filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
-			filterrequest.setBrowser(session.getAttribute("browser").toString());
-			log.info("request send to the filter api ="+filterrequest);
+			
 			Object response = userProfileFeignImpl.viewIPLogRequest(filterrequest,pageNo,pageSize,file);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 

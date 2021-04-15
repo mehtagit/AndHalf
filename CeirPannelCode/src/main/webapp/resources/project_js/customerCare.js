@@ -3,7 +3,7 @@ var userId = $("body").attr("data-userID");
 var cierRoletype = sessionStorage.getItem("cierRoletype");
 var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 var userType = $("body").attr("data-roleType");
-
+var userName = $("body").attr("data-selected-username");
 var msisdn = $("body").attr("data-msisdn");
 var imei = $("body").attr("data-imei");
 
@@ -33,17 +33,32 @@ $(document).ready(function(){
 
 function getGsmaDetails(){
 	//////console.log("msisdn-->"+msisdn+" imei-->"+imei+" deviceIdType-->"+deviceIdType);
+	alert($("body").attr("data-selected-username"));
+	var filterRequest={
+			"imei": imei,
+			"msisdn": msisdn,
+			"identifierType": deviceIdType,
+			"userId":parseInt(userId),
+			"featureId":parseInt(featureId),
+			"userTypeId": parseInt($("body").attr("data-userTypeID")),
+			"userType":$("body").attr("data-roleType"),
+			"userName" : userName,
+			"roleType" : $("body").attr("data-roleType") 
+	}	
+	
 	var token = $("meta[name='_csrf']").attr("content");
 	var header = $("meta[name='_csrf_header']").attr("content");
 	$.ajaxSetup({
 		headers:
 		{ 'X-CSRF-TOKEN': token }
 	});
+	
 	$.ajax({
-		url: './getGsmaDetails?imei='+imei+'&msisdn='+msisdn+'&identifierType='+deviceIdType+'',
+		url: './getGsmaDetails',
+		dataType : 'json',
 		type: 'POST',
-		processData: false,
-		contentType: false,
+		contentType : 'application/json; charset=utf-8',
+		data : JSON.stringify(filterRequest),
 		success: function (data, textStatus, jqXHR) {
 			setGsmaDetails(data);
 		}
