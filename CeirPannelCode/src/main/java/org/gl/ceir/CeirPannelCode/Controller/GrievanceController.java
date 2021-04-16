@@ -3,7 +3,6 @@ package org.gl.ceir.CeirPannelCode.Controller;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +27,6 @@ import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,8 +38,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
-
-import CeirPannelCode.Model.Register_UploadPaidStatus;
 
 @Controller
 public class GrievanceController {
@@ -222,26 +218,33 @@ public class GrievanceController {
 
 	//***************************************** view Grievance controller *********************************
 	@RequestMapping(value="/viewGrievance",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-	public @ResponseBody List<GrievanceModel> viewGrievance(@RequestParam(name="grievanceId") String grievanceId,HttpSession session ,@RequestParam(name="recordLimit") Integer recordLimit )
+	public @ResponseBody List<GrievanceModel> viewGrievance(@RequestParam(name="grievanceId") String grievanceId,HttpSession session ,@RequestParam(name="recordLimit") Integer recordLimit,HttpServletRequest request )
 	{
 		log.info("entery point in view grievance.");
 		int userId= (int) session.getAttribute("userid");
 		List<GrievanceModel>  grievanceModel=new ArrayList<GrievanceModel> ();
+		UserHeader header=registerService.getUserHeaders(request);
+		String publicIp = header.getPublicIp();
+		String browser = header.getBrowser();
+		log.info("request passed to the save grievance method="+grievanceModel);
 		log.info("Request pass to the view grievance api ="+grievanceId+"  userId= "+userId);
-		grievanceModel=grievanceFeignClient.viewGrievance(grievanceId, userId,recordLimit);
+		grievanceModel=grievanceFeignClient.viewGrievance(grievanceId, userId,recordLimit,publicIp,browser);
 		log.info("Response from  view grievance api = "+grievanceModel);
 		return grievanceModel;
 	}
 
 	//***************************************** end  view Grievance controller *********************************
 	@RequestMapping(value="/endUserViewGrievance",method ={org.springframework.web.bind.annotation.RequestMethod.GET})
-	public @ResponseBody List<GrievanceModel> EndUserviewGrievance(@RequestParam(name="grievanceId") String grievanceId,HttpSession session ,@RequestParam(name="recordLimit") Integer recordLimit,@RequestParam(name="userId") Integer userId )
+	public @ResponseBody List<GrievanceModel> EndUserviewGrievance(@RequestParam(name="grievanceId") String grievanceId,HttpSession session ,@RequestParam(name="recordLimit") Integer recordLimit,@RequestParam(name="userId") Integer userId,HttpServletRequest request )
 	{
 		log.info("entery point in end user view grievance.");
 		/* int userId= (int) session.getAttribute("userid"); */
 		List<GrievanceModel>  grievanceModel=new ArrayList<GrievanceModel> ();
+		UserHeader header=registerService.getUserHeaders(request);
+		String publicIp = header.getPublicIp();
+		String browser = header.getBrowser();
 		log.info("Request pass to the end view grievance api ="+grievanceId+"  userId= "+userId);
-		grievanceModel=grievanceFeignClient.viewGrievance(grievanceId, userId,recordLimit);
+		grievanceModel=grievanceFeignClient.viewGrievance(grievanceId, userId,recordLimit,publicIp,browser);
 		log.info("Response from  end view grievance api = "+grievanceModel);
 		return grievanceModel;
 	}
