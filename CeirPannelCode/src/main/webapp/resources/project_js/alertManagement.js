@@ -130,7 +130,8 @@
 						fixedColumns: true,
 						columnDefs: [
 							{ width: 120, targets: 0 },
-							{ width: 120, targets: 1 }
+							{ width: 120, targets: 1 },
+							{ orderable: false, targets: -1 }
 						]
 					});
 

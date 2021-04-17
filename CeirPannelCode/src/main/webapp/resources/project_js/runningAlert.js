@@ -30,7 +30,7 @@
 
          $(window).load(function(){
 			$('div#initialloader').fadeIn('fast');
-			alertFieldTable(lang);
+			alertFieldTable(lang,null);
 			sessionStorage.removeItem("session-value");
 			pageRendering();
 			
@@ -48,7 +48,15 @@
 		
 		//**************************************************filter table**********************************************
 		
-		function alertFieldTable(lang){
+		function alertFieldTable(lang,source){
+			var source__val;
+			if(source == 'filter' ) {
+				source__val= source;
+				$("body").attr("data-session-source","filter");
+			}
+			else{
+				source__val= $("body").attr("data-session-source");
+			}
 			
 			var alertId = $("#alertId").val() == "-1" || $("#alertId").val() == undefined ? "" : $("#alertId option:selected").text();
 			var description = $("#description").val() == "" || $("#description").val() == undefined ? null : $("#description").val();
@@ -106,7 +114,7 @@
 	       });
 		   },
 						ajax: {
-							url : 'runningAlertManagementData',
+							url : 'runningAlertManagementData?source='+source__val,
 							type: 'POST',
 							dataType: "json",
 							data : function(d) {

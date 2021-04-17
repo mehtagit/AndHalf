@@ -401,7 +401,8 @@ function ImporterviewByID(id, actionType, projectPath, modalID) {
 	});
 	
 	$.ajax({
-		url : "./viewByID/" + id + "?lang=" + lang, // controller haven'nt made
+		url : "./viewByID/" + id + "?lang=" + lang+ "&userType=" + userType
+		+ "&userId=" + userId, // controller haven'nt made
 													// yet for this url. this is
 													// dummy url.
 		dataType : 'json',
@@ -1021,7 +1022,7 @@ function confirmantiondelete() {
 	var remark = $("#deleteTacRemark").val();
 	var id = $("#deleteTacId").val();
 	
-
+	
 	// ////console.log("userType=="+userType+" ==id=="+id+"===userId===" +userId);
 
 	/*
