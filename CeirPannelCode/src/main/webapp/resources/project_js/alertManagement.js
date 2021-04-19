@@ -172,7 +172,7 @@
 					var date=data.inputTypeDateList;
 					for(i=0; i<date.length; i++){
 						if(date[i].type === "date"){
-							$("#alertTableDiv").append("<div class='input-field col s6 m2'>"+
+							$("#alertTableDiv").append("<div class='input-field'>"+
 								"<div id='enddatepicker' class='input-group'>"+
 								"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 								"<label for="+date[i].id+">"+date[i].title
@@ -184,12 +184,12 @@
 							maxDate: new Date()
 						});
 					}else if(date[i].type === "text"){
-						$("#alertTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+						$("#alertTableDiv").append("<div class='input-field' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 					}
 					else if(date[i].type === "select"){
 
 							var dropdownDiv=
-								$("#alertTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
+								$("#alertTableDiv").append("<div class='selectDropdwn'>"+
 										
 										"<div class='select-wrapper select2  initialized'>"+
 										"<span class='caret'>"+"</span>"+
@@ -223,9 +223,9 @@
 							"</div>");
 					}*/
 						var viewFilter="viewFilter";
-						$("#alertTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+						$("#alertTableDiv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
 						$("#alertTableDiv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
-						$("#alertTableDiv").append("<div class=' col s3 m2 l5'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportAlertData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#alertTableDiv").append("<div class='filter_btn'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportAlertData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						$('#clearFilter').attr("onclick", "Resetfilter('viewFilter')");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);

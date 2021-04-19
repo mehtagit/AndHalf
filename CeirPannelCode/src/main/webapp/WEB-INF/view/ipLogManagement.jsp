@@ -118,7 +118,7 @@
 							</div>
 							<form action="${context}/ipLogManagement" id="viewFilter"
 								method="post">
-								<div class="col s12 m12 l12" id="ipLogTableDiv"
+								<div class="registrationTableDiv_box" id="ipLogTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv"></div>
 								</div>

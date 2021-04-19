@@ -149,48 +149,47 @@
 						var elem='<p class="PageHeading">'+data.pageTitle+'</p>';		
 						$("#pageHeader").append(elem);
 						var button=data.buttonList;
-
 						var date=data.inputTypeDateList;
-						/*for(i=0; i<date.length; i++){
+						for(i=0; i<date.length; i++){
 							if(date[i].type === "date"){
-								$("#slaTableDiv").append("<div class='input-field col s6 m2'>"+
-										"<div id='enddatepicker' class='input-group date'>"+
-										"<input class='form-control datepicker' type='text' onchange='checkDate(startDate,endDate)' id="+date[i].id+" autocomplete='off'>"+
-										"<label for="+date[i].id+">"+date[i].title
-										+"</label>"+
-										"<span	class='input-group-addon' style='color: #ff4081'>"+
-										"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-								$( "#"+date[i].id ).datepicker({
-									dateFormat: "yy-mm-dd",
-									 maxDate: new Date()
-						        });
-								}
-							else if(date[i].type === "text"){
-								$("#slaTableDiv").append("<div class='input-field col s6 m2'><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
-
-							}
-						} */
-
-						// dynamic dropdown portion
-						var dropdown=data.dropdownList;
-						for(i=0; i<dropdown.length; i++){
-							var dropdownDiv=
-								$("#slaTableDiv").append("<div class='col s6 m2 l2 selectDropdwn'>"+
-										
-										"<div class='select-wrapper select2 form-control boxBorder boxHeight initialized'>"+
-										"<span class='caret'>"+"</span>"+
-										"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
-
-										"<select id="+dropdown[i].id+"  class='select-wrapper select2  initialized'>"+
-										"<option value=null>"+dropdown[i].title+
-										"</option>"+
-										"</select>"+
-										"</div>"+
-								"</div>");
+								$("#slaTableDiv").append("<div class='input-field'>"+
+									"<div id='enddatepicker' class='input-group'>"+
+									"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
+									"<label for="+date[i].id+">"+date[i].title
+									+"</label>"+
+									"<span	class='input-group-addon' style='color: #ff4081'>"+
+									"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+							$( "#"+date[i].id ).datepicker({
+								dateFormat: "yy-mm-dd",
+								maxDate: new Date()
+							});
+						}else if(date[i].type === "text"){
+							$("#slaTableDiv").append("<div class='input-field' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 						}
+						else if(date[i].type === "select"){
 
-						$("#slaTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'></div>");
-						$("#slaTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+								var dropdownDiv=
+									$("#slaTableDiv").append("<div class='selectDropdwn'>"+
+											
+											"<div class='select-wrapper select2  initialized'>"+
+											"<span class='caret'>"+"</span>"+
+											"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+
+											"<select id="+date[i].id+" class='select2 initialized'>"+
+											"<option value='-1' selected>"+date[i].title+
+											"</option>"+
+											"</select>"+
+											"</div>"+
+									"</div>");
+							
+							}
+						}
+						
+						var viewFilter="viewFilter";
+						$("#slaTableDiv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='submitFilter'></div>");
+						$("#slaTableDiv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
+						$("#slaTableDiv").append("<div class='filter_btn'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$('#clearFilter').attr("onclick", "Resetfilter('viewFilter')");
 
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
@@ -223,14 +222,14 @@
 				});
 				$.getJSON('./getAllfeatures', function(data) {
 				for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].id).text(data[i].name).appendTo('#feature');
+				$('<option>').val(data[i].id).text(data[i].name).appendTo('#featureName');
 				}
 			});
 				
 				$.getJSON('./registrationUserType?type=2', function(data) {
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].id).text(data[i].usertypeName)
-						.appendTo('#userType');
+						.appendTo('#usertype');
 					}
 				});
 				
@@ -288,7 +287,12 @@
 			}
 			
 
-			
+			function Resetfilter(formID){
+				$('#'+formID).trigger('reset');
+				$("label").removeClass('active');
+				DataTable(lang)
+				
+			}	
 
 
 			

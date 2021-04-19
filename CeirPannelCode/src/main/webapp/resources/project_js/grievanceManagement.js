@@ -427,7 +427,7 @@ var featureId = 6;
 				
 
 				$.ajax({
-					url: './viewGrievance?recordLimit=2&grievanceId='+grievanceId,
+					url: './viewGrievance?recordLimit=2&grievanceId='+grievanceId+ "&userType=" + userType+" &featureId=" +featureId,
 					type: 'GET',
 					processData: false,
 					contentType: false,

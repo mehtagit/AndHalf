@@ -125,9 +125,9 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
 
 								<a href="" class="boton right" id="btnLink" hidden="hidden"></a>
 							</div>
-							<form action="${context}/slaManagement"
+							<form action="${context}/slaManagement" id="viewFilter"
 								method="post">
-								<div class="col s12 m12 l12" id="slaTableDiv"
+								<div class="registrationTableDiv_box" id="slaTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
 									</div>

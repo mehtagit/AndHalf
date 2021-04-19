@@ -118,7 +118,7 @@
 							</div>
 							<form action="${context}/alertManagement" id="viewFilter"
 								method="post">
-								<div class="col s12 m12 l12" id="alertTableDiv"
+								<div class="registrationTableDiv_box" id="alertTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv"></div>
 								</div>

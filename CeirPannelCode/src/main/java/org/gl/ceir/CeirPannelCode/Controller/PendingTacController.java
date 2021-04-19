@@ -42,7 +42,9 @@ public ModelAndView viewMessageManagement(HttpSession session) {
 	//------------------------------------- delete Pending TAC ----------------------------------------	
 	
 			@DeleteMapping ("pending-tac-approved")
-			public @ResponseBody GenricResponse deletePortAddress(@RequestBody FilterRequest filterRequest) {
+			public @ResponseBody GenricResponse deletePortAddress(@RequestBody FilterRequest filterRequest,HttpSession session) {
+				filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+			    filterRequest.setBrowser(session.getAttribute("browser").toString());
 				log.info("request send to the Delete pending api="+filterRequest);
 				GenricResponse response= feignCleintImplementation.deletePendingTac(filterRequest);
 				log.info("response after delete TAC."+response);
@@ -59,6 +61,9 @@ public ModelAndView viewMessageManagement(HttpSession session) {
 				Object response;
 				Integer file = 1;	
 				log.info("filterRequest:::::::::"+filterRequest);
+				filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
+			    filterRequest.setBrowser(session.getAttribute("browser").toString());
+				log.info("request send to the Delete pending api="+filterRequest);
 				response= feignCleintImplementation.pendingTACFeign(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
 				FileExportResponse fileExportResponse;
 				Gson gson= new Gson(); 

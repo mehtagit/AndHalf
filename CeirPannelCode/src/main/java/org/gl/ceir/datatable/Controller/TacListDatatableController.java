@@ -90,6 +90,9 @@ public class TacListDatatableController {
 		}
 		filterrequest.setOrderColumnName(column);
 		filterrequest.setOrder(order);
+		filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterrequest.setBrowser(session.getAttribute("browser").toString());
+		log.info("request send to the Delete pending api="+filterrequest);
 		
 		try{
 			log.info("request send to the filter api ="+filterrequest);
