@@ -1,7 +1,5 @@
 package com.gl.ceir.config.model;
 
-import javax.persistence.Transient;
-
 public class FilterRequest {
 
 	private Long id;

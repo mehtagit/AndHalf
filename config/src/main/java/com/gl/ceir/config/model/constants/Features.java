@@ -29,4 +29,5 @@ public interface Features {
 	String FILE_DOWNLOAD="File Download";
 	String ERROR_FILE="Error File";
 	String UPLOADED_FILE="Uploaded File";
+	String pending_tac="Pending TAC List";
 }

@@ -23,6 +23,7 @@ import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.configuration.PropertiesReader;
 import com.gl.ceir.config.configuration.SortDirection;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
+import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FileDetails;
 import com.gl.ceir.config.model.FilterRequest;
 import com.gl.ceir.config.model.GenricResponse;
@@ -30,8 +31,10 @@ import com.gl.ceir.config.model.PendingTacApprovedDb;
 import com.gl.ceir.config.model.SearchCriteria;
 import com.gl.ceir.config.model.SystemConfigurationDb;
 import com.gl.ceir.config.model.constants.Datatype;
+import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.GenericMessageTags;
 import com.gl.ceir.config.model.constants.SearchOperation;
+import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.file.PendingTacApprovedFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.PendingTacApprovedRepository;
@@ -69,6 +72,8 @@ public class PendingTacApprovedImpl {
 
 	@Autowired
 	ConfigurationManagementServiceImpl configurationManagementServiceImpl;
+	
+	
 
 	public GenricResponse saveSystemConfigList(PendingTacApprovedDb pendingTacApprovedDb){
 		try {
@@ -150,6 +155,11 @@ public class PendingTacApprovedImpl {
 				return new GenricResponse(1, GenericMessageTags.NULL_REQ.getTag(), 
 						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
+			
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(),
+					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
+					Long.valueOf(filterRequest.getFeatureId()), Features.pending_tac, SubFeatures.DELETE, "", "NA",
+					filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
 
 			if(Objects.nonNull(filterRequest.getTxnId())) {
 				
@@ -198,6 +208,7 @@ public class PendingTacApprovedImpl {
 			}
 			
 			
+			
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
 			
 			logger.info("orderColumn Name is : "+orderColumn+ "  -------------  direction is : "+direction);
@@ -217,6 +228,11 @@ public class PendingTacApprovedImpl {
 	private GenericSpecificationBuilder<PendingTacApprovedDb> buildSpecification(FilterRequest filterRequest){
 		GenericSpecificationBuilder<PendingTacApprovedDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
+		auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(),
+				Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
+				Long.valueOf(filterRequest.getFeatureId()), Features.pending_tac, SubFeatures.VIEW_ALL, "", "NA",
+				filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
+		
 		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
 			cmsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
 
@@ -266,6 +282,13 @@ public class PendingTacApprovedImpl {
 			List<PendingTacApprovedDb> pendingTacApprovedDbs = getAll(filterRequest);
 
 			logger.info("Data:"+pendingTacApprovedDbs);
+			
+			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(),
+					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
+					Long.valueOf(filterRequest.getFeatureId()), Features.pending_tac, SubFeatures.EXPORT, "", "NA",
+					filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
+			
+			
 			if( !pendingTacApprovedDbs.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
 					fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "PendingTacApprovedDbs.csv";
