@@ -69,7 +69,9 @@ public class FilterRequest {
 	public String description,name;
 	private String publicIp;
 	private String browser;
+	private String value,field,tagId;
 	
+	private String graceAction,postGraceAction,ruleOrder,failedRuleActionGrace,failedRuleActionPostGrace,output;
 	public String getFilteredUserType() {
 		return filteredUserType;
 	}
@@ -449,6 +451,78 @@ public class FilterRequest {
 		this.name = name;
 	}
 
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public String getField() {
+		return field;
+	}
+
+	public void setField(String field) {
+		this.field = field;
+	}
+
+	public String getTagId() {
+		return tagId;
+	}
+
+	public void setTagId(String tagId) {
+		this.tagId = tagId;
+	}
+
+	public String getGraceAction() {
+		return graceAction;
+	}
+
+	public void setGraceAction(String graceAction) {
+		this.graceAction = graceAction;
+	}
+
+	public String getPostGraceAction() {
+		return postGraceAction;
+	}
+
+	public void setPostGraceAction(String postGraceAction) {
+		this.postGraceAction = postGraceAction;
+	}
+
+	public String getRuleOrder() {
+		return ruleOrder;
+	}
+
+	public void setRuleOrder(String ruleOrder) {
+		this.ruleOrder = ruleOrder;
+	}
+
+	public String getFailedRuleActionGrace() {
+		return failedRuleActionGrace;
+	}
+
+	public void setFailedRuleActionGrace(String failedRuleActionGrace) {
+		this.failedRuleActionGrace = failedRuleActionGrace;
+	}
+
+	public String getFailedRuleActionPostGrace() {
+		return failedRuleActionPostGrace;
+	}
+
+	public void setFailedRuleActionPostGrace(String failedRuleActionPostGrace) {
+		this.failedRuleActionPostGrace = failedRuleActionPostGrace;
+	}
+
+	public String getOutput() {
+		return output;
+	}
+
+	public void setOutput(String output) {
+		this.output = output;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -564,11 +638,29 @@ public class FilterRequest {
 		builder.append(publicIp);
 		builder.append(", browser=");
 		builder.append(browser);
+		builder.append(", value=");
+		builder.append(value);
+		builder.append(", field=");
+		builder.append(field);
+		builder.append(", tagId=");
+		builder.append(tagId);
+		builder.append(", graceAction=");
+		builder.append(graceAction);
+		builder.append(", postGraceAction=");
+		builder.append(postGraceAction);
+		builder.append(", ruleOrder=");
+		builder.append(ruleOrder);
+		builder.append(", failedRuleActionGrace=");
+		builder.append(failedRuleActionGrace);
+		builder.append(", failedRuleActionPostGrace=");
+		builder.append(failedRuleActionPostGrace);
+		builder.append(", output=");
+		builder.append(output);
 		builder.append("]");
 		return builder.toString();
 	}
 
-	 
+ 	 
 	
 	
 }

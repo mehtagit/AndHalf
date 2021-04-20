@@ -44,11 +44,45 @@ public class FileServiceImpl {
 
 		String fileName = null;
 		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.sample_file_link);
-		AuditTrail auditTrail = new AuditTrail(request.getUserId(), 
+		String featureName=null;
+		if(featureId==3)
+		{
+			featureName=Features.CONSIGNMENT;
+		}
+		else if(featureId==4)
+		{
+			featureName=Features.STOCK;
+		}
+		else if(featureId==12)
+		{
+			featureName=Features.REGISTER_DEVICE;
+		}
+		else if(featureId==5)
+		{
+			featureName=Features.STOLEN_RECOVERY;
+		}
+		else if(featureId==7)
+		{
+			featureName=Features.BLOCK_UNBLOCK;
+		}
+		else if(featureId==21)
+		{
+			featureName=Features.TYPE_APPROVE;
+		}
+		else if(featureId==9)
+		{
+			featureName=Features.GREY_LIST;
+		}
+		else if(featureId==10)
+		{
+			featureName=Features.BLACK_LIST;
+		}
+			AuditTrail auditTrail = new AuditTrail(request.getUserId(), 
 				request.getUsername(), 
 				request.getUserTypeId(), 
 				request.getUserType(), 
-				request.getFeatureId(), 
+				featureId, 
+				featureName, 
 				Features.SAMPLE_FILE, 
 				"", "NA",request.getUserType(),request.getPublicIp(),request.getBrowser());
 		logger.info("AUDIT : View in audit_trail. " + auditTrail);
@@ -85,7 +119,7 @@ public class FileServiceImpl {
 				auditRequest.getUsername(), 
 				auditRequest.getUserTypeId(), 
 				auditRequest.getUserType(), 
-				auditRequest.getFeatureId(), 
+				Features.FILE_DOWNLOAD, 
 				Features.MANUAL_FILE, 
 				"", "NA",auditRequest.getUserType(),auditRequest.getPublicIp(),auditRequest.getBrowser());
 		logger.info("AUDIT : View in audit_trail. " + auditTrail);
@@ -152,12 +186,46 @@ public class FileServiceImpl {
 
 		String fileLink = null;
 		SystemConfigurationDb systemConfigurationDb  = configurationManagementServiceImpl.findByTag(ConfigTags.upload_file_link);
+		String featureName=null;
+		if(auditRequest.getFeatureId()==3)
+		{
+			featureName=Features.CONSIGNMENT;
+		}
+		else if(auditRequest.getFeatureId()==4)
+		{
+			featureName=Features.STOCK;
+		}
+		else if(auditRequest.getFeatureId()==12)
+		{
+			featureName=Features.REGISTER_DEVICE;
+		}
+		else if(auditRequest.getFeatureId()==5)
+		{
+			featureName=Features.STOLEN_RECOVERY;
+		}
+		else if(auditRequest.getFeatureId()==7)
+		{
+			featureName=Features.BLOCK_UNBLOCK;
+		}
+		else if(auditRequest.getFeatureId()==21)
+		{
+			featureName=Features.TYPE_APPROVE;
+		}
+		else if(auditRequest.getFeatureId()==9)
+		{
+			featureName=Features.GREY_LIST;
+		}
+		else if(auditRequest.getFeatureId()==10)
+		{
+			featureName=Features.BLACK_LIST;
+		}
 		if(fileType.equalsIgnoreCase("error")) {
 		AuditTrail auditTrail = new AuditTrail(auditRequest.getUserId(), 
 				auditRequest.getUsername(), 
 				auditRequest.getUserTypeId(), 
 				auditRequest.getUserType(), 
 				auditRequest.getFeatureId(), 
+				featureName,
 				Features.ERROR_FILE, 
 				"", txnId,auditRequest.getUserType(),auditRequest.getPublicIp(),auditRequest.getBrowser());
 		logger.info("AUDIT : View in audit_trail. error " + auditTrail);
@@ -169,6 +237,7 @@ public class FileServiceImpl {
 					auditRequest.getUserTypeId(), 
 					auditRequest.getUserType(), 
 					auditRequest.getFeatureId(), 
+					featureName,
 					Features.UPLOADED_FILE, 
 					"", txnId,auditRequest.getUserType(),auditRequest.getPublicIp(),auditRequest.getBrowser());
 			logger.info("AUDIT : View in audit_trail. actual file " + auditTrail);

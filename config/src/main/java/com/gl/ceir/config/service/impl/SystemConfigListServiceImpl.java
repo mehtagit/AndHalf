@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.configuration.SortDirection;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FileDetails;
@@ -222,7 +223,29 @@ public class SystemConfigListServiceImpl {
 	public Page<SystemConfigListDb> filter(FilterRequest filterRequest, Integer pageNo, Integer pageSize) {
 
 		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			
+			String orderColumn =null;
+//			createdOn,taxPaidStatus,quantity,deviceQuantity,supplierName,consignmentStatus
+			logger.info("column Name :: " + filterRequest.getColumnName());
+			
+			orderColumn = "Created On".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
+					          : "Modified On".equalsIgnoreCase(filterRequest.getColumnName()) ? "modifiedOn"
+					        		  : "Field".equalsIgnoreCase(filterRequest.getColumnName()) ? "tag"
+					        				  : "Display Name".equalsIgnoreCase(filterRequest.getColumnName()) ? "interp"
+					        						  : "Field ID".equalsIgnoreCase(filterRequest.getColumnName()) ? "tagId"
+					        								  : "Description".equalsIgnoreCase(filterRequest.getColumnName()) ? "description"
+					        								  	 : "modifiedOn";
+			
+			Sort.Direction direction;
+			if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+				direction=Sort.Direction.DESC;
+			}
+			else {
+				direction= SortDirection.getSortDirection(filterRequest.getSort());
+			}
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
+			logger.info("column Name :: " + orderColumn+"---direction : "+filterRequest.getSort());
+			//Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 			Page<SystemConfigListDb> page;
 			if ("-1".equals(filterRequest.getTag()) && filterRequest.getDisplayName().isEmpty()) {
 				page = systemConfigListRepository.findAll(pageable);
@@ -378,14 +401,30 @@ public class SystemConfigListServiceImpl {
 		auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(), 0L, "System", 0L, 
 				Features.FIELD_MANGEMENT, SubFeatures.VIEW_ALL, "","NA","System",filterRequest.getPublicIp(),filterRequest.getBrowser()));
 		
+		if (Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
+			cmsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate(), SearchOperation.GREATER_THAN,
+					Datatype.DATE));
+
+		if (Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
+			cmsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate(), SearchOperation.LESS_THAN,
+					Datatype.DATE));
+
+		
 		if (Objects.nonNull(filterRequest.getTag()) && !"-1".equals(filterRequest.getTag())) {
 			cmsb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY, Datatype.STRING));
 		}
 
 		if (Objects.nonNull(filterRequest.getDisplayName()) && filterRequest.getDisplayName()!="") {
-			cmsb.with(new SearchCriteria("interp", filterRequest.getDisplayName(), SearchOperation.EQUALITY, Datatype.STRING));
+			cmsb.with(new SearchCriteria("interp", filterRequest.getDisplayName(), SearchOperation.LIKE, Datatype.STRING));
 		}
 		
+		if (Objects.nonNull(filterRequest.getDescription()) && filterRequest.getDescription()!="") {
+			cmsb.with(new SearchCriteria("description", filterRequest.getDescription(), SearchOperation.LIKE, Datatype.STRING));
+		}
+		
+		if (Objects.nonNull(filterRequest.getField()) && filterRequest.getField()!="") {
+			cmsb.with(new SearchCriteria("tagId", filterRequest.getField(), SearchOperation.LIKE, Datatype.STRING));
+		}
 	
 		if (Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()) {
 			cmsb.orSearch(new SearchCriteria("description", filterRequest.getSearchString(), SearchOperation.LIKE,

@@ -67,6 +67,7 @@ import com.gl.ceir.config.model.constants.WebActionDbState;
 import com.gl.ceir.config.model.constants.WebActionDbSubFeature;
 import com.gl.ceir.config.model.constants.WebActionStatus;
 import com.gl.ceir.config.model.file.BlockUnblockFileModel;
+import com.gl.ceir.config.model.file.BlockUnblockOperationFileModel;
 import com.gl.ceir.config.model.file.StolenAndRecoveryFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.ConsignmentRepository;
@@ -302,10 +303,21 @@ public class StolenAndRecoveryServiceImpl {
 	public Page<StolenandRecoveryMgmt> getAllInfo(FilterRequest filterRequest, Integer pageNo, Integer pageSize,String source){
 		List<StateMgmtDb> stateInterpList = null;
 		List<StateMgmtDb> statusList = null;
+		String orderColumn=null;
 		if(filterRequest.getFeatureId() == 5) {
 			
 		}
-		String orderColumn = "0".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
+		if(filterRequest.getUserType().equals("Operation")) {
+			orderColumn = "0".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
+					: "1".equalsIgnoreCase(filterRequest.getColumnName()) ? "txnId"
+							: "2".equalsIgnoreCase(filterRequest.getColumnName()) ? "requestType"
+									: "3".equalsIgnoreCase(filterRequest.getColumnName()) ? "sourceType"
+											: "4".equalsIgnoreCase(filterRequest.getColumnName())? "fileStatus"
+													:"5".equalsIgnoreCase(filterRequest.getColumnName()) ? "qty" 
+													    : "6".equalsIgnoreCase(filterRequest.getColumnName()) ? "deviceQuantity":"modifiedOn";
+		}
+		else {
+		  orderColumn = "0".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
 				: "1".equalsIgnoreCase(filterRequest.getColumnName()) ? "txnId"
 						: "3".equalsIgnoreCase(filterRequest.getColumnName()) ? "requestType"
 								: "4".equalsIgnoreCase(filterRequest.getColumnName()) ? "sourceType"
@@ -319,7 +331,7 @@ public class StolenAndRecoveryServiceImpl {
 		else if(filterRequest.getFeatureId() == 5 && "2".equalsIgnoreCase(filterRequest.getColumnName())) {
 			orderColumn = "blockingType";
 		}
-		
+		}
 		Sort.Direction direction;
 		if("modifiedOn".equalsIgnoreCase(orderColumn)) {
 			direction=Sort.Direction.DESC;
@@ -327,7 +339,7 @@ public class StolenAndRecoveryServiceImpl {
 		else {
 			direction= SortDirection.getSortDirection(filterRequest.getSort());
 		}
-		
+		logger.info("final column name=="+orderColumn+" and sorting order== "+direction);
 		Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
 	
 	//	Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
@@ -473,7 +485,7 @@ public class StolenAndRecoveryServiceImpl {
 			srsb.with(new SearchCriteria("deviceQuantity", filterRequest.getDeviceQuantity(), SearchOperation.LIKE, Datatype.STRING));
 		
 		if(Objects.nonNull(filterRequest.getBlockingTypeFilter()) && !filterRequest.getBlockingTypeFilter().isEmpty())
-			srsb.with(new SearchCriteria("blockingType", filterRequest.getBlockingTypeFilter(), SearchOperation.LIKE, Datatype.STRING));
+			srsb.with(new SearchCriteria("blockingType", filterRequest.getBlockingTypeFilter(), SearchOperation.EQUALITY, Datatype.STRING));
 		
 		if(Objects.nonNull(filterRequest.getRequestType())) {
 			srsb.with(new SearchCriteria("requestType", filterRequest.getRequestType(), SearchOperation.EQUALITY, Datatype.STRING));
@@ -591,7 +603,11 @@ public class StolenAndRecoveryServiceImpl {
 
 			if(filterRequest.getFeatureId() == 5) {
 				return exportStolenRecoveryData(filterRequest, source, dtf, dtf2, filePath, link);
-			}else {
+			}
+			if(filterRequest.getFeatureId() == 7 && filterRequest.getUserType().equalsIgnoreCase("Operation") ) {
+				return exportBlockDataOperation(filterRequest, source, dtf, dtf2, filePath, link);
+			}
+			else {
 				return exportBlockData(filterRequest, source, dtf, dtf2, filePath, link);
 			}
 		}catch (RequestInvalidException e) {
@@ -701,6 +717,83 @@ public class StolenAndRecoveryServiceImpl {
 				fileRecords = new ArrayList<>();
 				for( StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmts ) {
 					srfm = new BlockUnblockFileModel();
+					if(Objects.isNull(stolenandRecoveryMgmt)) {
+						continue;
+					}
+
+					srfm.setCreatedOn(stolenandRecoveryMgmt.getCreatedOn().format(dtf));
+					srfm.setModifiedOn( stolenandRecoveryMgmt.getModifiedOn().format(dtf));
+					srfm.setTxnId( stolenandRecoveryMgmt.getTxnId());
+					srfm.setRequestType(stolenandRecoveryMgmt.getRequestTypeInterp());
+					srfm.setMode(stolenandRecoveryMgmt.getSourceTypeInterp());
+					logger.info("Status : "+stolenandRecoveryMgmt.getStateInterp());
+					srfm.setStolenStatus(stolenandRecoveryMgmt.getStateInterp());
+					srfm.setQuantity(stolenandRecoveryMgmt.getQty());
+					if(Objects.isNull(stolenandRecoveryMgmt.getOperatorTypeId())) {
+						srfm.setSource("");
+					}else if(stolenandRecoveryMgmt.getOperatorTypeId() == -1) {
+						srfm.setSource("Operation");
+					}else {
+						srfm.setSource(stolenandRecoveryMgmt.getOperatorTypeIdInterp());
+					}
+
+					srfm.setFileName( stolenandRecoveryMgmt.getFileName());
+					srfm.setDeviceQuantity(stolenandRecoveryMgmt.getDeviceQuantity());
+
+					logger.debug(srfm);
+					fileRecords.add(srfm);
+				}
+				csvWriter.write(fileRecords);
+			}
+			addInAuditTrail(Long.valueOf(filterRequest.getUserId()), "NA", SubFeatures.EXPORT, filterRequest.getRoleType(),filterRequest.getRequestType(),filterRequest.getFeatureId(),filterRequest.getPublicIp(),filterRequest.getBrowser());
+			return new FileDetails( fileName, filePath, link.getValue().replace("$LOCAL_IP", propertiesReader.localIp) + fileName ); 
+
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+
+			Map<String, String> bodyPlaceHolderMap = new HashMap<>();
+			bodyPlaceHolderMap.put("<feature>", decideFeature(5L));
+			bodyPlaceHolderMap.put("<sub_feature>", SubFeatures.EXPORT);
+			alertServiceImpl.raiseAnAlert(Alerts.ALERT_011, filterRequest.getUserId(), bodyPlaceHolderMap);
+
+			throw new ResourceServicesException(this.getClass().getName(), e.getMessage());
+		}finally {
+			try {
+				if( Objects.nonNull(writer) )
+					writer.close();
+			} catch (IOException e) {}
+		}
+	}
+	
+	private FileDetails exportBlockDataOperation(FilterRequest filterRequest, String source, DateTimeFormatter dtf, 
+			DateTimeFormatter dtf2, String filePath, SystemConfigurationDb link) {
+		BlockUnblockOperationFileModel srfm = null;
+		Writer writer   = null;
+		String fileName = null;
+
+		StatefulBeanToCsvBuilder<BlockUnblockOperationFileModel> builder = null;
+		StatefulBeanToCsv<BlockUnblockOperationFileModel> csvWriter = null;
+		List< BlockUnblockOperationFileModel > fileRecords = null;
+		CustomMappingStrategy<BlockUnblockOperationFileModel> mappingStrategy = new CustomMappingStrategy<>();
+
+		try {
+			List<StolenandRecoveryMgmt> stolenandRecoveryMgmts = getAll(filterRequest, source);
+
+			fileName = LocalDateTime.now().format(dtf2).replace(" ", "_") + "_Block_Unblock.csv";
+
+			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
+			mappingStrategy.setType(BlockUnblockOperationFileModel.class);
+
+			builder = new StatefulBeanToCsvBuilder<>(writer);
+			csvWriter = builder.withMappingStrategy(mappingStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
+
+			if( stolenandRecoveryMgmts.isEmpty() ) {
+				csvWriter.write(new BlockUnblockOperationFileModel());
+			}else {
+
+				fileRecords = new ArrayList<>();
+				for( StolenandRecoveryMgmt stolenandRecoveryMgmt : stolenandRecoveryMgmts ) {
+					srfm = new BlockUnblockOperationFileModel();
 					if(Objects.isNull(stolenandRecoveryMgmt)) {
 						continue;
 					}
@@ -884,7 +977,8 @@ public class StolenAndRecoveryServiceImpl {
 				return new GenricResponse(4,"TxnId Does Not exist", filterRequest.getTxnId());
 			}else {
 				if("Lawful Agency".equalsIgnoreCase(filterRequest.getUserType()) 
-						|| "Operator".equalsIgnoreCase(filterRequest.getUserType())) {
+						|| "Operator".equalsIgnoreCase(filterRequest.getUserType())
+								|| "Operation".equalsIgnoreCase(filterRequest.getUserType())) {
 					// Check if someone else taken the same action on Stolen/Recovery/Block/Unblock.
 					StolenandRecoveryMgmt stolenandRecoveryMgmtTemp = stolenAndRecoveryRepository.getByTxnId(payloadTxnId);
 					if(stolenandRecoveryMgmtTemp.getFileStatus() == 7) {

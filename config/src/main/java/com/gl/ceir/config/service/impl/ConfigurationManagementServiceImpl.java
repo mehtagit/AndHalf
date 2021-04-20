@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.configuration.SortDirection;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FileDetails;
@@ -114,7 +115,32 @@ public class ConfigurationManagementServiceImpl {
 	public Page<SystemConfigurationDb> filterSystemConfiguration(FilterRequest filterRequest, Integer pageNo,
 			Integer pageSize) {
 		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			String orderColumn =null;
+//			createdOn,taxPaidStatus,quantity,deviceQuantity,supplierName,consignmentStatus
+			logger.info("column Name :: " + filterRequest.getColumnName());
+			
+			orderColumn = "Created On".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
+					          : "Modified On".equalsIgnoreCase(filterRequest.getColumnName()) ? "modifiedOn"
+					        		  : "Description".equalsIgnoreCase(filterRequest.getColumnName()) ? "description"
+					        				  : "Value".equalsIgnoreCase(filterRequest.getColumnName()) ? "value"
+					        						  : "Type".equalsIgnoreCase(filterRequest.getColumnName()) ? "type"
+					 : "modifiedOn";
+			
+			Sort.Direction direction;
+			if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+				direction=Sort.Direction.DESC;
+			}
+			else {
+				direction= SortDirection.getSortDirection(filterRequest.getSort());
+			}
+			if("modifiedOn".equalsIgnoreCase(orderColumn) && SortDirection.getSortDirection(filterRequest.getSort()).equals(Sort.Direction.ASC)) {
+				direction=Sort.Direction.ASC;
+			}
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
+			logger.info("column Name :: " + filterRequest.getColumnName()+"---system.getSort() : "+filterRequest.getSort());
+			
+			
+			//Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 			Page<SystemConfigurationDb> page = systemConfigurationDbRepository
 					.findAll(buildSpecification_system(filterRequest).build(), pageable);
 
@@ -219,8 +245,33 @@ public class ConfigurationManagementServiceImpl {
 	public Page<MessageConfigurationDb> filterMessageConfiguration(FilterRequest filterRequest, Integer pageNo,
 			Integer pageSize) {
 		try {
-
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			String orderColumn =null;
+//			createdOn,taxPaidStatus,quantity,deviceQuantity,supplierName,consignmentStatus
+			logger.info("column Name :: " + filterRequest.getColumnName());
+			
+			orderColumn = "Created On".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
+					          : "Modified On".equalsIgnoreCase(filterRequest.getColumnName()) ? "modifiedOn"
+					        		  : "Feature".equalsIgnoreCase(filterRequest.getColumnName()) ? "featureName"
+					        				  : "Subject".equalsIgnoreCase(filterRequest.getColumnName()) ? "subject"
+					        						  : "Description".equalsIgnoreCase(filterRequest.getColumnName()) ? "description"
+					        				                    : "Value".equalsIgnoreCase(filterRequest.getColumnName()) ? "value"
+					        						               : "Channel".equalsIgnoreCase(filterRequest.getColumnName()) ? "channel"
+					                                                     : "modifiedOn";
+			 
+			Sort.Direction direction;
+			logger.info("direction and column name:  "+SortDirection.getSortDirection(filterRequest.getSort())+"-----"+orderColumn);
+			if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+				direction=Sort.Direction.DESC;
+			}
+			else {
+				direction= SortDirection.getSortDirection(filterRequest.getSort());
+			}
+			if("modifiedOn".equalsIgnoreCase(orderColumn) && SortDirection.getSortDirection(filterRequest.getSort()).equals(Sort.Direction.ASC)) {
+				direction=Sort.Direction.ASC;
+			}
+			logger.info("final column :  "+orderColumn+"  direction--"+direction);
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
+			//Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 			Page<MessageConfigurationDb> page = messageConfigurationDbRepository
 					.findAll(buildSpecification(filterRequest).build(), pageable);
 
@@ -597,6 +648,14 @@ public class ConfigurationManagementServiceImpl {
 		GenericSpecificationBuilder<MessageConfigurationDb> sb = new GenericSpecificationBuilder<>(
 				propertiesReader.dialect);
 
+		if (Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
+			sb.with(new SearchCriteria("createdOn", filterRequest.getStartDate(), SearchOperation.GREATER_THAN,
+					Datatype.DATE));
+
+		if (Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
+			sb.with(new SearchCriteria("createdOn", filterRequest.getEndDate(), SearchOperation.LESS_THAN,
+					Datatype.DATE));
+		
 		if (Objects.nonNull(filterRequest.getTag()))
 			sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY_CASE_INSENSITIVE,
 					Datatype.STRING));
@@ -605,9 +664,22 @@ public class ConfigurationManagementServiceImpl {
 			sb.with(new SearchCriteria("channel", filterRequest.getChannel(), SearchOperation.EQUALITY,
 					Datatype.STRING));
 
+		
+		
 		if (Objects.nonNull(filterRequest.getFeatureName()))
 			sb.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY,
 					Datatype.STRING));
+
+		if (Objects.nonNull(filterRequest.getSubject()) && !filterRequest.getSubject().isEmpty() )
+			sb.with(new SearchCriteria("subject", filterRequest.getSubject(), SearchOperation.LIKE,Datatype.STRING));	
+		
+		if (Objects.nonNull(filterRequest.getDescription()) && !filterRequest.getDescription().isEmpty() )
+			sb.with(new SearchCriteria("description", filterRequest.getDescription(), SearchOperation.LIKE,Datatype.STRING));
+		
+		if (Objects.nonNull(filterRequest.getValue()) && !filterRequest.getValue().isEmpty() )
+			sb.with(new SearchCriteria("value", filterRequest.getValue(), SearchOperation.LIKE,
+					Datatype.STRING));
+		
 		/*
 		 * if (Objects.nonNull(filterRequest.getFeatureName())) sb.with(new
 		 * SearchCriteria("subject", filterRequest.getSubject(), SearchOperation.LIKE,
@@ -632,7 +704,16 @@ public class ConfigurationManagementServiceImpl {
 
 		GenericSpecificationBuilder<SystemConfigurationDb> sb = new GenericSpecificationBuilder<SystemConfigurationDb>(
 				propertiesReader.dialect);
+		
+		if (Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
+			sb.with(new SearchCriteria("createdOn", filterRequest.getStartDate(), SearchOperation.GREATER_THAN,
+					Datatype.DATE));
 
+		if (Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
+			sb.with(new SearchCriteria("createdOn", filterRequest.getEndDate(), SearchOperation.LESS_THAN,
+					Datatype.DATE));
+
+		
 		if (Objects.nonNull(filterRequest.getTag()))
 			sb.with(new SearchCriteria("tag", filterRequest.getTag(), SearchOperation.EQUALITY_CASE_INSENSITIVE,
 					Datatype.STRING));
@@ -644,6 +725,15 @@ public class ConfigurationManagementServiceImpl {
 			sb.with(new SearchCriteria("featureName", filterRequest.getFeatureName(), SearchOperation.EQUALITY,
 					Datatype.STRING));
 
+		if (Objects.nonNull(filterRequest.getDescription()) && !filterRequest.getDescription().isEmpty() )
+			sb.with(new SearchCriteria("description", filterRequest.getDescription(), SearchOperation.LIKE,Datatype.STRING));
+		
+		if (Objects.nonNull(filterRequest.getValue()) && !filterRequest.getValue().isEmpty() )
+			sb.with(new SearchCriteria("value", filterRequest.getValue(), SearchOperation.LIKE,
+					Datatype.STRING));
+		
+	
+		
 		if (Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()) {
 			sb.orSearch(
 					new SearchCriteria("tag", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));

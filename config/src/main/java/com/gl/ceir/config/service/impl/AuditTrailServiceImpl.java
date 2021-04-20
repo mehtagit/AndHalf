@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import com.gl.ceir.config.ConfigTags;
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.configuration.SortDirection;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FileDetails;
@@ -97,8 +98,27 @@ public class AuditTrailServiceImpl {
 			Integer pageSize) {
 
 		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
-
+			String orderColumn=null;
+			orderColumn = "0".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn"
+					: "1".equalsIgnoreCase(filterRequest.getColumnName()) ? "txnId"
+							: "2".equalsIgnoreCase(filterRequest.getColumnName()) ? "userId"
+									: "3".equalsIgnoreCase(filterRequest.getColumnName()) ? "userType"
+											: "4".equalsIgnoreCase(filterRequest.getColumnName())? "roleType"
+													:"5".equalsIgnoreCase(filterRequest.getColumnName()) ? "featureName" 
+													    : "6".equalsIgnoreCase(filterRequest.getColumnName()) ? "subFeature"
+													    	: "7".equalsIgnoreCase(filterRequest.getColumnName()) ? "publicIp"
+													    		: "8".equalsIgnoreCase(filterRequest.getColumnName()) ? "browser":"modifiedOn";
+			
+			Sort.Direction direction;
+			if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+				direction=Sort.Direction.DESC;
+			}
+			else {
+				direction= SortDirection.getSortDirection(filterRequest.getSort());
+			}
+			logger.info("final column name=="+orderColumn+" and sorting order== "+direction);
+			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
+			
 			Page<AuditTrail> page = auditTrailRepository.findAll( buildSpecification(filterRequest).build(), pageable );
 			
 			logger.info("response data "+page.getContent());
@@ -211,7 +231,7 @@ public class AuditTrailServiceImpl {
 			cmsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getSubFeatureName()) && !filterRequest.getSubFeatureName().isEmpty())
-			cmsb.with(new SearchCriteria("subFeature", filterRequest.getSubFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
+			cmsb.with(new SearchCriteria("subFeature", filterRequest.getSubFeatureName(), SearchOperation.LIKE, Datatype.STRING));
 
 		if(Objects.nonNull(filterRequest.getUserName()) && !filterRequest.getUserName().isEmpty())
 			cmsb.with(new SearchCriteria("userName", filterRequest.getUserName(), SearchOperation.EQUALITY_CASE_INSENSITIVE, Datatype.STRING));
@@ -219,6 +239,13 @@ public class AuditTrailServiceImpl {
 		if(Objects.nonNull(filterRequest.getRoleType()) && !filterRequest.getRoleType().isEmpty())
 			cmsb.with(new SearchCriteria("roleType", filterRequest.getRoleType(), SearchOperation.EQUALITY, Datatype.STRING));
 
+		
+		if(Objects.nonNull(filterRequest.getPublicIp()) && !filterRequest.getPublicIp().isEmpty())
+			cmsb.with(new SearchCriteria("publicIp", filterRequest.getPublicIp(), SearchOperation.LIKE, Datatype.STRING));
+		
+		if(Objects.nonNull(filterRequest.getBrowser()) && !filterRequest.getBrowser().isEmpty())
+			cmsb.with(new SearchCriteria("browser", filterRequest.getBrowser(), SearchOperation.LIKE, Datatype.STRING));
+		
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			cmsb.orSearch(new SearchCriteria("txnId", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
 			cmsb.orSearch(new SearchCriteria("userName", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));

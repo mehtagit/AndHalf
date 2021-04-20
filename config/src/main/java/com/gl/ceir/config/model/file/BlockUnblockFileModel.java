@@ -37,7 +37,7 @@ public class BlockUnblockFileModel {
 	@CsvBindByPosition(position = 6)
 	private String stolenStatus;
 	
-	@CsvBindByName(column = "IMEI/MEID Quantity")
+	@CsvBindByName(column = "IMEI Quantity")
 	@CsvBindByPosition(position = 7)
 	private Integer quantity;
 	

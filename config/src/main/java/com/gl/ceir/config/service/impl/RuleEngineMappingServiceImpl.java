@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import com.gl.ceir.config.EmailSender.EmailUtil;
 import com.gl.ceir.config.configuration.PropertiesReader;
+import com.gl.ceir.config.configuration.SortDirection;
 import com.gl.ceir.config.exceptions.ResourceServicesException;
 import com.gl.ceir.config.model.AuditTrail;
 import com.gl.ceir.config.model.FileDetails;
@@ -145,7 +146,37 @@ public class RuleEngineMappingServiceImpl {
 			Integer pageSize,String operation) {
 
 		try {
-			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			
+
+			 String orderColumn =null;
+			 logger.info("column Name :: " + filterRequest.getColumnName());
+			           orderColumn = "0".equalsIgnoreCase(filterRequest.getColumnName()) ? "createdOn":
+			        		   "1".equalsIgnoreCase(filterRequest.getColumnName()) ? "modifiedOn":
+			        			   "2".equalsIgnoreCase(filterRequest.getColumnName()) ? "name":
+			        				   "3".equalsIgnoreCase(filterRequest.getColumnName()) ? "feature":
+			        					   "4".equalsIgnoreCase(filterRequest.getColumnName()) ? "userType":
+			        						   "5".equalsIgnoreCase(filterRequest.getColumnName()) ? "ruleOrder":
+			        							   "6".equalsIgnoreCase(filterRequest.getColumnName()) ? "graceAction":
+			        								   "7".equalsIgnoreCase(filterRequest.getColumnName()) ? "postGraceAction":
+			        									   "8".equalsIgnoreCase(filterRequest.getColumnName()) ? "failedRuleActionGrace":
+			        										   "9".equalsIgnoreCase(filterRequest.getColumnName()) ? "failedRuleActionPostGrace":
+			        											   "10".equalsIgnoreCase(filterRequest.getColumnName()) ? "output"
+								       :"modifiedOn";
+			//Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
+			
+Sort.Direction direction;
+logger.info("direction and column name:  "+SortDirection.getSortDirection(filterRequest.getSort())+"---column name--"+orderColumn);
+if("modifiedOn".equalsIgnoreCase(orderColumn)) {
+direction=Sort.Direction.DESC;
+}
+else {
+direction= SortDirection.getSortDirection(filterRequest.getSort());
+}
+if("modifiedOn".equalsIgnoreCase(orderColumn) && SortDirection.getSortDirection(filterRequest.getSort()).equals(Sort.Direction.ASC)) {
+direction=Sort.Direction.ASC;
+}
+logger.info("final column :  "+orderColumn+"  direction--"+direction);
+Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction,orderColumn));
 
 			Page<RuleEngineMapping> page = ruleEngineMappingRepository.findAll( buildSpecification(filterRequest).build(), pageable );
 			
@@ -167,16 +198,46 @@ public class RuleEngineMappingServiceImpl {
 	private GenericSpecificationBuilder<RuleEngineMapping> buildSpecification(FilterRequest filterRequest){
 		GenericSpecificationBuilder<RuleEngineMapping> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
 
-		if(Objects.nonNull(filterRequest.getRuleName()))
+		if (Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
+			cmsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate(), SearchOperation.GREATER_THAN,
+					Datatype.DATE));
+
+		if (Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
+			cmsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate(), SearchOperation.LESS_THAN,
+					Datatype.DATE));
+		
+		if(Objects.nonNull(filterRequest.getRuleName()) && !filterRequest.getRuleName().isEmpty())
 			cmsb.with(new SearchCriteria("name", filterRequest.getRuleName(), SearchOperation.EQUALITY, Datatype.STRING));
 
-		if(Objects.nonNull(filterRequest.getFeatureName()))
+		if(Objects.nonNull(filterRequest.getFeatureName()) && !filterRequest.getFeatureName().isEmpty())
 			cmsb.with(new SearchCriteria("feature", filterRequest.getFeatureName(), SearchOperation.EQUALITY, Datatype.STRING));
 
-		if(Objects.nonNull(filterRequest.getUserType()))
+		if(Objects.nonNull(filterRequest.getUserType()) && !filterRequest.getUserType().isEmpty() )
 			cmsb.with(new SearchCriteria("userType", filterRequest.getUserType(), SearchOperation.EQUALITY, Datatype.STRING));
+		
 
+		if(Objects.nonNull(filterRequest.getGraceAction()) && !filterRequest.getGraceAction().isEmpty())
+			cmsb.with(new SearchCriteria("graceAction", filterRequest.getGraceAction(), SearchOperation.EQUALITY, Datatype.STRING));
+		
 
+		if(Objects.nonNull(filterRequest.getPostGraceAction()) && !filterRequest.getPostGraceAction().isEmpty())
+			cmsb.with(new SearchCriteria("postGraceAction", filterRequest.getPostGraceAction(), SearchOperation.EQUALITY, Datatype.STRING));
+		
+
+		if(Objects.nonNull(filterRequest.getFailedRuleActionGrace()) && !filterRequest.getFailedRuleActionGrace().isEmpty())
+			cmsb.with(new SearchCriteria("failedRuleActionGrace", filterRequest.getFailedRuleActionGrace(), SearchOperation.EQUALITY, Datatype.STRING));
+		
+
+		if(Objects.nonNull(filterRequest.getFailedRuleActionPostGrace())  && !filterRequest.getFailedRuleActionPostGrace().isEmpty())
+			cmsb.with(new SearchCriteria("failedRuleActionPostGrace", filterRequest.getFailedRuleActionPostGrace(), SearchOperation.EQUALITY, Datatype.STRING));
+		
+
+		if(Objects.nonNull(filterRequest.getOutput()) &&  !filterRequest.getOutput().isEmpty())
+			cmsb.with(new SearchCriteria("output", filterRequest.getOutput(), SearchOperation.EQUALITY, Datatype.STRING));
+
+		if(Objects.nonNull(filterRequest.getRuleOrder()) && !filterRequest.getRuleOrder().isEmpty())
+			cmsb.with(new SearchCriteria("ruleOrder", filterRequest.getRuleOrder(), SearchOperation.LIKE, Datatype.STRING));
+		
 		if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			cmsb.orSearch(new SearchCriteria("ruleOrder", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));	
 			cmsb.orSearch(new SearchCriteria("name", filterRequest.getSearchString(), SearchOperation.LIKE, Datatype.STRING));
