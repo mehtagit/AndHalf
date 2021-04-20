@@ -88,16 +88,17 @@ public class PendingTacApprovedController {
 	public MappingJacksonValue withPaginationConsignments(@RequestBody FilterRequest filterRequest,
 			@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo, 
 			@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-			@RequestParam(value = "file", defaultValue = "0") Integer file) {
+			@RequestParam(value = "file", defaultValue = "0") Integer file,
+			@RequestParam(value = "source", defaultValue = "menu") String source) {
 
 		MappingJacksonValue mapping = null; 
 		if(file == 0) {
 			logger.info("Request to view filtered PendingTacApprovedDb = " + filterRequest);
-			Page<PendingTacApprovedDb> auditTrail = pendingTacApprovedImpl.filterPendingTacApprovedDb(filterRequest, pageNo, pageSize);
+			Page<PendingTacApprovedDb> auditTrail = pendingTacApprovedImpl.filterPendingTacApprovedDb(filterRequest, pageNo, pageSize,"View",source);
 			mapping = new MappingJacksonValue(auditTrail); 
 		}else {
 			logger.info("Request to export filtered PendingTacApprovedDb = " + filterRequest);
-			FileDetails fileDetails = pendingTacApprovedImpl.getFilteredPendingTacApprovedDbInFile(filterRequest);
+			FileDetails fileDetails = pendingTacApprovedImpl.getFilteredPendingTacApprovedDbInFile(filterRequest,"Export",source);
 			mapping = new MappingJacksonValue(fileDetails); 
 		}
 

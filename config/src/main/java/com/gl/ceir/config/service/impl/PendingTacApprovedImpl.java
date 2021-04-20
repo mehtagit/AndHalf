@@ -156,11 +156,6 @@ public class PendingTacApprovedImpl {
 						GenericMessageTags.NULL_REQ.getMessage(), null);
 			}
 			
-			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(),
-					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
-					Long.valueOf(filterRequest.getFeatureId()), Features.pending_tac, SubFeatures.DELETE, "", "NA",
-					filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
-
 			if(Objects.nonNull(filterRequest.getTxnId())) {
 				
 				if(pendingTacApprovedRepository.deleteByTxnId(filterRequest.getTxnId()) > 0) {
@@ -168,8 +163,12 @@ public class PendingTacApprovedImpl {
 				}else {
 					logger.info("Delete of tac is failed for txnId[" + filterRequest.getTxnId() + "] by only txnId.");
 				}
-				
+				auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(),
+						Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
+						Long.valueOf(filterRequest.getFeatureId()), Features.pending_tac, SubFeatures.DELETE, "", "NA",
+						filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
 				return new GenricResponse(0, "Deleted Successully.", "", "");
+				
 			}else if(Objects.nonNull(filterRequest.getTac()) && Objects.nonNull(filterRequest.getImporterId())){
 				if(pendingTacApprovedRepository.deleteByTacAndUserId(filterRequest.getTac(), filterRequest.getImporterId()) > 0) {
 					logger.info("Delete of tac is successful for txnId[" + filterRequest.getTxnId() + "] by tac and importerid.");
@@ -189,7 +188,7 @@ public class PendingTacApprovedImpl {
 	}
 
 	public Page<PendingTacApprovedDb> filterPendingTacApprovedDb(FilterRequest filterRequest, Integer pageNo,
-			Integer pageSize) {
+			Integer pageSize, String Operation,String source) {
 		try {
 			
 			String orderColumn = "Created On".equalsIgnoreCase(filterRequest.getOrderColumnName()) ? "createdOn"
@@ -211,12 +210,25 @@ public class PendingTacApprovedImpl {
 			
 			Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(direction, orderColumn));
 			
-			logger.info("orderColumn Name is : "+orderColumn+ "  -------------  direction is : "+direction);
+			logger.info("orderColumn Name is : "+orderColumn+ "  -------------  direction is : "+direction+" & source is -----"+source);
 			
 			//Pageable pageable = PageRequest.of(pageNo, pageSize, new Sort(Sort.Direction.DESC, "modifiedOn"));
 
-			Page<PendingTacApprovedDb> page = pendingTacApprovedRepository.findAll( buildSpecification(filterRequest).build(), pageable );
-
+			Page<PendingTacApprovedDb> page = pendingTacApprovedRepository.findAll( buildSpecification(filterRequest,Operation).build(), pageable );
+			
+			if(source.equalsIgnoreCase("menu")) {
+				auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(),
+						Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
+						Long.valueOf(filterRequest.getFeatureId()), Features.pending_tac, SubFeatures.VIEW_ALL, "", "NA",
+						filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
+			} else if(source.equalsIgnoreCase("filter")){
+					auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(),
+							Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
+							Long.valueOf(filterRequest.getFeatureId()), Features.pending_tac, SubFeatures.FILTER, "", "NA",
+							filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
+			}else if(source.equalsIgnoreCase("ViewExport")) {
+				logger.info("for "+source+" no entries in Audit Trail");
+            }
 			return page;
 
 		} catch (Exception e) {
@@ -225,13 +237,8 @@ public class PendingTacApprovedImpl {
 		}
 	}
 
-	private GenericSpecificationBuilder<PendingTacApprovedDb> buildSpecification(FilterRequest filterRequest){
+	private GenericSpecificationBuilder<PendingTacApprovedDb> buildSpecification(FilterRequest filterRequest,String Operation){
 		GenericSpecificationBuilder<PendingTacApprovedDb> cmsb = new GenericSpecificationBuilder<>(propertiesReader.dialect);
-
-		auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(),
-				Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
-				Long.valueOf(filterRequest.getFeatureId()), Features.pending_tac, SubFeatures.VIEW_ALL, "", "NA",
-				filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
 		
 		if(Objects.nonNull(filterRequest.getStartDate()) && !filterRequest.getStartDate().isEmpty())
 			cmsb.with(new SearchCriteria("createdOn", filterRequest.getStartDate() , SearchOperation.GREATER_THAN, Datatype.DATE));
@@ -255,7 +262,7 @@ public class PendingTacApprovedImpl {
 		return cmsb;
 	}
 
-	public FileDetails getFilteredPendingTacApprovedDbInFile(FilterRequest filterRequest) {
+	public FileDetails getFilteredPendingTacApprovedDbInFile(FilterRequest filterRequest,String Operation,String source) {
 		logger.info("method executed");
 		String fileName = null;
 		Writer writer   = null;
@@ -279,15 +286,15 @@ public class PendingTacApprovedImpl {
 
 		try {
 			logger.info("going to fetch the data");
-			List<PendingTacApprovedDb> pendingTacApprovedDbs = getAll(filterRequest);
+			List<PendingTacApprovedDb> pendingTacApprovedDbs = getAll(filterRequest,Operation,source);
 
 			logger.info("Data:"+pendingTacApprovedDbs);
+			
 			
 			auditTrailRepository.save(new AuditTrail(filterRequest.getUserId(), filterRequest.getUserName(),
 					Long.valueOf(filterRequest.getUserTypeId()), filterRequest.getUserType(),
 					Long.valueOf(filterRequest.getFeatureId()), Features.pending_tac, SubFeatures.EXPORT, "", "NA",
 					filterRequest.getRoleType(),filterRequest.getPublicIp(),filterRequest.getBrowser()));
-			
 			
 			if( !pendingTacApprovedDbs.isEmpty() ) {
 				if(Objects.nonNull(filterRequest.getUserId()) && (filterRequest.getUserId() != -1 && filterRequest.getUserId() != 0)) {
@@ -341,9 +348,9 @@ public class PendingTacApprovedImpl {
 		}
 	}
 
-	private List<PendingTacApprovedDb> getAll(FilterRequest filterRequest) {
+	private List<PendingTacApprovedDb> getAll(FilterRequest filterRequest, String Operation, String source) {
 		try {
-			List<PendingTacApprovedDb> pendingTacApprovedDbs = pendingTacApprovedRepository.findAll(buildSpecification(filterRequest).build());
+			List<PendingTacApprovedDb> pendingTacApprovedDbs = pendingTacApprovedRepository.findAll(buildSpecification(filterRequest,Operation).build());
 
 			/*
 			 * for(AuditTrail auditTrail : auditTrails ) { setInterp(auditTrail); }
