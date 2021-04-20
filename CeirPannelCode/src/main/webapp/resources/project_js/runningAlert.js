@@ -303,7 +303,7 @@
 				{ 'X-CSRF-TOKEN': token }
 			});
 			$.ajax({
-				url: './exportRunningAlertData',
+				url: './exportRunningAlertData?source=ViewExport',
 				type: 'POST',
 				dataType : 'json',
 				contentType : 'application/json; charset=utf-8',

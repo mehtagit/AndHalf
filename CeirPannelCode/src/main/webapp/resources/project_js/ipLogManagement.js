@@ -71,9 +71,11 @@
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					//"username" : $("#userName").val() == " " || $("#userName").val() == undefined ? $("body").attr("data-selected-username") : $("#userName").val(),
-					"username" : username,
-					"publicIp" : $('#publicIp').val(),
-					"browser" : $('#browser').val()
+					"username" : $("body").attr("data-selected-username"),
+					"filterPublicIp" : $('#publicIp').val() == "" || $('#publicIp').val() == undefined ? null : $('#publicIp').val(),
+					"filterBrowser" : $('#browser').val() == "" || $('#browser').val() == undefined ? null : $('#browser').val(), 
+					"filteredUsername" :  username 
+					
 			}				
 			if(lang=='km'){
 				var langFile="./resources/i18n/khmer_datatable.json";
@@ -241,7 +243,7 @@
 			var info = table.page.info(); 
 			var pageNo=info.page;
 			var pageSize =info.length;
-			
+			username = $("#userName").val() != " " ? $("#userName").val() : $("#userName").val();
 			var filterRequest={
 					"endDate":$('#endDate').val(),
 					"startDate":$('#startDate').val(),
@@ -251,11 +253,11 @@
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"userId" : parseInt($("body").attr("data-userID")),
-					"username" : $("#userName").val() == "" || $("#userName").val() == undefined ? "" : $("#userName").val(),
-					"publicIp" : $('#publicIp').val(),
-					"browser" : $('#browser').val()
-					
-					
+					//"username" : $("#userName").val() == "" || $("#userName").val() == undefined ? "" : $("#userName").val(),
+					"username" : $("body").attr("data-selected-username"),
+					"filterPublicIp" : $('#publicIp').val() == "" || $('#publicIp').val() == undefined ? null : $('#publicIp').val(),
+					"filterBrowser" : $('#browser').val() == "" || $('#browser').val() == undefined ? null : $('#browser').val(), 
+					"filteredUsername" :  username 
 			}
 			//////console.log(JSON.stringify(filterRequest))
 			var token = $("meta[name='_csrf']").attr("content");
@@ -265,7 +267,7 @@
 				{ 'X-CSRF-TOKEN': token }
 			});
 			$.ajax({
-				url: './exportLogData',
+				url: './exportLogData?source=ViewExport',
 				type: 'POST',
 				dataType : 'json',
 				contentType : 'application/json; charset=utf-8',

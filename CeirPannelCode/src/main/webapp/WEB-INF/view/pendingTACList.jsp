@@ -110,7 +110,9 @@ var path="${context}";
 
 <body data-id="38" data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" 
 data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}"
- data-grievanceStatus="${grievanceStatus}" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
+ data-grievanceStatus="${grievanceStatus}" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
+ data-username="${username}"
+ data-session-source="${not empty param.source ? param.source : 'menu'}">
 
 
 	<!-- START CONTENT -->

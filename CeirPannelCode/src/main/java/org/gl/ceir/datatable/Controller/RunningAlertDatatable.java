@@ -70,7 +70,7 @@ public class RunningAlertDatatable {
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 		
 		String column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
-			"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Modified On":
+			"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Alert ID":
 				"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Description":
 					"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Status" 
 						:"Modified On";

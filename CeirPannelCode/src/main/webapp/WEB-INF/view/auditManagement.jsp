@@ -189,6 +189,18 @@
 						<label for="viewSubFeature"><spring:message code="table.SubFeature" /></label>
 					</div>
 					
+					<div class="input-field col s12 m6">
+						<input type="text" id="viewPublicIp" name="status"
+							placeholder=""  disabled >
+						<label for="viewPublicIp"><spring:message code="table.publicIp" /></label>
+					</div>
+					
+					<div class="input-field col s12 m6">
+						<input type="text" id="viewBrowser" name="status"
+							placeholder="" disabled >
+						<label for="viewBrowser"><spring:message code="table.browser" /></label>
+					</div>
+					
 				</div>
 
 				

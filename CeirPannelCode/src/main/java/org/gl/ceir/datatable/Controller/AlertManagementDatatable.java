@@ -55,7 +55,8 @@ public class AlertManagementDatatable {
 	AlertRequest alertRequest; 
 	
 	@PostMapping("alertManagementData")
-	public ResponseEntity<?> viewAlertRecord(@RequestParam(name="type",defaultValue = "alertManagement",required = false) String role, HttpServletRequest request,HttpSession session) {
+	public ResponseEntity<?> viewAlertRecord(@RequestParam(name="type",defaultValue = "alertManagement",required = false) String role, 
+			@RequestParam(name = "source", defaultValue = "menu", required = false) String source,HttpServletRequest request,HttpSession session) {
 		//String userType = (String) session.getAttribute("usertype");
 		//int userId=	(int) session.getAttribute("userid");
 		int file=0;
@@ -95,7 +96,7 @@ public class AlertManagementDatatable {
 			filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
 			filterrequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the filter api ="+filterrequest);
-			Object response = userProfileFeignImpl.viewAlertRequest(filterrequest,pageNo,pageSize,file);
+			Object response = userProfileFeignImpl.viewAlertRequest(filterrequest,pageNo,pageSize,file,source);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
@@ -156,7 +157,7 @@ public class AlertManagementDatatable {
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
 			String[] names = { "HeaderButton", Translator.toLocale("button.addCurrency"), "AddCurrencyAddress()", "btnLink",
-					"FilterButton", Translator.toLocale("button.filter"),"alertFieldTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
+					"FilterButton", Translator.toLocale("button.filter"),"alertFieldTable(" + ConfigParameters.languageParam + ",'filter')", "submitFilter" };
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);

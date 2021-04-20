@@ -48,8 +48,16 @@
 		
 		//**************************************************filter table**********************************************
 		
-		function alertFieldTable(lang){
-			
+		function alertFieldTable(lang,source){
+			var source__val;
+			if(source == 'filter') {
+				source__val= source;
+				$("body").attr("data-session-source","filter");
+			}
+			else{
+				source__val = $("body").attr("data-session-source");
+				
+			}
 			var alertId = $("#alertId").val() == "-1" || $("#alertId").val() == undefined ? "" : $("#alertId option:selected").text();
 			var feature = $("#filterfeature").val() == "-1" || $("#filterfeature").val() == undefined ? null : $("#filterfeature option:selected").text();
 			var description = $("#description").val() == "" || $("#description").val() == undefined ? null : $("#description").val();
@@ -110,7 +118,7 @@
 	       });
 		   },
 						ajax: {
-							url : 'alertManagementData',
+							url : 'alertManagementData?source='+source__val,
 							type: 'POST',
 							dataType: "json",
 							data : function(d) {
@@ -305,7 +313,7 @@
 				{ 'X-CSRF-TOKEN': token }
 			});
 			$.ajax({
-				url: './exportAlertData',
+				url: './exportAlertData?source=ViewExport',
 				type: 'POST',
 				dataType : 'json',
 				contentType : 'application/json; charset=utf-8',

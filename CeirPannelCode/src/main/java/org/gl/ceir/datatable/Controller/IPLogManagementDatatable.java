@@ -87,19 +87,15 @@ public class IPLogManagementDatatable {
 		}
 		filterrequest.setOrderColumnName(column);
 		filterrequest.setOrder(order);
+		filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterrequest.setBrowser(session.getAttribute("browser").toString());
 		
-		if(source=="menu") {
-			filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
-			filterrequest.setBrowser(session.getAttribute("browser").toString());
-		}else {
-			filterrequest.setPublicIp(filterrequest.getPublicIp());
-			filterrequest.setBrowser(filterrequest.getBrowser());
-		}
+		
 		log.info("request send to the filter api ="+filterrequest);
 		
 		try {
 			
-			Object response = userProfileFeignImpl.viewIPLogRequest(filterrequest,pageNo,pageSize,file);
+			Object response = userProfileFeignImpl.viewIPLogRequest(filterrequest,pageNo,pageSize,file,source);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);

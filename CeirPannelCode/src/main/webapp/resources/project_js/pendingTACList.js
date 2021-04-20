@@ -26,7 +26,7 @@
 
 			$(document).ready(function(){
 				$('div#initialloader').fadeIn('fast');
-				DataTable(lang);
+				DataTable(lang,null);
 				pageRendering();
 			});
 
@@ -39,8 +39,15 @@
 
 			//**************************************************Grievance table**********************************************
 
-			function DataTable(lang){
-				
+			function DataTable(lang,source){
+				var source__val;
+				if(source == 'filter' ) {
+					source__val= source;
+					$("body").attr("data-session-source","filter");
+				}
+				else{
+					source__val= $("body").attr("data-session-source");
+				}
 				var featureName = $('#feature').val() == null ? null : $("#feature option:selected").text();
 				
 				var filterRequest={
@@ -49,12 +56,12 @@
 						"tac" : $('#tac').val(),
 						"txnId" :  $('#transactionID').val(),
 						"feature" : featureName,
-						//"userId": parseInt($("body").attr("data-userID")),
-						//"featureId":parseInt(featureId),
-						//"userTypeId": parseInt($("body").attr("data-userTypeID")),
-						
-						//"userType":$("body").attr("data-roleType"),
-						"featureId":parseInt(featureId)
+						"userId": parseInt($("body").attr("data-userID")),
+						"userName":$("body").attr("data-username"),
+						"userTypeId": parseInt($("body").attr("data-userTypeID")),
+						"userType":$("body").attr("data-roleType"),
+						"featureId":parseInt(featureId),
+						"roleType":$("body").attr("data-roleType")
 				}
 				
 				if(lang=='km'){
@@ -101,7 +108,7 @@
 			       });
 				   },
 							ajax: {
-								url : 'pendingTACdata',
+								url : 'pendingTACdata?source='+source__val,
 								type: 'POST',
 								dataType: "json",
 								data : function(d) {
@@ -256,7 +263,13 @@
 						"id" : id,
 						"txnId" : $("#tacdeleteTxnId").text(),
 						"remark" : $("#deleteTacRemark").val(),
-						"userId" : parseInt($("body").attr("data-userID"))
+						"userId" : parseInt($("body").attr("data-userID")),
+						"userId": parseInt($("body").attr("data-userID")),
+						"userName":$("body").attr("data-username"),
+						"userTypeId": parseInt($("body").attr("data-userTypeID")),
+						"userType":$("body").attr("data-roleType"),
+						"featureId":parseInt(featureId),
+						"roleType":$("body").attr("data-roleType")
 				}
 				//////console.log(JSON.stringify(deleteRequest));
 				var token = $("meta[name='_csrf']").attr("content");
@@ -300,7 +313,7 @@
 				var featureName = $('#feature').val() == null ? null : $("#feature option:selected").text();
 				var pageNo=info.page;
 				var pageSize =info.length;
-				
+				var source__val = $("body").attr("data-session-source"); 
 				var filterRequest={
 						"endDate":$('#endDate').val(),
 						"startDate":$('#startDate').val(),
@@ -309,11 +322,17 @@
 						"feature" : featureName,
 						"featureId":parseInt(featureId),
 						"pageNo":parseInt(pageNo),
-						"pageSize":parseInt(pageSize)
+						"pageSize":parseInt(pageSize),
+						"userId": parseInt($("body").attr("data-userID")),
+						"userName":$("body").attr("data-username"),
+						"userTypeId": parseInt($("body").attr("data-userTypeID")),
+						"userType":$("body").attr("data-roleType"),
+						"featureId":parseInt(featureId),
+						"roleType":$("body").attr("data-roleType")
 				}
 				//////console.log(JSON.stringify(filterRequest))
 				$.ajax({
-					url: './exportPendingTacData',
+					url: './exportPendingTacData?source='+source__val,
 					type: 'POST',
 					dataType : 'json',
 					contentType : 'application/json; charset=utf-8',

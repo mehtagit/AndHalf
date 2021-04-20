@@ -267,6 +267,8 @@ function setViewPopupData(data){
 	data.roleType=="" || data.roleType==null ? $("#viewRoleType").val('NA') : $("#viewRoleType").val(data.roleType);
 	data.featureName=="" || data.featureName==null ? $("#viewFeature").val('NA') : $("#viewFeature").val(data.featureName);
 	data.subFeature=="" || data.subFeature==null ? $("#viewSubFeature").val('NA') : $("#viewSubFeature").val(data.subFeature);
+	data.publicIp=="" || data.publicIp==null ? $("#viewPublicIp").val('NA') : $("#viewPublicIp").val(data.publicIp);
+	data.browser=="" || data.browser==null ? $("#viewBrowser").val('NA') : $("#viewBrowser").val(data.browser);
 }
 
 

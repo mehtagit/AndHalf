@@ -18,9 +18,24 @@ public class FilterRequest {
 	public String order,orderColumnName;
 	private String browser,filteredUsername,name,subject;
 	public String msisdn,imei,identifierType;
+	public String filterPublicIp,filterBrowser;
 	
 	
 	
+	
+	
+	public String getFilterPublicIp() {
+		return filterPublicIp;
+	}
+	public void setFilterPublicIp(String filterPublicIp) {
+		this.filterPublicIp = filterPublicIp;
+	}
+	public String getFilterBrowser() {
+		return filterBrowser;
+	}
+	public void setFilterBrowser(String filterBrowser) {
+		this.filterBrowser = filterBrowser;
+	}
 	public String getMsisdn() {
 		return msisdn;
 	}
@@ -907,6 +922,10 @@ public class FilterRequest {
 		builder.append(imei);
 		builder.append(", identifierType=");
 		builder.append(identifierType);
+		builder.append(", filterPublicIp=");
+		builder.append(filterPublicIp);
+		builder.append(", filterBrowser=");
+		builder.append(filterBrowser);
 		builder.append("]");
 		return builder.toString();
 	}
