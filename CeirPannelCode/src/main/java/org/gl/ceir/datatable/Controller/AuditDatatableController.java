@@ -62,6 +62,14 @@ public class AuditDatatableController {
 		Integer file = 0;
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
+		if(request.getParameter("order[0][column]") == null && request.getParameter("order[0][dir]") == null) {
+			filterrequest.setColumnName("modifiedOn");
+			filterrequest.setSort("desc");
+			}
+		else {
+		filterrequest.setColumnName(request.getParameter("order[0][column]"));
+		filterrequest.setSort(request.getParameter("order[0][dir]"));
+		}
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 		try {
@@ -87,11 +95,11 @@ public class AuditDatatableController {
 				  String roleType = dataInsideList.getRoleType();
 				  String featureName = dataInsideList.getFeatureName();
 				  String subFeature = dataInsideList.getSubFeature();
-				  //String publicIp = dataInsideList.getPublicIp();
-				  //String browser = dataInsideList.getBrowser();
+				  String publicIp = dataInsideList.getPublicIp();
+				  String browser = dataInsideList.getBrowser();
 				   String userStatus = (String) session.getAttribute("userStatus");
 				   String action=iconState.auditManagementIcons(userStatus,getuserId,id);		
-				   Object[] finalData={createdOn,txnId,userName,userTypeName,roleType,featureName,subFeature,action}; 
+				   Object[] finalData={createdOn,txnId,userName,userTypeName,roleType,featureName,subFeature,publicIp,browser,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 				   finalList.add(finalDataList);
 				   datatableResponseModel.setData(finalList);	
@@ -147,23 +155,19 @@ public class AuditDatatableController {
 			
 		
 		  //Dropdown items 
-			String[] selectParam={"select","User Type","userType","","select","Role Type","roleType","","select","Feature","feature",""}; 
-		  for(int i=0; i<selectParam.length; i++) { 
-				inputFields= new InputFields();
-		  inputFields.setType(selectParam[i]); 
-		  i++;
-		  inputFields.setTitle(selectParam[i]);
-		  i++; 
-		  inputFields.setId(selectParam[i]);
-		  i++; 
-		  inputFields.setClassName(selectParam[i]);
-		  dropdownList.add(inputFields);
-		  } 
-		pageElement.setDropdownList(dropdownList);
+		/*
+		 * String[] selectParam={"select","User Type","userType","","select","Role Type"
+		 * ,"roleType","","select","Feature","feature",""}; for(int i=0;
+		 * i<selectParam.length; i++) { inputFields= new InputFields();
+		 * inputFields.setType(selectParam[i]); i++;
+		 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
+		 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
+		 * } pageElement.setDropdownList(dropdownList);
+		 */
 		 
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text","Transaction ID","transactionID","","text","User ID","userName",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text",Translator.toLocale("input.transactionID"),"transactionID","18","text",Translator.toLocale("table.UserName"),"userName","20","select",Translator.toLocale("table.userType"),"userType","","select",Translator.toLocale("table.roleType"),"roleType","","select",Translator.toLocale("table.feature"),"feature","","text",Translator.toLocale("table.SubFeature"),"subfeatureFilter","15","text",Translator.toLocale("table.publicIp"),"publicIpFilter","18","text",Translator.toLocale("table.browser"),"browserFilter","18"};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

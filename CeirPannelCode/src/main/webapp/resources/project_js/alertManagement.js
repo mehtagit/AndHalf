@@ -48,8 +48,16 @@
 		
 		//**************************************************filter table**********************************************
 		
-		function alertFieldTable(lang){
-			
+		function alertFieldTable(lang,source){
+			var source__val;
+			if(source == 'filter') {
+				source__val= source;
+				$("body").attr("data-session-source","filter");
+			}
+			else{
+				source__val = $("body").attr("data-session-source");
+				
+			}
 			var alertId = $("#alertId").val() == "-1" || $("#alertId").val() == undefined ? "" : $("#alertId option:selected").text();
 			var feature = $("#filterfeature").val() == "-1" || $("#filterfeature").val() == undefined ? null : $("#filterfeature option:selected").text();
 			var description = $("#description").val() == "" || $("#description").val() == undefined ? null : $("#description").val();
@@ -110,7 +118,7 @@
 	       });
 		   },
 						ajax: {
-							url : 'alertManagementData',
+							url : 'alertManagementData?source='+source__val,
 							type: 'POST',
 							dataType: "json",
 							data : function(d) {
@@ -130,7 +138,8 @@
 						fixedColumns: true,
 						columnDefs: [
 							{ width: 120, targets: 0 },
-							{ width: 120, targets: 1 }
+							{ width: 120, targets: 1 },
+							{ orderable: false, targets: -1 }
 						]
 					});
 
@@ -171,7 +180,7 @@
 					var date=data.inputTypeDateList;
 					for(i=0; i<date.length; i++){
 						if(date[i].type === "date"){
-							$("#alertTableDiv").append("<div class='input-field col s6 m2'>"+
+							$("#alertTableDiv").append("<div class='input-field'>"+
 								"<div id='enddatepicker' class='input-group'>"+
 								"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 								"<label for="+date[i].id+">"+date[i].title
@@ -183,12 +192,12 @@
 							maxDate: new Date()
 						});
 					}else if(date[i].type === "text"){
-						$("#alertTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+						$("#alertTableDiv").append("<div class='input-field' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 					}
 					else if(date[i].type === "select"){
 
 							var dropdownDiv=
-								$("#alertTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
+								$("#alertTableDiv").append("<div class='selectDropdwn'>"+
 										
 										"<div class='select-wrapper select2  initialized'>"+
 										"<span class='caret'>"+"</span>"+
@@ -222,9 +231,9 @@
 							"</div>");
 					}*/
 						var viewFilter="viewFilter";
-						$("#alertTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+						$("#alertTableDiv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
 						$("#alertTableDiv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
-						$("#alertTableDiv").append("<div class=' col s3 m2 l5'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportAlertData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#alertTableDiv").append("<div class='filter_btn'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportAlertData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						$('#clearFilter').attr("onclick", "Resetfilter('viewFilter')");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
@@ -304,7 +313,7 @@
 				{ 'X-CSRF-TOKEN': token }
 			});
 			$.ajax({
-				url: './exportAlertData',
+				url: './exportAlertData?source=ViewExport',
 				type: 'POST',
 				dataType : 'json',
 				contentType : 'application/json; charset=utf-8',
@@ -424,4 +433,41 @@
 			$("label").removeClass('active');
 			alertFieldTable(lang)
 			
-		}		
+		}	
+		
+
+		function saveIPLog() {
+		var obj = {
+		username : $("body").attr("data-selected-username"),
+		password : "",
+		captcha : ""
+		}
+
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+
+		if(sessionStorage.getItem("isSessionActive") == "Y"){
+		$.ajaxSetup({
+		headers : {
+		'X-CSRF-TOKEN' : token
+		}
+		});
+
+		$.ajax({
+		type : 'POST',
+		url : contextpath + '/ipLogInfo',
+		contentType : "application/json",
+		data : JSON.stringify(obj),
+		success : function(data) {
+		// console.log("successfully saved");
+
+		},
+		error : function(xhr, ajaxOptions, thrownError) {
+
+		}
+		});
+		}
+
+		sessionStorage.removeItem("isSessionActive");
+		}	
+		

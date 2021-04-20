@@ -1,9 +1,12 @@
 package org.gl.ceir.CeirPannelCode.Controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.TypeApprovedFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
+import org.gl.ceir.CeirPannelCode.Model.UserHeader;
+import org.gl.ceir.CeirPannelCode.Service.RegistrationService;
 import org.gl.ceir.CeirPannelCode.Util.UtilDownload;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +27,9 @@ public class AdminManageTypeApprove {
 	TypeApprovedFeignImpl typeApprovedFeignImpl;
 	@Autowired
 	UtilDownload utildownload;
+	
+	@Autowired
+	RegistrationService registerService;
 	
 	@RequestMapping(value=
 		{"/manageTypeDevices2"},method={org.springframework.web.bind.annotation.
@@ -49,13 +55,15 @@ public class AdminManageTypeApprove {
 			  									  @RequestParam(name="userType",required = false ) String userType, 
 												  @RequestParam(name="userId",required = false ) Integer userId,
 												  @RequestParam(name="remark",required = false ) String remark,
-												  HttpSession session) {
+												  HttpSession session,HttpServletRequest request) {
 
-		log.info("enter in  delete TAC.");
+		
+		UserHeader header=registerService.getUserHeaders(request);
+		String publicIp = header.getPublicIp();
+		String browser = header.getBrowser();
 		log.info("request passed to the deleteTAC Api="+id+" userType="+userType+" userId="+userId+" remark="+remark);
-		GenricResponse response=typeApprovedFeignImpl.TypeApproveDelete(id, userType, userId, remark);
+		GenricResponse response=typeApprovedFeignImpl.TypeApproveDelete(id, userType, userId, remark,publicIp,browser);
 		log.info("response after delete Stock."+response);
-		log.info("exit point of delete stock.");
 		return response;
 		
 

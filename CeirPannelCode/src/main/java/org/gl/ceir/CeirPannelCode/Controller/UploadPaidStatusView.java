@@ -318,6 +318,10 @@ RegistrationService registerService;
 		filterRequestuserpaidStatus.setUserType(userType);
 		filterRequestuserpaidStatus.setNationality(nationality);
 		filterRequestuserpaidStatus.setOrigin(origin);
+		
+		UserHeader header=registerService.getUserHeaders(request);
+		filterRequestuserpaidStatus.setPublicIp(header.getPublicIp());
+		filterRequestuserpaidStatus.setBrowser(header.getBrowser());
 		log.info(" request passed to the exportTo Excel Api =="+filterRequestuserpaidStatus+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 		Object response = userPaidStatusFeignClient.consignmentFilter(filterRequestuserpaidStatus, pageNo, pageSize, file,"filter");
 		Gson gson= new Gson(); 

@@ -258,10 +258,12 @@ a#newUserLink {
 					</div>
 					<div class="input-field col s11">
 						<input type="password" id="oldPassword" class="password2" autocomplete="off"
-							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
-							maxlength="10" min="8"
+							pattern="<spring:eval expression="@environment.getProperty('pattern.password')" />"
+							 oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+						    
+							oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
 							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-							required="required" /> <label for="oldPassword"
+							required /> <label for="oldPassword"
 							class="center-align" style="color: #000; font-size: 12px;">
 							 <spring:message code="registration.oldpassword" /></label>
 							<div class="input-field-addon">
@@ -279,10 +281,12 @@ a#newUserLink {
 					<div class="input-field col s11">
 
 						<label for="newPassword" style="color: #000; font-size: 12px;"><spring:message code="registration.newpassword" /></label> <input type="password"
-							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" autocomplete="off"
-							maxlength="10" min="8"
-							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-							required="required" id="password2" class="password3" />
+							pattern="<spring:eval expression="@environment.getProperty('pattern.password')" />" autocomplete="off"
+							
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+						<%-- oninvalid="InvalidMsg(this,'input','<spring:message code="validation.password" />');" --%>
+						oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+							required id="password2" class="password3" />
 				<div class="input-field-addon">
 		<i  class="fa fa-eye-slash teal-text toggle-password3" aria-hidden="true"></i>
 											</div>				
@@ -297,10 +301,10 @@ a#newUserLink {
 						<label for="confirm_password"
 							style="color: #000; font-size: 12px;"><spring:message code="registration.confirmpassword" /></label> <input 
 							type="password" class="password4" id="confirm_password" autocomplete="off"
-							pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
-							maxlength="10" min="8" 
-							title="Please enter atleast one numeric char, one alphabet, one special character and must be of minumum 8 length"
-							required="required" />
+							pattern="<spring:eval expression="@environment.getProperty('pattern.password')" />"
+							oninput="InvalidMsg(this,'input','<spring:message code="validation.password" />');"
+						    oninvalid="this.setCustomValidity('<spring:message code="validation.requiredMsg" />')"
+							required />
 						<div class="input-field-addon">
 				<i  class="fa fa-eye-slash teal-text toggle-password4" aria-hidden="true"></i>
 											</div>		
@@ -308,7 +312,7 @@ a#newUserLink {
 				</div>
 				<div class="row" style="margin-top: 30px;">
 					<div class="input-field col s12 center">
-						<button class="btn" id="updateStatusBtn"><spring:message code="button.submit" /></button>
+						<button class="btn" id="updateStatusBtn" type="submit"><spring:message code="button.submit" /></button>
 						<button type="button" class="btn modal-close"
 							style="margin-left: 10px;"><spring:message code="button.cancel" /></button>
 					</div>
@@ -384,14 +388,16 @@ a#newUserLink {
 	<script type="text/javascript" src="${context}/resources/ajax/clearSession.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript" src="${context}/resources/ajax/Login.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	 <script type="text/javascript" src="${context}/resources/ajax/Password.js?version=<%= (int) (Math.random() * 10) %>"></script>
-
+<script type="text/javascript" src="${context}/resources/project_js/login.js?version=<%= (int) (Math.random() * 10) %>"></script>
+  <script type="text/javascript" src="${context}/resources/js/plugins.js"></script>
+	<script type="text/javascript"
+		src="${context}/resources/project_js/ValidationFileOutsidePortal.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript">
 	 if(window.location.href.includes('isExpired=yes') && location.href.indexOf('reload')  ==-1)   
 	    {
 	         location.href=location.href+'&reload';
 	    }
 </script>
-	<script type="text/javascript" src="${context}/resources/project_js/login.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	
 </body></html>
 

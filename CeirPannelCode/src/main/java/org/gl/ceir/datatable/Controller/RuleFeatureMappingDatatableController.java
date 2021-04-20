@@ -75,6 +75,15 @@ public class RuleFeatureMappingDatatableController {
 		FilterRequest filterRequest = gsonObject.fromJson(filter, FilterRequest.class);
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize;
+		
+		if(request.getParameter("order[0][column]") == null && request.getParameter("order[0][dir]") == null) {
+			filterRequest.setColumnName("modifiedOn");
+			filterRequest.setSort("desc");
+			}
+		else {
+			filterRequest.setColumnName(request.getParameter("order[0][column]"));
+			filterRequest.setSort(request.getParameter("order[0][dir]"));
+		}
 		filterRequest.setSearchString(request.getParameter("search[value]"));
 		log.info("pageSize" + pageSize + "-----------pageNo---" + pageNo);
 		try {
@@ -162,33 +171,40 @@ public class RuleFeatureMappingDatatableController {
 
 		// Dropdown items
 
-		String[] selectParam = { "select", Translator.toLocale("table.ruleName"), "Rule Name", "", "select",
-				Translator.toLocale("table.featureName"), "Feature Name", "", "select",
-				Translator.toLocale("table.userType"), "User Type", "" };
-		for (int i = 0; i < selectParam.length; i++) {
-			inputFields = new InputFields();
-			inputFields.setType(selectParam[i]);
-			i++;
-			inputFields.setTitle(selectParam[i]);
-			i++;
-			inputFields.setId(selectParam[i]);
-			i++;
-			inputFields.setClassName(selectParam[i]);
-			dropdownList.add(inputFields);
-		}
-		pageElement.setDropdownList(dropdownList);
-
 		/*
-		 * //input type date list String[] dateParam=
-		 * {"date",Translator.toLocale("input.startDate"),"startDate","","date",
-		 * Translator.toLocale("input.endDate"),"endDate",""}; for(int i=0; i<
-		 * dateParam.length; i++) { dateRelatedFields= new InputFields();
-		 * dateRelatedFields.setType(dateParam[i]); i++;
-		 * dateRelatedFields.setTitle(dateParam[i]); i++;
-		 * dateRelatedFields.setId(dateParam[i]); i++;
-		 * dateRelatedFields.setClassName(dateParam[i]);
-		 * inputTypeDateList.add(dateRelatedFields); }
+		 * String[] selectParam = { "select", Translator.toLocale("table.ruleName"),
+		 * "Rule Name", "", "select", Translator.toLocale("table.featureName"),
+		 * "Feature Name", "", "select", Translator.toLocale("table.userType"),
+		 * "User Type", "" }; for (int i = 0; i < selectParam.length; i++) { inputFields
+		 * = new InputFields(); inputFields.setType(selectParam[i]); i++;
+		 * inputFields.setTitle(selectParam[i]); i++; inputFields.setId(selectParam[i]);
+		 * i++; inputFields.setClassName(selectParam[i]); dropdownList.add(inputFields);
+		 * } pageElement.setDropdownList(dropdownList);
 		 */
+
+		String[] dateParam = {  "date",Translator.toLocale("input.startDate"), "startDate", "", 
+				                "date", Translator.toLocale("input.endDate"), "endDate", "",
+				                "select",Translator.toLocale("table.ruleName"), "Rule Name", "",
+				                "select",Translator.toLocale("table.featureName"), "Feature Name", "",
+				                "select",Translator.toLocale("table.userType"), "User Type", "",
+				                "text",Translator.toLocale("table.order"), "actionOrder", "5",
+				                "select",Translator.toLocale("table.gracePeriod"), "actionGracePeriod", "",
+				                "select",Translator.toLocale("table.postGracePeriod"), "actionPostGracePeriod", "",
+				                "select",Translator.toLocale("table.moveToGracePeriod"), "actionMoveToGracePeriod", "",
+				                "select",Translator.toLocale("table.moveToPostGracePeriod"), "actionMoveToPostGracePeriod", "",
+				                "select",Translator.toLocale("table.expectedOutput"), "expectedOutput", ""};
+		for (int i = 0; i < dateParam.length; i++) {
+			dateRelatedFields = new InputFields();
+			dateRelatedFields.setType(dateParam[i]);
+			i++;
+			dateRelatedFields.setTitle(dateParam[i]);
+			i++;
+			dateRelatedFields.setId(dateParam[i]);
+			i++;
+			dateRelatedFields.setClassName(dateParam[i]);
+			inputTypeDateList.add(dateRelatedFields);
+		}
+		 
 
 		pageElement.setInputTypeDateList(inputTypeDateList);
 		pageElement.setUserStatus(userStatus);

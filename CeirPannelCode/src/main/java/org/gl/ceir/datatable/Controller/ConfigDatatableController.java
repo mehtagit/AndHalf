@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.UserHeader;
+import org.gl.ceir.CeirPannelCode.Service.RegistrationService;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
 import org.gl.ceir.configuration.ConfigParameters;
@@ -50,6 +52,10 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 	ConfigContentModel configContentModel;
 	@Autowired
 	ConfigPaginationModel configPaginationModel;
+	
+	@Autowired
+	RegistrationService registerService;
+
 	
 	@PostMapping("adminConfigData")
 	public ResponseEntity<?> viewAdminConfig(@RequestParam(name="type",defaultValue = "Config",required = false) String role, HttpServletRequest request,HttpSession session) {
@@ -94,8 +100,13 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 				log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 				filterrequest.setSearchString(request.getParameter("search[value]"));
 		try {
-			filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
-			filterrequest.setBrowser(session.getAttribute("browser").toString());
+			UserHeader header=registerService.getUserHeaders(request);
+			filterrequest.setPublicIp(header.getPublicIp());
+			filterrequest.setBrowser(header.getBrowser());
+			/*
+			 * filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
+			 * filterrequest.setBrowser(session.getAttribute("browser").toString());
+			 */
 			log.info("request send to the filter api ="+filterrequest);
 			Object response = feignCleintImplementation.adminConfigFeign(filterrequest, pageNo, pageSize, file);
 			log.info("response in datatable"+response);

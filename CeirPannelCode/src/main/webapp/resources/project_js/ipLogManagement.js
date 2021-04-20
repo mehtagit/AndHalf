@@ -71,9 +71,11 @@
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					//"username" : $("#userName").val() == " " || $("#userName").val() == undefined ? $("body").attr("data-selected-username") : $("#userName").val(),
-					"username" : username,
-					"publicIp" : $('#publicIp').val(),
-					"browser" : $('#browser').val()
+					"username" : $("body").attr("data-selected-username"),
+					"filterPublicIp" : $('#publicIp').val() == "" || $('#publicIp').val() == undefined ? null : $('#publicIp').val(),
+					"filterBrowser" : $('#browser').val() == "" || $('#browser').val() == undefined ? null : $('#browser').val(), 
+					"filteredUsername" :  username 
+					
 			}				
 			if(lang=='km'){
 				var langFile="./resources/i18n/khmer_datatable.json";
@@ -175,7 +177,7 @@
 					var date=data.inputTypeDateList;
 					for(i=0; i<date.length; i++){
 						if(date[i].type === "date"){
-							$("#ipLogTableDiv").append("<div class='input-field col s6 m2'>"+
+							$("#ipLogTableDiv").append("<div class='input-field'>"+
 									"<div id='enddatepicker' class='input-group'>"+
 									"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 									"<label for="+date[i].id+">"+date[i].title
@@ -187,7 +189,7 @@
 								 maxDate: new Date()
 					        });
 						}else if(date[i].type === "text"){
-							$("#ipLogTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+							$("#ipLogTableDiv").append("<div class='input-field' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 						}
 						 
 					} 
@@ -210,9 +212,9 @@
 							"</div>");
 					}*/
 						var viewFilter="viewFilter";
-						$("#ipLogTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+						$("#ipLogTableDiv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
 						$("#ipLogTableDiv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
-						$("#ipLogTableDiv").append("<div class=' col s3 m2'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportIPLogData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#ipLogTableDiv").append("<div class='filter_btn'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportIPLogData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
 						$('#clearFilter').attr("onclick", "Resetfilter('viewFilter')");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
@@ -241,7 +243,7 @@
 			var info = table.page.info(); 
 			var pageNo=info.page;
 			var pageSize =info.length;
-			
+			username = $("#userName").val() != " " ? $("#userName").val() : $("#userName").val();
 			var filterRequest={
 					"endDate":$('#endDate').val(),
 					"startDate":$('#startDate').val(),
@@ -251,11 +253,11 @@
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"userId" : parseInt($("body").attr("data-userID")),
-					"username" : $("#userName").val() == "" || $("#userName").val() == undefined ? "" : $("#userName").val(),
-					"publicIp" : $('#publicIp').val(),
-					"browser" : $('#browser').val()
-					
-					
+					//"username" : $("#userName").val() == "" || $("#userName").val() == undefined ? "" : $("#userName").val(),
+					"username" : $("body").attr("data-selected-username"),
+					"filterPublicIp" : $('#publicIp').val() == "" || $('#publicIp').val() == undefined ? null : $('#publicIp').val(),
+					"filterBrowser" : $('#browser').val() == "" || $('#browser').val() == undefined ? null : $('#browser').val(), 
+					"filteredUsername" :  username 
 			}
 			//////console.log(JSON.stringify(filterRequest))
 			var token = $("meta[name='_csrf']").attr("content");
@@ -265,7 +267,7 @@
 				{ 'X-CSRF-TOKEN': token }
 			});
 			$.ajax({
-				url: './exportLogData',
+				url: './exportLogData?source=ViewExport',
 				type: 'POST',
 				dataType : 'json',
 				contentType : 'application/json; charset=utf-8',

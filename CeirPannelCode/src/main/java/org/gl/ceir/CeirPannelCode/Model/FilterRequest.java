@@ -18,7 +18,8 @@ public class FilterRequest {
 	public String order,orderColumnName;
 	private String browser,filteredUsername,name,subject;
 	public String msisdn,imei,identifierType;
-	
+	private String graceAction,postGraceAction,ruleOrder,failedRuleActionGrace,failedRuleActionPostGrace,output;
+	public String filterPublicIp,filterBrowser;
 	public String getFilteredUsername() {
 		return filteredUsername;
 	}
@@ -682,6 +683,58 @@ public class FilterRequest {
 	public void setIdentifierType(String identifierType) {
 		this.identifierType = identifierType;
 	}
+	
+	
+	
+	
+	public String getGraceAction() {
+		return graceAction;
+	}
+	public void setGraceAction(String graceAction) {
+		this.graceAction = graceAction;
+	}
+	public String getPostGraceAction() {
+		return postGraceAction;
+	}
+	public void setPostGraceAction(String postGraceAction) {
+		this.postGraceAction = postGraceAction;
+	}
+	public String getRuleOrder() {
+		return ruleOrder;
+	}
+	public void setRuleOrder(String ruleOrder) {
+		this.ruleOrder = ruleOrder;
+	}
+	public String getFailedRuleActionGrace() {
+		return failedRuleActionGrace;
+	}
+	public void setFailedRuleActionGrace(String failedRuleActionGrace) {
+		this.failedRuleActionGrace = failedRuleActionGrace;
+	}
+	public String getFailedRuleActionPostGrace() {
+		return failedRuleActionPostGrace;
+	}
+	public void setFailedRuleActionPostGrace(String failedRuleActionPostGrace) {
+		this.failedRuleActionPostGrace = failedRuleActionPostGrace;
+	}
+	public String getOutput() {
+		return output;
+	}
+	public void setOutput(String output) {
+		this.output = output;
+	}
+	public String getFilterPublicIp() {
+		return filterPublicIp;
+	}
+	public void setFilterPublicIp(String filterPublicIp) {
+		this.filterPublicIp = filterPublicIp;
+	}
+	public String getFilterBrowser() {
+		return filterBrowser;
+	}
+	public void setFilterBrowser(String filterBrowser) {
+		this.filterBrowser = filterBrowser;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -905,9 +958,27 @@ public class FilterRequest {
 		builder.append(imei);
 		builder.append(", identifierType=");
 		builder.append(identifierType);
+		builder.append(", graceAction=");
+		builder.append(graceAction);
+		builder.append(", postGraceAction=");
+		builder.append(postGraceAction);
+		builder.append(", ruleOrder=");
+		builder.append(ruleOrder);
+		builder.append(", failedRuleActionGrace=");
+		builder.append(failedRuleActionGrace);
+		builder.append(", failedRuleActionPostGrace=");
+		builder.append(failedRuleActionPostGrace);
+		builder.append(", output=");
+		builder.append(output);
+		builder.append(", filterPublicIp=");
+		builder.append(filterPublicIp);
+		builder.append(", filterBrowser=");
+		builder.append(filterBrowser);
 		builder.append("]");
 		return builder.toString();
 	}
-	 
-	 
+ 
+	
+	
+	
 }

@@ -107,7 +107,8 @@ var path="${context}";
 
 <body data-id="40" data-roleType="${usertype}" data-userTypeID="${usertypeId}" data-userID="${userid}" data-selected-roleType="${selectedUserTypeId}" data-stolenselected-roleType="${stolenselectedUserTypeId}" 
 data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-selected-username="${username}"
- data-grievanceStatus="${grievanceStatus}" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
+ data-grievanceStatus="${grievanceStatus}" session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
+ data-session-source="${not empty param.source ? param.source : 'menu'}">
 
 
 	<!-- START CONTENT -->
@@ -124,9 +125,9 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
 
 								<a href="" class="boton right" id="btnLink" hidden="hidden"></a>
 							</div>
-							<form action="${context}/slaManagement"
+							<form action="${context}/slaManagement" id="viewFilter"
 								method="post">
-								<div class="col s12 m12 l12" id="slaTableDiv"
+								<div class="registrationTableDiv_box" id="slaTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
 									</div>

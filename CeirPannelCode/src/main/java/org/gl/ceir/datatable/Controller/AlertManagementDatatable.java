@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.AlertRequest;
+import org.gl.ceir.CeirPannelCode.Model.UserHeader;
+import org.gl.ceir.CeirPannelCode.Service.RegistrationService;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
 import org.gl.ceir.configuration.ConfigParameters;
@@ -53,9 +55,13 @@ public class AlertManagementDatatable {
 	AlertPaginationModel alertPaginationModel;
 	@Autowired
 	AlertRequest alertRequest; 
+	@Autowired
+	RegistrationService registerService;
+
 	
 	@PostMapping("alertManagementData")
-	public ResponseEntity<?> viewAlertRecord(@RequestParam(name="type",defaultValue = "alertManagement",required = false) String role, HttpServletRequest request,HttpSession session) {
+	public ResponseEntity<?> viewAlertRecord(@RequestParam(name="type",defaultValue = "alertManagement",required = false) String role, 
+			@RequestParam(name = "source", defaultValue = "menu", required = false) String source,HttpServletRequest request,HttpSession session) {
 		//String userType = (String) session.getAttribute("usertype");
 		//int userId=	(int) session.getAttribute("userid");
 		int file=0;
@@ -92,10 +98,11 @@ public class AlertManagementDatatable {
 		filterrequest.setOrder(order);
 		
 		try {
-			filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
-			filterrequest.setBrowser(session.getAttribute("browser").toString());
+			UserHeader header=registerService.getUserHeaders(request);
+			filterrequest.setPublicIp(header.getPublicIp());
+			filterrequest.setBrowser(header.getBrowser());
 			log.info("request send to the filter api ="+filterrequest);
-			Object response = userProfileFeignImpl.viewAlertRequest(filterrequest,pageNo,pageSize,file);
+			Object response = userProfileFeignImpl.viewAlertRequest(filterrequest,pageNo,pageSize,file,source);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
@@ -156,7 +163,7 @@ public class AlertManagementDatatable {
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
 			String[] names = { "HeaderButton", Translator.toLocale("button.addCurrency"), "AddCurrencyAddress()", "btnLink",
-					"FilterButton", Translator.toLocale("button.filter"),"alertFieldTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
+					"FilterButton", Translator.toLocale("button.filter"),"alertFieldTable(" + ConfigParameters.languageParam + ",'filter')", "submitFilter" };
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);

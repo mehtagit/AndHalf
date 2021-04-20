@@ -1,7 +1,7 @@
 
 var featureId = 6;
 			var cierRoletype = sessionStorage.getItem("cierRoletype");
-
+			var userType = $("body").attr("data-roleType");
 			var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		/*		window.parent.$('#langlist').on('change', function() {
 					var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
@@ -427,7 +427,7 @@ var featureId = 6;
 				
 
 				$.ajax({
-					url: './viewGrievance?recordLimit=2&grievanceId='+grievanceId,
+					url: './viewGrievance?recordLimit=2&grievanceId='+grievanceId+ "&userType=" + userType+" &featureId=" +featureId,
 					type: 'GET',
 					processData: false,
 					contentType: false,
@@ -672,7 +672,7 @@ var featureId = 6;
 				});	
 
 			$.ajax({
-					url: './viewGrievance?recordLimit=-1&grievanceId='+grievanceId,
+					url: './viewGrievance?recordLimit=-1&grievanceId='+grievanceId+ "&userType=" + userType+" &featureId=" +featureId,
 					type: 'GET',
 					processData: false,
 					contentType: false,

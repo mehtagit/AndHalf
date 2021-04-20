@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
@@ -56,7 +57,7 @@ public class TacListDatatableController {
 	TacPaginitionModel tacPaginitionModel;
 	
 	@PostMapping("pendingTACdata") 
-	public ResponseEntity<?> viewPendingTacList(HttpServletRequest request,HttpSession session) {
+	public ResponseEntity<?> viewPendingTacList(HttpServletRequest request,HttpSession session,@RequestParam(value = "source",defaultValue = "menu") String  source) {
 		String userType = (String) session.getAttribute("usertype");
 		int userId=	(int) session.getAttribute("userid");
 		int file=0;
@@ -90,10 +91,13 @@ public class TacListDatatableController {
 		}
 		filterrequest.setOrderColumnName(column);
 		filterrequest.setOrder(order);
+		filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
+		filterrequest.setBrowser(session.getAttribute("browser").toString());
+		log.info("request send to the Delete pending api="+filterrequest);
 		
 		try{
 			log.info("request send to the filter api ="+filterrequest);
-			Object response = feignCleintImplementation.pendingTACFeign(filterrequest, pageNo, pageSize, file);
+			Object response = feignCleintImplementation.pendingTACFeign(filterrequest, pageNo, pageSize, file,source);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
@@ -153,7 +157,7 @@ public class TacListDatatableController {
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
 			String[] names = { "HeaderButton", Translator.toLocale("button.addCurrency"), "AddCurrencyAddress()", "btnLink",
-					"FilterButton", Translator.toLocale("button.filter"),"DataTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
+					"FilterButton", Translator.toLocale("button.filter"),"DataTable(" + ConfigParameters.languageParam + ",'filter')", "submitFilter" };
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);

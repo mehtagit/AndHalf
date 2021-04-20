@@ -65,7 +65,7 @@
 					//////console.log("1=="+source);
 				var status =$('#status').val();
 				if(status=="" || status==null){
-					status=-1;
+					status=null;
 				}
 				if(source == 'filter' ) {
 					source__val= source;

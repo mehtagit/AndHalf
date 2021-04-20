@@ -179,7 +179,8 @@ public interface UserProfileFeignImpl {
 		public Object viewAlertRequest(@RequestBody AlertRequest filterRequest,
 		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-		@RequestParam(value = "file", defaultValue = "0") Integer file);	
+		@RequestParam(value = "file", defaultValue = "0") Integer file,
+		@RequestParam(name = "source", defaultValue = "menu", required = false) String source);	
 		
 /*-------------------------- view Running Alert Management Feign ------------------------------*/
 		
@@ -187,7 +188,8 @@ public interface UserProfileFeignImpl {
 		public Object viewRunningAlertRequest(@RequestBody FilterRequest filterRequest,
 		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-		@RequestParam(value = "file", defaultValue = "0") Integer file);	
+		@RequestParam(value = "file", defaultValue = "0") Integer file,
+		@RequestParam(name="source",defaultValue = "menu",required = false) String source );	
 		
 /*-------------------------- view IP LOG Management Feign ------------------------------*/
 		
@@ -195,7 +197,8 @@ public interface UserProfileFeignImpl {
 		public Object viewIPLogRequest(@RequestBody FilterRequest filterRequest,
 		@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 		@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
-		@RequestParam(value = "file", defaultValue = "0") Integer file);	
+		@RequestParam(value = "file", defaultValue = "0") Integer file,
+		@RequestParam(name = "source", defaultValue = "menu", required = false) String source);	
 
 		//***************************************************View Alert by Id Management Feign********************************
 		

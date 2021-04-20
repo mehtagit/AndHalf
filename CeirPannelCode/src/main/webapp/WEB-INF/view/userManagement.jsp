@@ -125,7 +125,7 @@
 							</div>
 							<form action="${context}/userManagement" id="viewFilter"
 								method="post">
-								<div class="col s12 m12 l12" id="userTableDiv"
+								<div class="registrationTableDiv_box" id="userTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv"></div>
 								</div>

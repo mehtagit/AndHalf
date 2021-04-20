@@ -117,9 +117,9 @@
 
 								<a href="" class="boton right" id="btnLink" hidden></a>
 							</div>
-							<form action="${context}/auditTrail"
+							<form action="${context}/auditTrail" id="viewFilter"
 								method="post">
-								<div class="col s12 m12 l12" id="auditTableDiv"
+								<div class="registrationTableDiv_box" id="auditTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
 										<!-- 							<div class='col s12 m2 l2'><button type='submit' class='btn primary botton' id='submitFilter'></button></div>
@@ -187,6 +187,18 @@
 						<input type="text" id="viewSubFeature" name="status"
 							placeholder="" maxlength="20" disabled >
 						<label for="viewSubFeature"><spring:message code="table.SubFeature" /></label>
+					</div>
+					
+					<div class="input-field col s12 m6">
+						<input type="text" id="viewPublicIp" name="status"
+							placeholder=""  disabled >
+						<label for="viewPublicIp"><spring:message code="table.publicIp" /></label>
+					</div>
+					
+					<div class="input-field col s12 m6">
+						<input type="text" id="viewBrowser" name="status"
+							placeholder="" disabled >
+						<label for="viewBrowser"><spring:message code="table.browser" /></label>
 					</div>
 					
 				</div>

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -70,7 +71,8 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 	//***************************************** Export Alert  controller *********************************
 	@PostMapping("exportAlertData")
 	@ResponseBody
-	public FileExportResponse exportToExcel(@RequestBody AlertRequest filterRequest,HttpSession session)
+	public FileExportResponse exportToExcel(@RequestBody AlertRequest filterRequest,HttpSession session,
+			@RequestParam(name = "source", defaultValue = "menu", required = false) String source)
 	{
 		Gson gsonObject=new Gson();
 		Object response;
@@ -78,7 +80,7 @@ private final Logger log = LoggerFactory.getLogger(getClass());
 		log.info("filterRequest:::::::::"+filterRequest);
 		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
 		filterRequest.setBrowser(session.getAttribute("browser").toString());
-	response= userProfileFeignImpl.viewAlertRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
+	response= userProfileFeignImpl.viewAlertRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file,source);
 	FileExportResponse fileExportResponse;
 	   Gson gson= new Gson(); 
 	   String apiResponse = gson.toJson(response);

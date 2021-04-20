@@ -213,7 +213,7 @@
 					} 
 				
 					// dynamic dropdown portion
-					var dropdown=data.dropdownList;
+				/*	var dropdown=data.dropdownList;
 					for(i=0; i<dropdown.length; i++){
 						var dropdownDiv=
 							$("#FieldTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
@@ -228,7 +228,7 @@
 									"</select>"+
 									"</div>"+
 							"</div>");
-					}
+					}*/
 
 						$("#FieldTableDiv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
 						$("#FieldTableDiv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>Clear all filters</button></div>");

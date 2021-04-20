@@ -36,7 +36,8 @@ public interface TypeApprovedFeignImpl {
 	@PostMapping("/TypeApproved/viewById/{id}") 
 	public TRCRegisteration viewByID(@RequestParam(name="id", required = false) int id,
 			@RequestParam(name="publicIp", required = false) String publicIp,
-			@RequestParam(name="browser", required = false) String browser) ;
+			@RequestParam(name="browser", required = false) String browser,@RequestParam(name="userType",required = false ) String userType, 
+			@RequestParam(name="userId",required = false ) Integer userId) ;
 	
 	
 	@PostMapping("/TypeApproved/update") 
@@ -50,6 +51,7 @@ public interface TypeApprovedFeignImpl {
 	public GenricResponse TypeApproveDelete(@RequestParam(name="id",required = false ) Integer id,
 											@RequestParam(name="userType",required = false ) String userType, 
 											@RequestParam(name="userId",required = false ) Integer userId,
-											@RequestParam(name="remark",required = false ) String remark
-											 );
+											@RequestParam(name="remark",required = false ) String remark,
+											@RequestParam(name="publicIp",required = false ) String publicIp,
+											@RequestParam(name="browser",required = false ) String browser);
 }

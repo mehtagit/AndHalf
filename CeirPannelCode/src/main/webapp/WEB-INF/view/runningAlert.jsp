@@ -96,7 +96,8 @@
 	data-selected-consignmentStatus="${consignmentStatus}"
 	data-selected-username="${username}"
 	session-value="en"
-	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
+	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}"
+	data-session-source="${not empty param.source ? param.source : 'menu'}">
 
 	<%-- session-value="${not empty param.NID ? param.NID : 'null'}" --%>
 
@@ -117,7 +118,7 @@
 							</div>
 							<form action="${context}/alertManagement" id="viewFilter"
 								method="post">
-								<div class="col s12 m12 l12" id="alertTableDiv"
+								<div class="registrationTableDiv_box" id="alertTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv"></div>
 								</div>
