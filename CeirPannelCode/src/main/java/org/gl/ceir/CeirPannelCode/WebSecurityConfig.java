@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -26,6 +27,10 @@ import org.springframework.security.web.csrf.MissingCsrfTokenException;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
+	
+	@Autowired
+	private CustomLogoutHandler logoutHandler;
+	
 	@Override
 	protected void configure(HttpSecurity http){
 		try {
@@ -35,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.NEVER).invalidSessionUrl("/login").and()
 			.formLogin().disable()
-			.logout().logoutUrl("/manualLogout").permitAll().invalidateHttpSession(true).deleteCookies("JSESSIONID").and().
+			.logout().logoutUrl("/manualLogout").permitAll().addLogoutHandler(logoutHandler).invalidateHttpSession(true).deleteCookies("JSESSIONID").and().
 			headers().frameOptions().sameOrigin().cacheControl().disable().and()
 			.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
 		}catch( Exception ex) {

@@ -464,7 +464,7 @@ div#error_Modal {
 
 			<div class="input-field col s12 center">
 			
-				<form action="./logout" method="post">
+				<form action="./login?isExpired=yes" method="post">
 						<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
 
@@ -715,11 +715,12 @@ data-dismiss="modal">&times;</button> -->
 						id="add_user"><spring:message code="modal.yes" /></a> --%>
 
 
-					<form onsubmit="return sessionLogOut()" action="" method="POST"  id="logoutForm">
+					<form action="./login?isExpired=yes" method="post" id="logoutForm">
 						<input type="hidden" name="${_csrf.parameterName}"
 							value="${_csrf.token}" />
 
-						<button type="submit"  class="btn">
+						<button type="button" onclick="sessionLogOut(<%=session.getLastAccessedTime()+timeout %>, <%=new Date().getTime()  %>)" class="btn">
+
 							<spring:message code="modal.yes" />
 						</button>
 						<a href="#" class="modal-close btn" style="margin-left: 10px;"><spring:message
@@ -886,8 +887,7 @@ data-dismiss="modal">&times;</button> -->
 	<!-- Custom js -->
 
 	
-	<script type="text/javascript"
-		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
+	
 	<script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
@@ -912,6 +912,8 @@ data-dismiss="modal">&times;</button> -->
 <script type="text/javascript"
 		src="${context}/resources/ajax/keyBoardShortcut.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	
+	<script type="text/javascript"
+		src="${context}/resources/project_js/globalVariables.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript">
 
 		$(document).ready(function() {
@@ -929,7 +931,7 @@ data-dismiss="modal">&times;</button> -->
 		
 	</script>
 	<script type="text/javascript">
-		 function sessionLogOut(){
+		/*  function sessionLogOut(){
 			
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
@@ -940,7 +942,7 @@ data-dismiss="modal">&times;</button> -->
 			});
 			$.ajax({
 				type : 'POST',
-				url : './manualLogout',
+				url : './login?isExpired=yes',
 				processData : false,
 				contentType : false,
 			    success : function(data) {
@@ -950,19 +952,18 @@ data-dismiss="modal">&times;</button> -->
 				error : function(xhr, ajaxOptions, thrownError) {
 					alert("error");
 				}
-			});
+			}); 
 		 
-	} 
-	/* function sessionLogOut(timeOut,currentTime){
+	}  */
+	 function sessionLogOut(timeOut,currentTime){
 		$('#logoutForm').submit();    
-		/* if(currentTime > timeOut){
+		/*  if(currentTime > timeOut){
 				$('#logoutForm').submit();
 			}
 			else{
 				 window.location.href = "./login";
-			} 
-}	
-	 */	
+			}  */
+}		
 		</script>
 <script type="text/javascript">$( document ).ready(function() {if($("body").attr("data-roleType") == '' || ($("body").attr("data-roleType") != window.parent.$("body").attr("data-roleType"))){window.top.location.href = "./login?isExpired=yes";} var timeoutTime = <%=session.getLastAccessedTime()%>;var timeout = <%=session.getMaxInactiveInterval()%>;timeoutTime += timeout;var currentTime;$("body").click(function(e) {$.ajaxSetup({headers:{ 'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content") }});$.ajax({url: './serverTime',type: 'GET',async: false,success: function (data, textStatus, jqXHR) {currentTime = data;},error: function (jqXHR, textStatus, errorThrown) {}});if( currentTime > timeoutTime ){window.top.location.href = "./login?isExpired=yes";}else{timeoutTime = currentTime + timeout;}});});</script>
 </body></html>

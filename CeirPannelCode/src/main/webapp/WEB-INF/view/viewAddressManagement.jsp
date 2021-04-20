@@ -121,9 +121,9 @@
 
 								<a class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/addressManagement"
+							<form action="${context}/addressManagement" id="viewFilter"
 								method="post">
-								<div class="col s12 m12 l12" id="AddressTableDiv"
+								<div class="registrationTableDiv_box" id="AddressTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv"></div>
 								</div>

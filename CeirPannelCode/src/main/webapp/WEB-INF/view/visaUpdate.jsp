@@ -221,9 +221,8 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
                
                 
                     <div class="input-field" style="margin-top: 30px;">
-                        <textarea id="Reason" class="materialize-textarea" name="Reason"
-                        oninput="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
-						oninvalid="InvalidMsg(this,'input','<spring:message code="validation.10000characters" />');"
+                        <textarea id="Reason" class="materialize-textarea" name="Reason" 
+                         maxlength="200"
                         style="min-height: 8rem;" required="required"></textarea>
                         <label for="Reason" style="margin-left: -10px;"><spring:message code="input.remarks" /><span
 												class="star">*</span></label>

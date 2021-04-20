@@ -123,7 +123,7 @@
 							</div>
 							<form action="${context}/currencyManagement" id="viewFilter"
 								method="post">
-								<div class="col s12 m12 l12" id="CurrencyTableDiv"
+								<div class="registrationTableDiv_box" id="CurrencyTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv"></div>
 								</div>

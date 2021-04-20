@@ -114,8 +114,8 @@ if (currentTime < dfd) {
 
 								<a class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/ruleListMav" method="post">
-								<div class="col s12 m12 l12" id="FieldTableDiv"
+							<form action="${context}/ruleListMav" id="viewfilter" method="post">
+								<div class="registrationTableDiv_box" id="FieldTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv"></div>
 								</div>

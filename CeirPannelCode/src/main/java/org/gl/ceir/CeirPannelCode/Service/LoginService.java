@@ -50,6 +50,7 @@ public class LoginService {
 	@Autowired
 	RegistrationService registerService;
 	
+	
 	   @Autowired
 	    PropertyReader propertyReader;
 	
@@ -295,11 +296,15 @@ public class LoginService {
 
 	}
 	
-	public HttpResponse changeExpirePassword(Password password) {
-		log.info("inside change password controller");
-		log.info("password data is :  "+password);                 
+	public HttpResponse changeExpirePassword(Password password,HttpServletRequest request) {
+		log.info("inside expiry   password controller");
+		                
 		if(password.getPassword().equals(password.getConfirmPassword())) {
-			HttpResponse response=new HttpResponse();             
+			HttpResponse response=new HttpResponse();
+			UserHeader header=registerService.getUserHeaders(request);
+			password.setPublicIp(header.getPublicIp());
+			password.setBrowser(header.getBrowser());
+			log.info("password data is :  "+password); 
 			response=userProfileFeignImpl.updateExpirePassword(password);
 			log.info("response got:  "+response);
 			return response; 	

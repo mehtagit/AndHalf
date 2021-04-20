@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.AlertRequest;
+import org.gl.ceir.CeirPannelCode.Model.UserHeader;
+import org.gl.ceir.CeirPannelCode.Service.RegistrationService;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
 import org.gl.ceir.configuration.ConfigParameters;
@@ -53,6 +55,9 @@ public class AlertManagementDatatable {
 	AlertPaginationModel alertPaginationModel;
 	@Autowired
 	AlertRequest alertRequest; 
+	@Autowired
+	RegistrationService registerService;
+
 	
 	@PostMapping("alertManagementData")
 	public ResponseEntity<?> viewAlertRecord(@RequestParam(name="type",defaultValue = "alertManagement",required = false) String role, 
@@ -93,8 +98,9 @@ public class AlertManagementDatatable {
 		filterrequest.setOrder(order);
 		
 		try {
-			filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
-			filterrequest.setBrowser(session.getAttribute("browser").toString());
+			UserHeader header=registerService.getUserHeaders(request);
+			filterrequest.setPublicIp(header.getPublicIp());
+			filterrequest.setBrowser(header.getBrowser());
 			log.info("request send to the filter api ="+filterrequest);
 			Object response = userProfileFeignImpl.viewAlertRequest(filterrequest,pageNo,pageSize,file,source);
 			log.info("response in datatable"+response);

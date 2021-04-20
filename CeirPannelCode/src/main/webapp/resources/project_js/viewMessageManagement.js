@@ -18,6 +18,11 @@ var role = currentRoleType == null ? roleType : currentRoleType;
 
 function messageManagementDatatable(){
 	var Feature=  $("#feature").val() == '' || $("#feature").val() == undefined ? null : $("#feature").val();
+	if(Feature=="Feature")
+		{
+		Feature=null;
+		}
+	 
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),

@@ -114,9 +114,9 @@
 
 								<a class="boton right" id="btnLink"></a>
 							</div>
-							<form action="${context}/fieldManagement"
+							<form action="${context}/fieldManagement" id="viewFilter"
 								method="post">
-								<div class="col s12 m12 l12" id="FieldTableDiv"
+								<div class="registrationTableDiv_box" id="FieldTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv"></div>
 								</div>

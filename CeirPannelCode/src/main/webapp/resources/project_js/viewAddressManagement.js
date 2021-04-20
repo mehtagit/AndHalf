@@ -75,14 +75,18 @@
 						destroy:true,
 						"serverSide": true,
 						orderCellsTop : true,
-						"ordering" : false,
+						"ordering" : true,
 						"bPaginate" : true,
-						"bFilter" : true,
+						"bFilter" : false,
 						"bInfo" : true,
 						"bSearchable" : true,
 						"oLanguage": {
 							"sEmptyTable": "No records found in the system"
 					    },
+					    "aaSorting": [],
+						columnDefs: [
+							   { orderable: false, targets: -1 }
+							],
 						initComplete: function() {
 					 		$('.dataTables_filter input')
 	       .off().on('keyup', function(event) {
@@ -141,7 +145,7 @@
 					var date=data.inputTypeDateList;
 					for(i=0; i<date.length; i++){
 						if(date[i].type === "date"){
-							$("#AddressTableDiv").append("<div class='input-field col s6 m2'>"+
+							$("#AddressTableDiv").append("<div class='input-field'>"+
 									"<div id='enddatepicker' class='input-group'>"+
 									"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
 									"<label for="+date[i].id+">"+date[i].title
@@ -153,13 +157,30 @@
 								 maxDate: new Date()
 					        });
 						}else if(date[i].type === "text"){
-							$("#AddressTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+							$("#AddressTableDiv").append("<div class='input-field'><input type="+date[i].type+" maxlength="+date[i].className+" id="+date[i].id+"><label for='parametername' class='center-align'>"+date[i].title+"</label></div>");
+							
+						}
+						else if(date[i].type === "select"){
+
+							var dropdownDiv=
+								$("#AddressTableDiv").append("<div class='selectDropdwn'>"+
+										
+										"<div class='select-wrapper select2  initialized'>"+
+										"<span class='caret'>"+"</span>"+
+										"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+										"<select id="+date[i].id+" class='select2 initialized'>"+
+										"<option value='' >"+date[i].title+
+										"</option>"+
+										"</select>"+
+										"</div>"+
+								"</div>");
+						
 						}
 						 
 					} 
 				
 				// dynamic dropdown portion
-					var dropdown=data.dropdownList;
+				/*	var dropdown=data.dropdownList;
 					for(i=0; i<dropdown.length; i++){
 						var dropdownDiv=
 							$("#AddressTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
@@ -174,10 +195,12 @@
 									"</select>"+
 									"</div>"+
 							"</div>");
-					}
+					}*/
 
-						$("#AddressTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-						$("#AddressTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportAddressData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#AddressTableDiv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+						$("#AddressTableDiv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>Clear all filters</button></div>");
+						$("#AddressTableDiv").append("<div class='filter_btn'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportAddressData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$('#clearFilter').attr("onclick", "filterResetAddressManagement('viewFilter')");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -1075,3 +1098,10 @@
 			
 			return false
 		}		
+		
+		
+		function filterResetAddressManagement(formID){
+			$('#'+formID).trigger('reset');
+			$("label").removeClass('active');
+			addressFieldTable(lang);
+		}

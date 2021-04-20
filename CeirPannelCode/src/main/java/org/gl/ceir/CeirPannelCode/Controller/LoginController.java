@@ -56,12 +56,14 @@ public class LoginController {
 			return loginService.changeLanguage(lang,session,request);
   }
 	
-	@RequestMapping(value = "/manualLogout", method = RequestMethod.POST)
-	public ModelAndView logout(HttpSession session,HttpServletRequest request) {
-		log.info("Coming first time in logout");
-		return loginService.logout(session,request);
-
-	}
+	/*
+	 * @RequestMapping(value = "/manualLogout", method = RequestMethod.POST) public
+	 * ModelAndView logout(HttpSession session,HttpServletRequest request) {
+	 * log.info("Coming first time in logout"); return
+	 * loginService.logout(session,request);
+	 * 
+	 * }
+	 */
 	
 	@RequestMapping(value = "/homePage", method = RequestMethod.GET)
 	public void indexSessionOut(HttpSession session,HttpServletResponse response,HttpServletRequest request) {
@@ -76,8 +78,8 @@ public class LoginController {
 
 	@RequestMapping(value = "changeExpirePassword",method = RequestMethod.POST)
 	@ResponseBody
-	public  HttpResponse changePassword(@RequestBody Password password) {
-		return loginService.changeExpirePassword(password);
+	public  HttpResponse changePassword(@RequestBody Password password,HttpServletRequest request) {
+		return loginService.changeExpirePassword(password,request);
 	}
 
 	@RequestMapping(value = "/forgotPassword",method = RequestMethod.GET)

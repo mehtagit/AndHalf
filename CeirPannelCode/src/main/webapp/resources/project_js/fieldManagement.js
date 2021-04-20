@@ -53,6 +53,9 @@
 		
 		function filterFieldTable(lang){
 			window.tag_val= $('#filterTagId').val() == undefined ? TagId : $('#filterTagId').val();
+			if(window.tag_val=="" || window.tag_val==null){
+				window.tag_val=TagId;
+			}
 			var displayName = $('#displayName').val() == "" ? "" : $('#displayName').val();
 			var filterRequest={
 					"endDate":$('#endDate').val(),
@@ -67,7 +70,9 @@
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
 					"username" : $("body").attr("data-selected-username"),
-					"displayName" : displayName
+					"displayName" : displayName,
+					"description":$('#decriptionID').val(),
+					"field":$('#fieldID').val()
 			}				
 			if(lang=='km'){
 				var langFile="./resources/i18n/khmer_datatable.json";
@@ -89,14 +94,18 @@
 						destroy:true,
 						"serverSide": true,
 						orderCellsTop : true,
-						"ordering" : false,
+						"ordering" : true,
 						"bPaginate" : true,
-						"bFilter" : true,
+						"bFilter" : false,
 						"bInfo" : true,
 						"bSearchable" : true,
 						"oLanguage": {
 							"sEmptyTable": "No records found in the system"
 					    },
+					    "aaSorting": [],
+						columnDefs: [
+							   { orderable: false, targets: -1 }
+							],
 					    initComplete: function() {
 					 		$('.dataTables_filter input')
 	       .off().on('keyup', function(event) {
@@ -168,13 +177,43 @@
 					var button=data.buttonList;
 					var date=data.inputTypeDateList;
 					for(i=0; i<date.length; i++){
-						 if(date[i].type === "text"){
-							$("#FieldTableDiv").append("<div class='input-field col s6 m2' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+						if(date[i].type === "date"){
+							$("#FieldTableDiv").append("<div class='input-field responsiveDiv'>"+
+									"<div id='enddatepicker' class='input-group date'>"+
+									"<label for='TotalPrice'>"+date[i].title
+									+"</label>"+"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off'>"+
+									"<span	class='input-group-addon' style='color: #ff4081'>"+
+									"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+							$( "#"+date[i].id ).datepicker({
+								dateFormat: "yy-mm-dd",
+								 maxDate: new Date()
+					        }); 	
 						}
+						 
+						 else if(date[i].type === "text"){
+								$("#FieldTableDiv").append("<div class='input-field'><input type="+date[i].type+" maxlength="+date[i].className+" id="+date[i].id+"><label for='parametername' class='center-align'>"+date[i].title+"</label></div>");
+								
+							}
+							else if(date[i].type === "select"){
+
+								var dropdownDiv=
+									$("#FieldTableDiv").append("<div class='selectDropdwn'>"+
+											
+											"<div class='select-wrapper select2  initialized'>"+
+											"<span class='caret'>"+"</span>"+
+											"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+
+											"<select id="+date[i].id+" class='select2 initialized'>"+
+											"<option value=''>"+date[i].title+"</option>"+
+											"</select>"+
+											"</div>"+
+									"</div>");
+							
+							}
 					} 
 				
 					// dynamic dropdown portion
-					var dropdown=data.dropdownList;
+				/*	var dropdown=data.dropdownList;
 					for(i=0; i<dropdown.length; i++){
 						var dropdownDiv=
 							$("#FieldTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
@@ -189,10 +228,12 @@
 									"</select>"+
 									"</div>"+
 							"</div>");
-					}
+					}*/
 
-						$("#FieldTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-						$("#FieldTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportFieldData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$("#FieldTableDiv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+						$("#FieldTableDiv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>Clear all filters</button></div>");
+						$("#FieldTableDiv").append("<div class='filter_btn'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportFieldData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+						$('#clearFilter').attr("onclick", "filterResetFieldManagement('viewFilter')");
 						for(i=0; i<button.length; i++){
 							$('#'+button[i].id).text(button[i].buttonTitle);
 							$('#'+button[i].id).attr("onclick", button[i].buttonURL);
@@ -548,3 +589,9 @@
 			$("#submitFilter").prop('disabled', true);
 		}
 	 });	*/
+	
+	function filterResetFieldManagement(formID){
+		$('#'+formID).trigger('reset');
+		$("label").removeClass('active');
+		filterFieldTable();
+	}

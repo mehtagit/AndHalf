@@ -33,18 +33,23 @@ function table(url,dataUrl){
 
 
 	var filterRequest={
-			
+			"endDate":$('#endDate').val(),
+			"startDate":$('#startDate').val(),
 			"featureName": Feature,
-
 			"ruleName": Rule,
-
 			"userType": User,
 			"userId":parseInt($("body").attr("data-userID")),
 			"featureId":parseInt(featureId),
 			"userTypeId": parseInt($("body").attr("data-userTypeID")),
 			"userName":$("body").attr("data-username"),
-			"roleType":$("body").attr("data-roleType")
-	}
+			"roleType":$("body").attr("data-roleType"),
+			"ruleOrder":$('#actionOrder').val(),
+			"graceAction":$('#actionGracePeriod').val(),
+			"postGraceAction":$('#actionPostGracePeriod').val(),
+			"failedRuleActionGrace":$('#actionMoveToGracePeriod').val(),
+			"failedRuleActionPostGrace":$('#actionMoveToPostGracePeriod').val(),
+			"output":$('#expectedOutput').val()
+			}
 	if(lang=='km'){
 		var langFile='./resources/i18n/khmer_datatable.json';
 	}
@@ -64,14 +69,18 @@ function table(url,dataUrl){
 				destroy:true,
 				"serverSide": true,
 				orderCellsTop : true,
-				"ordering" : false,
+				"ordering" : true,
 				"bPaginate" : true,
-				"bFilter" : true,
+				"bFilter" : false,
 				"bInfo" : true,
 				"bSearchable" : true,
 				"oLanguage": {
 					"sEmptyTable": "No records found in the system"
 			    },
+			    "aaSorting": [],
+				columnDefs: [
+					   { orderable: false, targets: -1 }
+					],
 				initComplete: function() {
 			 		$('.dataTables_filter input')
    .off().on('keyup', function(event) {
@@ -136,6 +145,44 @@ function pageButtons(Url){
 			var elem='<p class="PageHeading">'+data.pageTitle+'</p>';		
 			$("#pageHeader").append(elem);
 			var button=data.buttonList;
+			var date=data.inputTypeDateList;
+			for(i=0; i<date.length; i++){
+				
+				if(date[i].type === "date"){
+				$("#FieldTableDiv").append("<div class='input-field'>"+
+						"<div id='enddatepicker' class='input-group'>"+
+						"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
+						"<label for="+date[i].id+">"+date[i].title
+						+"</label>"+
+						"<span	class='input-group-addon' style='color: #ff4081'>"+
+						"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
+				$( "#"+date[i].id ).datepicker({
+					dateFormat: "yy-mm-dd",
+					maxDate: new Date()
+				});
+			}else if(date[i].type === "text"){
+				
+				$("#FieldTableDiv").append("<div class='input-field' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+			}
+			else if(date[i].type === "select"){
+
+					var dropdownDiv=
+						$("#FieldTableDiv").append("<div class='selectDropdwn'>"+
+								
+								"<div class='select-wrapper select2  initialized'>"+
+								"<span class='caret'>"+"</span>"+
+								"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
+
+								"<select id="+date[i].id+" class='select2 initialized'>"+
+								"<option value=''>"+date[i].title+
+								"</option>"+
+								"</select>"+
+								"</div>"+
+						"</div>");
+				
+				}
+			}
+			
 			/*			var date=data.inputTypeDateList;
 					for(i=0; i<date.length; i++){
 						if(date[i].type === "date"){
@@ -157,7 +204,7 @@ function pageButtons(Url){
 					} */
 
 			// dynamic dropdown portion
-			var dropdown=data.dropdownList;
+			/*var dropdown=data.dropdownList;
 			for(i=0; i<dropdown.length; i++){
 				var dropdownDiv=
 					$("#FieldTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
@@ -172,10 +219,12 @@ function pageButtons(Url){
 							"</select>"+
 							"</div>"+
 					"</div>");
-			}
+			}*/
 
-			$("#FieldTableDiv").append("<div class=' col s3 m2 l1'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
-			$("#FieldTableDiv").append("<div class=' col s3 m2 l1'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportRuleFeatureMapping()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+			$("#FieldTableDiv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+			$("#FieldTableDiv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
+			$("#FieldTableDiv").append("<div class='filter_btn'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportRuleFeatureMapping()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+			$('#clearFilter').attr("onclick", "filterResetFeatureMapping('viewfilter')");	
 			for(i=0; i<button.length; i++){
 				$('#'+button[i].id).text(button[i].buttonTitle);
 				if(button[i].type === "HeaderButton"){
@@ -214,18 +263,18 @@ function pageButtons(Url){
 				}
 			});
 
-		/*	$.getJSON('./getDropdownList/PERIOD_ACTION', function(data) {
+			$.getJSON('./getDropdownList/PERIOD_ACTION', function(data) {
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].interp).text(data[i].interp)
-					.appendTo('#GracePeriod,#PostGracePeriod');
+					.appendTo('#actionGracePeriod,#actionPostGracePeriod');
 				}
 			});
-*/
+
 
 			$.getJSON('./getDropdownList/MOVE_TO_NEXT', function(data) {
 				for (i = 0; i < data.length; i++) {
 					$('<option>').val(data[i].interp).text(data[i].interp)
-					.appendTo('#MoveToGracePeriod,#MoveToPostGracePeriod');
+					.appendTo('#MoveToGracePeriod,#MoveToPostGracePeriod,#actionMoveToGracePeriod,#actionMoveToPostGracePeriod');
 				}
 			});
 
@@ -516,7 +565,13 @@ function exportRuleFeatureMapping(){
 				"userName":$("body").attr("data-username"),
 				"roleType":$("body").attr("data-roleType"),
 				"pageNo":parseInt(pageNo),
-				"pageSize":parseInt(pageSize)
+				"pageSize":parseInt(pageSize),
+				"ruleOrder":$('#actionOrder').val(),
+				"graceAction":$('#actionGracePeriod').val(),
+				"postGraceAction":$('#actionPostGracePeriod').val(),
+				"failedRuleActionGrace":$('#actionMoveToGracePeriod').val(),
+				"failedRuleActionPostGrace":$('#actionMoveToPostGracePeriod').val(),
+				"output":$('#expectedOutput').val()
 		}
 	}else{
 		var filterRequest={
@@ -529,7 +584,14 @@ function exportRuleFeatureMapping(){
 				"userName":$("body").attr("data-username"),
 				"roleType":$("body").attr("data-roleType"),
 				"pageNo":parseInt(pageNo),
-				"pageSize":parseInt(pageSize)
+				"pageSize":parseInt(pageSize),
+				"ruleOrder":$('#actionOrder').val(),
+				"graceAction":$('#actionGracePeriod').val(),
+				"postGraceAction":$('#actionPostGracePeriod').val(),
+				"failedRuleActionGrace":$('#actionMoveToGracePeriod').val(),
+				"failedRuleActionPostGrace":$('#actionMoveToPostGracePeriod').val(),
+				"output":$('#expectedOutput').val()
+				
 		}
 	}
 
@@ -608,4 +670,11 @@ function setData_view(result){
 	$("#viewOutput").val(result.output);
 	result.modifiedBy =="" || result.modifiedBy==null ?  $("#viewModifiedBy").val('NA'): $("#viewModifiedBy").val(result.modifiedBy);
 	
+}
+
+
+function filterResetFeatureMapping(formID){
+	$('#'+formID).trigger('reset');
+	$("label").removeClass('active');
+	filter(lang);
 }
