@@ -88,13 +88,18 @@ public class RuleListDatatableController {
 					"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Description" :
 						"4".equalsIgnoreCase(request .getParameter("order[0][column]")) ? "Status"
 								:"Modified On";
-		String order;
-		if("Modified On".equalsIgnoreCase(column)) {
-			order="desc";
-		}
-		else {
-			order=request.getParameter("order[0][dir]");
-		}
+		
+log.info("---->"+request.getParameter("order[0][column]")+"============>"+request.getParameter("order[0][dir]"));
+String order;
+if ("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")==null) {
+order = "desc";
+} 
+else if("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")=="asc"){
+order ="asc";
+}
+else {
+order = request.getParameter("order[0][dir]");
+} 
 		filterRequest.setOrderColumnName(column);
 		filterRequest.setOrder(order);
 		
@@ -232,9 +237,9 @@ public class RuleListDatatableController {
 
 //********************************************** open register page or edit popup *****************************
 @GetMapping("/viewRuleListAPI/{id}")
-public @ResponseBody RuleListContent view(@PathVariable("id") Integer id)
+public @ResponseBody RuleListContent view(@PathVariable("id") Integer id,HttpServletRequest request,HttpSession session)
 {
-	RuleListContent ruleListContent= new RuleListContent();
+RuleListContent ruleListContent= new RuleListContent();
 ruleListContent=feignCleintImplementation.fetchData(id);
 log.info(" response::::"+ruleListContent);
 
@@ -250,10 +255,12 @@ return ruleListContent;
 //************************************************ update consignment record page********************************************************************************/
 
 @RequestMapping(value= {"/updateRuleList"},method={org.springframework.web.bind.annotation.RequestMethod.GET,org.springframework.web.bind.annotation.RequestMethod.POST}) 
-public @ResponseBody GenricResponse updateRecord(@RequestBody RuleListContent ruleListContent) 
+public @ResponseBody GenricResponse updateRecord(@RequestBody RuleListContent ruleListContent,HttpSession session) 
 {
-	log.info("request::::::"+ruleListContent);
 	//RuleListContent ruleList = new RuleListContent();
+	ruleListContent.setPublicIp(session.getAttribute("publicIP").toString());
+	ruleListContent.setBrowser(session.getAttribute("browser").toString());
+	log.info("request::::::"+ruleListContent);
 GenricResponse response = feignCleintImplementation.update(ruleListContent);
 log.info(" response from update Consignment api="+response);
 return response;

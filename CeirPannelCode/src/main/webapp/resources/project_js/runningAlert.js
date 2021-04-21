@@ -189,7 +189,7 @@
 								 maxDate: new Date()
 					        });
 						}else if(date[i].type === "text"){
-							$("#alertTableDiv").append("<div class='input-field' ><input type="+date[i].type+" id="+date[i].id+" maxlength='19' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+							$("#alertTableDiv").append("<div class='input-field' ><input type="+date[i].type+" id="+date[i].id+" maxlength='200' /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 						}else if(date[i].type === "select"){
 							var dropdownDiv=
 								$("#alertTableDiv").append("<div class='selectDropdwn'>"+

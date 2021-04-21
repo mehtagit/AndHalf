@@ -59,7 +59,8 @@
 					"email" : $('#emailID').val(),
 					"phoneNo" : $('#phone').val(),
 					//"username" : $('#userName').val() == "" || $('#userName').val() == undefined ? $("body").attr("data-selected-username") : $('#userName').val()
-					"username" : $('#userName').val()
+					"username" :  $("body").attr("data-selected-username"),
+					"filteredUsername" : $('#userName').val()
 			}		
 		}else{
 			var filterRequest={
@@ -74,12 +75,14 @@
 				"userType":$("body").attr("data-roleType"),
 				"email" : $('#emailID').val(),
 				"phoneNo" : $('#phone').val(),
-				"username" : $("body").attr("session-valuetxnid") == "null" ? $('#userName').val() : $("body").attr("session-valuetxnid"),
+				"username" :  $("body").attr("data-selected-username"),
+				"filteredUsername" : $('#userName').val()
+				//"username" : $("body").attr("session-valuetxnid") == "null" ? $('#userName').val() : $("body").attr("session-valuetxnid"),
 				//"username" : $('#userName').val() == "" || $('#userName').val() == undefined ? $("body").attr("data-selected-username") : $('#userName').val()
 				
       }}
 
-
+		console.log(JSON.stringify(filterRequest));
 
 		if(lang=='km'){
 			var langFile="./resources/i18n/khmer_datatable.json";

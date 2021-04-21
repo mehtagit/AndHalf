@@ -13,7 +13,10 @@ public class RuleListContent {
 	private String state;
 	private String output;
 	private String modifiedBy;
-
+	private String publicIp,browser;
+	
+	
+	
 
 	// parameters 	
 
@@ -71,38 +74,20 @@ public class RuleListContent {
 	public void setOutput(String output) {
 		this.output = output;
 	}
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("RuleListContent [id=");
-		builder.append(id);
-		builder.append(", createdOn=");
-		builder.append(createdOn);
-		builder.append(", modifiedOn=");
-		builder.append(modifiedOn);
-		builder.append(", name=");
-		builder.append(name);
-		builder.append(", description=");
-		builder.append(description);
-		builder.append(", state=");
-		builder.append(state);
-		builder.append(", output=");
-		builder.append(output);
-		builder.append(", modifiedBy=");
-		builder.append(modifiedBy);
-		builder.append(", userName=");
-		builder.append(userName);
-		builder.append(", featureId=");
-		builder.append(featureId);
-		builder.append(", userTypeId=");
-		builder.append(userTypeId);
-		builder.append(", roleType=");
-		builder.append(roleType);
-		builder.append(", userId=");
-		builder.append(userId);
-		builder.append("]");
-		return builder.toString();
+	
+	public String getPublicIp() {
+		return publicIp;
 	}
+	public void setPublicIp(String publicIp) {
+		this.publicIp = publicIp;
+	}
+	public String getBrowser() {
+		return browser;
+	}
+	public void setBrowser(String browser) {
+		this.browser = browser;
+	}
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -133,5 +118,42 @@ public class RuleListContent {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("RuleListContent [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", name=");
+		builder.append(name);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", state=");
+		builder.append(state);
+		builder.append(", output=");
+		builder.append(output);
+		builder.append(", modifiedBy=");
+		builder.append(modifiedBy);
+		builder.append(", publicIp=");
+		builder.append(publicIp);
+		builder.append(", browser=");
+		builder.append(browser);
+		builder.append(", userName=");
+		builder.append(userName);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", roleType=");
+		builder.append(roleType);
+		builder.append(", userId=");
+		builder.append(userId);
+		builder.append("]");
+		return builder.toString();
+	}
+	
+	
 }

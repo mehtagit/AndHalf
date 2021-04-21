@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -83,7 +84,7 @@ public class CurrencyController {
 
 		@PostMapping("exportCurrencyData")
 		@ResponseBody
-		public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session)
+		public FileExportResponse exportToExcel(@RequestBody FilterRequest filterRequest,HttpSession session,@RequestParam(name = "source", defaultValue = "menu", required = false) String source)
 		{
 			Gson gsonObject=new Gson();
 			Object response;
@@ -95,7 +96,7 @@ public class CurrencyController {
 			filterRequest.setPublicIp(session.getAttribute("publicIP").toString());
 		    filterRequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("filterRequest:::::::::"+filterRequest);
-			response= userProfileFeignImpl.viewCurrencyRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file);
+			response= userProfileFeignImpl.viewCurrencyRequest(filterRequest, filterRequest.getPageNo(), filterRequest.getPageSize(), file,source);
 			FileExportResponse fileExportResponse;
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
