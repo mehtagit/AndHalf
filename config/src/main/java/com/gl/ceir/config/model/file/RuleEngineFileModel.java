@@ -7,18 +7,24 @@ public class RuleEngineFileModel {
 	@CsvBindByName(column = "Created On")
 	@CsvBindByPosition(position = 0)
 	private String createdOn;
+	
 	@CsvBindByName(column = "Modified On")
 	@CsvBindByPosition(position = 1)
 	private String modifiedOn;
-	@CsvBindByName(column = "Status")
-	@CsvBindByPosition(position = 2)
-	private String state;
+	
 	@CsvBindByName(column = "Name")
-	@CsvBindByPosition(position = 3)
+	@CsvBindByPosition(position = 2)
 	private String name;
+	
 	@CsvBindByName(column = "Description")
-	@CsvBindByPosition(position = 4)
+	@CsvBindByPosition(position = 3)
 	private String description;
+	
+	@CsvBindByName(column = "Status")
+	@CsvBindByPosition(position = 4)
+	private String state;
+	
+	
 	public String getCreatedOn() {
 		return createdOn;
 	}

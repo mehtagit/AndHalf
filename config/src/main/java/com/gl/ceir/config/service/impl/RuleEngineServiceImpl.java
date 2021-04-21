@@ -35,6 +35,7 @@ import com.gl.ceir.config.model.constants.Features;
 import com.gl.ceir.config.model.constants.SearchOperation;
 import com.gl.ceir.config.model.constants.SubFeatures;
 import com.gl.ceir.config.model.file.RuleEngineFileModel;
+import com.gl.ceir.config.model.file.SystemMgtFileModel;
 import com.gl.ceir.config.repository.AuditTrailRepository;
 import com.gl.ceir.config.repository.RuleEngineRepository;
 import com.gl.ceir.config.repository.SystemConfigurationDbRepository;
@@ -167,14 +168,37 @@ public class RuleEngineServiceImpl {
 		if(Objects.nonNull(filterRequest.getEndDate()) && !filterRequest.getEndDate().isEmpty())
 			cmsb.with(new SearchCriteria("createdOn", filterRequest.getEndDate() , SearchOperation.LESS_THAN, Datatype.DATE));
 		
-		if(Objects.nonNull(filterRequest.getState()))
-			cmsb.with(new SearchCriteria("state", filterRequest.getState(), SearchOperation.EQUALITY, Datatype.STRING));
+		//if(Objects.nonNull(filterRequest.getState()))
+			//cmsb.with(new SearchCriteria("state", filterRequest.getState(), SearchOperation.EQUALITY, Datatype.STRING));
 		
-		if(Objects.nonNull(filterRequest.getDescription()))
-			cmsb.with(new SearchCriteria("description", filterRequest.getDescription(), SearchOperation.EQUALITY, Datatype.STRING));
+		if(filterRequest.getState()==null) {
+			logger.info("inside if state : " +filterRequest.getState());
+		}else{
+			logger.info("state Recieved =" +filterRequest.getState());
+			cmsb.with(new SearchCriteria("state",filterRequest.getState(), SearchOperation.EQUALITY, Datatype.STRING));
+		}
 		
-		if(Objects.nonNull(filterRequest.getName()))
-			cmsb.with(new SearchCriteria("name", filterRequest.getName(), SearchOperation.EQUALITY, Datatype.STRING));
+		
+		//if(Objects.nonNull(filterRequest.getDescription()))
+			//cmsb.with(new SearchCriteria("description", filterRequest.getDescription(), SearchOperation.LIKE, Datatype.STRING));
+		
+		if(filterRequest.getDescription()==null) {
+			logger.info("inside if description: " +filterRequest.getDescription());
+		}else{
+			logger.info("description Recieved =" +filterRequest.getDescription());
+			cmsb.with(new SearchCriteria("description",filterRequest.getDescription(), SearchOperation.LIKE, Datatype.STRING));
+		}
+	
+		
+		//if(Objects.nonNull(filterRequest.getName()))
+			//cmsb.with(new SearchCriteria("name", filterRequest.getName(), SearchOperation.LIKE, Datatype.STRING));
+		
+		if(filterRequest.getName()==null) {
+			logger.info("inside if Name : " +filterRequest.getName());
+		}else{
+			logger.info("name Recieved =" +filterRequest.getName());
+			cmsb.with(new SearchCriteria("name",filterRequest.getName(), SearchOperation.LIKE, Datatype.STRING));
+		}
 		
 		 if(Objects.nonNull(filterRequest.getSearchString()) && !filterRequest.getSearchString().isEmpty()){
 			 
@@ -247,6 +271,7 @@ public class RuleEngineServiceImpl {
 			writer = Files.newBufferedWriter(Paths.get(filePath+fileName));
 //			builder = new StatefulBeanToCsvBuilder<UserProfileFileModel>(writer);
 //			csvWriter = builder.withQuotechar(CSVWriter.DEFAULT_QUOTE_CHARACTER).build();
+			mapStrategy.setType(RuleEngineFileModel.class);
 //			
 			builder = new StatefulBeanToCsvBuilder<>(writer);
 			csvWriter = builder.withMappingStrategy(mapStrategy).withSeparator(',').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER).build();
