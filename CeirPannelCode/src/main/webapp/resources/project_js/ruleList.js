@@ -26,16 +26,24 @@
 		//**************************************************filter table**********************************************
 
 		function table(url,dataUrl){
-		var state= $("#State").val() =='null' ? undefined : $("#State").val();
+		
+		alert("state--"+state+" name----"+name+" description----" +description);
+		
+		var state= $("#State").val() == '' ||  $("#State").val() == undefined ? null : $("#State").val();
+		var name = $("#filterRule").val() =='' ||  $("#filterRule").val() == undefined ? null  : $("#filterRule").val();
+		var description = $("#filterDescription").val() == '' ||  $("#filterDescription").val() == undefined ? null  : $("#filterDescription").val();
+		
+		alert("state1--"+state+" name1----"+name+" description1----" +description);
+		
 			var filterRequest={
-					  "state": state,
+					  	"state": state,
 						"userId":parseInt($("body").attr("data-userID")),
 						"featureId":parseInt(featureId),
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
 						"userName":$("body").attr("data-selected-username"),
-						"roleType":$("body").attr("data-roleType"),
-						"name" :  $("#filterRule").val(),
-						"description" : $("#filterDescription").val(),
+					"roleType":$("body").attr("data-roleType"),
+						"name" :  name,
+						"description" : description,
 					
 			}
 			if(lang=='km'){

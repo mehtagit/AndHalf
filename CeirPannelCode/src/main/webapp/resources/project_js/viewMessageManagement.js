@@ -380,6 +380,11 @@ function exportData(){
 	var pageNo=info.page;
 	var pageSize =info.length;
 	var Feature=  $("#feature").val() == '' || $("#feature").val() == undefined ? null : $("#feature").val();
+	if(Feature=="Feature")
+	{
+	Feature=null;
+	}
+ 
 	var filterRequest={
 			"endDate":$('#endDate').val(),
 			"startDate":$('#startDate').val(),

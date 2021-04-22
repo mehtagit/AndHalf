@@ -18,7 +18,7 @@
 
          $(window).load(function(){
 			$('div#initialloader').fadeIn('fast');
-			currencyFieldTable(lang);
+			currencyFieldTable(lang,null);
 			sessionStorage.removeItem("session-value");
 			pageRendering();
 			
@@ -36,8 +36,16 @@
 		
 		//**************************************************filter table**********************************************
 		
-		function currencyFieldTable(lang){
-			
+		function currencyFieldTable(lang,source){
+			var source__val;
+			if(source == 'filter') {
+				source__val= source;
+				$("body").attr("data-session-source","filter");
+			}
+			else{
+				source__val = $("body").attr("data-session-source");
+				
+			}
 			var filterRequest={
 					"endDate":$('#endDate').val(),
 					"startDate":$('#startDate').val(),
@@ -91,7 +99,7 @@
 	       });
 		   },
 						ajax: {
-							url : 'currencyManagementData',
+							url : 'currencyManagementData?source='+source__val,
 							type: 'POST',
 							dataType: "json",
 							data : function(d) {
@@ -243,7 +251,7 @@
 		}
 		
 		$(document).on('change', '#currency', function(){
-			 $('#currency').val()== 0 ? $("#currencyDiv").css("display", "none") : $("#currencyDiv").css("display", "block");
+			 $('#currency').val()== 0 ? $("#currencyDiv").css("display", "none") && $("#dollar").attr("required", false) : $("#currencyDiv").css("display", "block") && $("#dollar").attr("required", true);;
 		});	
 	
 	/*----------------------------------- Save Field ----------------------------------------- */
@@ -471,7 +479,10 @@
 				"userType":$("body").attr("data-roleType"),
 				"username" : $("body").attr("data-selected-username"),
 				"pageNo":parseInt(pageNo),
-				"pageSize":parseInt(pageSize)
+				"pageSize":parseInt(pageSize),
+				"month" : parseInt($('#filterMonth').val()),
+				"riel" :  parseFloat($('#filterCambodian').val()),
+				"dollar" :	parseFloat($('#filterdoller').val())
 		}
 		
 		//console.log(JSON.stringify(filterRequest))
@@ -483,7 +494,7 @@
 		});
 		
 		$.ajax({
-			url: './exportCurrencyData',
+			url: './exportCurrencyData?source=ViewExport',
 			type: 'POST',
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',

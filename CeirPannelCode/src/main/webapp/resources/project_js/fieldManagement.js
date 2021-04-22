@@ -69,7 +69,7 @@
 					"featureId":parseInt(featureId),
 					"userTypeId": parseInt($("body").attr("data-userTypeID")),
 					"userType":$("body").attr("data-roleType"),
-					"username" : $("body").attr("data-selected-username"),
+					"userName" : $("body").attr("data-selected-username"),
 					"displayName" : displayName,
 					"description":$('#decriptionID').val(),
 					"field":$('#fieldID').val()
@@ -405,10 +405,11 @@
 		$("#editFieldId").val(result.tagId);
 		$("#editdisplayName").val(result.displayName);
 		result.modifiedBy =="" || result.modifiedBy==null ?  $("#editModifiedBy").val('NA'): $("#editModifiedBy").val(result.modifiedBy);
-		$("label[class='center-align']").addClass('active');
+		//$("label[class='center-align']").addClass('active');
 		$("label[for='editdescription']").addClass('active');
 		$("label[for='editInterp']").addClass('active');
 		$("label[for='editFieldId']").addClass('active');
+		$("label[for='editModifiedBy']").addClass('active');
 		
 	}
 	
@@ -536,6 +537,9 @@
 		var pageSize =info.length;
 		
 		window.tag_val= $('#filterTagId').val() == undefined || $('#filterTagId').val() == '-1' ? TagId : $('#filterTagId').val();
+		if(window.tag_val=="" || window.tag_val==null){
+			window.tag_val=TagId;
+		}
 		var displayName = $('#displayName').val() == "" ? "" : $('#displayName').val();
 		
 	
@@ -550,10 +554,12 @@
 				"tag": window.tag_val,
 				"userId":parseInt(userId),
 				"featureId":parseInt(featureId),
-				"username" : $("body").attr("data-selected-username"),
+				"userName" : $("body").attr("data-selected-username"),
 				"pageNo":parseInt(pageNo),
 				"pageSize":parseInt(pageSize),
-				"displayName" : displayName
+				"displayName" : displayName,
+				"description":$('#decriptionID').val(),
+				"field":$('#fieldID').val()
 		}
 		
 		//console.log(JSON.stringify(filterRequest))

@@ -1736,7 +1736,7 @@ type="submit" ><spring:message code="button.update" /></button>
 
 	<script type="text/javascript"
 		src="${context}/resources/i18n_library/min.js"></script>
-			<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+			
 <script type="text/javascript"
 		src="${context}/resources/project_js/backbutton.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
@@ -1755,6 +1755,9 @@ type="submit" ><spring:message code="button.update" /></button>
 		
 		<script type="text/javascript"
 		src="${context}/resources/project_js/validationMsg.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		<script type="text/javascript" src="${context}/resources/project_js/globalVariables.js"></script>
+		<script type="text/javascript"
+		src="${context}/resources/ajax/keyBoardShortcut.js?version=<%= (int) (Math.random() * 10) %>"></script>
 		<script type="text/javascript">
 		$('#editstolenBulkDatePeriod').datepicker({
 			dateFormat : "yy-mm-dd",

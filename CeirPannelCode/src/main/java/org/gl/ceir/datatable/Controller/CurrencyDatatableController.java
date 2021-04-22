@@ -53,7 +53,8 @@ public class CurrencyDatatableController {
 	CurrencyPaginationModel currencyPaginationModel;
 	
 	@PostMapping("currencyManagementData")
-	public ResponseEntity<?> viewCurrencyRecord(@RequestParam(name="type",defaultValue = "currencyManagement",required = false) String role, HttpServletRequest request,HttpSession session) {
+	public ResponseEntity<?> viewCurrencyRecord(@RequestParam(name="type",defaultValue = "currencyManagement",required = false) String role, HttpServletRequest request,HttpSession session,
+			@RequestParam(name = "source", defaultValue = "menu", required = false) String source) {
 		//String userType = (String) session.getAttribute("usertype");
 		//int userId=	(int) session.getAttribute("userid");
 		int file=0;
@@ -66,7 +67,6 @@ public class CurrencyDatatableController {
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
 		filterrequest.setSearchString(request.getParameter("search[value]"));
 		
-		log.info("---->"+request.getParameter("order[0][column]")+"============>"+request.getParameter("order[0][dir]"));
 		String column="0".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Created On":
 			"1".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Modified On":
 				"2".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Month":
@@ -75,13 +75,18 @@ public class CurrencyDatatableController {
 								"5".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Cambodian Riel":
 									"6".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "US Dollar"
 											:"Modified On";
+		log.info("---->"+request.getParameter("order[0][column]")+"============>"+request.getParameter("order[0][dir]"));
 		String order;
-		if("Modified On".equalsIgnoreCase(column)) {
-			order="desc";
+		if ("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")==null) {
+			order = "desc";
+		} 
+		else if("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")=="asc"){
+			order ="asc";
 		}
 		else {
-			order=request.getParameter("order[0][dir]");
-		}
+			order = request.getParameter("order[0][dir]");
+		} 
+		
 		filterrequest.setOrderColumnName(column);
 		filterrequest.setOrder(order);
 		
@@ -90,7 +95,7 @@ public class CurrencyDatatableController {
 			filterrequest.setPublicIp(session.getAttribute("publicIP").toString());
 			filterrequest.setBrowser(session.getAttribute("browser").toString());
 			log.info("request send to the filter api ="+filterrequest);
-			Object response = userProfileFeignImpl.viewCurrencyRequest(filterrequest,pageNo,pageSize,file);
+			Object response = userProfileFeignImpl.viewCurrencyRequest(filterrequest,pageNo,pageSize,file,source);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
@@ -154,7 +159,7 @@ public class CurrencyDatatableController {
 			log.info("session value user Type=="+session.getAttribute("usertype"));
 			
 			String[] names = { "HeaderButton", Translator.toLocale("button.addCurrency"), "AddCurrencyAddress()", "btnLink",
-					"FilterButton", Translator.toLocale("button.filter"),"currencyFieldTable(" + ConfigParameters.languageParam + ")", "submitFilter" };
+					"FilterButton", Translator.toLocale("button.filter"),"currencyFieldTable(" + ConfigParameters.languageParam + ",'filter')", "submitFilter" };
 			for(int i=0; i< names.length ; i++) {
 				button = new Button();
 				button.setType(names[i]);
