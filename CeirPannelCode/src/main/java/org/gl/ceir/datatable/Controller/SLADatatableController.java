@@ -141,7 +141,7 @@ public class SLADatatableController {
 	@PostMapping("sla/pageRendering")
 	public ResponseEntity<?> pageRendering(HttpSession session){
 
-		String userType = (String) session.getAttribute("usertype");
+		//String userType = (String) session.getAttribute("usertype");
 		String userStatus = (String) session.getAttribute("userStatus");
 		
 		InputFields inputFields = new InputFields();
@@ -172,11 +172,12 @@ public class SLADatatableController {
 			pageElement.setButtonList(buttonList);
 			
 		
-			//input type date list		
+			
+		
+			
 			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","",
-					"text",Translator.toLocale("table.UserName"),"username","20","text",Translator.toLocale("table.transactionID"),"transactionid","20",
-					"select",Translator.toLocale("table.userType"),"usertype","","select",Translator.toLocale("table.featureName"),"featureName","",
-					"select",Translator.toLocale("table.status"),"status",""};
+					"text",Translator.toLocale("table.UserName"),"username","","text",Translator.toLocale("table.transactionID"),"transactionid","",
+					"select",Translator.toLocale("table.userType"),"userType","","select",Translator.toLocale("table.featureName"),"feature",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);
@@ -188,12 +189,11 @@ public class SLADatatableController {
 				dateRelatedFields.setClassName(dateParam[i]);
 				inputTypeDateList.add(dateRelatedFields);
 			}
-			
+
 			pageElement.setInputTypeDateList(inputTypeDateList);
 			pageElement.setUserStatus(userStatus);
-			return new ResponseEntity<>(pageElement, HttpStatus.OK); 
-		
-		
+			return new ResponseEntity<>(pageElement, HttpStatus.OK); 	
+
 	}
 	
 	

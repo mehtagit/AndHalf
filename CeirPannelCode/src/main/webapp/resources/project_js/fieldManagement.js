@@ -10,6 +10,7 @@
 		var rejectedMsg,consignmentApproved,errorMsg,havingTxnID,updateMsg,hasBeenUpdated;
 		var consignmentDeleted,deleteInProgress;
 		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
+		var action = $("body").attr("data-action"); 
 		
 		var url = new URL(window.location.href);
 		url.searchParams.get("action")
@@ -52,6 +53,7 @@
 		//**************************************************filter table**********************************************
 		
 		function filterFieldTable(lang){
+			alert("action is--"+action);
 			window.tag_val= $('#filterTagId').val() == undefined ? TagId : $('#filterTagId').val();
 			if(window.tag_val=="" || window.tag_val==null){
 				window.tag_val=TagId;
@@ -85,7 +87,8 @@
 			});
 			
 			$.ajax({
-				url: 'headers?type=fieldManagement&lang='+lang,
+				//url: 'headers?type=fieldManagement?lang='+lang+'&action='+action,
+				url: 'headers?type=fieldManagement&lang='+lang+'&action='+action,
 				/*	headers: {"Accept-Language": "en"},*/
 				type: 'POST',
 				dataType: "json",
@@ -116,7 +119,7 @@
 	       });
 		   },
 						ajax: {
-							url : 'fieldManagementData',
+							url : 'fieldManagementData?action='+action,
 							type: 'POST',
 							dataType: "json",
 							data : function(d) {

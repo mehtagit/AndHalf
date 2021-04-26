@@ -42,14 +42,19 @@
 			function DataTable(lang){
 				
 				var featureName = $('#feature').val() == null ? null : $("#feature option:selected").text();
-				
+				var username = $("#username").val() != "" ? $("#username").val() : $("#username").val();
 				//var usertype = $('#userType').val() == null ? null : $("#userType option:selected").text(); 
 				
 				var filterRequest={
 						//"endDate":$('#endDate').val(),
 						//"startDate":$('#startDate').val(),
+						
+						"filteredUsername": username,
+						"txnId":$('#transactionid').val(),
+						
 						"feature" : parseInt($('#feature').val()),
 						"usertype" : parseInt($('#userType').val()),
+						
 						"username" : $("body").attr("data-selected-username"),
 						"featureId":parseInt(featureId),
 						"userTypeId": parseInt($("body").attr("data-userTypeID")),
@@ -144,32 +149,31 @@
 					dataType: "json",
 					success: function(data){
 						data.userStatus == "Disable" ? $('#btnLink').addClass( "eventNone" ) : $('#btnLink').removeClass( "eventNone" );
-
-
+						
 						var elem='<p class="PageHeading">'+data.pageTitle+'</p>';		
 						$("#pageHeader").append(elem);
 						var button=data.buttonList;
 						var date=data.inputTypeDateList;
 						for(i=0; i<date.length; i++){
 							if(date[i].type === "date"){
-								$("#slaTableDiv").append("<div class='input-field'>"+
+								$("#alertTableDiv").append("<div class='input-field'>"+
 									"<div id='enddatepicker' class='input-group'>"+
 									"<input class='form-control datepicker' type='text' id="+date[i].id+" autocomplete='off' onchange='checkDate(startDate,endDate)'>"+
 									"<label for="+date[i].id+">"+date[i].title
 									+"</label>"+
 									"<span	class='input-group-addon' style='color: #ff4081'>"+
 									"<i	class='fa fa-calendar' aria-hidden='true' style='float: right; margin-top: -37px;'>"+"</i>"+"</span>");
-							$( "#"+date[i].id ).datepicker({
+						/*	$( "#"+date[i].id ).datepicker({
 								dateFormat: "yy-mm-dd",
 								maxDate: new Date()
-							});
+							});*/
 						}else if(date[i].type === "text"){
-							$("#slaTableDiv").append("<div class='input-field' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+							$("#alertTableDiv").append("<div class='input-field' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
 						}
 						else if(date[i].type === "select"){
 
 								var dropdownDiv=
-									$("#slaTableDiv").append("<div class='selectDropdwn'>"+
+									$("#alertTableDiv").append("<div class='selectDropdwn'>"+
 											
 											"<div class='select-wrapper select2  initialized'>"+
 											"<span class='caret'>"+"</span>"+
@@ -184,33 +188,55 @@
 							
 							}
 						}
-						
-						var viewFilter="viewFilter";
-						$("#slaTableDiv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='submitFilter'></div>");
-						$("#slaTableDiv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
-						$("#slaTableDiv").append("<div class='filter_btn'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
-						$('#clearFilter').attr("onclick", "Resetfilter('viewFilter')");
+					
+					// dynamic dropdown portion
+						/*var dropdown=data.dropdownList;
+						for(i=0; i<dropdown.length; i++){
+							var dropdownDiv=
+								$("#alertTableDiv").append("<div class='col s6 m2 selectDropdwn'>"+
+									
+										"<div class='select-wrapper select2  initialized'>"+
+										"<span class='caret'>"+"</span>"+
+										"<input type='text' class='select-dropdown' readonly='true' data-activates='select-options-1023d34c-eac1-aa22-06a1-e420fcc55868' value='Consignment Status'>"+
 
-						for(i=0; i<button.length; i++){
-							$('#'+button[i].id).text(button[i].buttonTitle);
-							if(button[i].type === "HeaderButton"){
-								$('#'+button[i].id).attr("href", button[i].buttonURL);
-							}
-							else{
+										"<select id="+dropdown[i].id+" class='select2 initialized'>"+
+										"<option value='-1' selected>"+dropdown[i].title+
+										"</option>"+
+										"</select>"+
+										"</div>"+
+								"</div>");
+						}*/
+							var viewFilter="viewFilter";
+							$("#alertTableDiv").append("<div class='filter_btn'><button type='button' class='btn primary botton' id='submitFilter'/></div>");
+							$("#alertTableDiv").append("<div class='filter_btn'><button type='button'  class='btn primary botton' id='clearFilter'>"+$.i18n('clearFilter')+"</button></div>");
+							$("#alertTableDiv").append("<div class='filter_btn'><a href='JavaScript:void(0)' type='button' class='export-to-excel right'  onclick='exportAlertData()'>"+$.i18n('Export')+"<i class='fa fa-file-excel-o' aria-hidden='true'></i></a></div>");
+							$('#clearFilter').attr("onclick", "Resetfilter('viewFilter')");
+							for(i=0; i<button.length; i++){
+								$('#'+button[i].id).text(button[i].buttonTitle);
 								$('#'+button[i].id).attr("onclick", button[i].buttonURL);
 							}
-						}
+							
+							/*for(i=0; i<button.length; i++){
+								$('#'+button[i].id).text(button[i].buttonTitle);
+								if(button[i].type === "HeaderButton"){
+									$('#'+button[i].id).attr("href", button[i].buttonURL);
+								}
+								else{
+									$('#'+button[i].id).attr("onclick", button[i].buttonURL);
+								}
+							}
 
-						if(cierRoletype=="CEIRAdmin"){
-							$("#btnLink").css({display: "none"});
-						}
-
+							if(cierRoletype=="CEIRAdmin"){
+								$("#btnLink").css({display: "none"});
+							}
+*/
 					}
 
 				}); 
 				
 				setAllDropdown();
 			};
+			
 			
 			
 			function setAllDropdown(){
@@ -222,14 +248,14 @@
 				});
 				$.getJSON('./getAllfeatures', function(data) {
 				for (i = 0; i < data.length; i++) {
-				$('<option>').val(data[i].id).text(data[i].name).appendTo('#featureName');
+				$('<option>').val(data[i].id).text(data[i].name).appendTo('#feature');
 				}
 			});
 				
 				$.getJSON('./registrationUserType?type=2', function(data) {
 					for (i = 0; i < data.length; i++) {
 						$('<option>').val(data[i].id).text(data[i].usertypeName)
-						.appendTo('#usertype');
+						.appendTo('#userType');
 					}
 				});
 				

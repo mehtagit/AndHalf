@@ -127,7 +127,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
 							</div>
 							<form action="${context}/slaManagement" id="viewFilter"
 								method="post">
-								<div class="registrationTableDiv_box" id="slaTableDiv"
+								<div class="registrationTableDiv_box" id="alertTableDiv"
 									style="padding-bottom: 5px; background-color: #e2edef52;">
 									<div id="filterBtnDiv">
 									</div>

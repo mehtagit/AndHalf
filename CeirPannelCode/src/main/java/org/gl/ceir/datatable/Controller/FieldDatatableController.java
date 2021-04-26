@@ -54,7 +54,7 @@ public class FieldDatatableController {
 	public ResponseEntity<?> viewFieldManagement(
 			@RequestParam(name = "type", defaultValue = "FieldManagement", required = false) String role,
 			@RequestParam(name = "sourceType", required = false) String sourceType, HttpServletRequest request,
-			HttpSession session) {
+			HttpSession session,@RequestParam(name = "action", required = false) String Operation) {
 		List<List<Object>> finalList = new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
 		Gson gsonObject = new Gson();
@@ -99,6 +99,19 @@ public class FieldDatatableController {
 			List<FieldContantModel> paginationContentList = fieldPaginationModel.getContent();
 			if (paginationContentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
+			}else if(Operation.equals("viewAll")) {
+				for (FieldContantModel dataInsideList : paginationContentList) {
+					String createdOn = (String) dataInsideList.getCreatedOn();
+					String modifiedOn = (String) dataInsideList.getModifiedOn();
+					String displayName = dataInsideList.getDisplayName();
+					String interp = dataInsideList.getInterp();
+					String description = dataInsideList.getDescription();
+					String tagId = dataInsideList.getTagId();
+					Object[] finalData = {createdOn,modifiedOn, displayName, interp, tagId, description };
+					List<Object> finalDataList = new ArrayList<Object>(Arrays.asList(finalData));
+					finalList.add(finalDataList);
+					datatableResponseModel.setData(finalList);
+				}
 			} else {
 				for (FieldContantModel dataInsideList : paginationContentList) {
 					String createdOn = (String) dataInsideList.getCreatedOn();

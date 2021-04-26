@@ -251,7 +251,7 @@
 		}
 		
 		$(document).on('change', '#currency', function(){
-			 $('#currency').val()== 0 ? $("#currencyDiv").css("display", "none") && $("#dollar").attr("required", false) : $("#currencyDiv").css("display", "block") && $("#dollar").attr("required", true);;
+			 $('#currency').val()== 0 ? $("#currencyDiv").css("display", "none") && $("#dollar").attr("required", false) : $("#currencyDiv").css("display", "block") && $("#dollar").attr("required", true);
 		});	
 	
 	/*----------------------------------- Save Field ----------------------------------------- */
@@ -374,12 +374,16 @@
 		$("#editDollar").val(result.dollar);
 		result.modifiedBy =="" || result.modifiedBy==null ?  $("#editmodifiedBy").val('NA'): $("#editmodifiedBy").val(result.modifiedBy);
 		
+		$('#editCurrency').val()== "0" ? $("#editcurrencyDiv").css("display", "none") && $("#editDollar").attr("required", false) : $("#editcurrencyDiv").css("display", "block") && $("#editDollar").attr("required", true);
+		 
 		$("label[for='editMonth']").addClass('active');
 		$("label[for='editYear']").addClass('active');
 		$("label[for='editCurrency']").addClass('active');
 		$("label[for='editCambodianRiel']").addClass('active');
 		$("label[for='editDollar']").addClass('active');
 		$("label[for='editmodifiedBy']").addClass('active');
+		
+		$("#currency").val() == "0"
 	}
 	
 	

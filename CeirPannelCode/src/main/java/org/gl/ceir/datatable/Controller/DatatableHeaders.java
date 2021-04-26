@@ -21,7 +21,8 @@ public class DatatableHeaders {
 	@Autowired
 	Translator Translator;
 	@PostMapping("headers")
-	public ResponseEntity<?> headers(@RequestParam(name="type",defaultValue = "stock",required = false) String role){
+	public ResponseEntity<?> headers(@RequestParam(name="type",defaultValue = "stock",required = false) String role,
+			@RequestParam(name = "action", required = false) String Operation){
 		List<DatatableHeaderModel> dataTableInputs = new ArrayList<>();
 		try {
 
@@ -333,14 +334,21 @@ public class DatatableHeaders {
 			
 //fieldManagement
 			
-			else if("fieldManagement".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","tabel.field","table.displayName","tabel.fieldId","table.Description","table.action"};			
+			else if("fieldManagement".equals(role) && "viewAll".equals(Operation)) {
+				String[] headers = {"table.creationDate","table.lastupdatedate","tabel.field","table.displayName","tabel.fieldId","table.Description"};			
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}
 				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
 			}
 			
+			else if("fieldManagement".equals(role) && "filter".equals(Operation)) {
+				String[] headers = {"table.creationDate","table.lastupdatedate","tabel.field","table.displayName","tabel.fieldId","table.Description","table.action"};			
+				for(String header : headers) {
+					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
+				}
+				return new ResponseEntity<>(dataTableInputs, HttpStatus.OK);
+			}
 			
 			//Port Management
 			

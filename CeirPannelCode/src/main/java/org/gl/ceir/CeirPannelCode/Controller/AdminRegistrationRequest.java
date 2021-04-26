@@ -119,7 +119,7 @@ public class AdminRegistrationRequest {
 			@RequestParam(name="email",required = false) String email,
 			@RequestParam(name="phoneNo",required = false) String phoneNo,
 			@RequestParam(name="username",required = false) String username,
-			
+			@RequestParam(name="filteredUsername",required = false) String filteredUsername,
 			@RequestParam(name="source",defaultValue = "menu",required = false) String source,
 			
 			@RequestParam(name="pageSize") Integer pageSize,
@@ -149,6 +149,7 @@ public class AdminRegistrationRequest {
 		filterRequest.setEmail(email);
 		filterRequest.setPhoneNo(phoneNo);
 		filterRequest.setUsername(username);
+		filterRequest.setFilterUserName(filteredUsername);
 		
 		log.info(" request passed to the exportTo Excel Api =="+filterRequest+" *********** pageSize"+pageSize+"  pageNo  "+pageNo);
 		filterRequest.setPublicIp(session.getAttribute("publicIP").toString());

@@ -89,17 +89,17 @@ public class RuleListDatatableController {
 						"4".equalsIgnoreCase(request .getParameter("order[0][column]")) ? "Status"
 								:"Modified On";
 		
-log.info("---->"+request.getParameter("order[0][column]")+"============>"+request.getParameter("order[0][dir]"));
-String order;
-if ("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")==null) {
-order = "desc";
-} 
-else if("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")=="asc"){
-order ="asc";
-}
-else {
-order = request.getParameter("order[0][dir]");
-} 
+		log.info("---->"+request.getParameter("order[0][column]")+"============>"+request.getParameter("order[0][dir]"));
+		String order;
+		if ("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")==null) {
+			order = "desc";
+		} 
+		else if("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")=="asc"){
+			order ="asc";
+		}
+		else {
+			order = request.getParameter("order[0][dir]");
+		} 
 		filterRequest.setOrderColumnName(column);
 		filterRequest.setOrder(order);
 		

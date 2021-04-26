@@ -302,7 +302,7 @@ data-grievanceTxnId="${grievanceTxnId}" data-grievanceId="${grievanceId}" data-s
 													oninvalid="InvalidMsg(this,'input','<spring:message code="validation.200character" />');"
 													
 												  required   maxlength="200" class="materialize-textarea" style= "min-height: 8rem;"></textarea>
-                                            <label for="userRemark"><spring:message code="input.Remark" /><span
+                                            <label for="userRemark"><spring:message code="input.remarks" /><span
                                                     class="star">*</span></label>
                                         </div>
 

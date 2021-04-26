@@ -72,12 +72,16 @@ public class UserFeatureDatatable {
 					"3".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Feature" :
 						"4".equalsIgnoreCase(request.getParameter("order[0][column]")) ? "Period"	
 							:"Modified On";
+		log.info("---->"+request.getParameter("order[0][column]")+"============>"+request.getParameter("order[0][dir]"));
 		String order;
-		if("Modified On".equalsIgnoreCase(column)) {
-			order="desc";
+		if ("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")==null) {
+			order = "desc";
+		} 
+		else if("Modified On".equalsIgnoreCase(column) && request.getParameter("order[0][dir]")=="asc"){
+			order ="asc";
 		}
 		else {
-			order=request.getParameter("order[0][dir]");
+			order = request.getParameter("order[0][dir]");
 		}
 		filterrequest.setOrderColumnName(column);
 		filterrequest.setOrder(order);

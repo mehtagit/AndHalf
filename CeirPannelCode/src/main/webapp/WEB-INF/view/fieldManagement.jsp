@@ -94,6 +94,7 @@
 	data-selected-consignmentTxnId="${consignmentTxnId}"
 	data-selected-consignmentStatus="${consignmentStatus}"
 	data-selected-username="${username}"
+	data-action="${action}"
 	session-value="en"
 	session-valueTxnID="${not empty param.txnID ? param.txnID : 'null'}">
 

@@ -349,7 +349,7 @@
                                    <div class="input-field col s12 m6" style="margin-top: 38px;">
                                             <input type="text" id="edituserName" name="userName" disabled
                                                pattern="[a-zA-Z]{0,20}" required maxlength="18" />
-                                            <label for="edituserName"><spring:message code="registration.username"/><span class="star"> *</span></label>
+                                            <label for="edituserName"><spring:message code="registration.username"/></label>
                               </div>
                                    <div class="col s12 m6 selectDropdwn">         
                                 <label for="edituserType"><spring:message code="table.userType" /> <span class="star">*</span></label>

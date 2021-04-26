@@ -466,7 +466,8 @@
 		var endDate=$('#endDate').val();
 		var emailId = $('#emailID').val();
 		var phone = $('#phone').val();
-		var username = $('#userName').val();
+		var username = $("body").attr("data-selected-username");
+		var filteredUsername = $('#userName').val();
 		var asType =  $('#asType').val();
 		var userRoleTypeId =  $("#role").val();
 		var status =  $('#recentStatus').val();
@@ -482,16 +483,17 @@
 		var userID= (txnIdValue == 'null' && transactionIDValue == undefined)? -1 : -1;
 		
 		var source;
-		if(startdate != "" || endDate != "" || emailId !="" || phone != '' || username != "" || asType != "-1" ||  userRoleTypeId != "-1" || status != "-1"  ){
+		if(startdate != "" || endDate != "" || emailId !="" || phone != '' || filteredUsername != "" || asType != "-1" ||  userRoleTypeId != "-1" || status != "-1"  ){
 			source = "filter"
-			var username = $('#userName').val()
-			window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&email="+emailId+"&phoneNo="+phone+"&username="+username+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&featureId="+featureId+"&status="+status+"&source="+source+"&pageSize="+pageSize+"&pageNo="+pageNo+"&userTypeId="+usertypeId+"&userId="+userID+"";	
+			var filteredUsername = $('#userName').val()
+			window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&email="+emailId+"&phoneNo="+phone+"&username="+username+"&filteredUsername="+filteredUsername+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&featureId="+featureId+"&status="+status+"&source="+source+"&pageSize="+pageSize+"&pageNo="+pageNo+"&userTypeId="+usertypeId+"&userId="+userID+"";	
 		}else{
 			source =$("body").attr("data-session-source");
-			var username =  $("body").attr("session-valuetxnid") == "null" ? $('#userName').val() : $("body").attr("session-valuetxnid")
-			window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&email="+emailId+"&phoneNo="+phone+"&username="+username+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&featureId="+featureId+"&status="+status+"&source="+source+"&pageSize="+pageSize+"&pageNo="+pageNo+"&userTypeId="+usertypeId+"&userId="+userID+"";
+			var filteredUsername =  $("body").attr("session-valuetxnid") == "null" ? $('#userName').val() : $("body").attr("session-valuetxnid")
+			window.location.href="./exportAdminRegistration?RegistrationStartDate="+startdate+"&RegistrationEndDate="+endDate+"&email="+emailId+"&phoneNo="+phone+"&username="+username+"&filteredUsername="+filteredUsername+"&asType="+asType+"&userRoleTypeId="+userRoleTypeId+"&featureId="+featureId+"&status="+status+"&source="+source+"&pageSize="+pageSize+"&pageNo="+pageNo+"&userTypeId="+usertypeId+"&userId="+userID+"";
 			
 		}
+		
 		
 		
 	

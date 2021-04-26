@@ -560,6 +560,10 @@
 					"province" : $("#addProvince").val(),
 					"username" : $("body").attr("data-selected-username"),
 					"userId" : parseInt(userId),
+					"featureId":parseInt(featureId),
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username")
 				}
 			//console.log("Request-->"+JSON.stringify(Request));
 		 	var token = $("meta[name='_csrf']").attr("content");
@@ -595,6 +599,10 @@
 					"district": $('#addDistrict').val(),
 					"username" : $("body").attr("data-selected-username"),
 					"userId" : parseInt(userId),
+					"featureId":parseInt(featureId),
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username")
 				}
 			//console.log("Request-->"+JSON.stringify(Request));
 		 	var token = $("meta[name='_csrf']").attr("content");
@@ -630,6 +638,10 @@
 					"province" : $('#provinceForCommune').val(),
 					"username" : $("body").attr("data-selected-username"),
 					"userId" : parseInt(userId),
+					"featureId":parseInt(featureId),
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username")
 				}
 			//console.log("Request-->"+JSON.stringify(Request));
 		 	var token = $("meta[name='_csrf']").attr("content");
@@ -665,7 +677,10 @@
 		 			"village": $('#addVillage').val(),
 		 			"districtID": parseInt($('#districtForVillage').val()),
 					"username" : $("body").attr("data-selected-username"),
-					"userId" : parseInt(userId),
+					"featureId":parseInt(featureId),
+					"userTypeId": parseInt($("body").attr("data-userTypeID")),
+					"userType":$("body").attr("data-roleType"),
+					"username" : $("body").attr("data-selected-username")
 				}
 			//console.log("Request-->"+JSON.stringify(Request));
 		 	var token = $("meta[name='_csrf']").attr("content");

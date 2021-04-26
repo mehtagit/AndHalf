@@ -258,8 +258,9 @@
                         <label for="editmodifiedBy" class="">Modified By </label>
                     </div>
                     
-                    <div class="input-field col s12 m6">
-                        <input type="number" id="editDollar"
+                    
+                    <div id="editcurrencyDiv" class="input-field col s12 m6" style="display: none;">
+                    	<input type="number" id="editDollar"
                         pattern="<spring:eval expression="@environment.getProperty('pattern.Currency')" />"
                            oninput="InvalidMsg(this,'input','<spring:message code="validation.currencyMsg" />');" 
                         oninvalid="InvalidMsg(this,'input','<spring:message code="validation.currencyMsg" />');"

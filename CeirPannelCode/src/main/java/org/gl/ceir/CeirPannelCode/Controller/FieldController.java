@@ -35,14 +35,18 @@ public class FieldController {
 
 	@GetMapping("fieldManagement")
 	public ModelAndView pageView(@RequestParam(name="via", required = false) String via,
-								@RequestParam(name="tagId", required = false) String tagId, HttpSession session) {
+								@RequestParam(name="tagId", required = false) String tagId,
+								@RequestParam(name="action", required = false) String action,HttpSession session) {
 		ModelAndView modelAndView = new ModelAndView();
 		if("other".equals(via)) {
 			modelAndView.setViewName("fieldManagement");
+			modelAndView.addObject("action", action);
 		}
 		else {
 			modelAndView.setViewName("tagForm");
 		}
+		
+		
 		return modelAndView;
 	}
 	

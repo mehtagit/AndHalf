@@ -141,7 +141,7 @@ function pageRendering(){
 					});
 				}else if(date[i].type === "text"){
 					
-					$("#messageTableDiv").append("<div class='input-field' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+" class='center-align'>"+date[i].title+"</label></div>");
+					$("#messageTableDiv").append("<div class='input-field' ><input type="+date[i].type+" id="+date[i].id+" maxlength="+date[i].className+" /><label for="+date[i].id+">"+date[i].title+"</label></div>");
 				}
 				else if(date[i].type === "select"){
 
