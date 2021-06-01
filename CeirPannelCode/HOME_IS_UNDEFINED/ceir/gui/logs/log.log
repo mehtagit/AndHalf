@@ -1,0 +1,90 @@
+2021-06-01 11:04:40,079 INFO [AbstractApplicationContext.java:590] Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@dc59ec2: startup date [Tue Jun 01 11:04:40 IST 2021]; root of context hierarchy
+2021-06-01 11:04:41,000 INFO [PostProcessorRegistrationDelegate.java:326] Bean 'configurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$379d7849] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-06-01 11:04:41,489 INFO [SpringApplication.java:662] No active profile set, falling back to default profiles: default
+2021-06-01 11:04:41,516 INFO [AbstractApplicationContext.java:590] Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@1a3611b1: startup date [Tue Jun 01 11:04:41 IST 2021]; parent: org.springframework.context.annotation.AnnotationConfigApplicationContext@dc59ec2
+2021-06-01 11:04:42,803 INFO [SimpleAliasRegistry.java:73] Overriding alias 'dsjFeignClient' definition for registered name 'org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation' with new target name 'org.gl.ceir.CeirPannelCode.Feignclient.FeignClientImplementation'
+2021-06-01 11:04:42,804 INFO [SimpleAliasRegistry.java:73] Overriding alias 'profileUrlsFeignClient' definition for registered name 'org.gl.ceir.CeirPannelCode.Feignclient.DBTablesFeignClient' with new target name 'org.gl.ceir.CeirPannelCode.Feignclient.GsmaFeignClient'
+2021-06-01 11:04:42,805 INFO [SimpleAliasRegistry.java:73] Overriding alias 'dsjFeignClient' definition for registered name 'org.gl.ceir.CeirPannelCode.Feignclient.FeignClientImplementation' with new target name 'org.gl.ceir.CeirPannelCode.Feignclient.ImmigrationFeignImpl'
+2021-06-01 11:04:42,806 INFO [SimpleAliasRegistry.java:73] Overriding alias 'profileUrlsFeignClient' definition for registered name 'org.gl.ceir.CeirPannelCode.Feignclient.GsmaFeignClient' with new target name 'org.gl.ceir.CeirPannelCode.Feignclient.TypeApprovedFeignImpl'
+2021-06-01 11:04:42,807 INFO [SimpleAliasRegistry.java:73] Overriding alias 'dsjFeignClient' definition for registered name 'org.gl.ceir.CeirPannelCode.Feignclient.ImmigrationFeignImpl' with new target name 'org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient'
+2021-06-01 11:04:42,808 INFO [SimpleAliasRegistry.java:73] Overriding alias 'dsjFeignClient' definition for registered name 'org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient' with new target name 'org.gl.ceir.CeirPannelCode.Feignclient.UserPaidStatusFeignClient'
+2021-06-01 11:04:42,809 INFO [SimpleAliasRegistry.java:73] Overriding alias 'profileUrlsFeignClient' definition for registered name 'org.gl.ceir.CeirPannelCode.Feignclient.TypeApprovedFeignImpl' with new target name 'org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl'
+2021-06-01 11:04:43,555 INFO [DefaultListableBeanFactory.java:821] Overriding bean definition for bean 'dataSource' with a different definition: replacing [Root bean: class [null]; scope=refresh; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=false; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration$Hikari; factoryMethodName=dataSource; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]] with [Root bean: class [org.springframework.aop.scope.ScopedProxyFactoryBean]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in BeanDefinition defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]]
+2021-06-01 11:04:43,899 INFO [GenericScope.java:294] BeanFactory id=9920cf11-3082-3097-8df2-f9c932255fc0
+2021-06-01 11:04:43,914 WARN [AbstractApplicationContext.java:558] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Invalid bean definition with name 'org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation' defined in null: Could not resolve placeholder 'feignClientPath' in value "http://${feignClientPath}"; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'feignClientPath' in value "http://${feignClientPath}"
+2021-06-01 11:04:43,923 INFO [ConditionEvaluationReportLoggingListener.java:101] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-06-01 11:04:43,931 ERROR [SpringApplication.java:845] Application run failed
+org.springframework.beans.factory.BeanDefinitionStoreException: Invalid bean definition with name 'org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation' defined in null: Could not resolve placeholder 'feignClientPath' in value "http://${feignClientPath}"; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'feignClientPath' in value "http://${feignClientPath}"
+	at org.springframework.beans.factory.config.PlaceholderConfigurerSupport.doProcessProperties(PlaceholderConfigurerSupport.java:228)
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.processProperties(PropertySourcesPlaceholderConfigurer.java:182)
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.postProcessBeanFactory(PropertySourcesPlaceholderConfigurer.java:157)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:282)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:162)
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:694)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:532)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:762)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:398)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:330)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1258)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1246)
+	at org.gl.ceir.CeirPannelCode.MainApplication.main(MainApplication.java:37)
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'feignClientPath' in value "http://${feignClientPath}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:172)
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:124)
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:237)
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:211)
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:175)
+	at org.springframework.beans.factory.config.BeanDefinitionVisitor.resolveStringValue(BeanDefinitionVisitor.java:296)
+	at org.springframework.beans.factory.config.BeanDefinitionVisitor.resolveValue(BeanDefinitionVisitor.java:222)
+	at org.springframework.beans.factory.config.BeanDefinitionVisitor.visitPropertyValues(BeanDefinitionVisitor.java:147)
+	at org.springframework.beans.factory.config.BeanDefinitionVisitor.visitBeanDefinition(BeanDefinitionVisitor.java:85)
+	at org.springframework.beans.factory.config.PlaceholderConfigurerSupport.doProcessProperties(PlaceholderConfigurerSupport.java:225)
+	... 13 common frames omitted
+2021-06-01 11:11:44,238 INFO [AbstractApplicationContext.java:590] Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@3e694b3f: startup date [Tue Jun 01 11:11:44 IST 2021]; root of context hierarchy
+2021-06-01 11:11:44,864 INFO [PostProcessorRegistrationDelegate.java:326] Bean 'configurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$edb4d812] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-06-01 11:11:45,231 INFO [SpringApplication.java:662] No active profile set, falling back to default profiles: default
+2021-06-01 11:11:45,262 INFO [AbstractApplicationContext.java:590] Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@5b7a8434: startup date [Tue Jun 01 11:11:45 IST 2021]; parent: org.springframework.context.annotation.AnnotationConfigApplicationContext@3e694b3f
+2021-06-01 11:11:46,232 INFO [SimpleAliasRegistry.java:73] Overriding alias 'dsjFeignClient' definition for registered name 'org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation' with new target name 'org.gl.ceir.CeirPannelCode.Feignclient.FeignClientImplementation'
+2021-06-01 11:11:46,233 INFO [SimpleAliasRegistry.java:73] Overriding alias 'profileUrlsFeignClient' definition for registered name 'org.gl.ceir.CeirPannelCode.Feignclient.DBTablesFeignClient' with new target name 'org.gl.ceir.CeirPannelCode.Feignclient.GsmaFeignClient'
+2021-06-01 11:11:46,234 INFO [SimpleAliasRegistry.java:73] Overriding alias 'dsjFeignClient' definition for registered name 'org.gl.ceir.CeirPannelCode.Feignclient.FeignClientImplementation' with new target name 'org.gl.ceir.CeirPannelCode.Feignclient.ImmigrationFeignImpl'
+2021-06-01 11:11:46,235 INFO [SimpleAliasRegistry.java:73] Overriding alias 'profileUrlsFeignClient' definition for registered name 'org.gl.ceir.CeirPannelCode.Feignclient.GsmaFeignClient' with new target name 'org.gl.ceir.CeirPannelCode.Feignclient.TypeApprovedFeignImpl'
+2021-06-01 11:11:46,235 INFO [SimpleAliasRegistry.java:73] Overriding alias 'dsjFeignClient' definition for registered name 'org.gl.ceir.CeirPannelCode.Feignclient.ImmigrationFeignImpl' with new target name 'org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient'
+2021-06-01 11:11:46,236 INFO [SimpleAliasRegistry.java:73] Overriding alias 'dsjFeignClient' definition for registered name 'org.gl.ceir.CeirPannelCode.Feignclient.UploadPaidStatusFeignClient' with new target name 'org.gl.ceir.CeirPannelCode.Feignclient.UserPaidStatusFeignClient'
+2021-06-01 11:11:46,237 INFO [SimpleAliasRegistry.java:73] Overriding alias 'profileUrlsFeignClient' definition for registered name 'org.gl.ceir.CeirPannelCode.Feignclient.TypeApprovedFeignImpl' with new target name 'org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl'
+2021-06-01 11:11:46,719 INFO [DefaultListableBeanFactory.java:821] Overriding bean definition for bean 'dataSource' with a different definition: replacing [Root bean: class [null]; scope=refresh; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=false; primary=false; factoryBeanName=org.springframework.boot.autoconfigure.jdbc.DataSourceConfiguration$Hikari; factoryMethodName=dataSource; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]] with [Root bean: class [org.springframework.aop.scope.ScopedProxyFactoryBean]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in BeanDefinition defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Hikari.class]]
+2021-06-01 11:11:47,005 INFO [GenericScope.java:294] BeanFactory id=9920cf11-3082-3097-8df2-f9c932255fc0
+2021-06-01 11:11:47,020 WARN [AbstractApplicationContext.java:558] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanDefinitionStoreException: Invalid bean definition with name 'org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation' defined in null: Could not resolve placeholder 'feignClientPath' in value "http://${feignClientPath}"; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'feignClientPath' in value "http://${feignClientPath}"
+2021-06-01 11:11:47,030 INFO [ConditionEvaluationReportLoggingListener.java:101] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-06-01 11:11:47,037 ERROR [SpringApplication.java:845] Application run failed
+org.springframework.beans.factory.BeanDefinitionStoreException: Invalid bean definition with name 'org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation' defined in null: Could not resolve placeholder 'feignClientPath' in value "http://${feignClientPath}"; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'feignClientPath' in value "http://${feignClientPath}"
+	at org.springframework.beans.factory.config.PlaceholderConfigurerSupport.doProcessProperties(PlaceholderConfigurerSupport.java:228)
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.processProperties(PropertySourcesPlaceholderConfigurer.java:182)
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.postProcessBeanFactory(PropertySourcesPlaceholderConfigurer.java:157)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:282)
+	at org.springframework.context.support.PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors(PostProcessorRegistrationDelegate.java:162)
+	at org.springframework.context.support.AbstractApplicationContext.invokeBeanFactoryPostProcessors(AbstractApplicationContext.java:694)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:532)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:140)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:762)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:398)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:330)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1258)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1246)
+	at org.gl.ceir.CeirPannelCode.MainApplication.main(MainApplication.java:37)
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'feignClientPath' in value "http://${feignClientPath}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:172)
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:124)
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:237)
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:211)
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:175)
+	at org.springframework.beans.factory.config.BeanDefinitionVisitor.resolveStringValue(BeanDefinitionVisitor.java:296)
+	at org.springframework.beans.factory.config.BeanDefinitionVisitor.resolveValue(BeanDefinitionVisitor.java:222)
+	at org.springframework.beans.factory.config.BeanDefinitionVisitor.visitPropertyValues(BeanDefinitionVisitor.java:147)
+	at org.springframework.beans.factory.config.BeanDefinitionVisitor.visitBeanDefinition(BeanDefinitionVisitor.java:85)
+	at org.springframework.beans.factory.config.PlaceholderConfigurerSupport.doProcessProperties(PlaceholderConfigurerSupport.java:225)
+	... 13 common frames omitted
