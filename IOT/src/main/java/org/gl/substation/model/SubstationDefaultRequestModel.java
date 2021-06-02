@@ -20,5 +20,18 @@ public String toString() {
 	builder.append("]");
 	return builder.toString();
 }
+public String getUnitId() {
+	return unitId;
+}
+public void setUnitId(String unitId) {
+	this.unitId = unitId;
+}
+public String getSearchString() {
+	return searchString;
+}
+public void setSearchString(String searchString) {
+	this.searchString = searchString;
+}
+
 
 }

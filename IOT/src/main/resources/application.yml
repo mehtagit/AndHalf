@@ -1,7 +1,7 @@
 server:
     port: 9004
     servlet:
-        context-path: /substation
+        context-path: /Modem
     shutdown: graceful
 spring:
     datasource:
@@ -14,7 +14,7 @@ spring:
             max-idle: 15
             max-wait: 20000
             min-idle: 8
-        url: jdbc:mysql://localhost:3306/ceir?autoReconnect=true&useSSL=false
+        url: jdbc:mysql://localhost:3306/messageDB?autoReconnect=true&useSSL=false
         username: root
     jackson:
         serialization:
