@@ -29,7 +29,7 @@ public class PowerStationController {
 
 	@GetMapping("/get")
 	public ResponseEntity<?> get(){
-
+		logger.info("Inside substation controller");
 		List<DashboardData> data=powerStationRepository.substationNameList();
 		Optional<List<DashboardData>> list = Optional.ofNullable(data);
 		logger.info("substation name list is ::::::::::"+list);

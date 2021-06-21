@@ -10,33 +10,68 @@ import lombok.Setter;
 @Component
 @Getter @Setter 
 public class DashboardData {
-	private String unitID;
-    private String substation ;
-	private String lastIntervalPacketDate;
-	private String lastFaultPacketDate;
+	private Integer id;
+	private String modemId;
+	private String portId;
+	private String modem;
+	private String simNum;
+	private String mobileNum;
+	private String imeiNum;
+	private Integer statusint;
+	private String lastInitTime;
+	private String lastActivityTime;
+	private String reason;
+	private String flag;
 	DashboardData(){
 		
 	}
+	
+	
+	
+
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("DashboardData [unitID=");
-		builder.append(unitID);
-		builder.append(", substation=");
-		builder.append(substation);
-		builder.append(", lastIntervalPacketDate=");
-		builder.append(lastIntervalPacketDate);
-		builder.append(", lastFaultPacketDate=");
-		builder.append(lastFaultPacketDate);
+		builder.append("DashboardData [id=");
+		builder.append(id);
+		builder.append(", modemId=");
+		builder.append(modemId);
+		builder.append(", portId=");
+		builder.append(portId);
+		builder.append(", modem=");
+		builder.append(modem);
+		builder.append(", simNum=");
+		builder.append(simNum);
+		builder.append(", mobileNum=");
+		builder.append(mobileNum);
+		builder.append(", imeiNum=");
+		builder.append(imeiNum);
+		builder.append(", statusint=");
+		builder.append(statusint);
+		builder.append(", lastInitTime=");
+		builder.append(lastInitTime);
+		builder.append(", lastActivityTime=");
+		builder.append(lastActivityTime);
+		builder.append(", reason=");
+		builder.append(reason);
+		builder.append(", flag=");
+		builder.append(flag);
 		builder.append("]");
 		return builder.toString();
 	}
-	public DashboardData(String unitID, String substation, String lastIntervalPacketDate, String lastFaultPacketDate) {
+
+
+
+
+
+	public DashboardData(Integer ID, String modemId, String portId, String modem, Integer statusint ) {
 		super();
-		this.unitID = unitID;
-		this.substation = substation;
-		this.lastIntervalPacketDate = lastIntervalPacketDate;
-		this.lastFaultPacketDate = lastFaultPacketDate;
+		this.id = ID;
+		this.modemId = modemId;
+		this.portId = portId;
+		this.modem = modem;
+		this.statusint = statusint;
 	}
 	
 	
