@@ -4,274 +4,123 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SubstationDefaultResponseModel {
-
-	private Long id ;
-	private String unitId;
-	private String district;
-
-	private String substation;
-
-	private String capacity;
-
-	private String packetReceivedDate;
-
-	private String panelDatetime;
-
-	private String ryVoltage;
-	private String ybVoltage;
-
-	private String brVoltage;
-
-	private String rampereCurrent;
-
-	private String yampereCurrent;
-
-	private String bampereCurrent;
 	
-	private String rcapCurrent;
-
-	private String ycapCurrent;
-
-	private String bcapCurrent;
-	
-	private String totalPF;
-
-	private String overallApparentPower;
-
-	private String overallActivePower;
-
-	private String overallReactivePowerInd;
-	private String overallReactivePowerCap;
-
-	private String remark;
-
-	public Long getId() {
+	private Integer id;
+	private String modemId;
+	private String portId;
+	private String modem;
+	private String simNum;
+	private String mobileNum;
+	private String imeiNum;
+	private Integer statusint;
+	private String lastInitTime;
+	private String lastActivityTime;
+	private String reason;
+	private String flag;
+	public Integer getId() {
 		return id;
 	}
-
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public String getUnitId() {
-		return unitId;
+	public String getModemId() {
+		return modemId;
 	}
-
-	public void setUnitId(String unitId) {
-		this.unitId = unitId;
+	public void setModemId(String modemId) {
+		this.modemId = modemId;
 	}
-
-	public String getDistrict() {
-		return district;
+	public String getPortId() {
+		return portId;
 	}
-
-	public void setDistrict(String district) {
-		this.district = district;
+	public void setPortId(String portId) {
+		this.portId = portId;
 	}
-
-	public String getSubstation() {
-		return substation;
+	public String getModem() {
+		return modem;
 	}
-
-	public void setSubstation(String substation) {
-		this.substation = substation;
+	public void setModem(String modem) {
+		this.modem = modem;
 	}
-
-	public String getCapacity() {
-		return capacity;
+	public String getSimNum() {
+		return simNum;
 	}
-
-	public void setCapacity(String capacity) {
-		this.capacity = capacity;
+	public void setSimNum(String simNum) {
+		this.simNum = simNum;
 	}
-
-	public String getPacketReceivedDate() {
-		return packetReceivedDate;
+	public String getMobileNum() {
+		return mobileNum;
 	}
-
-	public void setPacketReceivedDate(String packetReceivedDate) {
-		this.packetReceivedDate = packetReceivedDate;
+	public void setMobileNum(String mobileNum) {
+		this.mobileNum = mobileNum;
 	}
-
-	public String getPanelDatetime() {
-		return panelDatetime;
+	public String getImeiNum() {
+		return imeiNum;
 	}
-
-	public void setPanelDatetime(String panelDatetime) {
-		this.panelDatetime = panelDatetime;
+	public void setImeiNum(String imeiNum) {
+		this.imeiNum = imeiNum;
 	}
-
-	public String getRyVoltage() {
-		return ryVoltage;
+	public Integer getStatusint() {
+		return statusint;
 	}
-
-	public void setRyVoltage(String ryVoltage) {
-		this.ryVoltage = ryVoltage;
+	public void setStatusint(Integer statusint) {
+		this.statusint = statusint;
 	}
-
-	public String getYbVoltage() {
-		return ybVoltage;
+	public String getLastInitTime() {
+		return lastInitTime;
 	}
-
-	public void setYbVoltage(String ybVoltage) {
-		this.ybVoltage = ybVoltage;
+	public void setLastInitTime(String lastInitTime) {
+		this.lastInitTime = lastInitTime;
 	}
-
-	public String getBrVoltage() {
-		return brVoltage;
+	public String getLastActivityTime() {
+		return lastActivityTime;
 	}
-
-	public void setBrVoltage(String brVoltage) {
-		this.brVoltage = brVoltage;
+	public void setLastActivityTime(String lastActivityTime) {
+		this.lastActivityTime = lastActivityTime;
 	}
-
-	public String getRampereCurrent() {
-		return rampereCurrent;
+	public String getReason() {
+		return reason;
 	}
-
-	public void setRampereCurrent(String rampereCurrent) {
-		this.rampereCurrent = rampereCurrent;
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
-
-	public String getYampereCurrent() {
-		return yampereCurrent;
+	public String getFlag() {
+		return flag;
 	}
-
-	public void setYampereCurrent(String yampereCurrent) {
-		this.yampereCurrent = yampereCurrent;
+	public void setFlag(String flag) {
+		this.flag = flag;
 	}
-
-	public String getBampereCurrent() {
-		return bampereCurrent;
-	}
-
-	public void setBampereCurrent(String bampereCurrent) {
-		this.bampereCurrent = bampereCurrent;
-	}
-
-	public String getRcapCurrent() {
-		return rcapCurrent;
-	}
-
-	public void setRcapCurrent(String rcapCurrent) {
-		this.rcapCurrent = rcapCurrent;
-	}
-
-	public String getYcapCurrent() {
-		return ycapCurrent;
-	}
-
-	public void setYcapCurrent(String ycapCurrent) {
-		this.ycapCurrent = ycapCurrent;
-	}
-
-	public String getBcapCurrent() {
-		return bcapCurrent;
-	}
-
-	public void setBcapCurrent(String bcapCurrent) {
-		this.bcapCurrent = bcapCurrent;
-	}
-
-	public String getTotalPF() {
-		return totalPF;
-	}
-
-	public void setTotalPF(String totalPF) {
-		this.totalPF = totalPF;
-	}
-
-	public String getOverallApparentPower() {
-		return overallApparentPower;
-	}
-
-	public void setOverallApparentPower(String overallApparentPower) {
-		this.overallApparentPower = overallApparentPower;
-	}
-
-	public String getOverallActivePower() {
-		return overallActivePower;
-	}
-
-	public void setOverallActivePower(String overallActivePower) {
-		this.overallActivePower = overallActivePower;
-	}
-
-	public String getOverallReactivePowerInd() {
-		return overallReactivePowerInd;
-	}
-
-	public void setOverallReactivePowerInd(String overallReactivePowerInd) {
-		this.overallReactivePowerInd = overallReactivePowerInd;
-	}
-
-	public String getOverallReactivePowerCap() {
-		return overallReactivePowerCap;
-	}
-
-	public void setOverallReactivePowerCap(String overallReactivePowerCap) {
-		this.overallReactivePowerCap = overallReactivePowerCap;
-	}
-
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("SubstationDefaultResponseModel [id=");
 		builder.append(id);
-		builder.append(", unitId=");
-		builder.append(unitId);
-		builder.append(", district=");
-		builder.append(district);
-		builder.append(", substation=");
-		builder.append(substation);
-		builder.append(", capacity=");
-		builder.append(capacity);
-		builder.append(", packetReceivedDate=");
-		builder.append(packetReceivedDate);
-		builder.append(", panelDatetime=");
-		builder.append(panelDatetime);
-		builder.append(", ryVoltage=");
-		builder.append(ryVoltage);
-		builder.append(", ybVoltage=");
-		builder.append(ybVoltage);
-		builder.append(", brVoltage=");
-		builder.append(brVoltage);
-		builder.append(", rampereCurrent=");
-		builder.append(rampereCurrent);
-		builder.append(", yampereCurrent=");
-		builder.append(yampereCurrent);
-		builder.append(", bampereCurrent=");
-		builder.append(bampereCurrent);
-		builder.append(", rcapCurrent=");
-		builder.append(rcapCurrent);
-		builder.append(", ycapCurrent=");
-		builder.append(ycapCurrent);
-		builder.append(", bcapCurrent=");
-		builder.append(bcapCurrent);
-		builder.append(", totalPF=");
-		builder.append(totalPF);
-		builder.append(", overallApparentPower=");
-		builder.append(overallApparentPower);
-		builder.append(", overallActivePower=");
-		builder.append(overallActivePower);
-		builder.append(", overallReactivePowerInd=");
-		builder.append(overallReactivePowerInd);
-		builder.append(", overallReactivePowerCap=");
-		builder.append(overallReactivePowerCap);
-		builder.append(", remark=");
-		builder.append(remark);
+		builder.append(", modemId=");
+		builder.append(modemId);
+		builder.append(", portId=");
+		builder.append(portId);
+		builder.append(", modem=");
+		builder.append(modem);
+		builder.append(", simNum=");
+		builder.append(simNum);
+		builder.append(", mobileNum=");
+		builder.append(mobileNum);
+		builder.append(", imeiNum=");
+		builder.append(imeiNum);
+		builder.append(", statusint=");
+		builder.append(statusint);
+		builder.append(", lastInitTime=");
+		builder.append(lastInitTime);
+		builder.append(", lastActivityTime=");
+		builder.append(lastActivityTime);
+		builder.append(", reason=");
+		builder.append(reason);
+		builder.append(", flag=");
+		builder.append(flag);
 		builder.append("]");
 		return builder.toString();
 	}
-
+	
+	
 
 
 }

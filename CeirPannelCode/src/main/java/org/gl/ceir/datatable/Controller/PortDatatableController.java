@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
+import org.gl.ceir.CeirPannelCode.Model.smsPortRequest;
 import org.gl.ceir.CeirPannelCode.Model.constants.UserStatus;
 import org.gl.ceir.Class.HeadersTitle.DatatableResponseModel;
 import org.gl.ceir.Class.HeadersTitle.IconsState;
@@ -61,7 +62,9 @@ public class PortDatatableController {
 	PortPaginationModal portPaginationModal;
 	
 	@PostMapping("portManagementData")
-	public ResponseEntity<?> viewPortRecord(@RequestParam(name="type",defaultValue = "portAddress",required = false) String role, HttpServletRequest request,HttpSession session) {
+	public ResponseEntity<?> viewPortRecord(@RequestParam(name="type",defaultValue = "portAddress",required = false) String role, HttpServletRequest request,HttpSession session,
+			@RequestParam(name="type",defaultValue = "portAddress",required = false) String via,
+			@RequestParam(name="recieveID",required = false) Integer recieveID) {
 		//String userType = (String) session.getAttribute("usertype");
 		//int userId=	(int) session.getAttribute("userid");
 		int file=0;
@@ -69,19 +72,26 @@ public class PortDatatableController {
 		List<List<Object>> finalList=new ArrayList<List<Object>>();
 		String filter = request.getParameter("filter");
 		Gson gsonObject=new Gson();
-		FilterRequest filterrequest = gsonObject.fromJson(filter, FilterRequest.class);
+		smsPortRequest filterrequest = gsonObject.fromJson(filter, smsPortRequest.class);
 		Integer pageSize = Integer.parseInt(request.getParameter("length"));
 		Integer pageNo = Integer.parseInt(request.getParameter("start")) / pageSize ;
-		filterrequest.setSearchString(request.getParameter("search[value]"));
+		log.info("recieveID is ["+recieveID+"]");
+		if(recieveID!=null) {
+			filterrequest.setId(recieveID);
+		}
+		
 		log.info("pageSize"+pageSize+"-----------pageNo---"+pageNo);
 		try {
+			//filterrequest.setId(3);
 			log.info("request send to the filter api ="+filterrequest);
 			Object response = userProfileFeignImpl.viewPortRequest(filterrequest,pageNo,pageSize,file);
 			log.info("response in datatable"+response);
 			Gson gson= new Gson(); 
 			String apiResponse = gson.toJson(response);
 			portPaginationModal = gson.fromJson(apiResponse, PortPaginationModal.class);
+			
 			List<PortContentModal> paginationContentList = portPaginationModal.getContent();
+			
 			if(paginationContentList.isEmpty()) {
 				datatableResponseModel.setData(Collections.emptyList());
 			}
@@ -89,15 +99,19 @@ public class PortDatatableController {
 			for(PortContentModal dataInsideList : paginationContentList) 
 				{
 				   String id =  String.valueOf(dataInsideList.getId());	
-				   String createdOn = dataInsideList.getCreatedOn();
-				   String modifiedOn = dataInsideList.getModifiedOn();
-				   String port = String.valueOf(dataInsideList.getPort());
-				   String address = dataInsideList.getAddress();
-				   String portInterp = dataInsideList.getPortInterp();
+				   String modemId = dataInsideList.getModemId();
+				   String portId = dataInsideList.getPortId();
+				   String modem = dataInsideList.getModem();
+				   String simNum = dataInsideList.getSimNum();
+				   String imeiNum = dataInsideList.getImeiNum();
+				   String lastInitTime = dataInsideList.getLastInitTime();
+				   String lastActivityTime = dataInsideList.getLastActivityTime();
+				   String statusInt =  String.valueOf(dataInsideList.getStatusInt());
+				   String stausInterp = (dataInsideList.getPortInterp()).toUpperCase();
 				   String userStatus = (String) session.getAttribute("userStatus");	  
-				   //log.info("Id-->"+Id+"--userStatus--->"+userStatus+"--StatusName---->"+StatusName+"--createdOn---->"+createdOn+"--id--->"+id+"--userName-->"+username);
-				   String action=iconState.portManagementIcons(id);			   
-				   Object[] finalData={createdOn,modifiedOn,portInterp,address,action}; 
+				   log.info("statusInt"+statusInt);
+				   String action=iconState.portManagementIcons(id,statusInt,modemId,portId);			   
+				   Object[] finalData={modemId,portId,modem,simNum,imeiNum,lastInitTime,lastActivityTime,stausInterp,action}; 
 				   List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 					finalList.add(finalDataList);
 					datatableResponseModel.setData(finalList);	
@@ -155,7 +169,7 @@ public class PortDatatableController {
 			
 		
 		  //Dropdown items 
-		  String[] selectParam={"select",Translator.toLocale("table.port"),"portType",""}; 
+		  String[] selectParam={"select","Status","status",""}; 
 		  for(int i=0; i<selectParam.length; i++) { 
 				inputFields= new InputFields();
 		  inputFields.setType(selectParam[i]); 
@@ -171,7 +185,7 @@ public class PortDatatableController {
 		 
 			
 			//input type date list		
-			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate",""};
+			String[] dateParam= {"date",Translator.toLocale("input.startDate"),"startDate","","date",Translator.toLocale("input.endDate"),"endDate","","text","Port Name","portId",""};
 			for(int i=0; i< dateParam.length; i++) {
 				dateRelatedFields= new InputFields();
 				dateRelatedFields.setType(dateParam[i]);

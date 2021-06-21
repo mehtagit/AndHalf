@@ -163,8 +163,8 @@ div#error_Modal {
 						</li> -->
 						<li>
 							<h1 class="logo-wrapper">
-								<a href="#" class="brand-logo darken-1"><span id="cierRoletype"> <spring:message
-											code="roletype.${fn:replace(sessionScope.usertype, ' ', '_')}" />
+								<a href="#" class="brand-logo darken-1"><span id="cierRoletype"> 
+								SMS GSM Modem Gateway
 								</span> <spring:message code="page.portal" /> <%
  	if ("Operator".equalsIgnoreCase(usertype)) {
  %> - <%=session.getAttribute("operatorTypeName")%> <%
@@ -267,7 +267,7 @@ div#error_Modal {
 								<p
 									style="width: 180px; text-align: center; color: #fff; font-size: 16px; margin-top: 2px;">
 									<spring:message code="page.welcome" />
-									<%=name%>
+									<%=name%><br>
 									(<%=(String) session.getAttribute("username")%>)
 								</p>
 							</div>

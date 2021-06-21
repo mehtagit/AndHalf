@@ -55,31 +55,18 @@ public class SubstationDefaultReportTable {
 			if(paginationContentListResponse.isPresent()) {
 				datatableResponseModel.setData(Collections.emptyList());
 			for(SubstationDefaultResponseModel paginationContentList : paginationContentListResponse.get()) {
-				Long id=paginationContentList.getId();
-				String unitID=paginationContentList.getUnitId();
-				String district=paginationContentList.getDistrict();
-				String substation=paginationContentList.getSubstation();
-				String capacity=paginationContentList.getCapacity();
-				String packetReciveDate=paginationContentList.getPacketReceivedDate();
-				String ry=paginationContentList.getRyVoltage();
-				String yb=paginationContentList.getYbVoltage();
-				String br=paginationContentList.getBrVoltage();
+				Integer id=paginationContentList.getId();
+				String modemId=paginationContentList.getModemId();
+				String portId=paginationContentList.getPortId();
+				String modem=paginationContentList.getModem();
+				String simNum=paginationContentList.getSimNum();
+				String mobileNum=paginationContentList.getMobileNum();
+				String imeiNum=paginationContentList.getImeiNum();
+				Integer statusint=paginationContentList.getStatusint();
+				String lastInitTime=paginationContentList.getLastInitTime();
+				String lastActivityTime=paginationContentList.getLastActivityTime();
 				
-				String rCurrent=paginationContentList.getRampereCurrent();
-				String yCurrent=paginationContentList.getYampereCurrent();
-				String bCurrent=paginationContentList.getBampereCurrent();
-				
-				String rcap=paginationContentList.getRcapCurrent();
-				String ycap=paginationContentList.getYcapCurrent();
-				String bcap=paginationContentList.getBcapCurrent();
-				String pf=paginationContentList.getTotalPF();
-				
-				String apparentPower=paginationContentList.getOverallApparentPower();
-				String activePower=paginationContentList.getOverallActivePower();
-				String powerInd=paginationContentList.getOverallReactivePowerInd();
-				String powerCap=paginationContentList.getOverallReactivePowerCap();
-				String remark=paginationContentList.getRemark();
-				Object[] finalData={unitID,district,substation,capacity,packetReciveDate,ry,yb,br,rCurrent,yCurrent,bCurrent,rcap,ycap,bcap,pf,apparentPower,activePower,powerInd,powerCap,remark}; 
+				Object[] finalData={id,modemId,portId,modem,simNum,mobileNum,imeiNum,statusint,lastInitTime,lastActivityTime}; 
 				List<Object> finalDataList=new ArrayList<Object>(Arrays.asList(finalData));
 				finalList.add(finalDataList);
 				datatableResponseModel.setData(finalList);

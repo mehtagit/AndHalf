@@ -56,10 +56,25 @@ margin: 0 7px;
 }
 
 .disable {
-color: grey;
+
+	color: grey !important
 }
 .list-icon {
   font-size: 20px !important;
   color: #fc950c;
   margin: 0 7px 0 7px;
+
+
+}
+
+
+.play-circle {
+    color: #04ff00;
+    font-size: 20px !important;
+    margin: 0px 4px;
+}
+
+.stop-circle {
+	color : red;
+    font-size: 20px !important;
 }

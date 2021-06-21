@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.gl.ceir.CeirPannelCode.Feignclient.FeignCleintImplementation;
 import org.gl.ceir.CeirPannelCode.Feignclient.GsmaFeignClient;
+import org.gl.ceir.CeirPannelCode.Feignclient.UserProfileFeignImpl;
 import org.gl.ceir.CeirPannelCode.Model.AddMoreFileModel;
 import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.Tag;
@@ -35,13 +36,18 @@ public class ProjectDropdownController {
 	FeignCleintImplementation feignCleintImplementation;
 	
 	@Autowired
+	UserProfileFeignImpl userProfileFeignImpl;
+	
+	@Autowired
 	GsmaFeignClient gsmaFeignClient;
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	@ResponseBody
 	@GetMapping("getDropdownList/{featureId}/{userTypeId}")
-	public List<Dropdown> getConsignmentStatus(@PathVariable("featureId") Integer featureId,@PathVariable("userTypeId") Integer userTypeId) {
-		List<Dropdown> dropdown = feignCleintImplementation.consignmentStatusList(featureId, userTypeId);
+	public List<Dropdown> getPortStatus(@PathVariable("featureId") Integer featureId,@PathVariable("userTypeId") Integer userTypeId) {
+		log.info("request send to the getStatusDropdownList api="+featureId+" userTypeId="+userTypeId);
+		List<Dropdown> dropdown = userProfileFeignImpl.portStatusList(featureId, userTypeId);
+		log.info("request send to the getStatusDropdownList api="+dropdown);
 		return dropdown;
 	}
 	

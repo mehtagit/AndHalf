@@ -140,7 +140,7 @@ a#newUserLink {
 										</div> --%>
 										<div class="col s12 m12">
 											<h5 style="text-align: -webkit-center;">
-												<spring:message code="registration.login" />
+												SMS GSM Modem Gateway Login
 											</h5>
 											<span id="errorMsg" style="color: red;"></span>
 											<hr>

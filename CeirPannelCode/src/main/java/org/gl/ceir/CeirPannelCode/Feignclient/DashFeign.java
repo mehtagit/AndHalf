@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import CeirPannelCode.Model.PortName;
 import CeirPannelCode.Model.SubstationName;
 
 @Service
@@ -22,7 +23,7 @@ import CeirPannelCode.Model.SubstationName;
 
 
 	@GetMapping("/station/get")
-	public List<SubstationName> get(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+	public List<PortName> get(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
 			@RequestParam(value = "count", defaultValue = "10", required = false) int size,
 			@RequestParam(value = "order", defaultValue = "ASC", required = false) Sort.Direction direction);
 	

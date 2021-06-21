@@ -9,6 +9,22 @@ public class FilterRequest {
 	private Double dollar,riel;
 	private int roleTypeId;
 	private String state,ruleName;
+	private Integer statusint;
+	private String portId;
+	
+	
+	public Integer getStatusint() {
+		return statusint;
+	}
+	public void setStatusint(Integer statusint) {
+		this.statusint = statusint;
+	}
+	public String getPortId() {
+		return portId;
+	}
+	public void setPortId(String portId) {
+		this.portId = portId;
+	}
 	public String getStartDate() {
 		return startDate;
 	}
@@ -652,6 +668,10 @@ public class FilterRequest {
 		builder.append(state);
 		builder.append(", ruleName=");
 		builder.append(ruleName);
+		builder.append(", statusint=");
+		builder.append(statusint);
+		builder.append(", portId=");
+		builder.append(portId);
 		builder.append("]");
 		return builder.toString();
 	}

@@ -10,13 +10,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import CeirPannelCode.Model.PortName;
 import CeirPannelCode.Model.SubstationName;
 
 @Controller
+@CrossOrigin
 public class DashBox {
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
@@ -26,12 +29,13 @@ public class DashBox {
 	@Autowired
 	DashFeign dashFeign;
 
-	@GetMapping("/substation/get")
+	@GetMapping("/get")
 	@ResponseBody
 	public ResponseEntity<?> get(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
 			@RequestParam(value = "count", defaultValue = "10", required = false) int size,
 			@RequestParam(value = "order", defaultValue = "ASC", required = false) Sort.Direction direction){
-		List<SubstationName> list = dashFeign.get(pageNo, size, direction);
+		List<PortName> list = dashFeign.get(pageNo, size, direction);
+		log.info("list-->"+list);
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 }

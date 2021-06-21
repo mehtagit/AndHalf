@@ -190,10 +190,7 @@ public interface FeignCleintImplementation {
 	//delete stolen recovery feign  controller
 	@RequestMapping(value="/stakeholder/Delete" ,method=RequestMethod.DELETE) 
 	public @ResponseBody GenricResponse deleteStolenRecovery(FilterRequest stolenRecoveryModel) ;
-	/************* DROPDOWN *****************/
-
-	@RequestMapping(value="/state-mgmt/{featureId}/{userTypeId}" ,method=RequestMethod.GET) 
-	public List<Dropdown> consignmentStatusList(@PathVariable("featureId") Integer featureId,@PathVariable("userTypeId") Integer userTypeId);
+	
 
 
 	@RequestMapping(value="system-config-list/{tag}" ,method=RequestMethod.GET) 

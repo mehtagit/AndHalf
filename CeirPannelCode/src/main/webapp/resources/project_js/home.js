@@ -18,26 +18,46 @@ $(document).ready(function () {
 	});
 	$.ajax({
 		type : 'GET',
-		url : ''+ip+''+port+'/substation/station/get',
+		//url : './get',
+		url : ''+ip+''+port+'/SMS/get',
 		contentType : "application/json",
 		success: function(data){
-			//	console.log(data);
+			console.log(data);
 			for(var i=0 ;i<data.length;i++){
-				if(finalVal <= data[i].lastIntervalPacketDate){
-					var classN="\"trWidht statusColor \"";
-					$('#activeDeviceTable').append('<tr  class='+classN+'><td onclick=redirectToTable("'+data[i].unitID+'");isActive(3);>'+data[i].substation+'</td><tr>');
+				
+				if(data[i].statusint==7 ){
+					var classN="\"trWidht upstatusColor \"";
+					$('#activeDeviceTable').append('<tr  class='+classN+'><td onclick=redirectToTable("'+data[i].id+'");>'+data[i].modem+'</td><tr>');
 				}
-				else if( data[i].lastIntervalPacketDate == null){
-					var classN="\"trWidht statusNotAvailableColor \"";
+				else if( data[i].statusint==9 ){
+					var classN="\"trWidht initColor \"";
 
-					$('#activeDeviceTable').append("<tr class="+classN+"><td>"+data[i].substation+"</td><tr>");
+					$('#activeDeviceTable').append('<tr  class='+classN+'><td onclick=redirectToTable("'+data[i].id+'");>'+data[i].modem+'</td><tr>');
+
+
+				}else if( data[i].statusint==10 ){
+					var classN="\"trWidht inProcessColor \"";
+
+					$('#activeDeviceTable').append('<tr  class='+classN+'><td onclick=redirectToTable("'+data[i].id+'");>'+data[i].modem+'</td><tr>');
+
+
+				}else if( data[i].statusint==11 ){
+					var classN="\"trWidht denitColor \"";
+
+					$('#activeDeviceTable').append('<tr  class='+classN+'><td onclick=redirectToTable("'+data[i].id+'");>'+data[i].modem+'</td><tr>');
+
+
+				}else if( data[i].statusint==12 ){
+					var classN="\"trWidht inSendColor \"";
+
+					$('#activeDeviceTable').append('<tr  class='+classN+'><td onclick=redirectToTable("'+data[i].id+'");>'+data[i].modem+'</td><tr>');
 
 
 				}
 				else{
 
-					var classN="\"trWidht NotstatusColor \"";
-					$('#activeDeviceTable').append('<tr  class='+classN+'><td onclick=redirectToTable("'+data[i].unitID+'");isActive(3);>'+data[i].substation+'</td><tr>');
+					var classN="\"trWidht downstatusColor \"";
+					$('#activeDeviceTable').append('<tr  class='+classN+'><td onclick=redirectToTable("'+data[i].id+'");>'+data[i].modem+'</td><tr>');
 					
 				}
 				$('div#initialloader').delay(300).fadeOut('slow');
@@ -90,6 +110,22 @@ function isActive(feature){
 
 
 // get detail based on Unit ID
-function redirectToTable(recieveID){
+/*function redirectToTable(recieveID){
 	window.location = "./report?redirectURL=viaDashboard&unitID="+recieveID+"&back=./Home";
-				}
+				}*/
+				
+
+// get detail based on Unit ID
+function redirectToTable(recieveID){
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$.ajaxSetup({
+		headers:
+		{ 'X-CSRF-TOKEN': token }
+	});
+	console.log("recieveID is -"+recieveID);
+	sessionStorage.setItem("recieveID", recieveID);
+	window.location.href = "./portManagement?via=viaDashboard"
+		
+	//window.location = "./portViewByID?redirectURL=viaDashboard&unitID="+recieveID+"&back=./Home";
+				}				

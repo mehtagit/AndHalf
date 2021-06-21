@@ -1,5 +1,8 @@
 package org.gl.ceir.CeirPannelCode.Feignclient;
 
+import java.util.List;
+
+import org.gl.ceir.CeirPannelCode.Model.Dropdown;
 import org.gl.ceir.CeirPannelCode.Model.FilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.GenricResponse;
 import org.gl.ceir.CeirPannelCode.Model.NewRule;
@@ -10,6 +13,7 @@ import org.gl.ceir.CeirPannelCode.Model.PaymentRequest;
 import org.gl.ceir.CeirPannelCode.Model.Registration;
 import org.gl.ceir.CeirPannelCode.Model.SLAfilterRequest;
 import org.gl.ceir.CeirPannelCode.Model.UserStatus;
+import org.gl.ceir.CeirPannelCode.Model.smsPortRequest;
 import org.gl.ceir.CeirPannelCode.Response.UpdateProfileResponse;
 import org.gl.ceir.CeirPannelCode.Util.HttpResponse;
 import org.gl.ceir.pagination.model.UserManagementContent;
@@ -77,7 +81,7 @@ public interface UserProfileFeignImpl {
 	/*-------------------------- view Port Feign ------------------------------*/
 	
 	@RequestMapping(value="/portAddress/view" ,method=RequestMethod.POST) 
-	public Object viewPortRequest(@RequestBody FilterRequest filterRequest,
+	public Object viewPortRequest(@RequestBody smsPortRequest filterRequest,
 	@RequestParam(value = "pageNo", defaultValue = "0") Integer pageNo,
 	@RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize,
 	@RequestParam(value = "file", defaultValue = "0") Integer file);
@@ -94,15 +98,22 @@ public interface UserProfileFeignImpl {
 	//***************************************************View Port Management Feign********************************
 	
 	@RequestMapping(value="/portAddress/viewDataById" ,method=RequestMethod.POST) 
-	public @ResponseBody GenricResponse viewPortFeign(@RequestBody FilterRequest filterRequest);
+	public @ResponseBody GenricResponse viewPortFeign(@RequestBody FilterRequest request);
 	
 	
 	
 	//***************************************************Update Port Address Feign********************************
 
-	@RequestMapping(value= "/portAddress/update" , method=RequestMethod.POST) 
-	public GenricResponse updatePortAddressFeign(@RequestBody FilterRequest filterRequest);
+	@RequestMapping(value= "/portAddress/run" , method=RequestMethod.POST) 
+	public GenricResponse runPortAddressFeign(@RequestBody smsPortRequest webAction);
 	
+	
+	//***************************************************Update Port Address Feign********************************
+
+	@RequestMapping(value= "/portAddress/stop" , method=RequestMethod.POST) 
+	public GenricResponse stopPortAddressFeign(@RequestBody smsPortRequest webAction);
+		
+		
 	//***************************************************Delete Port Management Feign********************************
 	
 	@RequestMapping(value="/portAddress/delete" ,method=RequestMethod.POST) 
@@ -250,5 +261,10 @@ public interface UserProfileFeignImpl {
 		
 		@RequestMapping(value="/userMgmt/delete" ,method=RequestMethod.POST) 
 		public @ResponseBody GenricResponse deleteUserFeign(@RequestBody NewSystemUser newSystemUser);
+		
+		/************* DROPDOWN *****************/
+
+		@RequestMapping(value="/Modem/state-mgmt/{featureId}/{userTypeId}" ,method=RequestMethod.GET) 
+		public List<Dropdown> portStatusList(@PathVariable("featureId") Integer featureId,@PathVariable("userTypeId") Integer userTypeId);
 } 
 

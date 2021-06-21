@@ -14,7 +14,7 @@
 
 <!DOCTYPE html>
 <html lang="en" class="no-js">
-<head><title>SubStation Portal</title>
+<head><title>SMS GSM Modem Gateway Portal</title>
 <!--<title>Home</title>-->
 <link
 	href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800&display=swap"
@@ -107,15 +107,27 @@
                 padding: 20px;
                 font-size: 30px;
                 text-align: center;
-		color: cadetblue;
+				color: cadetblue;
               }
-              .statusColor{
-              background: #008000 !important;}
-              .NotstatusColor{
-              background: #ADD8E6 !important;}
-              .statusNotAvailableColor{
+              .upstatusColor{
+              background: #008000 !important;
+              }
+              .downstatusColor{
               background: #898989 !important;
               }
+              .initColor{
+              background: #ADD8E6 !important;
+              }
+              .inProcessColor{
+                background: #ff8000 !important; 
+              }
+              .denitColor{
+              background: #999966 !important;
+              }
+              .inSendColor{
+               background: #e0b3ff !important;
+              }
+              
      tbody {
     display: flex;
     flex-wrap: wrap;
@@ -138,7 +150,7 @@
 	data-selected-roleType="${selectedUserTypeId}"
 	data-stolenselected-roleType="${stolenselectedUserTypeId}"
 	  data-ip="<spring:eval expression="@environment.getProperty('api.ip')"/>"
-	data-port="<spring:eval expression="@environment.getProperty('api.port')"/>"
+	data-port="<spring:eval expression="@environment.getProperty('server.port')"/>"
  
 >
 
@@ -165,7 +177,7 @@
 						<div class="row"></div>
 						<div class="col s12 m12">
 
-			  <a id="btn-Convert-Html2Image" href="#" style="margin-left: 96%;font-size: small;"><i class="fa fa-download" aria-hidden="true" style="margin-top: 6px;"> Download</i></a>
+			  <!-- <a id="btn-Convert-Html2Image" href="#" style="margin-left: 96%;font-size: small;"><i class="fa fa-download" aria-hidden="true" style="margin-top: 6px;"> Download</i></a> -->
     	
               <div id="html-content-holder">
               

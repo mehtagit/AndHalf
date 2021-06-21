@@ -33,6 +33,8 @@ public class IconsState {
 	String ListIcon =  "\"fa fa-list list-icon\"";
 	String plusIcon = "\"fa fa-plus-square download-icon\"";
 	String historyIcon = "\"fa fa-history download-icon\"";
+	String playIcon =  "\"fa fa-play-circle play-circle\"";
+	String stopIcon = "\"fa fa-stop-circle stop-circle\"";
 	// icon title  
 	String errorIconTitle= null;
 	String downloadIconTitle=null;
@@ -46,7 +48,9 @@ public class IconsState {
 	String ListIconTittle = null;
 	String plusIconTittle = null;
 	String historyTitle = null;
-
+	String playIconTitle = "Start";
+	String stopIconTitle = "Stop";
+	
 	String disableErrorIcon="\"fa fa-exclamation-circle error-icon disable\""; 
 	String disableDownloadIcon="\"fa fa-download download-icon disable\""; 
 	String disableViewIcon="\"fa fa-eye view-icon disable\"";
@@ -58,6 +62,8 @@ public class IconsState {
 	String disablePayTaxIcon =  "\"fa fa-money pay-tax-icon disable\"";
 	String disableHistoryIcon =  "\"fa fa-history download-icon disable\"";
 	String defaultTagName="DEFAULT";
+	String disablePlayIcon =  "\"fa fa-play-circle play-circle disable\""; 
+	String disableStopIcon = "\"fa fa-stop-circle stop-circle disable\"";
 
 	public String state(String fileName,String txnId ,String status,String userStatus) {
 		// URL link
@@ -2654,27 +2660,6 @@ public class IconsState {
 
 	}
 
-	/********************************** Icons for Port Management**********************************/ 
-
-	public String portManagementIcons(String id) { 
-		executePostConstruct();
-
-		String editAction= "PortViewByID('"+id+"')";
-		String deleteAction = "DeletePortRecord('"+id+"')";
-		// state related Code 
-
-
-		String edit="<a onclick="+editAction+"><i class="
-				+editIcon+" aria-hidden=\"true\"  title="
-				+editIconTitle+"></i></a>"; 
-		String delete="<a onclick="+deleteAction+" class=\"waves-effect waves-light modal-trigger\"><i class="
-				+deletionIcon+" aria-hidden=\"true\"  title="
-				+deleteIconTitle+"></i></a>";		
-
-		String action=edit.concat(delete);
-		return action;
-
-	}
 
 	/********************************** Icons for currency Management**********************************/ 
 
@@ -3241,6 +3226,46 @@ public class IconsState {
 		return action;
 
 	}
+	
+	
+	/********************************** Icons for Port Management**********************************/ 
+
+	public String portManagementIcons(String id, String status,String modemId, String portId) { 
+		executePostConstruct();
+		
+		String playAction= "PortViewByID('"+id+"','"+modemId+"','"+portId+"')";
+		String stopAction = "DeletePortRecord('"+id+"','"+modemId+"','"+portId+"')";
+		// state related Code 
+		
+		String run="<a onclick="+playAction+"><i class="
+				+playIcon+" aria-hidden=\"true\"  title="
+				+playIconTitle+"></i></a>"; 
+		String stop="<a onclick="+stopAction+"><i class="
+				+stopIcon+" aria-hidden=\"true\"  title="
+				+stopIconTitle+"></i></a>"; 
+		
+		
+		if (("9".equals(status) || "11".equals(status))) {
+			log.info("1");
+			run = "<a onclick="+playAction+" class=\"eventNone\"><i class="+disablePlayIcon+" aria-hidden=\"true\" title="
+					+approveIconTitle+" ></i></a>";
+			stop = "<a onclick="+stopAction+" class=\"eventNone\"><i class="+disableStopIcon+" aria-hidden=\"true\" title="
+					+rejectIconTitle+" ></i></a>";
+		}else if(("7".equals(status) || "10".equals(status) || "12".equals(status))) {
+			log.info("2");
+			run = "<a onclick="+playAction+" class=\"eventNone\"><i class="+disablePlayIcon+" aria-hidden=\"true\" title="
+					+approveIconTitle+" ></i></a>";
+		}else if("8".equals(status)) {
+			log.info("3");
+			stop = "<a onclick="+stopAction+" class=\"eventNone\"><i class="+disableStopIcon+" aria-hidden=\"true\" title="
+					+rejectIconTitle+" ></i></a>";
+		}
+		
+		String action=run.concat(stop);
+		return action;
+
+	}
+
 	
 	@PostConstruct
 	public void executePostConstruct() {

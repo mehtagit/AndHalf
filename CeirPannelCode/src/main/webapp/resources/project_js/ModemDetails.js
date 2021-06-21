@@ -1,7 +1,14 @@
 		var cierRoletype =$("body").attr("data-roleType");	
+		var startdate=$('#startDate').val(); 
+		var endDate=$('#endDate').val();
+		var taxStatus=$('#taxPaidStatus').val();
+		var txnId=$('#transactionID').val();
+		var consignmentStatus=$('#filterConsignmentStatus').val();
 		var userId = $("body").attr("data-userID");
 		var userType=$("body").attr("data-roleType");
 		var featureId="2";
+		var rejectedMsg,consignmentApproved,errorMsg,havingTxnID,updateMsg,hasBeenUpdated;
+		var consignmentDeleted,deleteInProgress;
 		var lang=window.parent.$('#langlist').val() == 'km' ? 'km' : 'en';
 		
 		$.i18n().locale = lang;	
@@ -25,13 +32,14 @@
 			filterFieldTable(lang);
 			
 			sessionStorage.removeItem("session-value");
-			pageRendering();
+			//pageRendering();
 			
 		 });
 		
 
 		var sourceType =localStorage.getItem("sourceType");
-		var TagId = sessionStorage.getItem("tagId");
+		var recieveID = sessionStorage.getItem("recieveID");
+		
 		
 		
 		//**************************************************filter table**********************************************
@@ -79,7 +87,7 @@
 	       });
 		   },
 						ajax: {
-							url : 'portManagementData',
+							url : 'portManagementData?recieveID='+parseInt(recieveID),
 							type: 'POST',
 							dataType: "json",
 							data : function(d) {
@@ -87,7 +95,11 @@
 
 							}
 						},
-						"columns": result
+						"columns": result,
+						"columnDefs": [{
+                					"targets": [ 8 ],
+                					"visible": false
+                		}],
 					});
 
 					$('div#initialloader').delay(300).fadeOut('slow');
@@ -177,7 +189,7 @@
 			}); 
 			
 			
-			setDropdown();
+			//setDropdown();
 	}
 
 
@@ -199,32 +211,122 @@
 		});
 	}
 
-	
+		function AddPortAddress(){
+			$('#addPort').openModal({
+		        dismissible:false
+		    });
+			//var tagDropDown =  document.getElementById("tag");
+			//var displayName = tagDropDown.options[tagDropDown.selectedIndex].text;
+		}
 		
 	
-	
+	/*----------------------------------- Save Field ----------------------------------------- */
+		
+	function submitPort(){
+		
+		var request={
+				"port":   $('#port').val(),
+				"address": $('#portAddress').val(),
+				"userId": parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
+
+		}
+		
+		//////console.log("request------------->" +JSON.stringify(request))
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
+		$.ajax({
+			url : './add-Port',
+			data : JSON.stringify(request),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			type : 'POST',
+			success : function(data, textStatus, jqXHR) {
+					////console.log(JSON.stringify(data));
+					$("#confirmField").openModal({
+				        dismissible:false
+				    });
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				////console.log("error in ajax")
+			}
+		});
+			
+			return false
+	}
+
 
   
-	/*--------------------------------- Start Port -----------------------------------*/
+	/*--------------------------------- Edit Model View -----------------------------------*/
 	
 	
-	function PortViewByID(id,modemId,portId){
-		window.modemId=modemId;
-		window.portId=portId
-		$("#editPortAddressModal").openModal({
-				dismissible:false
+	function PortViewByID(id){
+		$("#editId").val(id);
+		var request ={
+				"dataId" :  parseInt(id),
+				"userId": parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
+		}
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
 		});
+		$.ajax({
+				url: './portViewByID',
+				type: 'POST',
+				data : JSON.stringify(request),
+				dataType : 'json',
+				contentType : 'application/json; charset=utf-8',
+				success: function (data, textStatus, jqXHR) {
+						var result = data.data
+						$("#editPortAddressModal").openModal({
+					        dismissible:false
+					    });
+						PortEditPopupData(result);
+						//////console.log(result)
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					////console.log("error in ajax")
+				}
+			});	
+		}
+	
+	
+	function PortEditPopupData(result){
+		$("#editport").val(result.port);
+		$("#editId").val(result.id);
+		$("#editportAddress").val(result.address);
+		$("label[for='editportAddress']").addClass('active');
+		
 	}
 	
 	
+	/*---------------------------------- Update Field-------------------------------------*/
 	
 	
-	function startPort(){
+	function updatedPort(){
 
-		//console.log("window.modemId-"+window.modemId);
-		var webAction ={ 
-				"modemId" : window.modemId,
-				"clientId" : window.portId
+		var request ={ 
+				/*"id" : parseInt($("#editId").val()),
+				"port":   $('#editport').val(),
+				"address": $('#editportAddress').val(),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")*/
 		}
 
 		//////console.log("request--->" +JSON.stringify(request))
@@ -237,7 +339,7 @@
 		$.ajax({
 			url: './runPortAddress', 
 			type: 'POST',
-			data : JSON.stringify(webAction),
+			data : JSON.stringify(request),
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			success: function (data, textStatus, jqXHR) {
@@ -262,25 +364,30 @@
 	}
 
 	
-	 /*------------------------------------ Stop Port -----------------------------------*/
+	 /*------------------------------------ Delete Field -----------------------------------*/
 	
 	
-	function DeletePortRecord(id,modemId,portId){
+	function DeletePortRecord(id){
 		$("#DeleteFieldModal").openModal({
 			dismissible:false
 		});
-		window.modemId=modemId;
-		window.portId=portId;
+		
 
 	}	
 	
 	
 	
 	function stopPort(){
-		//console.log("window.modemId-"+window.modemId);
-		var webAction ={ 
-				"modemId" : window.modemId,
-				"clientId" : window.portId
+
+		var request ={ 
+				/*"id" : parseInt($("#editId").val()),
+				"port":   $('#editport').val(),
+				"address": $('#editportAddress').val(),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")*/
 		}
 
 		//////console.log("request--->" +JSON.stringify(request))
@@ -293,7 +400,7 @@
 		$.ajax({
 			url: './stopPortAddress', 
 			type: 'POST',
-			data : JSON.stringify(webAction),
+			data : JSON.stringify(request),
 			dataType : 'json',
 			contentType : 'application/json; charset=utf-8',
 			success: function (data, textStatus, jqXHR) {
@@ -320,6 +427,45 @@
 	
  
 	
+	
+	function confirmantiondelete(){
+		var request ={ 
+				"dataId" : parseInt($("#deletePortId").val()),
+				"port":   $('#editport').val(),
+				"address": $('#editportAddress').val(),
+				"userId":parseInt(userId),
+				"featureId":parseInt(featureId),
+				"userTypeId": parseInt($("body").attr("data-userTypeID")),
+				"userType":$("body").attr("data-roleType"),
+				"username" : $("body").attr("data-selected-username")
+		}
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		$.ajaxSetup({
+			headers:
+			{ 'X-CSRF-TOKEN': token }
+		});
+		
+		$.ajax({
+			url : './deletePort',
+			data : JSON.stringify(request),
+			dataType : 'json',
+			contentType : 'application/json; charset=utf-8',
+			type : 'POST',
+			success : function(data, textStatus, xhr) {
+				////console.log(data);
+				$("#DeleteFieldModal").closeModal();
+				$("#closeDeleteModal").openModal({
+					dismissible:false
+				});
+
+				$("#materialize-lean-overlay-3").css("display","none");
+			},
+			error : function() {
+				////console.log("Error");
+			}
+		});
+	}
 	
 	
 

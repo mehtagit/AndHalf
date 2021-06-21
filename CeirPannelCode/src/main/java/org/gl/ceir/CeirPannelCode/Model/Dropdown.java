@@ -97,11 +97,37 @@ public class Dropdown {
 	}
 	@Override
 	public String toString() {
-		return "Dropdown [id=" + id + ", createdOn=" + createdOn + ", modifiedOn=" + modifiedOn + ", featureId="
-				+ featureId + ", userTypeId=" + userTypeId + ", state=" + state + ", interp=" + interp + ", value="
-				+ value + ", tagId=" + tagId + ", brand_name=" + brand_name + ", modelName=" + modelName + ", brand_id="
-				+ brand_id + ", listOrder=" + listOrder + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Dropdown [id=");
+		builder.append(id);
+		builder.append(", createdOn=");
+		builder.append(createdOn);
+		builder.append(", modifiedOn=");
+		builder.append(modifiedOn);
+		builder.append(", featureId=");
+		builder.append(featureId);
+		builder.append(", userTypeId=");
+		builder.append(userTypeId);
+		builder.append(", state=");
+		builder.append(state);
+		builder.append(", interp=");
+		builder.append(interp);
+		builder.append(", value=");
+		builder.append(value);
+		builder.append(", tagId=");
+		builder.append(tagId);
+		builder.append(", brand_name=");
+		builder.append(brand_name);
+		builder.append(", modelName=");
+		builder.append(modelName);
+		builder.append(", brand_id=");
+		builder.append(brand_id);
+		builder.append(", listOrder=");
+		builder.append(listOrder);
+		builder.append("]");
+		return builder.toString();
 	}
+	
 	
 	
 	

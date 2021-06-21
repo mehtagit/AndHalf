@@ -117,7 +117,7 @@
 					<div class="col s12 m12 l12">
 						<div class="row card-panel">
 							<div class="container-fluid pageHeader" id="pageHeader">
-
+								<p class="PageHeading">Dashboard</p>	
 								<a class="boton right" id="btnLink" hidden="hidden"></a>
 							</div>
 							<form action="${context}/fieldManagement" id="viewFilter" 
@@ -142,15 +142,42 @@
 		<!--end container-->
 	</section>
 	
- 	
+ 	<div id="addPort" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
+        <h6 class="modal-header"><spring:message code="button.addport" /></h6>
+        <div class="modal-content">
+          	<form action="" onsubmit="return submitPort()" method="post" >
+                <div class="row" style="margin-top: 10px;">
+					
+					<div class="col s12 m6">
+					<label for="port" class="active">Port Type <span class="star">*</span></label>
+                     	 <select class="browser-default" id="port" required="required" >
+                                <option value=""  selected >Select Port Type</option>
+                          </select>
+                        
+                         <input type="text" id="id" hidden>
+                    </div>
+					
+					<div class="input-field col s12 m6" style="margin-top: 22px;">
+                        <input type="text" id="portAddress" name="value"  title="Please enter alphabets and numbers upto 100 characters only" maxlength="100" required="required">
+                        <label for="portAddress" class="">Port Address <span class="star"> *</span></label>
+                    </div>
+
+					 <div class="col s12 m12 center" style="margin-top: 20px;">
+                        <button class="btn" type="submit">Submit</button>
+                        <a href="#" class="btn modal-close" id="Cancel" onclick='resetFields()'  style="margin-left: 10px;">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 		
 		
 		<div id="editPortAddressModal" class="modal" style="z-index: 1003; display: none; opacity: 1; transform: scaleX(1); top: 10%;">
-        <h6 class="modal-header">Start Port</h6>
+        <h6 class="modal-header">Run Port</h6>
         <div class="modal-content">
-          	<form action="" onsubmit="return startPort()">
+          	<form action="" onsubmit="return updatedPort()">
                 <div class="row" style="margin-top: 10px;">
-					<h6 id="runSucessMessage">Do you really want to start the Port ?</h6>
+					<h6 id="runSucessMessage">do you really want to run the Port ?</h6>
 				<!-- <div class="col s12 m6">
 					<label for="editport" class="active">Port Type <span class="star">*</span></label>
                      	 <select class="browser-default" id="editport" >
@@ -166,7 +193,7 @@
                     </div> -->
 
 					<div class="col s12 m12 center" style="margin-top: 20px;">
-                        <button class="btn" type="submit">Start</button>
+                        <button class="btn" type="submit">Run</button>
                         <a href="#" class="btn modal-close" id="Cancel" style="margin-left: 10px;">Cancel</a>
                        
                     </div>
@@ -198,7 +225,7 @@
         <div class="modal-content">
           	<form action="" onsubmit="return stopPort()">
                 <div class="row" style="margin-top: 10px;">
-				<h6 id="runSucessMessage">Do you really want to stop the Port ?</h6>	
+				<h6 id="runSucessMessage">do you really want to stop the Port ?</h6>	
 				<!-- <div class="col s12 m6">
 					<label for="editport" class="active">Port Type <span class="star">*</span></label>
                      	 <select class="browser-default" id="editport" >
@@ -223,6 +250,27 @@
         </div>
     </div>
 	
+	
+	<div id="closeDeleteModal" class="modal">
+			<h6 class="modal-header"><spring:message code="modal.header.deletePort" /></h6>
+			<div class="modal-content">
+		
+			
+			<div class="row">
+
+				<h6 id="tacModalText"><spring:message code="modal.message.portDeleted" /> </h6>
+			</div>
+			<div class="row">
+				<div class="input-field col s12 center">
+					<a href="" class="modal-close btn"
+						style="margin-left: 10px;"><spring:message code="modal.close" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+		
+		
 	<div id="updateFieldsSuccess" class="modal">
      <h6 class="modal-header" style="margin:0px;">Port Action</h6>
         <div class="modal-content">
@@ -301,7 +349,7 @@
 	<script type="text/javascript"
 		src="${context}/resources/project_js/enterKey.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
-		src="${context}/resources/project_js/viewPortManagement.js?version=<%= (int) (Math.random() * 10) %>"></script>
+		src="${context}/resources/project_js/ModemDetails.js?version=<%= (int) (Math.random() * 10) %>"></script>
 	<script type="text/javascript"
 		src="${context}/resources/project_js/_dateFunction.js?version=<%= (int) (Math.random() * 10) %>" async></script>
 			<script type="text/javascript"

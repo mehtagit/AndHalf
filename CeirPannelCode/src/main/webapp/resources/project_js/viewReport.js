@@ -43,8 +43,8 @@
 			if($("body").attr("data-redirectURL") == 'viaDashboard'){
 			
 				var filterRequest={
-						"unitId" : $("body").attr("data-unitID")
-				
+						//"unitId" : $("body").attr("data-unitID")
+						"id" : $("body").attr("data-unitID")
 				}			
 				var tableURL="./defaultReport";
 				

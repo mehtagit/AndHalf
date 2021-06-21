@@ -342,7 +342,7 @@ public class DatatableHeaders {
 			//Port Management
 			
 			else if("portManagement".equals(role)) {
-				String[] headers = {"table.creationDate","table.lastupdatedate","table.port","table.address","table.action"};
+				String[] headers = {"Modem ID","Port Name","Modem","Sim Number","IMEI Number","Last UP Time","Last Activity Time","Status","Action"};
 				for(String header : headers) {
 					dataTableInputs.add(new DatatableHeaderModel(Translator.toLocale(header)));
 				}

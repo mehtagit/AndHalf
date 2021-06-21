@@ -15,7 +15,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http){
 	try {
 	http
-	.authorizeRequests().antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+	.authorizeRequests().antMatchers("/**").permitAll()
 	.and()
 	.sessionManagement()
 	.sessionCreationPolicy(SessionCreationPolicy.NEVER).invalidSessionUrl("/login").and()
